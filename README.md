@@ -1,4 +1,4 @@
-# abeille
+# abeille-manager
 
 ## Project setup
 ```

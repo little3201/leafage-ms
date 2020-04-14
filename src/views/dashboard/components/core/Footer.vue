@@ -42,30 +42,30 @@
 </template>
 
 <script>
-  export default {
-    name: 'DashboardCoreFooter',
+export default {
+  name: 'DashboardCoreFooter',
 
-    data: () => ({
-      links: [
-        {
-          href: '#',
-          text: 'Creative Tim',
-        },
-        {
-          href: '#',
-          text: 'About Us',
-        },
-        {
-          href: '#',
-          text: 'Blog',
-        },
-        {
-          href: '#',
-          text: 'Licenses',
-        },
-      ],
-    }),
-  }
+  data: () => ({
+    links: [
+      {
+        href: '#',
+        text: 'Creative Tim'
+      },
+      {
+        href: '#',
+        text: 'About Us'
+      },
+      {
+        href: '#',
+        text: 'Blog'
+      },
+      {
+        href: '#',
+        text: 'Licenses'
+      }
+    ]
+  })
+}
 </script>
 
 <style lang="sass">

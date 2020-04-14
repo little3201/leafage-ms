@@ -365,42 +365,42 @@
 </template>
 
 <script>
-  export default {
-    name: 'DashboardNotifications',
+export default {
+  name: 'DashboardNotifications',
 
-    data: () => ({
-      color: 'info',
-      colors: [
-        'info',
-        'success',
-        'warning',
-        'error',
-      ],
-      dialog: false,
-      dialog2: false,
-      dialog3: false,
-      direction: 'top center',
-      directions: [
-        'top left',
-        'top center',
-        'top right',
-        'bottom left',
-        'bottom center',
-        'bottom right',
-      ],
-      snackbar: false,
-    }),
+  data: () => ({
+    color: 'info',
+    colors: [
+      'info',
+      'success',
+      'warning',
+      'error'
+    ],
+    dialog: false,
+    dialog2: false,
+    dialog3: false,
+    direction: 'top center',
+    directions: [
+      'top left',
+      'top center',
+      'top right',
+      'bottom left',
+      'bottom center',
+      'bottom right'
+    ],
+    snackbar: false
+  }),
 
-    computed: {
-      parsedDirection () {
-        return this.direction.split(' ')
-      },
-    },
+  computed: {
+    parsedDirection () {
+      return this.direction.split(' ')
+    }
+  },
 
-    methods: {
-      randomColor () {
-        this.color = this.colors[Math.floor(Math.random() * this.colors.length)]
-      },
-    },
+  methods: {
+    randomColor () {
+      this.color = this.colors[Math.floor(Math.random() * this.colors.length)]
+    }
   }
+}
 </script>

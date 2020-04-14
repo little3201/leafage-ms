@@ -375,44 +375,44 @@
 </template>
 
 <script>
-  export default {
-    name: 'DashboardPanels',
+export default {
+  name: 'DashboardPanels',
 
-    data: () => ({
-      tab: 0,
-      tabs: [
-        'Profile',
-        'Settings',
-        'Options',
-      ],
-      tabs2: [
-        {
-          text: 'Home',
-          icon: 'mdi-view-dashboard',
-        },
-        {
-          text: 'Settings',
-          icon: 'mdi-clock-outline',
-        },
-      ],
-      tabs3: [
-        {
-          text: 'Description',
-          icon: 'mdi-information',
-        },
-        {
-          text: 'Location',
-          icon: 'mdi-map-marker',
-        },
-        {
-          text: 'Legal Info',
-          icon: 'mdi-gavel',
-        },
-        {
-          text: 'Help Center',
-          icon: 'mdi-help-circle-outline',
-        },
-      ],
-    }),
-  }
+  data: () => ({
+    tab: 0,
+    tabs: [
+      'Profile',
+      'Settings',
+      'Options'
+    ],
+    tabs2: [
+      {
+        text: 'Home',
+        icon: 'mdi-view-dashboard'
+      },
+      {
+        text: 'Settings',
+        icon: 'mdi-clock-outline'
+      },
+    ],
+    tabs3: [
+      {
+        text: 'Description',
+        icon: 'mdi-information'
+      },
+      {
+        text: 'Location',
+        icon: 'mdi-map-marker'
+      },
+      {
+        text: 'Legal Info',
+        icon: 'mdi-gavel'
+      },
+      {
+        text: 'Help Center',
+        icon: 'mdi-help-circle-outline'
+      }
+    ]
+  })
+}
 </script>

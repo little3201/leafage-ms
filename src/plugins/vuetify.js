@@ -115,6 +115,9 @@ const opts = {
       dark: theme,
       light: theme
     }
+  },
+  icons: {
+    iconfont: 'mdi' // default - only for display purposes
   }
 }
 

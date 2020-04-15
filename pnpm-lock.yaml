@@ -5845,7 +5845,7 @@ packages:
       tarball: json5/download/json5-0.5.1.tgz
   /json5/1.0.1:
     dependencies:
-      minimist: 1.2.0
+      minimist: 1.2.5
     dev: true
     hasBin: true
     resolution:
@@ -6477,6 +6477,11 @@ packages:
     resolution:
       integrity: sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
       tarball: minimist/download/minimist-1.2.0.tgz
+  /minimist/1.2.5:
+    dev: true
+    resolution:
+      integrity: sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI=
+      tarball: minimist/download/minimist-1.2.5.tgz
   /minipass-collect/1.0.2:
     dependencies:
       minipass: 3.1.1

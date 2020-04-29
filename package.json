@@ -26,16 +26,16 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.1.0",
     "chartist": "^0.11.4",
-    "deepmerge": "^4.2.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
-    "fibers": "^5.0.0",
     "lint-staged": "^10.2.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "vee-validate": "^3.3.0",
     "vue-chartist": "^2.2.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-cli-plugin-vuetify": "^2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.3"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

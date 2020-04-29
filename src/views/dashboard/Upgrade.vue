@@ -103,9 +103,9 @@
                   <v-btn
                     color="success"
                     target="_blank"
-                    href="https://www.creative-tim.com/product/vuetify-material-dashboard-pro?ref=vtymd-upgrade-page"
+                    href="@"
                   >
-                    Upgrade to Pro
+                    Do more
                   </v-btn>
                 </td>
               </tr>

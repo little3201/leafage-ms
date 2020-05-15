@@ -119,7 +119,7 @@ export default {
         actions: [
           'Action',
           'Another Action',
-          'Something else here',
+          'Something else here'
         ]
       },
       {

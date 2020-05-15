@@ -76,6 +76,7 @@
       <div />
     </v-list>
 
+<!--
     <template v-slot:append>
       <base-item
         :item="{
@@ -85,6 +86,7 @@
         }"
       />
     </template>
+-->
   </v-navigation-drawer>
 </template>
 
@@ -93,6 +95,7 @@
 import {
   mapState
 } from 'vuex'
+import { fetchSourceFunc } from '@/api/method'
 
 export default {
   name: 'DashboardCoreDrawer',
@@ -120,26 +123,6 @@ export default {
         title: 'rtables',
         icon: 'mdi-clipboard-outline',
         to: '/tables/regular-tables'
-      },
-      {
-        title: 'typography',
-        icon: 'mdi-format-font',
-        to: '/components/typography'
-      },
-      {
-        title: 'icons',
-        icon: 'mdi-chart-bubble',
-        to: '/components/icons'
-      },
-      {
-        title: 'google',
-        icon: 'mdi-map-marker',
-        to: '/maps/google-maps'
-      },
-      {
-        title: 'notifications',
-        icon: 'mdi-bell',
-        to: '/components/notifications'
       }
     ]
   }),
@@ -162,6 +145,9 @@ export default {
         avatar: true,
         title: this.$t('avatar')
       }
+    },
+    initSource () {
+      return this.fetchSource()
     }
   },
 
@@ -172,6 +158,17 @@ export default {
         children: item.children ? item.children.map(this.mapItem) : undefined,
         title: this.$t(item.title)
       }
+    },
+    fetchSource () {
+      fetchSourceFunc().then(
+        response => {
+          alert(response.data.budinessId)
+          // this.items = response.data
+        },
+        error => {
+          alert(error.statusText)
+        }
+      )
     }
   }
 }

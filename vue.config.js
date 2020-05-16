@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-    disableHostCheck: true,
+    disableHostCheck: true
   },
 
   transpileDependencies: ['vuetify'],
@@ -10,7 +10,7 @@ module.exports = {
       locale: 'en',
       fallbackLocale: 'en',
       localeDir: 'locales',
-      enableInSFC: false,
-    },
-  },
+      enableInSFC: false
+    }
+  }
 }

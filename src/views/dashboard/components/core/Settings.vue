@@ -126,6 +126,7 @@
             </v-item>
           </v-item-group>
 
+<!--
           <v-btn
             block
             class="mb-3"
@@ -178,6 +179,7 @@
             <v-icon>mdi-facebook</v-icon>
             - 50
           </v-btn>
+-->
         </v-card-text>
       </v-card>
     </v-menu>

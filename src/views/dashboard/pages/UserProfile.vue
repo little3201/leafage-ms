@@ -172,7 +172,37 @@
 </template>
 
 <script>
+import { queryUserFunc } from '@/api/method'
+
 export default {
-  //
+  name: 'UserProfile',
+
+  data: () => ({
+    user: {
+      nickname: '',
+      mobile: '',
+      email: '',
+      avatar: 'https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg'
+    }
+  }),
+
+  computed: {
+    initUser () {
+      return this.fetchUser()
+    }
+  },
+
+  methods: {
+    fetchUser () {
+      queryUserFunc().then(
+        response => {
+          // this.items = response.data
+        },
+        error => {
+          alert(error.statusText)
+        }
+      )
+    }
+  }
 }
 </script>

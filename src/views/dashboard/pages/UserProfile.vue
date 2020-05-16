@@ -186,15 +186,13 @@ export default {
     }
   }),
 
-  computed: {
-    initUser () {
-      return this.fetchUser()
-    }
+  created () {
+    this.queryUser()
   },
 
   methods: {
-    fetchUser () {
-      queryUserFunc().then(
+    queryUser (username) {
+      queryUserFunc(username).then(
         response => {
           // this.items = response.data
         },

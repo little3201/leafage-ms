@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    id="dashboard-core-footer"
+    id="footers"
   >
     <v-container>
       <v-row
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'DashboardCoreFooter',
+  name: 'Footers',
 
   data: () => ({
     links: [

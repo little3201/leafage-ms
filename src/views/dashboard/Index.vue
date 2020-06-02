@@ -15,10 +15,10 @@ export default {
   name: 'DashboardIndex',
 
   components: {
-    DashboardCoreAppBar: () => import('./components/core/AppBar'),
-    DashboardCoreDrawer: () => import('./components/core/Drawer'),
-    DashboardCoreSettings: () => import('./components/core/Settings'),
-    DashboardCoreView: () => import('./components/core/View')
+    DashboardCoreAppBar: () => import('@/components/AppBar'),
+    DashboardCoreDrawer: () => import('@/components/Drawer'),
+    DashboardCoreSettings: () => import('@/components/Settings'),
+    DashboardCoreView: () => import('@/components/View')
   },
 
   data: () => ({

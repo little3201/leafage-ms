@@ -51,9 +51,6 @@
       expand
       nav
     >
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
-      <div />
 
       <template v-for="(item, i) in computedItems">
         <base-item-group
@@ -71,22 +68,8 @@
         />
       </template>
 
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
       <div />
     </v-list>
-
-<!--
-    <template v-slot:append>
-      <base-item
-        :item="{
-          title: $t('upgrade'),
-          icon: 'mdi-package-up',
-          to: '/upgrade',
-        }"
-      />
-    </template>
--->
   </v-navigation-drawer>
 </template>
 
@@ -98,7 +81,7 @@ import {
 import { fetchSourceFunc } from '@/api/method'
 
 export default {
-  name: 'DashboardCoreDrawer',
+  name: 'Drawer',
 
   props: {
     expandOnHover: {
@@ -117,12 +100,17 @@ export default {
       {
         icon: 'mdi-account',
         title: 'user',
-        to: '/pages/user'
+        to: '/user'
       },
       {
-        title: 'rtables',
+        title: 'signin',
         icon: 'mdi-clipboard-outline',
-        to: '/tables/regular-tables'
+        to: '/signin'
+      },
+      {
+        title: 'signup',
+        icon: 'mdi-clipboard-outline',
+        to: '/signup'
       }
     ]
   }),

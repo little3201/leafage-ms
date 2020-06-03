@@ -1,7 +1,8 @@
 <template>
   <v-content>
     <router-view />
-    <footers />
+
+    <Footer />
   </v-content>
 </template>
 
@@ -10,7 +11,7 @@ export default {
   name: 'View',
 
   components: {
-    Footers: () => import('./Footers')
+    Footer: () => import('./Footer')
   }
 }
 </script>

@@ -15,7 +15,7 @@
         >
           <a
             :href="link.href"
-            class="mr-0 grey--text text--darken-3"
+            class="mr-0 grey--text"
             rel="noopener"
             target="_blank"
             v-text="link.text"
@@ -40,13 +40,13 @@
 
 <script>
 export default {
-  name: 'Footers',
+  name: 'Footer',
 
   data: () => ({
     links: [
       {
         href: '#',
-        text: 'Creative Tim'
+        text: 'Privacy'
       },
       {
         href: '#',
@@ -55,10 +55,6 @@ export default {
       {
         href: '#',
         text: 'Blog'
-      },
-      {
-        href: '#',
-        text: 'Licenses'
       }
     ]
   })

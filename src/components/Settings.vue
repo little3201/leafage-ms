@@ -192,7 +192,7 @@ import Proxyable from 'vuetify/lib/mixins/proxyable'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
-  name: 'DashboardCoreSettings',
+  name: 'Settings',
 
   mixins: [Proxyable],
 

@@ -9,190 +9,75 @@
         cols="12"
         md="8"
       >
-        <base-material-card>
-          <template v-slot:heading>
-            <div class="display-2 font-weight-light">
-              Edit Profile
-            </div>
-
-            <div class="subtitle-1 font-weight-light">
-              Complete your profile
-            </div>
-          </template>
-
-          <v-form>
-            <v-container class="py-0">
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Company (disabled)"
-                    disabled
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="User Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="First Name"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="Last Name"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    label="Adress"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="City"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Country"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="Postal Code"
-                    type="number"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    class="purple-input"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                  <v-btn
-                    color="success"
-                    class="mr-0"
-                  >
-                    Update Profile
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-form>
-        </base-material-card>
-      </v-col>
-
-      <v-col
-        cols="12"
-        md="4"
-      >
-        <base-material-card
-          class="v-card-profile"
-          avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
-        >
-          <v-card-text class="text-center">
-            <h6 class="display-1 mb-1 grey--text">
-              CEO / CO-FOUNDER
-            </h6>
-
-            <h4 class="display-2 font-weight-light mb-3 black--text">
-              Alec Thompson
-            </h4>
-
-            <p class="font-weight-light grey--text">
-              Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-            </p>
-
-            <v-btn
-              color="success"
-              rounded
-              class="mr-0"
-            >
-              Follow
-            </v-btn>
-          </v-card-text>
-        </base-material-card>
+        <v-card-title>
+          Nutrition
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          :search="search"
+        ></v-data-table>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { queryUserFunc } from '@/api/method'
+import { fetchUserFunc } from '@/api/method'
 
 export default {
   name: 'UserProfile',
 
   data: () => ({
-    user: {
-      nickname: '',
-      mobile: '',
-      email: '',
-      avatar: 'https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg'
-    }
+    search: '',
+    headers: [
+      {
+        text: 'Dessert (100g serving)',
+        align: 'start',
+        sortable: false,
+        value: 'name'
+      },
+      { text: 'Calories', value: 'calories' },
+      { text: 'Fat (g)', value: 'fat' },
+      { text: 'Carbs (g)', value: 'carbs' },
+      { text: 'Protein (g)', value: 'protein' },
+      { text: 'Iron (%)', value: 'iron' }
+    ],
+    desserts: [
+      {
+        name: 'Frozen Yogurt',
+        calories: 159,
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0,
+        iron: '1%'
+      },
+      {
+        name: 'Ice cream sandwich',
+        calories: 237,
+        fat: 9.0,
+        carbs: 37,
+        protein: 4.3,
+        iron: '1%'
+      }
+    ]
   }),
 
   created () {
-    this.queryUser()
+    this.fetchUser()
   },
 
   methods: {
-    queryUser (username) {
-      queryUserFunc(username).then(
+    fetchUser () {
+      fetchUserFunc().then(
         response => {
           // this.items = response.data
         },

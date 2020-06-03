@@ -1,21 +1,14 @@
 import axios from '@/api'
-import { SERVER_URL, AUTH } from './request'
+import qs from 'qs'
+import { SERVER_URL } from './request'
 
 /* 登录方法 */
-export const loginFunc = ({ username, password }) => {
-  const params = {
-    username: username,
-    password: password,
-    grant_type: 'password'
-  }
+export const loginFunc = (params) => {
   return axios.request({
     url: SERVER_URL.signin,
     method: 'post',
-    auth: {
-      username: AUTH.client_id,
-      password: AUTH.client_secret
-    },
-    params
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    data: qs.stringify(params, { indices: false })
   })
 }
 

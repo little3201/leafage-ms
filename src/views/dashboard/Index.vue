@@ -1,24 +1,24 @@
 <template>
   <v-app>
-    <dashboard-core-app-bar />
+    <App-bar />
 
-    <dashboard-core-drawer />
+    <Drawer />
 
-    <dashboard-core-view />
+    <View />
 
-    <dashboard-core-settings />
+    <Settings />
   </v-app>
 </template>
 
 <script>
 export default {
-  name: 'DashboardIndex',
+  name: 'Dashboard',
 
   components: {
-    DashboardCoreAppBar: () => import('@/components/AppBar'),
-    DashboardCoreDrawer: () => import('@/components/Drawer'),
-    DashboardCoreSettings: () => import('@/components/Settings'),
-    DashboardCoreView: () => import('@/components/View')
+    AppBar: () => import('@/components/AppBar'),
+    Drawer: () => import('@/components/Drawer'),
+    Settings: () => import('@/components/Settings'),
+    View: () => import('@/components/View')
   },
 
   data: () => ({

@@ -122,7 +122,7 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'DashboardCoreAppBar',
+  name: 'AppBar',
 
   components: {
   },

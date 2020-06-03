@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: 'View',
+  name: 'BaseView',
 
   components: {
     Footer: () => import('./Footer')

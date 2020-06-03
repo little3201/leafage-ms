@@ -7,23 +7,10 @@
     <v-row justify="center">
       <v-col
         cols="12"
-        md="8"
       >
-        <v-card-title>
-          Nutrition
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="desserts"
-          :search="search"
+          :items="items"
         ></v-data-table>
       </v-col>
     </v-row>
@@ -34,39 +21,54 @@
 import { fetchUserFunc } from '@/api/method'
 
 export default {
-  name: 'UserProfile',
+  name: 'User',
 
   data: () => ({
     search: '',
     headers: [
-      {
-        text: 'Dessert (100g serving)',
-        align: 'start',
-        sortable: false,
-        value: 'name'
-      },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Iron (%)', value: 'iron' }
+      { text: 'RealName', value: 'realName', align: 'center' },
+      { text: 'Mobile', value: 'mobile', align: 'center' },
+      { text: 'Email', value: 'email', align: 'center' },
+      { text: 'Age', value: 'age' },
+      { text: 'Gender', value: 'gender' },
+      { text: 'Country', value: 'country' },
+      { text: 'Province', value: 'province' },
+      { text: 'City', value: 'city' },
+      { text: 'Region', value: 'region' }
     ],
-    desserts: [
+    items: [
       {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
+        realName: 'Frozen',
+        mobile: 15967874565,
+        email: 'little3201@163.com',
+        age: 24,
+        gender: 4.0,
+        country: '1%',
+        province: '1%',
+        city: '1%',
+        region: '1%'
       },
       {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
+        realName: 'Frozen',
+        mobile: 15967874565,
+        email: 'little3201@163.com',
+        age: 24,
+        gender: 4.0,
+        country: '1%',
+        province: '1%',
+        city: '1%',
+        region: '1%'
+      },
+      {
+        realName: 'Frozen',
+        mobile: 15967874565,
+        email: 'little3201@163.com',
+        age: 24,
+        gender: 4.0,
+        country: '1%',
+        province: '1%',
+        city: '1%',
+        region: '1%'
       }
     ]
   }),

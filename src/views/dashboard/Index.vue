@@ -4,7 +4,7 @@
 
     <Drawer />
 
-    <View />
+    <Base-view />
 
     <Settings />
   </v-app>
@@ -18,7 +18,7 @@ export default {
     AppBar: () => import('@/components/AppBar'),
     Drawer: () => import('@/components/Drawer'),
     Settings: () => import('@/components/Settings'),
-    View: () => import('@/components/View')
+    BaseView: () => import('@/components/View')
   },
 
   data: () => ({

@@ -1,6 +1,6 @@
 // 服务匹配前缀
 const SERVER_PRE = {
-  hypervisor: '', // 系统
+  hypervisor: '/hypervisor', // 系统
   assets: '/assets' // 资源
 }
 

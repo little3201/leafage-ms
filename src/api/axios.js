@@ -67,7 +67,6 @@ class HttpRequest {
               break
             // 403 token过期，清除token并跳转登录页
             case 403:
-              // localStorage.removeItem('token');
               // store.commit('loginSuccess', null);
               setTimeout(() => { toSignin() }, 300)
               break
@@ -94,7 +93,7 @@ class HttpRequest {
   request (options) {
     const instance = axios.create()
     // 覆写库的超时默认值，所有请求都会等待 1 秒
-    instance.defaults.timeout = 1000
+    // instance.defaults.timeout = 1000
     options = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance, options.url)
     return instance(options)

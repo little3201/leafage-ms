@@ -78,7 +78,7 @@
 import {
   mapState
 } from 'vuex'
-import { fetchSourceFunc } from '@/api/method'
+import { retrieveSourceFunc } from '@/api/method'
 
 export default {
   name: 'Drawer',
@@ -135,7 +135,7 @@ export default {
       }
     },
     initSource () {
-      return this.fetchSource()
+      return this.retrieveSource()
     }
   },
 
@@ -147,8 +147,8 @@ export default {
         title: this.$t(item.title)
       }
     },
-    fetchSource () {
-      fetchSourceFunc().then(
+    retrieveSource () {
+      retrieveSourceFunc().then(
         response => {
           alert(response.data.budinessId)
           // this.items = response.data

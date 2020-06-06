@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { fetchUserFunc } from '@/api/method'
+import { retrieveUserFunc } from '@/api/method'
 
 export default {
   name: 'User',
@@ -74,12 +74,12 @@ export default {
   }),
 
   created () {
-    this.fetchUser()
+    this.retrieveUser()
   },
 
   methods: {
-    fetchUser () {
-      fetchUserFunc().then(
+    retrieveUser () {
+      retrieveUserFunc().then(
         response => {
           // this.items = response.data
         },

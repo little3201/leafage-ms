@@ -14,6 +14,11 @@ export default [
         name: 'User',
         path: 'user',
         component: () => import('@/views/user/Index')
+      },
+      {
+        name: 'Article',
+        path: 'article',
+        component: () => import('@/views/article/Index')
       }
     ]
   },

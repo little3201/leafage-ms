@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './plugins'
 import vuetify from '@/plugins/vuetify'
+import markdown from '@/plugins/markdown'
 import i18n from '@/plugins/i18n'
 
 Vue.config.productionTip = false
@@ -12,6 +13,7 @@ new Vue({
   router,
   store,
   vuetify,
+  markdown,
   i18n,
   render: h => h(App)
 }).$mount('#app')

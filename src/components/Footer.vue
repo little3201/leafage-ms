@@ -1,6 +1,8 @@
 <template>
   <v-footer
     id="footers"
+    app
+    inset
   >
     <v-container>
       <v-row

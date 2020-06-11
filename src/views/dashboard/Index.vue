@@ -4,7 +4,7 @@
 
     <Drawer />
 
-    <Base-view />
+    <Base-View />
 
     <Settings />
   </v-app>

@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <v-container
     class="fill-height"
     fluid
@@ -9,7 +10,7 @@
         <v-card class="pa-7">
           <v-row justify="center">
             <router-link to="/">
-              <v-img max-width="4rem" src="@/assets/logo.png"></v-img>
+              <v-img max-width="6rem" src="@/assets/logo.png"></v-img>
             </router-link>
           </v-row>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -29,17 +30,17 @@
             ></v-text-field>
           </v-form>
           <p>
-            <span class="subtitle-2">已有账号？</span>
-            <a href="/signin" class="subtitle-2">去登录</a>
+            <span class="text-subtitle-2">已有账号？</span>
+            <a href="/signin" class="text-subtitle-2">去登录</a>
           </p>
           <p>
-            <v-btn rounded class="body-1" color="primary" block @click="submitForm">
+            <v-btn rounded class="text-body-1" color="primary" block @click="submitForm">
               注&emsp;册
             </v-btn>
           </p>
           <p>
-            <span class="subtitle-2">注册即表示同意</span>
-            <a href="#" class="subtitle-2">《Abeille用户协议》</a>
+            <span class="text-subtitle-2">注册即表示同意</span>
+            <a href="#" class="text-subtitle-2">《Abeille用户协议》</a>
           </p>
           <p class="mb-0 text-center">第三方账号登录</p>
           <p class="mb-0 text-center">
@@ -57,6 +58,7 @@
       </v-col>
     </v-row>
   </v-container>
+  </v-app>
 </template>
 
 <script>

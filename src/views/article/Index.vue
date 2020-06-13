@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="full-height">
     <v-row justify="center" align="start" class="my-0">
-      <v-md-editor v-model="details.statusText" height="700px"></v-md-editor>
+      <v-md-editor v-model="details.statusText" height="600px"></v-md-editor>
     </v-row>
   </v-container>
 </template>

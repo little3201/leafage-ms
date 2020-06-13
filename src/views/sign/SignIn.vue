@@ -1,4 +1,5 @@
 <template>
+<v-app>
   <v-container
     class="fill-height"
     fluid
@@ -9,7 +10,7 @@
         <v-card class="pa-7">
           <v-row justify="center">
             <router-link to="/">
-              <v-img max-width="4rem" src="@/assets/logo.png"></v-img>
+              <v-img max-width="6rem" src="@/assets/logo.png"></v-img>
             </router-link>
           </v-row>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -34,16 +35,16 @@
             ></v-text-field>
           </v-form>
           <p class="text-right">
-            <a href="#" class="subtitle-2">忘记密码</a>
+            <a href="#" class="text-subtitle-2">忘记密码</a>
           </p>
           <p>
-            <v-btn rounded class="body-1" :loading="loading" color="primary" block @click="submitForm">
+            <v-btn rounded class="text-body-1" :loading="loading" color="primary" block @click="submitForm">
               登&emsp;录
             </v-btn>
           </p>
           <p>
-            <span class="subtitle-2">没有账号？</span>
-            <a href="/signup" class="subtitle-2">
+            <span class="text-subtitle-2">没有账号？</span>
+            <a href="/signup" class="text-subtitle-2">
               去注册
             </a>
           </p>
@@ -63,6 +64,7 @@
       </v-col>
     </v-row>
   </v-container>
+  </v-app>
 </template>
 
 <script>

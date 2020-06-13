@@ -30,7 +30,7 @@
           cols="12"
           md="auto"
         >
-          <div class="body-1 font-weight-light pt-6 pt-md-0 text-center">
+          <div class="text-body-1 font-weight-light pt-6 pt-md-0 text-center">
             Copyright &copy; {{ new Date().getFullYear() }} · 陕ICP备19017836号-1 · Made with 💜 by
             <strong>布吉岛</strong>
           </div>

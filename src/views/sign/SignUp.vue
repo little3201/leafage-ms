@@ -36,7 +36,15 @@
           <a href="/signin">去登录</a>
         </p>
         <p>
-          <v-btn rounded class="text-body-1" color="primary" block @click="submitForm">
+          <v-btn
+            depressed
+            rounded
+            class="text-body-1"
+            :loading="loading"
+            color="primary"
+            block
+            @click="submitForm"
+          >
             注&emsp;册
           </v-btn>
         </p>
@@ -69,6 +77,7 @@ export default {
   name: 'signup',
   data () {
     return {
+      loading: false,
       valid: true,
       formData: {
         username: '',

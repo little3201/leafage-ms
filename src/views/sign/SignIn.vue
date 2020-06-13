@@ -41,7 +41,15 @@
               <a href="#" class="text-subtitle-2">忘记密码</a>
             </p>
             <p>
-              <v-btn rounded class="text-body-1" :loading="loading" color="primary" block @click="submitForm">
+              <v-btn
+                depressed
+                rounded
+                class="text-body-1"
+                :loading="loading"
+                color="primary"
+                block
+                @click="submitForm"
+              >
                 登&emsp;录
               </v-btn>
             </p>
@@ -100,13 +108,11 @@ export default {
         this.loading = true
         loginFunc(this.formData).then(
           response => {
-            const token = response.data.token
-            window.localStorage.setItem('access_token', token)
             // 更新授权状态
             // this.$store.dispatch('setIsAuthenticated',true)
             // 设置token
             this.$router.push({
-              name: 'home'
+              name: 'Home'
             })
           },
           error => {

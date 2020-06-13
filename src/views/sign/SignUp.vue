@@ -6,56 +6,57 @@
   >
     <!-- content -->
     <v-row justify="center" class="my-0">
-      <v-col cols="12" xs="12" sm="6" md="5" lg="3" xl="2">
-        <v-card class="pa-7">
-          <v-row justify="center">
-            <router-link to="/">
-              <v-img max-width="6rem" src="@/assets/logo.png"></v-img>
-            </router-link>
-          </v-row>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-text-field
-              v-model="formData.username"
-              :rules="formRules.username"
-              label="手机号/邮箱"
-              prepend-inner-icon="mdi-account"
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="formData.password"
-              :rules="formRules.password"
-              label="登录密码"
-              prepend-inner-icon="mdi-lock"
-              required
-            ></v-text-field>
-          </v-form>
-          <p>
-            <span class="text-subtitle-2">已有账号？</span>
-            <a href="/signin" class="text-subtitle-2">去登录</a>
-          </p>
-          <p>
-            <v-btn rounded class="text-body-1" color="primary" block @click="submitForm">
-              注&emsp;册
-            </v-btn>
-          </p>
-          <p>
-            <span class="text-subtitle-2">注册即表示同意</span>
-            <a href="#" class="text-subtitle-2">《Abeille用户协议》</a>
-          </p>
-          <p class="mb-0 text-center">第三方账号登录</p>
-          <p class="mb-0 text-center">
-            <v-btn text icon x-large>
-              <v-icon>mdi-twitter</v-icon>
-            </v-btn>
-            <v-btn text icon x-large>
-              <v-icon>mdi-github-circle</v-icon>
-            </v-btn>
-            <v-btn text icon x-large>
-              <v-icon>mdi-wechat</v-icon>
-            </v-btn>
-          </p>
-        </v-card>
-      </v-col>
+      <v-sheet class="pa-5" width="296">
+        <v-row justify="center">
+          <router-link to="/">
+            <v-img max-width="6rem" src="@/assets/logo.png"></v-img>
+          </router-link>
+        </v-row>
+        <v-row justify="center">
+          <p class="my-3 text-button font-weight-bold">Create Your Account</p>
+        </v-row>
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-text-field
+            v-model="formData.username"
+            :rules="formRules.username"
+            label="手机号/邮箱"
+            prepend-inner-icon="mdi-account"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="formData.password"
+            :rules="formRules.password"
+            label="登录密码"
+            prepend-inner-icon="mdi-lock"
+            required
+          ></v-text-field>
+        </v-form>
+        <p class="text-subtitle-2">
+          <span>已有账号？</span>
+          <a href="/signin">去登录</a>
+        </p>
+        <p>
+          <v-btn rounded class="text-body-1" color="primary" block @click="submitForm">
+            注&emsp;册
+          </v-btn>
+        </p>
+        <p class="text-subtitle-2 text-center">
+          <span>注册即表示同意</span>
+          <a href="#" target="_blank">《Abeille用户协议》</a>
+        </p>
+        <p class="mb-0 text-center">第三方账号登录</p>
+        <p class="mb-0 text-center">
+          <v-btn text icon x-large>
+            <v-icon>mdi-twitter</v-icon>
+          </v-btn>
+          <v-btn text icon x-large>
+            <v-icon>mdi-github</v-icon>
+          </v-btn>
+          <v-btn text icon x-large>
+            <v-icon>mdi-wechat</v-icon>
+          </v-btn>
+        </p>
+      </v-sheet>
     </v-row>
   </v-container>
   </v-app>
@@ -109,4 +110,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+a {
+  text-decoration: none;
+}
 </style>

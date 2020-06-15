@@ -1,110 +1,17 @@
 import Vue from 'vue'
-import i18n from '@/i18n'
-import '@/sass/overrides.sass'
-import Vuetify, {
-  VApp,
-  VAppBar,
-  VAvatar,
-  VBtn,
-  VBadge,
-  VCard,
-  VCardActions,
-  VCardText,
-  VCheckbox,
+import i18n from '@/plugins/i18n'
+import Vuetify from 'vuetify/lib/framework'
+import {
   VCol,
-  VContent,
-  VContainer,
-  VDataTable,
-  VDivider,
-  VFooter,
-  VIcon,
-  VItem,
-  VItemGroup,
-  VImg,
-  VList,
-  VListItem,
-  VListItemAction,
-  VListItemIcon,
-  VListItemContent,
-  VListItemTitle,
-  VListItemSubtitle,
-  VListItemAvatar,
-  VMenu,
-  VNavigationDrawer,
-  VRating,
-  VRow,
-  VSheet,
-  VSpacer,
-  VSwitch,
-  VTabs,
-  VTabsItems,
-  VTabItem,
-  VTab,
-  VTextField,
-  VTimePicker,
-  VToolbar,
-  VToolbarTitle,
-  VToolbarItems
+  VRow
 } from 'vuetify/lib'
-import { Ripple } from 'vuetify/lib/directives'
 
 Vue.use(Vuetify, {
   components: {
-    VApp,
-    VAppBar,
-    VAvatar,
-    VBtn,
-    VBadge,
-    VCard,
-    VCardActions,
-    VCardText,
-    VCheckbox,
     VCol,
-    VContent,
-    VContainer,
-    VDataTable,
-    VDivider,
-    VFooter,
-    VIcon,
-    VItem,
-    VItemGroup,
-    VImg,
-    VList,
-    VListItem,
-    VListItemAction,
-    VListItemIcon,
-    VListItemContent,
-    VListItemTitle,
-    VListItemSubtitle,
-    VListItemAvatar,
-    VMenu,
-    VNavigationDrawer,
-    VRating,
-    VRow,
-    VSheet,
-    VSpacer,
-    VSwitch,
-    VTabs,
-    VTabsItems,
-    VTabItem,
-    VTab,
-    VTextField,
-    VTimePicker,
-    VToolbar,
-    VToolbarTitle,
-    VToolbarItems
-  },
-  directives: {
-    Ripple
+    VRow
   }
 })
-
-const theme = {
-  primary: '#4CAF50',
-  secondary: '#9C27b0',
-  accent: '#9C27b0',
-  info: '#00CAE3'
-}
 
 const opts = {
   lang: {
@@ -112,9 +19,16 @@ const opts = {
   },
   theme: {
     themes: {
-      dark: theme,
-      light: theme
+      dark: {},
+      light: {
+        primary: '#FF6F00',
+        secondary: '#050b1f',
+        accent: '#204165'
+      }
     }
+  },
+  icons: {
+    iconfont: 'mdi' // default - only for display purposes
   }
 }
 

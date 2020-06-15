@@ -2,14 +2,14 @@ import Vue from 'vue'
 import {
   extend,
   ValidationObserver,
-  ValidationProvider,
+  ValidationProvider
 } from 'vee-validate'
 import {
   email,
   max,
   min,
   numeric,
-  required,
+  required
 } from 'vee-validate/dist/rules'
 
 extend('email', email)

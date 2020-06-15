@@ -103,14 +103,9 @@ export default {
         to: '/user'
       },
       {
-        title: 'signin',
+        title: 'article',
         icon: 'mdi-clipboard-outline',
-        to: '/signin'
-      },
-      {
-        title: 'signup',
-        icon: 'mdi-clipboard-outline',
-        to: '/signup'
+        to: '/article'
       }
     ]
   }),

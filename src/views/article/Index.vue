@@ -1,30 +1,55 @@
 <template>
-  <v-container fluid class="full-height">
-    <v-row justify="center" align="start" class="my-0">
-      <v-md-editor v-model="details.statusText" height="600px"></v-md-editor>
+  <v-container
+    id="user-profile"
+    fluid
+    tag="section"
+  >
+    <v-row justify="center">
+      <v-col
+        cols="12"
+      >
+        <v-data-table
+          :headers="headers"
+          :items="items"
+        >
+        </v-data-table>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { retrieveArticleFunc } from '@/api/method'
+
 export default {
-  name: 'Articles',
-  props: {
-    businessId: String
-  },
+  name: 'User',
 
   data: () => ({
-    details: {
-      title: '',
-      srouceTest: '',
-      catalog: '',
-      content: '',
-      author: ''
-    }
+    search: '',
+    headers: [
+      { text: 'No.', value: 'businessId', align: 'center' },
+      { text: 'Title', value: 'title', align: 'center' },
+      { text: 'Subtitle', value: 'subtitle', align: 'center' },
+      { text: 'Author', value: 'author.nickname', align: 'center' }
+    ],
+    items: []
   }),
-  created: function () {
+
+  created () {
+    this.retrieveArticle()
   },
+
   methods: {
+    retrieveArticle () {
+      retrieveArticleFunc().then(
+        response => {
+          this.items = response.data
+        },
+        error => {
+          alert(error.statusText)
+        }
+      )
+    }
   }
 }
 </script>

@@ -26,7 +26,8 @@ export default {
   data: () => ({
     search: '',
     headers: [
-      { text: 'RealName', value: 'realName', align: 'center' },
+      { text: 'No.', value: 'businessId', align: 'center' },
+      { text: 'Nickname', value: 'nickname', align: 'center' },
       { text: 'Mobile', value: 'mobile', align: 'center' },
       { text: 'Email', value: 'email', align: 'center' },
       { text: 'Age', value: 'age' },
@@ -36,41 +37,7 @@ export default {
       { text: 'City', value: 'city' },
       { text: 'Region', value: 'region' }
     ],
-    items: [
-      {
-        realName: 'Frozen',
-        mobile: 15967874565,
-        email: 'little3201@163.com',
-        age: 24,
-        gender: 4.0,
-        country: '1%',
-        province: '1%',
-        city: '1%',
-        region: '1%'
-      },
-      {
-        realName: 'Frozen',
-        mobile: 15967874565,
-        email: 'little3201@163.com',
-        age: 24,
-        gender: 4.0,
-        country: '1%',
-        province: '1%',
-        city: '1%',
-        region: '1%'
-      },
-      {
-        realName: 'Frozen',
-        mobile: 15967874565,
-        email: 'little3201@163.com',
-        age: 24,
-        gender: 4.0,
-        country: '1%',
-        province: '1%',
-        city: '1%',
-        region: '1%'
-      }
-    ]
+    items: []
   }),
 
   created () {
@@ -81,7 +48,7 @@ export default {
     retrieveUser () {
       retrieveUserFunc().then(
         response => {
-          // this.items = response.data
+          this.items = response.data
         },
         error => {
           alert(error.statusText)

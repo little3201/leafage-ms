@@ -14,7 +14,7 @@ devDependencies:
   '@vue/cli-plugin-eslint': 4.4.4_f67a99d1204b4926fa440fa33402c84e
   '@vue/cli-plugin-router': 4.4.4_@vue+cli-service@4.4.4
   '@vue/cli-plugin-vuex': 4.4.4_@vue+cli-service@4.4.4
-  '@vue/cli-service': 4.4.4_6f61a63b94882a8a2c0e69c806156bf9
+  '@vue/cli-service': 4.4.4_329adb42a4aa045a265d13b4a06bd64e
   '@vue/eslint-config-standard': 4.0.0_eslint@5.16.0
   babel-eslint: 10.1.0_eslint@5.16.0
   chartist: 0.11.4
@@ -26,6 +26,7 @@ devDependencies:
   vee-validate: 3.3.3_vue@2.6.11
   vue-chartist: 2.3.0
   vue-cli-plugin-vuetify: 2.0.5
+  vue-cookies: 1.7.0
   vue-template-compiler: 2.6.11
   vuetify-loader: 1.5.0_08811a7fc76eae2f4503def42c134b9f
 lockfileVersion: 5.1
@@ -1308,7 +1309,7 @@ packages:
     dependencies:
       '@babel/core': 7.10.2
       '@vue/babel-preset-app': 4.4.4
-      '@vue/cli-service': 4.4.4_6f61a63b94882a8a2c0e69c806156bf9
+      '@vue/cli-service': 4.4.4_329adb42a4aa045a265d13b4a06bd64e
       '@vue/cli-shared-utils': 4.4.4
       babel-loader: 8.1.0_eaea9c166a05a2ae81982ff769e6ebeb
       cache-loader: 4.1.0_webpack@4.43.0
@@ -1322,7 +1323,7 @@ packages:
       tarball: '@vue/cli-plugin-babel/download/@vue/cli-plugin-babel-4.4.4.tgz'
   /@vue/cli-plugin-eslint/4.4.4_f67a99d1204b4926fa440fa33402c84e:
     dependencies:
-      '@vue/cli-service': 4.4.4_6f61a63b94882a8a2c0e69c806156bf9
+      '@vue/cli-service': 4.4.4_329adb42a4aa045a265d13b4a06bd64e
       '@vue/cli-shared-utils': 4.4.4
       eslint: 5.16.0
       eslint-loader: 2.2.1_eslint@5.16.0+webpack@4.43.0
@@ -1339,7 +1340,7 @@ packages:
       tarball: '@vue/cli-plugin-eslint/download/@vue/cli-plugin-eslint-4.4.4.tgz'
   /@vue/cli-plugin-router/4.4.4_@vue+cli-service@4.4.4:
     dependencies:
-      '@vue/cli-service': 4.4.4_6f61a63b94882a8a2c0e69c806156bf9
+      '@vue/cli-service': 4.4.4_329adb42a4aa045a265d13b4a06bd64e
       '@vue/cli-shared-utils': 4.4.4
     dev: true
     peerDependencies:
@@ -1349,14 +1350,14 @@ packages:
       tarball: '@vue/cli-plugin-router/download/@vue/cli-plugin-router-4.4.4.tgz'
   /@vue/cli-plugin-vuex/4.4.4_@vue+cli-service@4.4.4:
     dependencies:
-      '@vue/cli-service': 4.4.4_6f61a63b94882a8a2c0e69c806156bf9
+      '@vue/cli-service': 4.4.4_329adb42a4aa045a265d13b4a06bd64e
     dev: true
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
     resolution:
       integrity: sha1-QjKMFhl4gjoerJegeDKnqiJcu5s=
       tarball: '@vue/cli-plugin-vuex/download/@vue/cli-plugin-vuex-4.4.4.tgz'
-  /@vue/cli-service/4.4.4_6f61a63b94882a8a2c0e69c806156bf9:
+  /@vue/cli-service/4.4.4_329adb42a4aa045a265d13b4a06bd64e:
     dependencies:
       '@intervolga/optimize-cssnano-plugin': 1.0.6_webpack@4.43.0
       '@soda/friendly-errors-webpack-plugin': 1.7.1_webpack@4.43.0
@@ -1399,11 +1400,12 @@ packages:
       pnp-webpack-plugin: 1.6.4
       portfinder: 1.0.26
       postcss-loader: 3.0.0
+      sass-loader: 8.0.2_sass@1.26.8
       ssri: 7.1.0
       terser-webpack-plugin: 2.3.7_webpack@4.43.0
       thread-loader: 2.1.3_webpack@4.43.0
       url-loader: 2.3.0_file-loader@4.3.0+webpack@4.43.0
-      vue-loader: 15.9.2_css-loader@3.5.3+webpack@4.43.0
+      vue-loader: 15.9.2_1ebeed51c9db1c19ddd7ada5173f91fd
       vue-style-loader: 4.1.2
       vue-template-compiler: 2.6.11
       webpack: 4.43.0_webpack@4.43.0
@@ -1417,7 +1419,25 @@ packages:
     hasBin: true
     peerDependencies:
       '@vue/cli-service': '*'
+      less-loader: '*'
+      pug-plain-loader: '*'
+      raw-loader: '*'
+      sass-loader: '*'
+      stylus-loader: '*'
       vue-template-compiler: ^2.0.0
+    peerDependenciesMeta:
+      less-loader:
+        optional: true
+      pug-plain-loader:
+        optional: true
+      raw-loader:
+        optional: true
+      sass-loader:
+        optional: true
+      stylus-loader:
+        optional: true
+      vue-template-compiler:
+        optional: true
     resolution:
       integrity: sha1-JWyZDkmi/43FM7dzxQSmVDXHXEw=
       tarball: '@vue/cli-service/download/@vue/cli-service-4.4.4.tgz'
@@ -8835,6 +8855,13 @@ packages:
       node-sass: ^4.0.0
       sass: ^1.3.0
       webpack: ^4.36.0 || ^5.0.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
     resolution:
       integrity: sha1-3r7NjDziQ8dkVPLoKQSCFQOACQ0=
       tarball: sass-loader/download/sass-loader-8.0.2.tgz
@@ -10144,6 +10171,9 @@ packages:
     peerDependencies:
       file-loader: '*'
       webpack: ^4.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
     resolution:
       integrity: sha1-4OLvZY8APvuMpBsPP/v3a6uIZYs=
       tarball: url-loader/download/url-loader-2.3.0.tgz
@@ -10285,6 +10315,11 @@ packages:
     resolution:
       integrity: sha1-Cbp4koZT/H44Aeo35RIPlXQT3aQ=
       tarball: vue-cli-plugin-vuetify/download/vue-cli-plugin-vuetify-2.0.5.tgz
+  /vue-cookies/1.7.0:
+    dev: true
+    resolution:
+      integrity: sha1-3Y8Uf/FXngy9XzUtxd/yaW2HYLg=
+      tarball: vue-cookies/download/vue-cookies-1.7.0.tgz
   /vue-eslint-parser/5.0.0_eslint@5.16.0:
     dependencies:
       debug: 4.1.1
@@ -10312,19 +10347,28 @@ packages:
     resolution:
       integrity: sha1-zXwS8uF45vqiOw48/S97rJMF+Pw=
       tarball: vue-i18n/download/vue-i18n-8.18.2.tgz
-  /vue-loader/15.9.2_css-loader@3.5.3+webpack@4.43.0:
+  /vue-loader/15.9.2_1ebeed51c9db1c19ddd7ada5173f91fd:
     dependencies:
       '@vue/component-compiler-utils': 3.1.2
+      cache-loader: 4.1.0_webpack@4.43.0
       css-loader: 3.5.3_webpack@4.43.0
       hash-sum: 1.0.2
       loader-utils: 1.4.0
       vue-hot-reload-api: 2.3.4
       vue-style-loader: 4.1.2
+      vue-template-compiler: 2.6.11
       webpack: 4.43.0_webpack@4.43.0
     dev: true
     peerDependencies:
+      cache-loader: '*'
       css-loader: '*'
+      vue-template-compiler: '*'
       webpack: ^3.0.0 || ^4.1.0 || ^5.0.0-0
+    peerDependenciesMeta:
+      cache-loader:
+        optional: true
+      vue-template-compiler:
+        optional: true
     resolution:
       integrity: sha1-rgH19MnGoEv/RIORLnLvkaQCwa4=
       tarball: vue-loader/download/vue-loader-15.9.2.tgz
@@ -10522,6 +10566,10 @@ packages:
     hasBin: true
     peerDependencies:
       webpack: ^4.0.0 || ^5.0.0
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
     resolution:
       integrity: sha1-jxVKO84bz9HMYY705wMniFXn/4w=
       tarball: webpack-dev-server/download/webpack-dev-server-3.11.0.tgz
@@ -10825,6 +10873,7 @@ specifiers:
   vue: ^2.6.11
   vue-chartist: ^2.3.0
   vue-cli-plugin-vuetify: ^2.0.5
+  vue-cookies: ^1.7.0
   vue-i18n: ^8.18.2
   vue-router: ^3.3.3
   vue-template-compiler: ^2.6.11

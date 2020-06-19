@@ -30,7 +30,8 @@ export default {
       { text: 'No.', value: 'businessId', align: 'center' },
       { text: 'Title', value: 'title', align: 'center' },
       { text: 'Subtitle', value: 'subtitle', align: 'center' },
-      { text: 'Author', value: 'author.nickname', align: 'center' }
+      { text: 'Author', value: 'author.nickname', align: 'center' },
+      { text: 'Published Time', value: 'author.createTime', align: 'center' }
     ],
     items: []
   }),

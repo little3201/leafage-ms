@@ -98,13 +98,13 @@ export default {
         to: '/'
       },
       {
-        icon: 'mdi-account',
+        icon: 'mdi-account-multiple',
         title: 'user',
         to: '/user'
       },
       {
         title: 'article',
-        icon: 'mdi-clipboard-outline',
+        icon: 'mdi-book-open-page-variant',
         to: '/article'
       }
     ]

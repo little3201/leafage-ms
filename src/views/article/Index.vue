@@ -43,7 +43,9 @@ export default {
     retrieveArticle () {
       retrieveArticleFunc().then(
         response => {
-          this.items = response.data
+          if (response.data) {
+            this.items = response.data
+          }
         },
         error => {
           alert(error.statusText)

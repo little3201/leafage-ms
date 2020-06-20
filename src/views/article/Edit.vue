@@ -1,16 +1,25 @@
 <template>
   <v-container fluid class="full-height">
-    <v-row>
-      <v-text-field label="Title" single-line></v-text-field>
-    </v-row>
-    <v-row>
-      <v-textarea auto-grow label="Content" solo flat></v-textarea>
-      <v-divider vertical></v-divider>
-      <v-textarea auto-grow label="Content" disabled></v-textarea>
-    </v-row>
-    <v-row justify="center" align="start" class="my-0">
-      <v-md-editor v-model="details.statusText" height="600px"></v-md-editor>
-    </v-row>
+    <!--编辑区-->
+    <div ref="vNoteEdit" @scroll="$v_edit_scroll"
+          :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle && !s_preview_switch && !s_html_code, 'single-edit': !s_preview_switch && !s_html_code, 'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code), 'transition': transition}"
+          @click="textAreaFocus">
+        <div>
+          <!-- 双栏 -->
+          <v-textarea ref="vNoteTextarea" lineHeight="1.5" v-model="sourceText" fullHeight></v-textarea>
+        </div>
+    </div>
+    <!--展示区-->
+    <div :class="{'single-show': (!s_subfield && s_preview_switch) || (!s_subfield && s_html_code)}"
+        v-show="s_preview_switch || s_html_code" class="v-note-show">
+      <div ref="vShowContent" v-html="d_render" v-show="!s_html_code"
+            :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content"
+            >
+      </div>
+      <div :class="{'scroll-style': s_scrollStyle, 'scroll-style-border-radius': s_scrollStyle}" class="v-show-content-html">
+          {{content}}
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -22,17 +31,19 @@ export default {
   },
 
   data: () => ({
-    details: {
-      title: '',
-      srouceTest: '',
-      catalog: '',
-      content: '',
-      author: ''
-    }
+    sourceText: '',
+    content: ''
   }),
+
   created: function () {
   },
+
   methods: {
+    dataConvert(pos, url) {
+      this.$nextTick(function () {
+          this.content = this.markdownIt.render(this.d_value);
+      })
+    }
   }
 }
 </script>

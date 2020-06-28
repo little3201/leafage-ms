@@ -16,9 +16,9 @@ export default [
     ]
   },
   {
-    name: 'Edit',
-    path: '/edit',
-    component: () => import('@/views/article/Edit')
+    name: 'Editor',
+    path: '/editor',
+    component: () => import('@/views/article/Editor')
   },
   {
     name: 'SignIn',

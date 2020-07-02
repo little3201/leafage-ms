@@ -20,6 +20,11 @@ devDependencies:
   eslint: 5.16.0
   eslint-plugin-vue: 5.2.3_eslint@5.16.0
   lint-staged: 10.2.11
+  markdown-it: 11.0.0
+  markdown-it-anchor: 5.3.0_markdown-it@11.0.0
+  markdown-it-container: 3.0.0
+  markdown-it-table-of-contents: 0.4.4
+  prismjs: 1.20.0
   sass: 1.26.9
   sass-loader: 8.0.2_sass@1.26.9
   vee-validate: 3.3.6_vue@2.6.11
@@ -2747,6 +2752,16 @@ packages:
     resolution:
       integrity: sha1-sEM9C06chH7xiGik7xb9X8gnHEg=
       tarball: cli-width/download/cli-width-2.2.1.tgz
+  /clipboard/2.0.6:
+    dependencies:
+      good-listener: 1.2.2
+      select: 1.1.2
+      tiny-emitter: 2.1.0
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-UpISlu7A/fd+rRdJQhshyWhkc3Y=
+      tarball: clipboard/download/clipboard-2.0.6.tgz
   /clipboardy/2.3.0:
     dependencies:
       arch: 2.1.2
@@ -3546,6 +3561,12 @@ packages:
     resolution:
       integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
       tarball: delayed-stream/download/delayed-stream-1.0.0.tgz
+  /delegate/3.2.0:
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-tmtxwxWFIuirV0T3INjKDCr1kWY=
+      tarball: delegate/download/delegate-3.2.0.tgz
   /depd/1.1.2:
     dev: true
     engines:
@@ -4923,6 +4944,14 @@ packages:
     resolution:
       integrity: sha1-/QKacGxwPSm90XD0tts6P3p8tj0=
       tarball: globby/download/globby-9.2.0.tgz
+  /good-listener/1.2.2:
+    dependencies:
+      delegate: 3.2.0
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=
+      tarball: good-listener/download/good-listener-1.2.2.tgz
   /graceful-fs/4.2.4:
     dev: true
     resolution:
@@ -6135,6 +6164,13 @@ packages:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
       tarball: lines-and-columns/download/lines-and-columns-1.1.6.tgz
+  /linkify-it/3.0.2:
+    dependencies:
+      uc.micro: 1.0.6
+    dev: true
+    resolution:
+      integrity: sha1-9V7ri8HTrnVASeEkqzu1bZd5f7g=
+      tarball: linkify-it/download/linkify-it-3.0.2.tgz
   /lint-staged/10.2.11:
     dependencies:
       chalk: 4.1.0
@@ -6388,6 +6424,39 @@ packages:
     resolution:
       integrity: sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
       tarball: map-visit/download/map-visit-1.0.0.tgz
+  /markdown-it-anchor/5.3.0_markdown-it@11.0.0:
+    dependencies:
+      markdown-it: 11.0.0
+    dev: true
+    peerDependencies:
+      markdown-it: '*'
+    resolution:
+      integrity: sha1-1Ums1khWqOzRvqWDZe84Xv+6x0Q=
+      tarball: markdown-it-anchor/download/markdown-it-anchor-5.3.0.tgz
+  /markdown-it-container/3.0.0:
+    dev: true
+    resolution:
+      integrity: sha1-HRmwYECgIPmoJ1d7t9v2eqXemls=
+      tarball: markdown-it-container/download/markdown-it-container-3.0.0.tgz
+  /markdown-it-table-of-contents/0.4.4:
+    dev: true
+    engines:
+      node: '>6.4.0'
+    resolution:
+      integrity: sha1-PcfOi4/BflmBx3zDmNF4Ixnzf7w=
+      tarball: markdown-it-table-of-contents/download/markdown-it-table-of-contents-0.4.4.tgz
+  /markdown-it/11.0.0:
+    dependencies:
+      argparse: 1.0.10
+      entities: 2.0.3
+      linkify-it: 3.0.2
+      mdurl: 1.0.1
+      uc.micro: 1.0.6
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha1-2/wwNj5D11brxSw4WGuRuQBGuHY=
+      tarball: markdown-it/download/markdown-it-11.0.0.tgz
   /md5.js/1.3.5:
     dependencies:
       hash-base: 3.1.0
@@ -6407,6 +6476,11 @@ packages:
     resolution:
       integrity: sha1-hS3GD8ql2qLoz2yRicRA7T4EKXg=
       tarball: mdn-data/download/mdn-data-2.0.6.tgz
+  /mdurl/1.0.1:
+    dev: true
+    resolution:
+      integrity: sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
+      tarball: mdurl/download/mdurl-1.0.1.tgz
   /media-typer/0.3.0:
     dev: true
     engines:
@@ -8004,6 +8078,13 @@ packages:
     resolution:
       integrity: sha1-X0+HyPkeWuPzuoerTPXgOxoX8aM=
       tarball: pretty-error/download/pretty-error-2.1.1.tgz
+  /prismjs/1.20.0:
+    dev: true
+    optionalDependencies:
+      clipboard: 2.0.6
+    resolution:
+      integrity: sha1-m2hfxICjUU7nGY6sajv1AkMZ/wM=
+      tarball: prismjs/download/prismjs-1.20.0.tgz
   /private/0.1.8:
     dev: true
     engines:
@@ -8665,6 +8746,12 @@ packages:
     resolution:
       integrity: sha1-Yl2GWPhlr0Psliv8N2o3NZpJlMo=
       tarball: select-hose/download/select-hose-2.0.0.tgz
+  /select/1.1.2:
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=
+      tarball: select/download/select-1.1.2.tgz
   /selfsigned/1.10.7:
     dependencies:
       node-forge: 0.9.0
@@ -9557,6 +9644,12 @@ packages:
     resolution:
       integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
       tarball: timsort/download/timsort-0.3.0.tgz
+  /tiny-emitter/2.1.0:
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha1-HRpW7fxRxD6GPLtTgqcjMONVVCM=
+      tarball: tiny-emitter/download/tiny-emitter-2.1.0.tgz
   /tmp/0.0.33:
     dependencies:
       os-tmpdir: 1.0.2
@@ -9722,6 +9815,11 @@ packages:
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
       tarball: typedarray/download/typedarray-0.0.6.tgz
+  /uc.micro/1.0.6:
+    dev: true
+    resolution:
+      integrity: sha1-nEEagCpAmpH8bPdAgbq6NLJEmaw=
+      tarball: uc.micro/download/uc.micro-1.0.6.tgz
   /uglify-js/3.4.10:
     dependencies:
       commander: 2.19.0
@@ -10541,7 +10639,12 @@ specifiers:
   eslint: ^5.16.0
   eslint-plugin-vue: ^5.2.3
   lint-staged: ^10.2.11
+  markdown-it: ^11.0.0
+  markdown-it-anchor: ^5.3.0
+  markdown-it-container: ^3.0.0
+  markdown-it-table-of-contents: ^0.4.4
   nprogress: ^0.2.0
+  prismjs: ^1.20.0
   sass: ^1.26.9
   sass-loader: ^8.0.2
   vee-validate: ^3.3.6

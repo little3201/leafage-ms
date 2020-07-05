@@ -118,9 +118,9 @@ export default {
           error => {
             // 执行失败的回调函数
             alert(error.message)
-            this.loading = false
           }
         )
+        this.loading = false
       } else {
         return false
       }

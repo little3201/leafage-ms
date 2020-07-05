@@ -16,7 +16,6 @@ devDependencies:
   '@vue/cli-service': 4.4.6_1210932730d27ada1e6456e672bf472d
   '@vue/eslint-config-standard': 4.0.0_eslint@5.16.0
   babel-eslint: 10.1.0_eslint@5.16.0
-  chartist: 0.11.4
   eslint: 5.16.0
   eslint-plugin-vue: 5.2.3_eslint@5.16.0
   lint-staged: 10.2.11
@@ -27,7 +26,6 @@ devDependencies:
   markdown-it-table-of-contents: 0.4.4
   sass: 1.26.9
   sass-loader: 8.0.2_sass@1.26.9
-  vee-validate: 3.3.6_vue@2.6.11
   vue-chartist: 2.3.1
   vue-cli-plugin-vuetify: 2.0.6
   vue-cookies: 1.7.0
@@ -10072,15 +10070,6 @@ packages:
     resolution:
       integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
       tarball: vary/download/vary-1.1.2.tgz
-  /vee-validate/3.3.6_vue@2.6.11:
-    dependencies:
-      vue: 2.6.11
-    dev: true
-    peerDependencies:
-      vue: ^2.5.18
-    resolution:
-      integrity: sha1-WswjNynfoFNW9MGX+y+nxpQzJGQ=
-      tarball: vee-validate/download/vee-validate-3.3.6.tgz
   /vendors/1.0.4:
     dev: true
     resolution:
@@ -10643,7 +10632,6 @@ specifiers:
   '@vue/eslint-config-standard': ^4.0.0
   axios: ^0.19.2
   babel-eslint: ^10.1.0
-  chartist: ^0.11.4
   core-js: ^3.6.5
   eslint: ^5.16.0
   eslint-plugin-vue: ^5.2.3
@@ -10656,7 +10644,6 @@ specifiers:
   nprogress: ^0.2.0
   sass: ^1.26.9
   sass-loader: ^8.0.2
-  vee-validate: ^3.3.6
   vue: ^2.6.11
   vue-chartist: ^2.3.1
   vue-cli-plugin-vuetify: ^2.0.6

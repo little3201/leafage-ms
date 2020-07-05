@@ -79,7 +79,7 @@
           <v-badge
             color="red"
             overlap
-            bordered
+            content="6"
           >
             <template v-slot:badge>
               <span>5</span>
@@ -91,17 +91,18 @@
       </template>
 
       <v-list
-        :tile="false"
-        nav
+        dense
       >
-        <div>
-          <app-bar-item
-            v-for="(n, i) in notifications"
+        <v-list-item-group>
+          <v-list-item
+            v-for="(text, i) in notifications"
             :key="`item-${i}`"
           >
-            <v-list-item-title v-text="n" />
-          </app-bar-item>
-        </div>
+            <v-list-item-content>
+              <v-list-item-title v-text="text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-menu>
 

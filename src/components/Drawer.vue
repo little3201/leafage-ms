@@ -31,14 +31,14 @@
           contain
         >
           <v-img
-            src="@/assets/logo.png"
-            max-height="30"
+            src="@/assets/avatar.jpg"
           />
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item-title
-            class="text-display-1"
+            class="text-h5"
+            style="line-height: 1.5"
             v-text="profile.title"
           />
         </v-list-item-content>

@@ -44,7 +44,7 @@
                 <v-avatar
                   :class="active && 'v-settings__item--active'"
                   :color="color"
-                  class="v-settings__item"
+                  class="mx-1 v-settings__item"
                   size="25"
                   @click="toggle"
                 />
@@ -67,8 +67,8 @@
             <v-col cols="auto">
               <v-switch
                 v-model="$vuetify.theme.dark"
-                class="ma-0 pa-0"
                 color="secondary"
+                class="ma-0 pa-0"
                 hide-details
               />
             </v-col>
@@ -89,8 +89,8 @@
             <v-col cols="auto">
               <v-switch
                 v-model="showImg"
-                class="ma-0 pa-0"
                 color="secondary"
+                class="ma-0 pa-0"
                 hide-details
               />
             </v-col>
@@ -144,12 +144,10 @@ export default {
   data: () => ({
     color: '#FF6F00',
     colors: [
-      '#9C27b0',
-      '#00CAE3',
-      '#4CAF50',
-      '#ff9800',
-      '#E91E63',
-      '#FF5252'
+      '#FF0000',
+      '#FF6F00',
+      '#0000FF',
+      '#8B00FF'
     ],
     image: 'https://demos.creative-tim.com/material-dashboard/assets/img/sidebar-1.jpg',
     images: [
@@ -195,7 +193,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   .v-settings
     .v-item-group > *
       cursor: pointer

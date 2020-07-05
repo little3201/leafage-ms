@@ -2,38 +2,47 @@
   <v-form ref="form" v-model="valid" lazy-validation class="ma-3">
     <v-container fluid>
       <v-row>
-        文章标题：<v-text-field
-                  dense
-                  outlined
-                  filled
-                  required
-                  :counter="80"
-                  v-model="data.title"
-                  :rules="titleRules"
-                  maxlength="80"
-                />
-        <v-btn depressed class="mx-3" @click="storageData">提交</v-btn>
+        <v-text-field
+          label="文章标题"
+          dense
+          outlined
+          filled
+          required
+          :counter="80"
+          v-model="data.title"
+          :rules="titleRules"
+          maxlength="80"
+          class="mr-4"
+        />
+        <v-btn
+          depressed
+          style="margin-top:2px"
+          @click="storageData"
+          :loading="loading"
+          color="primary"
+        >发表文章</v-btn>
       </v-row>
       <v-row>
-        文章描述：<v-text-field
-                  dense
-                  outlined
-                  filled
-                  required
-                  :counter="100"
-                  v-model="data.subtitle"
-                  :rules="subtitleRules"
-                  maxlength="100"
-                />
+        <v-text-field
+          label="文章描述"
+          dense
+          outlined
+          filled
+          required
+          :counter="100"
+          v-model="data.subtitle"
+          :rules="subtitleRules"
+          maxlength="100"
+        />
       </v-row>
       <v-row>
           <!--编辑区-->
-          <v-col>
-            <v-textarea v-model="data.sourceText" rows="14" outlined filled required></v-textarea>
+          <v-col class="pa-0">
+            <v-textarea label="Markdown" v-model="data.sourceText" height="calc(100vh - 345px)" outlined filled required></v-textarea>
           </v-col>
           <!--展示区-->
-          <v-col v-show="isShow">
-            <v-textarea v-html="data.content" outlined readonly></v-textarea>
+          <v-col v-show="isShow" class="pa-0">
+            <v-sheet v-html="data.content" height="calc(100vh - 345px)" outlined></v-sheet>
           </v-col>
       </v-row>
     </v-container>
@@ -50,6 +59,7 @@ export default {
 
   data: () => ({
     valid: true,
+    loading: false,
     isShow: true,
     data: {
       businessId: '',
@@ -86,7 +96,7 @@ export default {
   methods: {
     storageData () {
       if (this.$refs.form.validate()) {
-        debugger
+        this.loading = true
         if (this.data.businessId) {
           modifyArticleFunc(this.data).then(
             response => {
@@ -97,6 +107,7 @@ export default {
               alert(error.message)
             }
           )
+          this.loading = false
         } else {
           createArticleFunc(this.data).then(
             response => {
@@ -105,7 +116,9 @@ export default {
             error => {
               // 执行失败的回调函数
               alert(error.message)
-            })
+            }
+          )
+          this.loading = false
         }
       }
     }

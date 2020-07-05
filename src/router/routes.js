@@ -12,6 +12,11 @@ export default [
         name: 'Article',
         path: 'article',
         component: () => import('@/views/article/Index')
+      },
+      {
+        name: 'Editor',
+        path: 'editor',
+        component: () => import('@/views/article/Editor')
       }
     ]
   },

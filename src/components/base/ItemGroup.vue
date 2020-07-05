@@ -19,7 +19,7 @@
         color="white"
         contain
       >
-        <v-img src="@/assets/logo.png" />
+        <v-img src="@/assets/avatar.jpg" />
       </v-list-item-avatar>
 
       <v-list-item-content>

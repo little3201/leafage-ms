@@ -1,20 +1,39 @@
 <template>
-  <v-form v-model="valid">
-    <v-container fluid class="full-height">
+  <v-form ref="form" v-model="valid" lazy-validation class="ma-3">
+    <v-container fluid>
       <v-row>
-        文章标题：<v-text-field outlined filled required :counter="100" />
+        文章标题：<v-text-field
+                  dense
+                  outlined
+                  filled
+                  required
+                  :counter="80"
+                  v-model="data.title"
+                  :rules="titleRules"
+                  maxlength="80"
+                />
+        <v-btn depressed class="mx-3" @click="storageData">提交</v-btn>
       </v-row>
       <v-row>
-        文章描述：<v-text-field outlined filled required :counter="100" />
+        文章描述：<v-text-field
+                  dense
+                  outlined
+                  filled
+                  required
+                  :counter="100"
+                  v-model="data.subtitle"
+                  :rules="subtitleRules"
+                  maxlength="100"
+                />
       </v-row>
       <v-row>
           <!--编辑区-->
           <v-col>
-            <v-textarea lineHeight="1.5" v-model="sourceText" auto-grow clearable outlined filled required></v-textarea>
+            <v-textarea v-model="data.sourceText" rows="14" outlined filled required></v-textarea>
           </v-col>
           <!--展示区-->
           <v-col v-show="isShow">
-            <div v-html="content"></div>
+            <v-textarea v-html="data.content" outlined readonly></v-textarea>
           </v-col>
       </v-row>
     </v-container>
@@ -24,33 +43,72 @@
 <script>
 import md from '@/plugins/markdown'
 import 'prismjs/themes/prism-okaidia.css'
+import { createArticleFunc, modifyArticleFunc } from '@/api/method'
 
 export default {
   name: 'Articles',
 
   data: () => ({
-    valid: false,
+    valid: true,
     isShow: true,
-    title: '',
+    data: {
+      businessId: '',
+      title: '',
+      subtitle: '',
+      sourceText: '',
+      content: ''
+    },
     titleRules: [
       v => !!v || 'Title is required',
-      v => v.length <= 100 || 'Title must be less than 100 characters'
+      v => v.length <= 80 || 'Title must be less than 100 characters'
     ],
-    sourceText: '示例代码：',
-    content: ''
+    subtitleRules: [
+      v => !!v || 'SubTitle is required',
+      v => v.length <= 100 || 'SubTitle must be less than 100 characters'
+    ]
   }),
 
-  created: function () {
+  computed: {
+    getSourceTest () {
+      return this.data.sourceText
+    }
   },
 
   watch: {
-    // 监听文章内容，如果变化则存入localStorage
-    sourceText () {
-      this.content = md.render(this.sourceText)
+    // 监听sourceText变化
+    getSourceTest: {
+      handler: function () {
+        this.data.content = md.render(this.data.sourceText)
+      }
     }
   },
 
   methods: {
+    storageData () {
+      if (this.$refs.form.validate()) {
+        debugger
+        if (this.data.businessId) {
+          modifyArticleFunc(this.data).then(
+            response => {
+              this.data = response.data
+            },
+            error => {
+              // 执行失败的回调函数
+              alert(error.message)
+            }
+          )
+        } else {
+          createArticleFunc(this.data).then(
+            response => {
+              this.data = response.data
+            },
+            error => {
+              // 执行失败的回调函数
+              alert(error.message)
+            })
+        }
+      }
+    }
   }
 }
 </script>

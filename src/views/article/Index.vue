@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="user-profile"
+    id="article"
     fluid
     tag="section"
   >

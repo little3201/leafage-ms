@@ -11,13 +11,9 @@ const md = new MarkdownIt({
   linkify: true,
   breaks: true
 })
-  .use(anchor, {
-    permalink: true,
-    permalinkBefore: true,
-    permalinkSymbol: '#'
-  }) // 使用 anchor 插件为标题元素添加锚点
+  .use(anchor) // 使用 anchor 插件为标题元素添加锚点
   .use(prism)
-  .use(toc, { includeLevel: [2, 3] }) // 使用 table-of-contents 插件实现自动生成目录
+  .use(toc) // 使用 table-of-contents 插件实现自动生成目录
   .use(container, 'info')
   .use(container, 'success')
   .use(container, 'warning')

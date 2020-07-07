@@ -36,14 +36,14 @@
         />
       </v-row>
       <v-row>
-          <!--编辑区-->
-          <v-col class="pa-0">
-            <v-textarea label="Markdown" v-model="data.sourceText" height="calc(100vh - 345px)" outlined filled required></v-textarea>
-          </v-col>
-          <!--展示区-->
-          <v-col v-show="isShow" class="pa-0">
-            <v-sheet v-html="data.content" height="calc(100vh - 345px)" outlined></v-sheet>
-          </v-col>
+        <!--编辑区-->
+        <v-col class="pa-0">
+          <v-textarea label="Markdown" v-model="data.sourceText" height="calc(100vh - 345px)" outlined filled required></v-textarea>
+        </v-col>
+        <!--展示区-->
+        <v-col v-show="isShow" class="pa-0">
+          <div v-html="data.content" height="calc(100vh - 345px)"></div>
+        </v-col>
       </v-row>
     </v-container>
   </v-form>

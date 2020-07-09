@@ -3,7 +3,7 @@ import HttpRequest from './axios'
 const baseUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://abeille.top/api'
-    : 'https://abeille.top/api'
+    : 'http://localhost'
 
 const axios = new HttpRequest(baseUrl)
 

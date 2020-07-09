@@ -5,6 +5,7 @@ import container from 'markdown-it-container'
 import prism from 'markdown-it-prism'
 import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-json'
+import 'prismjs/components/prism-bash'
 
 const md = new MarkdownIt({
   html: true,

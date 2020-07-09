@@ -66,7 +66,8 @@ export default {
       title: '',
       subtitle: '',
       sourceText: '',
-      content: ''
+      content: '',
+      modifier: 'US328CNJ9'
     },
     titleRules: [
       v => !!v || 'Title is required',
@@ -79,14 +80,14 @@ export default {
   }),
 
   computed: {
-    getSourceTest () {
+    getSourceText () {
       return this.data.sourceText
     }
   },
 
   watch: {
     // 监听sourceText变化
-    getSourceTest: {
+    getSourceText: {
       handler: function () {
         this.data.content = md.render(this.data.sourceText)
       }

@@ -9,14 +9,14 @@ export default [
         component: () => import('@/views/user/Index'),
         children: [
           {
-            name: 'Table',
+            name: 'Item',
             path: '/',
-            component: () => import('@/views/user/Table')
+            component: () => import('@/views/user/Item')
           },
           {
-            name: 'Editor',
-            path: 'editor',
-            component: () => import('@/views/user/Editor')
+            name: 'Profile',
+            path: 'profile',
+            component: () => import('@/views/user/Profile')
           }
         ]
       },
@@ -26,14 +26,14 @@ export default [
         component: () => import('@/views/article/Index'),
         children: [
           {
-            name: 'Table',
+            name: 'Item',
             path: '/',
-            component: () => import('@/views/article/Table')
+            component: () => import('@/views/article/Item')
           },
           {
-            name: 'Editor',
-            path: 'editor',
-            component: () => import('@/views/article/Editor')
+            name: 'Profile',
+            path: 'profile',
+            component: () => import('@/views/article/Profile')
           }
         ]
       }

@@ -106,11 +106,6 @@ export default {
         title: 'article',
         icon: 'mdi-book-open-page-variant',
         to: '/article'
-      },
-      {
-        title: 'editor',
-        icon: 'mdi-book-open-page-variant',
-        to: '/editor'
       }
     ]
   }),

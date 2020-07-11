@@ -65,7 +65,7 @@ export default {
       businessId: '',
       title: '',
       subtitle: '',
-      sourceText: '',
+      original: '',
       content: '',
       modifier: 'US328CNJ9'
     },
@@ -80,17 +80,15 @@ export default {
   }),
 
   computed: {
-    getSourceText () {
-      return this.data.sourceText
+    originalConvert () {
+      return this.data.original
     }
   },
 
   watch: {
     // 监听sourceText变化
-    getSourceText: {
-      handler: function () {
-        this.data.content = md.render(this.data.sourceText)
-      }
+    originalConvert () {
+      this.data.content = md.render(this.data.original)
     }
   },
 

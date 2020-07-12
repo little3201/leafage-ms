@@ -4,34 +4,30 @@ export default [
     component: () => import('@/views/View'),
     children: [
       {
-        name: 'User',
         path: 'user',
         component: () => import('@/views/user/Index'),
         children: [
           {
-            name: 'Item',
+            name: 'User',
             path: '/',
             component: () => import('@/views/user/Item')
           },
           {
-            name: 'Profile',
             path: 'profile',
             component: () => import('@/views/user/Profile')
           }
         ]
       },
       {
-        name: 'Article',
         path: 'article',
         component: () => import('@/views/article/Index'),
         children: [
           {
-            name: 'Item',
+            name: 'Article',
             path: '/',
             component: () => import('@/views/article/Item')
           },
           {
-            name: 'Profile',
             path: 'profile',
             component: () => import('@/views/article/Profile')
           }

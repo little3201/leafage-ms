@@ -6,7 +6,7 @@
     :expand-on-hover="expandOnHover"
     :right="$vuetify.rtl"
     :src="barImage"
-    mobile-break-point="960"
+    mobile-breakpoint="960"
     app
     width="260"
     v-bind="$attrs"
@@ -31,14 +31,14 @@
           contain
         >
           <v-img
-            src="@/assets/logo.png"
-            max-height="30"
+            src="@/assets/avatar.jpg"
           />
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item-title
-            class="text-display-1"
+            class="text-h5"
+            style="line-height: 1.5"
             v-text="profile.title"
           />
         </v-list-item-content>
@@ -98,13 +98,13 @@ export default {
         to: '/'
       },
       {
-        icon: 'mdi-account',
+        icon: 'mdi-account-multiple',
         title: 'user',
         to: '/user'
       },
       {
         title: 'article',
-        icon: 'mdi-clipboard-outline',
+        icon: 'mdi-book-open-page-variant',
         to: '/article'
       }
     ]
@@ -156,6 +156,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-</style>

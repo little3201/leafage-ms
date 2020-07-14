@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import i18n from '@/plugins/i18n'
 import Vuetify from 'vuetify/lib/framework'
+import '@mdi/font/css/materialdesignicons.css'
 import {
   VCol,
   VRow
@@ -19,11 +20,11 @@ const opts = {
   },
   theme: {
     themes: {
-      dark: {},
+      dark: {
+        primary: '#FF6F00'
+      },
       light: {
-        primary: '#FF6F00',
-        secondary: '#050b1f',
-        accent: '#204165'
+        primary: '#FF6F00'
       }
     }
   },

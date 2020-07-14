@@ -1,24 +1,39 @@
 export default [
   {
     path: '/',
-    component: () => import('@/views/dashboard/Index'),
+    component: () => import('@/views/View'),
     children: [
       {
-        name: 'User',
         path: 'user',
-        component: () => import('@/views/user/Index')
+        component: () => import('@/views/user/Index'),
+        children: [
+          {
+            name: 'User',
+            path: '/',
+            component: () => import('@/views/user/Item')
+          },
+          {
+            path: 'profile',
+            component: () => import('@/views/user/Profile')
+          }
+        ]
       },
       {
-        name: 'Article',
         path: 'article',
-        component: () => import('@/views/article/Index')
+        component: () => import('@/views/article/Index'),
+        children: [
+          {
+            name: 'Article',
+            path: '/',
+            component: () => import('@/views/article/Item')
+          },
+          {
+            path: 'profile',
+            component: () => import('@/views/article/Profile')
+          }
+        ]
       }
     ]
-  },
-  {
-    name: 'Edit',
-    path: '/edit',
-    component: () => import('@/views/article/Edit')
   },
   {
     name: 'SignIn',

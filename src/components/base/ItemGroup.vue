@@ -9,7 +9,6 @@
     <template v-slot:activator>
       <v-list-item-icon
         v-if="text"
-        class="v-list-item__icon--text"
         v-text="computedText"
       />
 

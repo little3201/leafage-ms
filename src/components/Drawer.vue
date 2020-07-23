@@ -98,6 +98,7 @@ export default {
       {
         icon: 'mdi-account-multiple',
         title: 'manager',
+        to: '/manager',
         children: [
           {
             icon: 'mdi-account-multiple',

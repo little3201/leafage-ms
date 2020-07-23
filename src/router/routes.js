@@ -4,34 +4,34 @@ export default [
     component: () => import('@/views/View'),
     children: [
       {
-        path: 'user',
-        component: () => import('@/views/user/Index'),
+        path: 'manager',
+        component: () => import('@/views/manager/user/Index'),
         children: [
           {
             name: 'User',
             path: '/',
-            component: () => import('@/views/user/Item')
+            component: () => import('@/views/manager/user/Item')
           },
           {
             path: 'profile',
-            component: () => import('@/views/user/Profile')
+            component: () => import('@/views/manager/user/Profile')
           }
         ]
       },
       {
         name: 'Role',
         path: 'role',
-        component: () => import('@/views/role/Index')
+        component: () => import('@/views/manager/Role.vue')
       },
       {
         name: 'Source',
         path: 'source',
-        component: () => import('@/views/source/Index')
+        component: () => import('@/views/manager/Source.vue')
       },
       {
         name: 'Group',
         path: 'group',
-        component: () => import('@/views/group/Index')
+        component: () => import('@/views/manager/Group.vue')
       },
       {
         path: 'article',

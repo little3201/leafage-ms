@@ -2,17 +2,8 @@ import Vue from 'vue'
 import i18n from '@/plugins/i18n'
 import Vuetify from 'vuetify/lib/framework'
 import '@mdi/font/css/materialdesignicons.css'
-import {
-  VCol,
-  VRow
-} from 'vuetify/lib'
 
-Vue.use(Vuetify, {
-  components: {
-    VCol,
-    VRow
-  }
-})
+Vue.use(Vuetify)
 
 const opts = {
   lang: {

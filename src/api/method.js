@@ -32,9 +32,9 @@ export const fetchSmsCaptchaFunc = mobile => {
 /* ===================用户接口方法=================== */
 
 /* 根据userId获取用户信息 */
-export const fetchUserFunc = userId => {
+export const fetchUserFunc = businessId => {
   return axios.request({
-    url: SERVER_URL.user.concat('/').concat(userId)
+    url: SERVER_URL.user.concat('/').concat(businessId)
   })
 }
 
@@ -45,12 +45,60 @@ export const retrieveUserFunc = () => {
   })
 }
 
+/* ===================角色接口方法=================== */
+
+/* 根据userId获取用户信息 */
+export const fetchRoleFunc = businessId => {
+  return axios.request({
+    url: SERVER_URL.role.concat('/').concat(businessId)
+  })
+}
+
+/* 获取用户信息列表 */
+export const retrieveRoleFunc = () => {
+  return axios.request({
+    url: SERVER_URL.role
+  })
+}
+
+/* ===================资源接口方法=================== */
+
+/* 根据userId获取用户信息 */
+export const fetchSourceFunc = businessId => {
+  return axios.request({
+    url: SERVER_URL.source.concat('/').concat(businessId)
+  })
+}
+
+/* 获取用户信息列表 */
+export const retrieveSourceFunc = () => {
+  return axios.request({
+    url: SERVER_URL.source
+  })
+}
+
+/* ===================组接口方法=================== */
+
+/* 根据userId获取用户信息 */
+export const fetchGroupFunc = businessId => {
+  return axios.request({
+    url: SERVER_URL.group.concat('/').concat(businessId)
+  })
+}
+
+/* 获取用户信息列表 */
+export const retrieveGroupFunc = () => {
+  return axios.request({
+    url: SERVER_URL.group
+  })
+}
+
 /* ===================文章接口方法=================== */
 
 /* 根据文章ID获取文章详情 */
-export const fetchArticleFunc = articleId => {
+export const fetchArticleFunc = businessId => {
   return axios.request({
-    url: SERVER_URL.article.concat('/').concat(articleId)
+    url: SERVER_URL.article.concat('/').concat(businessId)
   })
 }
 
@@ -71,9 +119,9 @@ export const createArticleFunc = (params) => {
 }
 
 /* 修改文章 */
-export const modifyArticleFunc = (articleId, params) => {
+export const modifyArticleFunc = (businessId, params) => {
   return axios.request({
-    url: SERVER_URL.article.concat('/').concat(articleId),
+    url: SERVER_URL.article.concat('/').concat(businessId),
     method: 'put',
     data: params
   })
@@ -82,9 +130,9 @@ export const modifyArticleFunc = (articleId, params) => {
 /* ===================翻译接口方法=================== */
 
 /* 根据翻译ID获取翻译详情 */
-export const fetchTranslationFunc = translationId => {
+export const fetchTranslationFunc = businessId => {
   return axios.request({
-    url: SERVER_URL.translation.concat('/').concat(translationId)
+    url: SERVER_URL.translation.concat('/').concat(businessId)
   })
 }
 
@@ -98,9 +146,9 @@ export const retrieveTranslationFunc = () => {
 /* ===================话题接口方法=================== */
 
 /* 根据话题ID获取翻译详情 */
-export const fetchTopicFunc = topicId => {
+export const fetchTopicFunc = businessId => {
   return axios.request({
-    url: SERVER_URL.topic.concat('/').concat(topicId)
+    url: SERVER_URL.topic.concat('/').concat(businessId)
   })
 }
 
@@ -114,8 +162,8 @@ export const retrieveTopicFunc = () => {
 /* ===================资源接口方法=================== */
 
 /* 获取翻译信息列表 */
-export const retrieveSourceFunc = () => {
+export const retrieveResourceFunc = () => {
   return axios.request({
-    url: SERVER_URL.source
+    url: SERVER_URL.resource
   })
 }

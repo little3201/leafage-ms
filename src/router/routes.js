@@ -19,6 +19,21 @@ export default [
         ]
       },
       {
+        name: 'Role',
+        path: 'role',
+        component: () => import('@/views/role/Index')
+      },
+      {
+        name: 'Source',
+        path: 'source',
+        component: () => import('@/views/source/Index')
+      },
+      {
+        name: 'Group',
+        path: 'group',
+        component: () => import('@/views/group/Index')
+      },
+      {
         path: 'article',
         component: () => import('@/views/article/Index'),
         children: [

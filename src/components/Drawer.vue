@@ -1,10 +1,8 @@
 <template>
   <v-navigation-drawer
-    id="core-navigation-drawer"
     v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
     :expand-on-hover="expandOnHover"
-    :right="$vuetify.rtl"
     :src="barImage"
     mobile-breakpoint="960"
     app
@@ -99,8 +97,29 @@ export default {
       },
       {
         icon: 'mdi-account-multiple',
-        title: 'user',
-        to: '/user'
+        title: 'manager',
+        children: [
+          {
+            icon: 'mdi-account-multiple',
+            title: 'user',
+            to: '/user'
+          },
+          {
+            icon: 'mdi-account-multiple',
+            title: 'role',
+            to: '/role'
+          },
+          {
+            icon: 'mdi-account-multiple',
+            title: 'source',
+            to: '/source'
+          },
+          {
+            icon: 'mdi-account-multiple',
+            title: 'group',
+            to: '/group'
+          }
+        ]
       },
       {
         title: 'article',

@@ -39,15 +39,8 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
-                        <v-col cols="12" md="6">
-                          <v-text-field outlined dense single-line label="Title"></v-text-field>
-                          <v-text-field outlined dense single-line label="Subtitle"></v-text-field>
-                          <v-text-field outlined dense single-line label="Title"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" md="6">
-                          <v-text-field outlined dense single-line label="Title"></v-text-field>
-                          <v-text-field outlined dense single-line label="Subtitle"></v-text-field>
-                          <v-text-field outlined dense single-line label="Title"></v-text-field>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Dessert name"></v-text-field>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -84,7 +77,7 @@
 </template>
 
 <script>
-import { retrieveArticleFunc } from '@/api/method'
+import { retrieveTopicFunc } from '@/api/method'
 
 export default {
   name: 'User',
@@ -130,12 +123,12 @@ export default {
   },
 
   created () {
-    this.retrieveArticle()
+    this.retrieveTopic()
   },
 
   methods: {
-    retrieveArticle () {
-      retrieveArticleFunc().then(
+    retrieveTopic () {
+      retrieveTopicFunc().then(
         response => {
           if (response.data) {
             this.items = response.data

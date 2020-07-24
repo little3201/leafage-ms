@@ -6,20 +6,13 @@
     :to="item.to"
     :active-class="`primary ${!isDark ? 'black' : 'white'}--text`"
   >
-    <v-list-item-icon
-      v-if="text"
-      class="v-list-item__icon--text"
-      v-text="computedText"
-    />
 
-    <v-list-item-icon v-else-if="item.icon">
+    <v-list-item-icon>
       <v-icon v-text="item.icon" />
     </v-list-item-icon>
 
-    <v-list-item-content v-if="item.title || item.subtitle">
+    <v-list-item-content>
       <v-list-item-title v-text="item.title" />
-
-      <v-list-item-subtitle v-text="item.subtitle" />
     </v-list-item-content>
   </v-list-item>
 </template>
@@ -50,17 +43,6 @@ export default {
   },
 
   computed: {
-    computedText () {
-      if (!this.item || !this.item.title) return ''
-
-      let text = ''
-
-      this.item.title.split(' ').forEach(val => {
-        text += val.substring(0, 1)
-      })
-
-      return text
-    },
     href () {
       return this.item.href || (!this.item.to ? '#' : undefined)
     }

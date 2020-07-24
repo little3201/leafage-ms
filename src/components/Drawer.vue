@@ -2,12 +2,9 @@
   <v-navigation-drawer
     v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
-    :expand-on-hover="expandOnHover"
     :src="barImage"
     mobile-breakpoint="960"
     app
-    width="260"
-    v-bind="$attrs"
   >
     <template v-slot:img="props">
       <v-img
@@ -23,20 +20,15 @@
       nav
     >
       <v-list-item>
-        <v-list-item-avatar
-          class="align-self-center"
-          color="white"
+        <v-img
+          src="@/assets/logo.png"
+          max-width="4rem"
           contain
-        >
-          <v-img
-            src="@/assets/avatar.jpg"
-          />
-        </v-list-item-avatar>
-
+        />
         <v-list-item-content>
           <v-list-item-title
-            class="text-h5"
-            style="line-height: 1.5"
+            class="text-h4"
+            style="line-height: 1"
             v-text="profile.title"
           />
         </v-list-item-content>
@@ -97,28 +89,33 @@ export default {
       },
       {
         icon: 'mdi-account-multiple',
-        title: 'manager',
-        to: '/manager',
+        title: 'Manager',
+        group: 'manager',
+        subGroup: true,
         children: [
           {
             icon: 'mdi-account-multiple',
             title: 'user',
-            to: '/user'
+            to: 'user',
+            subGroup: true
           },
           {
             icon: 'mdi-account-multiple',
             title: 'role',
-            to: '/role'
+            to: 'role',
+            subGroup: true
           },
           {
             icon: 'mdi-account-multiple',
             title: 'source',
-            to: '/source'
+            to: 'source',
+            subGroup: true
           },
           {
             icon: 'mdi-account-multiple',
             title: 'group',
-            to: '/group'
+            to: 'group',
+            subGroup: true
           }
         ]
       },
@@ -145,8 +142,7 @@ export default {
     },
     profile () {
       return {
-        avatar: true,
-        title: this.$t('avatar')
+        title: this.$t('abeille')
       }
     },
     initSource () {

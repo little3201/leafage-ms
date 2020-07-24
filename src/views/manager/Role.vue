@@ -14,7 +14,7 @@
         >
           <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>文章信息</v-toolbar-title>
+              <v-toolbar-title>角色信息</v-toolbar-title>
               <v-divider
                 class="mx-4"
                 inset

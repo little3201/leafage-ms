@@ -1,6 +1,7 @@
 {
-  "avatar": "Abeille",
+  "abeille": "Abeille",
   "dashboard": "Dashboard",
+  "manager": "Manager",
   "search": "Search",
   "settings": "Settings",
   "user": "User",

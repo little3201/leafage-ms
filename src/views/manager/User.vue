@@ -1,6 +1,6 @@
 <template>
   <v-container
-    id="article"
+    id="user"
     fluid
     tag="section"
   >
@@ -14,7 +14,7 @@
         >
           <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>组信息</v-toolbar-title>
+              <v-toolbar-title>用户信息</v-toolbar-title>
               <v-divider
                 class="mx-4"
                 inset
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { retrieveGroupFunc } from '@/api/method'
+import { retrieveUserFunc } from '@/api/method'
 
 export default {
   name: 'User',
@@ -86,11 +86,15 @@ export default {
     dialog: false,
     headers: [
       { text: 'No.', value: 'businessId', align: 'center' },
-      { text: 'Title', value: 'title', align: 'center' },
-      { text: 'Subtitle', value: 'subtitle', align: 'center' },
-      { text: 'Author', value: 'author.nickname', align: 'center' },
-      { text: 'Published Time', value: 'modifyTime', align: 'center' },
-      { text: 'Actions', value: 'actions', sortable: false }
+      { text: 'Nickname', value: 'nickname', align: 'center' },
+      { text: 'Mobile', value: 'mobile', align: 'center' },
+      { text: 'Email', value: 'email', align: 'center' },
+      { text: 'Age', value: 'age' },
+      { text: 'Gender', value: 'gender' },
+      { text: 'Country', value: 'country' },
+      { text: 'Province', value: 'province' },
+      { text: 'City', value: 'city' },
+      { text: 'Region', value: 'region' }
     ],
     items: [],
     editedIndex: -1,
@@ -123,49 +127,19 @@ export default {
   },
 
   created () {
-    this.retrieveGroup()
+    this.retrieveUser()
   },
 
   methods: {
-    retrieveGroup () {
-      retrieveGroupFunc().then(
+    retrieveUser () {
+      retrieveUserFunc().then(
         response => {
-          if (response.data) {
-            this.items = response.data
-          }
+          this.items = response.data
         },
         error => {
           alert(error.statusText)
         }
       )
-    },
-
-    editItem (item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-
-    deleteItem (item) {
-      const index = this.items.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
-    },
-
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem)
-      } else {
-        this.items.push(this.editedItem)
-      }
-      this.close()
     }
   }
 }

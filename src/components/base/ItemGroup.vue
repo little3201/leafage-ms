@@ -7,19 +7,6 @@
     :color="barColor !== 'rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7)' ? 'white' : 'grey darken-1'"
   >
     <template v-slot:activator>
-      <v-list-item-icon
-        v-if="text"
-        v-text="computedText"
-      />
-
-      <v-list-item-avatar
-        v-else-if="item.avatar"
-        class="align-self-center"
-        color="white"
-        contain
-      >
-        <v-img src="@/assets/logo.png" />
-      </v-list-item-avatar>
 
       <v-list-item-content>
         <v-list-item-title v-text="item.title" />
@@ -57,17 +44,12 @@ export default {
     item: {
       type: Object,
       default: () => ({
-        avatar: undefined,
         group: undefined,
         title: undefined,
         children: []
       })
     },
     subGroup: {
-      type: Boolean,
-      default: false
-    },
-    text: {
       type: Boolean,
       default: false
     }

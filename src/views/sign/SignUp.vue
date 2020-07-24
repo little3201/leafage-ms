@@ -13,7 +13,7 @@
           </router-link>
         </v-row>
         <v-row justify="center">
-          <p class="my-3 text-button font-weight-bold">Create Your Account</p>
+          <h4 class="my-3 text-uppercase">Create Your Account</h4>
         </v-row>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field

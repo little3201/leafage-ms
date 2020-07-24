@@ -4,34 +4,35 @@ export default [
     component: () => import('@/views/View'),
     children: [
       {
+        name: 'dashbord',
+        path: '',
+        component: () => import('@/views/Index')
+      },
+      {
         path: 'manager',
-        component: () => import('@/views/manager/user/Index'),
+        component: () => import('@/views/manager/Index'),
         children: [
           {
             name: 'User',
-            path: '/',
-            component: () => import('@/views/manager/user/Item')
+            path: 'user',
+            component: () => import('@/views/manager/User')
           },
           {
-            path: 'profile',
-            component: () => import('@/views/manager/user/Profile')
+            name: 'Role',
+            path: 'role',
+            component: () => import('@/views/manager/Role')
+          },
+          {
+            name: 'Source',
+            path: 'source',
+            component: () => import('@/views/manager/Source')
+          },
+          {
+            name: 'Group',
+            path: 'group',
+            component: () => import('@/views/manager/Group')
           }
         ]
-      },
-      {
-        name: 'Role',
-        path: 'role',
-        component: () => import('@/views/manager/Role.vue')
-      },
-      {
-        name: 'Source',
-        path: 'source',
-        component: () => import('@/views/manager/Source.vue')
-      },
-      {
-        name: 'Group',
-        path: 'group',
-        component: () => import('@/views/manager/Group.vue')
       },
       {
         path: 'article',

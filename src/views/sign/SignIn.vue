@@ -14,7 +14,7 @@
               </router-link>
             </v-row>
             <v-row justify="center">
-              <p class="my-3 text-button font-weight-bold">Sign In To Abeille</p>
+              <h4 class="my-3 text-uppercase">Sign In To Abeille</h4>
             </v-row>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
@@ -129,8 +129,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-a {
-  text-decoration: none;
-}
+<style lang="sass" scoped>
+a
+  text-decoration: none
 </style>

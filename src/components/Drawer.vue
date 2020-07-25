@@ -13,8 +13,6 @@
       />
     </template>
 
-    <v-divider class="mb-1" />
-
     <v-list
       dense
       nav
@@ -51,14 +49,24 @@
           <!--  -->
         </base-item-group>
 
-        <base-item
+        <v-list-item
           v-else
-          :key="`item-${i}`"
-          :item="item"
-        />
-      </template>
+          :key="i"
+          :href="href"
+          :rel="href && href !== '#' ? 'noopener' : undefined"
+          :target="href && href !== '#' ? '_blank' : undefined"
+          :to="item.to"
+        >
 
-      <div />
+          <v-list-item-icon>
+            <v-icon v-text="item.icon" />
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -73,13 +81,6 @@ import { retrieveSourceFunc } from '@/api/method'
 export default {
   name: 'Drawer',
 
-  props: {
-    expandOnHover: {
-      type: Boolean,
-      default: false
-    }
-  },
-
   data: () => ({
     items: [
       {
@@ -91,31 +92,26 @@ export default {
         icon: 'mdi-account-multiple',
         title: 'Manager',
         group: 'manager',
-        subGroup: true,
         children: [
           {
             icon: 'mdi-account-multiple',
             title: 'user',
-            to: 'user',
-            subGroup: true
+            to: 'user'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'role',
-            to: 'role',
-            subGroup: true
+            to: 'role'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'source',
-            to: 'source',
-            subGroup: true
+            to: 'source'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'group',
-            to: 'group',
-            subGroup: true
+            to: 'group'
           }
         ]
       },

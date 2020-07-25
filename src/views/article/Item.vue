@@ -2,7 +2,6 @@
   <v-container
     id="article"
     fluid
-    tag="section"
   >
     <v-row justify="center">
       <v-col
@@ -13,7 +12,7 @@
           :items="items"
         >
           <template v-slot:top>
-            <v-toolbar flat color="white">
+            <v-toolbar flat>
               <v-toolbar-title>文章信息</v-toolbar-title>
               <v-divider
                 class="mx-4"

@@ -7,10 +7,7 @@
     :color="barColor !== 'rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7)' ? 'white' : 'grey darken-1'"
   >
     <template v-slot:activator>
-
-      <v-list-item-content>
-        <v-list-item-title v-text="item.title" />
-      </v-list-item-content>
+      <v-list-item-title v-text="item.title" />
     </template>
 
     <template v-for="(child, i) in children">
@@ -18,14 +15,26 @@
         v-if="child.children"
         :key="`sub-group-${i}`"
         :item="child"
+        :subGroup="true"
       />
 
-      <base-item
+      <v-list-item
         v-else
-        :key="`item-${i}`"
-        :item="child"
-        text
-      />
+        :key="i"
+        :href="href"
+        :rel="href && href !== '#' ? 'noopener' : undefined"
+        :target="href && href !== '#' ? '_blank' : undefined"
+        :to="item.to"
+      >
+
+        <v-list-item-icon>
+          <v-icon v-text="item.icon" />
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title v-text="item.title" />
+        </v-list-item-content>
+      </v-list-item>
     </template>
   </v-list-group>
 </template>

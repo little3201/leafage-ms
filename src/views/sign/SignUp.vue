@@ -71,7 +71,9 @@
 </template>
 
 <script>
-import { loginFunc } from '@/api/method'
+import axios from '@/api'
+import qs from 'qs'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'signup',
@@ -98,11 +100,15 @@ export default {
   methods: {
     submitForm () {
       if (this.$refs.form.validate()) {
-        loginFunc(this.formData).then(
+        this.loading = true
+        const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+        axios.post(SERVER_URL.signin, headers, qs.stringify(this.formData, { indices: false })).then(
           response => {
+            // 更新授权状态
+            // this.$store.dispatch('setIsAuthenticated',true)
             // 设置token
             this.$router.push({
-              name: 'home'
+              name: 'Home'
             })
           },
           error => {
@@ -110,6 +116,7 @@ export default {
             alert(error.message)
           }
         )
+        this.loading = false
       } else {
         return false
       }

@@ -13,7 +13,7 @@
           :items="items"
         >
           <template v-slot:top>
-            <v-toolbar flat color="white">
+            <v-toolbar flat>
               <v-toolbar-title>用户信息</v-toolbar-title>
               <v-divider
                 class="mx-4"
@@ -77,7 +77,8 @@
 </template>
 
 <script>
-import { retrieveUserFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'User',
@@ -89,28 +90,41 @@ export default {
       { text: 'Nickname', value: 'nickname', align: 'center' },
       { text: 'Mobile', value: 'mobile', align: 'center' },
       { text: 'Email', value: 'email', align: 'center' },
-      { text: 'Age', value: 'age' },
-      { text: 'Gender', value: 'gender' },
-      { text: 'Country', value: 'country' },
-      { text: 'Province', value: 'province' },
-      { text: 'City', value: 'city' },
-      { text: 'Region', value: 'region' }
+      { text: 'Age', value: 'age', align: 'center' },
+      { text: 'Gender', value: 'gender', align: 'center' },
+      { text: 'Country', value: 'country', align: 'center' },
+      { text: 'Province', value: 'province', align: 'center' },
+      { text: 'City', value: 'city', align: 'center' },
+      { text: 'Region', value: 'region', align: 'center' },
+      { text: 'Modified Time', value: 'modifyTime', align: 'center' }
     ],
     items: [],
     editedIndex: -1,
     editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      businessId: undefined,
+      nickname: undefined,
+      mobile: undefined,
+      email: undefined,
+      age: undefined,
+      gender: undefined,
+      country: undefined,
+      province: undefined,
+      city: undefined,
+      region: undefined,
+      author: undefined
     },
     defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      businessId: undefined,
+      nickname: undefined,
+      mobile: undefined,
+      email: undefined,
+      age: undefined,
+      gender: undefined,
+      country: undefined,
+      province: undefined,
+      city: undefined,
+      region: undefined,
+      author: undefined
     }
   }),
 
@@ -132,7 +146,7 @@ export default {
 
   methods: {
     retrieveUser () {
-      retrieveUserFunc().then(
+      axios.get(SERVER_URL.user).then(
         response => {
           this.items = response.data
         },
@@ -140,6 +154,45 @@ export default {
           alert(error.statusText)
         }
       )
+    },
+
+    fetchUser (businessId) {
+      axios.get(SERVER_URL.user.concat('/').concat(businessId)).then(
+        response => {
+          this.items = response.data
+        },
+        error => {
+          alert(error.statusText)
+        }
+      )
+    },
+
+    editItem (item) {
+      this.editedIndex = this.items.indexOf(item)
+      this.editedItem = Object.assign({}, item)
+      this.dialog = true
+    },
+
+    deleteItem (item) {
+      const index = this.items.indexOf(item)
+      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
+    },
+
+    close () {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+
+    save () {
+      if (this.editedIndex > -1) {
+        Object.assign(this.items[this.editedIndex], this.editedItem)
+      } else {
+        this.items.push(this.editedItem)
+      }
+      this.close()
     }
   }
 }

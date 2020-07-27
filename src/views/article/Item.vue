@@ -85,7 +85,8 @@
 </template>
 
 <script>
-import { retrieveArticleFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'User',
@@ -136,7 +137,7 @@ export default {
 
   methods: {
     retrieveArticle () {
-      retrieveArticleFunc().then(
+      axios.get(SERVER_URL.article).then(
         response => {
           if (response.data) {
             this.items = response.data

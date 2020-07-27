@@ -41,20 +41,29 @@
     >
 
       <template v-for="(item, i) in computedItems">
-        <base-item-group
+        <v-item-group
           v-if="item.children"
           :key="`group-${i}`"
-          :item="item"
+          :subGroup="item.children"
         >
-          <!--  -->
-        </base-item-group>
+          <v-list-item
+            :key="`item-${i}`"
+            :to="item.to"
+          >
+
+            <v-list-item-icon>
+              <v-icon v-text="item.icon" />
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-item-group>
 
         <v-list-item
           v-else
-          :key="i"
-          :href="href"
-          :rel="href && href !== '#' ? 'noopener' : undefined"
-          :target="href && href !== '#' ? '_blank' : undefined"
+          :key="`sub-item-${i}`"
           :to="item.to"
         >
 
@@ -76,7 +85,8 @@
 import {
   mapState
 } from 'vuex'
-import { retrieveSourceFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'Drawer',
@@ -155,9 +165,9 @@ export default {
       }
     },
     retrieveSource () {
-      retrieveSourceFunc().then(
+      axios.get(SERVER_URL.source).then(
         response => {
-          alert(response.data.budinessId)
+          alert(response.data)
           // this.items = response.data
         },
         error => {

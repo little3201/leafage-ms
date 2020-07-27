@@ -51,8 +51,9 @@
 
 <script>
 import md from '@/plugins/markdown'
-import 'prismjs/themes/prism-okaidia.css'
-import { createArticleFunc, modifyArticleFunc } from '@/api/method'
+import 'prismjs/themes/prism-tomorrow.css'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'Articles',
@@ -97,7 +98,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         if (this.data.businessId) {
-          modifyArticleFunc(this.data).then(
+          axios.post(SERVER_URL.article, this.data).then(
             response => {
               this.data = response.data
             },
@@ -108,7 +109,7 @@ export default {
           )
           this.loading = false
         } else {
-          createArticleFunc(this.data).then(
+          axios.put(SERVER_URL.article, this.data).then(
             response => {
               this.data = response.data
             },

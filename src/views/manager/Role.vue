@@ -13,7 +13,7 @@
           :items="items"
         >
           <template v-slot:top>
-            <v-toolbar flat color="white">
+            <v-toolbar flat>
               <v-toolbar-title>角色信息</v-toolbar-title>
               <v-divider
                 class="mx-4"
@@ -77,36 +77,35 @@
 </template>
 
 <script>
-import { retrieveRoleFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
-  name: 'User',
+  name: 'Role',
 
   data: () => ({
     dialog: false,
     headers: [
       { text: 'No.', value: 'businessId', align: 'center' },
-      { text: 'Title', value: 'title', align: 'center' },
-      { text: 'Subtitle', value: 'subtitle', align: 'center' },
+      { text: 'Name', value: 'name', align: 'center' },
+      { text: 'Description', value: 'description', align: 'center' },
       { text: 'Author', value: 'author.nickname', align: 'center' },
-      { text: 'Published Time', value: 'modifyTime', align: 'center' },
+      { text: 'Modified Time', value: 'modifyTime', align: 'center' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],
     items: [],
     editedIndex: -1,
     editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      businessId: undefined,
+      name: undefined,
+      description: undefined,
+      author: undefined
     },
     defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
+      businessId: undefined,
+      name: undefined,
+      description: undefined,
+      author: undefined
     }
   }),
 
@@ -128,11 +127,20 @@ export default {
 
   methods: {
     retrieveRole () {
-      retrieveRoleFunc().then(
+      axios.get(SERVER_URL.role).then(
         response => {
-          if (response.data) {
-            this.items = response.data
-          }
+          this.items = response.data
+        },
+        error => {
+          alert(error.statusText)
+        }
+      )
+    },
+
+    fetchRole (businessId) {
+      axios.get(SERVER_URL.role.concat('/').concat(businessId)).then(
+        response => {
+          this.items = response.data
         },
         error => {
           alert(error.statusText)
@@ -148,7 +156,7 @@ export default {
 
     deleteItem (item) {
       const index = this.items.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
+      confirm('Are you sure to delete this item?') && this.items.splice(index, 1)
     },
 
     close () {

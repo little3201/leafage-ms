@@ -77,10 +77,11 @@
 </template>
 
 <script>
-import { retrieveTopicFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
-  name: 'User',
+  name: 'Topic',
 
   data: () => ({
     dialog: false,
@@ -128,7 +129,7 @@ export default {
 
   methods: {
     retrieveTopic () {
-      retrieveTopicFunc().then(
+      axios.get(SERVER_URL.topic).then(
         response => {
           if (response.data) {
             this.items = response.data

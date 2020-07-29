@@ -87,16 +87,14 @@ export default {
 
   methods: {
     retrieveArticle () {
-      axios.get(SERVER_URL.article).then(
-        response => {
-          if (response.data) {
-            this.items = response.data
-          }
-        },
-        error => {
-          alert(error.statusText)
+      axios.get(SERVER_URL.article).then(response => {
+        if (response.data) {
+          this.items = response.data
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     editItem (item) {

@@ -40,64 +40,33 @@
       nav
     >
 
-      <template v-for="(item, i) in computedItems">
+      <template v-for="(item, i) in items">
         <v-list-group
           v-if="item.children"
           :key="`group-${i}`"
-          prepend-icon="mdi-account-multiple"
+          :prepend-icon="item.icon"
           value="true"
+          no-action
         >
           <template v-slot:activator>
-            <v-list-item-title>Manager</v-list-item-title>
+            <v-list-item-title v-text="item.title" />
           </template>
 
-          <v-list-group
-            no-action
-            sub-group
-            value="true"
+          <v-list-item
+            v-for="(child, i) in item.children"
+            :key="`child-${i}`"
+            :to="child.to"
           >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>User</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="(admin, i) in admins"
-              :key="i"
-              link
-            >
-              <v-list-item-title v-text="admin[0]"></v-list-item-title>
-              <v-list-item-icon>
-                <v-icon v-text="admin[1]"></v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list-group>
-
-          <v-list-group
-            sub-group
-            no-action
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Actions</v-list-item-title>
-              </v-list-item-content>
-            </template>
-            <v-list-item
-              v-for="(crud, i) in cruds"
-              :key="i"
-            >
-              <v-list-item-title v-text="crud[0]"></v-list-item-title>
-              <v-list-item-action>
-                <v-icon v-text="crud[1]"></v-icon>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list-group>
+            <v-list-item-icon>
+              <v-icon v-text="child.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-title v-text="child.title"></v-list-item-title>
+          </v-list-item>
         </v-list-group>
 
         <v-list-item
           v-else
-          :key="`sub-item-${i}`"
+          :key="`item-${i}`"
           :to="item.to"
         >
 
@@ -134,28 +103,27 @@ export default {
       },
       {
         icon: 'mdi-account-multiple',
-        title: 'Manager',
-        group: 'manager',
+        title: 'manager',
         children: [
           {
             icon: 'mdi-account-multiple',
             title: 'user',
-            to: 'user'
+            to: 'manager/user'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'role',
-            to: 'role'
+            to: 'manager/role'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'source',
-            to: 'source'
+            to: 'manager/source'
           },
           {
             icon: 'mdi-account-multiple',
             title: 'group',
-            to: 'group'
+            to: 'manager/group'
           }
         ]
       },
@@ -164,16 +132,6 @@ export default {
         icon: 'mdi-book-open-page-variant',
         to: '/article'
       }
-    ],
-    admins: [
-      ['Management', 'mdi-people-outline'],
-      ['Settings', 'mdi-settings']
-    ],
-    cruds: [
-      ['Create', 'add'],
-      ['Read', 'insert_drive_file'],
-      ['Update', 'update'],
-      ['Delete', 'delete']
     ]
   }),
 
@@ -187,9 +145,6 @@ export default {
         this.$store.commit('SET_DRAWER', val)
       }
     },
-    computedItems () {
-      return this.items.map(this.mapItem)
-    },
     profile () {
       return {
         title: this.$t('abeille')
@@ -201,23 +156,13 @@ export default {
   },
 
   methods: {
-    mapItem (item) {
-      return {
-        ...item,
-        children: item.children ? item.children.map(this.mapItem) : undefined,
-        title: this.$t(item.title)
-      }
-    },
     retrieveSource () {
-      axios.get(SERVER_URL.source).then(
-        response => {
-          alert(response.data)
-          // this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
-        }
-      )
+      axios.get(SERVER_URL.source).then(response => {
+        alert(response.data)
+        // this.items = response.data
+      }).cache(error => {
+        alert(error.statusText)
+      })
     }
   }
 }

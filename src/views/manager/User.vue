@@ -146,25 +146,25 @@ export default {
 
   methods: {
     retrieveUser () {
-      axios.get(SERVER_URL.user).then(
-        response => {
+      axios.get(SERVER_URL.user).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     fetchUser (businessId) {
-      axios.get(SERVER_URL.user.concat('/').concat(businessId)).then(
-        response => {
+      axios.get(SERVER_URL.user.concat('/').concat(businessId)).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     editItem (item) {

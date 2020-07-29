@@ -130,25 +130,25 @@ export default {
 
   methods: {
     retrieveSource () {
-      axios.get(SERVER_URL.source).then(
-        response => {
+      axios.get(SERVER_URL.source).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     fetchSource (businessId) {
-      axios.get(SERVER_URL.source.concat('/').concat(businessId)).then(
-        response => {
+      axios.get(SERVER_URL.source.concat('/').concat(businessId)).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     editItem (item) {

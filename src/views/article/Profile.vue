@@ -98,26 +98,24 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         if (this.data.businessId) {
-          axios.post(SERVER_URL.article, this.data).then(
-            response => {
-              this.data = response.data
-            },
-            error => {
-              // 执行失败的回调函数
-              alert(error.message)
+          axios.post(SERVER_URL.article, this.data).then(response => {
+            if (response.data) {
+              this.items = response.data
             }
-          )
+          }).catch(error => {
+            console.log(error)
+            alert(error.statusText)
+          })
           this.loading = false
         } else {
-          axios.put(SERVER_URL.article, this.data).then(
-            response => {
-              this.data = response.data
-            },
-            error => {
-              // 执行失败的回调函数
-              alert(error.message)
+          axios.put(SERVER_URL.article, this.data).then(response => {
+            if (response.data) {
+              this.items = response.data
             }
-          )
+          }).catch(error => {
+            console.log(error)
+            alert(error.statusText)
+          })
           this.loading = false
         }
       }

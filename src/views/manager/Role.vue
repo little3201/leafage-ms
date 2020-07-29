@@ -127,25 +127,25 @@ export default {
 
   methods: {
     retrieveRole () {
-      axios.get(SERVER_URL.role).then(
-        response => {
+      axios.get(SERVER_URL.role).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     fetchRole (businessId) {
-      axios.get(SERVER_URL.role.concat('/').concat(businessId)).then(
-        response => {
+      axios.get(SERVER_URL.role.concat('/').concat(businessId)).then(response => {
+        if (response.data) {
           this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
         }
-      )
+      }).catch(error => {
+        console.log(error)
+        alert(error.statusText)
+      })
     },
 
     editItem (item) {

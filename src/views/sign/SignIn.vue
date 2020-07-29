@@ -109,20 +109,14 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
-        axios.post(SERVER_URL.signin, headers, qs.stringify(this.formData, { indices: false })).then(
-          response => {
-            // 更新授权状态
-            // this.$store.dispatch('setIsAuthenticated',true)
-            // 设置token
-            this.$router.push({
-              name: 'Home'
-            })
-          },
-          error => {
-            // 执行失败的回调函数
-            alert(error.message)
-          }
-        )
+        axios.post(SERVER_URL.signin, headers, qs.stringify(this.formData, { indices: false })).then(response => {
+          this.$router.push({
+            name: 'Home'
+          })
+        }).catch(error => {
+          console.log(error)
+          alert(error.statusText)
+        })
         this.loading = false
       } else {
         return false

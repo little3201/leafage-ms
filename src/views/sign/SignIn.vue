@@ -111,10 +111,9 @@ export default {
         const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
         axios.post(SERVER_URL.signin, headers, qs.stringify(this.formData, { indices: false })).then(response => {
           this.$router.push({
-            name: 'Home'
+            name: 'dashbord'
           })
         }).catch(error => {
-          console.log(error)
           alert(error.statusText)
         })
         this.loading = false

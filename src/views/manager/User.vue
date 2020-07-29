@@ -151,7 +151,6 @@ export default {
           this.items = response.data
         }
       }).catch(error => {
-        console.log(error)
         alert(error.statusText)
       })
     },
@@ -162,7 +161,6 @@ export default {
           this.items = response.data
         }
       }).catch(error => {
-        console.log(error)
         alert(error.statusText)
       })
     },

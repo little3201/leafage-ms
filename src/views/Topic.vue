@@ -129,16 +129,13 @@ export default {
 
   methods: {
     retrieveTopic () {
-      axios.get(SERVER_URL.topic).then(
-        response => {
-          if (response.data) {
-            this.items = response.data
-          }
-        },
-        error => {
-          alert(error.statusText)
+      axios.get(SERVER_URL.topic).then(response => {
+        if (response.data) {
+          this.items = response.data
         }
-      )
+      }).catch(error => {
+        alert(error.statusText)
+      })
     },
 
     editItem (item) {

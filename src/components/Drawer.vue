@@ -45,7 +45,6 @@
           v-if="item.children"
           :key="`group-${i}`"
           :prepend-icon="item.icon"
-          value="true"
           no-action
         >
           <template v-slot:activator>
@@ -74,9 +73,7 @@
             <v-icon v-text="item.icon" />
           </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
+          <v-list-item-title v-text="item.title" />
         </v-list-item>
       </template>
     </v-list>
@@ -97,31 +94,31 @@ export default {
   data: () => ({
     items: [
       {
-        icon: 'mdi-view-dashboard',
+        icon: 'mdi-home',
         title: 'dashboard',
         to: '/'
       },
       {
-        icon: 'mdi-account-multiple',
+        icon: 'mdi-contacts',
         title: 'manager',
         children: [
           {
-            icon: 'mdi-account-multiple',
+            icon: 'mdi-account-supervisor',
             title: 'user',
             to: 'manager/user'
           },
           {
-            icon: 'mdi-account-multiple',
+            icon: 'mdi-account-key',
             title: 'role',
             to: 'manager/role'
           },
           {
-            icon: 'mdi-account-multiple',
+            icon: 'mdi-source-branch',
             title: 'source',
             to: 'manager/source'
           },
           {
-            icon: 'mdi-account-multiple',
+            icon: 'mdi-lightbulb-group',
             title: 'group',
             to: 'manager/group'
           }

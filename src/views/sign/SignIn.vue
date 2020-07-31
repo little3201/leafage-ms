@@ -109,7 +109,6 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
-          debugger
           this.$cookies.set('keyName', 'time')
           this.$router.push({
             name: 'dashbord'

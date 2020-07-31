@@ -17,7 +17,7 @@ const toSignin = () => {
 const config = {
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://abeille.top/api' : 'http://localhost'
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost'
 }
 
 const instance = axios.create(config)

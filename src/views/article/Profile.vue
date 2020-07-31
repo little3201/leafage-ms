@@ -36,6 +36,15 @@
         />
       </v-row>
       <v-row>
+        <v-file-input
+          :rules="rules"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Pick an avatar"
+          prepend-icon="mdi-camera"
+          label="Avatar"
+        />
+      </v-row>
+      <v-row>
         <!--编辑区-->
         <v-col class="pa-0">
           <v-textarea label="Markdown" v-model="data.original" height="calc(100vh - 345px)" outlined filled required></v-textarea>
@@ -61,7 +70,7 @@ export default {
   data: () => ({
     valid: true,
     loading: false,
-    isShow: true,
+    isShow: false,
     data: {
       businessId: '',
       title: '',

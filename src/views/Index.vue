@@ -1,7 +1,9 @@
 <template>
-  <v-row>
-    Dashboard
-  </v-row>
+  <v-container>
+    <v-row>
+      Dashboard
+    </v-row>
+  </v-container>
 </template>
 
 <script>

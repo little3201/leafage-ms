@@ -54,7 +54,7 @@
           <v-list-item
             v-for="(child, i) in item.children"
             :key="`child-${i}`"
-            :to="child.to"
+            :to="item.group + '/' + child.to"
           >
             <v-list-item-icon>
               <v-icon v-text="child.icon"></v-icon>
@@ -66,7 +66,7 @@
         <v-list-item
           v-else
           :key="`item-${i}`"
-          :to="item.to"
+          :to="item.to ? item.to : '#'"
         >
 
           <v-list-item-icon>
@@ -95,37 +95,38 @@ export default {
     items: [
       {
         icon: 'mdi-home',
-        title: 'dashboard',
+        title: 'Dashboard',
         to: '/'
       },
       {
         icon: 'mdi-contacts',
-        title: 'manager',
+        title: 'Manager',
+        group: '/manager',
         children: [
           {
             icon: 'mdi-account-supervisor',
-            title: 'user',
-            to: 'manager/user'
+            title: 'User',
+            to: 'user'
           },
           {
             icon: 'mdi-account-key',
-            title: 'role',
-            to: 'manager/role'
+            title: 'Role',
+            to: 'role'
           },
           {
             icon: 'mdi-source-branch',
-            title: 'source',
-            to: 'manager/source'
+            title: 'Source',
+            to: 'source'
           },
           {
             icon: 'mdi-lightbulb-group',
-            title: 'group',
-            to: 'manager/group'
+            title: 'Group',
+            to: 'group'
           }
         ]
       },
       {
-        title: 'article',
+        title: 'Article',
         icon: 'mdi-book-open-page-variant',
         to: '/article'
       }

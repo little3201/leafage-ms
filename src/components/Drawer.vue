@@ -165,3 +165,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.v-btn
+  &::before
+    display: none
+</style>

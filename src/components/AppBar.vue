@@ -4,7 +4,6 @@
     absolute
     app
     flat
-    height="75"
   >
     <v-btn
       class="mr-3"
@@ -13,11 +12,7 @@
       small
       @click="setDrawer(!drawer)"
     >
-      <v-icon v-if="value">
-        mdi-view-quilt
-      </v-icon>
-
-      <v-icon v-else>
+      <v-icon>
         mdi-dots-vertical
       </v-icon>
     </v-btn>
@@ -29,41 +24,19 @@
 
     <v-spacer />
 
-    <v-text-field
-      :label="$t('search')"
-      color="secondary"
-      hide-details
-      style="max-width: 165px;"
-    >
-      <template
-        v-if="$vuetify.breakpoint.mdAndUp"
-        v-slot:append-outer
-      >
-        <v-btn
-          class="mt-n2"
-          elevation="1"
-          fab
-          small
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-      </template>
-    </v-text-field>
-
     <div class="mx-3" />
 
     <v-menu
-      bottom
       left
+      eager
       offset-y
       origin="top right"
       transition="scale-transition"
     >
       <template v-slot:activator="{ attrs, on }">
         <v-btn
-          class="ml-2"
-          min-width="0"
           text
+          rounded
           v-bind="attrs"
           v-on="on"
         >
@@ -87,7 +60,7 @@
         <v-list-item-group>
           <v-list-item
             v-for="(text, i) in notifications"
-            :key="`item-${i}`"
+            :key="`text-${i}`"
           >
             <v-list-item-content>
               <v-list-item-title v-text="text"></v-list-item-title>
@@ -97,14 +70,45 @@
       </v-list>
     </v-menu>
 
-    <v-btn
-      class="ml-2"
-      min-width="0"
-      text
-      to="/user"
+    <v-menu
+      left
+      offset-y
+      origin="top right"
+      transition="scale-transition"
     >
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+      <template v-slot:activator="{ attrs, on }">
+        <v-btn
+          text
+          rounded
+          v-bind="attrs"
+          v-on="on"
+        >
+          <v-avatar color="black" size="32">
+            <img
+              v-if="avatar"
+              src="@/assets/avatar.jpg"
+              alt="John"
+            />
+            <span v-else class="white--text">WL</span>
+          </v-avatar>
+        </v-btn>
+      </template>
+
+      <v-list
+        dense
+      >
+        <v-list-item-group>
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="`item-${i}`"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="item"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
   </v-app-bar>
 </template>
 
@@ -118,20 +122,19 @@ export default {
   components: {
   },
 
-  props: {
-    value: {
-      type: Boolean,
-      default: false
-    }
-  },
-
   data: () => ({
+    avatar: undefined,
     notifications: [
       'Mike John Responded to your email',
       'You have 5 new tasks',
       'You\'re now friends with Andrew',
       'Another Notification',
       'Another one'
+    ],
+    items: [
+      'Profile',
+      'Settings',
+      'Logout'
     ]
   }),
 

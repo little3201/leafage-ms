@@ -38,8 +38,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   res => {
     NProgress.done()
-    const { data, status } = res
-    return { data, status }
+    return res
   },
   error => {
     NProgress.done()

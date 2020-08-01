@@ -109,9 +109,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
-          this.$cookies.set('keyName', 'time')
-          this.$router.push({
-            name: 'dashbord'
+          this.$store.dispatch('validUser', true).then((data) => {
+            // 登陆成功之后，路由跳转至用户账户页或者进行你需要的操作
+            this.$router.push({
+              name: 'dashbord'
+            })
           })
         }).catch(error => {
           alert(error.statusText)

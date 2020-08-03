@@ -16,7 +16,7 @@
             <v-row justify="center">
               <h4 class="my-3 text-uppercase">Sign In To Abeille</h4>
             </v-row>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation @submit="submitForm()">
               <v-text-field
                 v-model="formData.username"
                 :rules="formRules.username"
@@ -24,7 +24,7 @@
                 prepend-inner-icon="mdi-account"
                 required
                 autocomplete="off"
-              ></v-text-field>
+              />
               <v-text-field
                 v-model="formData.password"
                 :rules="formRules.password"
@@ -35,24 +35,25 @@
                 :type="pwdShow ? 'text' : 'password'"
                 :append-icon="pwdShow ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="pwdShow = !pwdShow"
-              ></v-text-field>
+              />
+              <p class="text-right">
+                <a href="#" class="text-subtitle-2">忘记密码</a>
+              </p>
+              <p>
+                <v-btn
+                  depressed
+                  rounded
+                  type="submit"
+                  class="text-body-1"
+                  :loading="loading"
+                  color="primary"
+                  block
+                  @click="submitForm"
+                >
+                  登&emsp;录
+                </v-btn>
+              </p>
             </v-form>
-            <p class="text-right">
-              <a href="#" class="text-subtitle-2">忘记密码</a>
-            </p>
-            <p>
-              <v-btn
-                depressed
-                rounded
-                class="text-body-1"
-                :loading="loading"
-                color="primary"
-                block
-                @click="submitForm"
-              >
-                登&emsp;录
-              </v-btn>
-            </p>
             <p>
               <span class="text-subtitle-2">没有账号？</span>
               <a href="/signup" class="text-subtitle-2">
@@ -109,6 +110,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
+          this.loading = false
           this.$store.dispatch('validUser', true).then((data) => {
             // 登陆成功之后，路由跳转至用户账户页或者进行你需要的操作
             this.$router.push({
@@ -117,8 +119,8 @@ export default {
           })
         }).catch(error => {
           alert(error.statusText)
+          this.loading = false
         })
-        this.loading = false
       } else {
         return false
       }

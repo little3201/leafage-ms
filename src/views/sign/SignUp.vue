@@ -15,39 +15,41 @@
         <v-row justify="center">
           <h4 class="my-3 text-uppercase">Create Your Account</h4>
         </v-row>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" lazy-validation @submit="submitForm()">
           <v-text-field
             v-model="formData.username"
             :rules="formRules.username"
             label="手机号/邮箱"
             prepend-inner-icon="mdi-account"
             required
-          ></v-text-field>
+            autocomplete="off"
+          />
           <v-text-field
             v-model="formData.password"
             :rules="formRules.password"
             label="登录密码"
             prepend-inner-icon="mdi-lock"
             required
-          ></v-text-field>
+            autocomplete="off"
+          />
+          <p class="text-subtitle-2">
+            <span>已有账号？</span>
+            <a href="/signin">去登录</a>
+          </p>
+          <p>
+            <v-btn
+              depressed
+              rounded
+              class="text-body-1"
+              :loading="loading"
+              color="primary"
+              block
+              @click="submitForm"
+            >
+              注&emsp;册
+            </v-btn>
+          </p>
         </v-form>
-        <p class="text-subtitle-2">
-          <span>已有账号？</span>
-          <a href="/signin">去登录</a>
-        </p>
-        <p>
-          <v-btn
-            depressed
-            rounded
-            class="text-body-1"
-            :loading="loading"
-            color="primary"
-            block
-            @click="submitForm"
-          >
-            注&emsp;册
-          </v-btn>
-        </p>
         <p class="text-subtitle-2 text-center">
           <span>注册即表示同意</span>
           <a href="#" target="_blank">《Abeille用户协议》</a>
@@ -102,13 +104,14 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
+          this.loading = false
           this.$router.push({
             name: 'dashbord'
           })
         }).catch(error => {
           alert(error.statusText)
+          this.loading = false
         })
-        this.loading = false
       } else {
         return false
       }

@@ -16,7 +16,7 @@
             <v-row justify="center">
               <h4 class="my-3 text-uppercase">Sign In To Abeille</h4>
             </v-row>
-            <v-form ref="form" v-model="valid" lazy-validation @submit="submitForm()">
+            <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitForm()">
               <v-text-field
                 v-model="formData.username"
                 :rules="formRules.username"
@@ -48,7 +48,6 @@
                   :loading="loading"
                   color="primary"
                   block
-                  @click="submitForm"
                 >
                   登&emsp;录
                 </v-btn>

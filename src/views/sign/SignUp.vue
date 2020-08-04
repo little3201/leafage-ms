@@ -15,7 +15,7 @@
         <v-row justify="center">
           <h4 class="my-3 text-uppercase">Create Your Account</h4>
         </v-row>
-        <v-form ref="form" v-model="valid" lazy-validation @submit="submitForm()">
+        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitForm()">
           <v-text-field
             v-model="formData.username"
             :rules="formRules.username"
@@ -40,11 +40,11 @@
             <v-btn
               depressed
               rounded
+              type="submit"
               class="text-body-1"
               :loading="loading"
               color="primary"
               block
-              @click="submitForm"
             >
               注&emsp;册
             </v-btn>

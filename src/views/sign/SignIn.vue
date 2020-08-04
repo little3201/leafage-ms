@@ -117,8 +117,8 @@ export default {
             })
           })
         }).catch(error => {
-          alert(error.statusText)
           this.loading = false
+          alert(error.statusText)
         })
       } else {
         return false

@@ -37,11 +37,9 @@
       </v-row>
       <v-row>
         <v-file-input
-          :rules="rules"
           accept="image/png, image/jpeg, image/bmp"
           placeholder="Pick an avatar"
           prepend-icon="mdi-camera"
-          label="Avatar"
         />
       </v-row>
       <v-row>
@@ -51,7 +49,7 @@
         </v-col>
         <!--展示区-->
         <v-col v-show="isShow" class="pa-0">
-          <div v-html="data.content" height="calc(100vh - 345px)"></div>
+          <p v-html="data.content" height="calc(100vh - 345px)"></p>
         </v-col>
       </v-row>
     </v-container>
@@ -66,6 +64,13 @@ import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'Articles',
+
+  props: {
+    businessId: {
+      type: String,
+      default: undefined
+    }
+  },
 
   data: () => ({
     valid: true,
@@ -102,28 +107,52 @@ export default {
     }
   },
 
+  created () {
+    this.fetchArticle(this.businessId)
+  },
+
   methods: {
+    // 查询
+    fetchArticle (businessId) {
+      if (businessId) {
+        this.loading = true
+        axios.get(SERVER_URL.article.concat('/').concat(businessId)).then(response => {
+          this.loading = false
+          if (response.data) {
+            this.data = response.data
+          }
+        }).catch(error => {
+          this.loading = false
+          alert(error.statusText)
+        })
+        this.loading = false
+      }
+    },
+
+    // 保存
     storageData () {
       if (this.$refs.form.validate()) {
         this.loading = true
         if (this.data.businessId) {
           axios.post(SERVER_URL.article, this.data).then(response => {
+            this.loading = false
             if (response.data) {
               this.items = response.data
             }
           }).catch(error => {
+            this.loading = false
             alert(error.statusText)
           })
-          this.loading = false
         } else {
           axios.put(SERVER_URL.article, this.data).then(response => {
+            this.loading = false
             if (response.data) {
               this.items = response.data
             }
           }).catch(error => {
+            this.loading = false
             alert(error.statusText)
           })
-          this.loading = false
         }
       }
     }

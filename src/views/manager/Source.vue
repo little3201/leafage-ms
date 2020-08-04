@@ -84,7 +84,7 @@ export default {
       { text: 'Name', value: 'name', align: 'center' },
       { text: 'Type', value: 'type', align: 'center' },
       { text: 'Path', value: 'path', align: 'center' },
-      { text: 'Author', value: 'author.nickname', align: 'center' },
+      { text: 'Description', value: 'description', align: 'center' },
       { text: 'Modified Time', value: 'modifyTime', align: 'center' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],

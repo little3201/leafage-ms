@@ -83,7 +83,6 @@ export default {
       { text: 'No.', value: 'businessId', align: 'center' },
       { text: 'Name', value: 'name', align: 'center' },
       { text: 'Description', value: 'description', align: 'center' },
-      { text: 'Author', value: 'author.nickname', align: 'center' },
       { text: 'Modified Time', value: 'modifyTime', align: 'center' },
       { text: 'Actions', value: 'actions', sortable: false }
     ],

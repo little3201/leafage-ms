@@ -7,30 +7,48 @@
       <v-col
         cols="12"
       >
-        <v-data-table
-          :headers="headers"
-          :items="items"
-        >
-          <template v-slot:item.actions="{ item }">
-            <v-btn
-              small
-              icon
-              color="green"
-              class="mr-2"
-              :to="'article/profile/' + item.businessId"
-            >
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-            <v-btn
-              small
-              icon
-              color="red"
-              @click="deleteItem(item)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+        <v-simple-table fixed-header>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Subtitle</th>
+                <th class="text-center">Author</th>
+                <th class="text-center">Published Time</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items" :key="item.name">
+                <td class="text-center">{{ item.businessId }}</td>
+                <td class="text-center">{{ item.title }}</td>
+                <td class="text-center">{{ item.subtitle }}</td>
+                <td class="text-center">{{ item.author.nickname }}</td>
+                <td class="text-center">{{ item.modifyTime }}</td>
+                <td class="text-center">
+                  <v-btn
+                    small
+                    icon
+                    color="green"
+                    class="mr-2"
+                    :to="'article/profile/' + item.businessId"
+                  >
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                  <v-btn
+                    small
+                    icon
+                    color="red"
+                    @click="deleteItem(item)"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </td>
+              </tr>
+            </tbody>
           </template>
-        </v-data-table>
+        </v-simple-table>
       </v-col>
     </v-row>
   </v-container>
@@ -44,14 +62,6 @@ export default {
   name: 'User',
 
   data: () => ({
-    headers: [
-      { text: 'No.', value: 'businessId', align: 'center' },
-      { text: 'Title', value: 'title', align: 'center' },
-      { text: 'Subtitle', value: 'subtitle', align: 'center' },
-      { text: 'Author', value: 'author.nickname', align: 'center' },
-      { text: 'Published Time', value: 'modifyTime', align: 'center' },
-      { text: 'Actions', value: 'actions', sortable: false }
-    ],
     items: [],
     defaultItem: {
       name: '',

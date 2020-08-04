@@ -3,69 +3,48 @@
     <v-col
       cols="12"
     >
-      <v-data-table
-        :headers="headers"
-        :items="items"
-      >
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>用户信息</v-toolbar-title>
-            <v-divider
-              class="mx-4"
-              inset
-              vertical
-            ></v-divider>
-            <v-spacer></v-spacer>
-            <v-dialog v-model="dialog" max-width="500px">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >新增</v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
-                </v-card-title>
-
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field label="Dessert name"></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                  <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-toolbar>
+      <v-simple-table fixed-header>
+        <template v-slot:default>
+          <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Nickname</th>
+                <th class="text-center">Mobile</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Modified Time</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items" :key="item.name">
+                <td class="text-center">{{ item.businessId }}</td>
+                <td class="text-center">{{ item.nickname }}</td>
+                <td class="text-center">{{ item.mobile }}</td>
+                <td class="text-center">{{ item.email }}</td>
+                <td class="text-center">{{ item.modifyTime }}</td>
+                <td class="text-center">
+                  <v-btn
+                    small
+                    icon
+                    color="green"
+                    class="mr-2"
+                    @click="editedItem(item)"
+                  >
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                  <v-btn
+                    small
+                    icon
+                    color="red"
+                    @click="deleteItem(item)"
+                  >
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </td>
+              </tr>
+            </tbody>
         </template>
-        <template v-slot:item.actions="{ item }">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            mdi-pencil
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteItem(item)"
-          >
-            mdi-delete
-          </v-icon>
-        </template>
-      </v-data-table>
+      </v-simple-table>
     </v-col>
   </v-row>
 </template>
@@ -79,19 +58,6 @@ export default {
 
   data: () => ({
     dialog: false,
-    headers: [
-      { text: 'No.', value: 'businessId', align: 'center' },
-      { text: 'Nickname', value: 'nickname', align: 'center' },
-      { text: 'Mobile', value: 'mobile', align: 'center' },
-      { text: 'Email', value: 'email', align: 'center' },
-      { text: 'Age', value: 'age', align: 'center' },
-      { text: 'Gender', value: 'gender', align: 'center' },
-      { text: 'Country', value: 'country', align: 'center' },
-      { text: 'Province', value: 'province', align: 'center' },
-      { text: 'City', value: 'city', align: 'center' },
-      { text: 'Region', value: 'region', align: 'center' },
-      { text: 'Modified Time', value: 'modifyTime', align: 'center' }
-    ],
     items: [],
     editedIndex: -1,
     editedItem: {
@@ -99,26 +65,14 @@ export default {
       nickname: undefined,
       mobile: undefined,
       email: undefined,
-      age: undefined,
-      gender: undefined,
-      country: undefined,
-      province: undefined,
-      city: undefined,
-      region: undefined,
-      author: undefined
+      modifyTime: undefined
     },
     defaultItem: {
       businessId: undefined,
       nickname: undefined,
       mobile: undefined,
       email: undefined,
-      age: undefined,
-      gender: undefined,
-      country: undefined,
-      province: undefined,
-      city: undefined,
-      region: undefined,
-      author: undefined
+      modifyTime: undefined
     }
   }),
 

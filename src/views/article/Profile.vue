@@ -36,13 +36,20 @@
         />
       </v-row>
       <v-row>
+        <v-file-input
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Pick an avatar"
+          prepend-icon="mdi-camera"
+        />
+      </v-row>
+      <v-row>
         <!--编辑区-->
         <v-col class="pa-0">
           <v-textarea label="Markdown" v-model="data.original" height="calc(100vh - 345px)" outlined filled required></v-textarea>
         </v-col>
         <!--展示区-->
         <v-col v-show="isShow" class="pa-0">
-          <div v-html="data.content" height="calc(100vh - 345px)"></div>
+          <p v-html="data.content" height="calc(100vh - 345px)"></p>
         </v-col>
       </v-row>
     </v-container>
@@ -51,16 +58,24 @@
 
 <script>
 import md from '@/plugins/markdown'
-import 'prismjs/themes/prism-okaidia.css'
-import { createArticleFunc, modifyArticleFunc } from '@/api/method'
+import 'prismjs/themes/prism-tomorrow.css'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'Articles',
 
+  props: {
+    businessId: {
+      type: String,
+      default: undefined
+    }
+  },
+
   data: () => ({
     valid: true,
     loading: false,
-    isShow: true,
+    isShow: false,
     data: {
       businessId: '',
       title: '',
@@ -92,32 +107,52 @@ export default {
     }
   },
 
+  created () {
+    this.fetchArticle(this.businessId)
+  },
+
   methods: {
+    // 查询
+    fetchArticle (businessId) {
+      if (businessId) {
+        this.loading = true
+        axios.get(SERVER_URL.article.concat('/').concat(businessId)).then(response => {
+          this.loading = false
+          if (response.data) {
+            this.data = response.data
+          }
+        }).catch(error => {
+          this.loading = false
+          alert(error.statusText)
+        })
+        this.loading = false
+      }
+    },
+
+    // 保存
     storageData () {
       if (this.$refs.form.validate()) {
         this.loading = true
         if (this.data.businessId) {
-          modifyArticleFunc(this.data).then(
-            response => {
-              this.data = response.data
-            },
-            error => {
-              // 执行失败的回调函数
-              alert(error.message)
+          axios.post(SERVER_URL.article, this.data).then(response => {
+            this.loading = false
+            if (response.data) {
+              this.items = response.data
             }
-          )
-          this.loading = false
+          }).catch(error => {
+            this.loading = false
+            alert(error.statusText)
+          })
         } else {
-          createArticleFunc(this.data).then(
-            response => {
-              this.data = response.data
-            },
-            error => {
-              // 执行失败的回调函数
-              alert(error.message)
+          axios.put(SERVER_URL.article, this.data).then(response => {
+            this.loading = false
+            if (response.data) {
+              this.items = response.data
             }
-          )
-          this.loading = false
+          }).catch(error => {
+            this.loading = false
+            alert(error.statusText)
+          })
         }
       }
     }

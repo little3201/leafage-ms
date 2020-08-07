@@ -1,15 +1,10 @@
 <template>
   <v-navigation-drawer
-    id="core-navigation-drawer"
     v-model="drawer"
     :dark="barColor !== 'rgba(228, 226, 226, 1), rgba(255, 255, 255, 0.7)'"
-    :expand-on-hover="expandOnHover"
-    :right="$vuetify.rtl"
     :src="barImage"
     mobile-breakpoint="960"
     app
-    width="260"
-    v-bind="$attrs"
   >
     <template v-slot:img="props">
       <v-img
@@ -18,27 +13,20 @@
       />
     </template>
 
-    <v-divider class="mb-1" />
-
     <v-list
       dense
       nav
     >
       <v-list-item>
-        <v-list-item-avatar
-          class="align-self-center"
-          color="white"
+        <v-img
+          src="@/assets/logo.png"
+          max-width="4rem"
           contain
-        >
-          <v-img
-            src="@/assets/avatar.jpg"
-          />
-        </v-list-item-avatar>
-
+        />
         <v-list-item-content>
           <v-list-item-title
-            class="text-h5"
-            style="line-height: 1.5"
+            class="text-h4"
+            style="line-height: 1"
             v-text="profile.title"
           />
         </v-list-item-content>
@@ -52,23 +40,42 @@
       nav
     >
 
-      <template v-for="(item, i) in computedItems">
-        <base-item-group
+      <template v-for="(item, i) in items">
+        <v-list-group
           v-if="item.children"
           :key="`group-${i}`"
-          :item="item"
+          :prepend-icon="item.icon"
+          no-action
         >
-          <!--  -->
-        </base-item-group>
+          <template v-slot:activator>
+            <v-list-item-title v-text="item.title" />
+          </template>
 
-        <base-item
+          <v-list-item
+            v-for="(child, i) in item.children"
+            :key="`child-${i}`"
+            :to="item.group + '/' + child.to"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="child.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-title v-text="child.title"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+
+        <v-list-item
           v-else
           :key="`item-${i}`"
-          :item="item"
-        />
-      </template>
+          :to="item.to ? item.to : '#'"
+        >
 
-      <div />
+          <v-list-item-icon>
+            <v-icon v-text="item.icon" />
+          </v-list-item-icon>
+
+          <v-list-item-title v-text="item.title" />
+        </v-list-item>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -78,32 +85,48 @@
 import {
   mapState
 } from 'vuex'
-import { retrieveSourceFunc } from '@/api/method'
+import axios from '@/api'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'Drawer',
 
-  props: {
-    expandOnHover: {
-      type: Boolean,
-      default: false
-    }
-  },
-
   data: () => ({
     items: [
       {
-        icon: 'mdi-view-dashboard',
-        title: 'dashboard',
+        icon: 'mdi-home',
+        title: 'Dashboard',
         to: '/'
       },
       {
-        icon: 'mdi-account-multiple',
-        title: 'user',
-        to: '/user'
+        icon: 'mdi-contacts',
+        title: 'Manager',
+        group: '/manager',
+        children: [
+          {
+            icon: 'mdi-account-supervisor',
+            title: 'User',
+            to: 'user'
+          },
+          {
+            icon: 'mdi-account-key',
+            title: 'Role',
+            to: 'role'
+          },
+          {
+            icon: 'mdi-source-branch',
+            title: 'Source',
+            to: 'source'
+          },
+          {
+            icon: 'mdi-lightbulb-group',
+            title: 'Group',
+            to: 'group'
+          }
+        ]
       },
       {
-        title: 'article',
+        title: 'Article',
         icon: 'mdi-book-open-page-variant',
         to: '/article'
       }
@@ -120,13 +143,9 @@ export default {
         this.$store.commit('SET_DRAWER', val)
       }
     },
-    computedItems () {
-      return this.items.map(this.mapItem)
-    },
     profile () {
       return {
-        avatar: true,
-        title: this.$t('avatar')
+        title: this.$t('abeille')
       }
     },
     initSource () {
@@ -135,24 +154,20 @@ export default {
   },
 
   methods: {
-    mapItem (item) {
-      return {
-        ...item,
-        children: item.children ? item.children.map(this.mapItem) : undefined,
-        title: this.$t(item.title)
-      }
-    },
     retrieveSource () {
-      retrieveSourceFunc().then(
-        response => {
-          alert(response.data.budinessId)
-          // this.items = response.data
-        },
-        error => {
-          alert(error.statusText)
-        }
-      )
+      axios.get(SERVER_URL.source).then(response => {
+        alert(response.data)
+        // this.items = response.data
+      }).cache(error => {
+        alert(error.statusText)
+      })
     }
   }
 }
 </script>
+
+<style lang="sass">
+.v-btn
+  &::before
+    display: none
+</style>

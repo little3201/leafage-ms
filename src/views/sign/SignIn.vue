@@ -14,9 +14,9 @@
               </router-link>
             </v-row>
             <v-row justify="center">
-              <p class="my-3 text-button font-weight-bold">Sign In To Abeille</p>
+              <h4 class="my-3 text-uppercase">Sign In To Abeille</h4>
             </v-row>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitForm()">
               <v-text-field
                 v-model="formData.username"
                 :rules="formRules.username"
@@ -24,7 +24,7 @@
                 prepend-inner-icon="mdi-account"
                 required
                 autocomplete="off"
-              ></v-text-field>
+              />
               <v-text-field
                 v-model="formData.password"
                 :rules="formRules.password"
@@ -35,24 +35,24 @@
                 :type="pwdShow ? 'text' : 'password'"
                 :append-icon="pwdShow ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="pwdShow = !pwdShow"
-              ></v-text-field>
+              />
+              <p class="text-right">
+                <a href="#" class="text-subtitle-2">忘记密码</a>
+              </p>
+              <p>
+                <v-btn
+                  depressed
+                  rounded
+                  type="submit"
+                  class="text-body-1"
+                  :loading="loading"
+                  color="primary"
+                  block
+                >
+                  登&emsp;录
+                </v-btn>
+              </p>
             </v-form>
-            <p class="text-right">
-              <a href="#" class="text-subtitle-2">忘记密码</a>
-            </p>
-            <p>
-              <v-btn
-                depressed
-                rounded
-                class="text-body-1"
-                :loading="loading"
-                color="primary"
-                block
-                @click="submitForm"
-              >
-                登&emsp;录
-              </v-btn>
-            </p>
             <p>
               <span class="text-subtitle-2">没有账号？</span>
               <a href="/signup" class="text-subtitle-2">
@@ -79,7 +79,9 @@
 </template>
 
 <script>
-import { loginFunc } from '@/api/method'
+import axios from '@/api'
+import qs from 'qs'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'signin',
@@ -106,21 +108,18 @@ export default {
     submitForm () {
       if (this.$refs.form.validate()) {
         this.loading = true
-        loginFunc(this.formData).then(
-          response => {
-            // 更新授权状态
-            // this.$store.dispatch('setIsAuthenticated',true)
-            // 设置token
+        axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
+          this.loading = false
+          this.$store.dispatch('validUser', true).then((data) => {
+            // 登陆成功之后，路由跳转至用户账户页或者进行你需要的操作
             this.$router.push({
-              name: 'Home'
+              name: 'dashbord'
             })
-          },
-          error => {
-            // 执行失败的回调函数
-            alert(error.message)
-          }
-        )
-        this.loading = false
+          })
+        }).catch(error => {
+          this.loading = false
+          alert(error.statusText)
+        })
       } else {
         return false
       }
@@ -129,8 +128,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-a {
-  text-decoration: none;
-}
+<style lang="sass" scoped>
+a
+  text-decoration: none
 </style>

@@ -8,7 +8,7 @@
       flat
       link
       min-width="100"
-      style="position: fixed; top: 115px; right: -35px; border-radius: 8px;"
+      style="position: fixed; top: 155px; right: -35px; border-radius: 8px;"
     >
       <v-icon large>
         mdi-cog

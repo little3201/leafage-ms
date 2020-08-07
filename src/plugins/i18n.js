@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
 import en from 'vuetify/lib/locale/en'
+import zh from 'vuetify/lib/locale/zh-Hans'
 
 Vue.use(VueI18n)
 
@@ -9,6 +10,10 @@ const messages = {
   en: {
     ...require('@/locales/en.json'),
     $vuetify: en
+  },
+  zh: {
+    ...require('@/locales/zh.json'),
+    $vuetify: zh
   }
 }
 

@@ -52,7 +52,7 @@ export default {
       },
       {
         href: '#',
-        text: 'About Us'
+        text: 'About'
       },
       {
         href: '#',
@@ -64,9 +64,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  #footers
-    a
-      font-weight: 500
-      text-decoration: none
-      text-transform: uppercase
+a
+  font-weight: 500
+  text-decoration: none
 </style>

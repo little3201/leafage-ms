@@ -4,17 +4,33 @@ export default [
     component: () => import('@/views/View'),
     children: [
       {
-        path: 'user',
-        component: () => import('@/views/user/Index'),
+        name: 'dashbord',
+        path: '',
+        component: () => import('@/views/Index')
+      },
+      {
+        path: 'manager',
+        component: () => import('@/views/manager/Index'),
         children: [
           {
             name: 'User',
-            path: '/',
-            component: () => import('@/views/user/Item')
+            path: 'user',
+            component: () => import('@/views/manager/User')
           },
           {
-            path: 'profile',
-            component: () => import('@/views/user/Profile')
+            name: 'Role',
+            path: 'role',
+            component: () => import('@/views/manager/Role')
+          },
+          {
+            name: 'Source',
+            path: 'source',
+            component: () => import('@/views/manager/Source')
+          },
+          {
+            name: 'Group',
+            path: 'group',
+            component: () => import('@/views/manager/Group')
           }
         ]
       },
@@ -28,8 +44,9 @@ export default [
             component: () => import('@/views/article/Item')
           },
           {
-            path: 'profile',
-            component: () => import('@/views/article/Profile')
+            path: 'profile/:businessId',
+            component: () => import('@/views/article/Profile'),
+            props: true
           }
         ]
       }

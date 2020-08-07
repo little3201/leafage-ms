@@ -13,41 +13,43 @@
           </router-link>
         </v-row>
         <v-row justify="center">
-          <p class="my-3 text-button font-weight-bold">Create Your Account</p>
+          <h4 class="my-3 text-uppercase">Create Your Account</h4>
         </v-row>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitForm()">
           <v-text-field
             v-model="formData.username"
             :rules="formRules.username"
             label="手机号/邮箱"
             prepend-inner-icon="mdi-account"
             required
-          ></v-text-field>
+            autocomplete="off"
+          />
           <v-text-field
             v-model="formData.password"
             :rules="formRules.password"
             label="登录密码"
             prepend-inner-icon="mdi-lock"
             required
-          ></v-text-field>
+            autocomplete="off"
+          />
+          <p class="text-subtitle-2">
+            <span>已有账号？</span>
+            <a href="/signin">去登录</a>
+          </p>
+          <p>
+            <v-btn
+              depressed
+              rounded
+              type="submit"
+              class="text-body-1"
+              :loading="loading"
+              color="primary"
+              block
+            >
+              注&emsp;册
+            </v-btn>
+          </p>
         </v-form>
-        <p class="text-subtitle-2">
-          <span>已有账号？</span>
-          <a href="/signin">去登录</a>
-        </p>
-        <p>
-          <v-btn
-            depressed
-            rounded
-            class="text-body-1"
-            :loading="loading"
-            color="primary"
-            block
-            @click="submitForm"
-          >
-            注&emsp;册
-          </v-btn>
-        </p>
         <p class="text-subtitle-2 text-center">
           <span>注册即表示同意</span>
           <a href="#" target="_blank">《Abeille用户协议》</a>
@@ -71,7 +73,9 @@
 </template>
 
 <script>
-import { loginFunc } from '@/api/method'
+import axios from '@/api'
+import qs from 'qs'
+import { SERVER_URL } from '@/api/request'
 
 export default {
   name: 'signup',
@@ -98,18 +102,16 @@ export default {
   methods: {
     submitForm () {
       if (this.$refs.form.validate()) {
-        loginFunc(this.formData).then(
-          response => {
-            // 设置token
-            this.$router.push({
-              name: 'home'
-            })
-          },
-          error => {
-            // 执行失败的回调函数
-            alert(error.message)
-          }
-        )
+        this.loading = true
+        axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
+          this.loading = false
+          this.$router.push({
+            name: 'dashbord'
+          })
+        }).catch(error => {
+          this.loading = false
+          alert(error.statusText)
+        })
       } else {
         return false
       }

@@ -6,10 +6,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const redirectTo = (path) => {
   router.replace({
-    path: path,
-    query: {
-      redirect: router.currentRoute.fullPath
-    }
+    path: path
   })
 }
 
@@ -17,7 +14,7 @@ const redirectTo = (path) => {
 const config = {
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost'
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost:8760'
 }
 
 const instance = axios.create(config)
@@ -38,6 +35,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   res => {
     NProgress.done()
+    if (res.status === 204) {
+      setTimeout(() => { redirectTo('/signup') }, 300)
+    }
     return res
   },
   error => {
@@ -46,10 +46,6 @@ instance.interceptors.response.use(
     if (response) {
       // 状态码判断
       switch (response.status) {
-        // 204：用户未注册，跳转注册页
-        case 204:
-          setTimeout(() => { redirectTo('/signup') }, 300)
-          break
         // 401: 未登录状态，跳转登录页
         case 401:
           setTimeout(() => { redirectTo('/signin') }, 300)

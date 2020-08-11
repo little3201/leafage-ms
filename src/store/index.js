@@ -16,14 +16,8 @@ export default new Vuex.Store({
     },
     SET_DRAWER (state, payload) {
       state.drawer = payload
-    },
-    SET_IS_AUTH (state, payload) {
-      state.isAuth = payload
     }
   },
   actions: {
-    validUser ({ commit }, payload) {
-      commit('SET_IS_AUTH', payload)
-    }
   }
 })

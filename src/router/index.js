@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import store from '@/store'
+import VueCookies from 'vue-cookies'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -30,8 +30,8 @@ router.beforeEach((to, from, next) => {
   if (to.path !== from.path && !Vue.component(to.name)) {
     NProgress.start()
   }
-  const session = store.state.isAuth
-  if (whiteList.includes(to.fullPath) || session) {
+  const isAuth = VueCookies.get('isAuth')
+  if (whiteList.includes(to.fullPath) || isAuth) {
     next()
   } else {
     next({ path: '/signin', replace: true })

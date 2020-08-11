@@ -105,8 +105,11 @@ export default {
         this.loading = true
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
           this.loading = false
-          this.$router.push({
-            name: 'dashbord'
+          this.$store.dispatch('validUser', response.data.isAuth).then((data) => {
+            // 注册成功之后，路由跳转至用户账户页或者进行你需要的操作
+            this.$router.push({
+              name: 'dashbord'
+            })
           })
         }).catch(error => {
           this.loading = false

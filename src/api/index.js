@@ -4,9 +4,9 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const toSignin = () => {
+const redirectTo = (path) => {
   router.replace({
-    path: '/signin',
+    path: path,
     query: {
       redirect: router.currentRoute.fullPath
     }
@@ -46,14 +46,18 @@ instance.interceptors.response.use(
     if (response) {
       // 状态码判断
       switch (response.status) {
+        // 204：用户未注册，跳转注册页
+        case 204:
+          setTimeout(() => { redirectTo('/signup') }, 300)
+          break
         // 401: 未登录状态，跳转登录页
         case 401:
-          setTimeout(() => { toSignin() }, 300)
+          setTimeout(() => { redirectTo('/signin') }, 300)
           break
-        // 403 token过期，清除token并跳转登录页
+        // 403：验证失败，仍然登录页
         case 403:
           // store.commit('loginSuccess', null);
-          setTimeout(() => { toSignin() }, 300)
+          setTimeout(() => { redirectTo('/signin') }, 300)
           break
         // 404请求不存在
         case 404:

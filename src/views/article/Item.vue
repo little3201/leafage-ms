@@ -3,6 +3,17 @@
     id="article"
     fluid
   >
+    <v-row>
+      <v-btn
+        icon
+        style="margin-top:2px"
+        to="article/profile/new"
+        color="primary"
+      >
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+    </v-row>
+
     <v-row justify="center">
       <v-col
         cols="12"

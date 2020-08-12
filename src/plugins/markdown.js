@@ -10,12 +10,15 @@ import 'prismjs/components/prism-bash'
 const md = new MarkdownIt({
   html: true,
   linkify: true,
+  typography: true,
   breaks: true
 })
   .use(anchor) // 使用 anchor 插件为标题元素添加锚点
   .use(prism, {
     plugins: ['toolbar', 'line-numbers', 'show-language', 'copy-to-clipboard'],
-    defaultLanguageForUnknown: 'bash'
+    defaultLanguageForUnknown: 'bash',
+    defaultLanguageForUnspecified: 'bash',
+    defaultLanguage: 'bash'
   })
   .use(toc) // 使用 table-of-contents 插件实现自动生成目录
   .use(container, 'info')

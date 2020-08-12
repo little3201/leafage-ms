@@ -91,8 +91,8 @@ export default {
       valid: true,
       pwdShow: false,
       formData: {
-        username: '',
-        password: ''
+        username: undefined,
+        password: undefined
       },
       formRules: {
         username: [
@@ -111,7 +111,7 @@ export default {
         axios.post(SERVER_URL.signin, qs.stringify(this.formData, { indices: false })).then(response => {
           this.loading = false
           if (response.data.isAuth) {
-            this.$cookies.set('isAuth', response.data.isAuth)
+            this.$cookies.set('isAuth', response.data.isAuth, 0)
             // 登录成功之后，路由跳转至用户账户页或者进行你需要的操作
             this.$router.push({
               name: 'dashbord'

@@ -75,13 +75,13 @@ export default {
   data: () => ({
     valid: true,
     loading: false,
-    isShow: false,
+    isShow: true,
     data: {
-      businessId: '',
-      title: '',
-      subtitle: '',
-      original: '',
-      content: '',
+      businessId: undefined,
+      title: undefined,
+      subtitle: undefined,
+      original: undefined,
+      content: undefined,
       modifier: 'US328CNJ9'
     },
     titleRules: [
@@ -95,20 +95,22 @@ export default {
   }),
 
   computed: {
-    originalConvert () {
+    originalWatcher () {
       return this.data.original
     }
   },
 
   watch: {
     // 监听sourceText变化
-    originalConvert () {
+    originalWatcher () {
       this.data.content = md.render(this.data.original)
     }
   },
 
   created () {
-    this.fetchArticle(this.businessId)
+    if (this.businessId) {
+      this.fetchArticle(this.businessId)
+    }
   },
 
   methods: {
@@ -134,7 +136,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         if (this.data.businessId) {
-          axios.post(SERVER_URL.article, this.data).then(response => {
+          axios.put(SERVER_URL.article, this.data).then(response => {
             this.loading = false
             if (response.data) {
               this.items = response.data
@@ -144,7 +146,7 @@ export default {
             alert(error.statusText)
           })
         } else {
-          axios.put(SERVER_URL.article, this.data).then(response => {
+          axios.post(SERVER_URL.article, this.data).then(response => {
             this.loading = false
             if (response.data) {
               this.items = response.data

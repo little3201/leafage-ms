@@ -5,6 +5,7 @@ import container from 'markdown-it-container'
 import prism from 'markdown-it-prism'
 import 'prismjs/components/prism-java'
 import 'prismjs/components/prism-json'
+import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-bash'
 
 const md = new MarkdownIt({
@@ -15,7 +16,7 @@ const md = new MarkdownIt({
 })
   .use(anchor) // 使用 anchor 插件为标题元素添加锚点
   .use(prism, {
-    plugins: ['toolbar', 'line-numbers', 'show-language', 'copy-to-clipboard'],
+    plugins: ['line-numbers', 'show-language', 'copy-to-clipboard'],
     defaultLanguageForUnknown: 'bash',
     defaultLanguageForUnspecified: 'bash',
     defaultLanguage: 'bash'

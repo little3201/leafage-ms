@@ -4,12 +4,9 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const toSignin = () => {
+const redirectTo = (path) => {
   router.replace({
-    path: '/signin',
-    query: {
-      redirect: router.currentRoute.fullPath
-    }
+    path: path
   })
 }
 
@@ -17,7 +14,7 @@ const toSignin = () => {
 const config = {
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost'
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost:8760'
 }
 
 const instance = axios.create(config)
@@ -38,6 +35,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   res => {
     NProgress.done()
+    if (res.status === 204) {
+      setTimeout(() => { redirectTo('/signup') }, 300)
+    }
     return res
   },
   error => {
@@ -48,12 +48,12 @@ instance.interceptors.response.use(
       switch (response.status) {
         // 401: 未登录状态，跳转登录页
         case 401:
-          setTimeout(() => { toSignin() }, 300)
+          setTimeout(() => { redirectTo('/signin') }, 300)
           break
-        // 403 token过期，清除token并跳转登录页
+        // 403：验证失败，仍然登录页
         case 403:
           // store.commit('loginSuccess', null);
-          setTimeout(() => { toSignin() }, 300)
+          setTimeout(() => { redirectTo('/signin') }, 300)
           break
         // 404请求不存在
         case 404:

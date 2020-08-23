@@ -1,11 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import VueCookies from 'vue-cookies'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 Vue.use(VueRouter)
+
+// 白名单
+const whiteList = [
+  '/signin',
+  '/signup'
+]
 
 const router = new VueRouter({
   mode: 'history',
@@ -23,8 +30,12 @@ router.beforeEach((to, from, next) => {
   if (to.path !== from.path && !Vue.component(to.name)) {
     NProgress.start()
   }
-  // 放行
-  next()
+  const isAuth = VueCookies.get('isAuth')
+  if (whiteList.includes(to.fullPath) || isAuth) {
+    next()
+  } else {
+    next({ path: '/signin', replace: true })
+  }
 })
 
 /* 路由之后关闭进度条 */

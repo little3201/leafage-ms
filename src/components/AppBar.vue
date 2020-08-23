@@ -35,8 +35,7 @@
     >
       <template v-slot:activator="{ attrs, on }">
         <v-btn
-          text
-          rounded
+          icon
           v-bind="attrs"
           v-on="on"
         >
@@ -78,8 +77,7 @@
     >
       <template v-slot:activator="{ attrs, on }">
         <v-btn
-          text
-          rounded
+          icon
           v-bind="attrs"
           v-on="on"
         >

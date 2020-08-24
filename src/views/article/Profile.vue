@@ -82,6 +82,7 @@ export default {
       subtitle: undefined,
       original: undefined,
       content: undefined,
+      imageUrl: undefined,
       modifier: 'US328CNJ9'
     },
     titleRules: [
@@ -157,6 +158,22 @@ export default {
           })
         }
       }
+    },
+
+    uploadFile (file) {
+      var formData = new FormData()
+      let token = ''
+      formData.append('token', token)
+      formData.append('file', file)
+      axios.post('http://up-z1.qiniup.com', formData).then(response => {
+        this.loading = false
+        if (response.key) {
+          this.data.imageUrl = response.key
+        }
+      }).catch(error => {
+        this.loading = false
+        alert(error.statusText)
+      })
     }
   }
 }

@@ -42,8 +42,8 @@ abeille-manager，一个后端管理系统，使用 Vue + Vuetify。
 
 ### 展示截图
 
-![image](https://github.com/little3201/abeille-manager/blob/develop/src/assets/signin.png)
-![image](https://github.com/little3201/abeille-manager/blob/develop/src/assets/dashboard.png)
+<img alt="Abeille Logo" width="100%" src="src/assets/signin.png">
+<img alt="Abeille Logo" width="100%" src="src/assets/dashboard.png">
 
 ### 项目地址
 
@@ -73,22 +73,22 @@ abeille-manager，一个后端管理系统，使用 Vue + Vuetify。
 
 ## Project setup
 ```
-pnpm install
+yarn install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-pnpm run serve
+yarn serve
 ```
 
 ### Compiles and minifies for production
 ```
-pnpm run build
+yarn build
 ```
 
 ### Lints and fixes files
 ```
-pnpm run lint
+yarn lint
 ```
 
 <a href="https://github.com/little3201/abeille-manager/blob/master/LICENSE">

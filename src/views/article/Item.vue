@@ -4,14 +4,47 @@
     fluid
   >
     <v-row>
-      <v-btn
-        icon
-        style="margin-top:2px"
-        to="article/profile/new"
-        color="primary"
-      >
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
+      <v-col>
+        <v-text-field
+          label="编号"
+          autocomplete="off"
+          dense
+        />
+      </v-col>
+      <v-col>
+        <v-text-field
+          label="标题"
+          autocomplete="off"
+          dense
+        />
+      </v-col>
+      <v-col>
+        <v-select
+          label="分类"
+          dense
+          :items="category"
+        />
+      </v-col>
+      <v-col>
+        <v-text-field
+          label="创建时间"
+          autocomplete="off"
+          dense
+        />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-btn
+          icon
+          style="margin-top:2px"
+          to="article/profile/new"
+          color="primary"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-col>
     </v-row>
 
     <v-row justify="center">
@@ -80,7 +113,11 @@ export default {
       fat: 0,
       carbs: 0,
       protein: 0
-    }
+    },
+    category: [
+      'Java',
+      'Golang'
+    ]
   }),
 
   created () {

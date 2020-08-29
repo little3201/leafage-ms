@@ -3,39 +3,14 @@
     id="article"
     fluid
   >
+
     <v-row>
-      <v-col>
-        <v-text-field
-          label="编号"
-          autocomplete="off"
-          dense
-        />
-      </v-col>
       <v-col>
         <v-text-field
           label="标题"
           autocomplete="off"
           dense
         />
-      </v-col>
-      <v-col>
-        <v-select
-          label="分类"
-          dense
-          :items="category"
-        />
-      </v-col>
-      <v-col>
-        <v-text-field
-          label="创建时间"
-          autocomplete="off"
-          dense
-        />
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col>
         <v-btn
           icon
           style="margin-top:2px"

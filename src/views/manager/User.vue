@@ -3,6 +3,33 @@
     <v-col
       cols="12"
     >
+
+      <v-row class="mx-3">
+        <v-text-field
+          label="Search"
+          append-icon="mdi-magnify"
+          autocomplete="off"
+        />
+        <v-btn
+          icon
+          class="ml-8 mt-3"
+          color="primary"
+          @click="retrieveUser()"
+        >
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+
+        <v-btn
+          depressed
+          class="ma-3"
+          @click="editedItem()"
+          color="primary"
+        >
+          <v-icon left>mdi-plus-circle</v-icon>
+          创&emsp;建
+        </v-btn>
+      </v-row>
+
       <v-simple-table fixed-header>
         <template v-slot:default>
           <thead>
@@ -43,6 +70,30 @@
                 </td>
               </tr>
             </tbody>
+            <v-dialog v-model="dialog" max-width="500px">
+              <v-card>
+                <v-card-title class="h6 grey lighten-2">
+                  删除
+                </v-card-title>
+
+                <v-card-text>
+                  <v-row>
+                    <v-col class="text-center mt-6">删除后将无法恢复，确认删除请输入“删除”</v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-text-field label="删除"></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn text @click="close">Cancel</v-btn>
+                  <v-btn text @click="save">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
         </template>
       </v-simple-table>
     </v-col>
@@ -113,31 +164,15 @@ export default {
       })
     },
 
-    editItem (item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-
     deleteItem (item) {
-      const index = this.items.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.items.splice(index, 1)
+      this.dialog = true
     },
 
     close () {
       this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
     },
 
     save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem)
-      } else {
-        this.items.push(this.editedItem)
-      }
       this.close()
     }
   }

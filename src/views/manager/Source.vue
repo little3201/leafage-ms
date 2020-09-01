@@ -3,6 +3,33 @@
     <v-col
       cols="12"
     >
+
+      <v-row class="mx-3">
+        <v-text-field
+          label="Search"
+          append-icon="mdi-magnify"
+          autocomplete="off"
+        />
+        <v-btn
+          icon
+          class="ml-8 mt-3"
+          color="primary"
+          @click="retrieveSource()"
+        >
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+
+        <v-btn
+          depressed
+          class="ma-3"
+          to="article/profile"
+          color="primary"
+        >
+          <v-icon left>mdi-plus-circle</v-icon>
+          创&emsp;建
+        </v-btn>
+      </v-row>
+
       <v-simple-table fixed-header>
         <template v-slot:default>
           <thead>
@@ -30,7 +57,7 @@
                     icon
                     color="green"
                     class="mr-2"
-                    @click="editedItem(item)"
+                    @click="editItem(item)"
                   >
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
@@ -46,6 +73,69 @@
               </tr>
             </tbody>
         </template>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="primary"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              Open Dialog
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline">Source Profile</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field label="Legal first name*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Legal last name*"
+                      hint="example of persistent helper text"
+                      persistent-hint
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Email*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Password*" type="password" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-select
+                      :items="['0-17', '18-29', '30-54', '54+']"
+                      label="Age*"
+                      required
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-autocomplete
+                      :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                      label="Interests"
+                      multiple
+                    ></v-autocomplete>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*indicates required field</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-simple-table>
     </v-col>
   </v-row>
@@ -61,28 +151,14 @@ export default {
   data: () => ({
     dialog: false,
     items: [],
-    editedIndex: -1,
-    editedItem: {
-      businessId: undefined,
-      name: undefined,
-      type: 0,
-      path: undefined,
-      author: undefined
-    },
     defaultItem: {
       businessId: undefined,
-      name: undefined,
+      name: '',
       type: 0,
-      path: undefined,
+      path: '',
       author: undefined
     }
   }),
-
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    }
-  },
 
   watch: {
     dialog (val) {
@@ -116,8 +192,6 @@ export default {
     },
 
     editItem (item) {
-      this.editedIndex = this.items.indexOf(item)
-      this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
@@ -128,18 +202,9 @@ export default {
 
     close () {
       this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
     },
 
     save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem)
-      } else {
-        this.items.push(this.editedItem)
-      }
       this.close()
     }
   }

@@ -44,7 +44,7 @@ export default [
             component: () => import('@/views/article/Item')
           },
           {
-            path: 'profile/:businessId',
+            path: 'profile/:businessId?',
             component: () => import('@/views/article/Profile'),
             props: true
           }

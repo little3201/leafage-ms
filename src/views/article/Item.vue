@@ -4,22 +4,30 @@
     fluid
   >
 
-    <v-row>
-      <v-col>
-        <v-text-field
-          label="标题"
-          autocomplete="off"
-          dense
-        />
-        <v-btn
-          icon
-          style="margin-top:2px"
-          to="article/profile/new"
-          color="primary"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </v-col>
+    <v-row class="mx-3">
+      <v-text-field
+        label="Search"
+        append-icon="mdi-magnify"
+        autocomplete="off"
+      />
+      <v-btn
+        icon
+        class="ml-8 mt-3"
+        color="primary"
+        @click="retrieveArticle()"
+      >
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
+
+      <v-btn
+        depressed
+        class="ma-3"
+        to="article/profile"
+        color="primary"
+      >
+        <v-icon left>mdi-plus-circle</v-icon>
+        创&emsp;建
+      </v-btn>
     </v-row>
 
     <v-row justify="center">
@@ -88,11 +96,7 @@ export default {
       fat: 0,
       carbs: 0,
       protein: 0
-    },
-    category: [
-      'Java',
-      'Golang'
-    ]
+    }
   }),
 
   created () {

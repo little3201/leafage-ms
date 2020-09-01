@@ -78,11 +78,11 @@ export default {
     isShow: true,
     data: {
       businessId: undefined,
-      title: undefined,
-      subtitle: undefined,
-      original: undefined,
-      content: undefined,
-      imageUrl: undefined,
+      title: '',
+      subtitle: '',
+      original: '',
+      content: '',
+      imageUrl: '',
       modifier: 'US328CNJ9'
     },
     titleRules: [

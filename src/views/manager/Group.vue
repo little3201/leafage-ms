@@ -24,8 +24,7 @@
           @click="editedItem()"
           color="primary"
         >
-          <v-icon left>mdi-plus-circle</v-icon>
-          创&emsp;建
+          <v-icon>mdi-plus-circle</v-icon>
         </v-btn>
       </v-row>
 

@@ -24,7 +24,7 @@
           to="article/profile"
           color="primary"
         >
-          <v-icon left>mdi-plus-circle</v-icon>
+          <v-icon>mdi-plus-circle</v-icon>
         </v-btn>
       </v-row>
 

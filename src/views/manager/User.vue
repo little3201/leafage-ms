@@ -13,20 +13,18 @@
         <v-btn
           icon
           class="ml-8 mt-3"
-          color="primary"
           @click="retrieveUser()"
         >
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
 
         <v-btn
-          depressed
+          icon
           class="ma-3"
           @click="editedItem()"
           color="primary"
         >
-          <v-icon left>mdi-plus-circle</v-icon>
-          创&emsp;建
+          <v-icon>mdi-plus-circle</v-icon>
         </v-btn>
       </v-row>
 
@@ -38,6 +36,9 @@
                 <th class="text-center">Nickname</th>
                 <th class="text-center">Mobile</th>
                 <th class="text-center">Email</th>
+                <th class="text-center">Expired</th>
+                <th class="text-center">Locked</th>
+                <th class="text-center">CredentialsExpired</th>
                 <th class="text-center">Modified Time</th>
                 <th class="text-center">Actions</th>
               </tr>
@@ -48,6 +49,9 @@
                 <td class="text-center">{{ item.nickname }}</td>
                 <td class="text-center">{{ item.mobile }}</td>
                 <td class="text-center">{{ item.email }}</td>
+                <td class="text-center">{{ item.accountNonExpired ? '否' : '是' }}</td>
+                <td class="text-center">{{ item.accountNonLocked ? '否' : '是' }}</td>
+                <td class="text-center">{{ item.credentialsNonExpired ? '否' : '是' }}</td>
                 <td class="text-center">{{ item.modifyTime }}</td>
                 <td class="text-center">
                   <v-btn

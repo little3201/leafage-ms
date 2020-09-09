@@ -13,14 +13,13 @@
         <v-btn
           icon
           class="ml-8 mt-3"
-          color="primary"
           @click="retrieveGroup()"
         >
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
 
         <v-btn
-          depressed
+          icon
           class="ma-3"
           @click="editedItem()"
           color="primary"

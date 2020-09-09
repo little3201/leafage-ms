@@ -13,20 +13,18 @@
         <v-btn
           icon
           class="ml-8 mt-3"
-          color="primary"
           @click="retrieveSource()"
         >
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
 
         <v-btn
-          depressed
+          icon
           class="ma-3"
           to="article/profile"
           color="primary"
         >
           <v-icon left>mdi-plus-circle</v-icon>
-          创&emsp;建
         </v-btn>
       </v-row>
 

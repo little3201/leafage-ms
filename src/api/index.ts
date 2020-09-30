@@ -1,10 +1,7 @@
 import axios from 'axios'
-import router from '@/router'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+import router from '../router'
 
-const redirectTo = (path) => {
+const redirectTo = (path: string) => {
   router.replace({
     path: path
   })
@@ -22,11 +19,9 @@ const instance = axios.create(config)
 // 请求拦截
 instance.interceptors.request.use(
   config => {
-    NProgress.start()
     return config
   },
   error => {
-    NProgress.done()
     return Promise.reject(error)
   }
 )
@@ -34,14 +29,12 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   res => {
-    NProgress.done()
     if (res.status === 204) {
       setTimeout(() => { redirectTo('/signup') }, 300)
     }
     return res
   },
   error => {
-    NProgress.done()
     const { response } = error
     if (response) {
       // 状态码判断
@@ -74,4 +67,4 @@ instance.interceptors.response.use(
   }
 )
 
-export default instance
+export default instance;

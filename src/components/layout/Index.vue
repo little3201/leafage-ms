@@ -1,16 +1,16 @@
 <template>
-  <Layout />
+  <Menu />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Layout from '../components/layout/Index.vue'
+import Menu from './Menu.vue'
 
 export default defineComponent({
-  name: 'Home',
+  name: 'Layout',
 
   components: {
-    Layout
+    Menu
   },
 
   setup() {

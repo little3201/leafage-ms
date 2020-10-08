@@ -23,7 +23,6 @@ abeille-manager，一个后端管理系统，使用 Vue + Vuetify。
 ### 目标功能
 - [x] 登录注册
 - [ ] 修改密码
-- [ ] 第三方登录(github、码云)
 - [ ] 个人中心
 - [ ] 消息提醒
 - [x] 在线编辑文章
@@ -36,14 +35,10 @@ abeille-manager，一个后端管理系统，使用 Vue + Vuetify。
 - [x] 照片墙、关于我
 - [ ] 全文检索/站内搜索
 
-### 项目文档
-
-文档地址：
-
 ### 展示截图
 
-<img alt="Abeille Logo" width="100%" src="src/assets/signin.png">
-<img alt="Abeille Logo" width="100%" src="src/assets/dashboard.png">
+<img alt="Abeille Logo" width="100%" src="src/assets/images/signin.png">
+<img alt="Abeille Logo" width="100%" src="src/assets/images/dashboard.png">
 
 ### 项目地址
 

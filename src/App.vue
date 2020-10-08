@@ -9,3 +9,13 @@ export default defineComponent({
   name: 'App'
 })
 </script>
+
+<style lang="scss">
+body {
+    -webkit-font-smoothing: antialiased;
+    @apply overflow-x-hidden py-3 px-8 text-sm text-gray-800;
+    @media (max-width: 768px) {
+        @apply px-3;
+    }
+}
+</style>

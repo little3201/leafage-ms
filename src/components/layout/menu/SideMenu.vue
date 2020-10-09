@@ -1,13 +1,12 @@
 <template>
   <div class="flex">
     <!-- BEGIN: Side Menu -->
-    <nav class="pr-5 pb-16 overflow-x-hidden side-nav">
-      <div class="w-full h-px bg-theme-3 z-10 relative my-6"></div>
+    <nav class="bg-blue-500 side-nav">
       <ul>
         <li v-for="(side, index) in menus" :key="index">
           <a
             href="#"
-            class="flex items-center pl-5 mb-1 relative rounded-full side-menu--active"
+            class="items-center"
           >
             <div
               class="absolute top-0 left-0 h-full rounded-l-full transition ease-in duration-100"
@@ -16,6 +15,7 @@
             </div>
             <div class="w-full ml-3 flex items-center">
               {{ side.name }}
+              <!-- 箭头 -->
               <i
                 v-if="side.subs"
                 data-feather="chevron-down"

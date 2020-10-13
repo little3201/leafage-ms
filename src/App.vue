@@ -13,9 +13,6 @@ export default defineComponent({
 <style lang="scss">
 body {
     -webkit-font-smoothing: antialiased;
-    @apply overflow-x-hidden text-sm text-gray-800;
-    @media (max-width: 768px) {
-        @apply px-3;
-    }
+    @apply overflow-x-hidden py-0 px-0 text-sm text-gray-800;
 }
 </style>

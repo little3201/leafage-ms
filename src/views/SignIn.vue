@@ -7,11 +7,11 @@
           <a href="" class="-intro-x flex items-center pt-5">
             <img
               alt="Midone Laravel Admin Dashboard Starter Kit"
-              class="w-6"
+              class="w-8"
               src="../assets/logo.svg"
             />
             <span class="text-white text-lg ml-3">
-              Mid<span class="font-medium">one</span>
+              Abe<span class="font-medium">ille</span>
             </span>
           </a>
           <div class="my-auto">

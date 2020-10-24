@@ -1,5 +1,7 @@
 <template>
-  <Menu />
+  <div class="app">
+    <Menu />
+  </div>
 </template>
 
 <script lang="ts">
@@ -19,3 +21,14 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.app {
+  background: #1C3FAA;
+  -webkit-font-smoothing: antialiased;
+  @apply overflow-x-hidden py-3 px-8 text-sm text-gray-800;
+  @media (max-width: theme('screens.sm')) {
+      @apply px-3;
+  }
+}
+</style>

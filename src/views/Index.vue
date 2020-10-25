@@ -1,16 +1,16 @@
 <template>
-  <Layout />
+  <Landing />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Layout from '../components/layout/Index.vue'
+import Landing from '../components/common/Landing.vue'
 
 export default defineComponent({
   name: 'Home',
 
   components: {
-    Layout
+    Landing
   },
 
   setup() {

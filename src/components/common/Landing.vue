@@ -46,7 +46,7 @@
             <a
               href="#"
               class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100"
-              >Blog</a
+              >Document</a
             >
           </div>
         </div>
@@ -54,7 +54,7 @@
           <a
             href="#"
             class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100 mr-6"
-            >Login</a
+            >Sign In</a
           >
           <a
             href="#"

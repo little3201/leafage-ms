@@ -45,8 +45,13 @@
             >
             <a
               href="#"
-              class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100"
+              class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100 mr-6"
               >Document</a
+            >
+            <a
+              href="#"
+              class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100"
+              >FAQ</a
             >
           </div>
         </div>
@@ -209,7 +214,7 @@
                   <div class="w-32 bg-gray-200" style="height: 560px"></div>
                   <div class="flex-1 p-6">
                     <h2 class="text-lg text-gray-700 font-bold mb-3">
-                      Popular Payments
+                      Popular Permission 
                     </h2>
                     <div class="flex mb-5">
                       <div class="w-16 rounded-full bg-gray-100 py-2 px-4 mr-2">

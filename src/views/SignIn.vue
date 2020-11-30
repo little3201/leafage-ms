@@ -92,12 +92,12 @@
                 id="btn-login"
                 class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
               >
-                Login
+                Sign In
               </button>
               <button
                 class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0"
               >
-                Sign up
+                Sign Up
               </button>
             </div>
             <div

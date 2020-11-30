@@ -54,22 +54,22 @@
           </div>
         </div>
         <div class="hidden md:block">
-          <a
-            href="#"
+          <router-link
+            to="/signin"
             class="inline-block py-1 md:py-4 text-gray-500 hover:text-gray-100 mr-6"
-            >Sign In</a
-          >
-          <a
-            href="#"
+            >Sign In
+          </router-link>
+          <router-link
+            to="/signup"
             class="inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg"
-            >Sign Up</a
-          >
+            >Sign Up
+          </router-link>
         </div>
       </div>
     </nav>
     <nav
       v-show="opened"
-      class="fixed inset-x-0 md:hidden bg-white h-full w-full z-10"
+      class="fixed top-0 pt-16 inset-x-0 md:hidden bg-white h-full w-full z-10"
     >
       <div class="p-4 divide-y divide-gray-600 text-black flex flex-col">
         <router-link to="#how" class="p-2 font-semibold hover:text-orange-700"
@@ -83,6 +83,16 @@
         </router-link>
         <router-link to="#FAQ" class="p-2 font-semibold hover:text-orange-700"
           >FAQ
+        </router-link>
+        <router-link
+          to="/signin"
+          class="p-2 font-semibold hover:text-orange-700"
+          >Sign In
+        </router-link>
+        <router-link
+          to="/signup"
+          class="p-2 font-semibold hover:text-orange-700"
+          >Sign Up
         </router-link>
       </div>
     </nav>

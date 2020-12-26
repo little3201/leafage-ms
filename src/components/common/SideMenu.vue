@@ -1012,26 +1012,26 @@
               <div class="p-2">
                 <a
                   href=""
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
+                  class="flex items-center p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
                 >
                   <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile
                 </a>
                 <a
                   href=""
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
+                  class="flex items-center p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
                 >
                   <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account
                 </a>
                 <a
                   href=""
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
+                  class="flex items-center p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
                 >
                   <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset
                   Password
                 </a>
                 <a
                   href=""
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
+                  class="flex items-center p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
                 >
                   <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help
                 </a>
@@ -1039,7 +1039,7 @@
               <div class="p-2 border-t border-theme-40">
                 <a
                   href=""
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
+                  class="flex items-center p-2 transition duration-300 ease-in-out hover:bg-theme-1 rounded-md"
                 >
                   <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i>
                   Logout
@@ -1195,7 +1195,7 @@
                 </div>
                 <div class="dropdown relative xl:ml-auto mt-5 xl:mt-0">
                   <button
-                    class="dropdown-toggle button font-normal border text-white relative flex items-center text-gray-700"
+                    class="dropdown-toggle button font-normal border relative flex items-center text-gray-700"
                   >
                     Filter by Category
                     <i data-feather="chevron-down" class="w-4 h-4 ml-2"></i>
@@ -1208,27 +1208,27 @@
                     >
                       <a
                         href=""
-                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                        class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                         >PC & Laptop</a
                       >
                       <a
                         href=""
-                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                        class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                         >Smartphone</a
                       >
                       <a
                         href=""
-                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                        class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                         >Electronic</a
                       >
                       <a
                         href=""
-                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                        class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                         >Photography</a
                       >
                       <a
                         href=""
-                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                        class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                         >Sport</a
                       >
                     </div>

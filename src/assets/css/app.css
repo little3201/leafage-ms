@@ -1765,7 +1765,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .tooltipster-grow {
   transform: scale(0, 0);
   transition-property: transform;
-  -webkit-backface-visibility: hidden;
 }
 
 .tooltipster-grow.tooltipster-show {

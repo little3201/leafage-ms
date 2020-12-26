@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <Landing />
-    <Feature />
+  <div class="app">
+    <MobileMenu />
+    <SideMenu />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Landing from "../components/common/Landing.vue";
-import Feature from "../components/sections/Feature.vue";
+import MobileMenu from "../components/common/MobileMenu.vue";
+import SideMenu from "../components/common/SideMenu.vue";
 
 export default defineComponent({
   name: "Home",
 
   components: {
-    Landing,
-    Feature,
+    MobileMenu,
+    SideMenu,
   },
 
   setup() {

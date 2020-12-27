@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div>
     <MobileMenu />
     <SideMenu />
   </div>

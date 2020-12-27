@@ -11,7 +11,7 @@
               src="/src/assets/images/logo.svg"
             />
             <span class="text-white text-lg ml-3">
-              Mid<span class="font-medium">One</span>
+              Abe<span class="font-medium">ille</span>
             </span>
           </a>
           <div class="my-auto">

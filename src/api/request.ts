@@ -9,7 +9,7 @@ const SERVER_URL = {
   // hypervisor
   user: SERVER_PRE.hypervisor.concat('/user'), // 用户
   role: SERVER_PRE.hypervisor.concat('/role'), // 角色
-  source: SERVER_PRE.hypervisor.concat('/resource'), // 资源
+  authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
   group: SERVER_PRE.hypervisor.concat('/group'), // 组
   // assets
   article: SERVER_PRE.assets.concat('/article'), // 文章

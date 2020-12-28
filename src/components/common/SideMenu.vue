@@ -591,7 +591,7 @@
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-for="data in datas" :key="data.username">
                   <tr class="intro-x">
                     <td class="w-40">
                       <div class="flex">
@@ -622,341 +622,14 @@
                       </div>
                     </td>
                     <td>
-                      <a href="" class="font-medium whitespace-no-wrap"
-                        >Apple MacBook Pro 13</a
+                      <a href="" class="font-medium whitespace-no-wrap" v-text="data.nickname"
+                        ></a
                       >
                       <div class="text-gray-600 text-xs whitespace-no-wrap">
                         PC &amp; Laptop
                       </div>
                     </td>
-                    <td class="text-center">77</td>
-                    <td class="w-40">
-                      <div
-                        class="flex items-center justify-center text-theme-9"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-check-square w-4 h-4 mr-2"
-                        >
-                          <polyline points="9 11 12 14 22 4"></polyline>
-                          <path
-                            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                          ></path>
-                        </svg>
-                        Active
-                      </div>
-                    </td>
-                    <td class="table-report__action w-56">
-                      <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-square w-4 h-4 mr-2"
-                          >
-                            <polyline points="9 11 12 14 22 4"></polyline>
-                            <path
-                              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                            ></path>
-                          </svg>
-                          Edit
-                        </a>
-                        <a class="flex items-center text-theme-6" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-trash-2 w-4 h-4 mr-1"
-                          >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path
-                              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                            ></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                          </svg>
-                          Delete
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="intro-x">
-                    <td class="w-40">
-                      <div class="flex">
-                        <div class="w-10 h-10 image-fit zoom-in">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-7.jpg"
-                            title="Uploaded at 21 July 2020"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-13.jpg"
-                            title="Uploaded at 31 December 2021"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-2.jpg"
-                            title="Uploaded at 9 September 2020"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <a href="" class="font-medium whitespace-no-wrap"
-                        >Dell XPS 13</a
-                      >
-                      <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        PC &amp; Laptop
-                      </div>
-                    </td>
-                    <td class="text-center">100</td>
-                    <td class="w-40">
-                      <div
-                        class="flex items-center justify-center text-theme-9"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-check-square w-4 h-4 mr-2"
-                        >
-                          <polyline points="9 11 12 14 22 4"></polyline>
-                          <path
-                            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                          ></path>
-                        </svg>
-                        Active
-                      </div>
-                    </td>
-                    <td class="table-report__action w-56">
-                      <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-square w-4 h-4 mr-2"
-                          >
-                            <polyline points="9 11 12 14 22 4"></polyline>
-                            <path
-                              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                            ></path>
-                          </svg>
-                          Edit
-                        </a>
-                        <a class="flex items-center text-theme-6" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-trash-2 w-4 h-4 mr-1"
-                          >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path
-                              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                            ></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                          </svg>
-                          Delete
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="intro-x">
-                    <td class="w-40">
-                      <div class="flex">
-                        <div class="w-10 h-10 image-fit zoom-in">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-9.jpg"
-                            title="Uploaded at 5 January 2021"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-6.jpg"
-                            title="Uploaded at 18 November 2021"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-13.jpg"
-                            title="Uploaded at 1 June 2021"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <a href="" class="font-medium whitespace-no-wrap"
-                        >Oppo Find X2 Pro</a
-                      >
-                      <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        Smartphone &amp; Tablet
-                      </div>
-                    </td>
-                    <td class="text-center">50</td>
-                    <td class="w-40">
-                      <div
-                        class="flex items-center justify-center text-theme-9"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-check-square w-4 h-4 mr-2"
-                        >
-                          <polyline points="9 11 12 14 22 4"></polyline>
-                          <path
-                            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                          ></path>
-                        </svg>
-                        Active
-                      </div>
-                    </td>
-                    <td class="table-report__action w-56">
-                      <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-check-square w-4 h-4 mr-2"
-                          >
-                            <polyline points="9 11 12 14 22 4"></polyline>
-                            <path
-                              d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                            ></path>
-                          </svg>
-                          Edit
-                        </a>
-                        <a class="flex items-center text-theme-6" href="">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-trash-2 w-4 h-4 mr-1"
-                          >
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path
-                              d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                            ></path>
-                            <line x1="10" y1="11" x2="10" y2="17"></line>
-                            <line x1="14" y1="11" x2="14" y2="17"></line>
-                          </svg>
-                          Delete
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr class="intro-x">
-                    <td class="w-40">
-                      <div class="flex">
-                        <div class="w-10 h-10 image-fit zoom-in">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-11.jpg"
-                            title="Uploaded at 22 April 2020"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-10.jpg"
-                            title="Uploaded at 12 December 2020"
-                          />
-                        </div>
-                        <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                          <img
-                            alt="Midone Tailwind HTML Admin Template"
-                            class="tooltip rounded-full"
-                            src="/src/assets/images/preview-12.jpg"
-                            title="Uploaded at 7 May 2020"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <a href="" class="font-medium whitespace-no-wrap"
-                        >Apple MacBook Pro 13</a
-                      >
-                      <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        PC &amp; Laptop
-                      </div>
-                    </td>
-                    <td class="text-center">50</td>
+                    <td class="text-center">{{ data.modifyTime }}</td>
                     <td class="w-40">
                       <div
                         class="flex items-center justify-center text-theme-9"
@@ -1118,3 +791,28 @@
     <!-- END: Content -->
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import instance from "../../api";
+import SERVER_URL from "../../api/request";
+
+export default defineComponent({
+  setup() {
+    const datas = computed(() =>
+      instance.get(SERVER_URL.user.concat("?page=0&size=3")).then(
+        (response) => {
+          return response.data;
+        },
+        (error) => {
+          alert(error.statusText);
+        }
+      )
+    );
+
+    return {
+      datas,
+    };
+  },
+});
+</script>

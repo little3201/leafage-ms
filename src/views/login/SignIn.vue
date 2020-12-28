@@ -100,5 +100,20 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import instance from "../../api";
+import SERVER_URL from "../../api/request";
+
+export default defineComponent({
+  setup() {
+    const data = computed(() =>
+      instance.get(SERVER_URL.user.concat("?page=0&size=3"))
+    );
+
+    return {
+      data,
+    };
+  },
+});
+</script>

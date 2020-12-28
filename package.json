@@ -16,9 +16,11 @@
     "@vue/compiler-sfc": "^3.0.2",
     "eslint": "^7.10.0",
     "eslint-plugin-vue": "^7.1.0",
+    "mockjs": "^1.1.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.2",
     "typescript": "^4.0.3",
-    "vite": "^1.0.0-rc.8"
+    "vite": "^1.0.0-rc.8",
+    "vite-plugin-mock": "^1.0.9"
   }
 }

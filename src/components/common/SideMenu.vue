@@ -591,8 +591,8 @@
                     <th class="text-center whitespace-no-wrap">ACTIONS</th>
                   </tr>
                 </thead>
-                <tbody v-for="data in datas" :key="data.username">
-                  <tr class="intro-x">
+                <tbody>
+                  <tr class="intro-x" v-for="(data, index) in datas" :key="index">
                     <td class="w-40">
                       <div class="flex">
                         <div class="w-10 h-10 image-fit zoom-in">
@@ -622,14 +622,11 @@
                       </div>
                     </td>
                     <td>
-                      <a href="" class="font-medium whitespace-no-wrap" v-text="data.nickname"
-                        ></a
-                      >
-                      <div class="text-gray-600 text-xs whitespace-no-wrap">
-                        PC &amp; Laptop
+                      <a href="" class="font-medium whitespace-no-wrap" v-text="data.name"></a>
+                      <div class="text-gray-600 text-xs whitespace-no-wrap">{{ data.description }}
                       </div>
                     </td>
-                    <td class="text-center">{{ data.modifyTime }}</td>
+                    <td class="text-center">{{ data.code }}</td>
                     <td class="w-40">
                       <div
                         class="flex items-center justify-center text-theme-9"
@@ -793,22 +790,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
   setup() {
-    const datas = computed(() =>
-      instance.get(SERVER_URL.user.concat("?page=0&size=3")).then(
+    const datas = ref([]);
+
+    function initList() {
+      instance.get(SERVER_URL.role.concat("?page=0&size=10")).then(
         (response) => {
-          return response.data;
+          datas.value = response.data;
         },
         (error) => {
           alert(error.statusText);
         }
-      )
-    );
+      );
+    }
+
+    onMounted(() => {
+      initList()
+    })
 
     return {
       datas,

@@ -11,7 +11,7 @@ const redirectTo = (path: string) => {
 const config = {
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost'
+  baseURL: 'https://console.abeille.top/api'
 }
 
 const instance = axios.create(config)

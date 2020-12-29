@@ -6,7 +6,7 @@
         <img
           alt="Midone Tailwind HTML Admin Template"
           class="w-6"
-          src="/src/assets/images/logo.svg"
+          src="/images/logo.svg"
         />
         <span class="hidden xl:block text-white text-lg ml-3">
           Abe<span class="font-medium">ille</span>
@@ -275,7 +275,7 @@
           >
             <img
               alt="Midone Tailwind HTML Admin Template"
-              src="/src/assets/images/profile-12.jpg"
+              src="/images/profile-12.jpg"
             />
           </div>
         </div>

@@ -5,7 +5,7 @@
         <img
           alt="Midone Tailwind HTML Admin Template"
           class="w-6"
-          src="/src/assets/images/logo.svg"
+          src="/images/logo.svg"
         />
       </a>
       <a href="javascript:;" id="mobile-menu-toggler">

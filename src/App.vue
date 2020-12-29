@@ -11,5 +11,5 @@ export default defineComponent({
 </script>
 
 <style>
-
+@import '/assets/css/app.css';
 </style>

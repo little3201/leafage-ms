@@ -8,7 +8,7 @@
             <img
               alt="Midone Tailwind HTML Admin Template"
               class="w-6"
-              src="/src/assets/images/logo.svg"
+              src="/images/logo.svg"
             />
             <span class="text-white text-lg ml-3">
               Abe<span class="font-medium">ille</span>
@@ -18,7 +18,7 @@
             <img
               alt="Midone Tailwind HTML Admin Template"
               class="-intro-x w-1/2 -mt-16"
-              src="/src/assets/images/illustration.svg"
+              src="/images/illustration.svg"
             />
             <div
               class="-intro-x text-white font-medium text-4xl leading-tight mt-10"

@@ -4,7 +4,7 @@ import './index.css'
 import router from './router'
 // import { setupProdMockServer } from './mockServer';
 
-// dev mock server
+// // dev mock server
 // if (process.env.NODE_ENV === 'dev') {
 //     setupProdMockServer();
 // }

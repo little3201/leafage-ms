@@ -9632,7 +9632,7 @@ body {
 }
 
 .side-nav > ul ul {
-  display: none;
+  /* display: none; */
   --bg-opacity: 1;
   background-color: #1A389F;
   background-color: rgba(26, 56, 159, var(--bg-opacity));

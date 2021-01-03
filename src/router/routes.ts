@@ -3,49 +3,54 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: () => import('../views/Index.vue'),
   },
   {
     path: '/system',
-    name: 'system',
+    name: 'System',
     component: () => import('../views/system/Index.vue'),
     children: [
       {
+        path: '',
+        name: 'Group',
+        component: () => import('../views/system/Group.vue')
+      },
+      {
         path: 'user',
-        name: 'user',
+        name: 'User',
         component: () => import('../views/system/User.vue')
       },
       {
         path: 'role',
-        name: 'role',
+        name: 'Role',
         component: () => import('../views/system/Role.vue')
       },
       {
         path: 'authority',
-        name: 'authority',
+        name: 'Authority',
         component: () => import('../views/system/Authority.vue')
       }
     ]
   },
   {
     path: '/posts',
-    name: 'posts',
+    name: 'Posts',
     component: () => import('../views/posts/Index.vue'),
     children: [
       {
-        path: 'blog',
-        name: 'blog',
+        path: '',
+        name: 'Blog',
         component: () => import('../views/posts/Blog.vue')
       },
       {
-        path: '/portifolio',
-        name: 'portifolio',
+        path: 'portifolio',
+        name: 'Portifolio',
         component: () => import('../views/posts/Portifolio.vue')
       },
       {
         path: 'category',
-        name: 'category',
+        name: 'Category',
         component: () => import('../views/posts/Category.vue')
       }
     ]

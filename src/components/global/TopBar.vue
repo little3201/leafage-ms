@@ -76,3 +76,23 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+
+export default defineComponent({
+  name: "TopBar",
+
+  setup() {
+    function initWebSocket() {
+      let websock = new WebSocket("ws://localhost/webscoket");
+    }
+
+    onMounted(() => {
+      initWebSocket();
+    });
+
+    return {};
+  }
+});
+</script>

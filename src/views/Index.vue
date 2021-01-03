@@ -19,12 +19,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import MobileMenu from "../components/common/MobileMenu.vue";
-import SideMenu from "../components/common/SideMenu.vue";
+import MobileMenu from "../components/global/MobileMenu.vue";
+import SideMenu from "../components/global/SideMenu.vue";
 
-import Table from "../components/common/Table.vue";
-import Report from "../components/common/Report.vue";
-import TopBar from "../components/common/TopBar.vue";
+import Table from "../components/global/Table.vue";
+import Report from "../components/global/Report.vue";
+import TopBar from "../components/global/TopBar.vue";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";

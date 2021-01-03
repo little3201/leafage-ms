@@ -76,7 +76,7 @@
         </a>
         <ul v-show="isSystemOpen" class="xl:ml-4">
           <li>
-            <router-link to="/system/user" class="side-menu">
+            <router-link to="/system" class="side-menu">
               <div class="side-menu__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

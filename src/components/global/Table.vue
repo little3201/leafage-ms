@@ -55,7 +55,7 @@
       <table class="table table-report sm:mt-2">
         <thead>
           <tr>
-            <th class="whitespace-no-wrap">IMAGES</th>
+            <th class="whitespace-no-wrap">No.</th>
             <th class="whitespace-no-wrap">PRODUCT NAME</th>
             <th class="text-center whitespace-no-wrap">STOCK</th>
             <th class="text-center whitespace-no-wrap">STATUS</th>
@@ -64,33 +64,8 @@
         </thead>
         <tbody>
           <tr class="intro-x" v-for="(data, index) in datas" :key="index">
-            <td class="w-40">
-              <div class="flex">
-                <div class="w-10 h-10 image-fit zoom-in">
-                  <img
-                    alt="Midone Tailwind HTML Admin Template"
-                    class="tooltip rounded-full"
-                    src="/src/assets/images/preview-2.jpg"
-                    title="Uploaded at 6 August 2022"
-                  />
-                </div>
-                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                  <img
-                    alt="Midone Tailwind HTML Admin Template"
-                    class="tooltip rounded-full"
-                    src="/src/assets/images/preview-8.jpg"
-                    title="Uploaded at 1 May 2021"
-                  />
-                </div>
-                <div class="w-10 h-10 image-fit zoom-in -ml-5">
-                  <img
-                    alt="Midone Tailwind HTML Admin Template"
-                    class="tooltip rounded-full"
-                    src="/src/assets/images/preview-11.jpg"
-                    title="Uploaded at 10 October 2020"
-                  />
-                </div>
-              </div>
+            <td>
+              {{ index + 1 }}
             </td>
             <td>
               <a
@@ -217,9 +192,9 @@
           </a>
         </li>
         <li><a class="pagination__link" href="">...</a></li>
-        <li><a class="pagination__link" href="">1</a></li>
+        <li><a class="pagination__link pagination__link--active" href="">1</a></li>
         <li>
-          <a class="pagination__link pagination__link--active" href="">2</a>
+          <a class="pagination__link" href="">2</a>
         </li>
         <li><a class="pagination__link" href="">3</a></li>
         <li><a class="pagination__link" href="">...</a></li>
@@ -261,7 +236,7 @@ export default defineComponent({
   name: "table",
 
   props: {
-    data: {
+    datas: {
       type: Array,
       default: [],
     },

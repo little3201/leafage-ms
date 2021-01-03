@@ -12,9 +12,9 @@ const SERVER_URL = {
   authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
   group: SERVER_PRE.hypervisor.concat('/group'), // 组
   // assets
-  article: SERVER_PRE.assets.concat('/article'), // 文章
-  topic: SERVER_PRE.assets.concat('/topic'), // 话题
-  resource: SERVER_PRE.assets.concat('/portfolio') // 作品集
+  posts: SERVER_PRE.assets.concat('/posts'), // 帖子
+  category: SERVER_PRE.assets.concat('/category'), // 类别
+  portifolio: SERVER_PRE.assets.concat('/portfolio') // 作品集
 }
 
 export default SERVER_URL;

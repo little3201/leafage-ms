@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="px-4 py-3">
     <MobileMenu />
     <div class="flex">
-    <SideMenu />
-    <div class="content">
-      <TopBar />
-      <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
-          <!-- BEGIN: General Report -->
-          <Report />
-          <Table :datas="datas" />
+      <SideMenu />
+      <div class="content">
+        <TopBar />
+        <div class="grid grid-cols-12 gap-6">
+          <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
+            <!-- BEGIN: General Report -->
+            <Report />
+            <Table :datas="datas" />
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -22,9 +22,8 @@ import { defineComponent, ref, onMounted } from "vue";
 import MobileMenu from "../components/global/MobileMenu.vue";
 import SideMenu from "../components/global/SideMenu.vue";
 
-import Table from "../components/global/Table.vue";
 import Report from "../components/global/Report.vue";
-import TopBar from "../components/global/TopBar.vue";
+import Table from "../components/global/Table.vue";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";
@@ -35,23 +34,22 @@ export default defineComponent({
   components: {
     MobileMenu,
     SideMenu,
-    TopBar,
     Table,
     Report,
   },
 
-  setup () {
+  setup() {
     const datas = ref([]);
 
     async function initList() {
-      await instance.get(SERVER_URL.role.concat("?page=0&size=10")).then(
-        (response) => {
-          datas.value = response.data;
-        },
-        (error) => {
-          // alert(error.statusText);
-        }
-      );
+      // await instance.get(SERVER_URL.role.concat("?page=0&size=10")).then(
+      //   (response) => {
+      //     datas.value = response.data;
+      //   },
+      //   (error) => {
+      //     // alert(error.statusText);
+      //   }
+      // );
     }
 
     onMounted(() => {
@@ -61,7 +59,6 @@ export default defineComponent({
     return {
       datas,
     };
-  }
-
+  },
 });
 </script>

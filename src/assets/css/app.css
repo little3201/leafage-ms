@@ -6956,10 +6956,6 @@ html {
 body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
   font-family: Roboto;
   font-size: 0.875rem;
   --text-opacity: 1;
@@ -6967,12 +6963,6 @@ body {
   color: rgba(45, 55, 72, var(--text-opacity));
 }
 
-@media (max-width: 639px) {
-  body {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-}
 
 .content {
   border-radius: 30px;

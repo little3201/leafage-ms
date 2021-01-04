@@ -1,18 +1,18 @@
 <template>
-  <Table :datas="datas" />
+  <Tables :datas="datas" />
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
-import Table from "../components/global/Table.vue";
+import Tables from "/src/components/global/Tables.vue";
 
 export default defineComponent({
   name: "Role",
 
   components: {
-    Table,
+    Tables,
   },
 
   setup() {

@@ -4,61 +4,61 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Index.vue'),
-  },
-  {
-    path: '/system',
-    name: 'System',
-    component: () => import('../views/system/Index.vue'),
+    component: () => import('/src/views/Layout.vue'),
     children: [
       {
         path: '',
-        name: 'Group',
-        component: () => import('../views/system/Group.vue')
+        name: 'Dashboard',
+        component: () => import('/src/views/Index.vue')
       },
       {
-        path: 'user',
-        name: 'User',
-        component: () => import('../views/system/User.vue')
+        path: 'system',
+        name: 'System',
+        component: () => import('/src/views/system/Index.vue'),
+        children: [
+          {
+            path: 'group',
+            name: 'Group',
+            component: () => import('/src/views/system/Group.vue')
+          },
+          {
+            path: 'user',
+            name: 'User',
+            component: () => import('/src/views/system/User.vue')
+          },
+          {
+            path: 'role',
+            name: 'Role',
+            component: () => import('/src/views/system/Role.vue')
+          },
+          {
+            path: 'authority',
+            name: 'Authority',
+            component: () => import('/src/views/system/Authority.vue')
+          }
+        ]
       },
       {
-        path: 'role',
-        name: 'Role',
-        component: () => import('../views/system/Role.vue')
-      },
-      {
-        path: 'authority',
-        name: 'Authority',
-        component: () => import('../views/system/Authority.vue')
-      }
-    ]
-  },
-  {
-    path: '/posts',
-    name: 'Posts',
-    component: () => import('../views/posts/Index.vue'),
-    children: [
-      {
-        path: '',
-        name: 'Blog',
-        component: () => import('../views/posts/Blog.vue')
+        path: 'posts',
+        name: 'Posts',
+        component: () => import('/src/views/assets/Posts.vue')
       },
       {
         path: 'portifolio',
         name: 'Portifolio',
-        component: () => import('../views/posts/Portifolio.vue')
+        component: () => import('/src/views/assets/Portifolio.vue')
       },
       {
         path: 'category',
         name: 'Category',
-        component: () => import('../views/posts/Category.vue')
-      }
+        component: () => import('/src/views/assets/Category.vue')
+      },
     ]
   },
   {
     path: '/signin',
     name: 'SignIn',
-    component: () => import('../views/login/SignIn.vue'),
+    component: () => import('/src/views/login/SignIn.vue'),
   }
 ];
 

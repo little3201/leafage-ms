@@ -1,40 +1,18 @@
 <template>
-  <div class="px-4 py-3">
-    <MobileMenu />
-    <div class="flex">
-      <SideMenu />
-      <div class="content">
-        <TopBar />
-        <div class="grid grid-cols-12 gap-6">
-          <div class="col-span-12 xxl:col-span-9 grid grid-cols-12 gap-6">
-            <!-- BEGIN: General Report -->
-            <Report />
-            <Table :datas="datas" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <Report />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import MobileMenu from "../components/global/MobileMenu.vue";
-import SideMenu from "../components/global/SideMenu.vue";
-
-import Report from "../components/global/Report.vue";
-import Table from "../components/global/Table.vue";
+import Report from "/src/components/global/Report.vue";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";
 
 export default defineComponent({
-  name: "Home",
+  name: "Dashboard",
 
   components: {
-    MobileMenu,
-    SideMenu,
-    Table,
     Report,
   },
 
@@ -47,7 +25,7 @@ export default defineComponent({
       //     datas.value = response.data;
       //   },
       //   (error) => {
-      //     // alert(error.statusText);
+      //     alert(error.statusText);
       //   }
       // );
     }

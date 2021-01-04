@@ -48,16 +48,14 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-box"
+              class="feather feather-layers"
             >
-              <path
-                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-              ></path>
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
           <div class="side-menu__title">
@@ -138,11 +136,12 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-menu"
+                  class="feather feather-pocket"
                 >
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                  <path
+                    d="M4 3h16a2 2 0 0 1 2 2v6a10 10 0 0 1-10 10A10 10 0 0 1 2 11V5a2 2 0 0 1 2-2z"
+                  ></path>
+                  <polyline points="8 10 12 14 16 10"></polyline>
                 </svg>
               </div>
               <div class="side-menu__title">Role</div>
@@ -151,28 +150,7 @@
           <li>
             <router-link to="/system/authority" class="side-menu">
               <div class="side-menu__icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-lock"
-                >
-                  <rect
-                    x="3"
-                    y="11"
-                    width="18"
-                    height="11"
-                    rx="2"
-                    ry="2"
-                  ></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
               </div>
               <div class="side-menu__title">Authority</div>
             </router-link>
@@ -189,14 +167,14 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-inbox"
+              class="feather feather-book"
             >
-              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
               <path
-                d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
               ></path>
             </svg>
           </div>
@@ -213,17 +191,15 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-hard-drive"
+              class="feather feather-camera"
             >
-              <line x1="22" y1="12" x2="2" y2="12"></line>
               <path
-                d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
               ></path>
-              <line x1="6" y1="16" x2="6.01" y2="16"></line>
-              <line x1="10" y1="16" x2="10.01" y2="16"></line>
+              <circle cx="12" cy="13" r="4"></circle>
             </svg>
           </div>
           <div class="side-menu__title">Portifolio</div>
@@ -239,17 +215,15 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-hard-drive"
+              class="feather feather-tag"
             >
-              <line x1="22" y1="12" x2="2" y2="12"></line>
               <path
-                d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
               ></path>
-              <line x1="6" y1="16" x2="6.01" y2="16"></line>
-              <line x1="10" y1="16" x2="10.01" y2="16"></line>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
             </svg>
           </div>
           <div class="side-menu__title">Category</div>

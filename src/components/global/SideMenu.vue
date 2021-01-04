@@ -116,12 +116,10 @@
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-users"
+                  class="feather feather-user"
                 >
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
                 </svg>
               </div>
               <div class="side-menu__title">User</div>
@@ -202,9 +200,7 @@
               ></path>
             </svg>
           </div>
-          <div class="side-menu__title">
-            Posts
-          </div>
+          <div class="side-menu__title">Posts</div>
         </router-link>
       </li>
       <li>

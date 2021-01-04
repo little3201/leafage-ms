@@ -2,7 +2,7 @@
   <div class="top-bar">
     <!-- BEGIN: Breadcrumb -->
     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
-      <a href="" class="">Application</a>
+      <router-link to="/" class="">Application</router-link>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"
@@ -17,7 +17,7 @@
       >
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
-      <a href="" class="breadcrumb--active">Dashboard</a>
+      <router-link to="/" class="breadcrumb--active">Dashboard</router-link>
     </div>
     <div class="intro-x relative mr-3 sm:mr-6">
       <div class="search hidden sm:block">

@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-6">
     <div class="intro-y block sm:flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Weekly Top Seller</h2>
+      <h2 class="text-lg font-medium truncate mr-5" v-text="head"></h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
         <button class="button box flex items-center text-gray-700">
           <svg
@@ -52,12 +52,11 @@
       </div>
     </div>
     <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
-      <table class="table table-report sm:mt-2">
+      <table class="table table-report sm:mt-2 overflow-x-scroll">
         <thead>
           <tr>
-            <th class="whitespace-no-wrap">No.</th>
-            <th class="whitespace-no-wrap">PRODUCT NAME</th>
-            <th class="text-center whitespace-no-wrap">STOCK</th>
+            <th class="whitespace-no-wrap">NO.</th>
+            <th class="text-center whitespace-no-wrap uppercase" v-for="(title, index) in titles" :key="index">{{ title }}</th>
             <th class="text-center whitespace-no-wrap">STATUS</th>
             <th class="text-center whitespace-no-wrap">ACTIONS</th>
           </tr>
@@ -77,7 +76,7 @@
                 {{ data.description }}
               </div>
             </td>
-            <td class="text-center">{{ data.code }}</td>
+            <td class="text-center" v-for="(title, index) in titles" :key="index" v-text="data.title"></td>
             <td class="w-40">
               <div class="flex items-center justify-center text-theme-9">
                 <svg
@@ -174,7 +173,7 @@
           </a>
         </li>
         <li>
-          <a class="pagination__link" href="">
+          <a class="pagination__link" href="" disabled>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -191,7 +190,7 @@
             </svg>
           </a>
         </li>
-        <li><a class="pagination__link" href="">...</a></li>
+        <li class="hidden"><a class="pagination__link" href="">...</a></li>
         <li><a class="pagination__link pagination__link--active" href="">1</a></li>
         <li>
           <a class="pagination__link" href="">2</a>
@@ -236,6 +235,14 @@ export default defineComponent({
   name: "Tables",
 
   props: {
+    head: {
+      type: String,
+      default: 'Weekly Top Seller'
+    },
+    titles: {
+      type: Array,
+      default: []
+    },
     datas: {
       type: Array,
       default: [],

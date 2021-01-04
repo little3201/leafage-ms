@@ -36173,7 +36173,6 @@ video {
 }
 
 .mobile-menu ul li ul {
-  display: none;
   --bg-opacity: 1;
   background-color: #1A389F;
   background-color: rgba(26, 56, 159, var(--bg-opacity));

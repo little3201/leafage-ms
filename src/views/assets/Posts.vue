@@ -1,5 +1,5 @@
 <template>
-  <Tables :datas="datas" />
+  <Tables :head="head" :titles="titles" :datas="datas" />
 </template>
 
 
@@ -18,6 +18,8 @@ export default defineComponent({
   },
 
   setup() {
+    const head = ref("Posts Tables");
+    const titles = ref(["Code", "Title", "Subtitle", "Category"]);
     const datas = ref([]);
 
     async function initDatas() {
@@ -36,6 +38,8 @@ export default defineComponent({
     });
 
     return {
+      head,
+      titles,
       datas,
     };
   },

@@ -1,5 +1,5 @@
 <template>
-  <Tables :datas="datas" />
+  <Tables :head="head" :titles="titles" :datas="datas" />
 </template>
 
 <script lang="ts">
@@ -17,6 +17,8 @@ export default defineComponent({
   },
 
   setup() {
+    const head = ref("Category Tables");
+    const titles = ref(["Code", "Alias"]);
     const datas = ref([]);
 
     async function initDatas() {
@@ -35,6 +37,8 @@ export default defineComponent({
     });
 
     return {
+      head,
+      titles,
       datas,
     };
   },

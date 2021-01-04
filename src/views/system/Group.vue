@@ -1,5 +1,5 @@
 <template>
-  <Tables :datas="datas" />
+  <Tables :head="head" :titles="titles" :datas="datas" />
 </template>
 
 <script lang="ts">
@@ -16,6 +16,8 @@ export default defineComponent({
   },
 
   setup() {
+    const head = ref("Group Tables");
+    const titles = ref(["Code", "Name", "Principal", "Superior", "Description","User Count"]);
     const datas = ref([]);
 
     function initDatas() {
@@ -31,6 +33,8 @@ export default defineComponent({
     });
 
     return {
+      head,
+      titles,
       datas,
     };
   },

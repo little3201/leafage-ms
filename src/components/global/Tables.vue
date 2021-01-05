@@ -51,8 +51,8 @@
         </button>
       </div>
     </div>
-    <div class="intro-y overflow-auto lg:overflow-visible mt-8 sm:mt-0">
-      <table class="table table-report sm:mt-2 overflow-x-scroll">
+    <div class="intro-y overflow-auto mt-8 sm:mt-0">
+      <table class="table table-report sm:mt-2">
         <thead>
           <tr>
             <th class="whitespace-no-wrap">NO.</th>

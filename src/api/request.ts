@@ -14,7 +14,7 @@ const SERVER_URL = {
   // assets
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别
-  portifolio: SERVER_PRE.assets.concat('/portfolio') // 作品集
+  portfolio: SERVER_PRE.assets.concat('/portfolio') // 作品集
 }
 
 export default SERVER_URL;

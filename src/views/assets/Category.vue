@@ -212,17 +212,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Tables from "/src/components/global/Tables.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
   name: "Category",
-
-  components: {
-    Tables,
-  },
 
   setup() {
     const datas = ref([]);

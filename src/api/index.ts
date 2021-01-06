@@ -11,7 +11,7 @@ const redirectTo = (path: string) => {
 const config = {
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://console.abeille.top/api' : 'http://localhost'
+  baseURL: 'https://console.abeille.top/api'
 }
 
 const instance = axios.create(config)
@@ -50,7 +50,7 @@ instance.interceptors.response.use(
           break
         // 404请求不存在
         case 404:
-          response.statusText = '服务可能罢工了，再试一下。'
+          response.statusText = '服务可能罢工了，刷新试试。'
           break
         default:
           response.statusText = '请求可能跑丢了，再试一下。'

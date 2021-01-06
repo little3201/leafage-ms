@@ -9,12 +9,12 @@ const SERVER_URL = {
   // hypervisor
   user: SERVER_PRE.hypervisor.concat('/user'), // 用户
   role: SERVER_PRE.hypervisor.concat('/role'), // 角色
-  source: SERVER_PRE.hypervisor.concat('/resource'), // 资源
+  authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
   group: SERVER_PRE.hypervisor.concat('/group'), // 组
   // assets
-  article: SERVER_PRE.assets.concat('/article'), // 文章
-  topic: SERVER_PRE.assets.concat('/topic'), // 话题
-  resource: SERVER_PRE.assets.concat('/portfolio') // 作品集
+  posts: SERVER_PRE.assets.concat('/posts'), // 帖子
+  category: SERVER_PRE.assets.concat('/category'), // 类别
+  portfolio: SERVER_PRE.assets.concat('/portfolio') // 作品集
 }
 
 export default SERVER_URL;

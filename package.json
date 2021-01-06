@@ -6,7 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "tailwindcss": "^1.8.10",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",

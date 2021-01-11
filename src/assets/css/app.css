@@ -1444,26 +1444,6 @@
   display: none;
 }
 
-/* Slider */
-
-.slick-loading .slick-list {
-  background: #fff url("./ajax-loader.gif") center center no-repeat;
-}
-
-/* Icons */
-
-@font-face {
-  font-family: "slick";
-
-  src: url("./fonts/slick.eot");
-
-  src: url("./fonts/slick.eot?#iefix") format("embedded-opentype"), url("./fonts/slick.woff") format("woff"), url("./fonts/slick.ttf") format("truetype"), url("./fonts/slick.svg#slick") format("svg");
-
-  font-weight: normal;
-
-  font-style: normal;
-}
-
 /* Arrows */
 
 .slick-prev,
@@ -37133,12 +37113,6 @@ video {
 
 .note-editor.note-frame .note-statusbar .note-resizebar .note-icon-bar, .note-editor.note-airframe .note-statusbar .note-resizebar .note-icon-bar {
   border-color: #e2e8f0 !important;
-}
-
-@font-face {
-  font-family: "summernote";
-
-  src: url(../fonts/summernote/summernote.woff);
 }
 
 .slick-dots {

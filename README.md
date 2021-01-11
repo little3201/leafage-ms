@@ -29,8 +29,8 @@ abeille-manager，一个前（使用 Vue.js + Nuxt.js + Tailwindcss）、后端�
 
 ### 展示截图
 
-<img alt="signin" width="100%" src="src/assets/images/signin.png">
-<img alt="dashboard" width="100%" src="src/assets/images/dashboard.png">
+<img alt="signin" width="100%" src="src/assets/img/signin.png">
+<img alt="dashboard" width="100%" src="src/assets/img/dashboard.png">
 
 ### 项目地址
 

@@ -41,12 +41,12 @@ instance.interceptors.response.use(
       switch (response.status) {
         // 401: 未登录状态，跳转登录页
         case 401:
-          setTimeout(() => { redirectTo('/signin') }, 300)
+          redirectTo('/signin')
           break
         // 403：验证失败，仍然登录页
         case 403:
           // store.commit('loginSuccess', null);
-          setTimeout(() => { redirectTo('/signin') }, 300)
+          redirectTo('/signin')
           break
         // 404请求不存在
         case 404:

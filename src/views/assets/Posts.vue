@@ -79,7 +79,7 @@
             <td class="text-center" v-text="data.code"></td>
             <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
             <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="text-center" v-text="new Date(data.modifyTime).toDateString()"></td>
+            <td class="text-center" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="table-report__action w-56">
               <Action />
             </td>

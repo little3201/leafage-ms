@@ -34,7 +34,7 @@
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
           </div>
-          <div class="flex items-center w-full">Dashboard</div>
+          <div class="hidden xl:flex items-center w-full">Dashboard</div>
         </router-link>
       </li>
       <li>
@@ -61,7 +61,7 @@
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
-          <div class="flex items-center w-full">
+          <div class="hidden xl:flex items-center w-full">
             System
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +101,7 @@
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
               </div>
-              <div class="w-full flex items-center translate-x-2 transition duration-300">Group</div>
+              <div class="w-full hidden xl:flex items-center">Group</div>
             </router-link>
           </li>
           <li>
@@ -123,7 +123,7 @@
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
               </div>
-              <div class="w-full flex items-center">User</div>
+              <div class="w-full hidden xl:flex items-center">User</div>
             </router-link>
           </li>
           <li>
@@ -147,7 +147,7 @@
                   <polyline points="8 10 12 14 16 10"></polyline>
                 </svg>
               </div>
-              <div class="w-full flex items-center">Role</div>
+              <div class="w-full hidden xl:flex items-center">Role</div>
             </router-link>
           </li>
           <li>
@@ -172,7 +172,7 @@
                   <line x1="12" y1="2" x2="12" y2="12"></line>
                 </svg>
               </div>
-              <div class="w-full flex items-center">Authority</div>
+              <div class="w-full hidden xl:flex items-center">Authority</div>
             </router-link>
           </li>
         </ul>
@@ -201,7 +201,7 @@
               ></path>
             </svg>
           </div>
-          <div class="w-full flex items-center">Posts</div>
+          <div class="w-full hidden xl:flex items-center">Posts</div>
         </router-link>
       </li>
       <li>
@@ -228,7 +228,7 @@
               <circle cx="12" cy="13" r="4"></circle>
             </svg>
           </div>
-          <div class="w-full flex items-center">Portifolio</div>
+          <div class="w-full hidden xl:flex items-center">Portifolio</div>
         </router-link>
       </li>
       <li>
@@ -255,7 +255,7 @@
               <line x1="7" y1="7" x2="7.01" y2="7"></line>
             </svg>
           </div>
-          <div class="w-full flex items-center">Category</div>
+          <div class="w-full hidden xl:flex items-center">Category</div>
         </router-link>
       </li>
     </ul>

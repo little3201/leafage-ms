@@ -2,7 +2,7 @@
   <div class="col-span-12 mt-8">
     <div class="intro-y flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
-      <a href="" class="ml-auto flex text-theme-1">
+      <a href="" class="ml-auto flex text-blue-800">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -23,20 +23,20 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
-            <div class="flex">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
+            <div class="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-shopping-cart report-box__icon text-theme-10"
+                class="feather feather-shopping-cart text-blue-800"
               >
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
@@ -46,21 +46,22 @@
               </svg>
               <div class="ml-auto">
                 <div
-                  class="report-box__indicator bg-theme-9 tooltip cursor-pointer"
+                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                  style="background-color: rgba(145, 199, 20)"
                   title="33% Higher than last month"
                 >
                   33%
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-arrow-up w-4 h-4"
+                    class="feather feather-arrow-up"
                   >
                     <line x1="12" y1="19" x2="12" y2="5"></line>
                     <polyline points="5 12 12 5 19 12"></polyline>
@@ -74,41 +75,41 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-credit-card report-box__icon text-theme-11"
+                class="feather feather-credit-card text-yellow-500"
               >
                 <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                 <line x1="1" y1="10" x2="23" y2="10"></line>
               </svg>
               <div class="ml-auto">
                 <div
-                  class="report-box__indicator bg-theme-6 tooltip cursor-pointer"
+                  class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
                   title="2% Lower than last month"
                 >
                   2%
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-arrow-down w-4 h-4"
+                    class="feather feather-arrow-down"
                   >
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <polyline points="19 12 12 19 5 12"></polyline>
@@ -122,20 +123,20 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-monitor report-box__icon text-theme-12"
+                class="feather feather-monitor text-purple-500"
               >
                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                 <line x1="8" y1="21" x2="16" y2="21"></line>
@@ -143,21 +144,22 @@
               </svg>
               <div class="ml-auto">
                 <div
-                  class="report-box__indicator bg-theme-9 tooltip cursor-pointer"
+                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                  style="background-color: rgba(145, 199, 20)"
                   title="12% Higher than last month"
                 >
                   12%
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-arrow-up w-4 h-4"
+                    class="feather feather-arrow-up"
                   >
                     <line x1="12" y1="19" x2="12" y2="5"></line>
                     <polyline points="5 12 12 5 19 12"></polyline>
@@ -171,27 +173,28 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="report-box zoom-in">
-          <div class="box p-5">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="28"
+                height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-user report-box__icon text-theme-9"
+                class="feather feather-user text-green-600"
               >
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <div class="ml-auto">
                 <div
-                  class="report-box__indicator bg-theme-9 tooltip cursor-pointer"
+                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                  style="background-color: rgba(145, 199, 20)"
                   title="22% Higher than last month"
                 >
                   22%

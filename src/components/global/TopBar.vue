@@ -23,7 +23,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
-          class="w-56 bg-gray-300 rounded-full py-2 px-3"
+          class="w-56 bg-gray-300 rounded-full py-2 px-4 outline-none focus:placeholder-gray-800"
           placeholder="Search..."
         />
         <svg
@@ -45,7 +45,7 @@
     </div>
     <div class="intro-x relative mr-auto sm:mr-6">
       <div
-        class="notification notification--bullet relative cursor-pointer"
+        class="cursor-pointer"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -57,16 +57,17 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-bell notification__icon"
+          class="feather feather-bell"
         >
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
+        <span class="absolute inset-y-0 right-0 -mt-1 rounded-full h-2 w-2 bg-red-600"></span>
       </div>
     </div>
-    <div class="intro-x dropdown w-8 h-8 relative">
+    <div class="intro-x w-8 h-8 relative">
       <div
-        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
+        class="w-8 h-8 rounded-full overflow-hidden shadow-lg zoom-in"
       >
         <img
           alt="Midone Tailwind HTML Admin Template"

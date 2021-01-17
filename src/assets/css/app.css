@@ -6791,37 +6791,6 @@ select.input.input--lg {
   padding-right: 1rem;
 }
 
-.notification {
-  /* position: relative;
-  --text-opacity: 1;
-  color: #365A74;
-  color: rgba(54, 90, 116, var(--text-opacity)); */
-}
-
-.notification.notification--light {
-  --text-opacity: 1;
-  color: #98AFF5;
-  color: rgba(152, 175, 245, var(--text-opacity));
-}
-
-.notification .notification__icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.notification.notification--bullet:before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  margin-top: -2px;
-  border-radius: 9999px;
-  position: absolute;
-  right: 0;
-  --bg-opacity: 1;
-  background-color: #D32929;
-  background-color: rgba(211, 41, 41, var(--bg-opacity));
-}
-
 .image-fit {
   position: relative;
 }

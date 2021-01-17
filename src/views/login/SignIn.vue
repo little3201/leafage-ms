@@ -52,7 +52,7 @@
                 <input
                   type="text"
                   name="username"
-                  class="intro-x login__input input input--lg border border-gray-300 block"
+                  class="intro-x login__input rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
                   placeholder="Username/Phone/Email"
                   required
                   autofocus
@@ -60,7 +60,7 @@
                 <input
                   type="password"
                   name="password"
-                  class="intro-x login__input input input--lg border border-gray-300 block mt-4"
+                  class="intro-x login__input rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
                   placeholder="Password"
                   required
                 />
@@ -69,7 +69,7 @@
                 <div class="flex items-center mr-auto">
                   <input
                     type="checkbox"
-                    class="input border mr-2"
+                    class="py-2 px-3 border mr-2"
                     id="remember-me"
                   />
                   <label class="cursor-pointer select-none" for="remember-me"

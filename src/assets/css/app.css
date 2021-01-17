@@ -6383,25 +6383,6 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   }
 }
 
-.top-bar {
-  height: 67px;
-  z-index: 51;
-  display: flex;
-  align-items: center;
-  position: relative;
-  border-bottom-width: 1px;
-  --border-opacity: 1;
-  border-color: #dee7ef;
-  border-color: rgba(222, 231, 239, var(--border-opacity));
-}
-
-.app {
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-
 .login {
   position: relative;
   --bg-opacity: 1;
@@ -6610,40 +6591,12 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   }
 }
 
-.search {
-  position: relative;
-}
-
-.search .search__input {
-  width: 14rem;
-  border-radius: 9999px;
-  --bg-opacity: 1;
-  background-color: #D2DFEA;
-  background-color: rgba(210, 223, 234, var(--bg-opacity));
-  padding-right: 2rem;
-}
-
-.search .search__icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  position: absolute;
-  margin-top: auto;
-  margin-bottom: auto;
-  top: 0;
-  bottom: 0;
-  margin-right: 0.75rem;
-  right: 0;
-  --text-opacity: 1;
-  color: #365A74;
-  color: rgba(54, 90, 116, var(--text-opacity));
-}
-
 .input {
-  padding-top: 0.5rem;
+  /* padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  border-radius: 0.375rem;
+  border-radius: 0.375rem; */
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -6839,10 +6792,10 @@ select.input.input--lg {
 }
 
 .notification {
-  position: relative;
+  /* position: relative;
   --text-opacity: 1;
   color: #365A74;
-  color: rgba(54, 90, 116, var(--text-opacity));
+  color: rgba(54, 90, 116, var(--text-opacity)); */
 }
 
 .notification.notification--light {
@@ -10240,24 +10193,6 @@ select.input.input--lg {
   100% {
     z-index: 10;
   }
-}
-
-.breadcrumb {
-  display: flex;
-  align-items: center;
-}
-
-.breadcrumb.breadcrumb--light {
-  height: 100%;
-  margin-left: 2.5rem;
-  padding-left: 2.5rem;
-  border-left-width: 1px;
-  --border-opacity: 1;
-  border-color: #2e51bb;
-  border-color: rgba(46, 81, 187, var(--border-opacity));
-  --text-opacity: 1;
-  color: #C6D4FD;
-  color: rgba(198, 212, 253, var(--text-opacity));
 }
 
 @media (max-width: 767px) {
@@ -36017,12 +35952,6 @@ video {
 
 .delay-1000{
   transition-delay: 1000ms;
-}
-
-.top-bar-boxed {
-  height: 70px;
-  z-index: 51;
-  position: relative;
 }
 
 .mobile-menu {

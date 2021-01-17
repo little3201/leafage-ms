@@ -3,10 +3,13 @@
     <MobileMenu />
     <div class="flex">
       <SideMenu />
-      <div class="px-4 md:px-5 min-h-screen rounded-3xl bg-gray-100 flex-1">
+      <div
+        class="px-4 md:px-5 rounded-3xl bg-gray-100 flex-1"
+        style="min-height: calc(100vh - 24px)"
+      >
         <TopBar />
-            <!-- BEGIN: General Report -->
-            <router-view></router-view>
+        <!-- BEGIN: General Report -->
+        <router-view></router-view>
       </div>
     </div>
   </div>

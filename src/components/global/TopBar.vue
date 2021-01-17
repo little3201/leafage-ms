@@ -1,7 +1,7 @@
 <template>
-  <div class="top-bar">
+  <div class="flex items-center relative h-16 border-b bg-gray-200 bg-opacity-30">
     <!-- BEGIN: Breadcrumb -->
-    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+    <div class="-intro-x mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -17,13 +17,13 @@
       >
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
-      <router-link to="/" class="breadcrumb--active">Dashboard</router-link>
+      <router-link to="/" class="text-blue-800 font-medium">Dashboard</router-link>
     </div>
     <div class="intro-x relative mr-3 sm:mr-6">
-      <div class="search hidden sm:block">
+      <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
-          class="search__input input placeholder-theme-13"
+          class="w-56 bg-gray-300 rounded-full py-2 px-3"
           placeholder="Search..."
         />
         <svg
@@ -36,16 +36,16 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-search search__icon"
+          class="feather feather-search absolute inset-y-0 right-0 my-auto mr-3"
         >
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </div>
     </div>
-    <div class="intro-x dropdown relative mr-auto sm:mr-6">
+    <div class="intro-x relative mr-auto sm:mr-6">
       <div
-        class="dropdown-toggle notification notification--bullet cursor-pointer"
+        class="notification notification--bullet relative cursor-pointer"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

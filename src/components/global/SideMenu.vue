@@ -10,10 +10,13 @@
         Abe<span class="font-medium">ille</span>
       </span>
     </a>
-    <div class="my-6 relative h-px w-full bg-gray-200 opacity-30"></div>
+    <div class="my-6 relative h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul class="text-white">
       <li>
-        <router-link to="/" class="flex items-center h-12 relative rounded-l-full pl-5 bg-gray-100 text-black -mr-5">
+        <router-link
+          to="/"
+          class="flex items-center h-12 relative rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
+        >
           <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +101,7 @@
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
               </div>
-              <div class="w-full flex items-center">Group</div>
+              <div class="w-full flex items-center translate-x-2 transition duration-300">Group</div>
             </router-link>
           </li>
           <li>
@@ -148,7 +151,10 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/system/authority" class="flex items-center h-12 pl-5">
+            <router-link
+              to="/system/authority"
+              class="flex items-center h-12 pl-5"
+            >
               <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -172,8 +178,11 @@
         </ul>
       </li>
       <li>
-        <router-link to="/posts" class="side-menu flex items-center h-12 relative bg-indigo-300 opacity-5 rounded-l-full pl-5">
-          <div class="side-menu__icon">
+        <router-link
+          to="/posts"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -192,12 +201,15 @@
               ></path>
             </svg>
           </div>
-          <div class="w-full ml-3 flex items-center">Posts</div>
+          <div class="w-full flex items-center">Posts</div>
         </router-link>
       </li>
       <li>
-        <router-link to="/portifolio" class="side-menu flex items-center h-12 relative rounded-full pl-5">
-          <div class="side-menu__icon">
+        <router-link
+          to="/portifolio"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -216,12 +228,15 @@
               <circle cx="12" cy="13" r="4"></circle>
             </svg>
           </div>
-          <div class="side-menu__title w-full ml-3 flex items-center">Portifolio</div>
+          <div class="w-full flex items-center">Portifolio</div>
         </router-link>
       </li>
       <li>
-        <router-link to="/category" class="side-menu flex items-center h-12 relative rounded-full pl-5">
-          <div class="side-menu__icon">
+        <router-link
+          to="/category"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -240,7 +255,7 @@
               <line x1="7" y1="7" x2="7.01" y2="7"></line>
             </svg>
           </div>
-          <div class="side-menu__title w-full ml-3 flex items-center">Category</div>
+          <div class="w-full flex items-center">Category</div>
         </router-link>
       </li>
     </ul>

@@ -77,9 +77,18 @@
               ></a>
             </td>
             <td class="text-center" v-text="data.code"></td>
-            <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="text-center" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td
+              class="text-center"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="text-center"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="text-center"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
             <td class="table-report__action w-56">
               <Action />
             </td>
@@ -93,8 +102,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Action from '/src/components/global/Action.vue'
-import Pagation from '/src/components/global/Pagation.vue'
+import Action from "/src/components/global/Action.vue";
+import Pagation from "/src/components/global/Pagation.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -104,7 +113,7 @@ export default defineComponent({
 
   components: {
     Action,
-    Pagation
+    Pagation,
   },
 
   setup() {

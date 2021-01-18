@@ -1,6 +1,6 @@
 <template>
-  <nav class="side-nav">
-    <a href="" class="intro-x flex items-center pl-5 pt-4">
+  <nav class="hidden md:block sm:w-20 xl:w-60 pr-5">
+    <router-link to="/" class="intro-x flex items-center pl-5 pt-3">
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"
@@ -9,12 +9,15 @@
       <span class="hidden xl:block text-white text-lg ml-3">
         Abe<span class="font-medium">ille</span>
       </span>
-    </a>
-    <div class="side-nav__devider my-6"></div>
-    <ul>
+    </router-link>
+    <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
+    <ul class="text-white">
       <li>
-        <router-link to="/" class="side-menu side-menu--active">
-          <div class="side-menu__icon">
+        <router-link
+          to="/"
+          class="flex items-center h-12 relative rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -31,16 +34,16 @@
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
           </div>
-          <div class="side-menu__title">Dashboard</div>
+          <div class="hidden xl:flex items-center w-full">Dashboard</div>
         </router-link>
       </li>
       <li>
         <a
           href="javascript:;"
           @click.prevent="isSystemOpen = !isSystemOpen"
-          class="side-menu"
+          class="flex items-center h-12 relative rounded-full pl-5"
         >
-          <div class="side-menu__icon">
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -58,7 +61,7 @@
               <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
           </div>
-          <div class="side-menu__title">
+          <div class="hidden xl:flex items-center w-full">
             System
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +73,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-chevron-down side-menu__sub-icon"
+              class="feather feather-chevron-down ml-auto"
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
@@ -78,8 +81,8 @@
         </a>
         <ul v-show="isSystemOpen" class="xl:ml-4">
           <li>
-            <router-link to="/system/group" class="side-menu">
-              <div class="side-menu__icon">
+            <router-link to="/system/group" class="flex items-center h-12 pl-5">
+              <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -98,12 +101,12 @@
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
               </div>
-              <div class="side-menu__title">Group</div>
+              <div class="w-full hidden xl:flex items-center">Group</div>
             </router-link>
           </li>
           <li>
-            <router-link to="/system/user" class="side-menu">
-              <div class="side-menu__icon">
+            <router-link to="/system/user" class="flex items-center h-12 pl-5">
+              <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -120,12 +123,12 @@
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
               </div>
-              <div class="side-menu__title">User</div>
+              <div class="w-full hidden xl:flex items-center">User</div>
             </router-link>
           </li>
           <li>
-            <router-link to="/system/role" class="side-menu">
-              <div class="side-menu__icon">
+            <router-link to="/system/role" class="flex items-center h-12 pl-5">
+              <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -144,12 +147,15 @@
                   <polyline points="8 10 12 14 16 10"></polyline>
                 </svg>
               </div>
-              <div class="side-menu__title">Role</div>
+              <div class="w-full hidden xl:flex items-center">Role</div>
             </router-link>
           </li>
           <li>
-            <router-link to="/system/authority" class="side-menu">
-              <div class="side-menu__icon">
+            <router-link
+              to="/system/authority"
+              class="flex items-center h-12 pl-5"
+            >
+              <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -166,14 +172,17 @@
                   <line x1="12" y1="2" x2="12" y2="12"></line>
                 </svg>
               </div>
-              <div class="side-menu__title">Authority</div>
+              <div class="w-full hidden xl:flex items-center">Authority</div>
             </router-link>
           </li>
         </ul>
       </li>
       <li>
-        <router-link to="/posts" class="side-menu">
-          <div class="side-menu__icon">
+        <router-link
+          to="/posts"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -192,12 +201,15 @@
               ></path>
             </svg>
           </div>
-          <div class="side-menu__title">Posts</div>
+          <div class="w-full hidden xl:flex items-center">Posts</div>
         </router-link>
       </li>
       <li>
-        <router-link to="/portifolio" class="side-menu">
-          <div class="side-menu__icon">
+        <router-link
+          to="/portfolio"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -216,12 +228,15 @@
               <circle cx="12" cy="13" r="4"></circle>
             </svg>
           </div>
-          <div class="side-menu__title">Portifolio</div>
+          <div class="w-full hidden xl:flex items-center">Portfolio</div>
         </router-link>
       </li>
       <li>
-        <router-link to="/category" class="side-menu">
-          <div class="side-menu__icon">
+        <router-link
+          to="/category"
+          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        >
+          <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -240,7 +255,7 @@
               <line x1="7" y1="7" x2="7.01" y2="7"></line>
             </svg>
           </div>
-          <div class="side-menu__title">Category</div>
+          <div class="w-full hidden xl:flex items-center">Category</div>
         </router-link>
       </li>
     </ul>

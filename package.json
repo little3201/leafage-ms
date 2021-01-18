@@ -25,5 +25,16 @@
   },
   "resolutions": {
     "postcss": "8.2.1"
-  }
+  },
+  "keywords": [
+    "vue3",
+    "typescript",
+    "tailwindcss"
+  ],
+  "author": "liwenqiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/little3201/abeille-manager/issues"
+  },
+  "homepage": "https://github.com/little3201/abeille-manager#readme"
 }

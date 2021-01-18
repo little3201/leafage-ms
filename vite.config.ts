@@ -1,14 +1,10 @@
-import { SharedConfig } from 'vite';
 import path from 'path';
 
-const pathResolve = (pathStr: string) => {
-  return path.resolve(__dirname, pathStr);
-};
-
-const config: SharedConfig = {
+module.exports = {
   alias: {
-    '@/': pathResolve('src/'),
+    '/@/': path.resolve(__dirname, './src')
   },
-};
-
-module.exports = config;
+  optimizeDeps: {
+    include: ["axios", "mockjs"]
+  }
+}

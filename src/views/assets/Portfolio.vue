@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-6">
     <div class="intro-y block sm:flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Posts</h2>
+      <h2 class="text-lg font-medium truncate mr-5">Portfolio</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
         <button class="button box flex items-center text-gray-700">
           <svg
@@ -77,9 +77,18 @@
               ></a>
             </td>
             <td class="text-center" v-text="data.code"></td>
-            <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="text-center" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="text-center" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td
+              class="text-center"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="text-center"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="text-center"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
             <td class="table-report__action w-56">
               <Action />
             </td>
@@ -91,28 +100,27 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Action from '/src/components/global/Action.vue'
-import Pagation from '/src/components/global/Pagation.vue'
+import Action from "/src/components/global/Action.vue";
+import Pagation from "/src/components/global/Pagation.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
-  name: "Posts",
+  name: "Portfolio",
 
   components: {
     Action,
-    Pagation
+    Pagation,
   },
 
   setup() {
     const datas = ref([]);
 
     async function initDatas() {
-      await instance.get(SERVER_URL.posts.concat("?page=0&size=10")).then(
+      await instance.get(SERVER_URL.portfolio.concat("?page=0&size=10")).then(
         (response) => {
           datas.value = response.data;
         },

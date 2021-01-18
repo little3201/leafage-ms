@@ -44,9 +44,9 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('/src/views/assets/Posts.vue')
       },
       {
-        path: 'portifolio',
-        name: 'Portifolio',
-        component: () => import('/src/views/assets/Portifolio.vue')
+        path: 'portfolio',
+        name: 'Portfolio',
+        component: () => import('/src/views/assets/Portfolio.vue')
       },
       {
         path: 'category',

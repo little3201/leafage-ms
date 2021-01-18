@@ -47,43 +47,52 @@
               A few more clicks to sign in to your account. Manage all your
               e-commerce accounts in one place
             </div>
-            <div class="intro-x mt-8">
-              <input
-                type="text"
-                class="intro-x login__input input input--lg border border-gray-300 block"
-                placeholder="Email"
-              />
-              <input
-                type="password"
-                class="intro-x login__input input input--lg border border-gray-300 block mt-4"
-                placeholder="Password"
-              />
-            </div>
-            <div class="intro-x flex text-gray-700 text-xs sm:text-sm mt-4">
-              <div class="flex items-center mr-auto">
+            <form>
+              <div class="intro-x mt-8">
                 <input
-                  type="checkbox"
-                  class="input border mr-2"
-                  id="remember-me"
+                  type="text"
+                  name="username"
+                  class="intro-x login__input rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
+                  placeholder="Username/Phone/Email"
+                  required
+                  autofocus
                 />
-                <label class="cursor-pointer select-none" for="remember-me"
-                  >Remember me</label
-                >
+                <input
+                  type="password"
+                  name="password"
+                  class="intro-x login__input rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
+                  placeholder="Password"
+                  required
+                />
               </div>
-              <a href="">Forgot Password?</a>
-            </div>
-            <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-              <button
-                class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
-              >
-                Login
-              </button>
-              <button
-                class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0"
-              >
-                Sign up
-              </button>
-            </div>
+              <div class="intro-x flex text-gray-700 text-xs sm:text-sm mt-4">
+                <div class="flex items-center mr-auto">
+                  <input
+                    type="checkbox"
+                    class="py-2 px-3 border mr-2"
+                    id="remember-me"
+                  />
+                  <label class="cursor-pointer select-none" for="remember-me"
+                    >Remember me</label
+                  >
+                </div>
+                <a href="">Forgot Password?</a>
+              </div>
+              <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                <button
+                  type="submit"
+                  @click="onSumbit"
+                  class="button button--lg w-full xl:w-32 text-white bg-theme-1 xl:mr-3"
+                >
+                  Login
+                </button>
+                <button
+                  class="button button--lg w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0"
+                >
+                  Sign up
+                </button>
+              </div>
+            </form>
             <div
               class="intro-x mt-10 xl:mt-24 text-gray-700 text-center xl:text-left"
             >
@@ -106,9 +115,11 @@ import instance from "../../api";
 
 export default defineComponent({
   setup() {
-    const data = computed(() =>
-      instance.post('/login')
-    );
+    const data = computed(() => instance.post("/login"));
+
+    function onSubmit() {
+      alert("submit");
+    }
 
     return {
       data,

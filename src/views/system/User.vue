@@ -52,28 +52,28 @@
       </div>
     </div>
     <div class="intro-y overflow-auto mt-8 sm:mt-0">
-      <table class="table table-report sm:mt-2">
+      <table class="table w-full text-left table-report border-separate sm:mt-2">
         <thead>
           <tr class="uppercase">
-            <th class="whitespace-no-wrap">No.</th>
-            <th class="text-center whitespace-no-wrap">Username</th>
-            <th class="text-center whitespace-no-wrap">Avatar</th>
-            <th class="text-center whitespace-no-wrap">Gender</th>
-            <th class="text-center whitespace-no-wrap">Phone</th>
-            <th class="text-center whitespace-no-wrap">Email</th>
-            <th class="text-center whitespace-no-wrap">Birthday</th>
-            <th class="text-center whitespace-no-wrap">NonExpired</th>
-            <th class="text-center whitespace-no-wrap">Locked</th>
-            <th class="text-center whitespace-no-wrap">Credentials</th>
-            <th class="text-center whitespace-no-wrap">Actions</th>
+            <th class="px-4 py-3 font-medium whitespace-no-wrap">No.</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Username</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Avatar</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Gender</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Phone</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Email</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Birthday</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">NonExpired</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Locked</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Credentials</th>
+            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="intro-x" v-for="(data, index) in datas" :key="index">
-            <td>
+          <tr class="intro-x first:rounded-md" v-for="(data, index) in datas" :key="index">
+            <td class="px-4 py-3">
               {{ index + 1 }}
             </td>
-            <td class="text-center">
+            <td class="px-4 py-3 text-center">
               <a
                 href=""
                 class="font-medium whitespace-no-wrap"
@@ -84,17 +84,17 @@
                 v-text="data.nickname"
               ></p>
             </td>
-            <td class="text-center">
+            <td class="px-4 py-3 text-center">
               <img src="/src/assets/logo.svg" class="rounded-full w-8 h-8" >
             </td>
-            <td class="text-center" v-text="data.gender"></td>
-            <td class="text-center" v-text="data.phone"></td>
-            <td class="text-center" v-text="data.email"></td>
-            <td class="text-center" v-text="data.birthday"></td>
-            <td class="w-40">
+            <td class="px-4 py-3 text-center" v-text="data.gender"></td>
+            <td class="px-4 py-3 text-center" v-text="data.phone"></td>
+            <td class="px-4 py-3 text-center" v-text="data.email"></td>
+            <td class="px-4 py-3 text-center" v-text="new Date(data.birthday).toLocaleDateString()"></td>
+            <td class="px-4 py-3 w-40">
               <div
                 v-if="data.accountNonExpired"
-                class="flex items-center justify-center text-theme-9"
+                class="flex items-center justify-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="#91C714"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -131,10 +131,10 @@
                 </svg>
               </div>
             </td>
-            <td class="w-40">
+            <td class="px-4 py-3 w-40">
               <div
                 v-if="data.accountNonLocked"
-                class="flex items-center justify-center text-theme-9"
+                class="flex items-center justify-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +142,7 @@
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="#91C714"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -159,7 +159,7 @@
                   <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
                 </svg>
               </div>
-              <div v-else class="flex items-center justify-center text-theme-6">
+              <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -184,10 +184,10 @@
                 </svg>
               </div>
             </td>
-            <td class="w-40">
+            <td class="px-4 py-3 w-40">
               <div
                 v-if="data.credentialsNonExpired"
-                class="flex items-center justify-center text-theme-9"
+                class="flex items-center justify-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +195,7 @@
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="currentColor"
+                  stroke="#91C714"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -205,7 +205,7 @@
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <div v-else class="flex items-center justify-center text-theme-6">
+              <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -224,20 +224,20 @@
                 </svg>
               </div>
             </td>
-            <td class="table-report__action w-56">
+            <td class="px-4 py-3 table-report__action w-56">
               <div class="flex justify-center items-center">
                 <a class="flex items-center mr-3" href="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-check-square w-4 h-4 mr-2"
+                    class="feather feather-check-square mr-2"
                   >
                     <polyline points="9 11 12 14 22 4"></polyline>
                     <path
@@ -246,7 +246,7 @@
                   </svg>
                   Edit
                 </a>
-                <a class="flex items-center text-theme-6" href="">
+                <a class="flex items-center text-red-600" href="">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

@@ -1,6 +1,6 @@
 <template>
-  <nav class="side-nav hidden md:block md:w-20 xl:w-60 overflow-x-hidden pr-5">
-    <a href="" class="intro-x flex items-center pl-5 pt-4">
+  <nav class="hidden md:block sm:w-20 xl:w-60 overflow-x-hidden pr-5">
+    <a href="" class="intro-x flex items-center pl-5 pt-3">
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"

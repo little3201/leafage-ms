@@ -47,7 +47,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: rgba(145, 199, 20)"
+                  style="background-color: #91C714"
                   title="33% Higher than last month"
                 >
                   33%
@@ -145,7 +145,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: rgba(145, 199, 20)"
+                  style="background-color: #91C714"
                   title="12% Higher than last month"
                 >
                   12%
@@ -194,7 +194,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: rgba(145, 199, 20)"
+                  style="background-color: #91C714"
                   title="22% Higher than last month"
                 >
                   22%

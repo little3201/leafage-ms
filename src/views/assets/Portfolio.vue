@@ -109,7 +109,7 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
-  name: "Portifolio",
+  name: "Portfolio",
 
   components: {
     Action,

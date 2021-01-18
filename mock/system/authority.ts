@@ -7,8 +7,12 @@ export default [
       return [
         {
           code: '20A23D2D1',
-          name: 'admin',
-          description: 'admin',
+          name: 'User',
+          description: '用户',
+          superior: 'System',
+          type: 'menu',
+          path: '/user',
+          modifyTime: new Date()
         },
       ];
     },

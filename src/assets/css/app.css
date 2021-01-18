@@ -6454,18 +6454,18 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 
 .table th {
-  font-weight: 500;
+  /* font-weight: 500;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.75rem; */
 }
 
 .table td {
-  padding-left: 1.25rem;
+  /* padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.75rem; */
 }
 
 .table.table--sm th {

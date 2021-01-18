@@ -23,7 +23,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
-          class="w-56 bg-gray-300 rounded-full py-2 px-4 outline-none focus:placeholder-gray-800"
+          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:placeholder-gray-800"
           placeholder="Search..."
         />
         <svg

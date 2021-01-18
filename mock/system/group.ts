@@ -7,8 +7,11 @@ export default [
       return [
         {
           code: '20A23D2D1',
-          name: 'admin',
-          description: 'admin',
+          name: 'Technology',
+          description: '技术部',
+          superior: '集团',
+          principal: 'admin',
+          modifyTime: new Date()
         },
       ];
     },

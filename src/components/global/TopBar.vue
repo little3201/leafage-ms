@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center relative h-16 border-b bg-gray-200 bg-opacity-30">
+  <div class="flex items-center relative h-16 border-b bg-gray-100">
     <!-- BEGIN: Breadcrumb -->
     <div class="-intro-x mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>
@@ -62,7 +62,7 @@
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
-        <span class="absolute inset-y-0 right-0 -mt-1 rounded-full h-2 w-2 bg-red-600"></span>
+        <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
       </div>
     </div>
     <div class="intro-x w-8 h-8 relative">

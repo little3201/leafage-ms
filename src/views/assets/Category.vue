@@ -51,47 +51,45 @@
         </button>
       </div>
     </div>
-    <div class="col-span-12 mt-6">
-      <div class="intro-y overflow-auto mt-8 sm:mt-0">
-        <table class="table table-report sm:mt-2">
-          <thead>
-            <tr class="uppercase">
-              <th class="whitespace-no-wrap">No.</th>
-              <th class="text-center whitespace-no-wrap">Alias</th>
-              <th class="text-center whitespace-no-wrap">Code</th>
-              <th class="text-center whitespace-no-wrap">Posts Count</th>
-              <th class="text-center whitespace-no-wrap">Modify Time</th>
-              <th class="text-center whitespace-no-wrap">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="intro-x" v-for="(data, index) in datas" :key="index">
-              <td class="px-4 py-2 md:px-5 md:py-3">
-                {{ index + 1 }}
-              </td>
-              <td class="text-center">
-                <a
-                  href=""
-                  class="font-medium whitespace-no-wrap"
-                  v-text="data.alias"
-                ></a>
-              </td>
-              <td class="text-center" v-text="data.code"></td>
-              <td
-                class="text-center"
-                v-text="Math.floor(Math.random() * 100)"
-              ></td>
-              <td
-                class="text-center"
-                v-text="new Date(data.modifyTime).toLocaleDateString()"
-              ></td>
-              <td class="w-56">
-                <Action />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="intro-y overflow-auto mt-8 sm:mt-0">
+      <table class="table table-report sm:mt-2">
+        <thead>
+          <tr class="uppercase">
+            <th class="whitespace-no-wrap">No.</th>
+            <th class="text-center whitespace-no-wrap">Alias</th>
+            <th class="text-center whitespace-no-wrap">Code</th>
+            <th class="text-center whitespace-no-wrap">Posts Count</th>
+            <th class="text-center whitespace-no-wrap">Modify Time</th>
+            <th class="text-center whitespace-no-wrap">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="intro-x" v-for="(data, index) in datas" :key="index">
+            <td class="px-4 py-2 md:px-5 md:py-3">
+              {{ index + 1 }}
+            </td>
+            <td class="text-center">
+              <a
+                href=""
+                class="font-medium whitespace-no-wrap"
+                v-text="data.alias"
+              ></a>
+            </td>
+            <td class="text-center" v-text="data.code"></td>
+            <td
+              class="text-center"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="text-center"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
+            <td class="w-56">
+              <Action />
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <Pagation />
     </div>
   </div>
@@ -114,13 +112,7 @@ export default defineComponent({
   },
 
   setup() {
-    const datas = ref([
-      {
-          code: '32',
-          alias: 'Test',
-          modifyTime: new Date()
-        }
-    ]);
+    const datas = ref([]);
 
     async function initDatas() {
       await instance.get(SERVER_URL.category.concat("?page=0&size=10")).then(
@@ -134,7 +126,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      // initDatas();
+      initDatas();
     });
 
     return {

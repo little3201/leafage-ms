@@ -5,5 +5,7 @@ module.exports = {
   purge: ['./index.html', './src/**/*.vue', './src/**/*.ts'],
   plugins: [],
   variants: {
-  }
+    extend: {
+    }
+  },
 }

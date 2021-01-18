@@ -6,7 +6,7 @@ import authorityMock from '../mock/system/authority';
 
 import postsMock from '../mock/assets/posts';
 import categoryMock from '../mock/assets/category';
-import portiofioMock from '../mock/assets/portifolio';
+import portofioMock from '../mock/assets/portfolio';
 
 export function setupProdMockServer() {
   createProdMockServer([
@@ -16,6 +16,6 @@ export function setupProdMockServer() {
     ...authorityMock,
     ...postsMock, 
     ...categoryMock, 
-    ...portiofioMock
+    ...portofioMock
   ]);
 }

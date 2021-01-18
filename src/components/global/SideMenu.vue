@@ -206,7 +206,7 @@
       </li>
       <li>
         <router-link
-          to="/portifolio"
+          to="/portfolio"
           class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
         >
           <div class="mr-3">
@@ -228,7 +228,7 @@
               <circle cx="12" cy="13" r="4"></circle>
             </svg>
           </div>
-          <div class="w-full hidden xl:flex items-center">Portifolio</div>
+          <div class="w-full hidden xl:flex items-center">Portfolio</div>
         </router-link>
       </li>
       <li>

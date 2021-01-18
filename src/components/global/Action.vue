@@ -3,15 +3,15 @@
     <a class="flex items-center mr-3" href="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width="18"
+        height="18"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="feather feather-check-square w-4 h-4 mr-2"
+        class="feather feather-check-square mr-2"
       >
         <polyline points="9 11 12 14 22 4"></polyline>
         <path
@@ -20,18 +20,18 @@
       </svg>
       Edit
     </a>
-    <a class="flex items-center text-theme-6" href="">
+    <a class="flex items-center text-red-600" href="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width="18"
+        height="18"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="feather feather-trash-2 w-4 h-4 mr-1"
+        class="feather feather-trash-2 mr-1"
       >
         <polyline points="3 6 5 6 21 6"></polyline>
         <path

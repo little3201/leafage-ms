@@ -3,18 +3,18 @@
     <div class="intro-y block sm:flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">Users</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="button box flex items-center text-gray-700">
+        <button class="flex bg-white p-2 rounded-md items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-file-text hidden sm:block w-4 h-4 mr-2"
+            class="feather feather-file-text hidden sm:block mr-2"
           >
             <path
               d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
@@ -26,18 +26,18 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 button box flex items-center text-gray-700">
+        <button class="ml-3 bg-white p-2 rounded-md flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-file-text hidden sm:block w-4 h-4 mr-2"
+            class="feather feather-file-text mr-2"
           >
             <path
               d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
@@ -52,46 +52,46 @@
       </div>
     </div>
     <div class="intro-y overflow-auto mt-8 sm:mt-0">
-      <table class="table w-full text-left table-report border-separate sm:mt-2">
+      <table class="mt-2">
         <thead>
-          <tr class="uppercase">
-            <th class="px-4 py-3 font-medium whitespace-no-wrap">No.</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Username</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Avatar</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Gender</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Phone</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Email</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Birthday</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">NonExpired</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Locked</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Credentials</th>
-            <th class="px-4 py-3 font-medium text-center whitespace-no-wrap">Actions</th>
+          <tr class="uppercase text-center">
+            <th class="px-4 py-2 text-left">No.</th>
+            <th class="px-4 py-2">Username</th>
+            <th class="px-4 py-2">Avatar</th>
+            <th class="px-4 py-2">Gender</th>
+            <th class="px-4 py-2">Phone</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Birthday</th>
+            <th class="px-4 py-2">NonExpired</th>
+            <th class="px-4 py-2">Locked</th>
+            <th class="px-4 py-2">Credentials</th>
+            <th class="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="intro-x first:rounded-md" v-for="(data, index) in datas" :key="index">
-            <td class="px-4 py-3">
+          <tr class="intro-x text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+            <td class="px-4 py-2 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-3 text-center">
+            <td class="px-4 py-2">
               <a
                 href=""
-                class="font-medium whitespace-no-wrap"
+                class="font-medium"
                 v-text="data.username"
               ></a>
               <p
-                class="text-gray-600 text-xs whitespace-no-wrap"
+                class="text-gray-600 text-xs"
                 v-text="data.nickname"
               ></p>
             </td>
-            <td class="px-4 py-3 text-center">
+            <td class="px-4 py-2">
               <img src="/src/assets/logo.svg" class="rounded-full w-8 h-8" >
             </td>
-            <td class="px-4 py-3 text-center" v-text="data.gender"></td>
-            <td class="px-4 py-3 text-center" v-text="data.phone"></td>
-            <td class="px-4 py-3 text-center" v-text="data.email"></td>
-            <td class="px-4 py-3 text-center" v-text="new Date(data.birthday).toLocaleDateString()"></td>
-            <td class="px-4 py-3 w-40">
+            <td class="px-4 py-2" v-text="data.gender"></td>
+            <td class="px-4 py-2" v-text="data.phone"></td>
+            <td class="px-4 py-2" v-text="data.email"></td>
+            <td class="px-4 py-2" v-text="new Date(data.birthday).toLocaleDateString()"></td>
+            <td class="px-4 py-2">
               <div
                 v-if="data.accountNonExpired"
                 class="flex items-center justify-center"
@@ -112,7 +112,7 @@
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <div v-else class="flex items-center justify-center text-theme-6">
+              <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -131,7 +131,7 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-3 w-40">
+            <td class="px-4 py-2">
               <div
                 v-if="data.accountNonLocked"
                 class="flex items-center justify-center"
@@ -184,7 +184,7 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-3 w-40">
+            <td class="px-4 py-2">
               <div
                 v-if="data.credentialsNonExpired"
                 class="flex items-center justify-center"
@@ -224,145 +224,32 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-3 table-report__action w-56">
-              <div class="flex justify-center items-center">
-                <a class="flex items-center mr-3" href="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-check-square mr-2"
-                  >
-                    <polyline points="9 11 12 14 22 4"></polyline>
-                    <path
-                      d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                    ></path>
-                  </svg>
-                  Edit
-                </a>
-                <a class="flex items-center text-red-600" href="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-trash-2 w-4 h-4 mr-1"
-                  >
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path
-                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                    ></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                  </svg>
-                  Delete
-                </a>
-              </div>
+            <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
+              <Action />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div
-      class="intro-y flex flex-wrap sm:flex-row sm:flex-no-wrap items-center mt-3"
-    >
-      <ul class="pagination">
-        <li>
-          <a class="pagination__link" href="">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevrons-left"
-            >
-              <polyline points="11 17 6 12 11 7"></polyline>
-              <polyline points="18 17 13 12 18 7"></polyline>
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a class="pagination__link" href="" disabled>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left"
-            >
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </a>
-        </li>
-        <li class="hidden"><a class="pagination__link" href="">...</a></li>
-        <li>
-          <a class="pagination__link pagination__link--active" href="">1</a>
-        </li>
-        <li>
-          <a class="pagination__link" href="">2</a>
-        </li>
-        <li><a class="pagination__link" href="">3</a></li>
-        <li><a class="pagination__link" href="">...</a></li>
-        <li>
-          <a class="pagination__link" href="">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-right"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </a>
-        </li>
-        <li>
-          <a class="pagination__link" href=""> </a>
-        </li>
-      </ul>
-      <select class="w-20 input box mt-3 sm:mt-0">
-        <option>10</option>
-        <option>25</option>
-        <option>35</option>
-        <option>50</option>
-      </select>
-    </div>
+    <Pagation />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+import Action from '/src/components/global/Action.vue'
+import Pagation from '/src/components/global/Pagation.vue'
+
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
   name: "User",
+
+  components: {
+    Action,
+    Pagation
+  },
 
   setup() {
     const datas = ref([]);

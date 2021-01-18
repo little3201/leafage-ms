@@ -1,6 +1,6 @@
 <template>
-  <nav class="hidden md:block sm:w-20 xl:w-60 overflow-x-hidden pr-5">
-    <a href="" class="intro-x flex items-center pl-5 pt-3">
+  <nav class="hidden md:block sm:w-20 xl:w-60 pr-5">
+    <router-link to="/" class="intro-x flex items-center pl-5 pt-3">
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"
@@ -9,8 +9,8 @@
       <span class="hidden xl:block text-white text-lg ml-3">
         Abe<span class="font-medium">ille</span>
       </span>
-    </a>
-    <div class="my-6 relative h-px w-full bg-gray-200 bg-opacity-30"></div>
+    </router-link>
+    <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul class="text-white">
       <li>
         <router-link

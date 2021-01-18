@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="intro-y flex flex-wrap sm:flex-row sm:flex-no-wrap items-center mt-3"
-  >
-    <ul class="pagination">
-      <li>
-        <a class="pagination__link" href="">
+  <div class="intro-y flex items-center">
+    <ul class="flex items-center mr-0 sm:mr-auto">
+      <li class="px-3 py-2 mr-2">
+        <a href="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -22,8 +20,8 @@
           </svg>
         </a>
       </li>
-      <li>
-        <a class="pagination__link" href="" disabled>
+      <li class="px-3 py-2 mr-2">
+        <a href="" disabled>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -40,17 +38,17 @@
           </svg>
         </a>
       </li>
-      <li class="hidden"><a class="pagination__link" href="">...</a></li>
-      <li>
-        <a class="pagination__link pagination__link--active" href="">1</a>
+      <li class="px-3 py-2 mr-2"><a href="">...</a></li>
+      <li class="px-3 py-2 mr-2 bg-white rounded-md">
+        <a href="">1</a>
       </li>
-      <li>
-        <a class="pagination__link" href="">2</a>
+      <li class="px-3 py-2 mr-2">
+        <a href="">2</a>
       </li>
-      <li><a class="pagination__link" href="">3</a></li>
-      <li><a class="pagination__link" href="">...</a></li>
-      <li>
-        <a class="pagination__link" href="">
+      <li class="px-3 py-2 mr-2"><a href="">3</a></li>
+      <li class="px-3 py-2 mr-2"><a href="">...</a></li>
+      <li class="px-3 py-2 mr-2">
+        <a href="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -67,11 +65,26 @@
           </svg>
         </a>
       </li>
-      <li>
-        <a class="pagination__link" href=""> </a>
+      <li class="px-3 py-2">
+        <a href=""
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-chevrons-right"
+          >
+            <polyline points="13 17 18 12 13 7"></polyline>
+            <polyline points="6 17 11 12 6 7"></polyline></svg
+        ></a>
       </li>
     </ul>
-    <select class="w-20 input box mt-3 sm:mt-0">
+    <select class="w-20 p-2 box mt-3 sm:mt-0">
       <option>10</option>
       <option>25</option>
       <option>35</option>

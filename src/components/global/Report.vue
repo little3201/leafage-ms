@@ -5,15 +5,15 @@
       <a href="" class="ml-auto flex text-blue-800">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="16"
+          height="16"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-rotate-cw w-4 h-4 mr-3"
+          class="feather feather-rotate-cw mr-3"
         >
           <polyline points="23 4 23 10 17 10"></polyline>
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
@@ -23,7 +23,7 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="relative zoom-in">
+        <div class=" zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex items-center">
               <svg
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class="relative zoom-in">
+        <div class=" zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg

@@ -229,7 +229,6 @@ export default defineComponent({
       instance
         .get(SERVER_URL.role.concat("?page=0&size=10"))
         .then((response) => {
-          debugger
           datas.value = response.data;
         });
     }

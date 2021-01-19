@@ -4,7 +4,7 @@
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"
-        src="/images/logo.svg"
+        src="/src/assets/logo.svg"
       />
       <span class="hidden xl:block text-white text-lg ml-3">
         Abe<span class="font-medium">ille</span>
@@ -79,7 +79,7 @@
             </svg>
           </div>
         </a>
-        <ul v-show="isSystemOpen" class="xl:ml-4">
+        <ul v-show="isSystemOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30">
           <li>
             <router-link to="/system/group" class="flex items-center h-12 pl-5">
               <div class="mr-3">

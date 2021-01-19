@@ -71,7 +71,7 @@
       >
         <img
           alt="Midone Tailwind HTML Admin Template"
-          src="/images/profile-12.jpg"
+          src="/images/avatar.jpg"
         />
       </div>
     </div>

@@ -5,8 +5,8 @@ import router from './router'
 import { setupProdMockServer } from './mockServer';
 
 // dev mock server
-// if (process.env.NODE_ENV != 'production') {
-//     setupProdMockServer();
-// }
+if (process.env.NODE_ENV != 'production') {
+    setupProdMockServer();
+}
 
 createApp(App).use(router).mount('#app')

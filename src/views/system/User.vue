@@ -85,7 +85,7 @@
               ></p>
             </td>
             <td class="px-4 py-2 flex justify-center ">
-              <img src="/src/assets/logo.svg" class="rounded-full w-8 h-8" >
+              <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" >
             </td>
             <td class="px-4 py-2" v-text="data.gender"></td>
             <td class="px-4 py-2" v-text="data.phone"></td>

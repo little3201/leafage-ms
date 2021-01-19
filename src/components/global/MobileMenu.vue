@@ -1,11 +1,11 @@
 <template>
   <div class="mobile-menu md:hidden">
-    <div class="mobile-menu-bar">
+    <div class="flex">
       <a href="" class="flex mr-auto">
         <img
           alt="Midone Tailwind HTML Admin Template"
           class="w-6"
-          src="/images/logo.svg"
+          src="/src/assets/logo.svg"
         />
       </a>
       <a

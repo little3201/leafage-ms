@@ -1,6 +1,6 @@
 <template>
   <div class="col-span-12 mt-6">
-    <div class="intro-y block sm:flex items-center h-10">
+    <div class="block sm:flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">Users</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
         <button class="flex bg-white p-2 rounded-md items-center text-gray-700">
@@ -51,8 +51,8 @@
         </button>
       </div>
     </div>
-    <div class="intro-y overflow-auto mt-8 sm:mt-0">
-      <table class="mt-2">
+    <div class="overflow-auto mt-8 sm:mt-0">
+      <table class="mt-2 w-full">
         <thead>
           <tr class="uppercase text-center">
             <th class="px-4 py-2 text-left">No.</th>
@@ -69,7 +69,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="intro-x text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 text-left">
               {{ index + 1 }}
             </td>
@@ -84,7 +84,7 @@
                 v-text="data.nickname"
               ></p>
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4 py-2 flex justify-center ">
               <img src="/src/assets/logo.svg" class="rounded-full w-8 h-8" >
             </td>
             <td class="px-4 py-2" v-text="data.gender"></td>

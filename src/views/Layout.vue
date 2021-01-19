@@ -4,7 +4,7 @@
     <div class="flex">
       <SideMenu />
       <div
-        class="px-4 md:px-5 rounded-3xl bg-gray-100 overflow-auto"
+        class="px-4 md:px-5 rounded-3xl bg-gray-100 w-full overflow-hidden"
         style="min-height: calc(100vh - 24px)"
       >
         <TopBar />

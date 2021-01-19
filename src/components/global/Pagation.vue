@@ -1,5 +1,5 @@
 <template>
-  <div class="intro-y flex items-center">
+  <div class="flex items-center mt-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
       <li class="px-3 py-2 mr-2">
         <a href="">

@@ -3,7 +3,7 @@
     <div class="intro-y block sm:flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">Category</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="button box flex items-center text-gray-700">
+        <button class="p-2 rounded-md bg-white flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -26,7 +26,7 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 button box flex items-center text-gray-700">
+        <button class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -51,47 +51,51 @@
         </button>
       </div>
     </div>
-    <div class="intro-y overflow-auto mt-8 sm:mt-0">
-      <table class="table table-report sm:mt-2">
+    <div class="overflow-auto mt-8 sm:mt-0">
+      <table class="mt-2 w-full">
         <thead>
-          <tr class="uppercase">
-            <th class="whitespace-no-wrap">No.</th>
-            <th class="text-center whitespace-no-wrap">Alias</th>
-            <th class="text-center whitespace-no-wrap">Code</th>
-            <th class="text-center whitespace-no-wrap">Posts Count</th>
-            <th class="text-center whitespace-no-wrap">Modify Time</th>
-            <th class="text-center whitespace-no-wrap">Actions</th>
+          <tr class="uppercase text-center">
+            <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Alias</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Posts Count</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="intro-x" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 md:px-5 md:py-3">
               {{ index + 1 }}
             </td>
-            <td class="text-center">
+            <td class="px-4 py-2 md:px-5 md:py-3">
               <a
                 href=""
                 class="font-medium whitespace-no-wrap"
                 v-text="data.alias"
               ></a>
             </td>
-            <td class="text-center" v-text="data.code"></td>
+            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
             <td
-              class="text-center"
+              class="px-4 py-2 md:px-5 md:py-3"
               v-text="Math.floor(Math.random() * 100)"
             ></td>
             <td
-              class="text-center"
+              class="px-4 py-2 md:px-5 md:py-3"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
-            <td class="w-56">
+            <td class="px-4 py-2 md:px-5 md:py-3">
               <Action />
             </td>
           </tr>
         </tbody>
       </table>
-      <Pagation />
     </div>
+    <Pagation />
   </div>
 </template>
 

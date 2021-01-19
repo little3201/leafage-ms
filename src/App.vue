@@ -9,7 +9,3 @@ export default defineComponent({
   name: "App",
 });
 </script>
-
-<style>
-/* @import "/assets/css/app.css"; */
-</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center h-16 border-b bg-gray-100">
     <!-- BEGIN: Breadcrumb -->
-    <div class="-intro-x mr-auto hidden md:flex items-center">
+    <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@
       </svg>
       <router-link to="/" class="text-blue-800 font-medium">Dashboard</router-link>
     </div>
-    <div class="intro-x mr-3 sm:mr-6">
+    <div class="mr-3 sm:mr-6">
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
@@ -43,7 +43,7 @@
         </svg>
       </div>
     </div>
-    <div class="intro-x relative mr-auto sm:mr-6">
+    <div class="relative mr-auto sm:mr-6">
       <div
         class="cursor-pointer"
       >
@@ -65,7 +65,7 @@
         <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
       </div>
     </div>
-    <div class="intro-x w-8 h-8 relative">
+    <div class="w-8 h-8 relative">
       <div
         class="w-8 h-8 rounded-full overflow-hidden shadow-lg zoom-in"
       >

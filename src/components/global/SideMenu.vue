@@ -1,6 +1,6 @@
 <template>
   <nav class="hidden md:block sm:w-20 xl:w-60 pr-5">
-    <router-link to="/" class="intro-x flex items-center pl-5 pt-3">
+    <router-link to="/" class="flex items-center pl-5 pt-3">
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"
@@ -11,7 +11,7 @@
       </span>
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
-    <ul class="text-white">
+    <ul class="text-white w-full">
       <li>
         <router-link
           to="/"
@@ -73,7 +73,7 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-chevron-down ml-auto"
+              class="feather feather-chevron-down ml-auto mr-2"
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>

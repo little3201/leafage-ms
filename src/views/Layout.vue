@@ -17,9 +17,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MobileMenu from "/src/components/global/MobileMenu.vue";
-import SideMenu from "/src/components/global/SideMenu.vue";
-import TopBar from "/src/components/global/TopBar.vue";
+import MobileMenu from "/@/components/global/MobileMenu.vue";
+import SideMenu from "/@/components/global/SideMenu.vue";
+import TopBar from "/@/components/global/TopBar.vue";
 
 export default defineComponent({
   name: "Layout",

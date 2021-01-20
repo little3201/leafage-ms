@@ -1,22 +1,22 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto xl:bg-white">
     <div class="block xl:grid grid-cols-2 gap-4">
-      <div class="hidden xl:flex flex-col min-h-screen">
-        <a href="/" class="flex items-start pt-5">
+      <div class="hidden xl:flex flex-col min-h-screen ml-72 login">
+        <a href="/" class="flex items-start pt-5 mt-12 z-0">
           <img
             alt="Midone Tailwind HTML Admin Template"
             class="w-6"
-            src="src/assets/logo.svg"
+            src="/@/assets/logo.svg"
           />
           <span class="text-white text-lg ml-3">
             Abe<span class="font-medium">ille</span>
           </span>
         </a>
-        <div class="my-auto">
+        <div class="my-auto z-0">
           <img
             alt="Midone Tailwind HTML Admin Template"
             class="w-1/2 -mt-16"
-            src="src/assets/illustration.svg"
+            src="/@/assets/illustration.svg"
           />
           <div class="text-white font-medium text-4xl leading-tight mt-10">
             A few more clicks to
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="h-screen xl:h-auto flex py-5 px-2 xl:py-0">
+      <div class="h-screen xl:h-auto flex py-5 px-2 xl:py-0 z-0">
         <div
           class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto"
         >
@@ -39,7 +39,7 @@
             A few more clicks to sign in to your account. Manage all your
             e-commerce accounts in one place
           </div>
-          <form>
+          <form style="min-width: 350px">
             <div class="mt-8">
               <input
                 type="text"
@@ -116,3 +116,16 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.login:before {
+    content: "";
+    margin-left: -65%;
+    background-image: url(/@/assets/bg-login-page.svg);
+    background-position: right;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+</style>

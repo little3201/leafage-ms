@@ -121,7 +121,7 @@ export default defineComponent({
 .login:before {
     content: "";
     margin-left: -65%;
-    background-image: url(/@/assets/bg-login-page.svg);
+    background-image: url(../../assets/bg-login-page.svg);
     background-position: right;
     background-repeat: no-repeat;
     position: absolute;

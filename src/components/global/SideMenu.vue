@@ -15,7 +15,7 @@
       <li>
         <router-link
           to="/"
-          class="flex items-center h-12 relative rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
+          class="flex items-center h-12 rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -41,7 +41,7 @@
         <a
           href="javascript:;"
           @click.prevent="isSystemOpen = !isSystemOpen"
-          class="flex items-center h-12 relative rounded-full pl-5"
+          class="flex items-center h-12 rounded-full pl-5"
         >
           <div class="mr-3">
             <svg
@@ -180,7 +180,7 @@
       <li>
         <router-link
           to="/posts"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
         >
           <div class="mr-3">
             <svg
@@ -207,7 +207,7 @@
       <li>
         <router-link
           to="/portfolio"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
         >
           <div class="mr-3">
             <svg
@@ -234,7 +234,7 @@
       <li>
         <router-link
           to="/category"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
         >
           <div class="mr-3">
             <svg

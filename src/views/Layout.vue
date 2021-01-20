@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-3">
+  <div class="px-3 md:px-4 py-3">
     <MobileMenu />
     <div class="flex">
       <SideMenu />

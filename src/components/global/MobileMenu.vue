@@ -1,13 +1,13 @@
 <template>
   <div class="md:hidden">
-    <div class="flex">
-      <a href="" class="flex mr-auto">
+    <div class="flex h-8">
+      <router-link to="/" class="flex mr-auto">
         <img
-          alt="Midone Tailwind HTML Admin Template"
+          alt="abeille"
           class="w-6"
           src="/src/assets/logo.svg"
         />
-      </a>
+      </router-link>
       <a
         href="javascript:;"
         @click.prevent="isShow = !isShow"

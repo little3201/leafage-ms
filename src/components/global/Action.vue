@@ -1,6 +1,10 @@
 <template>
   <div class="flex justify-center items-center">
-    <a class="flex items-center mr-3" href="">
+    <a
+      class="flex items-center mr-3"
+      href="javascript:;"
+      @click.prevent="isModel = !isModel"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -44,3 +48,18 @@
     </a>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "Action",
+
+  props: {
+    isModel: {
+      type: Boolean,
+      default: false,
+    },
+  },
+});
+</script>

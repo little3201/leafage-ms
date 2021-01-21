@@ -12,10 +12,10 @@
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul class="text-white w-full">
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/"
-          class="flex items-center h-12 rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
+          class="flex items-center h-12 rounded-l-full pl-5 focus:bg-gray-100 focus:text-black -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -177,10 +177,10 @@
           </li>
         </ul>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/posts"
-          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -204,10 +204,10 @@
           <div class="w-full hidden xl:flex items-center">Posts</div>
         </router-link>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/portfolio"
-          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -231,10 +231,10 @@
           <div class="w-full hidden xl:flex items-center">Portfolio</div>
         </router-link>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/category"
-          class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg

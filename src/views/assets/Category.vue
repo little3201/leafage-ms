@@ -96,6 +96,7 @@
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" />
   </div>
 </template>
 
@@ -103,6 +104,7 @@
 import { defineComponent, ref, onMounted } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -113,6 +115,13 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
+    Model
+  },
+
+  data(){
+    return{
+      isModel: false
+    }
   },
 
   setup() {

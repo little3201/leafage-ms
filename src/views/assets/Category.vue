@@ -82,7 +82,7 @@
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
-              v-text="Math.floor(Math.random() * 100)"
+              v-text="data.count"
             ></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"

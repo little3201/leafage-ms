@@ -85,7 +85,7 @@
               ></p>
             </td>
             <td class="px-4 py-2 flex justify-center ">
-              <img src="/src/assets/logo.svg" class="rounded-full w-8 h-8" >
+              <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" >
             </td>
             <td class="px-4 py-2" v-text="data.gender"></td>
             <td class="px-4 py-2" v-text="data.phone"></td>
@@ -237,8 +237,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import Action from '/src/components/global/Action.vue'
-import Pagation from '/src/components/global/Pagation.vue'
+import Action from '/@/components/global/Action.vue'
+import Pagation from '/@/components/global/Pagation.vue'
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

@@ -1,9 +1,6 @@
 <template>
-  <!-- component -->
-  <!-- This is an example component -->
   <div>
     <Header />
-
     <div class="bg-indigo-900 md:overflow-hidden">
       <div class="px-4 py-20 md:py-4">
         <div class="md:max-w-6xl xl:max-w-screen-xl md:mx-auto">

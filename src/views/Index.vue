@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Report from "/src/components/global/Report.vue";
+import Report from "/@/components/global/Report.vue";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {

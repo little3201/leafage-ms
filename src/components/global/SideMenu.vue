@@ -4,7 +4,7 @@
       <img
         alt="Midone Tailwind HTML Admin Template"
         class="w-6"
-        src="/images/logo.svg"
+        src="/src/assets/logo.svg"
       />
       <span class="hidden xl:block text-white text-lg ml-3">
         Abe<span class="font-medium">ille</span>
@@ -12,10 +12,10 @@
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul class="text-white w-full">
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/"
-          class="flex items-center h-12 relative rounded-l-full pl-5 bg-gray-100 text-black -mr-5"
+          class="flex items-center h-12 rounded-l-full pl-5 focus:bg-gray-100 focus:text-black -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -41,7 +41,7 @@
         <a
           href="javascript:;"
           @click.prevent="isSystemOpen = !isSystemOpen"
-          class="flex items-center h-12 relative rounded-full pl-5"
+          class="flex items-center h-12 rounded-full pl-5"
         >
           <div class="mr-3">
             <svg
@@ -79,7 +79,7 @@
             </svg>
           </div>
         </a>
-        <ul v-show="isSystemOpen" class="xl:ml-4">
+        <ul v-show="isSystemOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30">
           <li>
             <router-link to="/system/group" class="flex items-center h-12 pl-5">
               <div class="mr-3">
@@ -177,10 +177,10 @@
           </li>
         </ul>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/posts"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -204,10 +204,10 @@
           <div class="w-full hidden xl:flex items-center">Posts</div>
         </router-link>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/portfolio"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg
@@ -231,10 +231,10 @@
           <div class="w-full hidden xl:flex items-center">Portfolio</div>
         </router-link>
       </li>
-      <li>
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
         <router-link
           to="/category"
-          class="flex items-center h-12 relative hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+          class="flex items-center h-12 focus:bg-gray-100 focus:text-black rounded-l-full pl-5 -mr-5"
         >
           <div class="mr-3">
             <svg

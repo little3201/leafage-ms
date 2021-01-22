@@ -102,8 +102,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Action from "/src/components/global/Action.vue";
-import Pagation from "/src/components/global/Pagation.vue";
+import Action from "/@/components/global/Action.vue";
+import Pagation from "/@/components/global/Pagation.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

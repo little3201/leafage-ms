@@ -16,16 +16,20 @@
 
 ## 项目介绍
 
-abeille-manager，一个前（使用 Vue.js + Nuxt.js + Tailwindcss）、后端（spring boot）分离的权限管理，支持响应式，使用typescript开发的精美系统
+一个使用 Vue3、 Tailwindcss 的网站管理系统，致力于促进管理系统界面更好的体验。
+包含帖子管理、影视资料管理、权限管理。
 
 ### 目标功能
 - [x] 登录注册
 - [x] 权限管理
 - [x] 个人中心
 - [ ] 消息提醒
-- [ ] 支付
 - [ ] 自定义主题
 - [ ] 全文检索/站内搜索
+
+
+### 站点体验
+访问地址：https://console.abeille.top
 
 ### 展示截图
 

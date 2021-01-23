@@ -89,14 +89,14 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
-    <Model :isModel="isModel" />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
@@ -121,6 +121,12 @@ export default defineComponent({
   data(){
     return{
       isModel: false
+    }
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean){
+      this.isModel = isOpen
     }
   },
 

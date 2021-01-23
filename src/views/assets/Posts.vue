@@ -26,7 +26,9 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700">
+        <button
+          class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -65,37 +67,48 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <a
-                href=""
-                class="font-medium"
-                v-text="data.title"
-              ></a>
+              <a href="" class="font-medium" v-text="data.title"></a>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="Math.floor(Math.random()*100)"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td
+              class="px-4 py-2 md:px-5 md:py-3"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="px-4 py-2 md:px-5 md:py-3"
+              v-text="Math.floor(Math.random() * 100)"
+            ></td>
+            <td
+              class="px-4 py-2 md:px-5 md:py-3"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Action from '/@/components/global/Action.vue'
-import Pagation from '/@/components/global/Pagation.vue'
+import Action from "/@/components/global/Action.vue";
+import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -105,7 +118,20 @@ export default defineComponent({
 
   components: {
     Action,
-    Pagation
+    Pagation,
+    Model,
+  },
+
+  data() {
+    return {
+      isModel: false,
+    };
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean) {
+      this.isModel = isOpen;
+    },
   },
 
   setup() {

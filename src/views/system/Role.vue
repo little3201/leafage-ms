@@ -85,13 +85,14 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
@@ -99,6 +100,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -109,6 +111,19 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
+    Model,
+  },
+
+  data() {
+    return {
+      isModel: false,
+    };
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean) {
+      this.isModel = isOpen;
+    },
   },
 
   setup() {

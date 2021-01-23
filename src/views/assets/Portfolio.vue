@@ -26,7 +26,9 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700">
+        <button
+          class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -65,7 +67,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
@@ -90,13 +96,14 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
@@ -104,6 +111,7 @@
 import { defineComponent, ref, onMounted } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -114,6 +122,19 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
+    Model,
+  },
+
+  data() {
+    return {
+      isModel: false,
+    };
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean) {
+      this.isModel = isOpen;
+    },
   },
 
   setup() {

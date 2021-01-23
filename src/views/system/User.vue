@@ -26,7 +26,9 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 bg-white p-2 rounded-md flex items-center text-gray-700">
+        <button
+          class="ml-3 bg-white p-2 rounded-md flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -69,28 +71,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 text-left">
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a
-                href=""
-                class="font-medium"
-                v-text="data.username"
-              ></a>
-              <p
-                class="text-gray-600 text-xs"
-                v-text="data.nickname"
-              ></p>
+              <a href="" class="font-medium" v-text="data.username"></a>
+              <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="px-4 py-2 flex justify-center ">
-              <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" >
+            <td class="px-4 py-2 flex justify-center">
+              <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" />
             </td>
             <td class="px-4 py-2" v-text="data.gender"></td>
             <td class="px-4 py-2" v-text="data.phone"></td>
             <td class="px-4 py-2" v-text="data.email"></td>
-            <td class="px-4 py-2" v-text="new Date(data.birthday).toLocaleDateString()"></td>
+            <td
+              class="px-4 py-2"
+              v-text="new Date(data.birthday).toLocaleDateString()"
+            ></td>
             <td class="px-4 py-2">
               <div
                 v-if="data.accountNonExpired"
@@ -225,20 +227,22 @@
               </div>
             </td>
             <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import Action from '/@/components/global/Action.vue'
-import Pagation from '/@/components/global/Pagation.vue'
+import Action from "/@/components/global/Action.vue";
+import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -248,7 +252,20 @@ export default defineComponent({
 
   components: {
     Action,
-    Pagation
+    Pagation,
+    Model,
+  },
+
+  data() {
+    return {
+      isModel: false,
+    };
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean) {
+      this.isModel = isOpen;
+    },
   },
 
   setup() {

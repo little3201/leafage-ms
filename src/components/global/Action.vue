@@ -3,7 +3,7 @@
     <a
       class="flex items-center mr-3"
       href="javascript:;"
-      @click.prevent="isModel = !isModel"
+      @click.prevent="openModel"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -55,11 +55,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Action",
 
-  props: {
-    isModel: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  methods: {
+    openModel(){
+      this.$emit('action', true)
+    }
+  }
 });
 </script>

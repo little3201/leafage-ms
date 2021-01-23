@@ -66,7 +66,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 text-left">
               {{ index + 1 }}
             </td>
@@ -84,16 +88,20 @@
             <td class="px-4 py-2" v-text="data.code"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.principal"></td>
-            <td class="px-4 py-2" v-text="Math.floor(Math.random()*10)"></td>
-            <td class="px-4 py-2" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td class="px-4 py-2" v-text="Math.floor(Math.random() * 10)"></td>
+            <td
+              class="px-4 py-2"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
             <td class="px-4 py-2">
-              <Action />
+              <Action @action="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Model :isModel="isModel" @action="modelOperate" />
   </div>
 </template>
 
@@ -101,6 +109,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -111,6 +120,19 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
+    Model,
+  },
+
+  data() {
+    return {
+      isModel: false,
+    };
+  },
+
+  methods: {
+    modelOperate(isOpen: boolean) {
+      this.isModel = isOpen;
+    },
   },
 
   setup() {

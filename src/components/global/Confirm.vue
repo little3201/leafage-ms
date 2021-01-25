@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isModel" class="fixed inset-0 overflow-y-auto">
+  <div v-show="isDel" class="fixed inset-0 overflow-y-auto">
     <div
       class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
     >
@@ -43,13 +43,11 @@
                 class="text-lg leading-6 font-medium text-gray-900"
                 id="modal-headline"
               >
-                Deactivate account
+                是否确认删除？
               </h3>
               <div class="mt-2">
                 <p class="text-sm text-gray-500">
-                  Are you sure you want to deactivate your account? All of your
-                  data will be permanently removed. This action cannot be
-                  undone.
+                  将要删除本条信息，一旦删除将不可恢复。
                 </p>
               </div>
             </div>
@@ -58,17 +56,17 @@
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
             type="button"
-            @click="closeModel"
+            @click="closeConfirm"
             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
           >
-            Deactivate
+            确认
           </button>
           <button
             type="button"
-            @click="closeModel"
+            @click="closeConfirm"
             class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
           >
-            Cancel
+            取消
           </button>
         </div>
       </div>
@@ -80,18 +78,18 @@
 import { defineComponent, computed } from "vue";
 
 export default defineComponent({
-  name: "Model",
+  name: "Confirm",
 
   props: {
-    isModel: {
+    isDel: {
       type: Boolean,
       default: false,
     },
   },
 
   methods: {
-    closeModel(){
-      this.$emit('action', false)
+    closeConfirm(){
+      this.$emit('delAction', false)
     }
   }
 });

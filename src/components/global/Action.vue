@@ -24,7 +24,7 @@
       </svg>
       Edit
     </a>
-    <a class="flex items-center text-red-600" href="">
+    <a class="flex items-center text-red-600" href="javascript:;" @click.prevent="openConfirm">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -56,8 +56,11 @@ export default defineComponent({
   name: "Action",
 
   methods: {
+    openConfirm(){
+      this.$emit('delAction', true)
+    },
     openModel(){
-      this.$emit('action', true)
+      this.$emit('editAction', true)
     }
   }
 });

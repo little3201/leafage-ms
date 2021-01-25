@@ -3,7 +3,7 @@
     <div class="intro-y block sm:flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">Groups</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="button box flex items-center text-gray-700">
+        <button class="p-2 rounded-md bg-white flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -26,7 +26,7 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 button box flex items-center text-gray-700">
+        <button class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -94,14 +94,14 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action @action="modelOperate" />
+              <Action @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
-    <Model :isModel="isModel" @action="modelOperate" />
+    <Confirm :isDel="isDel" @delAction="confirmOperate" />
   </div>
 </template>
 
@@ -109,7 +109,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
-import Model from "/@/components/global/Model.vue";
+import Confirm from "/@/components/global/Confirm.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -120,19 +120,23 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
-    Model,
+    Confirm,
   },
 
   data() {
-    return {
-      isModel: false,
-    };
+    return{
+      isEdit: false,
+      isDel: false
+    }
   },
 
   methods: {
-    modelOperate(isOpen: boolean) {
-      this.isModel = isOpen;
+    confirmOperate(isOpen: boolean){
+      this.isDel = isOpen
     },
+    modelOperate(isOpen: boolean){
+      this.isEdit = isOpen
+    }
   },
 
   setup() {

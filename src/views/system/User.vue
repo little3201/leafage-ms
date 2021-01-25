@@ -227,14 +227,14 @@
               </div>
             </td>
             <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
-              <Action @action="modelOperate" />
+              <Action @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
-    <Model :isModel="isModel" @action="modelOperate" />
+    <Confirm :isDel="isDel" @delAction="confirmOperate" />
   </div>
 </template>
 
@@ -242,7 +242,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
-import Model from "/@/components/global/Model.vue";
+import Confirm from "/@/components/global/Confirm.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -253,19 +253,23 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
-    Model,
+    Confirm,
   },
 
   data() {
-    return {
-      isModel: false,
-    };
+    return{
+      isEdit: false,
+      isDel: false
+    }
   },
 
   methods: {
-    modelOperate(isOpen: boolean) {
-      this.isModel = isOpen;
+    confirmOperate(isOpen: boolean){
+      this.isDel = isOpen
     },
+    modelOperate(isOpen: boolean){
+      this.isEdit = isOpen
+    }
   },
 
   setup() {

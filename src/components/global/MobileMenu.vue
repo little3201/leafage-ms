@@ -33,8 +33,8 @@
     </div>
     <div class="mb-6 mt-4 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul v-show="isShow" class="mb-6 w-full text-white">
-      <li>
-        <router-link to="/" class="flex items-center h-12 rounded-l-full pl-5">
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
+        <router-link to="/" class="flex items-center h-12 focus:bg-white focus:text-black rounded-full pl-5">
           <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@
         <a
           href="javascript:;"
           @click.prevent="isSystemOpen = !isSystemOpen"
-          class="flex items-center h-12 rounded-l-full pl-5"
+          class="flex items-center h-12 rounded-full pl-5"
         >
           <div class="mr-3">
             <svg
@@ -98,7 +98,7 @@
           </div>
         </a>
         <ul v-show="isSystemOpen" class="mx-4 bg-blue-900 bg-opacity-30">
-          <li>
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
             <router-link to="/system/group" class="flex items-center h-12 pl-5">
               <div class="mr-3">
                 <svg
@@ -122,7 +122,7 @@
               <div class="w-full flex items-center">Group</div>
             </router-link>
           </li>
-          <li>
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
             <router-link to="/system/user" class="flex items-center h-12 pl-5">
               <div class="mr-3">
                 <svg
@@ -144,7 +144,7 @@
               <div class="w-full flex items-center">User</div>
             </router-link>
           </li>
-          <li>
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
             <router-link to="/system/role" class="flex items-center h-12 pl-5">
               <div class="mr-3">
                 <svg
@@ -168,7 +168,7 @@
               <div class="w-full flex items-center">Role</div>
             </router-link>
           </li>
-          <li>
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
             <router-link to="/system/authority" class="flex items-center h-12 pl-5">
               <div class="mr-3">
                 <svg
@@ -192,8 +192,8 @@
           </li>
         </ul>
       </li>
-      <li>
-        <router-link to="/posts" class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5">
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
+        <router-link to="/posts" class="flex items-center h-12 focus:bg-white focus:text-black rounded-full pl-5">
           <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -216,8 +216,8 @@
           <div class="flex items-center">Posts</div>
         </router-link>
       </li>
-      <li>
-        <router-link to="/portfolio" class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5">
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
+        <router-link to="/portfolio" class="flex items-center h-12 focus:bg-white focus:text-black rounded-full pl-5">
           <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -240,8 +240,8 @@
           <div class="flex items-center">Portfolio</div>
         </router-link>
       </li>
-      <li>
-        <router-link to="/category" class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5">
+      <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-full">
+        <router-link to="/category" class="flex items-center h-12 focus:bg-white focus:text-black rounded-full pl-5">
           <div class="mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"

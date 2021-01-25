@@ -1,5 +1,5 @@
 <template>
-  <div class="md:hidden">
+  <header class="md:hidden">
     <div class="flex h-8">
       <router-link to="/" class="flex mr-auto">
         <img
@@ -265,7 +265,7 @@
         </router-link>
       </li>
     </ul>
-  </div>
+  </header>
 </template>
 
 <script lang="ts">

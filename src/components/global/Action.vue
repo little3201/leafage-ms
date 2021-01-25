@@ -1,5 +1,6 @@
 <template>
   <div class="flex justify-center items-center">
+    <slot></slot>
     <a
       class="flex items-center mr-3"
       href="javascript:;"
@@ -24,7 +25,11 @@
       </svg>
       Edit
     </a>
-    <a class="flex items-center text-red-600" href="javascript:;" @click.prevent="openConfirm">
+    <a
+      class="flex items-center text-red-600"
+      href="javascript:;"
+      @click.prevent="openConfirm"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -56,12 +61,12 @@ export default defineComponent({
   name: "Action",
 
   methods: {
-    openConfirm(){
-      this.$emit('delAction', true)
+    openConfirm() {
+      this.$emit("delAction", true);
     },
-    openModel(){
-      this.$emit('editAction', true)
-    }
-  }
+    openModel() {
+      this.$emit("editAction", true);
+    },
+  },
 });
 </script>

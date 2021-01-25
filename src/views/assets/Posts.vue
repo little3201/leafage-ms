@@ -92,7 +92,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action @delAction="confirmOperate" @editAction="modelOperate"/>
+              <Action @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -100,6 +100,36 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Model :isEdit="isEdit" @editAction="modelOperate">
+      <form>
+        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+          <div class="col-span-12 sm:col-span-6">
+            <label>Title</label>
+            <input
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              placeholder="Title"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Subtitle</label>
+            <input
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              placeholder="Subtitle"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Category</label>
+            <select class="py-2 px-3 rounded-md w-full border mt-2 flex-1">
+              <option>Technology</option>
+              <option>Lifestyle</option>
+              <option>Travel</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </Model>
   </div>
 </template>
 
@@ -109,6 +139,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -120,22 +151,23 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
+    Model,
   },
 
   data() {
-    return{
+    return {
       isEdit: false,
-      isDel: false
-    }
+      isDel: false,
+    };
   },
 
   methods: {
-    confirmOperate(isOpen: boolean){
-      this.isDel = isOpen
+    confirmOperate(isOpen: boolean) {
+      this.isDel = isOpen;
     },
-    modelOperate(isOpen: boolean){
-      this.isEdit = isOpen
-    }
+    modelOperate(isOpen: boolean) {
+      this.isEdit = isOpen;
+    },
   },
 
   setup() {

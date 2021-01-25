@@ -93,6 +93,31 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Model :isEdit="isEdit" @editAction="modelOperate">
+      <form class="w-full">
+        <div class="grid grid-cols-12 gap-4 row-gap-3">
+          <div class="col-span-12 sm:col-span-6">
+            <label>Name</label>
+            <input
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              placeholder="Name"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Superior</label>
+            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option>System</option>
+              <option>Posts</option>
+            </select>
+          </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" />
+          </div>
+        </div>
+      </form>
+    </Model>
   </div>
 </template>
 
@@ -101,6 +126,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -112,6 +138,7 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
+    Model
   },
 
   data() {

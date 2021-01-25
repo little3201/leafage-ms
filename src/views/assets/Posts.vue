@@ -101,9 +101,9 @@
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model :isEdit="isEdit" @editAction="modelOperate">
-      <form>
-        <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
+      <form class="w-full">
+        <div class="grid grid-cols-12 gap-4 row-gap-3">
+          <div class="col-span-12">
             <label>Title</label>
             <input
               type="text"
@@ -111,7 +111,7 @@
               placeholder="Title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-6">
+          <div class="col-span-12">
             <label>Subtitle</label>
             <input
               type="text"
@@ -121,7 +121,7 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Category</label>
-            <select class="py-2 px-3 rounded-md w-full border mt-2 flex-1">
+            <select class="p-2 rounded-md w-full border mt-2 flex-1">
               <option>Technology</option>
               <option>Lifestyle</option>
               <option>Travel</option>

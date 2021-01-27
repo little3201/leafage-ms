@@ -1,9 +1,11 @@
 <template>
   <div class="col-span-12 mt-6">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium  mr-5">Category</h2>
+      <h2 class="text-lg font-medium mr-5">Category</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700">
+        <button
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -77,7 +79,7 @@
     <div class="overflow-auto mt-8 sm:mt-0">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center">
+          <tr class="uppercase text-center h-14">
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Alias</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
@@ -126,6 +128,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Code"
+              :value="categoryData.code"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -134,6 +137,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Alias"
+              :value="categoryData.alias"
             />
           </div>
         </div>
@@ -166,6 +170,7 @@ export default defineComponent({
     return {
       isEdit: false,
       isDel: false,
+      categoryData: {},
     };
   },
 
@@ -173,8 +178,15 @@ export default defineComponent({
     confirmOperate(isOpen: boolean) {
       this.isDel = isOpen;
     },
-    modelOperate(isOpen: boolean) {
+    modelOperate(isOpen: boolean, params: string) {
       this.isEdit = isOpen;
+      this.categoryData = async () =>  {
+        await instance
+          .get(SERVER_URL.category.concat("/").concat(params))
+          .then((res) => {
+            return res.data;
+          });
+      };
     },
   },
 

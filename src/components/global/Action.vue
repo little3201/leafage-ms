@@ -4,7 +4,7 @@
     <a
       class="flex items-center mr-3"
       href="javascript:;"
-      @click.prevent="openModel"
+      @click.prevent="openModel(data.code)"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -64,8 +64,8 @@ export default defineComponent({
     openConfirm() {
       this.$emit("delAction", true);
     },
-    openModel() {
-      this.$emit("editAction", true);
+    openModel(code: String) {
+      this.$emit("editAction", true, code);
     },
   },
 });

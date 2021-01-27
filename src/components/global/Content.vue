@@ -26,7 +26,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 textarea {
   border: none;
   border-right: 1px solid #ccc;

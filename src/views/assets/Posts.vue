@@ -77,7 +77,7 @@
     <div class="overflow-auto mt-8 sm:mt-0">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center">
+          <tr class="uppercase text-center h-14">
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Title</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Code</th>

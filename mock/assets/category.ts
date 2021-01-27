@@ -11,6 +11,11 @@ export default [
           alias: 'Technology',
           modifyTime: new Date(),
         },
+        {
+          code: '20A23D2S1',
+          alias: 'Technology',
+          modifyTime: new Date(),
+        },
       ];
     },
   },

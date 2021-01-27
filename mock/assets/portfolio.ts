@@ -11,6 +11,11 @@ export default [
           title: 'Travel Photos',
           modifyTime: new Date(),
         },
+        {
+          code: '20A23D3D1',
+          title: 'Travel Photos',
+          modifyTime: new Date(),
+        },
       ];
     },
   },

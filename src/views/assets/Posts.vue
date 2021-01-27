@@ -1,9 +1,9 @@
 <template>
   <div class="col-span-12 mt-6">
-    <div class="block sm:flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Posts</h2>
+    <div class="flex justify-between items-center h-10">
+      <h2 class="text-lg font-medium mr-5">Posts</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="p-2 rounded-md bg-white flex items-center text-gray-700">
+        <button class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -27,7 +27,7 @@
           Export to Excel
         </button>
         <button
-          class="ml-3 p-2 rounded-md bg-white flex items-center text-gray-700"
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,10 +51,31 @@
           </svg>
           Export to PDF
         </button>
+        <button
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-plus-circle mr-2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          Add New
+        </button>
       </div>
     </div>
     <div class="overflow-auto mt-8 sm:mt-0">
-      <table class="mt-2 w-full">
+      <table class="mt-2 w-full truncate">
         <thead>
           <tr class="uppercase text-center">
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
@@ -127,6 +148,9 @@
               <option>Travel</option>
             </select>
           </div>
+          <div class="col-span-12">
+            <Content />
+          </div>
         </div>
       </form>
     </Model>
@@ -140,6 +164,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
+import Content from "/@/components/global/Content.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -152,6 +177,7 @@ export default defineComponent({
     Pagation,
     Confirm,
     Model,
+    Content,
   },
 
   data() {

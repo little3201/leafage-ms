@@ -4,7 +4,7 @@
     <a
       class="flex items-center mr-3"
       href="javascript:;"
-      @click.prevent="openModel(data.code)"
+      @click.prevent="openModel"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -60,12 +60,19 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Action",
 
+  props:{
+    code:{
+      type: String,
+      default: ''
+    }
+  },
+
   methods: {
     openConfirm() {
       this.$emit("delAction", true);
     },
-    openModel(code: String) {
-      this.$emit("editAction", true, code);
+    openModel() {
+      this.$emit("editAction", true, this.code);
     },
   },
 });

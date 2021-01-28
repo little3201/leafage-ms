@@ -1,7 +1,7 @@
 <template>
-  <div class="grid grid-flow-row grid-rows-1 grid-cols-2">
-    <textarea :value="content" @input="compileContent"></textarea>
-    <div v-html="compiled"></div>
+  <div class="grid grid-flow-row grid-rows-1 grid-cols-1" :class="{isShow: grid-cols-2}">
+    <textarea class="border-r border-gray-700 bg-gray-50" :value="content" @input="compileContent"></textarea>
+    <div v-show="isShow" v-html="compiled"></div>
   </div>
 </template>
 
@@ -11,9 +11,16 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Content",
 
+  props:{
+    content: {
+      tyep: String,
+      default: ''
+    }
+  },
+
   data() {
     return {
-      content:  "",
+      isShow: false,
       compiled: ''
     };
   },
@@ -25,16 +32,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-textarea {
-  border: none;
-  border-right: 1px solid #ccc;
-  resize: none;
-  outline: none;
-  background-color: #f6f6f6;
-  font-size: 14px;
-  font-family: "Monaco", courier, monospace;
-  padding: 20px;
-}
-</style>

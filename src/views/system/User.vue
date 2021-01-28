@@ -52,6 +52,7 @@
           Export to PDF
         </button>
         <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -248,7 +249,7 @@
               </div>
             </td>
             <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -265,6 +266,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
+              :value="userData.nickname"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -273,6 +275,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Phone"
+              :value="userData.phone"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -281,6 +284,7 @@
               type="email"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Email"
+              :value="userData.email"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -307,7 +311,8 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" />
+            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
+              :value="userData.description" />
           </div>
         </div>
       </form>
@@ -338,17 +343,26 @@ export default defineComponent({
   data() {
     return{
       isEdit: false,
-      isDel: false
+      isDel: false,
+      userData: {}
     }
   },
 
   methods: {
-    confirmOperate(isOpen: boolean){
-      this.isDel = isOpen
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean){
-      this.isEdit = isOpen
-    }
+    modelOperate(isEdit: boolean, params: string) {
+      this.userData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.user.concat("/").concat(params))
+          .then((res) => {
+            this.userData = res.data;
+          });
+      }
+      this.isEdit = isEdit
+    },
   },
 
   setup() {

@@ -52,6 +52,7 @@
           Export to PDF
         </button>
         <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -117,7 +118,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -134,6 +135,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
+              :value="authorityData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -142,6 +144,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Path"
+              :value="authorityData.path"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -161,7 +164,8 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" />
+            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
+              :value="authorityData.description"/>
           </div>
         </div>
       </form>
@@ -192,22 +196,29 @@ export default defineComponent({
   data() {
     return{
       isEdit: false,
-      isDel: false
+      isDel: false,
+      authorityData: {}
     }
   },
 
   methods: {
-    confirmOperate(isOpen: boolean){
-      this.isDel = isOpen
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean){
-      this.isEdit = isOpen
-    }
+    modelOperate(isEdit: boolean, params: string) {
+      this.authorityData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.authority.concat("/").concat(params))
+          .then((res) => {
+            this.authorityData = res.data;
+          });
+      }
+      this.isEdit = isEdit
+    },
   },
 
   setup() {
-    const head = ref("Authority Tables");
-    const titles = ref(["Code", "Name", "Path", "Superior", "Type"]);
     const datas = ref([]);
 
     async function initDatas() {
@@ -223,8 +234,6 @@ export default defineComponent({
     });
 
     return {
-      head,
-      titles,
       datas,
     };
   },

@@ -54,6 +54,7 @@
           Export to PDF
         </button>
         <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -111,7 +112,11 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action
+                :code="data.code"
+                @delAction="confirmOperate"
+                @editAction="modelOperate"
+              />
             </td>
           </tr>
         </tbody>
@@ -175,18 +180,19 @@ export default defineComponent({
   },
 
   methods: {
-    confirmOperate(isOpen: boolean) {
-      this.isDel = isOpen;
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean, params: string) {
-      this.isEdit = isOpen;
-      this.categoryData = async () =>  {
-        await instance
+    modelOperate(isEdit: boolean, params: string) {
+      this.categoryData = {}
+      if (isEdit && params) {
+        instance
           .get(SERVER_URL.category.concat("/").concat(params))
           .then((res) => {
-            return res.data;
+            this.categoryData = res.data;
           });
-      };
+      }
+      this.isEdit = isEdit
     },
   },
 

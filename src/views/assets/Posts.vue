@@ -52,6 +52,7 @@
           Export to PDF
         </button>
         <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -113,7 +114,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -130,6 +131,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Title"
+              :value="postsData.title"
             />
           </div>
           <div class="col-span-12">
@@ -138,6 +140,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Subtitle"
+              :value="postsData.subtitle"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -148,8 +151,16 @@
               <option>Travel</option>
             </select>
           </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Tags</label>
+            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option>Java</option>
+              <option>Spring</option>
+              <option>Vue</option>
+            </select>
+          </div>
           <div class="col-span-12">
-            <Content />
+            <Content :content="postsData.content" />
           </div>
         </div>
       </form>
@@ -184,15 +195,24 @@ export default defineComponent({
     return {
       isEdit: false,
       isDel: false,
+      postsData: {}
     };
   },
 
   methods: {
-    confirmOperate(isOpen: boolean) {
-      this.isDel = isOpen;
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean) {
-      this.isEdit = isOpen;
+    modelOperate(isEdit: boolean, params: string) {
+      this.postsData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.posts.concat("/").concat(params))
+          .then((res) => {
+            this.postsData = res.data;
+          });
+      }
+      this.isEdit = isEdit
     },
   },
 

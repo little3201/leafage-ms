@@ -52,6 +52,7 @@
           Export to PDF
         </button>
         <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -117,7 +118,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -134,22 +135,16 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Title"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Subtitle</label>
-            <input
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              placeholder="Subtitle"
+              :value="portfolioData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Category</label>
             <select class="py-2 px-3 rounded-md w-full border mt-2 flex-1">
-              <option>Technology</option>
-              <option>Lifestyle</option>
-              <option>Travel</option>
+              <option value="">请选择</option>
+              <option value="technology">Technology</option>
+              <option value="lifestyle">Lifestyle</option>
+              <option value="travel">Travel</option>
             </select>
           </div>
         </div>
@@ -182,15 +177,24 @@ export default defineComponent({
     return {
       isEdit: false,
       isDel: false,
+      portfolioData: {}
     };
   },
 
   methods: {
-    confirmOperate(isOpen: boolean) {
-      this.isDel = isOpen;
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean) {
-      this.isEdit = isOpen;
+    modelOperate(isEdit: boolean, params: string) {
+      this.portfolioData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.portfolio.concat("/").concat(params))
+          .then((res) => {
+            this.portfolioData = res.data;
+          });
+      }
+      this.isEdit = isEdit
     },
   },
 

@@ -51,6 +51,7 @@
         </button>
       </div>
       <button
+          @click="modelOperate(true)"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -115,7 +116,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -132,6 +133,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
+              :value="groupData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -150,7 +152,8 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" />
+            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
+              :value="groupData.description" />
           </div>
         </div>
       </form>
@@ -181,17 +184,26 @@ export default defineComponent({
   data() {
     return{
       isEdit: false,
-      isDel: false
+      isDel: false,
+      groupData: {}
     }
   },
 
   methods: {
-    confirmOperate(isOpen: boolean){
-      this.isDel = isOpen
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
     },
-    modelOperate(isOpen: boolean){
-      this.isEdit = isOpen
-    }
+    modelOperate(isEdit: boolean, params: string) {
+      this.groupData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.group.concat("/").concat(params))
+          .then((res) => {
+            this.groupData = res.data;
+          });
+      }
+      this.isEdit = isEdit
+    },
   },
 
   setup() {

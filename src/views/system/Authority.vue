@@ -1,9 +1,9 @@
 <template>
   <div class="col-span-12 mt-6">
-    <div class="block sm:flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">Authorities</h2>
+    <div class="flex justify-between items-center h-10">
+      <h2 class="text-lg font-medium mr-5">Authorities</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="p-2 rounded-md flex items-center bg-white text-gray-700">
+        <button class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -26,7 +26,9 @@
           </svg>
           Export to Excel
         </button>
-        <button class="ml-3 p-2 rounded-md button box flex items-center bg-white text-gray-700">
+        <button
+          class="hidden ml-3 p-2 rounded-md sm:flex items-center bg-white text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -49,12 +51,34 @@
           </svg>
           Export to PDF
         </button>
+        <button
+          @click="modelOperate(true)"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-plus-circle mr-2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          Add New
+        </button>
       </div>
     </div>
     <div class="overflow-auto mt-8 sm:mt-0">
-      <table class="mt-2 w-full">
+      <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center">
+          <tr class="uppercase text-center h-14">
             <th class="px-4 py-2 text-left">No.</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Code</th>
@@ -66,7 +90,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="text-center bg-white border-8 border-gray-100" v-for="(data, index) in datas" :key="index">
+          <tr
+            class="text-center bg-white border-8 border-gray-100"
+            v-for="(data, index) in datas"
+            :key="index"
+          >
             <td class="px-4 py-2 text-left">
               {{ index + 1 }}
             </td>
@@ -85,15 +113,63 @@
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.type"></td>
             <td class="px-4 py-2" v-text="data.path"></td>
-            <td class="px-4 py-2" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td
+              class="px-4 py-2"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            ></td>
             <td class="px-4 py-2">
-              <Action />
+              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <Pagation />
+    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Model :isEdit="isEdit" @editAction="modelOperate">
+      <form class="w-full">
+        <div class="grid grid-cols-12 gap-4 row-gap-3">
+          <div class="col-span-12 sm:col-span-6">
+            <label>Name</label>
+            <input
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              placeholder="Name"
+              :value="authorityData.name"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Path</label>
+            <input
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              placeholder="Path"
+              :value="authorityData.path"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Superior</label>
+            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option>System</option>
+              <option>Posts</option>
+            </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Type</label>
+            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option>Menu</option>
+              <option>Tab</option>
+              <option>Url</option>
+            </select>
+          </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
+              :value="authorityData.description"/>
+          </div>
+        </div>
+      </form>
+    </Model>
   </div>
 </template>
 
@@ -101,6 +177,8 @@
 import { defineComponent, onMounted, ref } from "vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
+import Confirm from "/@/components/global/Confirm.vue";
+import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -111,11 +189,36 @@ export default defineComponent({
   components: {
     Action,
     Pagation,
+    Confirm,
+    Model
+  },
+
+  data() {
+    return{
+      isEdit: false,
+      isDel: false,
+      authorityData: {}
+    }
+  },
+
+  methods: {
+    confirmOperate(isDel: boolean) {
+      this.isDel = isDel;
+    },
+    modelOperate(isEdit: boolean, params: string) {
+      this.authorityData = {}
+      if (isEdit && params) {
+        instance
+          .get(SERVER_URL.authority.concat("/").concat(params))
+          .then((res) => {
+            this.authorityData = res.data;
+          });
+      }
+      this.isEdit = isEdit
+    },
   },
 
   setup() {
-    const head = ref("Authority Tables");
-    const titles = ref(["Code", "Name", "Path", "Superior","Type"]);
     const datas = ref([]);
 
     async function initDatas() {
@@ -131,8 +234,6 @@ export default defineComponent({
     });
 
     return {
-      head,
-      titles,
       datas,
     };
   },

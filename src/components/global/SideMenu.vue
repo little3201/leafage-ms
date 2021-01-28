@@ -64,24 +64,42 @@
           <div class="hidden xl:flex items-center w-full">
             System
             <svg
+              v-if="isSystemOpen"
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
               class="feather feather-chevron-down ml-auto mr-2"
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
+            <svg v-else
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-right ml-auto mr-2"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
           </div>
         </a>
         <ul v-show="isSystemOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30">
-          <li>
-            <router-link to="/system/group" class="flex items-center h-12 pl-5">
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
+            <router-link
+              to="/system/group"
+              class="flex items-center h-12 pl-5 focus:bg-gray-100 focus:text-black rounded-l-full -mr-5"
+            >
               <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,8 +122,11 @@
               <div class="w-full hidden xl:flex items-center">Group</div>
             </router-link>
           </li>
-          <li>
-            <router-link to="/system/user" class="flex items-center h-12 pl-5">
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
+            <router-link
+              to="/system/user"
+              class="flex items-center h-12 pl-5 focus:bg-gray-100 focus:text-black rounded-l-full -mr-5"
+            >
               <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -126,8 +147,11 @@
               <div class="w-full hidden xl:flex items-center">User</div>
             </router-link>
           </li>
-          <li>
-            <router-link to="/system/role" class="flex items-center h-12 pl-5">
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
+            <router-link
+              to="/system/role"
+              class="flex items-center h-12 pl-5 focus:bg-gray-100 focus:text-black rounded-l-full -mr-5"
+            >
               <div class="mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -150,10 +174,10 @@
               <div class="w-full hidden xl:flex items-center">Role</div>
             </router-link>
           </li>
-          <li>
+          <li class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full">
             <router-link
               to="/system/authority"
-              class="flex items-center h-12 pl-5"
+              class="flex items-center h-12 pl-5 focus:bg-gray-100 focus:text-black rounded-l-full -mr-5"
             >
               <div class="mr-3">
                 <svg

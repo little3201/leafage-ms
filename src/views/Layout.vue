@@ -3,14 +3,13 @@
     <MobileMenu />
     <div class="flex">
       <SideMenu />
-      <div
+      <main
         class="px-4 md:px-5 rounded-3xl bg-gray-100 w-full overflow-hidden"
         style="min-height: calc(100vh - 24px)"
       >
         <TopBar />
-        <!-- BEGIN: General Report -->
         <router-view></router-view>
-      </div>
+      </main>
     </div>
   </div>
 </template>

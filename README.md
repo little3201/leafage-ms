@@ -1,16 +1,16 @@
 
-# Abeille
+# Leafage
 
 <p align="center">
   <a href="https://abeille.top" target="_blank">
-    <img alt="Abeille Logo" width="100" src="src/assets/logo.svg">
+    <img alt="Leafage Logo" width="100" src="src/assets/logo.svg">
   </a>
 </p>
 
 <p align="center">
   <br>
-  <a href="https://github.com/little3201/abeille-manager/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/little3201/abeille-manager.svg" alt="License">
+  <a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/little3201/leafage-ms.svg" alt="License">
   </a>
 </p>
 
@@ -26,6 +26,8 @@
 - [ ] 消息提醒
 - [ ] 自定义主题
 - [ ] 全文检索/站内搜索
+- [ ] 动画
+- [x] 响应式
 
 
 ### 站点体验
@@ -73,6 +75,6 @@ yarn dev
 yarn build
 ```
 
-<a href="https://github.com/little3201/abeille-manager/blob/master/LICENSE">
+<a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
   <h2>MIT</h2>
 </a>

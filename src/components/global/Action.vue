@@ -1,9 +1,10 @@
 <template>
   <div class="flex justify-center items-center">
+    <slot></slot>
     <a
       class="flex items-center mr-3"
       href="javascript:;"
-      @click.prevent="isModel = !isModel"
+      @click.prevent="openModel"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +25,11 @@
       </svg>
       Edit
     </a>
-    <a class="flex items-center text-red-600" href="">
+    <a
+      class="flex items-center text-red-600"
+      href="javascript:;"
+      @click.prevent="openConfirm"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -55,10 +60,19 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Action",
 
-  props: {
-    isModel: {
-      type: Boolean,
-      default: false,
+  props:{
+    code:{
+      type: String,
+      default: ''
+    }
+  },
+
+  methods: {
+    openConfirm() {
+      this.$emit("delAction", true);
+    },
+    openModel() {
+      this.$emit("editAction", true, this.code);
     },
   },
 });

@@ -1,5 +1,5 @@
 {
-  "name": "abeille-manager",
+  "name": "leafage-ms",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
@@ -41,7 +41,7 @@
   "author": "liwenqiang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/little3201/abeille-manager/issues"
+    "url": "https://github.com/little3201/leafage-ms/issues"
   },
-  "homepage": "https://github.com/little3201/abeille-manager#readme"
+  "homepage": "https://github.com/little3201/leafage-ms#readme"
 }

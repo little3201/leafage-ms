@@ -1,16 +1,16 @@
 
-# Abeille
+# Leafage
 
 <p align="center">
   <a href="https://abeille.top" target="_blank">
-    <img alt="Abeille Logo" width="100" src="src/assets/logo.svg">
+    <img alt="Leafage Logo" width="100" src="src/assets/logo.svg">
   </a>
 </p>
 
 <p align="center">
   <br>
-  <a href="https://github.com/little3201/abeille-manager/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/little3201/abeille-manager.svg" alt="License">
+  <a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/little3201/leafage-ms.svg" alt="License">
   </a>
 </p>
 
@@ -75,6 +75,6 @@ yarn dev
 yarn build
 ```
 
-<a href="https://github.com/little3201/abeille-manager/blob/master/LICENSE">
+<a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
   <h2>MIT</h2>
 </a>

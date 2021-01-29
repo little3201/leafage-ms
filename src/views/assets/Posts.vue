@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Posts</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700">
+        <button
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -114,7 +116,11 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action
+                :code="data.code"
+                @delAction="confirmOperate"
+                @editAction="modelOperate"
+              />
             </td>
           </tr>
         </tbody>
@@ -122,7 +128,12 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
+    <Model
+      :isEdit="isEdit"
+      :code="postsData.code"
+      @editAction="modelOperate"
+      @commitAction="commitOperate"
+    >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
@@ -160,6 +171,7 @@
             </select>
           </div>
           <div class="col-span-12">
+            <label>Content</label>
             <Content :content="postsData.content" />
           </div>
         </div>
@@ -195,16 +207,18 @@ export default defineComponent({
     return {
       isEdit: false,
       isDel: false,
-      postsData: {}
+      postsData: {},
     };
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.postsData = {}
+      this.postsData = {};
       if (isEdit && params) {
         instance
           .get(SERVER_URL.posts.concat("/").concat(params))
@@ -212,12 +226,28 @@ export default defineComponent({
             this.postsData = res.data;
           });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.postsData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.posts.concat("/").concat(code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.posts, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     async function initDatas() {
       await instance.get(SERVER_URL.posts.concat("?page=0&size=10")).then(

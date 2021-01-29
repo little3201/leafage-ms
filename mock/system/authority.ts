@@ -15,6 +15,34 @@ export default [
     },
   },
   {
+    url: 'authority/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        name: 'User',
+        description: '用户',
+        superior: 'System',
+        type: 'menu',
+        path: '/user'
+      }
+    },
+  },
+  {
+    url: 'authority',
+    method: 'post',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        name: 'User',
+        description: '用户',
+        superior: 'System',
+        type: 'menu',
+        path: '/user'
+      }
+    },
+  },
+  {
     url: 'authority',
     method: 'get',
     response: () => {

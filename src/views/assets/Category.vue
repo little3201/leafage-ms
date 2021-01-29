@@ -124,7 +124,12 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
+    <Model
+      :code="categoryData.code"
+      :isEdit="isEdit"
+      @editAction="modelOperate"
+      @commitAction="commitOperate"
+    >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
@@ -180,11 +185,13 @@ export default defineComponent({
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.categoryData = {}
+      this.categoryData = {};
       if (isEdit && params) {
         instance
           .get(SERVER_URL.category.concat("/").concat(params))
@@ -192,12 +199,28 @@ export default defineComponent({
             this.categoryData = res.data;
           });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.categoryData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.category.concat("/").concat(code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.category, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     async function initDatas() {
       await instance.get(SERVER_URL.category.concat("?page=0&size=10")).then(

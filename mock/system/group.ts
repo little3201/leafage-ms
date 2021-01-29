@@ -14,6 +14,32 @@ export default [
     },
   },
   {
+    url: 'group/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        name: 'Technology',
+        description: '技术部',
+        superior: '集团',
+        principal: 'admin'
+      }
+    },
+  },
+  {
+    url: 'group',
+    method: 'post',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        name: 'Technology',
+        description: '技术部',
+        superior: '集团',
+        principal: 'admin'
+      }
+    },
+  },
+  {
     url: 'group',
     method: 'get',
     response: () => {

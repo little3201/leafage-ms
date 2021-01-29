@@ -12,6 +12,26 @@ export default [
     },
   },
   {
+    url: 'category/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+          code: '20A23D2D1',
+          alias: 'Technology'
+      }
+    },
+  },
+  {
+    url: 'category',
+    method: 'post',
+    response: () => {
+      return {
+          code: '20A23D2D1',
+          alias: 'Technology'
+      }
+    },
+  },
+  {
     url: 'category',
     method: 'get',
     response: () => {

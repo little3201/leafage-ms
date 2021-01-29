@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Authorities</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700">
+        <button
+          class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -118,7 +120,11 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action
+                :code="data.code"
+                @delAction="confirmOperate"
+                @editAction="modelOperate"
+              />
             </td>
           </tr>
         </tbody>
@@ -126,7 +132,12 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
+    <Model
+      :code="authorityData.code"
+      :isEdit="isEdit"
+      @editAction="modelOperate"
+      @commitAction="commitOperate"
+    >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
@@ -164,8 +175,10 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
-              :value="authorityData.description"/>
+            <textarea
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              :value="authorityData.description"
+            />
           </div>
         </div>
       </form>
@@ -190,23 +203,25 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
-    Model
+    Model,
   },
 
   data() {
-    return{
+    return {
       isEdit: false,
       isDel: false,
-      authorityData: {}
-    }
+      authorityData: {},
+    };
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.authorityData = {}
+      this.authorityData = {};
       if (isEdit && params) {
         instance
           .get(SERVER_URL.authority.concat("/").concat(params))
@@ -214,12 +229,28 @@ export default defineComponent({
             this.authorityData = res.data;
           });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.authorityData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.authority.concat("/").concat(code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.authority, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     async function initDatas() {
       await instance

@@ -14,6 +14,30 @@ export default [
     },
   },
   {
+    url: 'posts/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        title: '一步步实现分布式架构',
+        subtitle: '分布式架构，是一套很复杂的系统',
+        content: '## 分布式架构，是一套很复杂的系统'
+      }
+    },
+  },
+  {
+    url: 'posts',
+    method: 'post',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        title: '一步步实现分布式架构',
+        subtitle: '分布式架构，是一套很复杂的系统',
+        content: '## 分布式架构，是一套很复杂的系统'
+      }
+    },
+  },
+  {
     url: 'posts',
     method: 'get',
     response: () => {

@@ -131,17 +131,8 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
-            <label>Code</label>
-            <input
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              placeholder="Code"
-              :value="categoryData.code"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
+        <div class="grid grid-cols-12">
+          <div class="col-span-12">
             <label>Alias</label>
             <input
               type="text"

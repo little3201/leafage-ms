@@ -62,6 +62,7 @@
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Title"
               maxlength="20"
+              :value="profileData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-4">
@@ -79,6 +80,7 @@
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Subtitle"
               maxlength="64"
+              :value="profileData.subtitle"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -139,7 +141,7 @@
           </div>
           <div class="col-span-12">
             <label>Content</label>
-            <Content />
+            <Content :content="profileData.content" />
           </div>
         </div>
       </form>
@@ -169,25 +171,29 @@ export default defineComponent({
   },
 
   setup(props) {
-    const data = ref();
+    const profileData = ref({});
 
-    async function initData() {
-      await instance.get(SERVER_URL.posts.concat("/").concat(props.code)).then(
-        (response) => {
-          data.value = response.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+    console.log("传过来的code是：" + props.code);
+
+    async function initData(code: string) {
+      if (code && code.length > 0) {
+        await instance.get(SERVER_URL.posts.concat("/").concat(code)).then(
+          (response) => {
+            profileData.value = response.data;
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        );
+      }
     }
 
     onMounted(() => {
-      initData();
+      initData(props.code);
     });
 
     return {
-      data,
+      profileData,
     };
   },
 });

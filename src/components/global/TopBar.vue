@@ -23,7 +23,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
-          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:placeholder-gray-800"
+          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:ring-2 focus:placeholder-gray-800"
           placeholder="Search..."
         />
         <svg
@@ -36,7 +36,7 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-search absolute inset-y-0 right-0 my-auto mr-3"
+          class="feather feather-search absolute inset-y-0 right-0 my-auto mr-3 opacity-60"
         >
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>

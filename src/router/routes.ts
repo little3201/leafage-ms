@@ -45,11 +45,11 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: '',
-            name: 'Index',
+            name: 'Items',
             component: () => import('/src/views/assets/posts/Items.vue'),
           },
           {
-            path: 'profile/:code',
+            path: 'profile/:code?', // 使用 profile/:code* 的话，code会转为Array类型
             name: 'Porfile',
             component: () => import('/src/views/assets/posts/Profile.vue'),
           }

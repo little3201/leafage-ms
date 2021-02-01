@@ -105,11 +105,11 @@
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
-              v-text="Math.floor(Math.random() * 100)"
+              v-text="data.viewed"
             ></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
-              v-text="Math.floor(Math.random() * 100)"
+              v-text="data.likes"
             ></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
@@ -119,7 +119,7 @@
               <div class="flex justify-center items-center">
                 <router-link
                   class="flex items-center mr-3"
-                  :to="'/posts/profile/' + data.code"
+                  to="/posts/profile/8"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

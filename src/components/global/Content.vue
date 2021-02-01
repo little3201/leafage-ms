@@ -1,10 +1,14 @@
 <template>
   <div
-    class="grid grid-flow-row grid-rows-1 rounded-md border mt-2"
-    :class="{ 'grid-cols-2': isShow, 'grid-cols-1': !isShow }"
+    class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border mt-2 mb-5"
   >
-    <textarea class="p-2 min-h-screen" :value="input" @input="update"></textarea>
-    <div class="border-l overflow-auto bg-white" v-show="isShow" v-html="rendedHtml">
+    <textarea
+      class="p-2 min-h-screen"
+      :value="input"
+      @input="update"
+    ></textarea>
+    <div class="hidden md:block border-l overflow-auto bg-white">
+      <p class="m-2" v-html="rendedHtml"></p>
     </div>
   </div>
 </template>
@@ -26,7 +30,6 @@ export default defineComponent({
   },
 
   setup(props) {
-    const isShow = ref(true)
     const input = ref(props.content);
 
     const md = new MarkdownIt({
@@ -54,7 +57,7 @@ export default defineComponent({
 
     const update = (e: any) => {
       setTimeout(() => {
-        input.value  = e.target.value;
+        input.value = e.target.value;
       }, 300);
     };
 
@@ -62,7 +65,22 @@ export default defineComponent({
       return md.render(input.value);
     });
 
-    return { isShow, rendedHtml, input, update };
+    return { rendedHtml, input, update };
   },
 });
 </script>
+
+<style>
+pre {
+  font-size: 12px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: revert;
+  font-weight: revert;
+}
+</style>

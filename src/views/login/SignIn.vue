@@ -39,7 +39,7 @@
             A few more clicks to sign in to your account. Manage all your
             e-commerce accounts in one place
           </div>
-          <form style="min-width: 350px" @submit.prevent="onSubmit">
+          <form style="min-width: 300px" @submit.prevent="onSubmit">
             <div class="mt-8">
               <input
                 type="text"

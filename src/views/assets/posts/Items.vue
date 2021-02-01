@@ -54,7 +54,7 @@
           Export to PDF
         </button>
         <button
-          @click.prevent="this.$router.push('/posts/profile')"
+          @click="this.$router.push('/posts/profile')"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -119,7 +119,7 @@
               <div class="flex justify-center items-center">
                 <router-link
                   class="flex items-center mr-3"
-                  to="/posts/profile/8"
+                  :to="'/posts/profile/' + data.code"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

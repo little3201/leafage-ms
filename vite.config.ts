@@ -6,6 +6,6 @@ module.exports = {
   },
   // 解决没有 export default module  的问题
   optimizeDeps: {
-    include: ["qs", "lodash"]
+    include: ["qs", "axios", "mockjs"]
   }
 }

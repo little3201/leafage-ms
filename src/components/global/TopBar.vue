@@ -67,7 +67,8 @@
     </div>
     <div class="w-8 h-8 relative">
       <div
-        class="w-8 h-8 rounded-full overflow-hidden shadow-lg zoom-in"
+        @click="this.$router.push('/signin')"
+        class="w-8 h-8 rounded-full overflow-hidden shadow-lg"
       >
         <img
           alt="Midone Tailwind HTML Admin Template"

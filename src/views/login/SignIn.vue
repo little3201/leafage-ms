@@ -110,7 +110,7 @@ export default defineComponent({
     const formData = ref({});
 
     function onSubmit() {
-      instance.post("login", qs.stringify(formData.value)).then(
+      instance.post("/login", qs.stringify(formData.value)).then(
         (res) => {},
         (err) => {}
       );

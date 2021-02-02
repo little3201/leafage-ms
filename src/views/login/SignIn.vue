@@ -101,24 +101,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import instance from "../../api";
-import qs from 'qs'
+import qs from "qs";
 
 export default defineComponent({
   setup() {
     const formData = ref({});
 
     function onSubmit() {
-      debugger;
-      console.log(formData.value);
-      instance
-        .post("login", qs.stringify(formData.value))
-        .then(
-          (res) => {},
-          (err) => {}
-        );
+      instance.post("login", qs.stringify(formData.value)).then(
+        (res) => {},
+        (err) => {}
+      );
     }
+
+    // 欲提交，请求csrfToken
+    function preSubmit(){
+      instance.get("/check")
+    }
+
+    onMounted(() => {
+      preSubmit()
+    })
 
     return {
       formData,

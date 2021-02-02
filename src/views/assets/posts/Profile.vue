@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Portfolio</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
         <button
-          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +29,8 @@
           保存
         </button>
         <button
-          @click.prevent="this.$router.push('/posts/profile')"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+          @click="submit"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@
     </div>
     <div class="overflow-auto mt-8 sm:mt-0">
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
+        <div class="grid grid-cols-12 gap-4 px-1">
           <div class="col-span-12 sm:col-span-8">
             <label>Title</label>
             <input
@@ -67,7 +67,9 @@
           </div>
           <div class="col-span-12 sm:col-span-4">
             <label>Category</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
+            >
               <option>Technology</option>
               <option>Lifestyle</option>
               <option>Travel</option>
@@ -77,7 +79,7 @@
             <label>Subtitle</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
               placeholder="Subtitle"
               maxlength="64"
               :value="profileData.subtitle"
@@ -85,7 +87,9 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Tags</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
+            >
               <option>Java</option>
               <option>Spring</option>
               <option>Vue</option>
@@ -93,7 +97,9 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Type</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
+            >
               <option>原创</option>
               <option>转载</option>
             </select>
@@ -141,7 +147,18 @@
           </div>
           <div class="col-span-12">
             <label>Content</label>
-            <Content :content="profileData.content" />
+            <div
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border mt-2 mb-5"
+            >
+              <textarea
+                class="p-2 min-h-screen outline-none focus:ring-2"
+                :value="input"
+                @input="update"
+              ></textarea>
+              <div class="hidden md:block border-l overflow-auto bg-white">
+                <p class="m-2 leading-loose" v-html="rendedHtml"></p>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -150,18 +167,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import Content from "/@/components/global/Content.vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
+import router from "../../../router";
 
 import instance from "../../../api";
 import SERVER_URL from "../../../api/request";
 
+import md from "../../../plugins/markdown";
+import qs from "qs";
+
 export default defineComponent({
   name: "Profile",
-
-  components: {
-    Content,
-  },
 
   props: {
     code: {
@@ -172,14 +188,14 @@ export default defineComponent({
 
   setup(props) {
     const profileData = ref({});
-
-    console.log("传过来的code是：" + props.code);
+    const input = ref("");
 
     async function initData(code: string) {
       if (code && code.length > 0) {
         await instance.get(SERVER_URL.posts.concat("/").concat(code)).then(
           (response) => {
             profileData.value = response.data;
+            input.value = response.data.content;
           },
           (error) => {
             alert(error.statusText);
@@ -188,12 +204,54 @@ export default defineComponent({
       }
     }
 
+    const update = (e: any) => {
+      setTimeout(() => {
+        input.value = e.target.value;
+      }, 300);
+    };
+
+    const submit = () => {
+      debugger
+      if (props.code) {
+        instance
+          .put(
+            SERVER_URL.posts.concat("/").concat(props.code),
+            qs.stringify(profileData.value)
+          )
+          .then(
+            (response) => {
+              router.push("/posts");
+            },
+            (error) => {
+              alert(error.statusText);
+            }
+          );
+      } else {
+        instance.post(SERVER_URL.posts, qs.stringify(profileData.value)).then(
+          (response) => {
+            router.push("/posts");
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        );
+      }
+    };
+
+    const rendedHtml = computed(() => {
+      return md.render(input.value);
+    });
+
     onMounted(() => {
       initData(props.code);
     });
 
     return {
+      input,
       profileData,
+      rendedHtml,
+      update,
+      submit
     };
   },
 });
@@ -201,6 +259,15 @@ export default defineComponent({
 
 <style>
 pre {
-  font-size: 12px;
+  font-size: 13px;
+  @apply leading-relaxed
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: revert;
 }
 </style>

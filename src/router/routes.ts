@@ -52,6 +52,7 @@ const routes: Array<RouteRecordRaw> = [
             path: 'profile/:code?', // 使用 profile/:code* 的话，code会转为Array类型
             name: 'Porfile',
             component: () => import('/src/views/assets/posts/Profile.vue'),
+            props: true // 需配置props: true, 然后可在组件中使用Props获取路由参数
           }
         ]
       },

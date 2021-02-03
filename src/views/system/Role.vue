@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Roles</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden sm:flex items-center bg-white p-2 rounded-md text-gray-700">
+        <button
+          class="hidden sm:flex items-center bg-white p-2 rounded-md text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -101,13 +103,17 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
-            <td class="px-4 py-2" v-text="Math.floor(Math.random() * 10)"></td>
+            <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action
+                :code="data.code"
+                @delAction="confirmOperate"
+                @editAction="modelOperate"
+              />
             </td>
           </tr>
         </tbody>
@@ -115,7 +121,12 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
+    <Model
+      :code="roleData.code"
+      :isEdit="isEdit"
+      @editAction="modelOperate"
+      @commitAction="commitOperate"
+    >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
@@ -136,8 +147,10 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
-              :value="roleData.description" />
+            <textarea
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              :value="roleData.description"
+            />
           </div>
         </div>
       </form>
@@ -162,36 +175,52 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
-    Model
+    Model,
   },
 
   data() {
-    return{
+    return {
       isEdit: false,
       isDel: false,
-      roleData: {}
-    }
+      roleData: {},
+    };
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.roleData = {}
+      this.roleData = {};
       if (isEdit && params) {
-        instance
-          .get(SERVER_URL.role.concat("/").concat(params))
-          .then((res) => {
-            this.roleData = res.data;
-          });
+        instance.get(SERVER_URL.role.concat("/", params)).then((res) => {
+          this.roleData = res.data;
+        });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.roleData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.role.concat("/", code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.role, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     function initDatas() {
       instance

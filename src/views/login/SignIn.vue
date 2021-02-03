@@ -39,12 +39,13 @@
             A few more clicks to sign in to your account. Manage all your
             e-commerce accounts in one place
           </div>
-          <form style="min-width: 350px">
+          <form style="min-width: 300px" @submit.prevent="onSubmit">
             <div class="mt-8">
               <input
                 type="text"
                 name="username"
-                class="w-full rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
+                v-model="formData.username"
+                class="w-full rounded-md focus:ring-2 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
                 placeholder="Username/Phone/Email"
                 required
                 autocomplete="off"
@@ -52,7 +53,8 @@
               <input
                 type="password"
                 name="password"
-                class="w-full rounded-md py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
+                v-model="formData.password"
+                class="w-full rounded-md focus:ring-2 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
                 placeholder="Password"
                 required
                 autocomplete="off"
@@ -99,19 +101,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
+import router from "../../router";
+
 import instance from "../../api";
+import qs from "qs";
 
 export default defineComponent({
   setup() {
-    const data = computed(() => instance.post("/login"));
+    const formData = ref({});
 
     function onSubmit() {
-      alert("submit");
+      instance.post("/login", qs.stringify(formData.value)).then(
+        (res) => {
+          router.push("/")
+        }
+      );
     }
 
+    // 欲提交，请求csrfToken
+    function preSubmit(){
+      instance.get("/check")
+    }
+
+    onMounted(() => {
+      preSubmit()
+    })
+
     return {
-      data,
+      formData,
+      onSubmit,
     };
   },
 });
@@ -119,13 +138,13 @@ export default defineComponent({
 
 <style scoped>
 .login:before {
-    content: "";
-    margin-left: -65%;
-    background-image: url(../../assets/bg-login-page.svg);
-    background-position: right;
-    background-repeat: no-repeat;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  content: "";
+  margin-left: -65%;
+  background-image: url(../../assets/bg-login-page.svg);
+  background-position: right;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 </style>

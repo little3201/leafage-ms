@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Groups</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700">
+        <button
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -26,7 +28,9 @@
           </svg>
           Export to Excel
         </button>
-        <button class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700">
+        <button
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -51,27 +55,27 @@
         </button>
       </div>
       <button
-          @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+        @click="modelOperate(true)"
+        class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-plus-circle mr-2"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-plus-circle mr-2"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Add New
-        </button>
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        Add New
+      </button>
     </div>
     <div class="overflow-auto mt-8 sm:mt-0">
       <table class="mt-2 w-full truncate">
@@ -110,13 +114,17 @@
             <td class="px-4 py-2" v-text="data.code"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.principal"></td>
-            <td class="px-4 py-2" v-text="Math.floor(Math.random() * 10)"></td>
+            <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2">
-              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action
+                :code="data.code"
+                @delAction="confirmOperate"
+                @editAction="modelOperate"
+              />
             </td>
           </tr>
         </tbody>
@@ -124,7 +132,12 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
+    <Model
+      :code="groupData.code"
+      :isEdit="isEdit"
+      @editAction="modelOperate"
+      @commitAction="commitOperate"
+    >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
@@ -152,8 +165,10 @@
           </div>
           <div class="col-span-12">
             <label>Description</label>
-            <textarea class="py-2 px-3 rounded-md w-full border mt-2 flex-1" 
-              :value="groupData.description" />
+            <textarea
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              :value="groupData.description"
+            />
           </div>
         </div>
       </form>
@@ -178,36 +193,54 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
-    Model
+    Model,
   },
 
   data() {
-    return{
+    return {
       isEdit: false,
       isDel: false,
-      groupData: {}
-    }
+      groupData: {},
+    };
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.groupData = {}
+      this.groupData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.group.concat("/").concat(params))
+          .get(SERVER_URL.group.concat("/", params))
           .then((res) => {
             this.groupData = res.data;
           });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.groupData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.group.concat("/", code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.group, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     function initDatas() {
       instance

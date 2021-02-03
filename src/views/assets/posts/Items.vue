@@ -3,7 +3,9 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Posts</h2>
       <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700">
+        <button
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -52,7 +54,7 @@
           Export to PDF
         </button>
         <button
-          @click="modelOperate(true)"
+          @click="this.$router.push('/posts/profile')"
           class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
         >
           <svg
@@ -103,18 +105,68 @@
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
-              v-text="Math.floor(Math.random() * 100)"
+              v-text="data.viewed"
             ></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
-              v-text="Math.floor(Math.random() * 100)"
+              v-text="data.likes"
             ></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <Action :code="data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <div class="flex justify-center items-center">
+                <router-link
+                  class="flex items-center mr-3"
+                  :to="'/posts/profile/' + data.code"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-check-square mr-2"
+                  >
+                    <polyline points="9 11 12 14 22 4"></polyline>
+                    <path
+                      d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
+                    ></path>
+                  </svg>
+                  Edit
+                </router-link>
+                <a
+                  class="flex items-center text-red-600"
+                  href="javascript:;"
+                  @click.prevent="openConfirm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-trash-2 mr-1"
+                  >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                  Delete
+                </a>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -122,102 +174,71 @@
     </div>
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
-    <Model :isEdit="isEdit" @editAction="modelOperate">
-      <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12">
-            <label>Title</label>
-            <input
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              placeholder="Title"
-              :value="postsData.title"
-            />
-          </div>
-          <div class="col-span-12">
-            <label>Subtitle</label>
-            <input
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              placeholder="Subtitle"
-              :value="postsData.subtitle"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Category</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>Technology</option>
-              <option>Lifestyle</option>
-              <option>Travel</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Tags</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>Java</option>
-              <option>Spring</option>
-              <option>Vue</option>
-            </select>
-          </div>
-          <div class="col-span-12">
-            <Content :content="postsData.content" />
-          </div>
-        </div>
-      </form>
-    </Model>
   </div>
 </template>
 
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
-import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
-import Content from "/@/components/global/Content.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "../../../api";
+import SERVER_URL from "../../../api/request";
 
 export default defineComponent({
-  name: "Posts",
+  name: "Items",
 
   components: {
-    Action,
     Pagation,
     Confirm,
-    Model,
-    Content,
   },
 
   data() {
     return {
       isEdit: false,
       isDel: false,
-      postsData: {}
+      postsData: {},
     };
   },
 
   methods: {
+    // 删除确认
     confirmOperate(isDel: boolean) {
       this.isDel = isDel;
     },
+    // 新增/编辑：打开
     modelOperate(isEdit: boolean, params: string) {
-      this.postsData = {}
+      this.postsData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.posts.concat("/").concat(params))
+          .get(SERVER_URL.posts.concat("/", params))
           .then((res) => {
             this.postsData = res.data;
           });
       }
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
+    },
+    // 新增/编辑：提交
+    commitOperate(code: string) {
+      let data = this.postsData;
+      if (code && code.length > 0) {
+        instance
+          .put(SERVER_URL.posts.concat("/", code), data)
+          .then((res) => {
+            this.datas.push(res.data);
+          });
+      } else {
+        instance.post(SERVER_URL.posts, data).then((res) => {
+          this.datas.push(res.data);
+        });
+      }
+      this.isEdit = false;
     },
   },
 
   setup() {
-    const datas = ref([]);
+    const datas = ref<any>([]);
 
     async function initDatas() {
       await instance.get(SERVER_URL.posts.concat("?page=0&size=10")).then(

@@ -7,8 +7,8 @@ const router = createRouter({
 });
 
 /* 路由之前检查token */
-router.beforeEach((to, from, next) => {
-  next()
+router.beforeEach(to => {
+  return true
 })
 
 /* 路由之后关闭进度条 */

@@ -20,6 +20,44 @@ export default [
     },
   },
   {
+    url: 'user/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        username: 'admin',
+        nickname: 'admin',
+        avatar: '',
+        gender: 'Male',
+        phone: 18713657895,
+        email: 'little3201@163.com',
+        birthday: new Date(),
+        accountNonExpired: true,
+        accountNonLocked: true,
+        credentialsNonExpired: true,
+      }
+    },
+  },
+  {
+    url: 'user',
+    method: 'post',
+    response: () => {
+      return {
+        code: '20A23D2D1',
+        username: 'admin',
+        nickname: 'admin',
+        avatar: '',
+        gender: 'Male',
+        phone: 18713657895,
+        email: 'little3201@163.com',
+        birthday: new Date(),
+        accountNonExpired: true,
+        accountNonLocked: true,
+        credentialsNonExpired: true,
+      }
+    },
+  },
+  {
     url: 'user',
     method: 'get',
     response: () => {

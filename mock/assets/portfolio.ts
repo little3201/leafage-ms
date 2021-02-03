@@ -12,6 +12,26 @@ export default [
     },
   },
   {
+    url: 'portfolio/20A23D2D1',
+    method: 'put',
+    response: () => {
+      return {
+          code: '20A23D2D1',
+          title: 'Travel Photos'
+      }
+    },
+  },
+  {
+    url: 'portfolio',
+    method: 'post',
+    response: () => {
+      return {
+          code: '20A23D2D1',
+          title: 'Travel Photos'
+      }
+    },
+  },
+  {
     url: 'portfolio',
     method: 'get',
     response: () => {

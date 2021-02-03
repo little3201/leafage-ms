@@ -41,7 +41,20 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'posts',
         name: 'Posts',
-        component: () => import('/src/views/assets/Posts.vue')
+        component: () => import('/src/views/assets/posts/Index.vue'),
+        children: [
+          {
+            path: '',
+            name: 'Items',
+            component: () => import('/src/views/assets/posts/Items.vue'),
+          },
+          {
+            path: 'profile/:code?', // 使用 profile/:code* 的话，code会转为Array类型
+            name: 'Porfile',
+            component: () => import('/src/views/assets/posts/Profile.vue'),
+            props: true // 需配置props: true, 然后可在组件中使用Props获取路由参数
+          }
+        ]
       },
       {
         path: 'portfolio',

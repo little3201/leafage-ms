@@ -195,7 +195,7 @@ export default defineComponent({
     modelOperate(isEdit: boolean, params: string) {
       this.roleData = {};
       if (isEdit && params) {
-        instance.get(SERVER_URL.role.concat("/").concat(params)).then((res) => {
+        instance.get(SERVER_URL.role.concat("/", params)).then((res) => {
           this.roleData = res.data;
         });
       }
@@ -206,7 +206,7 @@ export default defineComponent({
       let data = this.roleData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.role.concat("/").concat(code), data)
+          .put(SERVER_URL.role.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

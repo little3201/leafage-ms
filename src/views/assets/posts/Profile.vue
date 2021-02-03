@@ -192,7 +192,7 @@ export default defineComponent({
 
     async function initData(code: string) {
       if (code && code.length > 0) {
-        await instance.get(SERVER_URL.posts.concat("/").concat(code)).then(
+        await instance.get(SERVER_URL.posts.concat("/", code)).then(
           (response) => {
             profileData.value = response.data;
             input.value = response.data.content;
@@ -215,7 +215,7 @@ export default defineComponent({
       if (props.code) {
         instance
           .put(
-            SERVER_URL.posts.concat("/").concat(props.code),
+            SERVER_URL.posts.concat("/", props.code),
             qs.stringify(profileData.value)
           )
           .then(

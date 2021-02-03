@@ -370,7 +370,7 @@ export default defineComponent({
     modelOperate(isEdit: boolean, params: string) {
       this.userData = {};
       if (isEdit && params) {
-        instance.get(SERVER_URL.user.concat("/").concat(params)).then((res) => {
+        instance.get(SERVER_URL.user.concat("/", params)).then((res) => {
           this.userData = res.data;
         });
       }
@@ -381,7 +381,7 @@ export default defineComponent({
       let data = this.userData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.user.concat("/").concat(code), data)
+          .put(SERVER_URL.user.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

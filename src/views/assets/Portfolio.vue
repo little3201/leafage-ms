@@ -202,7 +202,7 @@ export default defineComponent({
       this.portfolioData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.portfolio.concat("/").concat(params))
+          .get(SERVER_URL.portfolio.concat("/", params))
           .then((res) => {
             this.portfolioData = res.data;
           });
@@ -214,7 +214,7 @@ export default defineComponent({
       let data = this.portfolioData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.portfolio.concat("/").concat(code), data)
+          .put(SERVER_URL.portfolio.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

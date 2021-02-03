@@ -102,6 +102,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import router from "../../router";
+
 import instance from "../../api";
 import qs from "qs";
 
@@ -111,8 +113,9 @@ export default defineComponent({
 
     function onSubmit() {
       instance.post("/login", qs.stringify(formData.value)).then(
-        (res) => {},
-        (err) => {}
+        (res) => {
+          router.push("/")
+        }
       );
     }
 

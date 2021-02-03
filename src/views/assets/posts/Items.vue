@@ -212,7 +212,7 @@ export default defineComponent({
       this.postsData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.posts.concat("/").concat(params))
+          .get(SERVER_URL.posts.concat("/", params))
           .then((res) => {
             this.postsData = res.data;
           });
@@ -224,7 +224,7 @@ export default defineComponent({
       let data = this.postsData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.posts.concat("/").concat(code), data)
+          .put(SERVER_URL.posts.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

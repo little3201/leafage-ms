@@ -224,7 +224,7 @@ export default defineComponent({
       this.authorityData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.authority.concat("/").concat(params))
+          .get(SERVER_URL.authority.concat("/", params))
           .then((res) => {
             this.authorityData = res.data;
           });
@@ -236,7 +236,7 @@ export default defineComponent({
       let data = this.authorityData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.authority.concat("/").concat(code), data)
+          .put(SERVER_URL.authority.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

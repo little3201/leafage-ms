@@ -214,7 +214,7 @@ export default defineComponent({
       this.groupData = {};
       if (isEdit && params) {
         instance
-          .get(SERVER_URL.group.concat("/").concat(params))
+          .get(SERVER_URL.group.concat("/", params))
           .then((res) => {
             this.groupData = res.data;
           });
@@ -226,7 +226,7 @@ export default defineComponent({
       let data = this.groupData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.group.concat("/").concat(code), data)
+          .put(SERVER_URL.group.concat("/", code), data)
           .then((res) => {
             this.datas.push(res.data);
           });

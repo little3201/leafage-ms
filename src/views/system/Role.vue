@@ -103,7 +103,7 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
-            <td class="px-4 py-2" v-text="Math.floor(Math.random() * 10)"></td>
+            <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"
               v-text="new Date(data.modifyTime).toLocaleDateString()"

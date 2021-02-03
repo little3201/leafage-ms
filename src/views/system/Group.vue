@@ -114,7 +114,7 @@
             <td class="px-4 py-2" v-text="data.code"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.principal"></td>
-            <td class="px-4 py-2" v-text="Math.floor(Math.random() * 10)"></td>
+            <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"
               v-text="new Date(data.modifyTime).toLocaleDateString()"

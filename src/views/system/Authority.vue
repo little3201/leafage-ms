@@ -84,6 +84,7 @@
             <th class="px-4 py-2 text-left">No.</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Code</th>
+            <th class="px-4 py-2">Role Count</th>
             <th class="px-4 py-2">Superior</th>
             <th class="px-4 py-2">Type</th>
             <th class="px-4 py-2">Path</th>
@@ -112,6 +113,7 @@
               ></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
+            <td class="px-4 py-2" v-text="data.count"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.type"></td>
             <td class="px-4 py-2" v-text="data.path"></td>

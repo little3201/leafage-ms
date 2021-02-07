@@ -136,7 +136,7 @@
             <label>Alias</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Alias"
               :value="categoryData.alias"
             />
@@ -149,6 +149,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import router from "../../router";
+
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -167,11 +169,17 @@ export default defineComponent({
     Model,
   },
 
+  props: {
+    code: {
+      type: String,
+      default: "",
+    },
+  },
+
   data() {
     return {
       isEdit: false,
       isDel: false,
-      categoryData: {},
     };
   },
 
@@ -206,12 +214,14 @@ export default defineComponent({
           this.datas.push(res.data);
         });
       }
+      this.submit()
       this.isEdit = false;
     },
   },
 
-  setup() {
+  setup(props) {
     const datas = ref<any>([]);
+    const categoryData = ref({});
 
     async function initDatas() {
       await instance.get(SERVER_URL.category.concat("?page=0&size=10")).then(
@@ -224,12 +234,39 @@ export default defineComponent({
       );
     }
 
+    const submit = () => {
+      debugger
+      if (props.code) {
+        instance
+          .put(SERVER_URL.category.concat("/", props.code), categoryData.value)
+          .then(
+            (response) => {
+              router.push("/category");
+            },
+            (error) => {
+              alert(error.statusText);
+            }
+          );
+      } else {
+        instance.post(SERVER_URL.category, categoryData.value).then(
+          (response) => {
+            router.push("/category");
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        );
+      }
+    };
+
     onMounted(() => {
       initDatas();
     });
 
     return {
       datas,
+      categoryData,
+      submit
     };
   },
 });

@@ -20,7 +20,7 @@
 包含帖子管理、影视资料管理、权限管理。
 
 ### 目标功能
-- [x] 登录注册
+- [x] 登录
 - [x] 权限管理
 - [x] 个人中心
 - [ ] 消息提醒
@@ -35,15 +35,15 @@
 
 ### 展示截图
 
-<img alt="signin" width="100%" src="src/assets/img/signin.png">
-<img alt="dashboard" width="100%" src="src/assets/img/dashboard.png">
+<img alt="signin" width="100%" src="src/assets/images/signin.jpeg">
+<img alt="dashboard" width="100%" src="src/assets/images/posts.jpeg">
 
 ### 项目地址
 
 目前项目托管在Gitee和Github平台上中，欢迎大家star 和 fork 支持~
 
-- Gitee地址：https://gitee.com/little3201/abeille-manager
-- Github地址：https://github.com/little3201/abeille-manager
+- Gitee地址：https://gitee.com/little3201/leafage-ms
+- Github地址：https://github.com/little3201/leafage-ms
 
 ### FAQ文档
 

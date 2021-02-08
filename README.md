@@ -42,8 +42,8 @@
 
 目前项目托管在Gitee和Github平台上中，欢迎大家star 和 fork 支持~
 
-- Gitee地址：https://gitee.com/little3201/abeille-manager
-- Github地址：https://github.com/little3201/abeille-manager
+- Gitee地址：https://gitee.com/little3201/leafage-ms
+- Github地址：https://github.com/little3201/leafage-ms
 
 ### FAQ文档
 

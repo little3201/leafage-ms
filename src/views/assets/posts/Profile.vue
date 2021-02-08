@@ -133,7 +133,7 @@ export default defineComponent({
     let profileData = reactive({
       title: "",
       subtitle: "",
-      cover: "",
+      cover: "https://cdn.pixabay.com/photo/2016/03/04/12/20/server-1235959_1280.jpg",
       content: "",
     });
     // 获取帖子信息

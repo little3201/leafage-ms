@@ -135,12 +135,12 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
-              :value="roleData.name"
+              v-model="roleData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="roleData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
               <option>System</option>
               <option>Posts</option>
             </select>
@@ -149,7 +149,7 @@
             <label>Description</label>
             <textarea
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              :value="roleData.description"
+              v-model="roleData.description"
             />
           </div>
         </div>
@@ -207,8 +207,8 @@ export default defineComponent({
       if (code && code.length > 0) {
         instance
           .put(SERVER_URL.role.concat("/", code), data)
-          .then((res) => {
-            this.datas.push(res.data);
+          .then(() => {
+            this.initDatas();
           });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
@@ -236,6 +236,7 @@ export default defineComponent({
 
     return {
       datas,
+      initDatas
     };
   },
 });

@@ -2,8 +2,8 @@
 # Leafage
 
 <p align="center">
-  <a href="https://abeille.top" target="_blank">
-    <img alt="Leafage Logo" width="100" src="src/assets/logo.svg">
+  <a href="https://console.abeille.top" target="_blank">
+    <img alt="Leafage Logo" width="200" src="src/assets/logo.svg">
   </a>
 </p>
 

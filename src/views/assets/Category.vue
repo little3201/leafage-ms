@@ -136,9 +136,9 @@
             <label>Alias</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Alias"
-              :value="categoryData.alias"
+              v-model="categoryData.alias"
             />
           </div>
         </div>
@@ -149,6 +149,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -197,9 +198,9 @@ export default defineComponent({
       let data = this.categoryData;
       if (code && code.length > 0) {
         instance
-          .put(SERVER_URL.category.concat("/").concat(code), data)
-          .then((res) => {
-            this.datas.push(res.data);
+          .put(SERVER_URL.category.concat("/", code), data)
+          .then(() => {
+            this.initDatas()
           });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
@@ -230,6 +231,7 @@ export default defineComponent({
 
     return {
       datas,
+      initDatas
     };
   },
 });

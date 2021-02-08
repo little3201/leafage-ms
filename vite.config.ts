@@ -7,5 +7,12 @@ module.exports = {
   // 解决没有 export default module  的问题
   optimizeDeps: {
     include: ["qs", "axios", "mockjs"]
-  }
+  },
+  proxy: {
+    '/api': {
+        target: 'http://localhost/',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+    }
+}
 }

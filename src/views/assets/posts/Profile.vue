@@ -62,17 +62,21 @@
               class="py-2 px-3 rounded-md focus:ring-2 ring-blue-400 outline-none w-full border mt-2 flex-1"
               placeholder="Title"
               maxlength="20"
-              :value="profileData.title"
+              v-model="profileData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-4">
             <label>Category</label>
             <select
+              v-model="profileData.category"
               class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
             >
-              <option>Technology</option>
-              <option>Lifestyle</option>
-              <option>Travel</option>
+              <option
+                v-for="category in categories"
+                :key="category.code"
+                :value="category.code"
+                v-text="category.alias"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
@@ -82,68 +86,8 @@
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
               placeholder="Subtitle"
               maxlength="64"
-              :value="profileData.subtitle"
+              v-model="profileData.subtitle"
             />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Tags</label>
-            <select
-              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
-            >
-              <option>Java</option>
-              <option>Spring</option>
-              <option>Vue</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Type</label>
-            <select
-              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
-            >
-              <option>原创</option>
-              <option>转载</option>
-            </select>
-          </div>
-          <div class="col-span-12">
-            <label class="text-sm font-medium text-gray-700">
-              Cover photo
-            </label>
-            <div
-              class="mt-2 bg-white flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
-            >
-              <div class="space-y-1 text-center">
-                <svg
-                  class="mx-auto h-12 w-12 text-gray-400"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <div class="flex text-sm text-gray-600">
-                  <label
-                    for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      class="sr-only"
-                    />
-                  </label>
-                  <p class="pl-1">or drag and drop</p>
-                </div>
-                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-              </div>
-            </div>
           </div>
           <div class="col-span-12">
             <label>Content</label>
@@ -152,11 +96,10 @@
             >
               <textarea
                 class="p-2 min-h-screen outline-none focus:ring-2"
-                :value="input"
-                @input="update"
+                v-model="profileData.content"
               ></textarea>
               <div class="hidden md:block border-l overflow-auto bg-white">
-                <p class="m-2 leading-loose" v-html="rendedHtml"></p>
+                <p class="article m-2 leading-loose" v-html="rendedHtml"></p>
               </div>
             </div>
           </div>
@@ -167,14 +110,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, reactive, onMounted, computed, ref } from "vue";
 import router from "../../../router";
 
 import instance from "../../../api";
 import SERVER_URL from "../../../api/request";
 
 import md from "../../../plugins/markdown";
-import qs from "qs";
 
 export default defineComponent({
   name: "Profile",
@@ -187,59 +129,78 @@ export default defineComponent({
   },
 
   setup(props) {
-    const profileData = ref({});
-    const input = ref("");
-
-    async function initData(code: string) {
+    const categories = ref([]);
+    let profileData = reactive({
+      title: "",
+      subtitle: "",
+      cover: "",
+      content: "",
+    });
+    // 获取帖子信息
+    const fetchPosts = (code: string) => {
       if (code && code.length > 0) {
-        await instance.get(SERVER_URL.posts.concat("/", code)).then(
-          (response) => {
-            profileData.value = response.data;
-            input.value = response.data.content;
+        instance.get(SERVER_URL.posts.concat("/", code)).then(
+          (res) => {
+            profileData.title = res.data.title;
+            profileData.subtitle = res.data.subtitle;
+            profileData.cover = res.data.cover;
+            profileData.content = res.data.content;
           },
           (error) => {
             alert(error.statusText);
           }
         );
       }
+    };
+    // 获取所有分类
+    const retrieveCategories = () => {
+      instance.get(SERVER_URL.category).then(
+        (res) => {
+          categories.value = res.data;
+        },
+        (error) => {
+          alert(error.statusText);
+        }
+      );
+    };
+    // 新增帖子
+    const postPosts = (data: Object) => {
+      instance.put(SERVER_URL.posts.concat("/", props.code), data).then(
+        () => {
+          router.push("/posts");
+        },
+        (error) => {
+          alert(error.statusText);
+        }
+      );
+    };
+    // 编辑帖子
+    const putPosts = (data: Object) => {
+      instance.post(SERVER_URL.posts, data).then(
+        () => {
+          router.push("/posts");
+        },
+        (error) => {
+          alert(error.statusText);
+        }
+      );
+    };
+    // 初始化，并发请求数据
+    async function initData(code: string) {
+      await Promise.all([retrieveCategories(), fetchPosts(code)]);
     }
 
-    const update = (e: any) => {
-      setTimeout(() => {
-        input.value = e.target.value;
-      }, 300);
-    };
-
+    // 提交执行
     const submit = () => {
-      debugger
       if (props.code) {
-        instance
-          .put(
-            SERVER_URL.posts.concat("/", props.code),
-            qs.stringify(profileData.value)
-          )
-          .then(
-            (response) => {
-              router.push("/posts");
-            },
-            (error) => {
-              alert(error.statusText);
-            }
-          );
+        postPosts(profileData);
       } else {
-        instance.post(SERVER_URL.posts, qs.stringify(profileData.value)).then(
-          (response) => {
-            router.push("/posts");
-          },
-          (error) => {
-            alert(error.statusText);
-          }
-        );
+        putPosts(profileData);
       }
     };
-
+    // 转换md为html
     const rendedHtml = computed(() => {
-      return md.render(input.value);
+      return md.render(profileData.content);
     });
 
     onMounted(() => {
@@ -247,27 +208,27 @@ export default defineComponent({
     });
 
     return {
-      input,
+      categories,
       profileData,
       rendedHtml,
-      update,
-      submit
+      submit,
     };
   },
 });
 </script>
 
-<style>
-pre {
+<style scoped>
+.article :deep() pre {
   font-size: 13px;
-  @apply leading-relaxed
+  @apply leading-relaxed;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: revert;
+.article :deep() h1 {
+  @apply text-2xl;
+}
+.article :deep() h2 {
+  @apply text-xl;
+}
+.article :deep() h3 {
+  @apply text-lg;
 }
 </style>

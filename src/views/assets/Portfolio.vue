@@ -107,14 +107,8 @@
               ></a>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
-            <td
-              class="px-4 py-2 md:px-5 md:py-3"
-              v-text="data.viewed"
-            ></td>
-            <td
-              class="px-4 py-2 md:px-5 md:py-3"
-              v-text="data.likes"
-            ></td>
+            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.viewed"></td>
+            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.likes"></td>
             <td
               class="px-4 py-2 md:px-5 md:py-3"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
@@ -146,16 +140,21 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Title"
-              :value="portfolioData.title"
+              v-model="portfolioData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Category</label>
-            <select class="py-2 px-3 rounded-md w-full border mt-2 flex-1">
-              <option value="">请选择</option>
-              <option value="technology">Technology</option>
-              <option value="lifestyle">Lifestyle</option>
-              <option value="travel">Travel</option>
+            <select
+              v-model="portfolioData.category"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+            >
+              <option
+                v-for="category in categories"
+                :key="category.code"
+                :value="category.code"
+                v-text="category.alias"
+              ></option>
             </select>
           </div>
         </div>
@@ -189,6 +188,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       portfolioData: {},
+      categories: [],
     };
   },
 
@@ -198,26 +198,37 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, params: string) {
+    modelOperate(isEdit: boolean, code: string) {
       this.portfolioData = {};
-      if (isEdit && params) {
-        instance
-          .get(SERVER_URL.portfolio.concat("/", params))
-          .then((res) => {
-            this.portfolioData = res.data;
-          });
-      }
+      Promise.all([this.retrieveCategories(), this.fetchPortfolio(isEdit, code)]);
       this.isEdit = isEdit;
+    },
+    // 获取所有分类
+    retrieveCategories() {
+      instance.get(SERVER_URL.category).then(
+        (res) => {
+          this.categories = res.data;
+        },
+        (error) => {
+          alert(error.statusText);
+        }
+      );
+    },
+    // 根据code查portfolio
+    fetchPortfolio(isEdit: boolean, code: string) {
+      if (isEdit && code) {
+        instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
+          this.portfolioData = res.data;
+        });
+      }
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
       let data = this.portfolioData;
       if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.portfolio.concat("/", code), data)
-          .then((res) => {
-            this.datas.push(res.data);
-          });
+        instance.put(SERVER_URL.portfolio.concat("/", code), data).then(() => {
+          this.initDatas();
+        });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
           this.datas.push(res.data);
@@ -247,6 +258,7 @@ export default defineComponent({
 
     return {
       datas,
+      initDatas,
     };
   },
 });

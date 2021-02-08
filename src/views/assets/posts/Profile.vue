@@ -62,12 +62,13 @@
               class="py-2 px-3 rounded-md focus:ring-2 ring-blue-400 outline-none w-full border mt-2 flex-1"
               placeholder="Title"
               maxlength="20"
-              :value="profileData.title"
+              v-model="profileData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-4">
             <label>Category</label>
             <select
+              v-model="profileData.category"
               class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
             >
               <option
@@ -85,7 +86,7 @@
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
               placeholder="Subtitle"
               maxlength="64"
-              :value="profileData.subtitle"
+              v-model="profileData.subtitle"
             />
           </div>
           <div class="col-span-12">
@@ -95,8 +96,7 @@
             >
               <textarea
                 class="p-2 min-h-screen outline-none focus:ring-2"
-                :value="profileData.content"
-                @input="update"
+                v-model="profileData.content"
               ></textarea>
               <div class="hidden md:block border-l overflow-auto bg-white">
                 <p class="article m-2 leading-loose" v-html="rendedHtml"></p>
@@ -130,7 +130,7 @@ export default defineComponent({
 
   setup(props) {
     const categories = ref([]);
-    const profileData = reactive({
+    let profileData = reactive({
       title: "",
       subtitle: "",
       cover: "",
@@ -143,7 +143,7 @@ export default defineComponent({
           (res) => {
             profileData.title = res.data.title;
             profileData.subtitle = res.data.subtitle;
-            profileData.content = res.data.cover;
+            profileData.cover = res.data.cover;
             profileData.content = res.data.content;
           },
           (error) => {
@@ -190,11 +190,6 @@ export default defineComponent({
       await Promise.all([retrieveCategories(), fetchPosts(code)]);
     }
 
-    const update = (e: any) => {
-      setTimeout(() => {
-        profileData.content = e.target.value;
-      }, 300);
-    };
     // 提交执行
     const submit = () => {
       if (props.code) {
@@ -216,7 +211,6 @@ export default defineComponent({
       categories,
       profileData,
       rendedHtml,
-      update,
       submit,
     };
   },

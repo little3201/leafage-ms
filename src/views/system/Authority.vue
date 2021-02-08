@@ -148,7 +148,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
-              :value="authorityData.name"
+              v-model="authorityData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -157,19 +157,21 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Path"
-              :value="authorityData.path"
+              v-model="authorityData.path"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="authorityData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option disabled value="">请选择</option>
               <option>System</option>
               <option>Posts</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Type</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="authorityData.type" class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option disabled value="">请选择</option>
               <option>Menu</option>
               <option>Tab</option>
               <option>Url</option>
@@ -179,7 +181,7 @@
             <label>Description</label>
             <textarea
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              :value="authorityData.description"
+              v-model="authorityData.description"
             />
           </div>
         </div>
@@ -239,8 +241,8 @@ export default defineComponent({
       if (code && code.length > 0) {
         instance
           .put(SERVER_URL.authority.concat("/", code), data)
-          .then((res) => {
-            this.datas.push(res.data);
+          .then(() => {
+            this.initDatas()
           });
       } else {
         instance.post(SERVER_URL.authority, data).then((res) => {
@@ -268,6 +270,7 @@ export default defineComponent({
 
     return {
       datas,
+      initDatas
     };
   },
 });

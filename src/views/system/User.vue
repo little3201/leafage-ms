@@ -252,7 +252,7 @@
             </td>
             <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
               <Action
-                :code="data.code"
+                :code="data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -264,7 +264,7 @@
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
-      :code="userData.code"
+      :code="userData.username"
       :isEdit="isEdit"
       @editAction="modelOperate"
       @commitAction="commitOperate"
@@ -277,7 +277,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Name"
-              :value="userData.nickname"
+              v-model="userData.nickname"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -286,7 +286,7 @@
               type="text"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Phone"
-              :value="userData.phone"
+              v-model="userData.phone"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -295,28 +295,29 @@
               type="email"
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
               placeholder="Email"
-              :value="userData.email"
+              v-model="userData.email"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Gender</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="userData.gender" class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option disabled value="">请选择</option>
               <option>Secrecy</option>
               <option>Male</option>
               <option>Famale</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Gender</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>Secrecy</option>
-              <option>Male</option>
-              <option>Famale</option>
+            <label>Locked</label>
+            <select v-model="userData.accountNonLocked" class="p-2 rounded-md w-full border mt-2 flex-1">
+              <option disabled value="">请选择</option>
+              <option>Lock</option>
+              <option>Unlock</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Birthday</label>
-            <select class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="userData.birthday" class="p-2 rounded-md w-full border mt-2 flex-1">
               <option>Today</option>
             </select>
           </div>
@@ -324,7 +325,7 @@
             <label>Description</label>
             <textarea
               class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
-              :value="userData.description"
+              v-model="userData.description"
             />
           </div>
         </div>
@@ -382,8 +383,8 @@ export default defineComponent({
       if (code && code.length > 0) {
         instance
           .put(SERVER_URL.user.concat("/", code), data)
-          .then((res) => {
-            this.datas.push(res.data);
+          .then(() => {
+            this.initDatas();
           });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
@@ -411,6 +412,7 @@ export default defineComponent({
 
     return {
       datas,
+      initDatas
     };
   },
 });

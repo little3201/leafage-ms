@@ -1,6 +1,3 @@
-
-# Leafage
-
 <p align="center">
   <a href="https://console.abeille.top" target="_blank">
     <img alt="Leafage Logo" width="200" src="src/assets/logo.svg">

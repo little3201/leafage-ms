@@ -52,7 +52,7 @@
             <img
               alt="Midone Tailwind HTML Admin Template"
               class="w-1/2 -mt-16"
-              src="/@/assets/illustration.svg"
+              src="../../assets/illustration.svg"
             />
             <div class="text-white font-medium text-4xl leading-tight mt-10">
               A few more clicks to

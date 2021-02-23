@@ -80,28 +80,39 @@
             </select>
           </div>
           <div class="col-span-12">
-            <label>Subtitle</label>
-            <input
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
-              placeholder="Subtitle"
-              maxlength="64"
-              v-model="profileData.subtitle"
-            />
-          </div>
-          <div class="col-span-12">
             <label>Content</label>
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border mt-2 mb-5"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border mt-2"
             >
               <textarea
-                class="p-2 min-h-screen outline-none focus:ring-2"
+                class="p-2 h-screen outline-none focus:ring-2"
                 v-model="profileData.content"
               ></textarea>
               <div class="hidden md:block border-l overflow-auto bg-white">
-                <p class="article m-2 leading-loose" v-html="rendedHtml"></p>
+                <p
+                  class="markdown-body m-2 leading-loose"
+                  v-html="rendedHtml"
+                ></p>
               </div>
             </div>
+          </div>
+          <div class="col-span-12 sm:col-span-4">
+            <label>封面图</label>
+            <div
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
+            >
+              <img :src="profileData.cover" class="w-full h-full" />
+            </div>
+          </div>
+          <div class="col-span-12 sm:col-span-8">
+            <label>Subtitle</label>
+            <textarea
+              type="text"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2 mb-5"
+              placeholder="Subtitle"
+              maxlength="64"
+              v-model="profileData.subtitle"
+            ></textarea>
           </div>
         </div>
       </form>
@@ -133,7 +144,8 @@ export default defineComponent({
     let profileData = reactive({
       title: "",
       subtitle: "",
-      cover: "https://cdn.pixabay.com/photo/2016/03/04/12/20/server-1235959_1280.jpg",
+      cover:
+        "https://cdn.pixabay.com/photo/2016/03/04/12/20/server-1235959_1280.jpg",
       content: "",
     });
     // 获取帖子信息
@@ -217,18 +229,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.article :deep() pre {
-  font-size: 13px;
-  @apply leading-relaxed;
-}
-.article :deep() h1 {
-  @apply text-2xl;
-}
-.article :deep() h2 {
-  @apply text-xl;
-}
-.article :deep() h3 {
-  @apply text-lg;
-}
+<style>
+@import "/@/assets/markdown.css"
 </style>

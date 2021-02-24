@@ -164,8 +164,7 @@
             <label>Superior</label>
             <select v-model="authorityData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
               <option disabled value="">请选择</option>
-              <option>System</option>
-              <option>Posts</option>
+              <option v-for="(data, index) in datas" :key="index" :value="data.code">{{ data.name }}</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">

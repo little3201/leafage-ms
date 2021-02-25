@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-8">
+  <div class="col-span-12 mt-2">
     <div class="intro-y flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
       <a href="" class="ml-auto flex text-blue-800">
@@ -21,7 +21,7 @@
         Reload Data
       </a>
     </div>
-    <div class="grid grid-cols-12 gap-6 mt-5">
+    <div class="grid grid-cols-12 gap-6 mt-2">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
         <div class=" zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">

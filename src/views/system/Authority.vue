@@ -1,8 +1,8 @@
 <template>
-  <div class="col-span-12 mt-6">
+  <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Authorities</h2>
-      <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <div class="flex items-center sm:ml-auto">
         <button
           class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700"
         >
@@ -77,10 +77,10 @@
         </button>
       </div>
     </div>
-    <div class="overflow-auto mt-8 sm:mt-0">
+    <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center h-14">
+          <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th class="px-4 py-2 text-left">No.</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Code</th>

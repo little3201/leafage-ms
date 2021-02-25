@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center h-16 border-b bg-gray-100">
+  <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
     <!-- BEGIN: Breadcrumb -->
     <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>

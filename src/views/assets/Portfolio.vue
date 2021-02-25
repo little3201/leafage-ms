@@ -1,8 +1,8 @@
 <template>
-  <div class="col-span-12 mt-6">
+  <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Portfolio</h2>
-      <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <div class="flex items-center sm:ml-auto">
         <button
           class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
         >
@@ -77,10 +77,10 @@
         </button>
       </div>
     </div>
-    <div class="overflow-auto mt-8 sm:mt-0">
+    <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center h-14">
+          <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Title</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Code</th>

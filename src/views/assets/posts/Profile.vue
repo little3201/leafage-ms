@@ -1,8 +1,8 @@
 <template>
-  <div class="col-span-12 mt-6">
+  <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Portfolio</h2>
-      <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
+      <div class="flex items-center sm:ml-auto">
         <button
           class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-2"
         >
@@ -52,24 +52,22 @@
         </button>
       </div>
     </div>
-    <div class="overflow-auto mt-8 sm:mt-0">
+    <div class="overflow-auto mt-2">
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 px-1">
-          <div class="col-span-12 sm:col-span-8">
-            <label>Title</label>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12 sm:col-span-5 md:flex items-center">
             <input
               type="text"
-              class="py-2 px-3 rounded-md focus:ring-2 ring-blue-400 outline-none w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md focus:ring-2 ring-blue-400 outline-none w-full border flex-1"
               placeholder="Title"
               maxlength="20"
               v-model="profileData.title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-4">
-            <label>Category</label>
+          <div class="col-span-12 sm:col-span-3 md:flex items-center">
             <select
               v-model="profileData.category"
-              class="p-2 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
+              class="p-2 rounded-md w-full border flex-1 outline-none focus:ring-2"
             >
               <option
                 v-for="category in categories"
@@ -79,13 +77,25 @@
               ></option>
             </select>
           </div>
+          <div class="col-span-12 sm:col-span-8">
+            <textarea
+              type="text"
+              class="py-2 px-3 rounded-md w-full border flex-1 outline-none focus:ring-2"
+              placeholder="Subtitle"
+              maxlength="64"
+              v-model="profileData.subtitle"
+            ></textarea>
+          </div>
+          <blockquote class="col-span-12 sm:col-span-4 mt-1">
+            <img :src="profileData.cover" class="-mt-14 h-28 rounded-md object-cover w-full" />
+          </blockquote>
           <div class="col-span-12">
-            <label>Content</label>
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border mt-2"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border"
+              style="height: calc(100vh - 290px)"
             >
               <textarea
-                class="p-2 h-screen outline-none focus:ring-2"
+                class="p-2 outline-none focus:ring-2"
                 v-model="profileData.content"
               ></textarea>
               <div class="hidden md:block border-l overflow-auto bg-white">
@@ -95,24 +105,6 @@
                 ></p>
               </div>
             </div>
-          </div>
-          <div class="col-span-12 sm:col-span-4">
-            <label>封面图</label>
-            <div
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2"
-            >
-              <img :src="profileData.cover" class="w-full h-full" />
-            </div>
-          </div>
-          <div class="col-span-12 sm:col-span-8">
-            <label>Subtitle</label>
-            <textarea
-              type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 outline-none focus:ring-2 mb-5"
-              placeholder="Subtitle"
-              maxlength="64"
-              v-model="profileData.subtitle"
-            ></textarea>
           </div>
         </div>
       </form>

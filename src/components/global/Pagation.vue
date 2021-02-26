@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center mb-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
-      <li class="px-3 py-2 mr-2">
+      <li class="px-3 py-2">
         <a href="javascript:;" @click="this.page = 0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@
           </svg>
         </a>
       </li>
-      <li v-if="page >= 1" class="px-3 py-2 mr-2">
+      <li class="px-3 py-2 mr-2">
         <a href="javascript:;" @click.prevent="decrease">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,20 +38,20 @@
           </svg>
         </a>
       </li>
-      <li v-if="page > 3" class="px-3 py-2 mr-2">
+      <li v-if="page > 2" class="px-3 py-2">
         <a href="javascript:;">...</a>
       </li>
       <li
         class="p-2 w-8 h-8 flex items-center justify-center"
-        :class="{ 'bg-white rounded-full': index == page + 1 }"
+        :class="{ 'bg-white rounded-full border': index == page + 1 }"
         v-for="index in pages"
         :key="index"
         @click.prevent="give(index - 1)"
       >
-        <a href="javascript:;" v-text="index + page"></a>
+        <a href="javascript:;" v-text="index"></a>
       </li>
-      <li class="px-3 py-2 mr-2"><a href="javascript:;">...</a></li>
-      <li class="px-3 py-2 mr-2">
+      <li class="px-3 py-2"><a href="javascript:;">...</a></li>
+      <li class="px-3 py-2">
         <a href="javascript:;" @click.prevent="increment">
           <svg
             xmlns="http://www.w3.org/2000/svg"

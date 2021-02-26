@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center sm:ml-auto">
     <button
-      class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none border active:border-blue-500"
+      class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +26,7 @@
       Export to Excel
     </button>
     <button
-      class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none border active:border-blue-500"
+      class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@
     </button>
     <button
       @click="operate"
-      class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none border active:border-blue-500"
+      class="ml-3 p-2 rounded-md bg-blue-600 flex items-center text-white hover:bg-blue-700 focus:outline-none border"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

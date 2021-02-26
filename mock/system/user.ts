@@ -72,8 +72,8 @@ export default [
           credentialsNonExpired: true,
         },
         {
-          username: 'admin2',
-          nickname: 'admin2',
+          username: 'kitty',
+          nickname: 'lily',
           avatar: '',
           gender: 'Female',
           phone: 18713657895,
@@ -84,8 +84,8 @@ export default [
           credentialsNonExpired: true,
         },
         {
-          username: 'admin3',
-          nickname: 'admin3',
+          username: 'john',
+          nickname: 'john',
           avatar: '',
           gender: '',
           phone: 18713657895,

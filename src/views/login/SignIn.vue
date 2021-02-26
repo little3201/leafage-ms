@@ -111,12 +111,12 @@
                 <button
                   type="submit"
                   @click="onSumbit"
-                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-700 active:bg-blue-800 xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
                 >
                   Login
                 </button>
                 <button
-                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 active:border-blue-700 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
                 >
                   Sign up
                 </button>
@@ -125,8 +125,8 @@
             <div class="mt-10 xl:mt-24 text-gray-700 text-center xl:text-left">
               By signin up, you agree to our
               <br />
-              <a class="text-blue-800" href="">Terms and Conditions</a> &
-              <a class="text-blue-800" href="">Privacy Policy</a>
+              <a class="text-blue-700" href="">Terms and Conditions</a> &
+              <a class="text-blue-700" href="">Privacy Policy</a>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Groups</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
           Export to Excel
         </button>
         <button
-          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@
       </div>
       <button
         @click="modelOperate(true)"
-        class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+        class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -144,29 +144,28 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="groupData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="groupData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>System</option>
-              <option>Posts</option>
+            <select v-model="groupData.superior" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
+              <option disabled value="">请选择</option>
+              <option v-for="(superior, index) in datas" :key="index" v-text="superior.name"></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Principal</label>
-            <select v-model="groupData.principal" class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>John</option>
-              <option>Jack</option>
+            <select v-model="groupData.principal" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
+              <option disabled value="">请选择</option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="groupData.description"
             />
           </div>

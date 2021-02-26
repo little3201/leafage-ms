@@ -1,11 +1,10 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'user/20A23D2D1',
+    url: 'user/admin',
     method: 'get',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
@@ -20,11 +19,10 @@ export default [
     },
   },
   {
-    url: 'user/20A23D2D1',
+    url: 'user/admin',
     method: 'put',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
@@ -43,7 +41,6 @@ export default [
     method: 'post',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
@@ -63,7 +60,6 @@ export default [
     response: () => {
       return [
         {
-          code: '20A23D2D1',
           username: 'admin',
           nickname: 'admin',
           avatar: '',
@@ -76,7 +72,6 @@ export default [
           credentialsNonExpired: true,
         },
         {
-          code: '20A23D2D1',
           username: 'admin2',
           nickname: 'admin2',
           avatar: '',
@@ -89,9 +84,8 @@ export default [
           credentialsNonExpired: true,
         },
         {
-          code: '20A23D2D1',
-          username: 'admin2',
-          nickname: 'admin2',
+          username: 'admin3',
+          nickname: 'admin3',
           avatar: '',
           gender: '',
           phone: 18713657895,

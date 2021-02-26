@@ -23,7 +23,7 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-2">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class=" zoom-in">
+        <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex items-center">
               <svg
@@ -47,7 +47,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="33% Higher than last month"
                 >
                   33%
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class=" zoom-in">
+        <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg
@@ -145,7 +145,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="12% Higher than last month"
                 >
                   12%
@@ -194,7 +194,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
                   22%
@@ -221,6 +221,35 @@
           </div>
         </div>
       </div>
+      <div ref="myChartRef" class="echarts"></div>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+import echarts from "../../plugins/echarts";
+
+export default defineComponent({
+  name: "Report",
+
+  setup() {
+    const myChartRef = ref();
+
+    const echartsInit = () => {
+      const myChart = echarts.init(myChartRef.value);
+      myChart.resize();
+    };
+
+    onMounted(() => {
+      setTimeout(() => {
+        echartsInit();
+      }, 100);
+    });
+
+    return {
+      myChartRef,
+    };
+  },
+});
+</script>

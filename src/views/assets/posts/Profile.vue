@@ -4,7 +4,8 @@
       <h2 class="text-lg font-medium mr-5">Portfolio</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-2"
+          @click="preview = !preview"
+          class="md:hidden ml-3 p-2 rounded-md bg-white flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,11 +27,11 @@
             <line x1="16" y1="17" x2="8" y2="17"></line>
             <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
-          保存
+          预览
         </button>
         <button
           @click="submit"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-2"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,11 +55,11 @@
     </div>
     <div class="overflow-auto mt-2">
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4">
+        <div class="grid grid-rows-2 grid-cols-12 gap-4 md:gap-x-4 md:gap-y-1">
           <div class="col-span-12 sm:col-span-5 md:flex items-center">
             <input
               type="text"
-              class="py-2 px-3 rounded-md focus:ring-2 ring-blue-400 outline-none w-full border flex-1"
+              class="py-2 px-3 rounded-md ring-blue-400 w-full border flex-1 focus:outline-none focus:ring-1"
               placeholder="Title"
               maxlength="20"
               v-model="profileData.title"
@@ -67,7 +68,7 @@
           <div class="col-span-12 sm:col-span-3 md:flex items-center">
             <select
               v-model="profileData.category"
-              class="p-2 rounded-md w-full border flex-1 outline-none focus:ring-2"
+              class="p-2 rounded-md w-full border flex-1 focus:outline-none focus:ring-1"
             >
               <option
                 v-for="category in categories"
@@ -77,28 +78,34 @@
               ></option>
             </select>
           </div>
+          <div class="row-span-2 col-span-12 sm:col-span-4">
+            <img
+              :src="profileData.cover"
+              class="rounded-md object-cover w-full h-28 md:mt-3"
+            />
+          </div>
           <div class="col-span-12 sm:col-span-8">
             <textarea
               type="text"
-              class="py-2 px-3 rounded-md w-full border flex-1 outline-none focus:ring-2"
+              class="py-2 px-3 rounded-md w-full border flex-1 focus:outline-none focus:ring-1"
               placeholder="Subtitle"
               maxlength="64"
               v-model="profileData.subtitle"
             ></textarea>
           </div>
-          <blockquote class="col-span-12 sm:col-span-4 mt-1">
-            <img :src="profileData.cover" class="-mt-14 h-28 rounded-md object-cover w-full" />
-          </blockquote>
+        </div>
+        <div class="grid grid-cols-12 gap-4 my-3">
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 md:grid-cols-2 rounded-md border"
-              style="height: calc(100vh - 290px)"
+              style="height: calc(100vh - 298px)"
             >
               <textarea
-                class="p-2 outline-none focus:ring-2"
+                v-show="!preview"
+                class="p-2 focus:outline-none focus:ring-1"
                 v-model="profileData.content"
               ></textarea>
-              <div class="hidden md:block border-l overflow-auto bg-white">
+              <div v-show="preview" class="border-l overflow-auto bg-white">
                 <p
                   class="markdown-body m-2 leading-loose"
                   v-html="rendedHtml"
@@ -113,7 +120,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, computed, ref } from "vue";
+import { defineComponent, onMounted, computed, ref } from "vue";
 import router from "../../../router";
 
 import instance from "../../../api";
@@ -132,12 +139,13 @@ export default defineComponent({
   },
 
   setup(props) {
+    let preview = ref(false);
     const categories = ref([]);
-    let profileData = reactive({
+    let profileData = ref({
       title: "",
       subtitle: "",
-      cover:
-        "https://cdn.pixabay.com/photo/2016/03/04/12/20/server-1235959_1280.jpg",
+      category: "",
+      cover: "",
       content: "",
     });
     // 获取帖子信息
@@ -145,10 +153,7 @@ export default defineComponent({
       if (code && code.length > 0) {
         instance.get(SERVER_URL.posts.concat("/", code)).then(
           (res) => {
-            profileData.title = res.data.title;
-            profileData.subtitle = res.data.subtitle;
-            profileData.cover = res.data.cover;
-            profileData.content = res.data.content;
+            profileData.value = res.data;
           },
           (error) => {
             alert(error.statusText);
@@ -204,7 +209,10 @@ export default defineComponent({
     };
     // 转换md为html
     const rendedHtml = computed(() => {
-      return md.render(profileData.content);
+      if (profileData.value.content) {
+        return md.render(profileData.value.content);
+      }
+      return "";
     });
 
     onMounted(() => {
@@ -212,6 +220,7 @@ export default defineComponent({
     });
 
     return {
+      preview,
       categories,
       profileData,
       rendedHtml,
@@ -222,5 +231,5 @@ export default defineComponent({
 </script>
 
 <style>
-@import "/@/assets/markdown.css"
+@import "/@/assets/markdown.css";
 </style>

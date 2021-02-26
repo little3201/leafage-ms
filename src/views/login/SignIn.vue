@@ -1,8 +1,8 @@
 <template>
   <div class="login xl:bg-white">
-    <div class="container mx-auto">
+    <div class="max-w-5xl mx-auto">
       <div class="block xl:grid grid-cols-2 gap-4">
-        <div class="hidden xl:flex flex-col min-h-screen ml-72">
+        <div class="hidden xl:flex flex-col min-h-screen">
           <a href="/" class="flex items-start pt-5 mt-12 z-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -48,25 +48,23 @@
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
-          <div class="my-auto z-0">
+          <div class="z-0">
             <img
               alt="Midone Tailwind HTML Admin Template"
-              class="w-1/2 -mt-16"
+              class="my-24"
               src="../../assets/illustration.svg"
             />
-            <div class="text-white font-medium text-4xl leading-tight mt-10">
-              A few more clicks to
-              <br />
-              sign in to your account.
+            <div class="text-white font-medium text-xl leading-tight mt-10">
+              一个使用 Vue3、 Tailwindcss 的网站管理系统
             </div>
-            <div class="mt-5 text-lg text-white">
-              Manage all your e-commerce accounts in one place
+            <div class="mt-5 text-white">
+              致力于提供一个开源、好用、好看的管理系统
             </div>
           </div>
         </div>
-        <div class="h-screen xl:h-auto flex py-5 px-2 xl:py-0">
+        <div class="h-screen flex px-2">
           <div
-            class="my-auto mx-auto xl:ml-20 bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto z-0"
+            class="my-auto mx-auto bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto z-0"
           >
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign In
@@ -175,6 +173,7 @@ export default defineComponent({
 .login:before {
   content: "";
   margin-left: -48%;
+  min-width: 768px;
   background-image: url(../../assets/bg-login-page.svg);
   background-position: right;
   background-repeat: no-repeat;

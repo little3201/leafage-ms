@@ -17,6 +17,7 @@
     "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.4",
     "autoprefixer": "^10.1.0",
+    "echarts": "^5.0.2",
     "eslint": "^7.16.0",
     "eslint-plugin-vue": "^7.4.0",
     "highlight.js": "^10.6.0",

@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Users</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden sm:flex bg-white p-2 rounded-md items-center text-gray-700"
+          class="hidden sm:flex bg-white p-2 rounded-md items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
           Export to Excel
         </button>
         <button
-          class="hidden ml-3 bg-white p-2 rounded-md sm:flex items-center text-gray-700"
+          class="hidden ml-3 bg-white p-2 rounded-md sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
         </button>
         <button
           @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -362,7 +362,7 @@
             <label>Nickname</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="userData.nickname"
             />
@@ -371,7 +371,7 @@
             <label>Phone</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Phone"
               v-model="userData.phone"
             />
@@ -380,7 +380,7 @@
             <label>Email</label>
             <input
               type="email"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Email"
               v-model="userData.email"
             />
@@ -389,37 +389,18 @@
             <label>Gender</label>
             <select
               v-model="userData.gender"
-              class="p-2 rounded-md w-full border mt-2 flex-1"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              placeholder="请选择"
             >
               <option disabled value="">请选择</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Locked</label>
-            <select
-              v-model="userData.accountNonLocked"
-              class="p-2 rounded-md w-full border mt-2 flex-1"
-            >
-              <option disabled value="">请选择</option>
-              <option value="true">Lock</option>
-              <option value="false">Unlock</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Birthday</label>
-            <select
-              v-model="userData.birthday"
-              class="p-2 rounded-md w-full border mt-2 flex-1"
-            >
-              <option>Today</option>
-            </select>
-          </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="userData.description"
             />
           </div>

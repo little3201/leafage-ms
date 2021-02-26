@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Authorities</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700"
+          class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
           Export to Excel
         </button>
         <button
-          class="hidden ml-3 p-2 rounded-md sm:flex items-center bg-white text-gray-700"
+          class="hidden ml-3 p-2 rounded-md sm:flex items-center bg-white text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
         </button>
         <button
           @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="authorityData.name"
             />
@@ -155,31 +155,31 @@
             <label>Path</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Path"
               v-model="authorityData.path"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="authorityData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="authorityData.superior" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
               <option disabled value="">请选择</option>
               <option v-for="(data, index) in datas" :key="index" :value="data.code">{{ data.name }}</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Type</label>
-            <select v-model="authorityData.type" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="authorityData.type" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
               <option disabled value="">请选择</option>
-              <option>Menu</option>
-              <option>Tab</option>
-              <option>Url</option>
+              <option>MENU</option>
+              <option>TAB</option>
+              <option>URL</option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="authorityData.description"
             />
           </div>

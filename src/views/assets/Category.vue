@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Category</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
           Export to Excel
         </button>
         <button
-          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
         </button>
         <button
           @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

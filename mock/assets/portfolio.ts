@@ -7,7 +7,8 @@ export default [
     response: () => {
       return {
           code: '20A23D2D1',
-          title: 'Travel Photos'
+          title: 'Travel Photos',
+          category: '20A23D2D1'
       }
     },
   },

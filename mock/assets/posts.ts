@@ -2,12 +2,13 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'posts/20A23D2D1',
+    url: 'posts/20829TXGD',
     method: 'get',
     response: () => {
       return {
-        code: '20A23D2D1',
+        code: '20829TXGD',
         title: '一步步实现分布式架构',
+        category: '20A23D2D1',
         subtitle: '分布式架构，是一套很复杂的系统',
         cover: 'https://cdn.pixabay.com/photo/2019/11/12/09/03/proxy-4620557_1280.jpg',
         content: '## 分布式架构，是一套很复杂的系统 ### 这是内容，一步步实现分布式架构，一步步实现分布式架构，一步步实现分布式架构'

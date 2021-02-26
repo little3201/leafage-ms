@@ -1,20 +1,6 @@
 import MarkdownIt from "markdown-it";
-import hljs from "highlight.js/lib/core";
+import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-
-import javascript from 'highlight.js/lib/languages/javascript';
-import typescript from 'highlight.js/lib/languages/typescript';
-import java from 'highlight.js/lib/languages/java';
-import sql from 'highlight.js/lib/languages/sql';
-import nginx from 'highlight.js/lib/languages/nginx';
-import json from 'highlight.js/lib/languages/json';
-
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('typescript', typescript);
-hljs.registerLanguage('java', java);
-hljs.registerLanguage('sql', sql);
-hljs.registerLanguage('nginx', nginx);
-hljs.registerLanguage('json', json);
 
 const md = new MarkdownIt({
     html: true,

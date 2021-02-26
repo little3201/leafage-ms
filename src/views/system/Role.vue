@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium mr-5">Roles</h2>
       <div class="flex items-center sm:ml-auto">
         <button
-          class="hidden sm:flex items-center bg-white p-2 rounded-md text-gray-700"
+          class="hidden sm:flex items-center bg-white p-2 rounded-md text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@
           Export to Excel
         </button>
         <button
-          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700"
+          class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
         </button>
         <button
           @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
+          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -133,14 +133,14 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="roleData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="roleData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select v-model="roleData.superior" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
               <option>System</option>
               <option>Posts</option>
             </select>
@@ -148,7 +148,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="roleData.description"
             />
           </div>

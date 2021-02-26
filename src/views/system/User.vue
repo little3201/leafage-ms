@@ -2,80 +2,7 @@
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Users</h2>
-      <div class="flex items-center sm:ml-auto">
-        <button
-          class="hidden sm:flex bg-white p-2 rounded-md items-center text-gray-700 focus:outline-none focus:ring-1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text hidden sm:block mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to Excel
-        </button>
-        <button
-          class="hidden ml-3 bg-white p-2 rounded-md sm:flex items-center text-gray-700 focus:outline-none focus:ring-1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to PDF
-        </button>
-        <button
-          @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white focus:outline-none focus:ring-1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-plus-circle mr-2"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Add New
-        </button>
-      </div>
+      <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
@@ -390,7 +317,6 @@
             <select
               v-model="userData.gender"
               class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
-              placeholder="请选择"
             >
               <option disabled value="">请选择</option>
               <option value="Male">Male</option>
@@ -412,6 +338,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+
+import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -424,6 +352,7 @@ export default defineComponent({
   name: "User",
 
   components: {
+    Operation,
     Action,
     Pagation,
     Confirm,

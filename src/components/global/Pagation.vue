@@ -2,7 +2,7 @@
   <div class="flex items-center mb-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
       <li class="px-3 py-2 mr-2">
-        <a href="">
+        <a href="javascript:;" @click="this.page = 0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -20,8 +20,8 @@
           </svg>
         </a>
       </li>
-      <li class="px-3 py-2 mr-2">
-        <a href="" disabled>
+      <li v-if="page >= 1" class="px-3 py-2 mr-2">
+        <a href="javascript:;" @click.prevent="decrease">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -38,17 +38,21 @@
           </svg>
         </a>
       </li>
-      <li class="px-3 py-2 mr-2"><a href="">...</a></li>
-      <li class="px-3 py-2 mr-2 bg-white rounded-md">
-        <a href="">1</a>
+      <li v-if="page > 3" class="px-3 py-2 mr-2">
+        <a href="javascript:;">...</a>
       </li>
-      <li class="px-3 py-2 mr-2">
-        <a href="">2</a>
+      <li
+        class="p-2 w-8 h-8 flex items-center justify-center"
+        :class="{ 'bg-white rounded-full': index == page + 1 }"
+        v-for="index in pages"
+        :key="index"
+        @click.prevent="give(index - 1)"
+      >
+        <a href="javascript:;" v-text="index + page"></a>
       </li>
-      <li class="px-3 py-2 mr-2"><a href="">3</a></li>
-      <li class="px-3 py-2 mr-2"><a href="">...</a></li>
+      <li class="px-3 py-2 mr-2"><a href="javascript:;">...</a></li>
       <li class="px-3 py-2 mr-2">
-        <a href="">
+        <a href="javascript:;" @click.prevent="increment">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -66,7 +70,7 @@
         </a>
       </li>
       <li class="px-3 py-2">
-        <a href=""
+        <a href="javascript:;"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -85,6 +89,7 @@
       </li>
     </ul>
     <select
+      v-model="size"
       class="my-1 block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
       <option>10</option>
@@ -94,3 +99,39 @@
     </select>
   </div>
 </template>
+
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  name: "Pagation",
+
+  methods: {
+    // 递增
+    increment() {
+      this.page++;
+    },
+    // 递减
+    decrease() {
+      this.page--;
+    },
+    // 设置
+    give(page: number) {
+      this.page = page;
+    },
+  },
+
+  setup() {
+    let page = ref(0);
+    let size = ref(10);
+    const pages = ref(6);
+
+    return {
+      page,
+      size,
+      pages,
+    };
+  },
+});
+</script>

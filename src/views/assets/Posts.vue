@@ -1,8 +1,8 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Portfolio</h2>
-      <Operation @modelOperate="modelOperate"/>
+      <h2 class="text-lg font-medium mr-5">Posts</h2>
+      <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
@@ -11,6 +11,7 @@
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Title</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Category</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Viewed</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Likes</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
@@ -26,14 +27,11 @@
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2 md:px-5 md:py-3">
-              <a
-                href=""
-                class="font-medium whitespace-no-wrap"
-                v-text="data.title"
-              ></a>
+            <td class="px-4 py-2 md:px-5 md:py-3 text-center">
+              <a href="" class="font-medium" v-text="data.title"></a>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
+            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.category"></td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.viewed"></td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.likes"></td>
             <td
@@ -54,27 +52,26 @@
     <Pagation />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
-      :code="portfolioData.code"
+      :code="postsData.code"
       :isEdit="isEdit"
       @editAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
-            <label>Title</label>
+        <div class="grid grid-rows-2 grid-cols-12 gap-4 md:gap-x-4 md:gap-y-1">
+          <div class="col-span-12 sm:col-span-5 md:flex items-center">
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="py-2 px-3 rounded-md ring-blue-400 w-full border focus:outline-none focus:ring-1"
               placeholder="Title"
-              v-model="portfolioData.title"
+              maxlength="20"
+              v-model="postsData.title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Category</label>
+          <div class="col-span-12 sm:col-span-3 md:flex items-center">
             <select
-              v-model="portfolioData.category"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              v-model="postsData.category"
+              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
             >
               <option
                 v-for="category in categories"
@@ -84,14 +81,58 @@
               ></option>
             </select>
           </div>
+          <div class="row-span-2 col-span-12 sm:col-span-4">
+            <img
+              v-if="postsData.cover"
+              :src="postsData.cover"
+              alt="cover"
+              class="rounded-md object-cover w-full h-28 md:mt-3"
+            />
+            <div
+              v-else
+              class="rounded-md border w-full h-28 md:mt-3 flex items-center"
+            >
+              <input type="file" placeholder="上传封面" />
+            </div>
+          </div>
+          <div class="col-span-12 sm:col-span-8">
+            <textarea
+              type="text"
+              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
+              placeholder="Subtitle"
+              maxlength="64"
+              v-model="postsData.subtitle"
+            ></textarea>
+          </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 my-3">
+          <div class="col-span-12">
+            <div
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md border h-96"
+            >
+              <textarea
+                v-show="!preview"
+                class="p-2 rounded-tl-md rounded-bl-md focus:outline-none focus:ring-1"
+                v-model="content"
+                placeholder="write with markdown..."
+              ></textarea>
+              <div v-show="preview" class="border-l overflow-auto bg-white">
+                <p
+                  class="markdown-body m-2 leading-loose"
+                  v-html="rendedHtml"
+                ></p>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </Model>
   </div>
 </template>
 
+
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -101,9 +142,10 @@ import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+import md from "../../plugins/markdown";
 
 export default defineComponent({
-  name: "Portfolio",
+  name: "Items",
 
   components: {
     Operation,
@@ -117,7 +159,7 @@ export default defineComponent({
     return {
       isEdit: false,
       isDel: false,
-      portfolioData: {},
+      postsData: {},
       categories: [],
     };
   },
@@ -129,8 +171,13 @@ export default defineComponent({
     },
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
-      this.portfolioData = {};
-      Promise.all([this.retrieveCategories(), this.fetchPortfolio(isEdit, code)]);
+      this.postsData = {};
+      this.content = "";
+      Promise.all([
+        this.retrieveCategories(),
+        this.fetchPosts(isEdit, code),
+        this.fetchContent(isEdit, code),
+      ]);
       this.isEdit = isEdit;
     },
     // 获取所有分类
@@ -144,23 +191,33 @@ export default defineComponent({
         }
       );
     },
-    // 根据code查portfolio
-    fetchPortfolio(isEdit: boolean, code: string) {
+    // 根据code查posts
+    fetchPosts(isEdit: boolean, code: string) {
       if (isEdit && code) {
-        instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
-          this.portfolioData = res.data;
+        instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
+          this.postsData = res.data;
         });
+      }
+    },
+    // 根据code查posts content
+    fetchContent(isEdit: boolean, code: string) {
+      if (isEdit && code) {
+        instance
+          .get(SERVER_URL.posts.concat("/", code, "/content"))
+          .then((res) => {
+            this.content = res.data.content;
+          });
       }
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
-      let data = this.portfolioData;
+      let data = this.postsData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.portfolio.concat("/", code), data).then(() => {
-          this.initDatas();
+        instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
+          this.datas.push(res.data);
         });
       } else {
-        instance.post(SERVER_URL.portfolio, data).then((res) => {
+        instance.post(SERVER_URL.posts, data).then((res) => {
           this.datas.push(res.data);
         });
       }
@@ -169,10 +226,12 @@ export default defineComponent({
   },
 
   setup() {
+    let preview = ref(false);
+    let content = ref("");
     const datas = ref<any>([]);
 
     async function initDatas() {
-      await instance.get(SERVER_URL.portfolio.concat("?page=0&size=10")).then(
+      await instance.get(SERVER_URL.posts.concat("?page=0&size=10")).then(
         (response) => {
           datas.value = response.data;
         },
@@ -182,14 +241,28 @@ export default defineComponent({
       );
     }
 
+    // 转换md为html
+    const rendedHtml = computed(() => {
+      if (content.value) {
+        return md.render(content.value);
+      }
+      return "";
+    });
+
     onMounted(() => {
       initDatas();
     });
 
     return {
+      preview,
       datas,
-      initDatas,
+      content,
+      rendedHtml,
     };
   },
 });
 </script>
+
+<style>
+@import "/@/assets/markdown.css";
+</style>

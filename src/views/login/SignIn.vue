@@ -81,7 +81,7 @@
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="w-full rounded-md focus:ring-2 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
+                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
                   placeholder="Username/Phone/Email"
                   required
                   autocomplete="off"
@@ -90,7 +90,7 @@
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="w-full rounded-md focus:ring-2 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
+                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
                   placeholder="Password"
                   required
                   autocomplete="off"
@@ -113,12 +113,12 @@
                 <button
                   type="submit"
                   @click="onSumbit"
-                  class="w-full xl:w-32 text-white bg-blue-800 xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-700 active:bg-blue-800 xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
                 >
                   Login
                 </button>
                 <button
-                  class="w-full xl:w-32 text-gray-700 border border-gray-300 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 active:border-blue-700 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
                 >
                   Sign up
                 </button>

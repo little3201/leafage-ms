@@ -100,7 +100,7 @@
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2 md:px-5 md:py-3">
+            <td class="px-4 py-2 md:px-5 md:py-3 text-center">
               <a href="" class="font-medium" v-text="data.title"></a>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>

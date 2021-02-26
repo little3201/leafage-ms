@@ -350,8 +350,9 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-a.router-link-exact-active {
-  @apply bg-gray-100 text-black;
+<style scoped>
+.router-link-exact-active {
+  background-color: #f3f4f6;
+  color: black;
 }
 </style>

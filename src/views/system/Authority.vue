@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="overflow-auto">
-      <table class="mt-2 w-full truncate">
+      <table class="my-2 w-full truncate">
         <thead>
           <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th class="px-4 py-2 text-left">No.</th>

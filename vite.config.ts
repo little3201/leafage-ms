@@ -19,8 +19,4 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly'
     }
   },
-  // 解决没有 export default module  的问题
-  optimizeDeps: {
-    include: ["qs", "axios", "mockjs"]
-  }
 })

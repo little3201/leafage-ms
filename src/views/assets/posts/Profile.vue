@@ -73,7 +73,6 @@
               <option
                 v-for="category in categories"
                 :key="category.code"
-                :value="category.code"
                 v-text="category.alias"
               ></option>
             </select>

@@ -1,11 +1,10 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'user/20A23D2D1',
+    url: 'user/admin',
     method: 'get',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
@@ -20,15 +19,14 @@ export default [
     },
   },
   {
-    url: 'user/20A23D2D1',
+    url: 'user/admin',
     method: 'put',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
-        gender: 'Male',
+        gender: 'Female',
         phone: 18713657895,
         email: 'little3201@163.com',
         birthday: new Date(),
@@ -43,11 +41,10 @@ export default [
     method: 'post',
     response: () => {
       return {
-        code: '20A23D2D1',
         username: 'admin',
         nickname: 'admin',
         avatar: '',
-        gender: 'Male',
+        gender: 'Famale',
         phone: 18713657895,
         email: 'little3201@163.com',
         birthday: new Date(),
@@ -63,7 +60,6 @@ export default [
     response: () => {
       return [
         {
-          code: '20A23D2D1',
           username: 'admin',
           nickname: 'admin',
           avatar: '',
@@ -76,11 +72,22 @@ export default [
           credentialsNonExpired: true,
         },
         {
-          code: '20A23D2D1',
-          username: 'admin2',
-          nickname: 'admin2',
+          username: 'kitty',
+          nickname: 'lily',
           avatar: '',
-          gender: 'Male',
+          gender: 'Female',
+          phone: 18713657895,
+          email: 'little3201@163.com',
+          birthday: new Date(),
+          accountNonExpired: true,
+          accountNonLocked: true,
+          credentialsNonExpired: true,
+        },
+        {
+          username: 'john',
+          nickname: 'john',
+          avatar: '',
+          gender: '',
           phone: 18713657895,
           email: 'little3201@163.com',
           birthday: new Date(),

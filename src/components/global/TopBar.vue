@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center h-16 border-b bg-gray-100">
+  <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
     <!-- BEGIN: Breadcrumb -->
     <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>
@@ -23,7 +23,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
-          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:ring-2 focus:placeholder-gray-800"
+          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:ring-1 focus:placeholder-gray-800"
           placeholder="Search..."
         />
         <svg

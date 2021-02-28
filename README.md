@@ -1,6 +1,3 @@
-
-# Leafage
-
 <p align="center">
   <a href="https://console.abeille.top" target="_blank">
     <img alt="Leafage Logo" width="200" src="src/assets/logo.svg">
@@ -16,7 +13,7 @@
 
 ## 项目介绍
 
-一个使用 Vue3、 Tailwindcss 的网站管理系统，致力于促进管理系统界面更好的体验。
+一个使用 Vue3、 Tailwindcss 的网站管理系统，致力于提供一个开源、好用、好看的管理系统。
 包含帖子管理、影视资料管理、权限管理。
 
 ### 目标功能

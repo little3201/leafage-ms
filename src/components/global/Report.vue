@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-8">
+  <div class="col-span-12 mt-2">
     <div class="intro-y flex items-center h-10">
       <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
       <a href="" class="ml-auto flex text-blue-800">
@@ -21,9 +21,9 @@
         Reload Data
       </a>
     </div>
-    <div class="grid grid-cols-12 gap-6 mt-5">
+    <div class="grid grid-cols-12 gap-6 my-2">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class=" zoom-in">
+        <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex items-center">
               <svg
@@ -47,7 +47,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="33% Higher than last month"
                 >
                   33%
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-        <div class=" zoom-in">
+        <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
               <svg
@@ -145,7 +145,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="12% Higher than last month"
                 >
                   12%
@@ -194,7 +194,7 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91C714"
+                  style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
                   22%
@@ -221,6 +221,131 @@
           </div>
         </div>
       </div>
+      <div class="col-span-12 sm:col-span-6 intro-y">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
+            <div ref="barChartRef" class="w-full h-80"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 sm:col-span-6 intro-y">
+        <div class="relative zoom-in">
+          <div class="shadow-sm rounded-md bg-white p-5">
+            <div ref="lineChartRef" class="w-full h-80"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+import echarts from "../../plugins/echarts";
+
+import instance from "../../api";
+import SERVER_URL from "../../api/request";
+
+export default defineComponent({
+  name: "Report",
+
+  setup() {
+    const barChartRef = ref();
+    const lineChartRef = ref();
+
+    const barchartInit = () => {
+      const barChart = echarts.init(barChartRef.value);
+      barChart.resize();
+      instance.get(SERVER_URL.category).then((res) => {
+        barChart.setOption({
+          legend: {},
+          tooltip: {},
+          dataset: {
+            source: [
+              ["product", "Add", "Edit", "Del"],
+              ["Sun", 4, 8, 0],
+              ["Mon", 9, 4, 1],
+              ["Tue", 4, 2, 2],
+              ["Wes", 7, 9, 1],
+              ["Thu", 7, 9, 1],
+              ["Fri", 7, 9, 1],
+              ["Sat", 7, 9, 1],
+            ],
+          },
+          xAxis: { type: "category" },
+          yAxis: {},
+          // Declare several bar series, each will be mapped
+          // to a column of dataset.source by default.
+          series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
+        });
+      });
+    };
+
+    const linechartInit = () => {
+      const lineChart = echarts.init(lineChartRef.value);
+      lineChart.resize();
+      instance.get(SERVER_URL.category).then((res) => {
+        lineChart.setOption({
+          tooltip: {
+            trigger: "axis",
+          },
+          legend: {
+            data: ["Add", "Edit", "Del"],
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          toolbox: {
+            feature: {
+              saveAsImage: {},
+            },
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: ["Sun", "Mon", "Tue", "Wes", "Thu", "Fri", "Sat"],
+          },
+          yAxis: {
+            type: "value",
+          },
+          series: [
+            {
+              name: "Add",
+              type: "line",
+              stack: "总量",
+              data: [120, 132, 101, 134, 90, 230, 210],
+            },
+            {
+              name: "Edit",
+              type: "line",
+              stack: "总量",
+              data: [220, 182, 191, 234, 290, 330, 310],
+            },
+            {
+              name: "Del",
+              type: "line",
+              stack: "总量",
+              data: [150, 232, 201, 154, 190, 330, 410],
+            },
+          ],
+        });
+      });
+    };
+
+    onMounted(() => {
+      setTimeout(() => {
+        barchartInit();
+        linechartInit();
+      }, 100);
+    });
+
+    return {
+      barChartRef,
+      lineChartRef,
+    };
+  },
+});
+</script>

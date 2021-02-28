@@ -1,86 +1,13 @@
 <template>
-  <div class="col-span-12 mt-6">
+  <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Authorities</h2>
-      <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button
-          class="hidden p-2 rounded-md sm:flex items-center bg-white text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to Excel
-        </button>
-        <button
-          class="hidden ml-3 p-2 rounded-md sm:flex items-center bg-white text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to PDF
-        </button>
-        <button
-          @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-plus-circle mr-2"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Add New
-        </button>
-      </div>
+      <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto mt-8 sm:mt-0">
-      <table class="mt-2 w-full truncate">
+    <div class="overflow-auto">
+      <table class="my-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center h-14">
+          <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th class="px-4 py-2 text-left">No.</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Code</th>
@@ -115,7 +42,17 @@
             <td class="px-4 py-2" v-text="data.code"></td>
             <td class="px-4 py-2" v-text="data.count"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
-            <td class="px-4 py-2" v-text="data.type"></td>
+            <td class="px-4 py-2">
+              <span
+                v-text="data.type"
+                class="p-1 rounded-md text-xs"
+                :class="[
+                  { 'bg-blue-300': data.type == 'Menu' },
+                  { 'bg-green-300': data.type == 'Tab' },
+                  { 'bg-pink-300': data.type == 'Url' },
+                ]"
+              ></span>
+            </td>
             <td class="px-4 py-2" v-text="data.path"></td>
             <td
               class="px-4 py-2"
@@ -146,7 +83,7 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="authorityData.name"
             />
@@ -155,32 +92,43 @@
             <label>Path</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Path"
               v-model="authorityData.path"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="authorityData.superior" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              v-model="authorityData.superior"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option disabled value="">请选择</option>
-              <option>System</option>
-              <option>Posts</option>
+              <option
+                v-for="(data, index) in datas"
+                :key="index"
+                :value="data.code"
+              >
+                {{ data.name }}
+              </option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Type</label>
-            <select v-model="authorityData.type" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              v-model="authorityData.type"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option disabled value="">请选择</option>
-              <option>Menu</option>
-              <option>Tab</option>
-              <option>Url</option>
+              <option value="Menu">Menu</option>
+              <option value="Tab">Tab</option>
+              <option value="Url">Url</option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="authorityData.description"
             />
           </div>
@@ -192,6 +140,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+
+import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -204,6 +154,7 @@ export default defineComponent({
   name: "Authority",
 
   components: {
+    Operation,
     Action,
     Pagation,
     Confirm,
@@ -227,11 +178,9 @@ export default defineComponent({
     modelOperate(isEdit: boolean, params: string) {
       this.authorityData = {};
       if (isEdit && params) {
-        instance
-          .get(SERVER_URL.authority.concat("/", params))
-          .then((res) => {
-            this.authorityData = res.data;
-          });
+        instance.get(SERVER_URL.authority.concat("/", params)).then((res) => {
+          this.authorityData = res.data;
+        });
       }
       this.isEdit = isEdit;
     },
@@ -239,11 +188,9 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.authorityData;
       if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.authority.concat("/", code), data)
-          .then(() => {
-            this.initDatas()
-          });
+        instance.put(SERVER_URL.authority.concat("/", code), data).then(() => {
+          this.initDatas();
+        });
       } else {
         instance.post(SERVER_URL.authority, data).then((res) => {
           this.datas.push(res.data);
@@ -270,7 +217,7 @@ export default defineComponent({
 
     return {
       datas,
-      initDatas
+      initDatas,
     };
   },
 });

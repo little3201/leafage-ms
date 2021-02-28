@@ -1,86 +1,13 @@
 <template>
-  <div class="col-span-12 mt-6">
+  <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium mr-5">Users</h2>
-      <div class="flex items-center sm:ml-auto mt-3 sm:mt-0">
-        <button
-          class="hidden sm:flex bg-white p-2 rounded-md items-center text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text hidden sm:block mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to Excel
-        </button>
-        <button
-          class="hidden ml-3 bg-white p-2 rounded-md sm:flex items-center text-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-file-text mr-2"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Export to PDF
-        </button>
-        <button
-          @click="modelOperate(true)"
-          class="ml-3 p-2 rounded-md bg-blue-700 flex items-center text-white"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-plus-circle mr-2"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="16"></line>
-            <line x1="8" y1="12" x2="16" y2="12"></line>
-          </svg>
-          Add New
-        </button>
-      </div>
+      <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto mt-8 sm:mt-0">
+    <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center h-14">
+          <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th class="px-4 py-2 text-left">No.</th>
             <th class="px-4 py-2">Username</th>
             <th class="px-4 py-2">Avatar</th>
@@ -110,7 +37,94 @@
             <td class="px-4 py-2 flex justify-center">
               <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" />
             </td>
-            <td class="px-4 py-2" v-text="data.gender"></td>
+            <td class="px-4 py-2">
+              <svg
+                v-if="data.gender === 'Male'"
+                width="16"
+                height="16"
+                viewBox="0 0 48 48"
+                class="mx-auto"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="48" height="48" fill="white" fill-opacity="0.01" />
+                <path
+                  d="M41.9514 15.0485V6.04846H32.9514"
+                  stroke="#3B82F6"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10.413 38.001C15.8803 43.4683 24.7447 43.4683 30.212 38.001C32.9457 35.2673 34.3125 31.6844 34.3125 28.1015C34.3125 24.5186 32.9457 20.9357 30.212 18.202C24.7447 12.7346 15.8803 12.7346 10.413 18.202C4.94567 23.6693 4.94567 32.5336 10.413 38.001Z"
+                  fill="none"
+                  stroke="#3B82F6"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M29.9999 18L39.9515 8.0485"
+                  stroke="#3B82F6"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <svg
+                v-else-if="data.gender === 'Female'"
+                width="16"
+                height="16"
+                viewBox="0 0 48 48"
+                class="mx-auto"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g>
+                  <g transform="translate(-6.000000, -2.000000)">
+                    <rect
+                      fill-opacity="0.01"
+                      fill="#FFFFFF"
+                      x="6"
+                      y="2"
+                      width="48"
+                      height="48"
+                      stroke-width="1.5"
+                      stroke="none"
+                      fill-rule="evenodd"
+                    />
+                    <g
+                      transform="translate(28.000000, 28.000000) scale(-1, -1) rotate(45.000000) translate(-28.000000, -28.000000) translate(13.500000, 4.000000)"
+                    >
+                      <path
+                        d="M14.3370491,47 C22.0690356,47 28.3370491,40.7319865 28.3370491,33 C28.3370491,29.1340068 26.7700457,25.6340068 24.236544,23.1005051 C21.7030423,20.5670034 18.2030423,19 14.3370491,19 C6.6050626,19 0.337049096,25.2680135 0.337049096,33 C0.337049096,40.7319865 6.6050626,47 14.3370491,47 Z"
+                        fill="none"
+                        fill-rule="nonzero"
+                        stroke-linejoin="round"
+                        stroke-width="4"
+                        stroke="#EC4899"
+                      />
+                      <path
+                        d="M14.5,19 L14.5,1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="4"
+                        stroke="#EC4899"
+                        fill="none"
+                        fill-rule="evenodd"
+                      />
+                      <path
+                        d="M5.5,11 L23.5,11"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="4"
+                        stroke="#EC4899"
+                        fill="none"
+                        fill-rule="evenodd"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </td>
             <td class="px-4 py-2" v-text="data.phone"></td>
             <td class="px-4 py-2" v-text="data.email"></td>
             <td
@@ -124,12 +138,12 @@
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#91C714"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-check-circle"
@@ -141,12 +155,12 @@
               <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-x-circle"
@@ -164,12 +178,12 @@
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#91C714"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-unlock"
@@ -188,12 +202,12 @@
               <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-lock"
@@ -217,12 +231,12 @@
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#91C714"
-                  stroke-width="2"
+                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-check-circle"
@@ -275,7 +289,7 @@
             <label>Nickname</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Name"
               v-model="userData.nickname"
             />
@@ -284,7 +298,7 @@
             <label>Phone</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Phone"
               v-model="userData.phone"
             />
@@ -293,38 +307,26 @@
             <label>Email</label>
             <input
               type="email"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               placeholder="Email"
               v-model="userData.email"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Gender</label>
-            <select v-model="userData.gender" class="p-2 rounded-md w-full border mt-2 flex-1">
+            <select
+              v-model="userData.gender"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option disabled value="">请选择</option>
-              <option>Secrecy</option>
-              <option>Male</option>
-              <option>Famale</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Locked</label>
-            <select v-model="userData.accountNonLocked" class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option disabled value="">请选择</option>
-              <option>Lock</option>
-              <option>Unlock</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Birthday</label>
-            <select v-model="userData.birthday" class="p-2 rounded-md w-full border mt-2 flex-1">
-              <option>Today</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1"
+              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
               v-model="userData.description"
             />
           </div>
@@ -336,6 +338,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+
+import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -348,6 +352,7 @@ export default defineComponent({
   name: "User",
 
   components: {
+    Operation,
     Action,
     Pagation,
     Confirm,
@@ -381,11 +386,9 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.userData;
       if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.user.concat("/", code), data)
-          .then(() => {
-            this.initDatas();
-          });
+        instance.put(SERVER_URL.user.concat("/", code), data).then(() => {
+          this.initDatas();
+        });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
           this.datas.push(res.data);
@@ -412,7 +415,7 @@ export default defineComponent({
 
     return {
       datas,
-      initDatas
+      initDatas,
     };
   },
 });

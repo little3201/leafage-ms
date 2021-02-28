@@ -188,7 +188,7 @@
               ></textarea>
               <article
                 v-else
-                class="p-2 markdown-body"
+                class="p-2 markdown-body overflow-auto"
                 v-html="rendedHtml"
               ></article>
             </div>

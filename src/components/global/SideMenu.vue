@@ -78,8 +78,7 @@
         </router-link>
       </li>
       <li>
-        <a
-          href="javascript:;"
+        <div
           @click.prevent="isSystemOpen = !isSystemOpen"
           class="flex items-center h-12 rounded-full pl-5"
         >
@@ -134,7 +133,7 @@
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </div>
-        </a>
+        </div>
         <ul v-show="isSystemOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30">
           <li
             class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full relative"

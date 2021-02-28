@@ -147,7 +147,7 @@ export default defineComponent({
     const formData = ref({});
 
     function onSubmit() {
-      instance.post("/login", qs.stringify(formData.value)).then((res) => {
+      instance.post("/login", qs.stringify(formData.value)).then(() => {
         router.push("/");
       });
     }

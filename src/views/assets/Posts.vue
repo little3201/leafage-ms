@@ -86,13 +86,43 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover w-full h-28 md:mt-3"
+              class="rounded-md object-cover w-48 h-28 md:mt-3"
             />
             <div
               v-else
-              class="rounded-md border w-full h-28 md:mt-3 flex items-center"
+              class="rounded-md border w-48 h-28 md:mt-3 flex items-center"
             >
-              <input type="file" placeholder="上传封面" />
+              <div class="mx-auto text-center">
+                <div class="text-center text-gray-600">
+                  <label
+                    for="file-upload"
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                  >
+                    <svg
+                      class="mx-auto h-8 w-8"
+                      stroke="currentColor"
+                      fill="none"
+                      viewBox="0 0 48 48"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <input
+                      id="file-upload"
+                      name="cover"
+                      type="file"
+                      class="sr-only"
+                    />
+                  </label>
+                </div>
+                <p class="text-xs text-gray-500">png, jpeg, jpg</p>
+                <p class="text-xs text-gray-500">up to 2MB</p>
+              </div>
             </div>
           </div>
           <div class="col-span-12 sm:col-span-8">
@@ -108,20 +138,59 @@
         <div class="grid grid-cols-12 gap-4 my-3">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md border h-96"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md border h-52 md:h-96 relative"
             >
+              <a
+                href="javascript:;"
+                @click="preview = !preview"
+                class="top-0 right-0 absolute"
+              >
+                <svg
+                  v-if="preview"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-eye-off opacity-30"
+                >
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                  ></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-eye opacity-30"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </a>
               <textarea
-                v-show="!preview"
-                class="p-2 rounded-tl-md rounded-bl-md focus:outline-none focus:ring-1"
+                v-if="!preview"
+                class="p-2 md:rounded-tl-md md:rounded-bl-md focus:outline-none focus:ring-1"
                 v-model="content"
                 placeholder="write with markdown..."
               ></textarea>
-              <div v-show="preview" class="border-l overflow-auto bg-white">
-                <p
-                  class="markdown-body m-2 leading-loose"
-                  v-html="rendedHtml"
-                ></p>
-              </div>
+              <article
+                v-else
+                class="p-2 markdown-body"
+                v-html="rendedHtml"
+              ></article>
             </div>
           </div>
         </div>

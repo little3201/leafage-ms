@@ -45,7 +45,12 @@
             <td class="px-4 py-2">
               <span
                 v-text="data.type"
-                class="p-1 bg-blue-300 rounded-md text-xs"
+                class="p-1 rounded-md text-xs"
+                :class="[
+                  { 'bg-blue-300': data.type == 'Menu' },
+                  { 'bg-green-300': data.type == 'Tab' },
+                  { 'bg-pink-300': data.type == 'Url' },
+                ]"
               ></span>
             </td>
             <td class="px-4 py-2" v-text="data.path"></td>

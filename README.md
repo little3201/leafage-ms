@@ -32,8 +32,14 @@
 
 ### 展示截图
 
+控制台
+<img alt="dashboard" width="100%" src="src/assets/images/dashboard.jpeg">
+
+登录页
 <img alt="signin" width="100%" src="src/assets/images/signin.jpeg">
-<img alt="dashboard" width="100%" src="src/assets/images/posts.jpeg">
+
+列表页+model
+<img alt="posts" width="100%" src="src/assets/images/posts.jpeg">
 
 ### 项目地址
 

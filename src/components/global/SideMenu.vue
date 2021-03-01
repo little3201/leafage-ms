@@ -360,9 +360,9 @@ export default defineComponent({
     const datas = ref([]);
 
     async function initAuthorities() {
-      await instance.get(SERVER_URL.authority).then((response) => {
-        datas.value = response.data;
-      });
+      // await instance.get(SERVER_URL.authority).then((response) => {
+      //   datas.value = response.data;
+      // });
     }
 
     onMounted(() => {

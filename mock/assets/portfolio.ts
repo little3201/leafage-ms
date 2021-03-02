@@ -40,11 +40,13 @@ export default [
         {
           code: '20A23D2D1',
           title: 'Travel Photos',
+          type: 'jpg',
           modifyTime: new Date(),
         },
         {
           code: '20A23D2D1',
-          title: 'Travel Photos',
+          title: 'Travel Video',
+          type: 'mp4',
           modifyTime: new Date(),
         },
       ];

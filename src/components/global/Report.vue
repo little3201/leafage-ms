@@ -1,8 +1,8 @@
 <template>
   <div class="col-span-12 mt-2">
-    <div class="intro-y flex items-center h-10">
-      <h2 class="text-lg font-medium truncate mr-5">General Report</h2>
-      <a href="" class="ml-auto flex text-blue-800">
+    <div class="flex items-center h-10">
+      <h2 class="text-lg font-medium">General Report</h2>
+      <a href="" class="ml-auto flex items-center text-blue-800">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -22,7 +22,7 @@
       </a>
     </div>
     <div class="grid grid-cols-12 gap-6 my-2">
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex items-center">
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
@@ -122,7 +122,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="relative zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
@@ -172,7 +172,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="relative zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div class="flex">
@@ -221,14 +221,14 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6 intro-y">
+      <div class="col-span-12 sm:col-span-6">
         <div class="relative zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div ref="barChartRef" class="w-full h-80"></div>
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6 intro-y">
+      <div class="col-span-12 sm:col-span-6">
         <div class="relative zoom-in">
           <div class="shadow-sm rounded-md bg-white p-5">
             <div ref="lineChartRef" class="w-full h-80"></div>

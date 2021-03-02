@@ -38,19 +38,22 @@
           </svg>
         </a>
       </li>
-      <li v-if="page > 2" class="px-3 py-2">
+      <li v-if="page > 3" class="px-3 py-2">
         <a href="javascript:;">...</a>
       </li>
       <li
-        class="p-2 w-8 h-8 flex items-center justify-center"
-        :class="{ 'bg-white rounded-full border': index == page + 1 }"
         v-for="index in pages"
         :key="index"
-        @click.prevent="give(index - 1)"
+        class="p-2 w-8 h-8 flex items-center justify-center"
+        :class="{ 'bg-white rounded-full border': index == page + 1, 'hidden' : page > 3 && index < 4 }"
       >
-        <a href="javascript:;" v-text="index"></a>
+        <a
+          href="javascript:;"
+          @click.prevent="give(index - 1)"
+          v-text="index"
+        ></a>
       </li>
-      <li class="px-3 py-2"><a href="javascript:;">...</a></li>
+      <li v-if="pages > 6 && page < 4" class="px-3 py-2"><a href="javascript:;">...</a></li>
       <li class="px-3 py-2">
         <a href="javascript:;" @click.prevent="increment">
           <svg
@@ -70,7 +73,7 @@
         </a>
       </li>
       <li class="px-3 py-2">
-        <a href="javascript:;"
+        <a href="javascript:;" @click.prevent="page = pages - 1"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -110,22 +113,27 @@ export default defineComponent({
   methods: {
     // 递增
     increment() {
-      this.page++;
+      if (this.page < this.pages - 1) {
+        this.page++;
+      }
     },
     // 递减
     decrease() {
-      this.page--;
+      if (this.page > 0) {
+        this.page--;
+      }
     },
     // 设置
     give(page: number) {
       this.page = page;
+      this.$emit("initDatas", this.page, this.size);
     },
   },
 
   setup() {
     let page = ref(0);
     let size = ref(10);
-    const pages = ref(6);
+    const pages = ref(7);
 
     return {
       page,

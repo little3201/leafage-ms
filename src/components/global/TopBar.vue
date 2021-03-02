@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="relative mr-auto sm:mr-6">
-      <div class="cursor-pointer">
+      <div class="cursor-pointer" @click="notify = !notify">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -68,25 +68,99 @@
           class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
         ></span>
       </div>
-    </div>
-    <div class="mr-auto sm:mr-6 cursor-pointer">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-settings"
+      <div
+        v-show="notify"
+        class="origin-top-right p-4 absolute w-80 right-0 mt-5 rounded-md shadow-lg bg-white z-10"
       >
-        <circle cx="12" cy="12" r="3"></circle>
-        <path
-          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
-        ></path>
-      </svg>
+        <div class="mb-4">Notifications</div>
+        <div class="cursor-pointer flex items-center">
+          <div class="overflow-hidden">
+            <div class="flex items-center">
+              <a href="javascript:;" class="font-medium truncate mr-5"
+                >John Travolta</a
+              >
+              <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">
+                06:05 AM
+              </div>
+            </div>
+            <div class="w-full truncate text-gray-600">
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+              It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 20
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mr-auto sm:mr-6 relative">
+      <div class="cursor-pointer" @click="settings = !settings">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-settings"
+        >
+          <circle cx="12" cy="12" r="3"></circle>
+          <path
+            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+          ></path>
+        </svg>
+        <div
+          v-show="settings"
+          class="origin-top-right p-4 absolute w-48 right-0 mt-5 rounded-md shadow-lg bg-white z-10"
+        >
+          <div>
+            <a
+              href="#"
+              class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-user mr-2"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              Mode
+            </a>
+            <a
+              href=""
+              class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-lock mr-2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Language
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="w-8 h-8 relative">
       <div
@@ -97,34 +171,100 @@
       </div>
       <div
         v-show="account"
-        class="origin-top-right absolute right-0 mt-4 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+        class="origin-top-right p-4 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
-        <div
-          class="py-1"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="options-menu"
-        >
+        <div class="py-2">
+          <div class="font-medium">布吉岛</div>
+          <div class="text-xs">Full Stack Engineer</div>
+        </div>
+        <div>
           <a
             href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            role="menuitem"
-            >Profile</a
+            class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-user mr-2"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profile
+          </a>
           <a
-            href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            role="menuitem"
-            >Settings</a
+            href=""
+            class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
-          <button
-            @click="singout"
-            type="submit"
-            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
-            role="menuitem"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-lock mr-2"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Reset Password
+          </a>
+          <a
+            href=""
+            class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
-            Sign out
-          </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-help-circle mr-2"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Help
+          </a>
+        </div>
+        <div class="py-2 border-t border-theme-40">
+          <a
+            href=""
+            class="flex items-center transition duration-300 ease-in-out hover:text-blue-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-toggle-right mr-2"
+            >
+              <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
+              <circle cx="16" cy="12" r="3"></circle>
+            </svg>
+            Logout
+          </a>
         </div>
       </div>
     </div>
@@ -141,6 +281,8 @@ export default defineComponent({
   name: "TopBar",
 
   setup() {
+    let notify = ref(false);
+    let settings = ref(false);
     let account = ref(false);
 
     const signout = () => {
@@ -150,8 +292,10 @@ export default defineComponent({
     };
 
     return {
+      notify,
       account,
-      signout
+      settings,
+      signout,
     };
   },
 });

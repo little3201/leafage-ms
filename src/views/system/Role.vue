@@ -1,7 +1,25 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Roles</h2>
+      <h2 class="text-lg font-medium">Roles</h2>
+      <button @click="initDatas(0, 10)" class="ml-4 flex items-center text-blue-800 focus:outline-none">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
@@ -46,7 +64,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="roleData.code"
@@ -67,7 +85,10 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="roleData.superior" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
+            <select
+              v-model="roleData.superior"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option>System</option>
               <option>Posts</option>
             </select>
@@ -135,11 +156,9 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.roleData;
       if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.role.concat("/", code), data)
-          .then(() => {
-            this.initDatas();
-          });
+        instance.put(SERVER_URL.role.concat("/", code), data).then(() => {
+          this.initDatas(0, 10);
+        });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
           this.datas.push(res.data);
@@ -152,21 +171,21 @@ export default defineComponent({
   setup() {
     const datas = ref<any>([]);
 
-    function initDatas() {
+    function initDatas(page: number, size: number) {
       instance
-        .get(SERVER_URL.role.concat("?page=0&size=10"))
+        .get(SERVER_URL.role.concat("?page=" + page, "&size=" + size))
         .then((response) => {
           datas.value = response.data;
         });
     }
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {
       datas,
-      initDatas
+      initDatas,
     };
   },
 });

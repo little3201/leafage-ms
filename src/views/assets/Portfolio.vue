@@ -1,8 +1,26 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Portfolio</h2>
-      <Operation @modelOperate="modelOperate"/>
+      <h2 class="text-lg font-medium">Portfolio</h2>
+      <button @click="initDatas(0, 10)" class="ml-4 flex items-center text-blue-800 focus:outline-none">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
+      <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
@@ -11,6 +29,7 @@
             <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Title</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
+            <th class="px-4 py-2 md:px-5 md:py-3">Type</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Viewed</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Likes</th>
             <th class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
@@ -34,6 +53,41 @@
               ></a>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
+            <td class="px-4 py-2 md:px-5 md:py-3">
+              <svg
+                v-if="data.type == 'jpg'"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-image mx-auto"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <svg
+                v-if="data.type == 'mp4'"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-video mx-auto"
+              >
+                <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+              </svg>
+            </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.viewed"></td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.likes"></td>
             <td
@@ -51,7 +105,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="portfolioData.code"
@@ -130,7 +184,10 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.portfolioData = {};
-      Promise.all([this.retrieveCategories(), this.fetchPortfolio(isEdit, code)]);
+      Promise.all([
+        this.retrieveCategories(),
+        this.fetchPortfolio(isEdit, code),
+      ]);
       this.isEdit = isEdit;
     },
     // 获取所有分类
@@ -157,7 +214,7 @@ export default defineComponent({
       let data = this.portfolioData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.portfolio.concat("/", code), data).then(() => {
-          this.initDatas();
+          this.initDatas(0, 10);
         });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
@@ -171,19 +228,21 @@ export default defineComponent({
   setup() {
     const datas = ref<any>([]);
 
-    async function initDatas() {
-      await instance.get(SERVER_URL.portfolio.concat("?page=0&size=10")).then(
-        (response) => {
-          datas.value = response.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+    async function initDatas(page: number, size: number) {
+      await instance
+        .get(SERVER_URL.portfolio.concat("?page=" + page, "&size=" + size))
+        .then(
+          (response) => {
+            datas.value = response.data;
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        );
     }
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {

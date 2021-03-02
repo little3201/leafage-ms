@@ -18,5 +18,15 @@ export default defineConfig({
     modules: {
       localsConvention: 'camelCaseOnly'
     }
+  },
+  server: {
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'http://localhost:8764',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

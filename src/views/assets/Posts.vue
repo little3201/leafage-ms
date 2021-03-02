@@ -280,14 +280,14 @@ export default defineComponent({
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
-      let data = this.postsData;
+      let data = { ...this.postsData, content: this.content }
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
-          this.datas.push(res.data);
+          this.initDatas();
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
-          this.datas.push(res.data);
+          this.datas.push(res.data); 
         });
       }
       this.isEdit = false;
@@ -325,6 +325,7 @@ export default defineComponent({
     return {
       preview,
       datas,
+      initDatas,
       content,
       rendedHtml,
     };

@@ -1,7 +1,7 @@
 // 服务匹配前缀
 const SERVER_PRE = {
   hypervisor: '/hypervisor', // 系统
-  assets: '/assets' // 资源
+  assets: '' // 资源
 }
 
 // 接口请求路径

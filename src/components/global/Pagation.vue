@@ -2,7 +2,7 @@
   <div class="flex items-center mb-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
       <li class="px-3 py-2">
-        <a href="javascript:;" @click="this.page = 0">
+        <a href="javascript:;" @click="this.page = 0, give(page)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -45,7 +45,10 @@
         v-for="index in pages"
         :key="index"
         class="p-2 w-8 h-8 flex items-center justify-center"
-        :class="{ 'bg-white rounded-full border': index == page + 1, 'hidden' : page > 3 && index < 4 }"
+        :class="{
+          'bg-white rounded-full border': index == page + 1,
+          hidden: page > 3 && index < 4,
+        }"
       >
         <a
           href="javascript:;"
@@ -53,7 +56,9 @@
           v-text="index"
         ></a>
       </li>
-      <li v-if="pages > 6 && page < 4" class="px-3 py-2"><a href="javascript:;">...</a></li>
+      <li v-if="pages > 6 && page < 4" class="px-3 py-2">
+        <a href="javascript:;">...</a>
+      </li>
       <li class="px-3 py-2">
         <a href="javascript:;" @click.prevent="increment">
           <svg
@@ -73,7 +78,7 @@
         </a>
       </li>
       <li class="px-3 py-2">
-        <a href="javascript:;" @click.prevent="page = pages - 1"
+        <a href="javascript:;" @click.prevent="page = pages - 1, give(page)"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -115,12 +120,14 @@ export default defineComponent({
     increment() {
       if (this.page < this.pages - 1) {
         this.page++;
+        this.give(this.page);
       }
     },
     // 递减
     decrease() {
       if (this.page > 0) {
         this.page--;
+        this.give(this.page);
       }
     },
     // 设置

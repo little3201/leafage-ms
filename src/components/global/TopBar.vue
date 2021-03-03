@@ -245,7 +245,8 @@
         </div>
         <div class="py-2 border-t border-theme-40">
           <a
-            href=""
+            href="javascript:;"
+            @click.prevent="signout"
             class="flex items-center transition duration-300 ease-in-out hover:text-blue-600"
           >
             <svg
@@ -287,7 +288,7 @@ export default defineComponent({
 
     const signout = () => {
       instance.post("/logout").then(() => {
-        router.push("/sign");
+        router.push("/signin");
       });
     };
 

@@ -2,7 +2,10 @@
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Posts</h2>
-      <button @click="initDatas(0, 10)" class="ml-4 flex items-center text-blue-800 focus:outline-none">
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -14,6 +17,7 @@
           stroke-linecap="round"
           stroke-linejoin="round"
           class="feather feather-rotate-cw mr-2"
+          :class="{ 'animate-spin': loading }"
         >
           <polyline points="23 4 23 10 17 10"></polyline>
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
@@ -67,7 +71,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas"/>
+    <Pagation @initDatas="initDatas" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="postsData.code"
@@ -297,14 +301,14 @@ export default defineComponent({
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
-      let data = { ...this.postsData, content: this.content }
+      let data = { ...this.postsData, content: this.content };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
           this.initDatas(0, 10);
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
-          this.datas.push(res.data); 
+          this.datas.push(res.data);
         });
       }
       this.isEdit = false;
@@ -314,17 +318,24 @@ export default defineComponent({
   setup() {
     let preview = ref(false);
     let content = ref("");
+    let loading = ref(false);
     const datas = ref<any>([]);
 
-    async function initDatas(page:number, size:number) {
-      await instance.get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size)).then(
-        (response) => {
-          datas.value = response.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+    async function initDatas(page: number, size: number) {
+      loading.value = true;
+      await instance
+        .get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size))
+        .then(
+          (response) => {
+            datas.value = response.data;
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        )
+        .finally(() => {
+          loading.value = false;
+        });
     }
 
     // 转换md为html
@@ -341,9 +352,10 @@ export default defineComponent({
 
     return {
       preview,
+      content,
+      loading,
       datas,
       initDatas,
-      content,
       rendedHtml,
     };
   },

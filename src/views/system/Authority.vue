@@ -65,9 +65,9 @@
                 v-text="data.type"
                 class="p-1 rounded-md text-xs"
                 :class="[
-                  { 'bg-blue-300': data.type == 'Menu' },
-                  { 'bg-green-300': data.type == 'Tab' },
-                  { 'bg-pink-300': data.type == 'Url' },
+                  { 'bg-blue-300': data.type == 'MENU' },
+                  { 'bg-green-300': data.type == 'BTN' },
+                  { 'bg-pink-300': data.type == 'ROUTER' },
                 ]"
               ></span>
             </td>
@@ -138,9 +138,9 @@
               class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
             >
               <option disabled value="">请选择</option>
-              <option value="Menu">Menu</option>
-              <option value="Tab">Tab</option>
-              <option value="Url">Url</option>
+              <option value="MENU">MENU</option>
+              <option value="BTN">BTN</option>
+              <option value="ROUTER">ROUTER</option>
             </select>
           </div>
           <div class="col-span-12">

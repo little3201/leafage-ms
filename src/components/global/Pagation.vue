@@ -115,6 +115,13 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Pagation",
 
+  props: {
+    pages: {
+      type: Number,
+      default: 0
+    }
+  },
+
   methods: {
     // 递增
     increment() {
@@ -140,12 +147,10 @@ export default defineComponent({
   setup() {
     let page = ref(0);
     let size = ref(10);
-    const pages = ref(7);
 
     return {
       page,
       size,
-      pages,
     };
   },
 });

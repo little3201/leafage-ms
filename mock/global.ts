@@ -14,7 +14,9 @@ export default [
         method: 'post',
         response: () => {
             return {
-
+                username: 'little3201',
+                nickname: '管理员',
+                avatar: '/images/avatar.jpg'
             }
         },
     },

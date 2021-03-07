@@ -2,7 +2,10 @@
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Groups</h2>
-      <button @click="initDatas(0, 10)" class="ml-4 flex items-center text-blue-800 focus:outline-none">
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -75,7 +78,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="groupData.code"
@@ -181,7 +184,7 @@ export default defineComponent({
       let data = this.groupData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.group.concat("/", code), data).then(() => {
-          this.initDatas(0, 10);
+          this.retrieveGroup(0, 10);
         });
       } else {
         instance.post(SERVER_URL.group, data).then((res) => {
@@ -194,12 +197,24 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    const pages = ref(0);
 
-    function initDatas(page: number, size: number) {
-      instance
+    // 初始化数据
+    async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrieveGroup(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.group.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrieveGroup(page: number, size: number) {
+      await instance
         .get(SERVER_URL.group.concat("?page=" + page, "&size=" + size))
-        .then((response) => {
-          datas.value = response.data;
+        .then((res) => {
+          datas.value = res.data;
         });
     }
 
@@ -209,7 +224,8 @@ export default defineComponent({
 
     return {
       datas,
-      initDatas,
+      pages,
+      retrieveGroup,
     };
   },
 });

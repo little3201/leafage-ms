@@ -2,7 +2,10 @@
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Portfolio</h2>
-      <button @click="initDatas(0, 10)" class="ml-4 flex items-center text-blue-800 focus:outline-none">
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -105,7 +108,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="portfolioData.code"
@@ -214,7 +217,7 @@ export default defineComponent({
       let data = this.portfolioData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.portfolio.concat("/", code), data).then(() => {
-          this.initDatas(0, 10);
+          this.retrievePortfolio(0, 10);
         });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
@@ -227,8 +230,20 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    const pages = ref(0);
 
+    // 初始化数据
     async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrievePortfolio(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrievePortfolio(page: number, size: number) {
       await instance
         .get(SERVER_URL.portfolio.concat("?page=" + page, "&size=" + size))
         .then(
@@ -247,7 +262,8 @@ export default defineComponent({
 
     return {
       datas,
-      initDatas,
+      pages,
+      retrievePortfolio,
     };
   },
 });

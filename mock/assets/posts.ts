@@ -2,6 +2,13 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
+    url: 'posts/count',
+    method: 'get',
+    response: () => {
+      return 3
+    },
+  },
+  {
     url: 'posts/20829TXGD/content',
     method: 'get',
     response: () => {

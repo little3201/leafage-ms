@@ -141,15 +141,19 @@
 import { defineComponent, ref, onMounted } from "vue";
 import router from "../../router";
 
+import { useStore } from "../../store";
+
 import instance from "../../api";
 import qs from "qs";
 
 export default defineComponent({
   setup() {
     const formData = ref({});
+    const store = useStore();
 
     function onSubmit() {
-      instance.post("/login", qs.stringify(formData.value)).then(() => {
+      instance.post("/login", qs.stringify(formData.value)).then((res) => {
+        store.commit("setUser", res.data);
         router.push("/");
       });
     }

@@ -162,20 +162,27 @@
         </div>
       </div>
     </div>
-    <div class="w-8 h-8 relative">
+    <div class="relative">
       <div
+        v-if="user.username"
         @click="account = !account"
-        class="rounded-full overflow-hidden shadow-lg cursor-pointer"
+        class="rounded-full shadow-lg cursor-pointer w-8 h-8"
       >
-        <img alt="leafage" src="/images/avatar.jpg" />
+        <img alt="leafage" :src="user.avatar" />
       </div>
+      <router-link
+        v-else
+        to="/signin"
+        class="bg-blue-600 text-white hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-full"
+        >Sign In</router-link
+      >
       <div
         v-show="account"
         class="origin-top-right p-4 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
         <div class="py-2">
-          <div class="font-medium">布吉岛</div>
-          <div class="text-xs">Full Stack Engineer</div>
+          <div class="font-medium" v-text="user.nickname"></div>
+          <div class="text-xs" v-text="user.username"></div>
         </div>
         <div>
           <a
@@ -273,8 +280,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import router from "../../router";
+
+import { useStore } from "../../store";
 
 import instance from "../../api";
 
@@ -282,9 +291,16 @@ export default defineComponent({
   name: "TopBar",
 
   setup() {
+    // 控制通知是否打开
     let notify = ref(false);
+    // 控制设置是否打开
     let settings = ref(false);
+    // 控制账号操作是否打开
     let account = ref(false);
+
+    // 从vuex中取登录信息
+    const store = useStore();
+    const user = computed(() => store.state.user);
 
     const signout = () => {
       instance.post("/logout").then(() => {
@@ -295,6 +311,7 @@ export default defineComponent({
     return {
       notify,
       account,
+      user,
       settings,
       signout,
     };

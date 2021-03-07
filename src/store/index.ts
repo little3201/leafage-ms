@@ -1,24 +1,33 @@
-import { createStore } from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, useStore as baseUseStore, Store } from 'vuex'
 
-export default createStore({
+// define your typings for the store state
+export interface State {
+  user: {
+    username: string,
+    nickname: string,
+    avatar: string
+  }
+}
+
+// define injection key
+export const key: InjectionKey<Store<State>> = Symbol()
+
+export const store = createStore<State>({
   state: {
-    names: []
-  },
-  mutations: {
-    addNames(state: any, name: string) {
-      state.taskList.push(name)
-    },
-    removeNames(state: any, index: number) {
-      state.taskList.splice(index, 1)
-    },
-    modifyNames(state: any, payload: any) {
-      const { index, status } = payload
-
-      state.names[index].isfinished = status
+    user: {
+      username: '',
+      nickname: '',
+      avatar: ''
     }
   },
-  actions: {
-  },
-  modules: {
+  mutations: {
+    setUser(state: any, user: object) {
+      state.user = user
+    },
   }
 })
+
+export function useStore() {
+  return baseUseStore(key)
+}

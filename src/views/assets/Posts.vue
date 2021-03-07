@@ -71,7 +71,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="postsData.code"
@@ -304,7 +304,7 @@ export default defineComponent({
       let data = { ...this.postsData, content: this.content };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
-          this.initDatas(0, 10);
+          this.retrievePosts(0, 10);
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
@@ -320,14 +320,26 @@ export default defineComponent({
     let content = ref("");
     let loading = ref(false);
     const datas = ref<any>([]);
+    const pages = ref(0);
 
+    // 初始化数据
     async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrievePosts(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrievePosts(page: number, size: number) {
       loading.value = true;
       await instance
         .get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size))
         .then(
-          (response) => {
-            datas.value = response.data;
+          (res) => {
+            datas.value = res.data;
           },
           (error) => {
             alert(error.statusText);
@@ -354,8 +366,9 @@ export default defineComponent({
       preview,
       content,
       loading,
+      pages,
       datas,
-      initDatas,
+      retrievePosts,
       rendedHtml,
     };
   },

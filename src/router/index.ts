@@ -8,12 +8,15 @@ const router = createRouter({
 
 /* 路由之前检查token */
 router.beforeEach(to => {
+  if (to.fullPath === '/login') {
+    sessionStorage.removeItem("user")
+  }
   return true
 })
 
 /* 路由之后关闭进度条 */
 router.afterEach(() => {
-  
+
 })
 
 export default router;

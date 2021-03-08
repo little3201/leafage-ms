@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="initDatas(0, 10)"
+        @click="retrieve(0, 10)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -108,7 +108,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" :pages="pages" />
+    <Pagation @retrieve="retrieve" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="portfolioData.code"
@@ -189,7 +189,7 @@ export default defineComponent({
       this.portfolioData = {};
       Promise.all([
         this.retrieveCategories(),
-        this.fetchPortfolio(isEdit, code),
+        this.fetch(isEdit, code),
       ]);
       this.isEdit = isEdit;
     },
@@ -205,7 +205,7 @@ export default defineComponent({
       );
     },
     // 根据code查portfolio
-    fetchPortfolio(isEdit: boolean, code: string) {
+    fetch(isEdit: boolean, code: string) {
       if (isEdit && code) {
         instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
           this.portfolioData = res.data;
@@ -217,7 +217,7 @@ export default defineComponent({
       let data = this.portfolioData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.portfolio.concat("/", code), data).then(() => {
-          this.retrievePortfolio(0, 10);
+          this.retrieve(0, 10);
         });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
@@ -234,7 +234,7 @@ export default defineComponent({
 
     // 初始化数据
     async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrievePortfolio(page, size)]);
+      await Promise.all([count(), retrieve(page, size)]);
     }
     // 统计数据
     async function count() {
@@ -243,7 +243,7 @@ export default defineComponent({
       });
     }
     // 查询列表
-    async function retrievePortfolio(page: number, size: number) {
+    async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.portfolio.concat("?page=" + page, "&size=" + size))
         .then(
@@ -263,7 +263,7 @@ export default defineComponent({
     return {
       datas,
       pages,
-      retrievePortfolio,
+      retrieve,
     };
   },
 });

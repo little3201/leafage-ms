@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Authorities</h2>
       <button
-        @click="initDatas(0, 10)"
+        @click="retrieve(0, 10)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -90,7 +90,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" :pages="pages" />
+    <Pagation @retrieve="retrieve" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="authorityData.code"
@@ -210,7 +210,7 @@ export default defineComponent({
       let data = this.authorityData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.authority.concat("/", code), data).then(() => {
-          this.retrieveAuthority(0, 10);
+          this.retrieve(0, 10);
         });
       } else {
         instance.post(SERVER_URL.authority, data).then((res) => {
@@ -227,7 +227,7 @@ export default defineComponent({
 
     // 初始化数据
     async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrieveAuthority(page, size)]);
+      await Promise.all([count(), retrieve(page, size)]);
     }
     // 统计数据
     async function count() {
@@ -236,7 +236,7 @@ export default defineComponent({
       });
     }
     // 查询列表
-    async function retrieveAuthority(page: number, size: number) {
+    async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.authority.concat("?page=" + page, "&size=" + size))
         .then((res) => {
@@ -251,7 +251,7 @@ export default defineComponent({
     return {
       datas,
       pages,
-      retrieveAuthority,
+      retrieve,
     };
   },
 });

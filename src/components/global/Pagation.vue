@@ -149,7 +149,7 @@ export default defineComponent({
     // 设置
     give(page: number) {
       this.page = page;
-      this.$emit("initDatas", this.page, this.size);
+      this.$emit("retrieve", this.page, this.size);
     },
   },
 

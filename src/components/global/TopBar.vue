@@ -164,11 +164,11 @@
     </div>
     <div class="relative">
       <div
-        v-if="user.username"
+        v-if="user"
         @click="account = !account"
         class="rounded-full shadow-lg cursor-pointer w-8 h-8"
       >
-        <img alt="leafage" :src="user.avatar" />
+        <img alt="leafage" :src="user.avatar" class="rounded-full" />
       </div>
       <router-link
         v-else
@@ -283,8 +283,6 @@
 import { computed, defineComponent, ref } from "vue";
 import router from "../../router";
 
-import { useStore } from "../../store";
-
 import instance from "../../api";
 
 export default defineComponent({
@@ -298,9 +296,13 @@ export default defineComponent({
     // 控制账号操作是否打开
     let account = ref(false);
 
-    // 从vuex中取登录信息
-    const store = useStore();
-    const user = computed(() => store.state.user);
+    const user = computed(() => {
+      let data = sessionStorage.getItem("user");
+      if (data) {
+        return JSON.parse(data);
+      }
+      return {};
+    });
 
     const signout = () => {
       instance.post("/logout").then(() => {

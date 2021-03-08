@@ -162,7 +162,6 @@ export default defineComponent({
     let page = ref(0);
     let size = ref(10);
     let pages = computed(() => {
-      debugger;
       if (props.total) {
         if (props.total % size.value > 0) {
           console.log(props.total / size.value)

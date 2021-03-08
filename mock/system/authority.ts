@@ -1,6 +1,13 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
+    url: 'authority/count',
+    method: 'get',
+    response: () => {
+      return 2
+    },
+  },
+  {
     url: 'authority/203315P3Q',
     method: 'get',
     response: () => {
@@ -58,7 +65,7 @@ export default [
         { "code": "212240439", "modifyTime": "2021-02-24T11:28:41.202", "superior": "System", "name": "Authority", "type": "Menu", "path": "/authority", "description": "权限", "count": 0 },
         { "code": "21224UJ6C", "modifyTime": "2021-02-25T13:56:13.127", "superior": "User", "name": "Add", "type": "Url", "path": "/", "description": "新增", "count": 0 },
         { "code": "21224PV7C", "modifyTime": "2021-02-25T13:56:34.668", "superior": "User", "name": "Edit", "type": "Tab", "path": "/{code}", "description": "编辑", "count": 0 },
-        { "code": "212240499", "modifyTime": "2021-02-24T11:28:41.202", "superior": "User", "name": "Del", "type": "Url", "path": "/{code}", "description": "删除", "count": 0 } 
+        { "code": "212240499", "modifyTime": "2021-02-24T11:28:41.202", "superior": "User", "name": "Del", "type": "Url", "path": "/{code}", "description": "删除", "count": 0 }
       ];
     },
   },

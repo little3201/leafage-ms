@@ -124,7 +124,7 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Pagation",
 
-  props:{
+  props: {
     pages: {
       type: Number,
       default: 0

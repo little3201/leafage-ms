@@ -2,12 +2,19 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
+    url: 'category/count',
+    method: 'get',
+    response: () => {
+      return 2
+    },
+  },
+  {
     url: 'category/20A23D2D1',
     method: 'get',
     response: () => {
       return {
-          code: '20A23D2D1',
-          alias: 'Technology'
+        code: '20A23D2D1',
+        alias: 'Technology'
       }
     },
   },
@@ -16,8 +23,8 @@ export default [
     method: 'put',
     response: () => {
       return {
-          code: '20A23D2D1',
-          alias: 'Technology'
+        code: '20A23D2D1',
+        alias: 'Technology'
       }
     },
   },
@@ -26,8 +33,8 @@ export default [
     method: 'post',
     response: () => {
       return {
-          code: '20A23D2D1',
-          alias: 'Technology'
+        code: '20A23D2D1',
+        alias: 'Technology'
       }
     },
   },

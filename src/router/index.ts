@@ -8,7 +8,7 @@ const router = createRouter({
 
 /* 路由之前检查token */
 router.beforeEach(to => {
-  if (to.fullPath === '/login') {
+  if (to.fullPath === '/signin') {
     sessionStorage.removeItem("user")
   }
   return true

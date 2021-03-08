@@ -164,7 +164,7 @@
     </div>
     <div class="relative">
       <div
-        v-if="user"
+        v-if="user && Object.keys(user).length > 0"
         @click="account = !account"
         class="rounded-full shadow-lg cursor-pointer w-8 h-8"
       >

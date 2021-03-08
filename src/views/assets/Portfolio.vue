@@ -108,7 +108,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :pages="pages" />
+    <Pagation @retrieve="retrieve" :total="total" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="portfolioData.code"
@@ -230,7 +230,7 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
-    const pages = ref(0);
+    const total = ref(0);
 
     // 初始化数据
     async function initDatas(page: number, size: number) {
@@ -239,7 +239,7 @@ export default defineComponent({
     // 统计数据
     async function count() {
       await instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
-        pages.value = res.data;
+        total.value = res.data;
       });
     }
     // 查询列表
@@ -262,7 +262,7 @@ export default defineComponent({
 
     return {
       datas,
-      pages,
+      total,
       retrieve,
     };
   },

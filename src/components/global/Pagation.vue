@@ -1,8 +1,12 @@
 <template>
   <div class="flex items-center mb-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
-      <li class="px-3 py-2">
-        <a href="javascript:;" @click="this.page = 0, give(page)">
+      <li>
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          @click="(this.page = 0), give(page)"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -18,10 +22,10 @@
             <polyline points="11 17 6 12 11 7"></polyline>
             <polyline points="18 17 13 12 18 7"></polyline>
           </svg>
-        </a>
+        </button>
       </li>
-      <li class="px-3 py-2 mr-2">
-        <a href="javascript:;" @click.prevent="decrease">
+      <li>
+        <button type="button" class="focus:outline-none w-8 h-8" @click="decrease">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -36,31 +40,31 @@
           >
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
-        </a>
+        </button>
       </li>
-      <li v-if="page > 3" class="px-3 py-2">
-        <a href="javascript:;">...</a>
+      <li v-if="page > 3">
+        <button type="button" class="focus:outline-none w-8 h-8">...</button>
       </li>
       <li
         v-for="index in pages"
         :key="index"
-        class="p-2 w-8 h-8 flex items-center justify-center"
-        :class="{
-          'bg-white rounded-full border': index == page + 1,
-          hidden: page > 3 && index < 4,
-        }"
       >
-        <a
-          href="javascript:;"
+        <button
+          type="button"
           @click.prevent="give(index - 1)"
           v-text="index"
-        ></a>
+          class="focus:outline-none w-8 h-8"
+          :class="{
+            'bg-white rounded-full border shadow-sm': index == page + 1,
+            hidden: page > 3 && index < 4,
+          }"
+        ></button>
       </li>
-      <li v-if="pages > 6 && page < 4" class="px-3 py-2">
-        <a href="javascript:;">...</a>
+      <li v-if="pages > 6 && page < 4">
+        <button type="button" class="focus:outline-none w-8 h-8">...</button>
       </li>
-      <li class="px-3 py-2">
-        <a href="javascript:;" @click.prevent="increment">
+      <li>
+        <button type="button" class="focus:outline-none w-8 h-8" @click="increment">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -75,11 +79,15 @@
           >
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
-        </a>
+        </button>
       </li>
-      <li class="px-3 py-2">
-        <a href="javascript:;" @click.prevent="page = pages - 1, give(page)"
-          ><svg
+      <li>
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          @click="(page = pages - 1), give(page)"
+        >
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -92,8 +100,9 @@
             class="feather feather-chevrons-right"
           >
             <polyline points="13 17 18 12 13 7"></polyline>
-            <polyline points="6 17 11 12 6 7"></polyline></svg
-        ></a>
+            <polyline points="6 17 11 12 6 7"></polyline>
+          </svg>
+        </button>
       </li>
     </ul>
     <select
@@ -114,6 +123,13 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Pagation",
+
+  props:{
+    pages: {
+      type: Number,
+      default: 0
+    }
+  },
 
   methods: {
     // 递增
@@ -140,12 +156,10 @@ export default defineComponent({
   setup() {
     let page = ref(0);
     let size = ref(10);
-    const pages = ref(7);
 
     return {
       page,
       size,
-      pages,
     };
   },
 });

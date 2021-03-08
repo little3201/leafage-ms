@@ -25,7 +25,11 @@
         </button>
       </li>
       <li>
-        <button type="button" class="focus:outline-none w-8 h-8" @click="decrease">
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          @click="decrease"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -45,10 +49,7 @@
       <li v-if="page > 3">
         <button type="button" class="focus:outline-none w-8 h-8">...</button>
       </li>
-      <li
-        v-for="index in pages"
-        :key="index"
-      >
+      <li v-for="index in pages" :key="index">
         <button
           type="button"
           @click.prevent="give(index - 1)"
@@ -60,11 +61,15 @@
           }"
         ></button>
       </li>
-      <li v-if="pages > 6 && page < 4">
+      <li v-if="pages / size > 6 && page < 4">
         <button type="button" class="focus:outline-none w-8 h-8">...</button>
       </li>
       <li>
-        <button type="button" class="focus:outline-none w-8 h-8" @click="increment">
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          @click="increment"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -119,16 +124,16 @@
 
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "Pagation",
 
   props: {
-    pages: {
+    total: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
 
   methods: {
@@ -149,17 +154,30 @@ export default defineComponent({
     // 设置
     give(page: number) {
       this.page = page;
-      this.$emit("initDatas", this.page, this.size);
+      this.$emit("retrieve", this.page, this.size);
     },
   },
 
-  setup() {
+  setup(props) {
     let page = ref(0);
     let size = ref(10);
+    let pages = computed(() => {
+      if (props.total) {
+        if (props.total % size.value > 0) {
+          console.log(props.total / size.value)
+          return ~~(props.total / size.value) + 1;
+        } else {
+          return ~~(props.total / size.value);
+        }
+      } else {
+        return 1;
+      }
+    });
 
     return {
       page,
       size,
+      pages,
     };
   },
 });

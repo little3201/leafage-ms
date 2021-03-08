@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Roles</h2>
       <button
-        @click="initDatas(0, 10)"
+        @click="retrieve(0, 10)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -67,7 +67,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @initDatas="initDatas" :pages="pages" />
+    <Pagation @retrieve="retrieve" :total="total" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="roleData.code"
@@ -160,7 +160,7 @@ export default defineComponent({
       let data = this.roleData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.role.concat("/", code), data).then(() => {
-          this.retrieveRole(0, 10);
+          this.retrieve(0, 10);
         });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
@@ -173,20 +173,20 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
-    const pages = ref(0);
+    const total = ref(0);
 
     // 初始化数据
     async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrieveRole(page, size)]);
+      await Promise.all([count(), retrieve(page, size)]);
     }
     // 统计数据
     async function count() {
       await instance.get(SERVER_URL.role.concat("/count")).then((res) => {
-        pages.value = res.data;
+        total.value = res.data;
       });
     }
     // 查询列表
-    async function retrieveRole(page: number, size: number) {
+    async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.role.concat("?page=" + page, "&size=" + size))
         .then((response) => {
@@ -200,8 +200,8 @@ export default defineComponent({
 
     return {
       datas,
-      pages,
-      retrieveRole,
+      total,
+      retrieve,
     };
   },
 });

@@ -78,7 +78,8 @@
         </router-link>
       </li>
       <li>
-        <div
+        <a
+          href="#"
           @click.prevent="isSystemOpen = !isSystemOpen"
           class="flex items-center h-12 rounded-full pl-5"
         >
@@ -133,7 +134,7 @@
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </div>
-        </div>
+        </a>
         <ul v-show="isSystemOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30">
           <li
             class="hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full relative"
@@ -360,9 +361,9 @@ export default defineComponent({
     const datas = ref([]);
 
     async function initAuthorities() {
-      await instance.get(SERVER_URL.authority).then((response) => {
-        datas.value = response.data;
-      });
+      // await instance.get(SERVER_URL.authority).then((response) => {
+      //   datas.value = response.data;
+      // });
     }
 
     onMounted(() => {

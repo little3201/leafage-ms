@@ -1,7 +1,29 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Posts</h2>
+      <h2 class="text-lg font-medium">Posts</h2>
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+          :class="{ 'animate-spin': loading }"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
@@ -49,7 +71,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="postsData.code"
@@ -127,7 +149,6 @@
           </div>
           <div class="col-span-12 sm:col-span-8">
             <textarea
-              type="text"
               class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
               placeholder="Subtitle"
               maxlength="64"
@@ -182,7 +203,7 @@
               </a>
               <textarea
                 v-if="!preview"
-                class="p-2 md:rounded-tl-md md:rounded-bl-md focus:outline-none focus:ring-1"
+                class="p-2 focus:outline-none focus:ring-1"
                 v-model="content"
                 placeholder="write with markdown..."
               ></textarea>
@@ -280,10 +301,10 @@ export default defineComponent({
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
-      let data = this.postsData;
+      let data = { ...this.postsData, content: this.content };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
-          this.datas.push(res.data);
+          this.retrievePosts(0, 10);
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
@@ -297,17 +318,36 @@ export default defineComponent({
   setup() {
     let preview = ref(false);
     let content = ref("");
+    let loading = ref(false);
     const datas = ref<any>([]);
+    const pages = ref(0);
 
-    async function initDatas() {
-      await instance.get(SERVER_URL.posts.concat("?page=0&size=10")).then(
-        (response) => {
-          datas.value = response.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+    // 初始化数据
+    async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrievePosts(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrievePosts(page: number, size: number) {
+      loading.value = true;
+      await instance
+        .get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size))
+        .then(
+          (res) => {
+            datas.value = res.data;
+          },
+          (error) => {
+            alert(error.statusText);
+          }
+        )
+        .finally(() => {
+          loading.value = false;
+        });
     }
 
     // 转换md为html
@@ -319,13 +359,16 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {
       preview,
-      datas,
       content,
+      loading,
+      pages,
+      datas,
+      retrievePosts,
       rendedHtml,
     };
   },

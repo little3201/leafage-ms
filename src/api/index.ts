@@ -35,6 +35,7 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   res => {
+    // 用户不存在，跳转注册
     if (res.status === 204) {
       setTimeout(() => { redirectTo('/signup') }, 300)
     }
@@ -45,8 +46,9 @@ instance.interceptors.response.use(
     if (response) {
       // 状态码判断
       switch (response.status) {
-        // 401: 未登录状态，跳转登录页
+        // 401: 未登录状态，403：无权限，跳转登录页
         case 401:
+        case 403:
           redirectTo('/signin')
           break
         // 404/500请求不存在

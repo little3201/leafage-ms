@@ -1,7 +1,28 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Groups</h2>
+      <h2 class="text-lg font-medium">Groups</h2>
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
@@ -57,7 +78,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="groupData.code"
@@ -78,14 +99,24 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
-            <select v-model="groupData.superior" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
+            <select
+              v-model="groupData.superior"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option disabled value="">请选择</option>
-              <option v-for="(superior, index) in datas" :key="index" v-text="superior.name"></option>
+              <option
+                v-for="(superior, index) in datas"
+                :key="index"
+                v-text="superior.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Principal</label>
-            <select v-model="groupData.principal" class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1">
+            <select
+              v-model="groupData.principal"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
               <option disabled value="">请选择</option>
             </select>
           </div>
@@ -142,11 +173,9 @@ export default defineComponent({
     modelOperate(isEdit: boolean, params: string) {
       this.groupData = {};
       if (isEdit && params) {
-        instance
-          .get(SERVER_URL.group.concat("/", params))
-          .then((res) => {
-            this.groupData = res.data;
-          });
+        instance.get(SERVER_URL.group.concat("/", params)).then((res) => {
+          this.groupData = res.data;
+        });
       }
       this.isEdit = isEdit;
     },
@@ -154,11 +183,9 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.groupData;
       if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.group.concat("/", code), data)
-          .then(() => {
-            this.initDatas();
-          });
+        instance.put(SERVER_URL.group.concat("/", code), data).then(() => {
+          this.retrieveGroup(0, 10);
+        });
       } else {
         instance.post(SERVER_URL.group, data).then((res) => {
           this.datas.push(res.data);
@@ -170,22 +197,35 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    const pages = ref(0);
 
-    function initDatas() {
-      instance
-        .get(SERVER_URL.group.concat("?page=0&size=10"))
-        .then((response) => {
-          datas.value = response.data;
+    // 初始化数据
+    async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrieveGroup(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.group.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrieveGroup(page: number, size: number) {
+      await instance
+        .get(SERVER_URL.group.concat("?page=" + page, "&size=" + size))
+        .then((res) => {
+          datas.value = res.data;
         });
     }
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {
       datas,
-      initDatas
+      pages,
+      retrieveGroup,
     };
   },
 });

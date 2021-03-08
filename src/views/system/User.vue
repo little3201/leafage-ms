@@ -1,7 +1,28 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Users</h2>
+      <h2 class="text-lg font-medium">Users</h2>
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
@@ -275,7 +296,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="userData.username"
@@ -387,7 +408,7 @@ export default defineComponent({
       let data = this.userData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.user.concat("/", code), data).then(() => {
-          this.initDatas();
+          this.retrieveUser(0, 10);
         });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
@@ -400,22 +421,35 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    const pages = ref(0);
 
-    async function initDatas() {
+    // 初始化数据
+    async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrieveUser(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.user.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrieveUser(page: number, size: number) {
       await instance
-        .get(SERVER_URL.user.concat("?page=0&size=10"))
-        .then((response) => {
-          datas.value = response.data;
+        .get(SERVER_URL.user.concat("?page=" + page, "&size=" + size))
+        .then((res) => {
+          datas.value = res.data;
         });
     }
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {
       datas,
-      initDatas,
+      pages,
+      retrieveUser,
     };
   },
 });

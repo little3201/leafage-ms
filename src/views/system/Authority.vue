@@ -1,7 +1,28 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center h-10">
-      <h2 class="text-lg font-medium mr-5">Authorities</h2>
+      <h2 class="text-lg font-medium">Authorities</h2>
+      <button
+        @click="initDatas(0, 10)"
+        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-rotate-cw mr-2"
+        >
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+        Reload Data
+      </button>
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
@@ -47,9 +68,9 @@
                 v-text="data.type"
                 class="p-1 rounded-md text-xs"
                 :class="[
-                  { 'bg-blue-300': data.type == 'Menu' },
-                  { 'bg-green-300': data.type == 'Tab' },
-                  { 'bg-pink-300': data.type == 'Url' },
+                  { 'bg-blue-300': data.type == 'MENU' },
+                  { 'bg-green-300': data.type == 'BTN' },
+                  { 'bg-pink-300': data.type == 'ROUTER' },
                 ]"
               ></span>
             </td>
@@ -69,7 +90,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation />
+    <Pagation @initDatas="initDatas" :pages="pages" />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="authorityData.code"
@@ -120,9 +141,9 @@
               class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
             >
               <option disabled value="">请选择</option>
-              <option value="Menu">Menu</option>
-              <option value="Tab">Tab</option>
-              <option value="Url">Url</option>
+              <option value="MENU">MENU</option>
+              <option value="BTN">BTN</option>
+              <option value="ROUTER">ROUTER</option>
             </select>
           </div>
           <div class="col-span-12">
@@ -189,7 +210,7 @@ export default defineComponent({
       let data = this.authorityData;
       if (code && code.length > 0) {
         instance.put(SERVER_URL.authority.concat("/", code), data).then(() => {
-          this.initDatas();
+          this.retrieveAuthority(0, 10);
         });
       } else {
         instance.post(SERVER_URL.authority, data).then((res) => {
@@ -202,22 +223,35 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    const pages = ref(0);
 
-    async function initDatas() {
+    // 初始化数据
+    async function initDatas(page: number, size: number) {
+      await Promise.all([count(), retrieveAuthority(page, size)]);
+    }
+    // 统计数据
+    async function count() {
+      await instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
+        pages.value = res.data;
+      });
+    }
+    // 查询列表
+    async function retrieveAuthority(page: number, size: number) {
       await instance
-        .get(SERVER_URL.authority.concat("?page=0&size=10"))
-        .then((response) => {
-          datas.value = response.data;
+        .get(SERVER_URL.authority.concat("?page=" + page, "&size=" + size))
+        .then((res) => {
+          datas.value = res.data;
         });
     }
 
     onMounted(() => {
-      initDatas();
+      initDatas(0, 10);
     });
 
     return {
       datas,
-      initDatas,
+      pages,
+      retrieveAuthority,
     };
   },
 });

@@ -1,6 +1,13 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
+    url: 'group/count',
+    method: 'get',
+    response: () => {
+      return 5
+    },
+  },
+  {
     url: 'group/20A23D2D1',
     method: 'get',
     response: () => {

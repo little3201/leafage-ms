@@ -47,14 +47,14 @@
         </button>
       </li>
       <li v-if="page > 3">
-        <button type="button" class="focus:outline-none w-8 h-8">...</button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li v-for="index in pages" :key="index">
         <button
           type="button"
           @click.prevent="give(index - 1)"
           v-text="index"
-          class="focus:outline-none w-8 h-8"
+          class="focus:outline-none w-8 h-8 mr-2"
           :class="{
             'bg-white rounded-full border shadow-sm': index == page + 1,
             hidden: page > 3 && index < 4,
@@ -62,7 +62,7 @@
         ></button>
       </li>
       <li v-if="pages / size > 6 && page < 4">
-        <button type="button" class="focus:outline-none w-8 h-8">...</button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li>
         <button
@@ -164,7 +164,7 @@ export default defineComponent({
     let pages = computed(() => {
       if (props.total) {
         if (props.total % size.value > 0) {
-          console.log(props.total / size.value)
+          // 通过 ~~number 来取整
           return ~~(props.total / size.value) + 1;
         } else {
           return ~~(props.total / size.value);

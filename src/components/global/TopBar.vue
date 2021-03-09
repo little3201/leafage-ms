@@ -48,7 +48,10 @@
       </div>
     </div>
     <div class="relative mr-auto sm:mr-6">
-      <div class="cursor-pointer" @click="notify = !notify">
+      <div
+        class="cursor-pointer"
+        @click="(notify = !notify), (account = false), (settings = false)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -93,7 +96,10 @@
       </div>
     </div>
     <div class="mr-auto sm:mr-6 relative">
-      <div class="cursor-pointer" @click="settings = !settings">
+      <div
+        class="cursor-pointer"
+        @click="(settings = !settings), (account = false), (notify = false)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -165,10 +171,16 @@
     <div class="relative">
       <div
         v-if="user && Object.keys(user).length > 0"
-        @click="account = !account"
+        @click="(account = !account), (notify = false), (settings = false)"
         class="rounded-full shadow-lg cursor-pointer w-8 h-8"
       >
-        <img alt="leafage" :src="user.avatar" class="rounded-full" />
+        <img
+          v-if="user.avater"
+          alt="leafage"
+          :src="user.avatar"
+          class="rounded-full"
+        />
+        <span v-else v-text="user.nickname.substr(0, 1)"></span>
       </div>
       <router-link
         v-else

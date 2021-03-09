@@ -162,7 +162,7 @@ export default defineComponent({
 
     function onSubmit() {
       instance.post("/login", qs.stringify(formData.value)).then(() => {
-        router.push("/");
+        router.replace("/");
       });
     }
 
@@ -172,7 +172,7 @@ export default defineComponent({
     }
 
     const toSignIn = () => {
-      router.push("/signin");
+      router.replace("/signin");
     };
 
     onMounted(() => {

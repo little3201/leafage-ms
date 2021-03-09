@@ -152,6 +152,7 @@ export default defineComponent({
 
     function onSubmit() {
       instance.post("/login", qs.stringify(formData.value)).then((res) => {
+        console.log(res.data)
         if (res.data.username) {
           fetchUser(res.data.username);
         }

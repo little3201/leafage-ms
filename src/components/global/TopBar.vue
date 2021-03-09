@@ -172,15 +172,15 @@
       <div
         v-if="user && Object.keys(user).length > 0"
         @click="(account = !account), (notify = false), (settings = false)"
-        class="rounded-full shadow-lg cursor-pointer w-8 h-8"
+        class="rounded-full cursor-pointer w-8 h-8 text-center bg-white"
       >
         <img
-          v-if="user.avater"
+          v-if="user.avatar"
           alt="leafage"
           :src="user.avatar"
           class="rounded-full"
         />
-        <span v-else v-text="user.nickname.substr(0, 1)"></span>
+        <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
       </div>
       <router-link
         v-else
@@ -292,7 +292,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import router from "../../router";
 
 import instance from "../../api";
@@ -318,7 +318,7 @@ export default defineComponent({
 
     const signout = () => {
       instance.post("/logout").then(() => {
-        router.push("/signin");
+        router.replace("/signin");
       });
     };
 

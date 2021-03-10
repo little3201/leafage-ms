@@ -180,7 +180,11 @@
           :src="user.avatar"
           class="rounded-full"
         />
-        <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
+        <span
+          v-else
+          v-text="user.nickname.substr(0, 1)"
+          class="text-xl rounded-full"
+        ></span>
       </div>
       <router-link
         v-else
@@ -294,6 +298,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import router from "../../router";
+import { useStore } from "../../store";
 
 import instance from "../../api";
 
@@ -308,12 +313,15 @@ export default defineComponent({
     // 控制账号操作是否打开
     let account = ref(false);
 
+    const store = useStore();
+
     const user = computed(() => {
       let data = sessionStorage.getItem("user");
       if (data) {
         return JSON.parse(data);
+      } else {
+        return store.state.user;
       }
-      return {};
     });
 
     const signout = () => {

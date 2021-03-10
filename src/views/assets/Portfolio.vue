@@ -149,10 +149,7 @@
               alt="cover"
               class="rounded-md object-cover h-32 mt-2"
             />
-            <div
-              v-else
-              class="rounded-md border h-32 mt-2 flex items-center"
-            >
+            <div v-else class="rounded-md border h-32 mt-2 flex items-center">
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
@@ -178,11 +175,11 @@
                       name="cover"
                       type="file"
                       class="sr-only"
+                      accept="image/png,image/jpeg,image/jpg,vedio/mp4"
                     />
                   </label>
                 </div>
-                <p class="text-xs text-gray-500">png, jpeg, jpg</p>
-                <p class="text-xs text-gray-500">up to 2MB</p>
+                <p class="text-xs text-gray-500">png, jpeg, jpg, mp4</p>
               </div>
             </div>
           </div>
@@ -232,10 +229,7 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.portfolioData = {};
-      Promise.all([
-        this.retrieveCategories(),
-        this.fetch(isEdit, code),
-      ]);
+      Promise.all([this.retrieveCategories(), this.fetch(isEdit, code)]);
       this.isEdit = isEdit;
     },
     // 获取所有分类

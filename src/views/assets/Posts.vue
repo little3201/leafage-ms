@@ -138,6 +138,7 @@
                       name="cover"
                       type="file"
                       class="sr-only"
+                      accept="image/png,image/jpeg,image/jpg"
                     />
                   </label>
                 </div>
@@ -300,7 +301,7 @@ export default defineComponent({
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
-      let data = { ...this.postsData, content: this.content };
+      let data = { ...this.postsData, content: this.content, cover: '~/assets/images/posts.jpeg' };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
           this.retrieve(0, 10);

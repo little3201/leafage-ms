@@ -61,7 +61,30 @@
                 :code="data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
-              />
+              >
+                <a
+                  class="flex items-center mr-3 text-blue-600"
+                  href="javascript:;"
+                  @click.prevent="isEdit = true"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-power mr-2"
+                  >
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                  </svg>
+                  Empower
+                </a>
+              </Action>
             </td>
           </tr>
         </tbody>
@@ -146,10 +169,10 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, params: string) {
+    modelOperate(isEdit: boolean, code: string) {
       this.roleData = {};
-      if (isEdit && params) {
-        instance.get(SERVER_URL.role.concat("/", params)).then((res) => {
+      if (isEdit && code) {
+        instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
           this.roleData = res.data;
         });
       }
@@ -159,12 +182,18 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.roleData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.role.concat("/", code), data).then(() => {
-          this.retrieve(0, 10);
+        instance.put(SERVER_URL.role.concat("/", code), data).then((res) => {
+          // 将datas中修改项的历史数据删除
+          this.datas = this.datas.filter((item: any) => item.code != code);
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
-          this.datas.push(res.data);
+          // 删除第一个
+          this.datas.shift();
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       }
       this.isEdit = false;

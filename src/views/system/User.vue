@@ -344,6 +344,30 @@
               <option value="Female">Female</option>
             </select>
           </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Groups</label>
+            <select
+              multiple
+              size="5"
+              v-model="userData.groups"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
+              <option disabled value="">请选择</option>
+              <option :value="group.code" v-for="(group, index) in groups" :key="index" v-text="group.name"></option>
+            </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Roles</label>
+            <select
+              multiple
+              size="5"
+              v-model="userData.roles"
+              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+            >
+              <option disabled value="">请选择</option>
+              <option :value="role.code" v-for="(role, index) in roles" :key="index" v-text="role.name"></option>
+            </select>
+          </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
@@ -369,6 +393,8 @@ import Model from "/@/components/global/Model.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
+import swal from "sweetalert";
+
 export default defineComponent({
   name: "User",
 
@@ -385,6 +411,8 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       userData: {},
+      groups: [],
+      roles: [],
     };
   },
 
@@ -394,25 +422,53 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, params: string) {
+    modelOperate(isEdit: boolean, username: string) {
       this.userData = {};
-      if (isEdit && params) {
-        instance.get(SERVER_URL.user.concat("/", params)).then((res) => {
+      Promise.all([
+        this.fetch(isEdit, username),
+        this.retrieveGroups(),
+        this.retrieveRoles(),
+      ]);
+      this.isEdit = isEdit;
+    },
+    // 查询用户详情
+    fetch(isEdit: boolean, username: string) {
+      if (isEdit && username) {
+        instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
           this.userData = res.data;
         });
       }
-      this.isEdit = isEdit;
+    },
+    // 查询groups
+    retrieveGroups() {
+      instance.get(SERVER_URL.group).then((res) => {
+        this.groups = res.data;
+      });
+    },
+    // 查询roles
+    retrieveRoles() {
+      instance.get(SERVER_URL.role).then((res) => {
+        this.roles = res.data;
+      });
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
       let data = this.userData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.user.concat("/", code), data).then(() => {
-          this.retrieve(0, 10);
+        instance.put(SERVER_URL.user.concat("/", code), data).then((res) => {
+          // 将datas中修改项的历史数据删除
+          this.datas = this.datas.filter((item: any) => item.code != code);
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated a new item", "success");
         });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
-          this.datas.push(res.data);
+          // 删除第一个
+          this.datas.shift();
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;

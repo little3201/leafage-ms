@@ -38,6 +38,10 @@
     "typescript",
     "tailwindcss"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/little3201/leafage-ms.git"
+  },
   "author": "liwenqiang",
   "license": "MIT",
   "bugs": {

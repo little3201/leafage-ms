@@ -132,11 +132,11 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, params: string) {
+    modelOperate(isEdit: boolean, code: string) {
       this.categoryData = {};
-      if (isEdit && params) {
+      if (isEdit && code) {
         instance
-          .get(SERVER_URL.category.concat("/").concat(params))
+          .get(SERVER_URL.category.concat("/").concat(code))
           .then((res) => {
             this.categoryData = res.data;
           });
@@ -147,12 +147,18 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.categoryData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.category.concat("/", code), data).then(() => {
-          this.retrieve(0, 10);
+        instance.put(SERVER_URL.category.concat("/", code), data).then((res) => {
+          // 将datas中修改项的历史数据删除
+          this.datas = this.datas.filter((item: any) => item.code != code);
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
-          this.datas.push(res.data);
+          // 删除第一个
+          this.datas.shift()
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       }
       this.isEdit = false;

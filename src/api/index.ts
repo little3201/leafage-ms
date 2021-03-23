@@ -6,7 +6,7 @@ const redirectTo = (path: string) => {
     cancleRequest() // 取消请求
     delete requestList[index]
   })
-  router.push(path)
+  router.replace(path)
 }
 
 // 默认配置
@@ -37,7 +37,7 @@ instance.interceptors.response.use(
   res => {
     // 用户不存在，跳转注册
     if (res.status === 204) {
-      setTimeout(() => { redirectTo('/signup') }, 300)
+      redirectTo('/signup')
     }
     return res
   },

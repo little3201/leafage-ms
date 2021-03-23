@@ -23,7 +23,7 @@ export default defineConfig({
   //   proxy: {
   //     // 选项写法
   //     '/api': {
-  //       target: 'https://console.abeille.top/api',
+  //       target: 'https://console.leafage.top/api',
   //       changeOrigin: true,
   //       rewrite: (path) => path.replace(/^\/api/, '')
   //     }

@@ -52,7 +52,7 @@
             <img
               alt="Midone Tailwind HTML Admin Template"
               class="my-24"
-              src="../../assets/illustration.svg"
+              src="/assets/illustration.svg"
             />
             <div class="text-white font-medium text-xl leading-tight mt-10">
               一个使用 Vue3、 Tailwindcss 的网站管理系统

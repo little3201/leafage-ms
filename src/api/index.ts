@@ -37,7 +37,7 @@ instance.interceptors.response.use(
   res => {
     // 用户不存在，跳转注册
     if (res.status === 204) {
-      setTimeout(() => { redirectTo('/signup') }, 300)
+      redirectTo('/signup')
     }
     return res
   },

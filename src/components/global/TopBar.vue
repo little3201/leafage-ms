@@ -48,7 +48,10 @@
       </div>
     </div>
     <div class="relative mr-auto sm:mr-6">
-      <div class="cursor-pointer" @click="notify = !notify">
+      <div
+        class="cursor-pointer"
+        @click="(notify = !notify), (account = false), (settings = false)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -93,7 +96,10 @@
       </div>
     </div>
     <div class="mr-auto sm:mr-6 relative">
-      <div class="cursor-pointer" @click="settings = !settings">
+      <div
+        class="cursor-pointer"
+        @click="(settings = !settings), (account = false), (notify = false)"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -165,10 +171,20 @@
     <div class="relative">
       <div
         v-if="user && Object.keys(user).length > 0"
-        @click="account = !account"
-        class="rounded-full shadow-lg cursor-pointer w-8 h-8"
+        @click="(account = !account), (notify = false), (settings = false)"
+        class="rounded-full cursor-pointer w-8 h-8 text-center bg-white"
       >
-        <img alt="leafage" :src="user.avatar" class="rounded-full" />
+        <img
+          v-if="user.avatar"
+          alt="leafage"
+          :src="user.avatar"
+          class="rounded-full"
+        />
+        <span
+          v-else
+          v-text="user.nickname.substr(0, 1)"
+          class="text-xl rounded-full"
+        ></span>
       </div>
       <router-link
         v-else
@@ -280,8 +296,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import router from "../../router";
+import { useStore } from "../../store";
 
 import instance from "../../api";
 
@@ -296,17 +313,20 @@ export default defineComponent({
     // 控制账号操作是否打开
     let account = ref(false);
 
+    const store = useStore();
+
     const user = computed(() => {
       let data = sessionStorage.getItem("user");
       if (data) {
         return JSON.parse(data);
+      } else {
+        return store.state.user;
       }
-      return {};
     });
 
     const signout = () => {
       instance.post("/logout").then(() => {
-        router.push("/signin");
+        router.replace("/signin");
       });
     };
 

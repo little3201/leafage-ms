@@ -118,6 +118,11 @@
               class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
             >
               <option disabled value="">请选择</option>
+              <option
+                v-for="(user, index) in users"
+                :key="index"
+                v-text="user.nickname"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
@@ -161,6 +166,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       groupData: {},
+      users: [],
     };
   },
 
@@ -170,25 +176,44 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, params: string) {
+    modelOperate(isEdit: boolean, code: string) {
       this.groupData = {};
-      if (isEdit && params) {
-        instance.get(SERVER_URL.group.concat("/", params)).then((res) => {
+      Promise.all([this.retrieveUsers(code), this.fetch(isEdit, code)]);
+
+      this.isEdit = isEdit;
+    },
+    // 查询详情
+    fetch(isEdit: boolean, code: string) {
+      if (isEdit && code) {
+        instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
           this.groupData = res.data;
         });
       }
-      this.isEdit = isEdit;
+    },
+    // 查询关联用户
+    retrieveUsers(code: string) {
+      instance
+        .get(SERVER_URL.user.concat("/", code, "/relation"))
+        .then((res) => {
+          this.users = res.data;
+        });
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
       let data = this.groupData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.group.concat("/", code), data).then(() => {
-          this.retrieve(0, 10);
+        instance.put(SERVER_URL.group.concat("/", code), data).then((res) => {
+          // 将datas中修改项的历史数据删除
+          this.datas = this.datas.filter((item: any) => item.code != code);
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       } else {
         instance.post(SERVER_URL.group, data).then((res) => {
-          this.datas.push(res.data);
+          // 删除第一个
+          this.datas.shift();
+          // 将结果添加到第一个
+          this.datas.unshift(res.data);
         });
       }
       this.isEdit = false;

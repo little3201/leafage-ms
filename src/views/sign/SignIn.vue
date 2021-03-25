@@ -140,7 +140,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import router from "../../router";
-
+import { useStore } from "../../store";
 import qs from "qs";
 
 import instance from "../../api";
@@ -149,6 +149,7 @@ import SERVER_URL from "../../api/request";
 export default defineComponent({
   setup() {
     const formData = ref({});
+    const store = useStore();
 
     function onSubmit() {
       instance.post("/login", qs.stringify(formData.value)).then((res) => {
@@ -162,6 +163,7 @@ export default defineComponent({
     async function fetchUser(username: string) {
       await instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
         sessionStorage.setItem("user", JSON.stringify(res.data));
+        store.commit("setUser", res.data);
       });
     }
 

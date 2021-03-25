@@ -45,9 +45,9 @@
           </g>
         </g>
       </svg>
-      <span class="hidden xl:block text-white text-lg ml-3">
+      <h1 class="hidden xl:block text-white text-xl ml-3">
         Leaf<span class="font-medium">age</span>
-      </span>
+      </h1>
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul class="text-white w-full">

@@ -6,7 +6,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   resolve: {
     alias: {
-      '/@': path.resolve(__dirname, 'src')
+      '/@': path.resolve(__dirname, './src')
     }
   },
   plugins: [vue()],
@@ -19,14 +19,14 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly'
     }
   },
-  // server: {
-  //   proxy: {
-  //     // 选项写法
-  //     '/api': {
-  //       target: 'https://console.leafage.top/api',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'https://console.leafage.top/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

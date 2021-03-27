@@ -50,9 +50,9 @@
           </a>
           <div class="z-0">
             <img
-              alt="Midone Tailwind HTML Admin Template"
+              src="/src/assets/illustration.svg"
               class="my-24"
-              src="../../assets/illustration.svg"
+              alt="leafage"
             />
             <div class="text-white font-medium text-xl leading-tight mt-10">
               一个使用 Vue3、 Tailwindcss 的网站管理系统
@@ -121,9 +121,7 @@
                   <a class="text-blue-700 ml-1" href="#">Privacy Policy</a>.
                 </div>
               </div>
-              <div
-                class="mt-4 xl:mt-8 text-center xl:text-left"
-              >
+              <div class="mt-4 xl:mt-8 text-center xl:text-left">
                 <button
                   type="submit"
                   @click="onSumbit"
@@ -152,7 +150,6 @@ import { defineComponent, ref, onMounted } from "vue";
 import router from "../../router";
 
 import instance from "../../api";
-import qs from "qs";
 
 export default defineComponent({
   name: "SignUp",
@@ -161,7 +158,7 @@ export default defineComponent({
     const formData = ref({});
 
     function onSubmit() {
-      instance.post("/login", qs.stringify(formData.value)).then(() => {
+      instance.post("/register", new URLSearchParams(formData.value)).then(() => {
         router.replace("/");
       });
     }
@@ -194,7 +191,7 @@ export default defineComponent({
     content: "";
     margin-left: -48%;
     min-width: 768px;
-    background-image: url(../../assets/bg-login-page.svg);
+    background-image: url(/src/assets/bg-login-page.svg);
     background-position: right;
     background-repeat: no-repeat;
     background-size: auto 100%;

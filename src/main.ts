@@ -4,11 +4,11 @@ import './assets/main.css'
 import router from './router'
 import { store, key } from './store'
 
-import { setupProdMockServer } from './plugins/mockServer';
+// import { setupProdMockServer } from './plugins/mockServer';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {
-    setupProdMockServer();
+    // setupProdMockServer();
 }
 
 createApp(App).use(router).use(store, key).mount('#app')

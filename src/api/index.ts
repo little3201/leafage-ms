@@ -6,7 +6,7 @@ const redirectTo = (path: string) => {
     cancleRequest() // 取消请求
     delete requestList[index]
   })
-  router.push(path)
+  router.replace(path)
 }
 
 // 默认配置

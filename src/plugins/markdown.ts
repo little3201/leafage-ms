@@ -14,7 +14,7 @@ import xml from 'highlight.js/lib/languages/xml';
 import htmlbars from 'highlight.js/lib/languages/htmlbars'
 import shell from 'highlight.js/lib/languages/shell'
 
-hljs.registerLanguage('bash',bash)
+hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('java', java);

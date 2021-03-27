@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://console.abeille.top" target="_blank">
+  <a href="https://console.leafage.top" target="_blank">
     <img alt="Leafage Logo" width="200" src="src/assets/logo.svg">
   </a>
 </p>
@@ -28,7 +28,7 @@
 
 
 ### 站点体验
-访问地址：https://console.abeille.top
+访问地址：https://console.leafage.top
 
 ### 展示截图
 

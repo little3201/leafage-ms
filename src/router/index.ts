@@ -6,7 +6,7 @@ const router = createRouter({
   routes,
 });
 
-/* 路由之前检查token */
+/* 路由之前 */
 router.beforeEach(to => {
   if (to.fullPath === '/signin') {
     sessionStorage.removeItem("user")
@@ -14,7 +14,7 @@ router.beforeEach(to => {
   return true
 })
 
-/* 路由之后关闭进度条 */
+/* 路由之后 */
 router.afterEach(() => {
 
 })

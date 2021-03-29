@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="retrieve(0, 10)"
+        @click="retrieve(0, 9)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -50,8 +50,9 @@
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3">
               <a
-                href=""
-                class="font-medium whitespace-no-wrap"
+                href="https://www.leafage.top/portfolio"
+                target="_blank"
+                class="font-medium text-blue-600"
                 v-text="data.title"
               ></a>
             </td>
@@ -302,7 +303,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 10);
+      initDatas(0, 9);
     });
 
     return {

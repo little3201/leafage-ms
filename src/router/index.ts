@@ -8,9 +8,6 @@ const router = createRouter({
 
 /* 路由之前 */
 router.beforeEach(to => {
-  if (to.fullPath === '/signin') {
-    sessionStorage.removeItem("user")
-  }
   return true
 })
 

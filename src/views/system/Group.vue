@@ -92,7 +92,7 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model="groupData.name"
             />
@@ -101,7 +101,7 @@
             <label>Superior</label>
             <select
               v-model="groupData.superior"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option disabled value="">请选择</option>
               <option
@@ -115,7 +115,7 @@
             <label>Principal</label>
             <select
               v-model="groupData.principal"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option disabled value="">请选择</option>
               <option
@@ -128,7 +128,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="groupData.description"
             />
           </div>

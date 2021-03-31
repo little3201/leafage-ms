@@ -64,14 +64,14 @@
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="max-w-md my-auto mx-auto bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto z-0"
+            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
           >
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign In
             </h2>
             <div class="mt-2 text-gray-500 xl:hidden text-center">
-              A few more clicks to sign in to your account. Manage all your
-              e-commerce accounts in one place
+              一个使用 Vue3、 Tailwindcss
+              的网站管理系统，致力于提供一个好用、好看的管理系统
             </div>
             <form @submit.prevent="onSubmit">
               <div class="mt-8">
@@ -79,7 +79,7 @@
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
+                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
                   placeholder="Username/Phone/Email"
                   required
                   autocomplete="off"
@@ -88,17 +88,17 @@
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block mt-4"
+                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
                 />
               </div>
-              <div class="flex text-gray-700 text-xs sm:text-sm mt-4">
-                <div class="flex items-center mr-auto">
+              <div class="flex text-gray-700 text-sm mt-4">
+                <div class="inline-flex items-center mr-auto">
                   <input
                     type="checkbox"
-                    class="py-2 px-3 border mr-2"
+                    class="rounded border-gray-300 text-indigo-600 shadow-sm mr-2"
                     id="remember-me"
                   />
                   <label class="cursor-pointer select-none" for="remember-me"
@@ -107,18 +107,18 @@
                 </div>
                 <a href="">Forgot Password?</a>
               </div>
-              <div class="mt-5 xl:mt-8 text-center xl:text-left">
+              <div class="mt-4 xl:mt-8 text-center xl:text-left">
                 <button
                   type="submit"
                   @click="onSumbit"
-                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white xl:mr-3 py-3 px-4 rounded-md"
                 >
                   Login
                 </button>
                 <button
                   type="button"
                   @click="toSignUp"
-                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 mt-4 xl:mt-0 py-3 px-4 rounded-md"
                 >
                   Sign Up
                 </button>
@@ -151,12 +151,14 @@ export default defineComponent({
     const store = useStore();
 
     function onSubmit() {
-      instance.post("/login", new URLSearchParams(formData.value)).then((res) => {
-        if (res.data.username) {
-          fetchUser(res.data.username);
-        }
-        router.replace("/");
-      });
+      instance
+        .post("/login", new URLSearchParams(formData.value))
+        .then((res) => {
+          if (res.data.username) {
+            fetchUser(res.data.username);
+          }
+          router.replace("/");
+        });
     }
 
     async function fetchUser(username: string) {

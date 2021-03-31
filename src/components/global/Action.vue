@@ -1,5 +1,5 @@
 <template>
-  <div v-show="this.$store.state.user && Object.keys(this.$store.state.user).length > 0" class="flex justify-center items-center">
+  <div class="flex justify-center items-center">
     <slot></slot>
     <a
       class="flex items-center mr-3"

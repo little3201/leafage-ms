@@ -310,7 +310,7 @@
             <label>Nickname</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model="userData.nickname"
             />
@@ -319,7 +319,7 @@
             <label>Phone</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Phone"
               v-model="userData.phone"
             />
@@ -328,7 +328,7 @@
             <label>Email</label>
             <input
               type="email"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Email"
               v-model="userData.email"
             />
@@ -337,7 +337,7 @@
             <label>Gender</label>
             <select
               v-model="userData.gender"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
               <option value="Male">Male</option>
@@ -350,7 +350,7 @@
               multiple
               size="5"
               v-model="userData.groups"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
               <option :value="group.code" v-for="(group, index) in groups" :key="index" v-text="group.name"></option>
@@ -359,10 +359,10 @@
           <div class="col-span-12 sm:col-span-6">
             <label>Roles</label>
             <select
-              multiple
+              multiple="multiple"
               size="5"
               v-model="userData.roles"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
               <option :value="role.code" v-for="(role, index) in roles" :key="index" v-text="role.name"></option>
@@ -371,7 +371,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="userData.description"
             />
           </div>

@@ -26,14 +26,14 @@
     <div class="mr-3 sm:mr-6">
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
-          type="text"
-          class="w-56 bg-blue-100 bg-opacity-50 rounded-full py-2 px-4 outline-none focus:ring-1 focus:placeholder-gray-800"
+          type="search"
+          class="w-56 py-1 border border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           placeholder="Search..."
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

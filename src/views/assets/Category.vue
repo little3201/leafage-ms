@@ -85,7 +85,7 @@
             <label>Alias</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               v-model="categoryData.alias"
             />

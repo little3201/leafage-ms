@@ -1,5 +1,10 @@
 <template>
-  <div class="flex items-center sm:ml-auto">
+  <div
+    v-show="
+      this.$store.state.user && Object.keys(this.$store.state.user).length > 0
+    "
+    class="flex items-center sm:ml-auto"
+  >
     <button
       class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
     >
@@ -85,7 +90,7 @@ export default defineComponent({
   methods: {
     operate() {
       this.$emit("modelOperate", true);
-    }
+    },
   },
 });
 </script>

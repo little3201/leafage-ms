@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Category</h2>
       <button
-        @click="retrieve(0, 10)"
+        @click="retrieve(0, 9)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -48,8 +48,9 @@
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3">
               <a
-                href=""
-                class="font-medium whitespace-no-wrap"
+                href="https://www.leafage.top/posts"
+                target="_blank"
+                class="font-medium text-blue-600"
                 v-text="data.alias"
               ></a>
             </td>
@@ -147,16 +148,18 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.categoryData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.category.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-        });
+        instance
+          .put(SERVER_URL.category.concat("/", code), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            this.datas = this.datas.filter((item: any) => item.code != code);
+            // 将结果添加到第一个
+            this.datas.unshift(res.data);
+          });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
           // 删除第一个
-          this.datas.shift()
+          this.datas.shift();
           // 将结果添加到第一个
           this.datas.unshift(res.data);
         });
@@ -194,7 +197,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 10);
+      initDatas(0, 9);
     });
 
     return {

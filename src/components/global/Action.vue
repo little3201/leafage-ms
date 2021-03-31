@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center">
+  <div v-show="this.$store.state.user && Object.keys(this.$store.state.user).length > 0" class="flex justify-center items-center">
     <slot></slot>
     <a
       class="flex items-center mr-3"
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 
 export default defineComponent({
   name: "Action",

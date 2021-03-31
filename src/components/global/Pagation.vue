@@ -114,8 +114,8 @@
       v-model="size"
       class="my-1 block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
-      <option>10</option>
-      <option>25</option>
+      <option>9</option>
+      <option>20</option>
       <option>35</option>
       <option>50</option>
     </select>
@@ -160,7 +160,7 @@ export default defineComponent({
 
   setup(props) {
     let page = ref(0);
-    let size = ref(10);
+    let size = ref(9);
     let pages = computed(() => {
       if (props.total) {
         if (props.total % size.value > 0) {

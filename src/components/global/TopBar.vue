@@ -326,6 +326,9 @@ export default defineComponent({
 
     const signout = () => {
       instance.post("/logout").then(() => {
+        // 退出登录，设置user为空
+        store.commit("setUser", {});
+        sessionStorage.removeItem("user")
         router.replace("/signin");
       });
     };

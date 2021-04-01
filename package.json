@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.2",
+    "@types/chart.js": "^2.9.31",
     "@types/markdown-it": "^12.0.1",
     "@vitejs/plugin-vue": "^1.2.0",
     "@vue/compiler-sfc": "^3.0.8",

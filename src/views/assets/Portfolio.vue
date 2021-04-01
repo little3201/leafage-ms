@@ -123,7 +123,7 @@
             <label>Title</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               v-model="portfolioData.title"
             />
@@ -132,7 +132,7 @@
             <label>Category</label>
             <select
               v-model="portfolioData.category"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
             >
               <option
                 v-for="category in categories"
@@ -148,9 +148,9 @@
               v-if="portfolioData.url"
               :src="portfolioData.url"
               alt="cover"
-              class="rounded-md object-cover h-32 mt-2"
+              class="rounded-md object-cover h-32 mt-1"
             />
-            <div v-else class="rounded-md border h-32 mt-2 flex items-center">
+            <div v-else class="rounded-md border border-gray-300 shadow-sm h-32 mt-1 flex items-center">
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label

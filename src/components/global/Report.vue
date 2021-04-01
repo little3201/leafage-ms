@@ -221,131 +221,15 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 sm:col-span-6">
-        <div class="relative zoom-in">
-          <div class="shadow-sm rounded-md bg-white p-5">
-            <div ref="barChartRef" class="w-full h-80"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 sm:col-span-6">
-        <div class="relative zoom-in">
-          <div class="shadow-sm rounded-md bg-white p-5">
-            <div ref="lineChartRef" class="w-full h-80"></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import echarts from "../../plugins/echarts";
-
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Report",
 
-  setup() {
-    const barChartRef = ref();
-    const lineChartRef = ref();
-
-    const barchartInit = () => {
-      const barChart = echarts.init(barChartRef.value);
-      barChart.resize();
-      instance.get(SERVER_URL.category).then((res) => {
-        barChart.setOption({
-          legend: {},
-          tooltip: {},
-          dataset: {
-            source: [
-              ["product", "Add", "Edit", "Del"],
-              ["Sun", 4, 8, 0],
-              ["Mon", 9, 4, 1],
-              ["Tue", 4, 2, 2],
-              ["Wes", 7, 9, 1],
-              ["Thu", 7, 9, 1],
-              ["Fri", 7, 9, 1],
-              ["Sat", 7, 9, 1],
-            ],
-          },
-          xAxis: { type: "category" },
-          yAxis: {},
-          // Declare several bar series, each will be mapped
-          // to a column of dataset.source by default.
-          series: [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
-        });
-      });
-    };
-
-    const linechartInit = () => {
-      const lineChart = echarts.init(lineChartRef.value);
-      lineChart.resize();
-      instance.get(SERVER_URL.category).then((res) => {
-        lineChart.setOption({
-          tooltip: {
-            trigger: "axis",
-          },
-          legend: {
-            data: ["Add", "Edit", "Del"],
-          },
-          grid: {
-            left: "3%",
-            right: "4%",
-            bottom: "3%",
-            containLabel: true,
-          },
-          toolbox: {
-            feature: {
-              saveAsImage: {},
-            },
-          },
-          xAxis: {
-            type: "category",
-            boundaryGap: false,
-            data: ["Sun", "Mon", "Tue", "Wes", "Thu", "Fri", "Sat"],
-          },
-          yAxis: {
-            type: "value",
-          },
-          series: [
-            {
-              name: "Add",
-              type: "line",
-              stack: "总量",
-              data: [120, 132, 101, 134, 90, 230, 210],
-            },
-            {
-              name: "Edit",
-              type: "line",
-              stack: "总量",
-              data: [220, 182, 191, 234, 290, 330, 310],
-            },
-            {
-              name: "Del",
-              type: "line",
-              stack: "总量",
-              data: [150, 232, 201, 154, 190, 330, 410],
-            },
-          ],
-        });
-      });
-    };
-
-    onMounted(() => {
-      setTimeout(() => {
-        barchartInit();
-        linechartInit();
-      }, 100);
-    });
-
-    return {
-      barChartRef,
-      lineChartRef,
-    };
-  },
 });
 </script>

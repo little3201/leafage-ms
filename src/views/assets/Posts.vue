@@ -84,11 +84,11 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-rows-2 grid-cols-12 gap-4 md:gap-x-4 md:gap-y-1">
+        <div class="grid grid-rows-2 grid-cols-12 gap-x-4">
           <div class="col-span-12 sm:col-span-5 md:flex items-center">
             <input
               type="text"
-              class="py-2 px-3 rounded-md ring-blue-400 w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="20"
               v-model="postsData.title"
@@ -97,7 +97,7 @@
           <div class="col-span-12 sm:col-span-3 md:flex items-center">
             <select
               v-model="postsData.category"
-              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             >
               <option
                 v-for="category in categories"
@@ -112,11 +112,11 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover w-48 h-28 md:mt-3"
+              class="rounded-md object-cover w-48 h-32 md:mt-4"
             />
             <div
               v-else
-              class="rounded-md border w-48 h-28 md:mt-3 flex items-center"
+              class="rounded-md border border-gray-300 w-48 h-32 md:mt-4 flex items-center"
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
@@ -154,17 +154,18 @@
           </div>
           <div class="col-span-12 sm:col-span-8">
             <textarea
-              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="64"
               v-model="postsData.subtitle"
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-12 gap-4 my-3">
+        <div class="grid grid-cols-12 my-3">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md border h-52 md:h-96 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
+              :class="{ 'border': preview }"
             >
               <a
                 href="javascript:;"
@@ -208,15 +209,16 @@
               </a>
               <textarea
                 v-if="!preview"
-                class="p-2 focus:outline-none focus:ring-1"
+                class="block w-full rounded-md border-gray-300 shadow-sm"
                 v-model="content"
                 placeholder="write with markdown..."
               ></textarea>
-              <article
+              <figure
                 v-else
                 class="p-2 markdown-body overflow-auto"
+                style="width: 606px"
                 v-html="rendedHtml"
-              ></article>
+              ></figure>
             </div>
           </div>
         </div>

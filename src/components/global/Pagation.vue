@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center mb-3">
+  <div class="flex items-center mt-1 mb-3">
     <ul class="flex items-center mr-0 sm:mr-auto">
       <li>
         <button
@@ -112,7 +112,7 @@
     </ul>
     <select
       v-model="size"
-      class="my-1 block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      class="block border border-gray-300 rounded-md sm:text-sm"
     >
       <option>9</option>
       <option>20</option>

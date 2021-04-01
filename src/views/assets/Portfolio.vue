@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="retrieve(0, 9)"
+        @click="retrieve(0, 10)"
         class="ml-4 flex items-center text-blue-800 focus:outline-none"
       >
         <svg
@@ -303,7 +303,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

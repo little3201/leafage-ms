@@ -1,8 +1,6 @@
 <template>
   <div
-    v-show="
-      this.$store.state.user && Object.keys(this.$store.state.user).length > 0
-    "
+    v-show="user && Object.keys(user).length > 0"
     class="flex justify-center items-center"
   >
     <slot></slot>
@@ -61,6 +59,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from "vue";
+import { useStore } from "../../store";
 
 export default defineComponent({
   name: "Action",
@@ -79,6 +78,20 @@ export default defineComponent({
     openModel() {
       this.$emit("editAction", true, this.code);
     },
+  },
+
+  setup() {
+    const store = useStore();
+    const user = computed(() => {
+      let data = sessionStorage.getItem("user");
+      if (data) {
+        return JSON.parse(data);
+      } else {
+        return store.state.user;
+      }
+    });
+
+    return { user };
   },
 });
 </script>

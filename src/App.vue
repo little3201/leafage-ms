@@ -1,5 +1,5 @@
 <template>
-  <router-view class="text-sm" />
+  <router-view class="text-sm xl:text-base" />
 </template>
 
 <script lang="ts">

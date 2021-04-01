@@ -47,7 +47,9 @@
         </button>
       </li>
       <li v-if="page > 3">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">
+          ...
+        </button>
       </li>
       <li v-for="index in pages" :key="index">
         <button
@@ -62,7 +64,9 @@
         ></button>
       </li>
       <li v-if="pages / size > 6 && page < 4">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">
+          ...
+        </button>
       </li>
       <li>
         <button
@@ -114,7 +118,7 @@
       v-model="size"
       class="block border border-gray-300 rounded-md sm:text-sm"
     >
-      <option>9</option>
+      <option>10</option>
       <option>20</option>
       <option>35</option>
       <option>50</option>
@@ -124,7 +128,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "Pagation",
@@ -151,16 +155,23 @@ export default defineComponent({
         this.give(this.page);
       }
     },
-    // 设置
-    give(page: number) {
-      this.page = page;
-      this.$emit("retrieve", this.page, this.size);
-    },
   },
 
-  setup(props) {
+  setup(props, ctx) {
     let page = ref(0);
-    let size = ref(9);
+    let size = ref(10);
+
+    // 监听size, 调用查询方法
+    watch(size, (curSize, prevSize) => {
+      give(page.value);
+    });
+
+    // 设置
+    function give(p: number) {
+      page.value = p;
+      ctx.emit("retrieve", page.value, size.value);
+    }
+
     let pages = computed(() => {
       if (props.total) {
         if (props.total % size.value > 0) {
@@ -178,6 +189,7 @@ export default defineComponent({
       page,
       size,
       pages,
+      give,
     };
   },
 });

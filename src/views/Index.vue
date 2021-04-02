@@ -1,35 +1,49 @@
 <template>
   <div>
     <Report />
-    <Doughnut
-      :data="[25, 75, 30]"
-      :labels="['Red', 'Green', 'Blue']"
-      :colors="['red', 'green', 'blue']"
-    />
+    <Chart :name="name" :data="data" :labels="labels" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import Report from "/@/components/global/Report.vue";
-import Doughnut from "/@/components/global/Doughnut.vue";
+import Chart from "/@/components/global/Chart.vue";
+
+import instance from "../api";
+import SERVER_URL from "../api/request";
 
 export default defineComponent({
   name: "Dashboard",
 
   components: {
     Report,
-    Doughnut,
+    Chart,
   },
 
   setup() {
-    async function initList() {}
+    let data = ref<Array<Object>>(new Array<Object>());
+    let name = ref("Category");
+    const labels = ref<Array<String>>(new Array<String>());
+
+    function initList() {
+      instance.get(SERVER_URL.category).then((res) => {
+        res.data.forEach((e: any) => {
+          labels.value.push(e.alias);
+          data.value.push(e.count);
+        });
+      });
+    }
 
     onMounted(() => {
       initList();
     });
 
-    return {};
+    return {
+      name,
+      data,
+      labels
+    };
   },
 });
 </script>

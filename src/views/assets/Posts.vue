@@ -165,7 +165,7 @@
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
-              :class="{ 'border': preview }"
+              :class="{ border: preview }"
             >
               <a
                 href="javascript:;"
@@ -322,8 +322,10 @@ export default defineComponent({
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
         });

@@ -1,15 +1,27 @@
 <template>
-  <canvas id="doughnut" />
+  <div>
+    <canvas :id="type + 'Chart'" width="400" height="200" />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Chart from "chart.js";
+import { chart } from "../../plugins/chart";
 
 export default defineComponent({
-  name: "Doughnut",
+  name: "Chart",
 
   props: {
+    name: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    type: {
+      type: String,
+      default: "line",
+      required: true,
+    },
     options: {
       type: Object,
       default: {},
@@ -32,8 +44,8 @@ export default defineComponent({
     this.createChart({
       datasets: [
         {
+          label: this.name,
           data: this.data,
-          backgroundColor: this.colors,
         },
       ],
       labels: this.labels,
@@ -42,13 +54,15 @@ export default defineComponent({
 
   methods: {
     createChart(chartData: object) {
-      const canvas = document.getElementById("doughnut") as HTMLCanvasElement;
-      const options = {
-        type: "doughnut",
+      const ctx = document.getElementById(
+        this.type + "Chart-" + this.name
+      ) as HTMLCanvasElement;
+      const config = {
+        type: this.type,
         data: chartData,
         options: this.options,
       };
-      new Chart(canvas, options);
+      chart(ctx, config);
     },
   },
 });

@@ -464,8 +464,10 @@ export default defineComponent({
         });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
           swal("Operated Success!", "you add a new item", "success");

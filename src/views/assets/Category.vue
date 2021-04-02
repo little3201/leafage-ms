@@ -158,8 +158,10 @@ export default defineComponent({
           });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
         });
@@ -187,8 +189,8 @@ export default defineComponent({
       await instance
         .get(SERVER_URL.category.concat("?page=" + page, "&size=" + size))
         .then(
-          (response) => {
-            datas.value = response.data;
+          (res) => {
+            datas.value = res.data;
           },
           (error) => {
             alert(error.statusText);

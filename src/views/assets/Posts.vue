@@ -144,6 +144,7 @@
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg"
+                      @change="uploadFile($event.target.file)"
                     />
                   </label>
                 </div>
@@ -311,7 +312,6 @@ export default defineComponent({
       let data = {
         ...this.postsData,
         content: this.content,
-        cover: "~/assets/images/posts.jpeg",
       };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
@@ -331,6 +331,22 @@ export default defineComponent({
         });
       }
       this.isEdit = false;
+    },
+
+    // 上传文件
+    uploadFile(file: File) {
+      let param = new FormData(); //创建form对象
+      param.append("file", file); //通过append向form对象添加数据
+      //设置请求头
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" },
+      };
+      instance
+        .post("/upload", param, config)
+        .then((res) => {
+          let data = {...this.postsData, cover: res.data}
+          this.postsData = data;
+        });
     },
   },
 

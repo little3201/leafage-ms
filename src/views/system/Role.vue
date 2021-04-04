@@ -63,9 +63,9 @@
                 @editAction="modelOperate"
               >
                 <a
-                  class="flex items-center mr-3 text-blue-600"
+                  class="flex items-center mr-3 text-purple-600"
                   href="javascript:;"
-                  @click.prevent="isEdit = true"
+                  @click.prevent="isTree = true"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
                     <line x1="12" y1="2" x2="12" y2="12"></line>
                   </svg>
-                  Empower
+                  Auz
                 </a>
               </Action>
             </td>
@@ -129,6 +129,7 @@
         </div>
       </form>
     </Model>
+    <Tree :isTree="isTree" @treeAction="treeOperate" />
   </div>
 </template>
 
@@ -140,6 +141,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
+import Tree from "/@/components/global/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -153,12 +155,14 @@ export default defineComponent({
     Pagation,
     Confirm,
     Model,
+    Tree
   },
 
   data() {
     return {
       isEdit: false,
       isDel: false,
+      isTree: false,
       roleData: {},
     };
   },
@@ -177,6 +181,10 @@ export default defineComponent({
         });
       }
       this.isEdit = isEdit;
+    },
+    // 新增/编辑：打开
+    treeOperate(isTree: boolean) {
+      this.isTree = isTree;
     },
     // 新增/编辑：提交
     commitOperate(code: string) {

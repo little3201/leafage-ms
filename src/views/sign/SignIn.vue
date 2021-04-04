@@ -127,8 +127,8 @@
             <div class="mt-10 xl:mt-24 text-center xl:text-left">
               By signin up, you agree to our
               <br />
-              <a class="text-blue-700" href="">Terms and Conditions</a> &
-              <a class="text-blue-700" href="">Privacy Policy</a>
+              <a class="text-blue-600" href="">Terms and Conditions</a> &
+              <a class="text-blue-600" href="">Privacy Policy</a>
             </div>
           </div>
         </div>

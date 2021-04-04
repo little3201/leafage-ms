@@ -119,7 +119,7 @@
                     class="rounded border-gray-300 text-indigo-600 shadow-sm mr-2"
                   />
                   <label class="cursor-pointer">I agree to the Leafage</label>
-                  <a class="text-blue-700 ml-1" href="#">Privacy Policy</a>.
+                  <a class="text-blue-600 ml-1" href="#">Privacy Policy</a>.
                 </div>
               </div>
               <div class="mt-4 xl:mt-8 text-center xl:text-left">

@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Users</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,12 +55,12 @@
               <a href="" class="font-medium" v-text="data.username"></a>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="px-4 py-2 flex justify-center">
+            <td class="p-2 flex justify-center">
               <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" />
             </td>
             <td class="px-4 py-2">
               <svg
-                v-if="data.gender === 'Male'"
+                v-if="data.gender === 'M'"
                 width="16"
                 height="16"
                 viewBox="0 0 48 48"
@@ -92,7 +92,7 @@
                 />
               </svg>
               <svg
-                v-else-if="data.gender === 'Female'"
+                v-else-if="data.gender === 'F'"
                 width="16"
                 height="16"
                 viewBox="0 0 48 48"
@@ -340,32 +340,38 @@
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Groups</label>
             <select
-              multiple
-              size="5"
               v-model="userData.groups"
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
-              <option :value="group.code" v-for="(group, index) in groups" :key="index" v-text="group.name"></option>
+              <option
+                :value="group.code"
+                v-for="group in groups"
+                :key="group.code"
+                v-text="group.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Roles</label>
             <select
-              multiple="multiple"
-              size="5"
               v-model="userData.roles"
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled value="">请选择</option>
-              <option :value="role.code" v-for="(role, index) in roles" :key="index" v-text="role.name"></option>
+              <option
+                :value="role.code"
+                v-for="role in roles"
+                :key="role.code"
+                v-text="role.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
@@ -373,6 +379,7 @@
             <textarea
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="userData.description"
+              placeholder="Description"
             />
           </div>
         </div>

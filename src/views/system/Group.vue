@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Groups</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -105,8 +105,9 @@
             >
               <option disabled value="">请选择</option>
               <option
-                v-for="(superior, index) in datas"
-                :key="index"
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
                 v-text="superior.name"
               ></option>
             </select>
@@ -121,7 +122,7 @@
               <option
                 v-for="(user, index) in users"
                 :key="index"
-                v-text="user.nickname"
+                v-text="user.nickname + '(' + user.username + ')'"
               ></option>
             </select>
           </div>
@@ -169,6 +170,7 @@ export default defineComponent({
       isDel: false,
       groupData: {},
       users: [],
+      superiors: [],
     };
   },
 
@@ -180,8 +182,11 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.groupData = {};
-      Promise.all([this.retrieveUsers(code), this.fetch(isEdit, code)]);
-
+      Promise.all([
+        this.retrieveUsers(code),
+        this.fetch(isEdit, code),
+        this.retrieveSuperiors(),
+      ]);
       this.isEdit = isEdit;
     },
     // 查询详情
@@ -199,6 +204,12 @@ export default defineComponent({
         .then((res) => {
           this.users = res.data;
         });
+    },
+    // 查询所有
+    retrieveSuperiors() {
+      instance.get(SERVER_URL.group).then((res) => {
+        this.superiors = res.data;
+      });
     },
     // 新增/编辑：提交
     commitOperate(code: string) {

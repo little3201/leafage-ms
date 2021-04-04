@@ -33,15 +33,14 @@
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-shopping-cart text-blue-800"
+                class="feather feather-book text-blue-600"
               >
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                 <path
-                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
                 ></path>
               </svg>
               <div class="ml-auto">
@@ -69,8 +68,8 @@
                 </div>
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">4.510</div>
-            <div class="text-base text-gray-600 mt-1">Item Sales</div>
+            <div class="text-3xl font-bold leading-8 mt-6">2286</div>
+            <div class="text-base text-gray-600 mt-1">Posts Viewed</div>
           </div>
         </div>
       </div>
@@ -85,13 +84,15 @@
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-credit-card text-yellow-500"
+                class="feather feather-camera text-yellow-600"
               >
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                <line x1="1" y1="10" x2="23" y2="10"></line>
+                <path
+                  d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
+                ></path>
+                <circle cx="12" cy="13" r="4"></circle>
               </svg>
               <div class="ml-auto">
                 <div
@@ -117,8 +118,8 @@
                 </div>
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">3.521</div>
-            <div class="text-base text-gray-600 mt-1">New Orders</div>
+            <div class="text-3xl font-bold leading-8 mt-6">0</div>
+            <div class="text-base text-gray-600 mt-1">Portfolio Viewed</div>
           </div>
         </div>
       </div>
@@ -133,14 +134,15 @@
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-monitor text-purple-500"
+                class="feather feather-tag text-purple-600"
               >
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
+                <path
+                  d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                ></path>
+                <line x1="7" y1="7" x2="7.01" y2="7"></line>
               </svg>
               <div class="ml-auto">
                 <div
@@ -167,8 +169,8 @@
                 </div>
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">2.145</div>
-            <div class="text-base text-gray-600 mt-1">Total Products</div>
+            <div class="text-3xl font-bold leading-8 mt-6">4</div>
+            <div class="text-base text-gray-600 mt-1">Category Created</div>
           </div>
         </div>
       </div>
@@ -216,7 +218,7 @@
                 </div>
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">152.000</div>
+            <div class="text-3xl font-bold leading-8 mt-6">1520</div>
             <div class="text-base text-gray-600 mt-1">Unique Visitor</div>
           </div>
         </div>
@@ -230,6 +232,5 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Report",
-
 });
 </script>

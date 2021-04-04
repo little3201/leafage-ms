@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Authorities</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +126,11 @@
             >
               <option disabled value="">请选择</option>
               <option
-                v-for="(data, index) in datas"
-                :key="index"
-                :value="data.code"
-              >
-                {{ data.name }}
-              </option>
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
+                v-text="superior.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -151,6 +150,7 @@
             <textarea
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="authorityData.description"
+              placeholder="Description"
             />
           </div>
         </div>
@@ -189,6 +189,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       authorityData: {},
+      superiors: [],
     };
   },
 
@@ -200,24 +201,36 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.authorityData = {};
+      Promise.all([this.fetch(isEdit, code), this.retrieveMenu()]);
+      this.isEdit = isEdit;
+    },
+    // 查详情
+    fetch(isEdit: boolean, code: string) {
       if (isEdit && code) {
         instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
           this.authorityData = res.data;
         });
       }
-      this.isEdit = isEdit;
+    },
+    // 查所有菜单
+    retrieveMenu() {
+      instance.get(SERVER_URL.authority.concat("?type=menu")).then((res) => {
+        this.superiors = res.data;
+      });
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
       let data = this.authorityData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.authority.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
+        instance
+          .put(SERVER_URL.authority.concat("/", code), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            this.datas = this.datas.filter((item: any) => item.code != code);
+            // 将结果添加到第一个
+            this.datas.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
       } else {
         instance.post(SERVER_URL.authority, data).then((res) => {
           if (this.datas.size() >= 10) {

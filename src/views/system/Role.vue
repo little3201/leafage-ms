@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Roles</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -115,8 +115,13 @@
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option>System</option>
-              <option>Posts</option>
+              <option value="" disabled>请选择</option>
+              <option
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
+                v-text="superior.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
@@ -157,7 +162,7 @@ export default defineComponent({
     Pagation,
     Confirm,
     Model,
-    Tree
+    Tree,
   },
 
   data() {
@@ -166,6 +171,7 @@ export default defineComponent({
       isDel: false,
       isTree: false,
       roleData: {},
+      superiors: [],
     };
   },
 
@@ -177,14 +183,24 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.roleData = {};
+      Promise.all([this.fetch(isEdit, code), this.retrieveSuperiors()]);
+      this.isEdit = isEdit;
+    },
+    // 查详情
+    fetch(isEdit: boolean, code: string) {
       if (isEdit && code) {
         instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
           this.roleData = res.data;
         });
       }
-      this.isEdit = isEdit;
     },
-    // 新增/编辑：打开
+    // 查所有角色
+    retrieveSuperiors() {
+      instance.get(SERVER_URL.role).then((res) => {
+        this.superiors = res.data;
+      });
+    },
+    // 授权：打开
     treeOperate(isTree: boolean) {
       this.isTree = isTree;
     },

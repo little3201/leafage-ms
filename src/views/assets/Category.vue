@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Category</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,6 +88,14 @@
               class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               v-model="categoryData.alias"
+            />
+          </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              v-model="categoryData.description"
+              placeholder="Description"
             />
           </div>
         </div>

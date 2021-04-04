@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
         @click="retrieve(0, 10)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,6 +134,7 @@
               v-model="portfolioData.category"
               class="block w-full rounded-md border-gray-300 shadow-sm"
             >
+              <option value="" disabled>请选择</option>
               <option
                 v-for="category in categories"
                 :key="category.code"
@@ -150,7 +151,10 @@
               alt="cover"
               class="rounded-md object-cover h-32 mt-1"
             />
-            <div v-else class="rounded-md border border-gray-300 shadow-sm h-32 mt-1 flex items-center">
+            <div
+              v-else
+              class="rounded-md border border-gray-300 shadow-sm h-32 mt-1 flex items-center"
+            >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
@@ -183,6 +187,14 @@
                 <p class="text-xs text-gray-500">png, jpeg, jpg, mp4</p>
               </div>
             </div>
+          </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              v-model="portfolioData.description"
+              placeholder="Description"
+            />
           </div>
         </div>
       </form>
@@ -258,13 +270,15 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.portfolioData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.portfolio.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
+        instance
+          .put(SERVER_URL.portfolio.concat("/", code), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            this.datas = this.datas.filter((item: any) => item.code != code);
+            // 将结果添加到第一个
+            this.datas.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
           if (this.datas.size() >= 10) {

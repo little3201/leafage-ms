@@ -19,14 +19,14 @@
       </svg>
       <router-link
         :to="this.$route.path"
-        class="text-blue-800 font-medium"
+        class="text-blue-600 font-medium"
         v-text="this.$route.name"
       ></router-link>
     </div>
     <div class="mr-3 sm:mr-6">
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
-          type="search"
+          type="text"
           class="w-56 py-1 border border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           placeholder="Search..."
         />

@@ -146,6 +146,8 @@ import Tree from "/@/components/global/Tree.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
+import swal from "sweetalert";
+
 export default defineComponent({
   name: "Role",
 
@@ -195,6 +197,7 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
@@ -204,6 +207,7 @@ export default defineComponent({
           }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;

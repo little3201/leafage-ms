@@ -460,7 +460,7 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated a new item", "success");
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {

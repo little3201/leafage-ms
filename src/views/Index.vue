@@ -1,14 +1,12 @@
 <template>
   <div>
     <Report />
-    <Chart :name="name" :data="data" :labels="labels" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import Report from "/@/components/global/Report.vue";
-import Chart from "/@/components/global/Chart.vue";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";
@@ -18,7 +16,6 @@ export default defineComponent({
 
   components: {
     Report,
-    Chart,
   },
 
   setup() {

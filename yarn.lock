@@ -450,11 +450,6 @@ chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^3.0.0-rc.6:
-  version "3.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.0.0-rc.6.tgz#c4f4b6fac5166ec195a18b5d56a2a29b1368b2c2"
-  integrity sha512-wukLA6MG0uA+EOuMxo5E1ClXyNSJAbzACqGRKDMeggpMSLYvL3IEgXiwWKv/zmAtx2mhD4AEFlhfmzm2i4LVGQ==
-
 chokidar@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"

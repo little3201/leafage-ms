@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Posts</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -84,11 +84,11 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-rows-2 grid-cols-12 gap-4 md:gap-x-4 md:gap-y-1">
+        <div class="grid grid-rows-2 grid-cols-12 gap-x-4">
           <div class="col-span-12 sm:col-span-5 md:flex items-center">
             <input
               type="text"
-              class="py-2 px-3 rounded-md ring-blue-400 w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="20"
               v-model="postsData.title"
@@ -97,7 +97,7 @@
           <div class="col-span-12 sm:col-span-3 md:flex items-center">
             <select
               v-model="postsData.category"
-              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             >
               <option
                 v-for="category in categories"
@@ -112,11 +112,11 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover w-48 h-28 md:mt-3"
+              class="rounded-md object-cover w-48 h-32 md:mt-4"
             />
             <div
               v-else
-              class="rounded-md border w-48 h-28 md:mt-3 flex items-center"
+              class="rounded-md border border-gray-300 w-48 h-32 md:mt-4 flex items-center"
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
@@ -144,6 +144,7 @@
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg"
+                      @change="uploadFile($event.target.file)"
                     />
                   </label>
                 </div>
@@ -154,17 +155,18 @@
           </div>
           <div class="col-span-12 sm:col-span-8">
             <textarea
-              class="p-2 rounded-md w-full border focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="64"
               v-model="postsData.subtitle"
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-12 gap-4 my-3">
+        <div class="grid grid-cols-12 my-3">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md border h-52 md:h-96 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
+              :class="{ border: preview }"
             >
               <a
                 href="javascript:;"
@@ -208,15 +210,16 @@
               </a>
               <textarea
                 v-if="!preview"
-                class="p-2 focus:outline-none focus:ring-1"
+                class="block w-full rounded-md border-gray-300 shadow-sm"
                 v-model="content"
                 placeholder="write with markdown..."
               ></textarea>
-              <article
+              <figure
                 v-else
                 class="p-2 markdown-body overflow-auto"
+                style="width: 606px"
                 v-html="rendedHtml"
-              ></article>
+              ></figure>
             </div>
           </div>
         </div>
@@ -239,8 +242,10 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 import md from "../../plugins/markdown";
 
+import swal from "sweetalert";
+
 export default defineComponent({
-  name: "Items",
+  name: "Posts",
 
   components: {
     Operation,
@@ -309,7 +314,6 @@ export default defineComponent({
       let data = {
         ...this.postsData,
         content: this.content,
-        cover: "~/assets/images/posts.jpeg",
       };
       if (code && code.length > 0) {
         instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
@@ -317,16 +321,36 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;
+    },
+
+    // 上传文件
+    uploadFile(file: File) {
+      let param = new FormData(); //创建form对象
+      param.append("file", file); //通过append向form对象添加数据
+      //设置请求头
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" },
+      };
+      instance
+        .post("/upload", param, config)
+        .then((res) => {
+          let data = {...this.postsData, cover: res.data}
+          this.postsData = data;
+        });
     },
   },
 
@@ -369,7 +393,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

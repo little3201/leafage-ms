@@ -14,7 +14,7 @@ export default [
         method: 'post',
         response: () => {
             return {
-                username: 'little3201'
+                username: 'admin'
             }
         },
     },

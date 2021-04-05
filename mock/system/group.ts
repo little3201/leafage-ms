@@ -13,7 +13,7 @@ export default [
     response: () => {
       return {
         code: '20A23D2D1',
-        name: 'Technology',
+        name: 'Tech Dept',
         description: '技术部',
         superior: '集团',
         principal: 'admin'
@@ -26,7 +26,7 @@ export default [
     response: () => {
       return {
         code: '20A23D2D1',
-        name: 'Technology',
+        name: 'Tech Dept',
         description: '技术部',
         superior: '集团',
         principal: 'admin'
@@ -39,7 +39,7 @@ export default [
     response: () => {
       return {
         code: '20A23D2D1',
-        name: 'Technology',
+        name: 'Tech Dept',
         description: '技术部',
         superior: '集团',
         principal: 'admin'
@@ -53,7 +53,7 @@ export default [
       return [
         {
           code: '20A23D2D1',
-          name: 'Technology',
+          name: 'Tech Dept',
           description: '技术部',
           superior: '集团',
           principal: 'admin',

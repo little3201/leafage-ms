@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Groups</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,13 +49,12 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a
-                href=""
-                class="font-medium whitespace-no-wrap"
+              <span
+                class="font-medium"
                 v-text="data.name"
-              ></a>
+              ></span>
               <p
-                class="text-gray-600 text-xs whitespace-no-wrap"
+                class="text-gray-600 text-xs"
                 v-text="data.description"
               ></p>
             </td>
@@ -92,7 +91,7 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model="groupData.name"
             />
@@ -101,12 +100,13 @@
             <label>Superior</label>
             <select
               v-model="groupData.superior"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option
-                v-for="(superior, index) in datas"
-                :key="index"
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
                 v-text="superior.name"
               ></option>
             </select>
@@ -115,20 +115,20 @@
             <label>Principal</label>
             <select
               v-model="groupData.principal"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option
                 v-for="(user, index) in users"
                 :key="index"
-                v-text="user.nickname"
+                v-text="user.nickname + '(' + user.username + ')'"
               ></option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="groupData.description"
             />
           </div>
@@ -150,6 +150,8 @@ import Model from "/@/components/global/Model.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
+import swal from "sweetalert";
+
 export default defineComponent({
   name: "Group",
 
@@ -167,6 +169,7 @@ export default defineComponent({
       isDel: false,
       groupData: {},
       users: [],
+      superiors: [],
     };
   },
 
@@ -178,8 +181,11 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.groupData = {};
-      Promise.all([this.retrieveUsers(code), this.fetch(isEdit, code)]);
-
+      Promise.all([
+        this.retrieveUsers(code),
+        this.fetch(isEdit, code),
+        this.retrieveSuperiors(),
+      ]);
       this.isEdit = isEdit;
     },
     // 查询详情
@@ -198,6 +204,12 @@ export default defineComponent({
           this.users = res.data;
         });
     },
+    // 查询所有
+    retrieveSuperiors() {
+      instance.get(SERVER_URL.group).then((res) => {
+        this.superiors = res.data;
+      });
+    },
     // 新增/编辑：提交
     commitOperate(code: string) {
       let data = this.groupData;
@@ -207,13 +219,17 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.group, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;
@@ -244,7 +260,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

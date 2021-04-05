@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Users</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,15 +52,15 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a href="" class="font-medium" v-text="data.username"></a>
+              <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="px-4 py-2 flex justify-center">
+            <td class="p-2 flex justify-center">
               <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" />
             </td>
             <td class="px-4 py-2">
               <svg
-                v-if="data.gender === 'Male'"
+                v-if="data.gender === 'M'"
                 width="16"
                 height="16"
                 viewBox="0 0 48 48"
@@ -92,7 +92,7 @@
                 />
               </svg>
               <svg
-                v-else-if="data.gender === 'Female'"
+                v-else-if="data.gender === 'F'"
                 width="16"
                 height="16"
                 viewBox="0 0 48 48"
@@ -310,7 +310,7 @@
             <label>Nickname</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model="userData.nickname"
             />
@@ -319,7 +319,7 @@
             <label>Phone</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Phone"
               v-model="userData.phone"
             />
@@ -328,7 +328,7 @@
             <label>Email</label>
             <input
               type="email"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Email"
               v-model="userData.email"
             />
@@ -337,42 +337,49 @@
             <label>Gender</label>
             <select
               v-model="userData.gender"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option disabled>请选择</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Groups</label>
             <select
-              multiple
-              size="5"
               v-model="userData.groups"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
-              <option :value="group.code" v-for="(group, index) in groups" :key="index" v-text="group.name"></option>
+              <option disabled>请选择</option>
+              <option
+                :value="group.code"
+                v-for="group in groups"
+                :key="group.code"
+                v-text="group.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Roles</label>
             <select
-              multiple
-              size="5"
               v-model="userData.roles"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
-              <option :value="role.code" v-for="(role, index) in roles" :key="index" v-text="role.name"></option>
+              <option disabled>请选择</option>
+              <option
+                :value="role.code"
+                v-for="role in roles"
+                :key="role.code"
+                v-text="role.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="userData.description"
+              placeholder="Description"
             />
           </div>
         </div>
@@ -460,12 +467,14 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated a new item", "success");
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.user, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
           swal("Operated Success!", "you add a new item", "success");
@@ -499,7 +508,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

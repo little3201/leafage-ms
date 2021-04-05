@@ -1,9 +1,11 @@
 <template>
-  <Report />
+  <div>
+    <Report />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent } from "vue";
 import Report from "/@/components/global/Report.vue";
 
 export default defineComponent({
@@ -11,19 +13,6 @@ export default defineComponent({
 
   components: {
     Report,
-  },
-
-  setup() {
-
-    async function initList() {
-    }
-
-    onMounted(() => {
-      initList();
-    });
-
-    return {
-    };
   },
 });
 </script>

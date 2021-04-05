@@ -16,29 +16,36 @@
 一个使用 Vue3、 Tailwindcss 的网站管理系统，致力于提供一个开源、好用、好看的管理系统。
 包含帖子管理、影视资料管理、权限管理。
 
+与本项目配套的后台服务（[leafage-gateway](https://github.com/little3201/leafage-gateway), [leafage-basic](https://github.com/little3201/leafage-basic)）
+
+**后台管理系统访问地址：** https://console.leafage.top
+
+### 更新
+
+项目创建与 2019-11-08 历经好几次改版，虽然过程很折腾，但是也明白和体会了很多，对于一些技术点理接更深了，近期更新请查看更新日志。
+
+[更新日志](CHANGELOG.md) 
+
 ### 目标功能
 - [x] 登录
 - [x] 权限管理
-- [x] 个人中心
+- [ ] 个人中心
 - [ ] 消息提醒
 - [ ] 自定义主题
-- [ ] 全文检索/站内搜索
 - [ ] 动画
 - [x] 响应式
-
-
-### 站点体验
-访问地址：https://console.leafage.top
+- [ ] 表单验证
+- [ ] i18n
 
 ### 展示截图
 
-控制台
+**控制台：**
 <img alt="dashboard" width="100%" src="src/assets/images/dashboard.jpeg">
 
-登录页
+**登录页：**
 <img alt="signin" width="100%" src="src/assets/images/signin.jpeg">
 
-列表页+model
+**列表页+model：**
 <img alt="posts" width="100%" src="src/assets/images/posts.jpeg">
 
 ### 项目地址

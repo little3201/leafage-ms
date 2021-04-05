@@ -3,7 +3,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="block xl:grid grid-cols-2 gap-4">
         <div class="hidden xl:flex flex-col min-h-screen">
-          <a href="/" class="flex items-start pt-5 mt-12 z-0">
+          <a href="/" class="flex items-center pt-5 mt-12 z-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -44,7 +44,7 @@
                 </g>
               </g>
             </svg>
-            <span class="text-white text-lg ml-3">
+            <span class="text-white text-xl ml-3">
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
@@ -64,77 +64,69 @@
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="max-w-md my-auto mx-auto bg-white xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto z-0"
+            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
           >
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign Up
             </h2>
             <div class="mt-2 text-gray-500 xl:hidden text-center">
-              A few more clicks to sign in to your account. Manage all your
-              e-commerce accounts in one place
+              一个使用 Vue3、 Tailwindcss
+              的网站管理系统，致力于提供一个好用、好看的管理系统
             </div>
-            <form @submit.prevent="onSubmit">
+            <form @submit.prevent="onSubmit" class="mx-auto">
               <div class="mt-8">
                 <input
                   type="text"
-                  name="username"
                   v-model="formData.username"
-                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
-                  placeholder="Nickname"
+                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  placeholder="Username"
                   required
                   autocomplete="off"
                 />
                 <input
-                  type="text"
-                  name="username"
-                  v-model="formData.username"
-                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block my-4"
-                  placeholder="Username/Phone/Email"
+                  type="email"
+                  v-model="formData.email"
+                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  placeholder="Email"
                   required
                   autocomplete="off"
                 />
                 <input
                   type="password"
-                  name="password"
-                  v-model="formData.password"
-                  class="w-full rounded-md focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
+                  v-model.trim="formData.password"
+                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
                   placeholder="Password"
-                  required
-                  autocomplete="off"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  v-model="formData.confirm"
-                  class="w-full rounded-md mt-4 focus:ring-1 outline-none ring-blue-300 py-2 px-3 lg:py-3 lg:px-4 border border-gray-300 block"
-                  placeholder="Confirm Password"
                   required
                   autocomplete="off"
                 />
               </div>
               <div class="flex text-gray-700 text-xs sm:text-sm mt-4">
-                <div class="flex items-center mr-auto">
-                  <input type="checkbox" class="py-2 px-3 border mr-2" />
-                  <label class="cursor-pointer select-none"
-                    >I agree to the Leafage</label
-                  >
-                  <a class="text-blue-700 ml-1" href="#">Privacy Policy</a>.
+                <div class="flex items-center">
+                  <input
+                    type="checkbox"
+                    v-model="formData.agree"
+                    class="rounded border-gray-300 shadow-sm mr-2"
+                  />
+                  <label class="cursor-pointer">I agree to the Leafage</label>
+                  <a class="text-blue-600 ml-1" href="#">Privacy Policy</a>.
                 </div>
               </div>
-              <div class="mt-4 xl:mt-8 text-center xl:text-left">
+              <div
+                class="mt-4 xl:mt-8 text-center xl:text-left grid grid-rows-1 xl:grid-cols-2 gap-4"
+              >
                 <button
                   type="submit"
                   @click="onSumbit"
-                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white xl:mr-3 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
                 >
                   Register
                 </button>
                 <button
                   type="button"
                   @click="toSignIn"
-                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 mt-3 xl:mt-0 py-2 px-3 lg:py-3 lg:px-4 rounded-md"
+                  class="w-full focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 py-2 rounded-md"
                 >
-                  Sign In
+                  Sign in
                 </button>
               </div>
             </form>
@@ -157,13 +149,13 @@ export default defineComponent({
   setup() {
     const formData = ref({});
 
-    function onSubmit() {
+    function onSubmit(): void {
       instance.post("/register", new URLSearchParams(formData.value)).then(() => {
         router.replace("/");
       });
     }
 
-    // 欲提交，请求csrfToken
+    // 提交，请求csrfToken
     function preSubmit() {
       instance.get("/check");
     }
@@ -171,7 +163,6 @@ export default defineComponent({
     const toSignIn = () => {
       router.replace("/signin");
     };
-
     onMounted(() => {
       preSubmit();
     });

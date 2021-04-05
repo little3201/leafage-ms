@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Category</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -85,9 +85,17 @@
             <label>Alias</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               v-model="categoryData.alias"
+            />
+          </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              v-model="categoryData.description"
+              placeholder="Description"
             />
           </div>
         </div>
@@ -107,6 +115,8 @@ import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+
+import swal from "sweetalert";
 
 export default defineComponent({
   name: "Category",
@@ -155,13 +165,17 @@ export default defineComponent({
             this.datas = this.datas.filter((item: any) => item.code != code);
             // 将结果添加到第一个
             this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated the item", "success");
           });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;
@@ -187,8 +201,8 @@ export default defineComponent({
       await instance
         .get(SERVER_URL.category.concat("?page=" + page, "&size=" + size))
         .then(
-          (response) => {
-            datas.value = response.data;
+          (res) => {
+            datas.value = res.data;
           },
           (error) => {
             alert(error.statusText);
@@ -197,7 +211,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

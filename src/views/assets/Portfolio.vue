@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +123,7 @@
             <label>Title</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               v-model="portfolioData.title"
             />
@@ -132,8 +132,9 @@
             <label>Category</label>
             <select
               v-model="portfolioData.category"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
             >
+              <option disabled>请选择</option>
               <option
                 v-for="category in categories"
                 :key="category.code"
@@ -148,9 +149,12 @@
               v-if="portfolioData.url"
               :src="portfolioData.url"
               alt="cover"
-              class="rounded-md object-cover h-32 mt-2"
+              class="rounded-md object-cover h-32 mt-1"
             />
-            <div v-else class="rounded-md border h-32 mt-2 flex items-center">
+            <div
+              v-else
+              class="rounded-md border border-gray-300 shadow-sm h-32 mt-1 flex items-center"
+            >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
@@ -184,6 +188,14 @@
               </div>
             </div>
           </div>
+          <div class="col-span-12">
+            <label>Description</label>
+            <textarea
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              v-model="portfolioData.description"
+              placeholder="Description"
+            />
+          </div>
         </div>
       </form>
     </Model>
@@ -201,6 +213,8 @@ import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+
+import swal from "sweetalert";
 
 export default defineComponent({
   name: "Portfolio",
@@ -256,18 +270,24 @@ export default defineComponent({
     commitOperate(code: string) {
       let data = this.portfolioData;
       if (code && code.length > 0) {
-        instance.put(SERVER_URL.portfolio.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-        });
+        instance
+          .put(SERVER_URL.portfolio.concat("/", code), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            this.datas = this.datas.filter((item: any) => item.code != code);
+            // 将结果添加到第一个
+            this.datas.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
-          // 删除第一个
-          this.datas.shift()
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;
@@ -303,7 +323,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Roles</h2>
       <button
-        @click="retrieve(0, 9)"
-        class="ml-4 flex items-center text-blue-800 focus:outline-none"
+        @click="retrieve(0, 10)"
+        class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a href="" class="font-medium" v-text="data.name"></a>
+              <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
@@ -63,9 +63,9 @@
                 @editAction="modelOperate"
               >
                 <a
-                  class="flex items-center mr-3 text-blue-600"
+                  class="flex items-center mr-3 text-purple-600"
                   href="javascript:;"
-                  @click.prevent="isEdit = true"
+                  @click.prevent="isTree = true"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +82,7 @@
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
                     <line x1="12" y1="2" x2="12" y2="12"></line>
                   </svg>
-                  Empower
+                  Auz
                 </a>
               </Action>
             </td>
@@ -104,7 +104,7 @@
             <label>Name</label>
             <input
               type="text"
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model="roleData.name"
             />
@@ -113,22 +113,28 @@
             <label>Superior</label>
             <select
               v-model="roleData.superior"
-              class="p-2 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option>System</option>
-              <option>Posts</option>
+              <option disabled>请选择</option>
+              <option
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
+                v-text="superior.name"
+              ></option>
             </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="py-2 px-3 rounded-md w-full border mt-2 flex-1 focus:outline-none focus:ring-1"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               v-model="roleData.description"
             />
           </div>
         </div>
       </form>
     </Model>
+    <Tree :isTree="isTree" @treeAction="treeOperate" />
   </div>
 </template>
 
@@ -140,9 +146,12 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
+import Tree from "/@/components/global/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+
+import swal from "sweetalert";
 
 export default defineComponent({
   name: "Role",
@@ -153,13 +162,16 @@ export default defineComponent({
     Pagation,
     Confirm,
     Model,
+    Tree,
   },
 
   data() {
     return {
       isEdit: false,
       isDel: false,
+      isTree: false,
       roleData: {},
+      superiors: [],
     };
   },
 
@@ -171,12 +183,26 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.roleData = {};
+      Promise.all([this.fetch(isEdit, code), this.retrieveSuperiors()]);
+      this.isEdit = isEdit;
+    },
+    // 查详情
+    fetch(isEdit: boolean, code: string) {
       if (isEdit && code) {
         instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
           this.roleData = res.data;
         });
       }
-      this.isEdit = isEdit;
+    },
+    // 查所有角色
+    retrieveSuperiors() {
+      instance.get(SERVER_URL.role).then((res) => {
+        this.superiors = res.data;
+      });
+    },
+    // 授权：打开
+    treeOperate(isTree: boolean) {
+      this.isTree = isTree;
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
@@ -187,13 +213,17 @@ export default defineComponent({
           this.datas = this.datas.filter((item: any) => item.code != code);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you updated the item", "success");
         });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
-          // 删除第一个
-          this.datas.shift();
+          if (this.datas.size() >= 10) {
+            // 删除第一个
+            this.datas.shift();
+          }
           // 将结果添加到第一个
           this.datas.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
         });
       }
       this.isEdit = false;
@@ -224,7 +254,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      initDatas(0, 9);
+      initDatas(0, 10);
     });
 
     return {

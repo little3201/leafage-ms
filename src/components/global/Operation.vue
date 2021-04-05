@@ -1,8 +1,6 @@
 <template>
   <div
-    v-show="
-      this.$store.state.user && Object.keys(this.$store.state.user).length > 0
-    "
+    v-show="user && Object.keys(user).length > 0"
     class="flex items-center sm:ml-auto"
   >
     <button
@@ -82,7 +80,8 @@
 
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import { useStore } from "../../store";
 
 export default defineComponent({
   name: "Operation",
@@ -91,6 +90,20 @@ export default defineComponent({
     operate() {
       this.$emit("modelOperate", true);
     },
+  },
+
+  setup() {
+    const store = useStore();
+    const user = computed(() => {
+      let data = sessionStorage.getItem("user");
+      if (data) {
+        return JSON.parse(data);
+      } else {
+        return store.state.user;
+      }
+    });
+
+    return { user };
   },
 });
 </script>

@@ -47,7 +47,7 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a href="" class="font-medium" v-text="data.name"></a>
+              <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
@@ -115,7 +115,7 @@
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="" disabled>请选择</option>
+              <option disabled>请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

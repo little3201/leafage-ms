@@ -245,7 +245,7 @@ import md from "../../plugins/markdown";
 import swal from "sweetalert";
 
 export default defineComponent({
-  name: "Items",
+  name: "Posts",
 
   components: {
     Operation,

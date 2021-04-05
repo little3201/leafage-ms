@@ -52,7 +52,7 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a href="" class="font-medium" v-text="data.username"></a>
+              <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
             <td class="p-2 flex justify-center">
@@ -339,7 +339,7 @@
               v-model="userData.gender"
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
@@ -350,7 +350,7 @@
               v-model="userData.groups"
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option
                 :value="group.code"
                 v-for="group in groups"
@@ -365,7 +365,7 @@
               v-model="userData.roles"
               class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option
                 :value="role.code"
                 v-for="role in roles"

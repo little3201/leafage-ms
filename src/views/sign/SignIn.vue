@@ -3,7 +3,7 @@
     <div class="max-w-5xl mx-auto">
       <div class="block xl:grid grid-cols-2 gap-4">
         <div class="hidden xl:flex flex-col min-h-screen">
-          <a href="/" class="flex items-start pt-5 mt-12 z-0">
+          <a href="/" class="flex items-center pt-5 mt-12 z-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -44,7 +44,7 @@
                 </g>
               </g>
             </svg>
-            <span class="text-white text-lg ml-3">
+            <span class="text-white text-xl ml-3">
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
@@ -80,7 +80,7 @@
                   name="username"
                   v-model="formData.username"
                   class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
-                  placeholder="Username/Phone/Email"
+                  placeholder="Username/Email"
                   required
                   autocomplete="off"
                 />
@@ -98,29 +98,31 @@
                 <div class="inline-flex items-center mr-auto">
                   <input
                     type="checkbox"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm mr-2"
+                    class="rounded border-gray-300 shadow-sm mr-2"
                     id="remember-me"
                   />
                   <label class="cursor-pointer select-none" for="remember-me"
                     >Remember me</label
                   >
                 </div>
-                <a href="">Forgot Password?</a>
+                <a href="" class="text-blue-600">Forgot Password ?</a>
               </div>
-              <div class="mt-4 xl:mt-8 text-center xl:text-left">
+              <div
+                class="mt-4 xl:mt-8 text-center xl:text-left grid grid-rows-1 xl:grid-cols-2 gap-4"
+              >
                 <button
                   type="submit"
                   @click="onSumbit"
-                  class="w-full xl:w-32 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white xl:mr-3 py-3 px-4 rounded-md"
+                  class="w-full focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
                 >
-                  Login
+                  Sign in
                 </button>
                 <button
                   type="button"
                   @click="toSignUp"
-                  class="w-full xl:w-32 focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 mt-4 xl:mt-0 py-3 px-4 rounded-md"
+                  class="w-full focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 py-2 rounded-md"
                 >
-                  Sign Up
+                  Sign up
                 </button>
               </div>
             </form>
@@ -146,11 +148,13 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 export default defineComponent({
+  name: 'SignIn',
+
   setup() {
     const formData = ref({});
     const store = useStore();
 
-    function onSubmit() {
+    function onSubmit(): void {
       instance
         .post("/login", new URLSearchParams(formData.value))
         .then((res) => {

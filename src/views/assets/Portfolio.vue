@@ -134,7 +134,7 @@
               v-model="portfolioData.category"
               class="block w-full rounded-md border-gray-300 shadow-sm"
             >
-              <option value="" disabled>请选择</option>
+              <option disabled>请选择</option>
               <option
                 v-for="category in categories"
                 :key="category.code"

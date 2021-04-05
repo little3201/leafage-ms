@@ -50,13 +50,12 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <a
-                href=""
-                class="font-medium whitespace-no-wrap"
+              <span
+                class="font-medium"
                 v-text="data.name"
-              ></a>
+              ></span>
               <p
-                class="text-gray-600 text-xs whitespace-no-wrap"
+                class="text-gray-600 text-xs"
                 v-text="data.description"
               ></p>
             </td>
@@ -124,7 +123,7 @@
               v-model="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -139,7 +138,7 @@
               v-model="authorityData.type"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled value="">请选择</option>
+              <option disabled>请选择</option>
               <option value="MENU">MENU</option>
               <option value="BTN">BTN</option>
               <option value="ROUTER">ROUTER</option>

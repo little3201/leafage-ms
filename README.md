@@ -13,16 +13,26 @@
 
 ## 项目介绍
 
-一个使用 Vue3、 Tailwindcss 的网站管理系统，致力于提供一个开源、好用、好看的管理系统。
-包含帖子管理、影视资料管理、权限管理。
+一个使用 Vue3、Tailwindcss 的 CMS 网站管理系统，包含帖子管理、作品资料管理、权限管理。网站建立之初为了实现一套可用的、通用的权限管理解决方案，因为在工作中几乎每个公司甚至每个项目都离不开一套权限管理的实现，然而这些年经历的都是凑活能用的一些权限管理方案。同时为了作为博客网站的帖子管理系统。
 
-与本项目配套的后台服务（[leafage-gateway](https://github.com/little3201/leafage-gateway), [leafage-basic](https://github.com/little3201/leafage-basic)）
+之前看到过一些比较好的方案的讲解说明，但是没有一个好看的、好用的开源的项目，大都是基于antd或者element-ui的模版提供的，都还没有成型，仅仅学习可以，或者很简单的权限也能凑活用，没有更加细粒度的权限管理，所以就自己试着来将想法落地实现，并开源供以后借鉴或者使用。
+
+### 功能模块介绍：
+
+<img alt="introduce" src="src/assets/images/introduce.png">
 
 **后台管理系统访问地址：** https://console.leafage.top
 
+### 后台服务功能模块介绍：
+
+与本项目配套的后台服务（[leafage-gateway](https://github.com/little3201/leafage-gateway), [leafage-basic](https://github.com/little3201/leafage-basic)）
+
+<img alt="introduce" src="src/assets/images/server.png">
+
+
 ### 更新
 
-项目创建与 2019-11-08 历经好几次改版，虽然过程很折腾，但是也明白和体会了很多，对于一些技术点理接更深了，近期更新请查看更新日志。
+项目创建与 2019-11-08 历经好几次改版，从最初的html+css到vue2+iview(viewui)/element-ui/vuetify再到vue3+tailwindcss，虽然过程很折腾，但是也明白和体会了很多，对于一些技术点理接更深了，近期更新请查看更新日志。
 
 [更新日志](CHANGELOG.md) 
 
@@ -50,7 +60,7 @@
 
 ### 项目地址
 
-目前项目托管在Gitee和Github平台上中，欢迎大家star 和 fork 支持~
+目前项目托管在Gitee和Github平台上中，欢迎大家star 和 fork 支持
 
 - Gitee地址：https://gitee.com/little3201/leafage-ms
 - Github地址：https://github.com/little3201/leafage-ms

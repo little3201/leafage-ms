@@ -49,14 +49,8 @@
               {{ index + 1 }}
             </td>
             <td class="px-4 py-2">
-              <span
-                class="font-medium"
-                v-text="data.name"
-              ></span>
-              <p
-                class="text-gray-600 text-xs"
-                v-text="data.description"
-              ></p>
+              <span class="font-medium" v-text="data.name"></span>
+              <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
@@ -181,11 +175,13 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.groupData = {};
-      Promise.all([
-        this.retrieveUsers(code),
-        this.fetch(isEdit, code),
-        this.retrieveSuperiors(),
-      ]);
+      if (isEdit == true) {
+        Promise.all([
+          this.retrieveUsers(code),
+          this.fetch(isEdit, code),
+          this.retrieveSuperiors(),
+        ]);
+      }
       this.isEdit = isEdit;
     },
     // 查询详情

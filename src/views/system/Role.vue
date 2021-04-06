@@ -183,7 +183,9 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.roleData = {};
-      Promise.all([this.fetch(isEdit, code), this.retrieveSuperiors()]);
+      if (isEdit == true) {
+        Promise.all([this.fetch(isEdit, code), this.retrieveSuperiors()]);
+      }
       this.isEdit = isEdit;
     },
     // 查详情

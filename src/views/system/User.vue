@@ -431,11 +431,13 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, username: string) {
       this.userData = {};
-      Promise.all([
-        this.fetch(isEdit, username),
-        this.retrieveGroups(),
-        this.retrieveRoles(),
-      ]);
+      if (isEdit == true) {
+        Promise.all([
+          this.fetch(isEdit, username),
+          this.retrieveGroups(),
+          this.retrieveRoles(),
+        ]);
+      }
       this.isEdit = isEdit;
     },
     // 查询用户详情

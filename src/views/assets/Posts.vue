@@ -90,7 +90,7 @@
               type="text"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
-              maxlength="20"
+              maxlength="50"
               v-model="postsData.title"
             />
           </div>
@@ -157,7 +157,7 @@
             <textarea
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
-              maxlength="64"
+              maxlength="100"
               v-model="postsData.subtitle"
             ></textarea>
           </div>
@@ -273,11 +273,13 @@ export default defineComponent({
     modelOperate(isEdit: boolean, code: string) {
       this.postsData = {};
       this.content = "";
-      Promise.all([
-        this.retrieveCategories(),
-        this.fetchPosts(isEdit, code),
-        this.fetchContent(isEdit, code),
-      ]);
+      if (isEdit == true) {
+        Promise.all([
+          this.retrieveCategories(),
+          this.fetchPosts(isEdit, code),
+          this.fetchContent(isEdit, code),
+        ]);
+      }
       this.isEdit = isEdit;
     },
     // 获取所有分类
@@ -345,12 +347,10 @@ export default defineComponent({
       let config = {
         headers: { "Content-Type": "multipart/form-data" },
       };
-      instance
-        .post("/upload", param, config)
-        .then((res) => {
-          let data = {...this.postsData, cover: res.data}
-          this.postsData = data;
-        });
+      instance.post("/upload", param, config).then((res) => {
+        let data = { ...this.postsData, cover: res.data };
+        this.postsData = data;
+      });
     },
   },
 

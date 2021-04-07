@@ -244,7 +244,9 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.portfolioData = {};
-      Promise.all([this.retrieveCategories(), this.fetch(isEdit, code)]);
+      if (isEdit == true) {
+        Promise.all([this.retrieveCategories(), this.fetch(isEdit, code)]);
+      }
       this.isEdit = isEdit;
     },
     // 获取所有分类

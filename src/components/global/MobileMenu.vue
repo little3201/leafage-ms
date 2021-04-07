@@ -43,10 +43,7 @@
           </g>
         </svg>
       </router-link>
-      <a
-        href="javascript:;"
-        @click.prevent="isShow = !isShow"
-      >
+      <a href="javascript:;" @click.prevent="isShow = !isShow">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -67,10 +64,11 @@
     </div>
     <div class="mb-6 mt-4 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <ul v-show="isShow" class="mb-6 w-full text-white">
-      <li class="rounded-full">
+      <li>
         <router-link
+          @click="closeMenu"
           to="/"
-          class="flex items-center h-12 rounded-full pl-5"
+          class="flex items-center h-10 rounded-full pl-5"
           exact
         >
           <div class="mr-3">
@@ -97,7 +95,7 @@
         <a
           href="#"
           @click.prevent="isSystemOpen = !isSystemOpen"
-          class="flex items-center h-12 pl-5"
+          class="flex items-center h-10 pl-5"
         >
           <div class="mr-3">
             <svg
@@ -136,10 +134,11 @@
           </div>
         </a>
         <ul v-show="isSystemOpen" class="mx-4 bg-blue-900 bg-opacity-30">
-          <li class="rounded-full">
+          <li>
             <router-link
+              @click="closeMenu"
               to="/system/group"
-              class="flex items-center h-12 pl-5 rounded-full"
+              class="flex items-center h-10 pl-5 rounded-full"
               exact
             >
               <div class="mr-3">
@@ -164,10 +163,11 @@
               <div class="w-full flex items-center">Group</div>
             </router-link>
           </li>
-          <li class="rounded-full">
+          <li>
             <router-link
+              @click="closeMenu"
               to="/system/user"
-              class="flex items-center h-12 pl-5 rounded-full"
+              class="flex items-center h-10 pl-5 rounded-full"
               exact
             >
               <div class="mr-3">
@@ -190,10 +190,11 @@
               <div class="w-full flex items-center">User</div>
             </router-link>
           </li>
-          <li class="rounded-full">
+          <li>
             <router-link
+              @click="closeMenu"
               to="/system/role"
-              class="flex items-center h-12 pl-5 rounded-full"
+              class="flex items-center h-10 pl-5 rounded-full"
               exact
             >
               <div class="mr-3">
@@ -218,10 +219,11 @@
               <div class="w-full flex items-center">Role</div>
             </router-link>
           </li>
-          <li class="rounded-full">
+          <li>
             <router-link
+              @click="closeMenu"
               to="/system/authority"
-              class="flex items-center h-12 pl-5 rounded-full"
+              class="flex items-center h-10 pl-5 rounded-full"
               exact
             >
               <div class="mr-3">
@@ -246,10 +248,11 @@
           </li>
         </ul>
       </li>
-      <li class="rounded-full">
+      <li>
         <router-link
+          @click="closeMenu"
           to="/posts"
-          class="flex items-center h-12 rounded-full pl-5"
+          class="flex items-center h-10 rounded-full pl-5"
           exact
         >
           <div class="mr-3">
@@ -274,10 +277,11 @@
           <div class="flex items-center">Posts</div>
         </router-link>
       </li>
-      <li class="rounded-full">
+      <li>
         <router-link
+          @click="closeMenu"
           to="/portfolio"
-          class="flex items-center h-12 rounded-full pl-5"
+          class="flex items-center h-10 rounded-full pl-5"
           exact
         >
           <div class="mr-3">
@@ -302,10 +306,11 @@
           <div class="flex items-center">Portfolio</div>
         </router-link>
       </li>
-      <li class="rounded-full">
+      <li>
         <router-link
+          @click="closeMenu"
           to="/category"
-          class="flex items-center h-12 rounded-full pl-5"
+          class="flex items-center h-10 rounded-full pl-5"
           exact
         >
           <div class="mr-3">
@@ -345,6 +350,12 @@ export default defineComponent({
       isShow: false,
       isSystemOpen: false,
     };
+  },
+
+  methods: {
+    closeMenu() {
+      this.isShow = false;
+    },
   },
 });
 </script>

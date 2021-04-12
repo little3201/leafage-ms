@@ -165,7 +165,7 @@ export default defineComponent({
             this.datas = this.datas.filter((item: any) => item.code != code);
             // 将结果添加到第一个
             this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
+            swal("Operated Success!", "you updated the item", "success");
           });
       } else {
         instance.post(SERVER_URL.category, data).then((res) => {
@@ -200,14 +200,9 @@ export default defineComponent({
     async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.category.concat("?page=" + page, "&size=" + size))
-        .then(
-          (res) => {
-            datas.value = res.data;
-          },
-          (error) => {
-            alert(error.statusText);
-          }
-        );
+        .then((res) => {
+          datas.value = res.data;
+        });
     }
 
     onMounted(() => {

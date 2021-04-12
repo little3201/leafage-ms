@@ -216,7 +216,7 @@
               ></textarea>
               <figure
                 v-else
-                class="p-2 markdown-body overflow-auto"
+                class="p-2 prose-sm md:prose overflow-auto"
                 style="width: 606px"
                 v-html="rendedHtml"
               ></figure>
@@ -407,7 +407,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-@import "/@/assets/markdown.css";
-</style>

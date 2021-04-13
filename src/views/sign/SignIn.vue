@@ -67,26 +67,24 @@
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign In
             </h2>
-            <div class="mt-2 text-gray-500 xl:hidden text-center">
-              一个使用 Vue3、 Tailwindcss
-              的网站管理系统，致力于提供一个好用、好看的管理系统
-            </div>
             <form @submit.prevent="onSubmit">
-              <div class="mt-8">
+              <div class="mt-6">
+                <label class="text-gray-600">Your Username</label>
                 <input
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
                   placeholder="Username/Email"
                   required
                   autocomplete="off"
                 />
+                <label class="text-gray-600">Your Password</label>
                 <input
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full mt-2 shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
@@ -105,30 +103,17 @@
                 </div>
                 <a href="" class="text-blue-600">Forgot Password ?</a>
               </div>
-              <div
-                class="mt-4 xl:mt-8 text-center xl:text-left grid grid-rows-1 xl:grid-cols-2 gap-4"
+              <button
+                type="submit"
+                @click="onSumbit"
+                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
               >
-                <button
-                  type="submit"
-                  @click="onSumbit"
-                  class="w-full focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
-                >
-                  Sign in
-                </button>
-                <button
-                  type="button"
-                  @click="toSignUp"
-                  class="w-full focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 py-2 rounded-md"
-                >
-                  Sign up
-                </button>
-              </div>
+                Sign in
+              </button>
             </form>
-            <div class="mt-10 xl:mt-24 text-center xl:text-left">
-              By signin up, you agree to our
-              <br />
-              <a class="text-blue-600" href="">Terms and Conditions</a> &
-              <a class="text-blue-600" href="">Privacy Policy</a>
+            <div class="my-6 text-center xl:text-left">
+              Not registered? 
+              <router-link class="text-blue-600" to="/signup">Create account</router-link>
             </div>
           </div>
         </div>

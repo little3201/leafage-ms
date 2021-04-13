@@ -26,9 +26,9 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
-      <table class="mt-2 w-full truncate">
+      <table class="mt-2 w-full truncate" aria-label="group">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12" aria-label="group">
+          <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 py-2 text-left">No.</th>
             <th scope="col" class="px-4 py-2">Name</th>
             <th scope="col" class="px-4 py-2">Code</th>

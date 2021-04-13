@@ -286,7 +286,9 @@ export default defineComponent({
     closeModel() {
       this.$emit("treeAction", false);
     },
-    onSubmit() {},
+    onSubmit() {
+      this.closeModel()
+    },
   },
 });
 </script>

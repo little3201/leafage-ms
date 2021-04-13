@@ -284,14 +284,9 @@ export default defineComponent({
     },
     // 获取所有分类
     retrieveCategories() {
-      instance.get(SERVER_URL.category).then(
-        (res) => {
-          this.categories = res.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+      instance.get(SERVER_URL.category).then((res) => {
+        this.categories = res.data;
+      });
     },
     // 根据code查posts
     fetchPosts(isEdit: boolean, code: string) {
@@ -374,14 +369,9 @@ export default defineComponent({
     async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size))
-        .then(
-          (res) => {
-            datas.value = res.data;
-          },
-          (error) => {
-            alert(error.statusText);
-          }
-        );
+        .then((res) => {
+          datas.value = res.data;
+        });
     }
 
     // 转换md为html

@@ -1,9 +1,9 @@
 <template>
   <div class="login xl:bg-white">
-    <div class="max-w-5xl mx-auto">
-      <div class="block xl:grid grid-cols-2 gap-4">
-        <div class="hidden xl:flex flex-col min-h-screen">
-          <a href="/" class="flex items-center pt-5 mt-12 z-0">
+    <div class="container mx-auto">
+      <div class="xl:grid grid-cols-2 gap-4">
+        <div class="hidden xl:flex flex-col h-screen my-auto md:ml-36 relative">
+          <a href="/" class="flex items-center z-0 absolute top-28">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -48,18 +48,16 @@
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
-          <div class="z-0">
-            <img
-              src="/src/assets/illustration.svg"
-              class="my-24"
-              alt="leafage"
-            />
-            <div class="text-white font-medium text-xl leading-tight mt-10">
+          <img
+            src="/src/assets/illustration.svg"
+            class="my-auto"
+            alt="leafage"
+          />
+          <div class="z-0 absolute bottom-28">
+            <p class="text-white font-medium text-xl leading-tight">
               一个使用 Vue3、 Tailwindcss 的网站管理系统
-            </div>
-            <div class="mt-5 text-white">
-              致力于提供一个开源、好用、好看的管理系统
-            </div>
+            </p>
+            <p class="text-white">致力于提供一个开源、好用、好看的管理系统</p>
           </div>
         </div>
         <div class="h-screen flex px-2">
@@ -100,7 +98,7 @@
                   autocomplete="off"
                 />
               </div>
-              <div class="flex text-gray-700 text-xs sm:text-sm mt-4">
+              <div class="flex text-gray-700 mt-4">
                 <div class="flex items-center">
                   <input
                     type="checkbox"
@@ -150,9 +148,11 @@ export default defineComponent({
     const formData = ref({});
 
     function onSubmit(): void {
-      instance.post("/register", new URLSearchParams(formData.value)).then(() => {
-        router.replace("/");
-      });
+      instance
+        .post("/register", new URLSearchParams(formData.value))
+        .then(() => {
+          router.replace("/");
+        });
     }
 
     // 提交，请求csrfToken

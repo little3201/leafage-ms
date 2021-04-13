@@ -251,14 +251,9 @@ export default defineComponent({
     },
     // 获取所有分类
     retrieveCategories() {
-      instance.get(SERVER_URL.category).then(
-        (res) => {
-          this.categories = res.data;
-        },
-        (error) => {
-          alert(error.statusText);
-        }
-      );
+      instance.get(SERVER_URL.category).then((res) => {
+        this.categories = res.data;
+      });
     },
     // 根据code查portfolio
     fetch(isEdit: boolean, code: string) {
@@ -314,14 +309,9 @@ export default defineComponent({
     async function retrieve(page: number, size: number) {
       await instance
         .get(SERVER_URL.portfolio.concat("?page=" + page, "&size=" + size))
-        .then(
-          (response) => {
-            datas.value = response.data;
-          },
-          (error) => {
-            alert(error.statusText);
-          }
-        );
+        .then((response) => {
+          datas.value = response.data;
+        });
     }
 
     onMounted(() => {

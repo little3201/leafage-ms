@@ -56,7 +56,7 @@
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
             <td class="p-2 flex justify-center">
-              <img src="/images/avatar.jpg" class="rounded-full w-8 h-8" />
+              <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8" />
             </td>
             <td class="px-4 py-2">
               <svg

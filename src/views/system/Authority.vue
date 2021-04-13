@@ -28,16 +28,16 @@
     <div class="overflow-auto">
       <table class="my-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th class="px-4 py-2 text-left">No.</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Code</th>
-            <th class="px-4 py-2">Role Count</th>
-            <th class="px-4 py-2">Superior</th>
-            <th class="px-4 py-2">Type</th>
-            <th class="px-4 py-2">Path</th>
-            <th class="px-4 py-2">Modify Time</th>
-            <th class="px-4 py-2">Actions</th>
+          <tr class="uppercase text-center text-xs sm:text-sm h-12" aria-label="authority">
+            <th scope="col" class="px-4 py-2 text-left">No.</th>
+            <th scope="col" class="px-4 py-2">Name</th>
+            <th scope="col" class="px-4 py-2">Code</th>
+            <th scope="col" class="px-4 py-2">Role Count</th>
+            <th scope="col" class="px-4 py-2">Superior</th>
+            <th scope="col" class="px-4 py-2">Type</th>
+            <th scope="col" class="px-4 py-2">Path</th>
+            <th scope="col" class="px-4 py-2">Modify Time</th>
+            <th scope="col" class="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -28,15 +28,15 @@
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th class="px-4 py-2 text-left">No.</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Code</th>
-            <th class="px-4 py-2">Superior</th>
-            <th class="px-4 py-2">Principal</th>
-            <th class="px-4 py-2">User Count</th>
-            <th class="px-4 py-2">Modify Time</th>
-            <th class="px-4 py-2">Actions</th>
+          <tr class="uppercase text-center text-xs sm:text-sm h-12" aria-label="group">
+            <th scope="col" class="px-4 py-2 text-left">No.</th>
+            <th scope="col" class="px-4 py-2">Name</th>
+            <th scope="col" class="px-4 py-2">Code</th>
+            <th scope="col" class="px-4 py-2">Superior</th>
+            <th scope="col" class="px-4 py-2">Principal</th>
+            <th scope="col" class="px-4 py-2">User Count</th>
+            <th scope="col" class="px-4 py-2">Modify Time</th>
+            <th scope="col" class="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>

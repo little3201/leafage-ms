@@ -26,15 +26,15 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto">
-      <table class="mt-2 w-full truncate">
+      <table class="mt-2 w-full truncate" aria-label="category">
         <thead>
           <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Alias</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Posts Count</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Actions</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Alias</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Code</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Posts Count</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +48,7 @@
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3">
               <a
+                rel="noopener"
                 href="https://www.leafage.top/posts"
                 target="_blank"
                 class="font-medium text-blue-600"

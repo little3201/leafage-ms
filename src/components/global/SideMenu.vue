@@ -344,8 +344,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
 
 export default defineComponent({
   name: "SideMenu",
@@ -354,24 +352,6 @@ export default defineComponent({
     return {
       isSystemOpen: false,
       isPostsOpen: false,
-    };
-  },
-
-  setup() {
-    const datas = ref([]);
-
-    async function initAuthorities() {
-      // await instance.get(SERVER_URL.authority).then((response) => {
-      //   datas.value = response.data;
-      // });
-    }
-
-    onMounted(() => {
-      initAuthorities();
-    });
-
-    return {
-      datas,
     };
   },
 });

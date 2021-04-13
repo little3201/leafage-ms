@@ -11,9 +11,4 @@ router.beforeEach(to => {
   return true
 })
 
-/* 路由之后 */
-router.afterEach(() => {
-
-})
-
 export default router;

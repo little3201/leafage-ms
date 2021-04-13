@@ -4,7 +4,7 @@ import router from '../router'
 const redirectTo = (path: string) => {
   requestList.length && requestList.length > 0 && requestList.forEach((cancleRequest, index) => {
     cancleRequest() // 取消请求
-    delete requestList[index]
+    requestList.splice(index)
   })
   router.replace(path)
 }
@@ -21,7 +21,7 @@ let requestList: Canceler[] = []
 
 // 请求拦截
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     config.cancelToken = new axios.CancelToken(function executor(cancel: Canceler): void {
       requestList.push(cancel)
     })

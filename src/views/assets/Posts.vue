@@ -28,15 +28,18 @@
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Title</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Code</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Category</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Viewed</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Likes</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
-            <th class="px-4 py-2 md:px-5 md:py-3">Actions</th>
+          <tr
+            class="uppercase text-center text-xs sm:text-sm h-12"
+            aria-label="posts"
+          >
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Title</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Code</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Category</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Viewed</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Likes</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -216,7 +219,7 @@
               ></textarea>
               <figure
                 v-else
-                class="p-2 prose-sm md:prose overflow-auto"
+                class="p-2 prose overflow-auto"
                 style="width: 606px"
                 v-html="rendedHtml"
               ></figure>
@@ -336,9 +339,8 @@ export default defineComponent({
 
     // 上传文件
     uploadFile(file: File) {
-      let param = new FormData(); //创建form对象
-      param.append("file", file); //通过append向form对象添加数据
-      //设置请求头
+      let param = new FormData();
+      param.append("file", file);
       let config = {
         headers: { "Content-Type": "multipart/form-data" },
       };

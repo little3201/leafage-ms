@@ -28,18 +28,18 @@
     <div class="overflow-auto">
       <table class="mt-2 w-full truncate">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th class="px-4 py-2 text-left">No.</th>
-            <th class="px-4 py-2">Username</th>
-            <th class="px-4 py-2">Avatar</th>
-            <th class="px-4 py-2">Gender</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Birthday</th>
-            <th class="px-4 py-2">NonExpired</th>
-            <th class="px-4 py-2">Locked</th>
-            <th class="px-4 py-2">Credentials</th>
-            <th class="px-4 py-2">Actions</th>
+          <tr class="uppercase text-center text-xs sm:text-sm h-12" aria-label="user">
+            <th scope="col" class="px-4 py-2 text-left">No.</th>
+            <th scope="col" class="px-4 py-2">Username</th>
+            <th scope="col" class="px-4 py-2">Avatar</th>
+            <th scope="col" class="px-4 py-2">Gender</th>
+            <th scope="col" class="px-4 py-2">Phone</th>
+            <th scope="col" class="px-4 py-2">Email</th>
+            <th scope="col" class="px-4 py-2">Birthday</th>
+            <th scope="col" class="px-4 py-2">NonExpired</th>
+            <th scope="col" class="px-4 py-2">Locked</th>
+            <th scope="col" class="px-4 py-2">Credentials</th>
+            <th scope="col" class="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -25,7 +25,7 @@ hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('htmlbars', htmlbars);
 
 
-const md = new MarkdownIt({
+const markdown = new MarkdownIt({
   html: true,
   linkify: true,
   breaks: true,
@@ -44,10 +44,10 @@ const md = new MarkdownIt({
 
     return (
       '<pre class="hljs"><code>' +
-      md.utils.escapeHtml(str) +
+      markdown.utils.escapeHtml(str) +
       "</code></pre>"
     );
   },
 });
 
-export default md
+export default markdown

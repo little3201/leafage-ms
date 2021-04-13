@@ -240,7 +240,7 @@ import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
-import md from "../../plugins/markdown";
+import markdown from "../../plugins/markdown";
 
 import swal from "sweetalert";
 
@@ -376,7 +376,7 @@ export default defineComponent({
     // 转换md为html
     const rendedHtml = computed(() => {
       if (content.value) {
-        return md.render(content.value);
+        return markdown.render(content.value);
       }
       return "";
     });

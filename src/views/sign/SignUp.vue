@@ -67,67 +67,59 @@
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign Up
             </h2>
-            <div class="mt-2 text-gray-500 xl:hidden text-center">
-              一个使用 Vue3、 Tailwindcss
-              的网站管理系统，致力于提供一个好用、好看的管理系统
-            </div>
             <form @submit.prevent="onSubmit" class="mx-auto">
-              <div class="mt-8">
-                <input
-                  type="text"
-                  v-model="formData.username"
-                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
-                  placeholder="Username"
-                  required
-                  autocomplete="off"
-                />
+              <div class="mt-6">
+                <label class="text-gray-600">Your Email</label>
                 <input
                   type="email"
                   v-model="formData.email"
-                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
                   placeholder="Email"
                   required
                   autocomplete="off"
                 />
+                <label class="text-gray-600">Your Password</label>
                 <input
                   type="password"
                   v-model.trim="formData.password"
-                  class="border border-gray-300 rounded-md w-full mt-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
                 />
+                <label class="text-gray-600">Confirm Password</label>
+                <input
+                  type="password"
+                  v-model.trim="confirmPassword"
+                  class="border border-gray-300 rounded-md w-full mt-2 shadow-sm"
+                  placeholder="Confirm Password"
+                  required
+                  autocomplete="off"
+                />
               </div>
-              <div class="flex text-gray-700 mt-4">
-                <div class="flex items-center">
-                  <input
-                    type="checkbox"
-                    v-model="formData.agree"
-                    class="rounded border-gray-300 shadow-sm mr-2"
-                  />
-                  <label class="cursor-pointer">I agree to the Leafage</label>
-                  <a class="text-blue-600 ml-1" href="#">Privacy Policy</a>.
-                </div>
+              <div class="flex items-center text-gray-700 mt-4">
+                <input
+                  type="checkbox"
+                  v-model="formData.agree"
+                  class="rounded border-gray-300 shadow-sm mr-2"
+                />
+                <label class="cursor-pointer">I agree to the Leafage</label>
+                <a class="text-blue-600 ml-1" href="#">Privacy Policy</a>.
               </div>
-              <div
-                class="mt-4 xl:mt-8 text-center xl:text-left grid grid-rows-1 xl:grid-cols-2 gap-4"
+              <button
+                type="submit"
+                @click="onSumbit"
+                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
               >
-                <button
-                  type="submit"
-                  @click="onSumbit"
-                  class="w-full focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
-                >
-                  Register
-                </button>
-                <button
-                  type="button"
-                  @click="toSignIn"
-                  class="w-full focus:outline-none text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600 py-2 rounded-md"
-                >
-                  Sign in
-                </button>
-              </div>
+                Register
+              </button>
             </form>
+            <div class="my-6 text-center xl:text-left">
+              Already have an account?
+              <router-link class="text-blue-600" to="/signin"
+                >Sign in</router-link
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -146,6 +138,7 @@ export default defineComponent({
 
   setup() {
     const formData = ref({});
+    const confirmPassword = ref("");
 
     function onSubmit(): void {
       instance
@@ -171,6 +164,7 @@ export default defineComponent({
       formData,
       onSubmit,
       toSignIn,
+      confirmPassword,
     };
   },
 });

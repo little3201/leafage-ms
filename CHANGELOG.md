@@ -6,15 +6,17 @@
 
 ## 更新记录
 
-2021-04-04: 
-- optimization: 
+2021-04-13:  
+  1. 解决snoar分析的问题；
+
+2021-04-04:  
   1. Dashboard去掉chart.js；
   2. 补充各模块相关联的下拉框数据问题；
   3. 添加Tree.vue，尚未完成接口;
   4. 登录/注册页，表单、样式优化；
 
 2021-04-02: 
-- optimization: 
+- 优化: 
   1. Dashboard加载echart太大问题；
   2. 补充role授权模块样式；
   3. 所有add/edit操作添加sweetalert;

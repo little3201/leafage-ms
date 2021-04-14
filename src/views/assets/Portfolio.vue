@@ -182,6 +182,7 @@
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg,vedio/mp4"
+                      @change="uploadImage($event.target.files)"
                     />
                   </label>
                 </div>
@@ -214,6 +215,7 @@ import Model from "/@/components/global/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+import { uploadFile } from "../../plugins/upload";
 
 import swal from "sweetalert";
 
@@ -289,6 +291,24 @@ export default defineComponent({
         });
       }
       this.isEdit = false;
+    },
+
+    // 上传文件
+    uploadImage(files: Array<File>) {
+      if (files.length > 0) {
+        let urls = new Array(files.length);
+        Array.from(Array(files.length).keys()).forEach((id) =>
+          uploadFile(files[id]).subscribe({
+            next: (result) => {},
+            error: () => {},
+            complete: (e) => {
+              urls.push("https://cdn.leafage.top/" + e.key);
+            },
+          })
+        );
+        let data = {...this.portfolioData, url: urls}
+        this.portfolioData = data
+      }
     },
   },
 

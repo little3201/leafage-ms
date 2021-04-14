@@ -144,7 +144,7 @@
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg"
-                      @change="uploadFile($event.target.file)"
+                      @change="uploadImage($event.target.files)"
                     />
                   </label>
                 </div>
@@ -241,6 +241,7 @@ import Model from "/@/components/global/Model.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 import markdown from "../../plugins/markdown";
+import { uploadFile } from "../../plugins/upload";
 
 import swal from "sweetalert";
 
@@ -335,16 +336,23 @@ export default defineComponent({
     },
 
     // 上传文件
-    uploadFile(file: File) {
-      let param = new FormData();
-      param.append("file", file);
-      let config = {
-        headers: { "Content-Type": "multipart/form-data" },
-      };
-      instance.post("/upload", param, config).then((res) => {
-        let data = { ...this.postsData, cover: res.data };
-        this.postsData = data;
-      });
+    uploadImage(files: Array<File>) {
+      if (files.length > 0) {
+        // Array.from(Array(files.length).keys()).forEach((id) =>
+        //   uploadFile(files[id])
+        // );
+        uploadFile(files[0]).subscribe({
+          next: (result) => {},
+          error: () => {},
+          complete: (e) => {
+            let data = {
+              ...this.postsData,
+              cover: "https://cdn.leafage.top/" + e.key,
+            };
+            this.postsData = data;
+          },
+        });
+      }
     },
   },
 

@@ -9,6 +9,7 @@
   <a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/little3201/leafage-ms.svg" alt="License">
   </a>
+  <img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=little3201_leafage-ms&metric=alert_status">
 </p>
 
 ## 项目介绍
@@ -39,6 +40,7 @@
 ### 目标功能
 - [x] 登录
 - [x] 权限管理
+- [x] 文件上传
 - [ ] 个人中心
 - [ ] 消息提醒
 - [ ] 自定义主题

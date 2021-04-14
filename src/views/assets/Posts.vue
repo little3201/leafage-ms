@@ -342,10 +342,8 @@ export default defineComponent({
         //   uploadFile(files[id])
         // );
         uploadFile(files[0]).subscribe({
-          next: (result) => {
-          },
-          error: () => {
-          },
+          next: (result) => {},
+          error: () => {},
           complete: (e) => {
             let data = {
               ...this.postsData,

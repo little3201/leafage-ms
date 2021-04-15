@@ -219,7 +219,7 @@ export default defineComponent({
         });
       } else {
         instance.post(SERVER_URL.role, data).then((res) => {
-          if (this.datas.size() >= 10) {
+          if (this.datas.length >= 10) {
             // 删除第一个
             this.datas.shift();
           }

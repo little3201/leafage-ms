@@ -281,7 +281,7 @@ export default defineComponent({
           });
       } else {
         instance.post(SERVER_URL.portfolio, data).then((res) => {
-          if (this.datas.size() >= 10) {
+          if (this.datas.length >= 10) {
             // 删除第一个
             this.datas.shift();
           }
@@ -299,15 +299,14 @@ export default defineComponent({
         let urls = new Array(files.length);
         Array.from(Array(files.length).keys()).forEach((id) =>
           uploadFile(files[id]).subscribe({
-            next: (result) => {},
-            error: () => {},
-            complete: (e) => {
+            // next: (result) => {},
+            // error: () => {},
+            complete: (e: any) => {
               urls.push("https://cdn.leafage.top/" + e.key);
             },
           })
         );
-        let data = {...this.portfolioData, url: urls}
-        this.portfolioData = data
+        this.portfolioData = { ...this.portfolioData, url: urls };
       }
     },
   },

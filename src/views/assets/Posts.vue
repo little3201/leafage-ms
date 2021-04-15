@@ -323,7 +323,7 @@ export default defineComponent({
         });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
-          if (this.datas.size() >= 10) {
+          if (this.datas.length >= 10) {
             // 删除第一个
             this.datas.shift();
           }
@@ -338,18 +338,12 @@ export default defineComponent({
     // 上传文件
     uploadImage(files: Array<File>) {
       if (files.length > 0) {
-        // Array.from(Array(files.length).keys()).forEach((id) =>
-        //   uploadFile(files[id])
-        // );
         uploadFile(files[0]).subscribe({
-          next: (result) => {},
-          error: () => {},
-          complete: (e) => {
-            let data = {
+          complete: (e: any) => {
+            this.postsData = {
               ...this.postsData,
               cover: "https://cdn.leafage.top/" + e.key,
             };
-            this.postsData = data;
           },
         });
       }

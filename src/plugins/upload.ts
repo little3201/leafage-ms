@@ -27,8 +27,7 @@ function getToken(access_key: string, secret_key: string, bucketname: string) {
     var hash = CryptoJS.HmacSHA1(encoded, secret_key);
     // 构造凭证
     var encodedSign = hash.toString(CryptoJS.enc.Base64).replace(/\//g, '_').replace(/\+/g, '-');
-    var uploadToken = access_key + ':' + encodedSign + ':' + encoded;
-    return uploadToken;
+    return access_key + ':' + encodedSign + ':' + encoded;
 }
 
 function utf16to8(str: string) {

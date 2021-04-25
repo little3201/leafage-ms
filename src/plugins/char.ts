@@ -4,7 +4,9 @@ import {
     LineController,
     PointElement,
     LinearScale,
-    Title
+    CategoryScale,
+    Title,
+    Tooltip
 } from 'chart.js';
 
 Chart.register(
@@ -12,7 +14,9 @@ Chart.register(
     LineController,
     PointElement,
     LinearScale,
-    Title
+    CategoryScale,
+    Title,
+    Tooltip
 );
 
 export const createChart = (ctx: HTMLCanvasElement, config: any) => {

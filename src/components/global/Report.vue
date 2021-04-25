@@ -221,7 +221,7 @@
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
         <div class="shadow-sm rounded-md bg-white p-5">
-          <canvas id="lineChart" height="400"></canvas>
+          <canvas id="lineChart" ref="lineChart"></canvas>
         </div>
       </div>
     </div>
@@ -229,28 +229,64 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import { createChart } from "../../plugins/char";
 
 export default defineComponent({
   name: "Report",
 
   setup() {
-    const ctx = <HTMLCanvasElement>document.getElementById("lineChart");
+    const lineChart = ref();
     let config = {
       type: "line",
       data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            label: "count",
+            data: [112, 193, 100, 259, 24, 380],
+            tension: 0.3,
+            borderColor: '#91c714'
           },
         ],
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Chart.js Line Chart",
+            },
+          },
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+              },
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "Value",
+              },
+              suggestedMin: -10,
+              suggestedMax: 200,
+            },
+          },
+        },
       },
       options: {},
     };
-    createChart(ctx, config);
+
+    onMounted(() => {
+      createChart(lineChart.value, config);
+    });
+
+    return { lineChart };
   },
 });
 </script>

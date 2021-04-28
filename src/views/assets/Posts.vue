@@ -84,39 +84,26 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-rows-2 grid-cols-12 gap-x-4">
-          <div class="col-span-12 sm:col-span-5 md:flex items-center">
+        <div class="grid grid-rows-3 grid-cols-12 gap-x-4 gap-y-2">
+          <div class="col-span-12 sm:col-span-8 md:flex items-center">
             <input
               type="text"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
               v-model="postsData.title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-3 md:flex items-center">
-            <select
-              v-model="postsData.category"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            >
-              <option
-                v-for="category in categories"
-                :key="category.code"
-                :value="category.code"
-                v-text="category.alias"
-              ></option>
-            </select>
-          </div>
-          <div class="row-span-2 col-span-12 sm:col-span-4">
+          <div class="row-span-3 col-span-12 sm:col-span-4">
             <img
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover w-48 h-32 md:mt-4"
+              class="rounded-md object-cover w-48 h-36"
             />
             <div
               v-else
-              class="rounded-md border border-gray-300 w-48 h-32 md:mt-4 flex items-center"
+              class="rounded-md border border-gray-300 w-48 h-36 flex items-center"
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
@@ -153,19 +140,42 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-8">
+          <div class="col-span-12 sm:col-span-8 md:flex items-center">
+            <input
+              type="text"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
+              placeholder="Tags"
+              maxlength="50"
+              v-model="postsData.tags"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-4 md:flex items-center">
+            <select
+              v-model="postsData.category"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
+            >
+              <option disabled>请选择</option>
+              <option
+                v-for="category in categories"
+                :key="category.code"
+                :value="category.code"
+                v-text="category.alias"
+              ></option>
+            </select>
+          </div>
+          <div class="col-span-12">
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="100"
               v-model="postsData.subtitle"
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-12 my-3">
+        <div class="grid grid-cols-12 mt-2">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
               :class="{ border: preview }"
             >
               <a
@@ -253,7 +263,7 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
-    Model,
+    Model
   },
 
   data() {

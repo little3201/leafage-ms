@@ -81,12 +81,12 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-cols-12">
+        <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label>Alias</label>
             <input
               type="text"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               v-model="categoryData.alias"
             />

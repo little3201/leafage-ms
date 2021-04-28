@@ -103,10 +103,28 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Path</label>
+            <label>Type</label>
+            <select
+              :disabled="authorityData.code"
+              v-model="authorityData.type"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              :class="{ 'text-gray-300': authorityData.code }"
+            >
+              <option disabled>请选择</option>
+              <option value="M">Menu</option>
+              <option value="B">Button</option>
+              <option value="R">Router</option>
+            </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label :class="{ 'text-gray-300': authorityData.type == 'B' }"
+              >Path</label
+            >
             <input
+              :disabled="authorityData.type == 'B'"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              :class="{ 'text-gray-300 placeholder-gray-300': authorityData.type == 'B' }"
               placeholder="Path"
               v-model="authorityData.path"
             />
@@ -124,18 +142,6 @@
                 :value="superior.code"
                 v-text="superior.name"
               ></option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Type</label>
-            <select
-              v-model="authorityData.type"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option value="MENU">MENU</option>
-              <option value="BTN">BTN</option>
-              <option value="ROUTER">ROUTER</option>
             </select>
           </div>
           <div class="col-span-12">

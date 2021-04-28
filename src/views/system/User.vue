@@ -56,7 +56,11 @@
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
             <td class="p-2 flex justify-center">
-              <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8" />
+              <img
+                src="/images/avatar.jpg"
+                alt="avatar"
+                class="rounded-full w-8 h-8"
+              />
             </td>
             <td class="px-4 py-2">
               <svg
@@ -307,33 +311,6 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label>Nickname</label>
-            <input
-              type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              placeholder="Name"
-              v-model="userData.nickname"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Phone</label>
-            <input
-              type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              placeholder="Phone"
-              v-model="userData.phone"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Email</label>
-            <input
-              type="email"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              placeholder="Email"
-              v-model="userData.email"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
             <label>Gender</label>
             <select
               v-model="userData.gender"
@@ -343,6 +320,12 @@
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Credentials Expired</label>
+            <label class="block">
+              <input type="datetime-local" v-model="userData.expired" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm" />
+            </label>
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Groups</label>
@@ -373,6 +356,26 @@
                 v-text="role.name"
               ></option>
             </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Locked</label>
+            <div class="mt-3">
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  checked
+                  value="false"
+                />
+                <span class="ml-2">false</span>
+              </label>
+              <label class="inline-flex items-center ml-4">
+                <input
+                  type="radio"
+                  value="true"
+                />
+                <span class="ml-2">true</span>
+              </label>
+            </div>
           </div>
           <div class="col-span-12">
             <label>Description</label>

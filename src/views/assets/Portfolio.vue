@@ -124,7 +124,7 @@
             <label>Title</label>
             <input
               type="text"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               v-model="portfolioData.title"
             />
@@ -133,7 +133,7 @@
             <label>Category</label>
             <select
               v-model="portfolioData.category"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
               <option

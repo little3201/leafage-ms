@@ -81,7 +81,7 @@
     >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
+          <div class="col-span-12">
             <label>Name</label>
             <input
               type="text"

@@ -138,38 +138,32 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-  },
-
-  methods: {
-    // 递增
-    increment() {
-      if (this.page < this.pages - 1) {
-        this.page++;
-        this.give(this.page);
-      }
+    page: {
+      type: Number,
+      default: 0
     },
-    // 递减
-    decrease() {
-      if (this.page > 0) {
-        this.page--;
-        this.give(this.page);
-      }
-    },
+    size: {
+      type: Number,
+      default: 10
+    }
   },
 
   setup(props, ctx) {
-    let page = ref(0);
-    let size = ref(10);
+    let page = ref(props.page);
+    let size = ref(props.size);
 
     // 监听size, 调用查询方法
     watch(size, (curSize, prevSize) => {
-      give(page.value);
+      if (curSize != prevSize) {
+        give(page.value);
+      }
     });
 
     // 设置
     function give(p: number) {
       page.value = p;
-      ctx.emit("retrieve", page.value, size.value);
+      ctx.emit("setPage", page.value, size.value)
+      ctx.emit("retrieve");
     }
 
     let pages = computed(() => {
@@ -185,11 +179,29 @@ export default defineComponent({
       }
     });
 
+    // 递增
+    function increment() {
+      if (page.value < pages.value - 1) {
+        page.value++;
+        give(page.value);
+      }
+    }
+
+    // 递减
+    function decrease() {
+      if (page.value > 0) {
+        page.value--;
+        give(page.value);
+      }
+    }
+
     return {
       page,
       size,
       pages,
       give,
+      increment,
+      decrease
     };
   },
 });

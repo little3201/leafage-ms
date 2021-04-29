@@ -68,6 +68,9 @@
           <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
         <span
+          class="absolute animate-ping inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
+        ></span>
+        <span
           class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
         ></span>
       </div>

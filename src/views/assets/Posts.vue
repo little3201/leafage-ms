@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Posts</h2>
       <button
-        @click="retrieve(0, 10)"
+        @click="retrieve(0, page)"
         class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -75,7 +75,13 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" />
+    <Pagation
+      @retrieve="retrieve"
+      :total="total"
+      :page="page"
+      :size="size"
+      @setPage="setPage"
+    />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="postsData.code"
@@ -91,7 +97,7 @@
               class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
-              v-model="postsData.title"
+              v-model.trim="postsData.title"
             />
           </div>
           <div class="row-span-3 col-span-12 sm:col-span-4">
@@ -145,8 +151,7 @@
               type="text"
               class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Tags"
-              maxlength="50"
-              v-model="postsData.tags"
+              v-model.trim="postsData.tags"
             />
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
@@ -168,7 +173,7 @@
               class="block w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="100"
-              v-model="postsData.subtitle"
+              v-model.trim="postsData.subtitle"
             ></textarea>
           </div>
         </div>
@@ -263,7 +268,7 @@ export default defineComponent({
     Action,
     Pagation,
     Confirm,
-    Model
+    Model,
   },
 
   data() {
@@ -319,6 +324,7 @@ export default defineComponent({
     },
     // 新增/编辑：提交
     commitOperate(code: string) {
+      debugger;
       let data = {
         ...this.postsData,
         content: this.content,
@@ -364,11 +370,19 @@ export default defineComponent({
     let preview = ref(false);
     let content = ref("");
     const datas = ref<any>([]);
+    let page = ref(0);
+    let size = ref(10);
     const total = ref(0);
 
+    // 设置页码
+    function setPage(p: number, s: number) {
+      page.value = p;
+      size.value = s;
+    }
+
     // 初始化数据
-    async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrieve(page, size)]);
+    async function initDatas() {
+      await Promise.all([count(), retrieve()]);
     }
     // 统计数据
     async function count() {
@@ -377,9 +391,11 @@ export default defineComponent({
       });
     }
     // 查询列表
-    async function retrieve(page: number, size: number) {
+    async function retrieve() {
       await instance
-        .get(SERVER_URL.posts.concat("?page=" + page, "&size=" + size))
+        .get(
+          SERVER_URL.posts.concat("?page=" + page.value, "&size=" + size.value)
+        )
         .then((res) => {
           datas.value = res.data;
         });
@@ -394,14 +410,17 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      initDatas(0, 10);
+      initDatas();
     });
 
     return {
       preview,
       content,
+      page,
+      size,
       total,
       datas,
+      setPage,
       retrieve,
       rendedHtml,
     };

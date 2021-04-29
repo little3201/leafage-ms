@@ -1,6 +1,5 @@
 <template>
   <div
-    v-show="user && Object.keys(user).length > 0"
     class="flex justify-center items-center"
   >
     <slot></slot>

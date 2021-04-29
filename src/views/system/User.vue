@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Users</h2>
       <button
-        @click="retrieve(0, 10)"
+        @click="retrieve()"
         class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -300,7 +300,13 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" />
+    <Pagation
+      @retrieve="retrieve"
+      :total="total"
+      :page="page"
+      :size="size"
+      @setPage="setPage"
+    />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="userData.username"
@@ -324,7 +330,11 @@
           <div class="col-span-12 sm:col-span-6">
             <label>Credentials Expired</label>
             <label class="block">
-              <input type="datetime-local" v-model="userData.expired" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm" />
+              <input
+                type="datetime-local"
+                v-model="userData.expired"
+                class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              />
             </label>
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -361,18 +371,11 @@
             <label>Locked</label>
             <div class="mt-3">
               <label class="inline-flex items-center">
-                <input
-                  type="radio"
-                  checked
-                  value="false"
-                />
+                <input type="radio" checked value="false" />
                 <span class="ml-2">false</span>
               </label>
               <label class="inline-flex items-center ml-4">
-                <input
-                  type="radio"
-                  value="true"
-                />
+                <input type="radio" value="true" />
                 <span class="ml-2">true</span>
               </label>
             </div>
@@ -491,11 +494,19 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    let page = ref(0);
+    let size = ref(10);
     const total = ref(0);
 
+    // 设置页码
+    function setPage(p: number, s: number) {
+      page.value = p;
+      size.value = s;
+    }
+
     // 初始化数据
-    async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrieve(page, size)]);
+    async function initDatas() {
+      await Promise.all([count(), retrieve()]);
     }
     // 统计数据
     async function count() {
@@ -504,22 +515,27 @@ export default defineComponent({
       });
     }
     // 查询列表
-    async function retrieve(page: number, size: number) {
+    async function retrieve() {
       await instance
-        .get(SERVER_URL.user.concat("?page=" + page, "&size=" + size))
+        .get(
+          SERVER_URL.user.concat("?page=" + page.value, "&size=" + size.value)
+        )
         .then((res) => {
           datas.value = res.data;
         });
     }
 
     onMounted(() => {
-      initDatas(0, 10);
+      initDatas();
     });
 
     return {
       datas,
+      page,
+      size,
       total,
       retrieve,
+      setPage,
     };
   },
 });

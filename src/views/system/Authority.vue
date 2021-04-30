@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Authorities</h2>
       <button
-        @click="retrieve(0, 10)"
+        @click="retrieve()"
         class="ml-4 flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -83,7 +83,13 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" />
+    <Pagation
+      @retrieve="retrieve"
+      :total="total"
+      :page="page"
+      :size="size"
+      @setPage="setPage"
+    />
     <Confirm :isDel="isDel" @delAction="confirmOperate" />
     <Model
       :code="authorityData.code"
@@ -103,10 +109,30 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Path</label>
+            <label>Type</label>
+            <select
+              :disabled="authorityData.code"
+              v-model="authorityData.type"
+              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              :class="{ 'text-gray-300': authorityData.code }"
+            >
+              <option disabled>请选择</option>
+              <option value="M">Menu</option>
+              <option value="B">Button</option>
+              <option value="R">Router</option>
+            </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label :class="{ 'text-gray-300': authorityData.type == 'B' }"
+              >Path</label
+            >
             <input
+              :disabled="authorityData.type == 'B'"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              :class="{
+                'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
+              }"
               placeholder="Path"
               v-model="authorityData.path"
             />
@@ -124,18 +150,6 @@
                 :value="superior.code"
                 v-text="superior.name"
               ></option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Type</label>
-            <select
-              v-model="authorityData.type"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option value="MENU">MENU</option>
-              <option value="BTN">BTN</option>
-              <option value="ROUTER">ROUTER</option>
             </select>
           </div>
           <div class="col-span-12">
@@ -243,11 +257,19 @@ export default defineComponent({
 
   setup() {
     const datas = ref<any>([]);
+    let page = ref(0);
+    let size = ref(10);
     const total = ref(0);
 
+    // 设置页码
+    function setPage(p: number, s: number) {
+      page.value = p;
+      size.value = s;
+    }
+
     // 初始化数据
-    async function initDatas(page: number, size: number) {
-      await Promise.all([count(), retrieve(page, size)]);
+    async function initDatas() {
+      await Promise.all([count(), retrieve()]);
     }
     // 统计数据
     async function count() {
@@ -256,22 +278,30 @@ export default defineComponent({
       });
     }
     // 查询列表
-    async function retrieve(page: number, size: number) {
+    async function retrieve() {
       await instance
-        .get(SERVER_URL.authority.concat("?page=" + page, "&size=" + size))
+        .get(
+          SERVER_URL.authority.concat(
+            "?page=" + page.value,
+            "&size=" + size.value
+          )
+        )
         .then((res) => {
           datas.value = res.data;
         });
     }
 
     onMounted(() => {
-      initDatas(0, 10);
+      initDatas();
     });
 
     return {
       datas,
       total,
+      page,
+      size,
       retrieve,
+      setPage,
     };
   },
 });

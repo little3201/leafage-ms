@@ -5,7 +5,6 @@ import {
     PointElement,
     LinearScale,
     CategoryScale,
-    Title,
     Tooltip
 } from 'chart.js';
 
@@ -15,7 +14,6 @@ Chart.register(
     PointElement,
     LinearScale,
     CategoryScale,
-    Title,
     Tooltip
 );
 

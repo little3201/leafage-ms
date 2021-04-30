@@ -69,28 +69,26 @@
             </h2>
             <form @submit.prevent="onSubmit">
               <div class="mt-6">
-                <label class="text-gray-600">Your Username</label>
                 <input
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Username/Email"
                   required
                   autocomplete="off"
                 />
-                <label class="text-gray-600">Your Password</label>
                 <input
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="border border-gray-300 rounded-md w-full mt-2 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full mb-6 shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
                 />
               </div>
-              <div class="flex text-gray-700 mt-4">
+              <div class="flex text-gray-700">
                 <div class="inline-flex items-center mr-auto">
                   <input
                     type="checkbox"

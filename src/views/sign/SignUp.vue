@@ -69,35 +69,32 @@
             </h2>
             <form @submit.prevent="onSubmit" class="mx-auto">
               <div class="mt-6">
-                <label class="text-gray-600">Your Email</label>
                 <input
                   type="email"
                   v-model="formData.email"
-                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Email"
                   required
                   autocomplete="off"
                 />
-                <label class="text-gray-600">Your Password</label>
                 <input
                   type="password"
                   v-model.trim="formData.password"
-                  class="border border-gray-300 rounded-md w-full mt-2 mb-4 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
                 />
-                <label class="text-gray-600">Confirm Password</label>
                 <input
                   type="password"
                   v-model.trim="confirmPassword"
-                  class="border border-gray-300 rounded-md w-full mt-2 shadow-sm"
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Confirm Password"
                   required
                   autocomplete="off"
                 />
               </div>
-              <div class="flex items-center text-gray-700 mt-4">
+              <div class="flex items-center text-gray-700">
                 <input
                   type="checkbox"
                   v-model="formData.agree"
@@ -111,7 +108,7 @@
                 @click="onSumbit"
                 class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
               >
-                Register
+                Sign up
               </button>
             </form>
             <div class="my-6 text-center xl:text-left">

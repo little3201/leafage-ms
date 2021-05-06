@@ -25,7 +25,7 @@
       </button>
       <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto">
+    <div class="overflow-auto" style="height: calc(100vh - 190px)">
       <table class="mt-2 w-full truncate" aria-label="user">
         <thead>
           <tr class="uppercase text-center text-xs sm:text-sm h-12">

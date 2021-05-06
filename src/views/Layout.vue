@@ -4,8 +4,8 @@
     <div class="flex">
       <SideMenu />
       <main
-        class="px-4 md:px-5 rounded-3xl bg-gray-100 w-full"
-        style="min-height: calc(100vh - 24px)"
+        class="px-4 md:px-5 rounded-3xl bg-gray-100 w-full overflow-hidden"
+        style="height: calc(100vh - 24px)"
       >
         <TopBar />
         <router-view></router-view>

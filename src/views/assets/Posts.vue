@@ -25,7 +25,7 @@
       </button>
       <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto">
+    <div class="overflow-auto" style="height: calc(100vh - 190px)">
       <table class="mt-2 w-full truncate" aria-label="posts">
         <thead>
           <tr class="uppercase text-center text-xs sm:text-sm h-12">
@@ -48,7 +48,7 @@
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2 md:px-5 md:py-3 text-center">
+            <td class="px-4 py-2 md:px-5 md:py-3 text-center max-h-32 max-w-sm truncate">
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"

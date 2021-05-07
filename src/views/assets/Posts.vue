@@ -39,7 +39,7 @@
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="overflow-auto"  style="height: calc(100vh - 238px)">
           <tr
             class="text-center bg-white border-8 border-gray-100"
             v-for="(data, index) in datas"
@@ -181,7 +181,7 @@
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
-              :class="{ border: preview }"
+              :class="{ 'border': preview }"
             >
               <a
                 href="javascript:;"

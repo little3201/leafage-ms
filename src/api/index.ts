@@ -21,7 +21,7 @@ let requestList: Canceler[] = []
 
 // 请求拦截
 instance.interceptors.request.use(
-  (config) => {
+  config => {
     config.cancelToken = new axios.CancelToken(function executor(cancel: Canceler): void {
       requestList.push(cancel)
     })
@@ -42,10 +42,10 @@ instance.interceptors.response.use(
     return res
   },
   error => {
-    const { res } = error
-    if (res) {
+    const { response } = error
+    if (response) {
       // 状态码判断
-      switch (res.status) {
+      switch (response.status) {
         // 401: 未登录状态，403：无权限，跳转登录页
         case 401:
         case 403:
@@ -54,10 +54,10 @@ instance.interceptors.response.use(
         // 404/500请求不存在
         case 404:
         case 500:
-          res.statusText = '服务可能罢工了，刷新试试。'
+          response.statusText = '服务可能罢工了，刷新试试。'
           break
         default:
-          res.statusText = '请求可能跑丢了，再试一下。'
+          response.statusText = '请求可能跑丢了，再试一下。'
       }
       return Promise.reject(res)
     }

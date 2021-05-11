@@ -8,7 +8,9 @@
         style="height: calc(100vh - 24px)"
       >
         <TopBar />
-        <router-view></router-view>
+        <transition name="fade">
+          <router-view></router-view>
+        </transition>
       </main>
     </div>
   </div>

@@ -204,8 +204,8 @@
           <div class="text-xs" v-text="user.username"></div>
         </div>
         <div>
-          <a
-            href="#"
+          <router-link
+            to="/settings/profile"
             class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
             <svg
@@ -224,9 +224,9 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
             Profile
-          </a>
-          <a
-            href=""
+          </router-link>
+          <router-link
+            to="/settings/secret"
             class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
             <svg
@@ -245,7 +245,7 @@
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
             Reset Password
-          </a>
+          </router-link>
           <a
             href=""
             class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"

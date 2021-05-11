@@ -53,6 +53,23 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Category',
         component: () => import('/src/views/assets/Category.vue')
       },
+      {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import('/src/views/settings/Settings.vue'),
+        children: [
+          {
+            path: 'profile',
+            name: 'Profile',
+            component: () => import('/src/views/settings/Profile.vue')
+          },
+          {
+            path: 'secret',
+            name: 'Secret',
+            component: () => import('/src/views/settings/Secret.vue')
+          }
+        ]
+      }
     ]
   },
   {

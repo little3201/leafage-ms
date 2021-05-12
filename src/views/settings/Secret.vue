@@ -8,7 +8,7 @@
         <label>Old Password</label>
         <input
           type="password"
-          class="p-2 rounded-md w-full border border-gray-300 mt-2"
+          class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Input text"
         />
       </div>
@@ -16,7 +16,7 @@
         <label>New Password</label>
         <input
           type="password"
-          class="p-2 rounded-md w-full border border-gray-300 mt-2"
+          class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Input text"
         />
       </div>
@@ -24,7 +24,7 @@
         <label>Confirm New Password</label>
         <input
           type="password"
-          class="p-2 rounded-md w-full border border-gray-300 mt-2"
+          class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Input text"
         />
       </div>

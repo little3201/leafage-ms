@@ -19,22 +19,26 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'group',
             name: 'Group',
-            component: () => import('/src/views/system/Group.vue')
+            component: () => import('/src/views/system/Group.vue'),
+            meta: { requiresAuth: true }
           },
           {
             path: 'user',
             name: 'User',
-            component: () => import('/src/views/system/User.vue')
+            component: () => import('/src/views/system/User.vue'),
+            meta: { requiresAuth: true }
           },
           {
             path: 'role',
             name: 'Role',
-            component: () => import('/src/views/system/Role.vue')
+            component: () => import('/src/views/system/Role.vue'),
+            meta: { requiresAuth: true }
           },
           {
             path: 'authority',
             name: 'Authority',
-            component: () => import('/src/views/system/Authority.vue')
+            component: () => import('/src/views/system/Authority.vue'),
+            meta: { requiresAuth: true }
           }
         ]
       },
@@ -61,12 +65,14 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: 'profile',
             name: 'Profile',
-            component: () => import('/src/views/settings/Profile.vue')
+            component: () => import('/src/views/settings/Profile.vue'),
+            meta: { requiresAuth: true }
           },
           {
             path: 'secret',
             name: 'Secret',
-            component: () => import('/src/views/settings/Secret.vue')
+            component: () => import('/src/views/settings/Secret.vue'),
+            meta: { requiresAuth: true }
           }
         ]
       }

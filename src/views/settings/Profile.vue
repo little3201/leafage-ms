@@ -55,7 +55,7 @@
               <label>Display Name</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full bg-gray-100 cursor-not-allowed mt-2 border border-gray-300"
+                class="rounded-md w-full bg-gray-100 cursor-not-allowed mt-1 border border-gray-300"
                 placeholder="Input text"
                 value="Russell Crowe"
                 disabled
@@ -63,8 +63,8 @@
             </div>
             <div class="mt-3">
               <label>Nearest MRT Station</label>
-              <div class="mt-2">
-                <select class="p-2 rounded-md w-full border border-gray-300">
+              <div class="mt-1">
+                <select class="rounded-md w-full border border-gray-300">
                   <option value="1">Admiralty</option>
                   <option value="2">Aljunied</option>
                   <option value="3">Ang Mo Kio</option>
@@ -75,8 +75,8 @@
             </div>
             <div class="mt-3">
               <label>Postal Code</label>
-              <div class="mt-2">
-                <select class="p-2 rounded-md w-full border border-gray-300">
+              <div class="mt-1">
+                <select class="rounded-md w-full border border-gray-300">
                   <option value="1">
                     018906 - 1 STRAITS BOULEVARD SINGA...
                   </option>
@@ -90,7 +90,7 @@
             <div class="mt-3">
               <label>Address</label>
               <textarea
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Adress"
               >
 10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore</textarea
@@ -119,7 +119,7 @@
               <label>Email</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-2"
+                class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
                 placeholder="Input text"
                 value="russellcrowe@left4code.com"
                 disabled
@@ -129,7 +129,7 @@
               <label>Name</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Input text"
                 value="Russell Crowe"
                 disabled
@@ -137,7 +137,7 @@
             </div>
             <div class="mt-3">
               <label>ID Type</label>
-              <select class="p-2 rounded-md w-full border border-gray-300 mt-2">
+              <select class="rounded-md w-full border border-gray-300 mt-1">
                 <option>IC</option>
                 <option>FIN</option>
                 <option>Passport</option>
@@ -147,7 +147,7 @@
               <label>ID Number</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Input text"
                 value="357821204950001"
               />
@@ -158,7 +158,7 @@
               <label>Phone Number</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Input text"
                 value="65570828"
               />
@@ -167,15 +167,15 @@
               <label>Address</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Input text"
                 value="10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore"
               />
             </div>
             <div class="mt-3">
               <label>Bank Name</label>
-              <div class="mt-2">
-                <select class="p-2 rounded-md w-full border border-gray-300">
+              <div class="mt-1">
+                <select class="rounded-md w-full border border-gray-300">
                   <option value="1">SBI - STATE BANK OF INDIA</option>
                   <option value="1">CITI BANK - CITI BANK</option>
                 </select>
@@ -185,7 +185,7 @@
               <label>Bank Account</label>
               <input
                 type="text"
-                class="p-2 rounded-md w-full border border-gray-300 mt-2"
+                class="rounded-md w-full border border-gray-300 mt-1"
                 placeholder="Input text"
                 value="DBS Current 011-903573-0"
               />
@@ -193,7 +193,7 @@
           </div>
         </div>
         <div class="flex justify-end mt-4">
-          <a href="" class="text-theme-6 flex items-center">
+          <a href="" class="text-red-600 flex border border-red-600 p-2 rounded-md items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

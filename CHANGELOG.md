@@ -5,6 +5,10 @@
 </p>
 
 ## 更新记录
+
+2021-05-11:  
+  1. 添加Settings.vue, Profile.vue, Secret.vue；
+
 2021-05-06:  
   1. 固定layout大小，内部table滚动；
 

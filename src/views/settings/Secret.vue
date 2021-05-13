@@ -9,7 +9,7 @@
         <input
           type="password"
           class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Input text"
+          placeholder="Input Old Password"
         />
       </div>
       <div class="mt-3">
@@ -17,7 +17,7 @@
         <input
           type="password"
           class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Input text"
+          placeholder="Input New Password"
         />
       </div>
       <div class="mt-3">
@@ -25,7 +25,7 @@
         <input
           type="password"
           class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Input text"
+          placeholder="Input Confirm New Password"
         />
       </div>
       <button type="button" class="p-2 rounded-md bg-blue-700 text-white mt-4">

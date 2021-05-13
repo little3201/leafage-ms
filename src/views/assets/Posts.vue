@@ -39,16 +39,18 @@
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Actions</th>
           </tr>
         </thead>
-        <tbody class="overflow-auto"  style="height: calc(100vh - 238px)">
+        <tbody class="overflow-auto" style="height: calc(100vh - 238px)">
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
             <td class="px-4 py-2 md:px-5 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2 md:px-5 md:py-3 text-center max-h-32 max-w-sm truncate">
+            <td
+              class="px-4 py-2 md:px-5 md:py-3 text-center max-h-32 max-w-sm truncate"
+            >
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"
@@ -94,7 +96,7 @@
           <div class="col-span-12 sm:col-span-8 md:flex items-center">
             <input
               type="text"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
               v-model.trim="postsData.title"
@@ -146,18 +148,20 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-8 md:flex items-center">
-            <input
-              type="text"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+          <div class="col-span-12 sm:col-span-8">
+            <select
+              multiple
+              class="w-full rounded-md border-gray-300 shadow-sm h-10"
               placeholder="Tags"
-              v-model.trim="postsData.tags"
-            />
+              v-model="postsData.tags"
+            >
+              <option disabled>请选择</option>
+            </select>
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <select
               v-model="postsData.category"
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="w-full rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
               <option
@@ -170,7 +174,7 @@
           </div>
           <div class="col-span-12">
             <textarea
-              class="block w-full rounded-md border-gray-300 shadow-sm"
+              class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="100"
               v-model.trim="postsData.subtitle"
@@ -181,7 +185,7 @@
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
-              :class="{ 'border': preview }"
+              :class="{ border: preview }"
             >
               <a
                 href="javascript:;"
@@ -225,7 +229,7 @@
               </a>
               <textarea
                 v-if="!preview"
-                class="block w-full rounded-md border-gray-300 shadow-sm"
+                class="w-full rounded-md border-gray-300 shadow-sm"
                 v-model="content"
                 placeholder="write with markdown..."
               ></textarea>

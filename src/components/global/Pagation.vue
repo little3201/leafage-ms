@@ -116,7 +116,7 @@
     </ul>
     <select
       v-model="size"
-      class="block border border-gray-300 rounded-md sm:text-sm"
+      class="border border-gray-300 rounded-md sm:text-sm"
     >
       <option>10</option>
       <option>20</option>

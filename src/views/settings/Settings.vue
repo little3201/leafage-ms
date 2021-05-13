@@ -280,7 +280,7 @@
         <div class="p-5 border-t flex">
           <button
             type="button"
-            class="p-2 rounded-md text-xs font-bold block bg-blue-700 text-white"
+            class="p-2 rounded-md text-xs font-bold bg-blue-700 text-white"
           >
             New Group
           </button>
@@ -297,7 +297,11 @@
       class="col-span-12 lg:col-span-8 2xl:col-span-9 overflow-auto rounded-md"
       style="height: calc(100vh - 160px)"
     >
-      <router-view></router-view>
+      <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </div>
 </template>

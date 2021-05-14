@@ -23,6 +23,7 @@
     "crypto-js": "^4.0.0",
     "eslint": "^7.25.0",
     "eslint-plugin-vue": "^7.9.0",
+    "feather-icons": "^4.28.0",
     "highlight.js": "^10.7.2",
     "markdown-it": "^12.0.6",
     "mockjs": "^1.1.0",

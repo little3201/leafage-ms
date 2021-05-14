@@ -154,7 +154,7 @@
                     </svg>
                     <input
                       id="file-upload"
-                      name="cover"
+                      name="portfolioData.cover"
                       multiple
                       type="file"
                       class="sr-only"

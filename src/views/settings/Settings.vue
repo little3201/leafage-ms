@@ -27,7 +27,7 @@
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
+                width="22"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -56,7 +56,6 @@
                     class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       viewBox="0 0 24 24"
@@ -65,11 +64,11 @@
                       stroke-width="1.5"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-activity mr-2"
+                      class="mr-2"
                     >
-                      <polyline
-                        points="22 12 18 12 15 21 9 3 6 12 2 12"
-                      ></polyline>
+                      <use
+                        xlink:href="feather-icons/feather-sprite.svg#global"
+                      />
                     </svg>
                     English
                   </a>
@@ -78,7 +77,6 @@
                     class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
                       viewBox="0 0 24 24"
@@ -87,13 +85,13 @@
                       stroke-width="1.5"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      class="feather feather-activity mr-2"
+                      class="mr-2"
                     >
-                      <polyline
-                        points="22 12 18 12 15 21 9 3 6 12 2 12"
-                      ></polyline>
+                      <use
+                        xlink:href="src/assets/feather-sprite.svg#global"
+                      />
                     </svg>
-                    Indonesia
+                    Chinese
                     <div
                       class="text-xs text-white px-1 rounded-full bg-theme-6 ml-auto"
                     >

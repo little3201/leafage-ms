@@ -122,7 +122,7 @@
             >
             <input
               :disabled="authorityData.type == 'B'"
-              type="text"
+              type="url"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{
                 'text-gray-300 placeholder-gray-300': authorityData.type == 'B',

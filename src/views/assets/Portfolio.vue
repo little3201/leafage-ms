@@ -155,6 +155,7 @@
                     <input
                       id="file-upload"
                       name="cover"
+                      multiple
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg,vedio/mp4"

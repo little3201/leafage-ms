@@ -139,7 +139,7 @@
         </div>
       </form>
     </Model>
-    <Tree :isTree="isTree" @treeAction="treeOperate" />
+    <Tree :isTree="isTree" @treeAction="treeOperate" :datas="authorities" />
   </div>
 </template>
 
@@ -177,6 +177,65 @@ export default defineComponent({
       isTree: false,
       roleData: {},
       superiors: [],
+      authorities: [
+        {
+          code: "a",
+          name: "Dashboard",
+          children: [],
+        },
+        {
+          code: "b",
+          name: "System",
+          children: [
+            {
+              code: "I",
+              name: "User",
+              children: [
+                {
+                  code: "1",
+                  name: "Add",
+                  children: [],
+                },
+                {
+                  code: "2",
+                  name: "Edit",
+                  children: [],
+                },
+                {
+                  code: "3",
+                  name: "Delete",
+                  children: [],
+                },
+                {
+                  code: "4",
+                  name: "Export",
+                  children: [],
+                },
+              ],
+            },
+            {
+              code: "c",
+              name: "Group",
+              children: [],
+            },
+          ],
+        },
+        {
+          code: "d",
+          name: "Category",
+          children: [],
+        },
+        {
+          code: "e",
+          name: "Posts",
+          children: [],
+        },
+        {
+          code: "f",
+          name: "Portfolio",
+          children: [],
+        },
+      ],
     };
   },
 

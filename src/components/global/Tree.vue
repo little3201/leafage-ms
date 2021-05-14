@@ -18,229 +18,7 @@
         aria-labelledby="modal-headline"
       >
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <div class="sm:flex sm:items-start">
-            <ul>
-              <li
-                class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
-              >
-                <input type="checkbox" checked class="rounded" />
-                <span class="ml-4">Dashboard</span>
-              </li>
-              <li
-                class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
-              >
-                <input type="checkbox" class="rounded" />
-                <span class="ml-4">Posts</span>
-                <ol class="flex items-center ml-8 border-l">
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-blue-600">Add</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Edit</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-red-600">Delete</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Export</span>
-                  </li>
-                </ol>
-              </li>
-              <li
-                class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
-              >
-                <input type="checkbox" class="rounded" />
-                <span class="ml-4">Portfolio</span>
-                <ol class="flex items-center ml-8 border-l">
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-blue-600">Add</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Edit</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-red-600">Delete</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Export</span>
-                  </li>
-                </ol>
-              </li>
-              <ul
-                class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
-              >
-                <input type="checkbox" class="rounded" />
-                <span
-                  @click="isChildOpen = !isChildOpen"
-                  class="ml-4 cursor-pointer flex items-center"
-                  >System
-                  <svg
-                    v-if="isChildOpen"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-down ml-4"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                  <svg
-                    v-else
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-chevron-right ml-4"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline></svg
-                ></span>
-              </ul>
-              <ul v-if="isChildOpen">
-                <li
-                  class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md ml-4"
-                >
-                  <input type="checkbox" class="rounded" />
-                  <span class="ml-4">User</span>
-                  <ol class="flex items-center ml-8 border-l">
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-blue-600">Add</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Edit</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-red-600">Delete</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Export</span>
-                    </li>
-                  </ol>
-                </li>
-                <li
-                  class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md ml-4"
-                >
-                  <input type="checkbox" class="rounded" />
-                  <span class="ml-4">Group</span>
-                  <ol class="flex items-center ml-8 border-l">
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-blue-600">Add</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Edit</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-red-600">Delete</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Export</span>
-                    </li>
-                  </ol>
-                </li>
-                <li
-                  class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md ml-4"
-                >
-                  <input type="checkbox" class="rounded" />
-                  <span class="ml-4">Role</span>
-                  <ol class="flex items-center ml-8 border-l">
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-blue-600">Add</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-purple-600">Auz</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Edit</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-red-600">Delete</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Export</span>
-                    </li>
-                  </ol>
-                </li>
-                <li
-                  class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md ml-4"
-                >
-                  <input type="checkbox" class="rounded" />
-                  <span class="ml-4">Authority</span>
-                  <ol class="flex items-center ml-8 border-l">
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-blue-600">Add</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Edit</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2 text-red-600">Delete</span>
-                    </li>
-                    <li class="flex items-center mx-4">
-                      <input type="checkbox" class="rounded" />
-                      <span class="ml-2">Export</span>
-                    </li>
-                  </ol>
-                </li>
-              </ul>
-              <li
-                class="py-1 px-2 flex items-center hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
-              >
-                <input type="checkbox" class="rounded" />
-                <span class="ml-4">Category</span>
-                <ol class="flex items-center ml-8 border-l">
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-blue-600">Add</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Edit</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2 text-red-600">Delete</span>
-                  </li>
-                  <li class="flex items-center mx-4">
-                    <input type="checkbox" class="rounded" />
-                    <span class="ml-2">Export</span>
-                  </li>
-                </ol>
-              </li>
-            </ul>
-          </div>
+          <TreeCore :datas="datas" />
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
@@ -265,21 +43,24 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import TreeCore from "./TreeCore.vue";
 
 export default defineComponent({
   name: "Tree",
+
+  components: {
+    TreeCore,
+  },
 
   props: {
     isTree: {
       type: Boolean,
       default: false,
     },
-  },
-
-  data() {
-    return {
-      isChildOpen: true,
-    };
+    datas: {
+      type: Array,
+      default: [],
+    },
   },
 
   methods: {
@@ -287,7 +68,7 @@ export default defineComponent({
       this.$emit("treeAction", false);
     },
     onSubmit() {
-      this.closeModel()
+      this.closeModel();
     },
   },
 });

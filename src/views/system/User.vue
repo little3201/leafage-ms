@@ -371,11 +371,11 @@
             <label>Locked</label>
             <div class="mt-3">
               <label class="inline-flex items-center">
-                <input type="radio" checked value="false" />
+                <input type="radio" checked value="true" v-model="userData.accountNonLocked" />
                 <span class="ml-2">false</span>
               </label>
               <label class="inline-flex items-center ml-4">
-                <input type="radio" value="true" />
+                <input type="radio" value="false" v-model="userData.accountNonLocked" />
                 <span class="ml-2">true</span>
               </label>
             </div>

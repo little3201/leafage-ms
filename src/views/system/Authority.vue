@@ -42,7 +42,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -57,15 +57,9 @@
             <td class="px-4 py-2" v-text="data.count"></td>
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2">
-              <span
-                v-text="data.type"
-                class="p-1 rounded-md text-xs"
-                :class="[
-                  { 'bg-blue-300': data.type == 'MENU' },
-                  { 'bg-green-300': data.type == 'BTN' },
-                  { 'bg-pink-300': data.type == 'ROUTER' },
-                ]"
-              ></span>
+              <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
+              <span class="text-blue-500" v-else-if="data.type == 'B'">Button</span>
+              <span class="text-pink-500" v-else>Api</span>
             </td>
             <td class="px-4 py-2" v-text="data.path"></td>
             <td
@@ -128,7 +122,7 @@
             >
             <input
               :disabled="authorityData.type == 'B'"
-              type="text"
+              type="url"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{
                 'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
@@ -155,7 +149,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model="authorityData.description"
               placeholder="Description"
             />

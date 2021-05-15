@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -92,7 +92,7 @@
             <label>Alias</label>
             <input
               type="text"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               v-model="categoryData.alias"
             />
@@ -100,7 +100,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model="categoryData.description"
               placeholder="Description"
             />

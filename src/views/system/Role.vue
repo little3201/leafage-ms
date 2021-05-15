@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -132,14 +132,14 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model="roleData.description"
             />
           </div>
         </div>
       </form>
     </Model>
-    <Tree :isTree="isTree" @treeAction="treeOperate" />
+    <Tree :isTree="isTree" @treeAction="treeOperate" :datas="authorities" />
   </div>
 </template>
 
@@ -177,6 +177,65 @@ export default defineComponent({
       isTree: false,
       roleData: {},
       superiors: [],
+      authorities: [
+        {
+          code: "a",
+          name: "Dashboard",
+          children: [],
+        },
+        {
+          code: "b",
+          name: "System",
+          children: [
+            {
+              code: "I",
+              name: "User",
+              children: [
+                {
+                  code: "1",
+                  name: "Add",
+                  children: [],
+                },
+                {
+                  code: "2",
+                  name: "Edit",
+                  children: [],
+                },
+                {
+                  code: "3",
+                  name: "Delete",
+                  children: [],
+                },
+                {
+                  code: "4",
+                  name: "Export",
+                  children: [],
+                },
+              ],
+            },
+            {
+              code: "c",
+              name: "Group",
+              children: [],
+            },
+          ],
+        },
+        {
+          code: "d",
+          name: "Category",
+          children: [],
+        },
+        {
+          code: "e",
+          name: "Posts",
+          children: [],
+        },
+        {
+          code: "f",
+          name: "Portfolio",
+          children: [],
+        },
+      ],
     };
   },
 

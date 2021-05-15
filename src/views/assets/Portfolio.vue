@@ -41,7 +41,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -59,39 +59,13 @@
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
             <td class="px-4 py-2 md:px-5 md:py-3">
-              <svg
-                v-if="data.type == 'jpg'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#3B82F6"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-image mx-auto"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              <svg
-                v-if="data.type == 'mp4'"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#10B981"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-video mx-auto"
-              >
-                <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-              </svg>
+              <span
+                v-text="data.type"
+                :class="[
+                  { 'text-blue-500': imgTypes.includes(data.type) },
+                  { 'text-pink-500': videoTypes.includes(data.type) },
+                ]"
+              ></span>
             </td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.viewed"></td>
             <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.likes"></td>
@@ -125,29 +99,25 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
+        <div class="grid grid-cols-12 gap-4 row-gap-3 w-full">
           <div class="col-span-12 sm:col-span-6">
             <label>Title</label>
             <input
               type="text"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               v-model="portfolioData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Category</label>
+            <label>Tags</label>
             <select
-              v-model="portfolioData.category"
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              multiple
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm h-10"
+              placeholder="Tags"
+              v-model="portfolioData.tags"
             >
               <option disabled>请选择</option>
-              <option
-                v-for="category in categories"
-                :key="category.code"
-                :value="category.code"
-                v-text="category.alias"
-              ></option>
             </select>
           </div>
           <div class="col-span-12">
@@ -155,7 +125,7 @@
             <img
               v-if="portfolioData.url"
               :src="portfolioData.url"
-              alt="cover"
+              alt="portfolio content"
               class="rounded-md object-cover h-32 mt-1"
             />
             <div
@@ -185,6 +155,7 @@
                     <input
                       id="file-upload"
                       name="cover"
+                      multiple
                       type="file"
                       class="sr-only"
                       accept="image/png,image/jpeg,image/jpg,vedio/mp4"
@@ -199,7 +170,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model="portfolioData.description"
               placeholder="Description"
             />
@@ -241,7 +212,8 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       portfolioData: {},
-      categories: [],
+      imgTypes: ["jpg", "jpeg", "png"],
+      videoTypes: ["mp4", "avi"],
     };
   },
 
@@ -253,24 +225,12 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.portfolioData = {};
-      if (isEdit == true) {
-        Promise.all([this.retrieveCategories(), this.fetch(isEdit, code)]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 获取所有分类
-    retrieveCategories() {
-      instance.get(SERVER_URL.category).then((res) => {
-        this.categories = res.data;
-      });
-    },
-    // 根据code查portfolio
-    fetch(isEdit: boolean, code: string) {
       if (isEdit && code) {
         instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
           this.portfolioData = res.data;
         });
       }
+      this.isEdit = isEdit;
     },
     // 新增/编辑：提交
     commitOperate(code: string) {

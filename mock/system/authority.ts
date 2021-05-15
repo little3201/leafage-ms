@@ -81,7 +81,8 @@ export default [
         { "code": "21224UJ5C", "modifyTime": "2021-02-25T13:56:13.127", "superior": "System", "name": "Group", "type": "M", "path": "/group", "description": "组", "count": 0 },
         { "code": "21224PV6C", "modifyTime": "2021-02-25T13:56:34.668", "superior": "System", "name": "Role", "type": "M", "path": "/role", "description": "角色", "count": 0 },
         { "code": "212240439", "modifyTime": "2021-02-24T11:28:41.202", "superior": "System", "name": "Authority", "type": "M", "path": "/authority", "description": "权限", "count": 0 },
-        { "code": "21224UJ6C", "modifyTime": "2021-02-25T13:56:13.127", "superior": "User", "name": "Add", "type": "B", "path": "/", "description": "新增", "count": 0 }
+        { "code": "21224UJ6C", "modifyTime": "2021-02-25T13:56:13.127", "superior": "User", "name": "Add", "type": "B", "path": "/", "description": "新增", "count": 0 },
+        { "code": "21224UJ6C", "modifyTime": "2021-02-25T13:56:13.127", "superior": null, "name": "Login", "type": null, "path": "/login", "description": "登录", "count": 0 }
       ];
     },
   },

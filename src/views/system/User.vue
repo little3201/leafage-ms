@@ -44,7 +44,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -320,7 +320,7 @@
             <label>Gender</label>
             <select
               v-model="userData.gender"
-              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
               <option value="M">Male</option>
@@ -329,11 +329,11 @@
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Credentials Expired</label>
-            <label class="block">
+            <label>
               <input
                 type="datetime-local"
                 v-model="userData.expired"
-                class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+                class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
               />
             </label>
           </div>
@@ -341,7 +341,7 @@
             <label>Groups</label>
             <select
               v-model="userData.groups"
-              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
               <option
@@ -356,7 +356,7 @@
             <label>Roles</label>
             <select
               v-model="userData.roles"
-              class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
               <option
@@ -371,11 +371,11 @@
             <label>Locked</label>
             <div class="mt-3">
               <label class="inline-flex items-center">
-                <input type="radio" checked value="false" />
+                <input type="radio" checked value="true" v-model="userData.accountNonLocked" />
                 <span class="ml-2">false</span>
               </label>
               <label class="inline-flex items-center ml-4">
-                <input type="radio" value="true" />
+                <input type="radio" value="false" v-model="userData.accountNonLocked" />
                 <span class="ml-2">true</span>
               </label>
             </div>
@@ -383,7 +383,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
-              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model="userData.description"
               placeholder="Description"
             />

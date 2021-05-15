@@ -15,6 +15,7 @@ export default [
       return {
         code: '20A23D2D1',
         title: 'Travel Photos',
+        type: 'jpg',
         category: '20A23D2D1'
       }
     },

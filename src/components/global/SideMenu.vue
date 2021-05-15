@@ -1,5 +1,5 @@
 <template>
-  <nav class="hidden md:block sm:w-20 xl:w-60 pr-5 text-sm">
+  <nav class="hidden md:block sm:w-20 xl:w-64 pr-5 text-sm overflow-hidden">
     <router-link
       to="/"
       class="flex items-center pl-5 pt-3"

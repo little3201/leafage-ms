@@ -13,7 +13,7 @@
         v-if="data.children && data.children.length > 0"
         href="javascript:;"
         @click.prevent="isOpen = !isOpen"
-        class="flex items-center h-12 rounded-full pl-5"
+        class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
       >
         <div class="mr-3">
           <svg
@@ -26,7 +26,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <use :xlink:href="'src/assets/feather-sprite.svg#' + data.icon" />
+            <use :xlink:href="'/@/assets/feather-sprite.svg#' + data.icon" />
           </svg>
         </div>
         <span
@@ -46,7 +46,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="src/assets/feather-sprite.svg#chevron-down" />
+            <use xlink:href="/@/assets/feather-sprite.svg#chevron-down" />
           </svg>
           <svg
             v-else
@@ -60,7 +60,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="src/assets/feather-sprite.svg#chevron-right" />
+            <use xlink:href="/@/assetsfeather-sprite.svg#chevron-right" />
           </svg>
         </span>
         <span
@@ -86,7 +86,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <use :xlink:href="'src/assets/feather-sprite.svg#' + data.icon" />
+            <use :xlink:href="'/@/assets/feather-sprite.svg#' + data.icon" />
           </svg>
         </div>
         <div

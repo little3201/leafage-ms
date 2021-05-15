@@ -32,8 +32,8 @@
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -50,7 +50,7 @@
     <div class="relative mr-auto sm:mr-6">
       <div
         class="cursor-pointer"
-        @click="(notify = !notify), (account = false), (settings = false)"
+        @click="(notify = !notify), (account = false)"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,14 +99,9 @@
       </div>
     </div>
     <div class="mr-auto sm:mr-6">
-      <div
-        class="cursor-pointer"
-        @click="(settings = !settings), (account = false), (notify = false)"
-      >
-        <span class="text-blue-600 mb-2">中</span>
-        <span class="text-gray-300">/</span>
-        <span class="text-gray-400 mt-2">En</span>
-      </div>
+      <button class="text-blue-600 -mt-2">中</button>
+      <span class="text-gray-300">/</span>
+      <button class="text-gray-400 -mb-2">En</button>
     </div>
     <div class="relative">
       <div
@@ -142,6 +137,7 @@
         </div>
         <div>
           <router-link
+            @click="account = false"
             to="/settings/profile"
             class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
@@ -163,6 +159,7 @@
             Profile
           </router-link>
           <router-link
+            @click="account = false"
             to="/settings/secret"
             class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
           >
@@ -248,8 +245,6 @@ export default defineComponent({
   setup() {
     // 控制通知是否打开
     let notify = ref(false);
-    // 控制设置是否打开
-    let settings = ref(false);
     // 控制账号操作是否打开
     let account = ref(false);
 
@@ -268,7 +263,7 @@ export default defineComponent({
       instance.post("/logout").then(() => {
         // 退出登录，设置user为空
         store.commit("setUser", {});
-        sessionStorage.removeItem("user")
+        sessionStorage.removeItem("user");
         router.replace("/signin");
       });
     };
@@ -277,7 +272,6 @@ export default defineComponent({
       notify,
       account,
       user,
-      settings,
       signout,
     };
   },

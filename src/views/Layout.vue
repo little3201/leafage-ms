@@ -8,11 +8,7 @@
         style="height: calc(100vh - 24px)"
       >
         <TopBar />
-        <router-view v-slot="{ Component, route }">
-          <transition :name="route.meta.transition">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <router-view> </router-view>
       </main>
     </div>
   </div>

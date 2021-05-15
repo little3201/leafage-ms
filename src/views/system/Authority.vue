@@ -105,11 +105,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="authorityData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -211,6 +210,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       authorityData: {},
+      dataCode: "",
       superiors: [],
     };
   },
@@ -223,14 +223,15 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.authorityData = {};
-      if (isEdit == true) {
-        Promise.all([this.fetch(isEdit, code), this.retrieveMenu()]);
+      if (isEdit) {
+        Promise.all([this.fetch(code), this.retrieveMenu()]);
       }
       this.isEdit = isEdit;
     },
     // 查详情
-    fetch(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+    fetch(code: string) {
+      if (code && code.length > 0) {
+        this.dataCode = code
         instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
           this.authorityData = res.data;
         });

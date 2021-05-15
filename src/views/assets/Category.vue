@@ -79,11 +79,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="categoryData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -141,6 +140,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       categoryData: {},
+      dataCode: "",
     };
   },
 
@@ -152,7 +152,8 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.categoryData = {};
-      if (isEdit && code) {
+      if (isEdit && code && code.length > 0) {
+        this.dataCode = code;
         instance
           .get(SERVER_URL.category.concat("/").concat(code))
           .then((res) => {
@@ -162,14 +163,16 @@ export default defineComponent({
       this.isEdit = isEdit;
     },
     // 新增/编辑：提交
-    commitOperate(code: string) {
+    commitOperate() {
       let data = this.categoryData;
-      if (code && code.length > 0) {
+      if (this.dataCode && this.dataCode.length > 0) {
         instance
-          .put(SERVER_URL.category.concat("/", code), data)
+          .put(SERVER_URL.category.concat("/", this.dataCode), data)
           .then((res) => {
             // 将datas中修改项的历史数据删除
-            this.datas = this.datas.filter((item: any) => item.code != code);
+            this.datas = this.datas.filter(
+              (item: any) => item.code != this.dataCode
+            );
             // 将结果添加到第一个
             this.datas.unshift(res.data);
             swal("Operated Success!", "you updated the item", "success");

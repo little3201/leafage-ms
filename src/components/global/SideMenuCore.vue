@@ -1,5 +1,5 @@
 <template>
-  <ul class="text-white w-full">
+  <ul class="text-white">
     <li
       v-for="data in datas"
       :key="data.code"
@@ -89,10 +89,7 @@
             <use :xlink:href="'/@/assets/feather-sprite.svg#' + data.icon" />
           </svg>
         </div>
-        <div
-          class="hidden xl:flex items-center w-full"
-          v-text="data.name"
-        ></div>
+        <div class="hidden xl:block w-full" v-text="data.name"></div>
       </router-link>
       <SideMenuCore
         v-show="isOpen"

@@ -78,11 +78,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="groupData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -168,6 +167,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       groupData: {},
+      dataCode: "",
       users: [],
       superiors: [],
     };
@@ -181,7 +181,7 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.groupData = {};
-      if (isEdit == true) {
+      if (isEdit) {
         Promise.all([
           this.retrieveUsers(code),
           this.fetch(isEdit, code),
@@ -192,7 +192,8 @@ export default defineComponent({
     },
     // 查询详情
     fetch(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+      if (isEdit && code && code.length > 0) {
+        this.dataCode = code;
         instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
           this.groupData = res.data;
         });
@@ -200,11 +201,14 @@ export default defineComponent({
     },
     // 查询关联用户
     retrieveUsers(code: string) {
-      instance
-        .get(SERVER_URL.user.concat("/", code, "/relation"))
-        .then((res) => {
-          this.users = res.data;
-        });
+      if (code && code.length > 0) {
+        this.dataCode = code;
+        instance
+          .get(SERVER_URL.user.concat("/", code, "/relation"))
+          .then((res) => {
+            this.users = res.data;
+          });
+      }
     },
     // 查询所有
     retrieveSuperiors() {

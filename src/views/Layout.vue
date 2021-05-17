@@ -2,17 +2,13 @@
   <div class="px-3 md:px-4 py-3">
     <MobileMenu />
     <div class="flex">
-      <SideMenu1 />
+      <SideMenu />
       <main
         class="px-4 md:px-5 rounded-3xl bg-gray-100 w-full overflow-hidden"
         style="height: calc(100vh - 24px)"
       >
         <TopBar />
-        <router-view v-slot="{ Component, route }">
-          <transition :name="route.meta.transition">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <router-view> </router-view>
       </main>
     </div>
   </div>
@@ -21,7 +17,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MobileMenu from "/@/components/global/MobileMenu.vue";
-import SideMenu1 from "/@/components/global/SideMenu1.vue";
+import SideMenu from "/@/components/global/SideMenu.vue";
 import TopBar from "/@/components/global/TopBar.vue";
 
 export default defineComponent({
@@ -29,7 +25,7 @@ export default defineComponent({
 
   components: {
     MobileMenu,
-    SideMenu1,
+    SideMenu,
     TopBar,
   },
 });

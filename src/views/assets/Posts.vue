@@ -84,11 +84,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="postsData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -280,6 +279,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       postsData: {},
+      dataCode: "",
       categories: [],
     };
   },
@@ -293,11 +293,11 @@ export default defineComponent({
     modelOperate(isEdit: boolean, code: string) {
       this.postsData = {};
       this.content = "";
-      if (isEdit == true) {
+      if (isEdit) {
         Promise.all([
           this.retrieveCategories(),
-          this.fetchPosts(isEdit, code),
-          this.fetchContent(isEdit, code),
+          this.fetchPosts(code),
+          this.fetchContent(code),
         ]);
       }
       this.isEdit = isEdit;
@@ -309,16 +309,17 @@ export default defineComponent({
       });
     },
     // 根据code查posts
-    fetchPosts(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+    fetchPosts(code: string) {
+      if (code && code.length > 0) {
+        this.dataCode = code;
         instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
           this.postsData = res.data;
         });
       }
     },
     // 根据code查posts content
-    fetchContent(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+    fetchContent(code: string) {
+      if (code && code.length > 0) {
         instance
           .get(SERVER_URL.posts.concat("/", code, "/content"))
           .then((res) => {
@@ -327,20 +328,23 @@ export default defineComponent({
       }
     },
     // 新增/编辑：提交
-    commitOperate(code: string) {
-      debugger;
+    commitOperate() {
       let data = {
         ...this.postsData,
         content: this.content,
       };
-      if (code && code.length > 0) {
-        instance.put(SERVER_URL.posts.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
+      if (this.dataCode && this.dataCode.length > 0) {
+        instance
+          .put(SERVER_URL.posts.concat("/", this.dataCode), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            this.datas = this.datas.filter(
+              (item: any) => item.code != this.dataCode
+            );
+            // 将结果添加到第一个
+            this.datas.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
       } else {
         instance.post(SERVER_URL.posts, data).then((res) => {
           if (this.datas.length >= 10) {

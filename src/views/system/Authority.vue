@@ -35,6 +35,7 @@
             <th scope="col" class="px-4 py-2">Role Count</th>
             <th scope="col" class="px-4 py-2">Superior</th>
             <th scope="col" class="px-4 py-2">Type</th>
+            <th scope="col" class="px-4 py-2">Icon</th>
             <th scope="col" class="px-4 py-2">Path</th>
             <th scope="col" class="px-4 py-2">Modify Time</th>
             <th scope="col" class="px-4 py-2">Actions</th>
@@ -58,8 +59,28 @@
             <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2">
               <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
-              <span class="text-blue-500" v-else-if="data.type == 'B'">Button</span>
+              <span class="text-blue-500" v-else-if="data.type == 'B'"
+                >Button</span
+              >
               <span class="text-pink-500" v-else>Api</span>
+            </td>
+            <td class="px-4 py-2">
+              <svg
+                v-if="data.icon"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mx-auto"
+              >
+                <use
+                  :xlink:href="'/@/assets/feather-sprite.svg#' + data.icon"
+                />
+              </svg>
             </td>
             <td class="px-4 py-2" v-text="data.path"></td>
             <td
@@ -84,11 +105,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="authorityData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -190,6 +210,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       authorityData: {},
+      dataCode: "",
       superiors: [],
     };
   },
@@ -202,14 +223,15 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.authorityData = {};
-      if (isEdit == true) {
-        Promise.all([this.fetch(isEdit, code), this.retrieveMenu()]);
+      if (isEdit) {
+        Promise.all([this.fetch(code), this.retrieveMenu()]);
       }
       this.isEdit = isEdit;
     },
     // 查详情
-    fetch(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+    fetch(code: string) {
+      if (code && code.length > 0) {
+        this.dataCode = code
         instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
           this.authorityData = res.data;
         });

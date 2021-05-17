@@ -307,11 +307,10 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="userData.username"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -424,6 +423,7 @@ export default defineComponent({
       isEdit: false,
       isDel: false,
       userData: {},
+      username: "",
       groups: [],
       roles: [],
     };
@@ -437,9 +437,9 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, username: string) {
       this.userData = {};
-      if (isEdit == true) {
+      if (isEdit) {
         Promise.all([
-          this.fetch(isEdit, username),
+          this.fetch(username),
           this.retrieveGroups(),
           this.retrieveRoles(),
         ]);
@@ -447,8 +447,9 @@ export default defineComponent({
       this.isEdit = isEdit;
     },
     // 查询用户详情
-    fetch(isEdit: boolean, username: string) {
-      if (isEdit && username) {
+    fetch(username: string) {
+      if (username && username.length > 0) {
+        this.username = username
         instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
           this.userData = res.data;
         });
@@ -467,12 +468,12 @@ export default defineComponent({
       });
     },
     // 新增/编辑：提交
-    commitOperate(code: string) {
+    commitOperate() {
       let data = this.userData;
-      if (code && code.length > 0) {
-        instance.put(SERVER_URL.user.concat("/", code), data).then((res) => {
+      if (this.username && this.username.length > 0) {
+        instance.put(SERVER_URL.user.concat("/", this.username), data).then((res) => {
           // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
+          this.datas = this.datas.filter((item: any) => item.code != this.username);
           // 将结果添加到第一个
           this.datas.unshift(res.data);
           swal("Operated Success!", "you updated the item", "success");

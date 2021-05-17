@@ -20,19 +20,16 @@
                   class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-red-600 right-0 top-0 -mr-2 -mt-2"
                 >
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#ffffff"
+                    stroke="currentColor"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-x"
                   >
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    <use xlink:href="/@/assets/feather-sprite.svg#x" />
                   </svg>
                 </div>
               </div>
@@ -193,7 +190,10 @@
           </div>
         </div>
         <div class="flex justify-end mt-4">
-          <a href="" class="text-red-600 flex border border-red-600 p-2 rounded-md items-center">
+          <a
+            href=""
+            class="text-red-600 flex border border-red-600 p-2 rounded-md items-center"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"

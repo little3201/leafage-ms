@@ -220,7 +220,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4">
           <canvas id="lineChart" ref="lineChart"></canvas>
         </div>
       </div>
@@ -240,11 +240,11 @@ export default defineComponent({
     let config = {
       type: "line",
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"],
         datasets: [
           {
             label: "count",
-            data: [112, 193, 100, 259, 24, 380],
+            data: [112, 193, 100, 259, 24, 380, 900],
             tension: 0.3,
             borderColor: '#91c714'
           },

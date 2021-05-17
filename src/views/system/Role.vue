@@ -96,11 +96,10 @@
       :page="page"
       @setPage="setPage"
     />
-    <Confirm :isDel="isDel" @delAction="confirmOperate" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
     <Model
-      :code="roleData.code"
-      :isEdit="isEdit"
-      @editAction="modelOperate"
+      :isShow="isEdit"
+      @cancelAction="modelOperate"
       @commitAction="commitOperate"
     >
       <form class="w-full">
@@ -139,7 +138,7 @@
         </div>
       </form>
     </Model>
-    <Tree :isTree="isTree" @treeAction="treeOperate" :datas="authorities" />
+    <Tree :isShow="isTree" @treeAction="treeOperate" :datas="authorities" />
   </div>
 </template>
 
@@ -176,6 +175,7 @@ export default defineComponent({
       isDel: false,
       isTree: false,
       roleData: {},
+      dataCode: "",
       superiors: [],
       authorities: [
         {
@@ -247,14 +247,15 @@ export default defineComponent({
     // 新增/编辑：打开
     modelOperate(isEdit: boolean, code: string) {
       this.roleData = {};
-      if (isEdit == true) {
-        Promise.all([this.fetch(isEdit, code), this.retrieveSuperiors()]);
+      if (isEdit) {
+        Promise.all([this.fetch(code), this.retrieveSuperiors()]);
       }
       this.isEdit = isEdit;
     },
     // 查详情
-    fetch(isEdit: boolean, code: string) {
-      if (isEdit && code) {
+    fetch(code: string) {
+      if (code && code.length > 0) {
+        this.dataCode = code;
         instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
           this.roleData = res.data;
         });

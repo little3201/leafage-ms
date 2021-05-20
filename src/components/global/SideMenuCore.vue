@@ -60,7 +60,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="/@/assetsfeather-sprite.svg#chevron-right" />
+            <use xlink:href="/@/assets/feather-sprite.svg#chevron-right" />
           </svg>
         </span>
         <span

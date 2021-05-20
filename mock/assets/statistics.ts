@@ -8,7 +8,7 @@ export default [
             return {
                 date: "2021-05-19",
                 viewed: 4061,
-                viewedOver: 30,
+                overViewed: 30,
                 likes: 30,
                 comment: 0
             }

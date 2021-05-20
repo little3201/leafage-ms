@@ -48,7 +48,7 @@
                 style="background-color: #91c714"
                 title="viewed higher than last month"
               >
-                {{ data.viewedOver }}%
+                {{ data.overViewed }}%
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

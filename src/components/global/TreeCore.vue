@@ -17,6 +17,21 @@
           v-if="data.children && data.children.length > 0"
           @click="isChildOpen = !isChildOpen"
           class="ml-4 cursor-pointer flex items-center"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use
+              :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon"
+            /></svg
           >{{ data.name }}
           <svg
             v-if="isChildOpen"
@@ -29,7 +44,7 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-down ml-4"
+            class="feather feather-chevron-down ml-6"
           >
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
@@ -44,11 +59,28 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-right ml-4"
+            class="feather feather-chevron-right ml-6"
           >
             <polyline points="9 18 15 12 9 6"></polyline></svg
         ></span>
-        <span v-else class="ml-4" v-text="data.name"></span>
+        <span v-else class="ml-4 flex items-center">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use
+              :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon"
+            />
+          </svg>
+          {{ data.name }}
+        </span>
       </div>
       <!-- children -->
       <TreeCore
@@ -70,8 +102,8 @@ export default defineComponent({
   props: {
     datas: {
       type: Array,
-      default: []
-    }
+      default: [],
+    },
   },
 
   data() {

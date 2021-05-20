@@ -65,7 +65,7 @@
                 <a
                   class="flex items-center mr-3 text-purple-600"
                   href="javascript:;"
-                  @click.prevent="isTree = true"
+                  @click.prevent="treeOperate(true)"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,65 +177,7 @@ export default defineComponent({
       roleData: {},
       dataCode: "",
       superiors: [],
-      authorities: [
-        {
-          code: "a",
-          name: "Dashboard",
-          children: [],
-        },
-        {
-          code: "b",
-          name: "System",
-          children: [
-            {
-              code: "I",
-              name: "User",
-              children: [
-                {
-                  code: "1",
-                  name: "Add",
-                  children: [],
-                },
-                {
-                  code: "2",
-                  name: "Edit",
-                  children: [],
-                },
-                {
-                  code: "3",
-                  name: "Delete",
-                  children: [],
-                },
-                {
-                  code: "4",
-                  name: "Export",
-                  children: [],
-                },
-              ],
-            },
-            {
-              code: "c",
-              name: "Group",
-              children: [],
-            },
-          ],
-        },
-        {
-          code: "d",
-          name: "Category",
-          children: [],
-        },
-        {
-          code: "e",
-          name: "Posts",
-          children: [],
-        },
-        {
-          code: "f",
-          name: "Portfolio",
-          children: [],
-        },
-      ],
+      authorities: [],
     };
   },
 
@@ -269,6 +211,11 @@ export default defineComponent({
     },
     // 授权：打开
     treeOperate(isTree: boolean) {
+      if (isTree) {
+        instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+          this.authorities = res.data;
+        });
+      }
       this.isTree = isTree;
     },
     // 新增/编辑：提交

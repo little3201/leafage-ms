@@ -49,7 +49,7 @@
             </span>
           </a>
           <img
-            src="/src/assets/illustration.svg"
+            src="/svg/illustration.svg"
             class="my-auto"
             alt="leafage"
           />
@@ -173,7 +173,7 @@ export default defineComponent({
     content: "";
     margin-left: -48%;
     min-width: 768px;
-    background-image: url(/src/assets/bg-login-page.svg);
+    background-image: url(/svg/bg-login-page.svg);
     background-position: right;
     background-repeat: no-repeat;
     background-size: auto 100%;

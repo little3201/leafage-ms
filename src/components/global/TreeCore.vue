@@ -8,8 +8,7 @@
       <div class="flex items-center">
         <input
           type="checkbox"
-          checked
-          class="rounded-md"
+          class="rounded"
           :value="data.code"
           v-model="menus"
         />
@@ -30,7 +29,7 @@
             class="mr-2"
           >
             <use
-              :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon"
+              :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon"
             /></svg
           >{{ data.name }}
           <svg
@@ -76,7 +75,7 @@
             class="mr-2"
           >
             <use
-              :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon"
+              :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon"
             />
           </svg>
           {{ data.name }}
@@ -109,7 +108,9 @@ export default defineComponent({
   data() {
     return {
       isChildOpen: true,
-      menus: [],
+      menus: [
+        "2122466RP"
+      ],
     };
   },
 });

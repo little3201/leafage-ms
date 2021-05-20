@@ -78,7 +78,7 @@
                 class="mx-auto"
               >
                 <use
-                  :xlink:href="'/src/assets/feather-sprite.svg#' + data.icon"
+                  :xlink:href="'/svg/feather-sprite.svg#' + data.icon"
                 />
               </svg>
             </td>

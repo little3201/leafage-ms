@@ -19,18 +19,18 @@
           class="ml-4 cursor-pointer flex items-center"
         >
           <svg
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
             class="mr-2"
           >
             <use
-              :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon"
+              :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon"
             /></svg
           >{{ data.name }}
           <svg
@@ -65,18 +65,18 @@
         ></span>
         <span v-else class="ml-4 flex items-center">
           <svg
-            width="20"
-            height="20"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
             class="mr-2"
           >
             <use
-              :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon"
+              :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon"
             />
           </svg>
           {{ data.name }}

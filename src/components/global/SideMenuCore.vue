@@ -26,7 +26,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <use :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon" />
+            <use :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon" />
           </svg>
         </div>
         <span
@@ -46,7 +46,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="/@/assets/feather-sprite.svg#chevron-down" />
+            <use xlink:href="/src/assets/feather-sprite.svg#chevron-down" />
           </svg>
           <svg
             v-else
@@ -60,7 +60,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="/@/assets/feather-sprite.svg#chevron-right" />
+            <use xlink:href="/src/assets/feather-sprite.svg#chevron-right" />
           </svg>
         </span>
         <span
@@ -86,7 +86,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <use :xlink:href="'/@/assets/feather-sprite.svg#' + data.expand.icon" />
+            <use :xlink:href="'/src/assets/feather-sprite.svg#' + data.expand.icon" />
           </svg>
         </div>
         <div class="hidden xl:block w-full" v-text="data.name"></div>

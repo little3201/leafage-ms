@@ -20,7 +20,7 @@
 
 ### 功能模块介绍：
 
-<img alt="introduce" src="src/assets/images/introduce.png">
+<img alt="introduce" src="public/images/introduce.png">
 
 **后台管理系统访问地址：** https://console.leafage.top
 
@@ -28,7 +28,7 @@
 
 与本项目配套的后台服务（[leafage-gateway](https://github.com/little3201/leafage-gateway), [leafage-basic](https://github.com/little3201/leafage-basic)）
 
-<img alt="introduce" src="src/assets/images/server.png">
+<img alt="introduce" src="public/images/server.png">
 
 
 ### 更新
@@ -52,13 +52,13 @@
 ### 展示截图
 
 **控制台：**
-<img alt="dashboard" width="100%" src="src/assets/images/dashboard.jpeg">
+<img alt="dashboard" width="100%" src="public/images/dashboard.jpeg">
 
 **登录页：**
-<img alt="signin" width="100%" src="src/assets/images/signin.jpeg">
+<img alt="signin" width="100%" src="public/images/signin.jpeg">
 
 **列表页+model：**
-<img alt="posts" width="100%" src="src/assets/images/posts.jpeg">
+<img alt="posts" width="100%" src="public/images/posts.jpeg">
 
 ### 项目地址
 

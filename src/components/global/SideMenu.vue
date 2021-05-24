@@ -58,6 +58,9 @@
 import { defineComponent } from "vue";
 import SideMenuCore from "./SideMenuCore.vue";
 
+import instance from "../../api";
+import SERVER_URL from "../../api/request";
+
 export default defineComponent({
   name: "SideMenu",
 
@@ -68,73 +71,20 @@ export default defineComponent({
   data() {
     return {
       isOpen: false,
-      datas: [
-        {
-          code: "a",
-          name: "Dashboard",
-          path: "/",
-          icon: "home",
-          children: [],
-        },
-        {
-          code: "b",
-          name: "System",
-          path: "/system",
-          icon: "layers",
-          children: [
-            {
-              code: "I",
-              name: "User",
-              path: "/user",
-              icon: "user",
-              children: [],
-            },
-            {
-              code: "II",
-              name: "Group",
-              path: "/group",
-              icon: "users",
-              children: [],
-            },
-            {
-              code: "III",
-              name: "Role",
-              path: "/role",
-              icon: "pocket",
-              children: [],
-            },
-            {
-              code: "V",
-              name: "Authority",
-              path: "/authority",
-              icon: "power",
-              children: [],
-            },
-          ],
-        },
-        {
-          code: "d",
-          name: "Category",
-          path: "/category",
-          icon: "tag",
-          children: [],
-        },
-        {
-          code: "e",
-          name: "Posts",
-          path: "/posts",
-          icon: "book",
-          children: [],
-        },
-        {
-          code: "f",
-          name: "Portfolio",
-          path: "/portfolio",
-          icon: "camera",
-          children: [],
-        },
-      ],
+      datas: [],
     };
+  },
+
+  mounted() {
+    this.retrieveAuthorities();
+  },
+
+  methods: {
+    retrieveAuthorities() {
+      instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+        this.datas = res.data;
+      });
+    },
   },
 });
 </script>

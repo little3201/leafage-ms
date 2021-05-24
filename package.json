@@ -27,7 +27,7 @@
     "highlight.js": "^10.7.2",
     "markdown-it": "^12.0.6",
     "mockjs": "^1.1.0",
-    "postcss": "^8.2.12",
+    "postcss": "^8.2.15",
     "qiniu-js": "^3.1.4",
     "sweetalert": "^2.1.2",
     "tailwindcss": "^2.1.2",
@@ -36,7 +36,7 @@
     "vite-plugin-mock": "^2.5.0"
   },
   "resolutions": {
-    "postcss": "8.2.12"
+    "postcss": "8.2.15"
   },
   "keywords": [
     "vue3",

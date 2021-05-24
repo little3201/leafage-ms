@@ -29,7 +29,7 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <use xlink:href="/@/assets/feather-sprite.svg#x" />
+                    <use xlink:href="/svg/feather-sprite.svg#x" />
                   </svg>
                 </div>
               </div>

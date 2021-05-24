@@ -46,9 +46,9 @@
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
                 style="background-color: #91c714"
-                title="33% Higher than last month"
+                title="viewed higher than last month"
               >
-                33%
+                {{ data.overViewed }}%
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -67,7 +67,10 @@
               </div>
             </div>
           </div>
-          <div class="text-3xl font-bold leading-8 mt-6">2286</div>
+          <h2
+            class="text-3xl font-bold leading-8 mt-6"
+            v-text="data.viewed"
+          ></h2>
           <div class="text-base text-gray-600 mt-1">Posts Viewed</div>
         </div>
       </div>
@@ -229,64 +232,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import { createChart } from "../../plugins/char";
+
+import instance from "../../api";
+import SERVER_URL from "../../api/request";
 
 export default defineComponent({
   name: "Report",
 
   setup() {
     const lineChart = ref();
-    let config = {
-      type: "line",
-      data: {
-        labels: ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"],
-        datasets: [
-          {
-            label: "count",
-            data: [112, 193, 100, 259, 24, 380, 900],
-            tension: 0.3,
-            borderColor: '#91c714'
-          },
-        ],
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: "Chart.js Line Chart",
-            },
-          },
-          interaction: {
-            intersect: false,
-          },
-          scales: {
-            x: {
-              display: true,
-              title: {
-                display: true,
-              },
-            },
-            y: {
-              display: true,
-              title: {
-                display: true,
-                text: "Value",
-              },
-              suggestedMin: -10,
-              suggestedMax: 200,
-            },
-          },
-        },
-      },
-      options: {},
-    };
+    const data = ref({});
+    const labels = ref<Array<String>>([]);
+    const datas = ref<Array<Number>>([]);
+    const rates = ref<Array<Number>>([]);
+    // 请求最新统计数据
+    async function fetch() {
+      await instance
+        .get(SERVER_URL.statistics.concat("/viewed"))
+        .then((res) => {
+          data.value = res.data;
+        });
+    }
+    // 请求七天内的统计数据
+    async function retrieve() {
+      await instance
+        .get(SERVER_URL.statistics.concat("?page=0&size=7"))
+        .then((res) => {
+          let array: Array<any> = res.data;
+          array.forEach((item: any) => {
+            labels.value.unshift(item.date);
+            datas.value.unshift(item.viewed);
+            rates.value.unshift(item.overViewed)
+          });
+        });
+    }
+
+    async function initData() {
+      await Promise.all([fetch(), retrieve()]).then(() =>
+        createChart(lineChart.value, labels.value, datas.value, rates.value)
+      );
+    }
 
     onMounted(() => {
-      createChart(lineChart.value, config);
+      initData();
     });
 
-    return { lineChart };
+    return { lineChart, data };
   },
 });
 </script>

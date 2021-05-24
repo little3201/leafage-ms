@@ -16,6 +16,7 @@ export default [
         code: '20A23D2D1',
         title: 'Travel Photos',
         type: 'jpg',
+        tags: ['travel', 'xian'],
         category: '20A23D2D1'
       }
     },

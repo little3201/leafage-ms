@@ -232,7 +232,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import { createChart } from "../../plugins/char";
 
 import instance from "../../api";
@@ -244,18 +244,39 @@ export default defineComponent({
   setup() {
     const lineChart = ref();
     const data = ref({});
+    const labels = ref<Array<String>>([]);
+    const datas = ref<Array<Number>>([]);
+    const rates = ref<Array<Number>>([]);
+    // 请求最新统计数据
+    async function fetch() {
+      await instance
+        .get(SERVER_URL.statistics.concat("/viewed"))
+        .then((res) => {
+          data.value = res.data;
+        });
+    }
+    // 请求七天内的统计数据
+    async function retrieve() {
+      await instance
+        .get(SERVER_URL.statistics.concat("?page=0&size=7"))
+        .then((res) => {
+          let array: Array<any> = res.data;
+          array.forEach((item: any) => {
+            labels.value.unshift(item.date);
+            datas.value.unshift(item.viewed);
+            rates.value.unshift(item.overViewed)
+          });
+        });
+    }
 
-    function fetch() {
-      instance.get(SERVER_URL.statistics.concat("/viewed")).then((res) => {
-        data.value = res.data;
-      });
+    async function initData() {
+      await Promise.all([fetch(), retrieve()]).then(() =>
+        createChart(lineChart.value, labels.value, datas.value, rates.value)
+      );
     }
 
     onMounted(() => {
-      let labels = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
-      let datas = [112, 193, 100, 259, 24, 380, 900];
-      createChart(lineChart.value, labels, datas);
-      fetch();
+      initData();
     });
 
     return { lineChart, data };

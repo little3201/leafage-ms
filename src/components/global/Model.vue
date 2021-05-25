@@ -27,10 +27,11 @@
             type="button"
             @click="commitOperation"
             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-            :class="{
-              'bg-red-600 hover:bg-red-700 focus:ring-red-500': isConfirm,
-              'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500': !isConfirm,
-            }"
+            :class="[
+              isConfirm
+                ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500'
+                : 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500',
+            ]"
           >
             {{ isConfirm ? "确认" : "提交" }}
           </button>

@@ -98,7 +98,7 @@
       @commitAction="commitOperate"
     >
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3 w-full">
+        <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
             <label>Title</label>
             <input
@@ -108,16 +108,38 @@
               v-model="portfolioData.title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-6">
+          <div class="col-span-12 sm:col-span-6 relative">
             <label>Tags</label>
-            <select
-              multiple
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm h-10"
+            <input
+              type="text"
+              @keydown.enter="addTag"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              :style="{ paddingLeft: pl + 'px' }"
               placeholder="Tags"
-              v-model="portfolioData.tags"
-            >
-              <option disabled>请选择</option>
-            </select>
+              v-model="tagValue"
+            />
+            <div class="absolute inset-y-0 mt-7 left-2 flex items-center">
+              <span
+                v-for="(tag, index) in portfolioData.tags"
+                :key="index"
+                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 flex items-center"
+                >{{ tag }}
+                <svg
+                  @click="removeTag(tag)"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="ml-1 cursor-pointer opacity-30"
+                >
+                  <use xlink:href="/svg/feather-sprite.svg#x" />
+                </svg>
+              </span>
+            </div>
           </div>
           <div class="col-span-12">
             <label>Content</label>
@@ -181,7 +203,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -206,92 +228,40 @@ export default defineComponent({
     Model,
   },
 
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      portfolioData: {},
-      dataCode: "",
-      imgTypes: ["jpg", "jpeg", "png"],
-      videoTypes: ["mp4", "avi"],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
-      this.portfolioData = {};
-      if (isEdit && code && code.length > 0) {
-        this.dataCode = code;
-        instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
-          this.portfolioData = res.data;
-        });
-      }
-      this.isEdit = isEdit;
-    },
-    // 新增/编辑：提交
-    commitOperate() {
-      let data = this.portfolioData;
-      if (this.dataCode && this.dataCode.length > 0) {
-        instance
-          .put(SERVER_URL.portfolio.concat("/", this.dataCode), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            this.datas = this.datas.filter(
-              (item: any) => item.code != this.dataCode
-            );
-            // 将结果添加到第一个
-            this.datas.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.portfolio, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-
-    // 上传文件
-    uploadImage(files: Array<File>) {
-      if (files.length > 0) {
-        let urls = new Array(files.length);
-        Array.from(Array(files.length).keys()).forEach((id) =>
-          uploadFile(files[id]).subscribe({
-            // next: (result) => {},
-            // error: () => {},
-            complete: (e: any) => {
-              urls.push("https://cdn.leafage.top/" + e.key);
-            },
-          })
-        );
-        this.portfolioData = { ...this.portfolioData, url: urls };
-      }
-    },
-  },
-
   setup() {
+    const imgTypes = ref(["jpg", "jpeg", "png"]);
+    const videoTypes = ref(["mp4", "avi"]);
+    // 数据
+    const portfolioData = ref({});
+    const dataCode = ref("");
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
+    // 标签参数
+    const tagValue = ref("");
+    const tags = ref<Array<String>>([]);
+    // 模态框参数
+    let isEdit = ref(false);
+    let isDel = ref(false);
 
     // 设置页码
     function setPage(p: number, s: number) {
       page.value = p;
       size.value = s;
     }
-
+    // 添加tag
+    function addTag() {
+      tags.value.push(tagValue.value);
+      portfolioData.value = { ...portfolioData.value, tags: tags.value };
+      tagValue.value = "";
+    }
+    // 删除tag
+    function removeTag(tag: String) {
+      tags.value = tags.value.filter((item) => item !== tag);
+      portfolioData.value = { ...portfolioData.value, tags: tags.value };
+    }
     // 初始化数据
     async function initDatas() {
       await Promise.all([count(), retrieve()]);
@@ -311,22 +281,108 @@ export default defineComponent({
             "&size=" + size.value
           )
         )
-        .then((response) => {
-          datas.value = response.data;
+        .then((res) => {
+          datas.value = res.data;
         });
     }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, code: string) {
+      portfolioData.value = {};
+      tags.value = [];
+      if (operate && code && code.length > 0) {
+        dataCode.value = code;
+        await instance
+          .get(SERVER_URL.portfolio.concat("/", code))
+          .then((res) => {
+            portfolioData.value = res.data;
+            tags.value = res.data.tags;
+          });
+      }
+      isEdit.value = operate;
+    }
+    // 新增/编辑：提交
+    async function commitOperate() {
+      let data = portfolioData.value;
+      if (dataCode.value && dataCode.value.length > 0) {
+        await instance
+          .put(SERVER_URL.portfolio.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        await instance.post(SERVER_URL.portfolio, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
+
+    // 上传文件
+    function uploadImage(files: Array<File>) {
+      if (files.length > 0) {
+        let urls = new Array(files.length);
+        Array.from(Array(files.length).keys()).forEach((id) =>
+          uploadFile(files[id]).subscribe({
+            // next: (result) => {},
+            // error: () => {},
+            complete: (e: any) => {
+              urls.push("https://cdn.leafage.top/" + e.key);
+            },
+          })
+        );
+        portfolioData.value = { ...portfolioData.value, url: urls };
+      }
+    }
+
+    const pl = computed(() => {
+      if (tags.value) {
+        return tags.value.length * 64 + 8;
+      }
+      return 0;
+    });
 
     onMounted(() => {
       initDatas();
     });
 
     return {
+      imgTypes,
+      videoTypes,
       datas,
       page,
       size,
       total,
+      tagValue,
+      tags,
+      isEdit,
+      isDel,
+      pl,
+      portfolioData,
+      // 方法
+      addTag,
+      removeTag,
       retrieve,
       setPage,
+      confirmOperate,
+      modelOperate,
+      commitOperate,
+      uploadImage,
     };
   },
 });

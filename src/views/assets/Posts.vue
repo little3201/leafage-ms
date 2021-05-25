@@ -147,15 +147,37 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-8">
-            <select
-              multiple
-              class="w-full rounded-md border-gray-300 shadow-sm h-10"
+          <div class="col-span-12 sm:col-span-8 relative">
+            <input
+              type="text"
+              @keydown.enter="addTag"
+              class="w-full rounded-md border-gray-300 shadow-sm"
+              :style="{ paddingLeft: pl + 'px' }"
               placeholder="Tags"
-              v-model="postsData.tags"
-            >
-              <option disabled>请选择</option>
-            </select>
+              v-model="tagValue"
+            />
+            <div class="absolute inset-y-0 left-3 flex items-center">
+              <span
+                v-for="(tag, index) in postsData.tags"
+                :key="index"
+                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 flex items-center"
+                >{{ tag }}
+                <svg
+                  @click="removeTag(tag)"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="ml-1 cursor-pointer opacity-30"
+                >
+                  <use xlink:href="/svg/feather-sprite.svg#x" />
+                </svg>
+              </span>
+            </div>
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <select
@@ -180,7 +202,7 @@
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-12 mt-2">
+        <div class="grid grid-cols-12 mt-1">
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
@@ -274,120 +296,30 @@ export default defineComponent({
     Model,
   },
 
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      postsData: {},
-      dataCode: "",
-      categories: [],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
-      this.postsData = {};
-      this.content = "";
-      if (isEdit) {
-        Promise.all([
-          this.retrieveCategories(),
-          this.fetchPosts(code),
-          this.fetchContent(code),
-        ]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 获取所有分类
-    retrieveCategories() {
-      instance.get(SERVER_URL.category).then((res) => {
-        this.categories = res.data;
-      });
-    },
-    // 根据code查posts
-    fetchPosts(code: string) {
-      if (code && code.length > 0) {
-        this.dataCode = code;
-        instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
-          this.postsData = res.data;
-        });
-      }
-    },
-    // 根据code查posts content
-    fetchContent(code: string) {
-      if (code && code.length > 0) {
-        instance
-          .get(SERVER_URL.posts.concat("/", code, "/content"))
-          .then((res) => {
-            this.content = res.data.content;
-          });
-      }
-    },
-    // 新增/编辑：提交
-    commitOperate() {
-      let data = {
-        ...this.postsData,
-        content: this.content,
-      };
-      if (this.dataCode && this.dataCode.length > 0) {
-        instance
-          .put(SERVER_URL.posts.concat("/", this.dataCode), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            this.datas = this.datas.filter(
-              (item: any) => item.code != this.dataCode
-            );
-            // 将结果添加到第一个
-            this.datas.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.posts, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-
-    // 上传文件
-    uploadImage(files: Array<File>) {
-      if (files.length > 0) {
-        uploadFile(files[0]).subscribe({
-          complete: (e: any) => {
-            this.postsData = {
-              ...this.postsData,
-              cover: "https://cdn.leafage.top/" + e.key,
-            };
-          },
-        });
-      }
-    },
-  },
-
   setup() {
     let preview = ref(false);
     let content = ref("");
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
+    // 标签参数
+    const tagValue = ref("");
+    const tags = ref<Array<String>>([]);
+    // 模态框参数
+    let isEdit = ref(false);
+    let isDel = ref(false);
+    // 数据
+    const postsData = ref({});
+    const dataCode = ref("");
+    const categories = ref([]);
 
     // 设置页码
     function setPage(p: number, s: number) {
       page.value = p;
       size.value = s;
     }
-
     // 初始化数据
     async function initDatas() {
       await Promise.all([count(), retrieve()]);
@@ -408,6 +340,113 @@ export default defineComponent({
           datas.value = res.data;
         });
     }
+    // 添加tag
+    function addTag() {
+      tags.value.push(tagValue.value);
+      postsData.value = { ...postsData.value, tags: tags.value };
+      tagValue.value = "";
+    }
+    // 删除tag
+    function removeTag(tag: String) {
+      tags.value = tags.value.filter((item) => item !== tag);
+      postsData.value = { ...postsData.value, tags: tags.value };
+    }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, code: string) {
+      postsData.value = {};
+      content.value = "";
+      tags.value = [];
+      if (operate) {
+        await Promise.all([
+          retrieveCategories(),
+          fetchPosts(code),
+          fetchContent(code),
+        ]);
+      }
+      isEdit.value = operate;
+    }
+    // 获取所有分类
+    async function retrieveCategories() {
+      await instance.get(SERVER_URL.category).then((res) => {
+        categories.value = res.data;
+      });
+    }
+    // 根据code查posts
+    async function fetchPosts(code: string) {
+      if (code && code.length > 0) {
+        dataCode.value = code;
+        await instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
+          postsData.value = res.data;
+          tags.value = res.data.tags;
+        });
+      }
+    }
+    // 根据code查posts content
+    async function fetchContent(code: string) {
+      if (code && code.length > 0) {
+        await instance
+          .get(SERVER_URL.posts.concat("/", code, "/content"))
+          .then((res) => {
+            content.value = res.data.content;
+          });
+      }
+    }
+    // 新增/编辑：提交
+    async function commitOperate() {
+      let data = {
+        ...postsData.value,
+        content: content.value,
+      };
+      if (dataCode.value && dataCode.value.length > 0) {
+        await instance
+          .put(SERVER_URL.posts.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        await instance.post(SERVER_URL.posts, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
+
+    // 上传文件
+    function uploadImage(files: Array<File>) {
+      if (files.length > 0) {
+        uploadFile(files[0]).subscribe({
+          complete: (e: any) => {
+            postsData.value = {
+              ...postsData.value,
+              cover: "https://cdn.leafage.top/" + e.key,
+            };
+          },
+        });
+      }
+    }
+
+    const pl = computed(() => {
+      if (tags.value) {
+        return tags.value.length * 64 + 8;
+      }
+      return 0;
+    });
 
     // 转换md为html
     const rendedHtml = computed(() => {
@@ -428,9 +467,26 @@ export default defineComponent({
       size,
       total,
       datas,
+      rendedHtml,
+      tagValue,
+      tags,
+      isEdit,
+      isDel,
+      postsData,
+      categories,
+      pl,
+      // 方法
       setPage,
       retrieve,
-      rendedHtml,
+      addTag,
+      removeTag,
+      confirmOperate,
+      modelOperate,
+      retrieveCategories,
+      fetchPosts,
+      fetchContent,
+      commitOperate,
+      uploadImage,
     };
   },
 });

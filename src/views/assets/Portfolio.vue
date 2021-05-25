@@ -293,7 +293,7 @@ export default defineComponent({
     async function modelOperate(operate: boolean, code: string) {
       portfolioData.value = {};
       tags.value = [];
-      if (isEdit && code && code.length > 0) {
+      if (operate && code && code.length > 0) {
         dataCode.value = code;
         await instance
           .get(SERVER_URL.portfolio.concat("/", code))

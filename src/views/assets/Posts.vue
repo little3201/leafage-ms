@@ -360,7 +360,7 @@ export default defineComponent({
       postsData.value = {};
       content.value = "";
       tags.value = [];
-      if (isEdit) {
+      if (operate) {
         await Promise.all([
           retrieveCategories(),
           fetchPosts(code),

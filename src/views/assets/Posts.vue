@@ -406,7 +406,7 @@ export default defineComponent({
           .put(SERVER_URL.posts.concat("/", dataCode.value), data)
           .then((res) => {
             // 将datas中修改项的历史数据删除
-            datas.value = datas.filter(
+            datas.value = datas.value.filter(
               (item: any) => item.code != dataCode.value
             );
             // 将结果添加到第一个

@@ -316,27 +316,6 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label>Gender</label>
-            <select
-              v-model="userData.gender"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Credentials Expired</label>
-            <label>
-              <input
-                type="datetime-local"
-                v-model="userData.expired"
-                class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-              />
-            </label>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
             <label>Groups</label>
             <select
               v-model="userData.groups"
@@ -367,15 +346,35 @@
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Locked</label>
+            <label>Credentials Expired</label>
+            <label>
+              <input
+                type="datetime-local"
+                v-model="userData.credentialsExpired"
+                class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              />
+            </label>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Account Expired</label>
+            <label>
+              <input
+                type="datetime-local"
+                v-model="userData.accountNonExpired"
+                class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              />
+            </label>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label>Account Locked</label>
             <div class="mt-3">
               <label class="inline-flex items-center">
                 <input type="radio" checked value="true" v-model="userData.accountNonLocked" />
-                <span class="ml-2">false</span>
+                <span class="ml-2">False</span>
               </label>
               <label class="inline-flex items-center ml-4">
                 <input type="radio" value="false" v-model="userData.accountNonLocked" />
-                <span class="ml-2">true</span>
+                <span class="ml-2">True</span>
               </label>
             </div>
           </div>

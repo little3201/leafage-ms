@@ -152,7 +152,7 @@
               type="text"
               @keydown.enter="addTag"
               class="w-full rounded-md border-gray-300 shadow-sm"
-              :style="{ paddingLeft: pl + 'px' }"
+              :style="{ paddingLeft: pl + 'rem' }"
               placeholder="Tags"
               v-model="tagValue"
             />
@@ -443,9 +443,9 @@ export default defineComponent({
 
     const pl = computed(() => {
       if (tags.value) {
-        return tags.value.length * 64 + 8;
+        return tags.value.length * 4 + 0.75;
       }
-      return 0;
+      return 0.75;
     });
 
     // 转换md为html

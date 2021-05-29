@@ -77,9 +77,7 @@
                 stroke-linejoin="round"
                 class="mx-auto"
               >
-                <use
-                  :xlink:href="'/svg/feather-sprite.svg#' + data.icon"
-                />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
               </svg>
             </td>
             <td class="px-4 py-2" v-text="data.path"></td>
@@ -114,7 +112,10 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label>Name</label>
+            <label
+              >Name
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <input
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -123,7 +124,10 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Type</label>
+            <label :class="{ 'text-gray-300': authorityData.code }"
+              >Type
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <select
               :disabled="authorityData.code"
               v-model="authorityData.type"
@@ -205,74 +209,16 @@ export default defineComponent({
     Model,
   },
 
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      authorityData: {},
-      dataCode: "",
-      superiors: [],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
-      this.authorityData = {};
-      if (isEdit) {
-        Promise.all([this.fetch(code), this.retrieveMenu()]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 查详情
-    fetch(code: string) {
-      if (code && code.length > 0) {
-        this.dataCode = code
-        instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
-          this.authorityData = res.data;
-        });
-      }
-    },
-    // 查所有菜单
-    retrieveMenu() {
-      instance.get(SERVER_URL.authority.concat("?type=menu")).then((res) => {
-        this.superiors = res.data;
-      });
-    },
-    // 新增/编辑：提交
-    commitOperate(code: string) {
-      let data = this.authorityData;
-      if (code && code.length > 0) {
-        instance
-          .put(SERVER_URL.authority.concat("/", code), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            this.datas = this.datas.filter((item: any) => item.code != code);
-            // 将结果添加到第一个
-            this.datas.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.authority, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-  },
-
   setup() {
+    // 模态框参数
+    const isEdit = ref(false);
+    const isDel = ref(false);
+    // 数据
+    const authorityData = ref({});
+    const dataCode = ref("");
+    const superiors = ref([]);
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
@@ -306,6 +252,63 @@ export default defineComponent({
           datas.value = res.data;
         });
     }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, code: string) {
+      authorityData.value = {};
+      if (operate) {
+        await Promise.all([fetch(code), retrieveMenu()]);
+      }
+      isEdit.value = operate;
+    }
+    // 查详情
+    async function fetch(code: string) {
+      if (code && code.length > 0) {
+        dataCode.value = code;
+        await instance
+          .get(SERVER_URL.authority.concat("/", code))
+          .then((res) => {
+            authorityData.value = res.data;
+          });
+      }
+    }
+    // 查所有菜单
+    async function retrieveMenu() {
+      await instance.get(SERVER_URL.authority.concat("?type=M")).then((res) => {
+        superiors.value = res.data;
+      });
+    }
+    // 新增/编辑：提交
+    function commitOperate() {
+      let data = authorityData.value;
+      if (dataCode.value && dataCode.value.length > 0) {
+        instance
+          .put(SERVER_URL.authority.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        instance.post(SERVER_URL.authority, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
 
     onMounted(() => {
       initDatas();
@@ -316,8 +319,16 @@ export default defineComponent({
       total,
       page,
       size,
+      isEdit,
+      isDel,
+      authorityData,
+      superiors,
+      // 方法
       retrieve,
       setPage,
+      confirmOperate,
+      modelOperate,
+      commitOperate,
     };
   },
 });

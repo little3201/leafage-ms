@@ -98,6 +98,7 @@
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
+              required
               v-model.trim="postsData.title"
             />
           </div>
@@ -181,7 +182,7 @@
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <select
-              v-model="postsData.category"
+              v-model="postsData.category" required
               class="w-full rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
@@ -198,6 +199,7 @@
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
               maxlength="100"
+              required
               v-model.trim="postsData.subtitle"
             ></textarea>
           </div>
@@ -252,6 +254,7 @@
                 v-if="!preview"
                 class="w-full rounded-md border-gray-300 shadow-sm"
                 v-model="content"
+                required
                 placeholder="write with markdown..."
               ></textarea>
               <figure
@@ -482,9 +485,6 @@ export default defineComponent({
       removeTag,
       confirmOperate,
       modelOperate,
-      retrieveCategories,
-      fetchPosts,
-      fetchContent,
       commitOperate,
       uploadImage,
     };

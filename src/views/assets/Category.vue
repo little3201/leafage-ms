@@ -30,7 +30,7 @@
         <thead>
           <tr class="uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Alias</th>
+            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Name</th>
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Code</th>
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Posts Count</th>
             <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
@@ -88,11 +88,15 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label>Alias</label>
+            <label
+              >Name
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <input
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
+              required
               v-model="categoryData.alias"
             />
           </div>
@@ -150,11 +154,11 @@ export default defineComponent({
       this.isDel = isDel;
     },
     // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
+    async modelOperate(isEdit: boolean, code: string) {
       this.categoryData = {};
       if (isEdit && code && code.length > 0) {
         this.dataCode = code;
-        instance
+        await instance
           .get(SERVER_URL.category.concat("/").concat(code))
           .then((res) => {
             this.categoryData = res.data;
@@ -193,7 +197,14 @@ export default defineComponent({
   },
 
   setup() {
+    // 模态框参数
+    const isEdit = ref(false);
+    const isDel = ref(false);
+    // 数据
+    const categoryData = ref({});
+    const dataCode = ref("");
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
@@ -227,6 +238,51 @@ export default defineComponent({
           datas.value = res.data;
         });
     }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    function modelOperate(operate: boolean, code: string) {
+      categoryData.value = {};
+      if (operate && code && code.length > 0) {
+        dataCode.value = code;
+        instance
+          .get(SERVER_URL.category.concat("/").concat(code))
+          .then((res) => {
+            categoryData.value = res.data;
+          });
+      }
+      isEdit.value = operate;
+    }
+    // 新增/编辑：提交
+    function commitOperate() {
+      let data = categoryData.value;
+      if (dataCode.value && dataCode.value.length > 0) {
+        instance
+          .put(SERVER_URL.category.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        instance.post(SERVER_URL.category, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
 
     onMounted(() => {
       initDatas();
@@ -237,8 +293,15 @@ export default defineComponent({
       page,
       size,
       total,
+      isEdit,
+      isDel,
+      categoryData,
+      // 方法
       retrieve,
       setPage,
+      confirmOperate,
+      modelOperate,
+      commitOperate,
     };
   },
 });

@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- BEGIN: Display Information -->
+  <div class="md:overflow-auto" style="height: calc(100vh - 160px)">
     <div class="bg-white rounded-md">
       <div class="flex items-center p-5 border-b border-gray-200">
         <h2 class="font-medium text-base mr-auto">Display Information</h2>
@@ -36,7 +35,7 @@
               <div class="w-40 mx-auto cursor-pointer relative mt-5">
                 <button
                   type="button"
-                  class="w-full bg-blue-700 text-white p-2 rounded-md"
+                  class="w-full bg-blue-700 text-white p-2 rounded-md focus:outline-none"
                 >
                   Change Photo
                 </button>
@@ -49,12 +48,12 @@
           </div>
           <div class="col-span-12 xl:col-span-8">
             <div>
-              <label>Display Name</label>
+              <label>Username</label>
               <input
                 type="text"
                 class="rounded-md w-full bg-gray-100 cursor-not-allowed mt-1 border border-gray-300"
                 placeholder="Input text"
-                value="Russell Crowe"
+                value="leafage"
                 disabled
               />
             </div>
@@ -95,7 +94,7 @@
             </div>
             <button
               type="button"
-              class="p-2 rounded-md w-20 bg-blue-700 text-white mt-3"
+              class="p-2 rounded-md w-20 bg-blue-700 text-white mt-3 focus:outline-none"
             >
               Save
             </button>
@@ -118,7 +117,7 @@
                 type="text"
                 class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
                 placeholder="Input text"
-                value="russellcrowe@left4code.com"
+                value="leafage@leafage.com"
                 disabled
               />
             </div>
@@ -217,7 +216,7 @@
           </a>
           <button
             type="button"
-            class="p-2 rounded-md w-20 bg-blue-700 text-white ml-auto"
+            class="p-2 rounded-md w-20 bg-blue-700 text-white ml-auto focus:outline-none"
           >
             Save
           </button>

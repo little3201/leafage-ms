@@ -1,10 +1,11 @@
 import { RouteRecordRaw } from 'vue-router';
+import Layout from '/@/views/Layout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Application',
-    component: () => import('/src/views/Layout.vue'),
+    component: Layout,
     children: [
       {
         path: '',

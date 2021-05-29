@@ -32,6 +32,7 @@
             <th scope="col" class="px-4 py-2 text-left">No.</th>
             <th scope="col" class="px-4 py-2">Name</th>
             <th scope="col" class="px-4 py-2">Code</th>
+            <th scope="col" class="px-4 py-2">Superior</th>
             <th scope="col" class="px-4 py-2">User Count</th>
             <th scope="col" class="px-4 py-2">Modify Time</th>
             <th scope="col" class="px-4 py-2">Actions</th>
@@ -51,6 +52,7 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
+            <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"

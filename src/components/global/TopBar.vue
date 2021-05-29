@@ -79,8 +79,23 @@
         class="origin-top-right p-4 absolute w-80 right-0 mt-5 rounded-md shadow-lg bg-white z-10"
       >
         <div class="mb-4">Notifications</div>
-        <div class="cursor-pointer flex items-center">
-          <div class="overflow-hidden">
+        <div class="cursor-pointer divide-y">
+          <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
+            <div class="flex items-center">
+              <a href="javascript:;" class="font-medium truncate mr-5"
+                >John Travolta</a
+              >
+              <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">
+                06:05 AM
+              </div>
+            </div>
+            <div class="w-full truncate text-gray-600">
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+              It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 20
+            </div>
+          </div>
+          <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
             <div class="flex items-center">
               <a href="javascript:;" class="font-medium truncate mr-5"
                 >John Travolta</a
@@ -98,10 +113,20 @@
         </div>
       </div>
     </div>
-    <div class="mr-auto sm:mr-6">
-      <button class="text-blue-600 -mt-2">中</button>
-      <span class="text-gray-300">/</span>
-      <button class="text-gray-400 -mb-2">En</button>
+    <div class="mr-auto sm:mr-6 cursor-pointer">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-2"
+      >
+        <use xlink:href="/svg/feather-sprite.svg#globe" />
+      </svg>
     </div>
     <div class="relative">
       <div
@@ -132,8 +157,8 @@
         class="origin-top-right p-4 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
         <div class="py-2">
-          <div class="font-medium" v-text="user.nickname"></div>
-          <div class="text-xs" v-text="user.username"></div>
+          <h3 class="font-blod text-base" v-text="user.nickname"></h3>
+          <h4 class="text-gray-500" v-text="user.username"></h4>
         </div>
         <div>
           <router-link
@@ -143,8 +168,8 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -165,8 +190,8 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -186,8 +211,8 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -211,8 +236,8 @@
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

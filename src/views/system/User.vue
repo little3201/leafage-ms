@@ -55,18 +55,18 @@
               <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="p-2 flex justify-center">
+            <td class="p-2">
               <img
                 src="/images/avatar.jpg"
                 alt="avatar"
-                class="rounded-full w-8 h-8"
+                class="rounded-full w-8 h-8 mx-auto"
               />
             </td>
             <td class="px-4 py-2">
               <svg
                 v-if="data.gender === 'M'"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 48 48"
                 class="mx-auto"
                 fill="none"
@@ -97,8 +97,8 @@
               </svg>
               <svg
                 v-else-if="data.gender === 'F'"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 48 48"
                 class="mx-auto"
                 xmlns="http://www.w3.org/2000/svg"

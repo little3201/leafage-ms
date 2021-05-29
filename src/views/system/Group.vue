@@ -120,7 +120,8 @@
               <option
                 v-for="(user, index) in users"
                 :key="index"
-                v-text="user.nickname + '(' + user.username + ')'"
+                :value="user.username"
+                v-text="user.nickname"
               ></option>
             </select>
           </div>

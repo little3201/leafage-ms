@@ -68,7 +68,7 @@ export default [
       return [
         {
           username: 'admin',
-          nickname: 'admin',
+          nickname: '布吉岛',
           avatar: '',
           gender: 'M',
           phone: "187****7895",

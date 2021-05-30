@@ -10,7 +10,7 @@
           type="checkbox"
           class="rounded"
           :value="data.code"
-          v-model="menus"
+          v-model="checkedDatas"
         />
         <span
           v-if="data.children && data.children.length > 0"
@@ -18,6 +18,7 @@
           class="ml-4 cursor-pointer flex items-center"
         >
           <svg
+            v-if="data.expand && data.expand.icon"
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -64,6 +65,7 @@
         ></span>
         <span v-else class="ml-4 flex items-center">
           <svg
+            v-if="data.expand && data.expand.icon"
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -74,9 +76,7 @@
             stroke-linejoin="round"
             class="mr-2"
           >
-            <use
-              :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon"
-            />
+            <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
           </svg>
           {{ data.name }}
         </span>
@@ -108,9 +108,7 @@ export default defineComponent({
   data() {
     return {
       isChildOpen: true,
-      menus: [
-        "2122466RP"
-      ],
+      checkedDatas: ["2122466RP"],
     };
   },
 });

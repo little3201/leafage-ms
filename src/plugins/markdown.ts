@@ -12,6 +12,7 @@ import json from 'highlight.js/lib/languages/json';
 import yaml from 'highlight.js/lib/languages/yaml';
 import xml from 'highlight.js/lib/languages/xml';
 import htmlbars from 'highlight.js/lib/languages/htmlbars'
+import dockerfile from 'highlight.js/lib/languages/dockerfile'
 
 hljs.registerLanguage('bash', bash)
 hljs.registerLanguage('javascript', javascript);
@@ -23,6 +24,7 @@ hljs.registerLanguage('json', json);
 hljs.registerLanguage('yaml', yaml);
 hljs.registerLanguage('xml', xml);
 hljs.registerLanguage('htmlbars', htmlbars);
+hljs.registerLanguage('dockerfile', dockerfile)
 
 
 const markdown = new MarkdownIt({

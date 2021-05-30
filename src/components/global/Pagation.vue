@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center mt-1 mb-3">
-    <ul class="flex items-center mr-0 sm:mr-auto">
+    <ul class="flex items-center ml-auto">
       <li>
         <button
           type="button"
@@ -114,13 +114,11 @@
         </button>
       </li>
     </ul>
-    <select
-      v-model="size"
-      class="border border-gray-300 rounded-md sm:text-sm"
-    >
+    <select v-model="size" class="py-1 border border-gray-300 rounded-md">
       <option>10</option>
+      <option>15</option>
       <option>20</option>
-      <option>35</option>
+      <option>30</option>
       <option>50</option>
     </select>
   </div>
@@ -140,12 +138,12 @@ export default defineComponent({
     },
     page: {
       type: Number,
-      default: 0
+      default: 0,
     },
     size: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
 
   setup(props, ctx) {
@@ -162,7 +160,7 @@ export default defineComponent({
     // 设置
     function give(p: number) {
       page.value = p;
-      ctx.emit("setPage", page.value, size.value)
+      ctx.emit("setPage", page.value, size.value);
       ctx.emit("retrieve");
     }
 
@@ -201,7 +199,7 @@ export default defineComponent({
       pages,
       give,
       increment,
-      decrease
+      decrease,
     };
   },
 });

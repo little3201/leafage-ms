@@ -32,6 +32,7 @@
             <th scope="col" class="px-4 py-2 text-left">No.</th>
             <th scope="col" class="px-4 py-2">Name</th>
             <th scope="col" class="px-4 py-2">Code</th>
+            <th scope="col" class="px-4 py-2">Superior</th>
             <th scope="col" class="px-4 py-2">User Count</th>
             <th scope="col" class="px-4 py-2">Modify Time</th>
             <th scope="col" class="px-4 py-2">Actions</th>
@@ -51,6 +52,7 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4 py-2" v-text="data.code"></td>
+            <td class="px-4 py-2" v-text="data.superior"></td>
             <td class="px-4 py-2" v-text="data.count"></td>
             <td
               class="px-4 py-2"
@@ -74,7 +76,7 @@
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.6"
+                    stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     class="feather feather-power mr-2"
@@ -105,7 +107,10 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label>Name</label>
+            <label
+              >Name
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <input
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -169,83 +174,18 @@ export default defineComponent({
     Tree,
   },
 
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      isTree: false,
-      roleData: {},
-      dataCode: "",
-      superiors: [],
-      authorities: [],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
-      this.roleData = {};
-      if (isEdit) {
-        Promise.all([this.fetch(code), this.retrieveSuperiors()]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 查详情
-    fetch(code: string) {
-      if (code && code.length > 0) {
-        this.dataCode = code;
-        instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
-          this.roleData = res.data;
-        });
-      }
-    },
-    // 查所有角色
-    retrieveSuperiors() {
-      instance.get(SERVER_URL.role).then((res) => {
-        this.superiors = res.data;
-      });
-    },
-    // 授权：打开
-    treeOperate(isTree: boolean) {
-      if (isTree) {
-        instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-          this.authorities = res.data;
-        });
-      }
-      this.isTree = isTree;
-    },
-    // 新增/编辑：提交
-    commitOperate(code: string) {
-      let data = this.roleData;
-      if (code && code.length > 0) {
-        instance.put(SERVER_URL.role.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
-      } else {
-        instance.post(SERVER_URL.role, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-  },
-
   setup() {
+    // 模态框参数
+    const isEdit = ref(false);
+    const isDel = ref(false);
+    const isTree = ref(false);
+    // 数据
+    const roleData = ref({});
+    const dataCode = ref("");
+    const superiors = ref([]);
+    const authorities = ref([]);
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
@@ -276,6 +216,70 @@ export default defineComponent({
           datas.value = response.data;
         });
     }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, code: string) {
+      roleData.value = {};
+      if (operate) {
+        await Promise.all([fetch(code), retrieveSuperiors()]);
+      }
+      isEdit.value = operate;
+    }
+    // 查详情
+    async function fetch(code: string) {
+      if (code && code.length > 0) {
+        dataCode.value = code;
+        await instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
+          roleData.value = res.data;
+        });
+      }
+    }
+    // 查所有角色
+    async function retrieveSuperiors() {
+      await instance.get(SERVER_URL.role).then((res) => {
+        superiors.value = res.data;
+      });
+    }
+    // 授权：打开
+    async function treeOperate(operate: boolean) {
+      if (operate) {
+        await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+          authorities.value = res.data;
+        });
+      }
+      isTree.value = operate;
+    }
+    // 新增/编辑：提交
+    function commitOperate() {
+      let data = roleData.value;
+      if (dataCode.value && dataCode.value.length > 0) {
+        instance
+          .put(SERVER_URL.role.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        instance.post(SERVER_URL.role, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
 
     onMounted(() => {
       initDatas();
@@ -286,8 +290,19 @@ export default defineComponent({
       page,
       size,
       total,
+      isEdit,
+      isDel,
+      isTree,
+      roleData,
+      superiors,
+      authorities,
+      // 方法
       retrieve,
       setPage,
+      confirmOperate,
+      modelOperate,
+      treeOperate,
+      commitOperate,
     };
   },
 });

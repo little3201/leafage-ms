@@ -9,34 +9,34 @@
   "dependencies": {
     "axios": "^0.21.1",
     "vue": "^3.0.11",
-    "vue-router": "^4.0.6",
-    "vuex": "^4.0.0"
+    "vue-router": "^4.0.8",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.3.2",
-    "@tailwindcss/typography": "^0.4.0",
+    "@tailwindcss/typography": "^0.4.1",
     "@types/markdown-it": "^12.0.1",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.11",
     "autoprefixer": "^10.2.5",
-    "chart.js": "^3.2.0",
+    "chart.js": "^3.3.0",
     "crypto-js": "^4.0.0",
-    "eslint": "^7.25.0",
+    "eslint": "^7.27.0",
     "eslint-plugin-vue": "^7.9.0",
     "feather-icons": "^4.28.0",
     "highlight.js": "^10.7.2",
     "markdown-it": "^12.0.6",
     "mockjs": "^1.1.0",
-    "postcss": "^8.2.15",
-    "qiniu-js": "^3.1.4",
+    "postcss": "^8.3.0",
+    "qiniu-js": "3.1.4",
     "sweetalert": "^2.1.2",
     "tailwindcss": "^2.1.2",
     "typescript": "^4.2.4",
-    "vite": "^2.2.3",
-    "vite-plugin-mock": "^2.5.0"
+    "vite": "^2.3.4",
+    "vite-plugin-mock": "^2.5.4"
   },
   "resolutions": {
-    "postcss": "8.2.15"
+    "postcss": "8.3.0"
   },
   "keywords": [
     "vue3",

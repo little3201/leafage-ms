@@ -55,18 +55,18 @@
               <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="p-2 flex justify-center">
+            <td class="p-2">
               <img
                 src="/images/avatar.jpg"
                 alt="avatar"
-                class="rounded-full w-8 h-8"
+                class="rounded-full w-8 h-8 mx-auto"
               />
             </td>
             <td class="px-4 py-2">
               <svg
                 v-if="data.gender === 'M'"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 48 48"
                 class="mx-auto"
                 fill="none"
@@ -97,8 +97,8 @@
               </svg>
               <svg
                 v-else-if="data.gender === 'F'"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 48 48"
                 class="mx-auto"
                 xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +294,48 @@
                 :code="data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
-              />
+              >
+                <a
+                  class="flex items-center mr-3 text-green-600"
+                  href="javascript:;"
+                  @click.prevent="treeOperate(true, 'group')"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-2"
+                  >
+                    <use xlink:href="/svg/feather-sprite.svg#users" />
+                  </svg>
+                  Groups
+                </a>
+                <a
+                  class="flex items-center mr-3 text-yellow-600"
+                  href="javascript:;"
+                  @click.prevent="treeOperate(true, 'role')"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-2"
+                  >
+                    <use xlink:href="/svg/feather-sprite.svg#pocket" />
+                  </svg>
+                  Roles
+                </a>
+              </Action>
             </td>
           </tr>
         </tbody>
@@ -315,69 +356,51 @@
     >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
-            <label>Gender</label>
-            <select
-              v-model="userData.gender"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Credentials Expired</label>
-            <label>
-              <input
-                type="datetime-local"
-                v-model="userData.expired"
-                class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-              />
+          <div class="col-span-12">
+            <label
+              >Account Expired
+              <span class="text-red-600 text-base ml-1">*</span>
             </label>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Groups</label>
-            <select
-              v-model="userData.groups"
+            <input
+              type="datetime-local"
+              v-model="userData.accountNonExpired"
+              required
               class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option
-                :value="group.code"
-                v-for="group in groups"
-                :key="group.code"
-                v-text="group.name"
-              ></option>
-            </select>
+            />
           </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Roles</label>
-            <select
-              v-model="userData.roles"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            >
-              <option disabled>请选择</option>
-              <option
-                :value="role.code"
-                v-for="role in roles"
-                :key="role.code"
-                v-text="role.name"
-              ></option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Locked</label>
+          <div class="col-span-12">
+            <label
+              >Account Locked
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <div class="mt-3">
-              <label class="inline-flex items-center">
-                <input type="radio" checked value="true" v-model="userData.accountNonLocked" />
-                <span class="ml-2">false</span>
-              </label>
-              <label class="inline-flex items-center ml-4">
-                <input type="radio" value="false" v-model="userData.accountNonLocked" />
-                <span class="ml-2">true</span>
-              </label>
+              <input
+                type="radio"
+                checked
+                value="true"
+                v-model="userData.accountNonLocked"
+              />
+              <span class="ml-2">False</span>
+              <input
+                type="radio"
+                value="false"
+                class="ml-4"
+                v-model="userData.accountNonLocked"
+              />
+              <span class="ml-2">True</span>
             </div>
+          </div>
+          <div class="col-span-12">
+            <label
+              >Credentials Expired
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
+            <input
+              type="datetime-local"
+              required
+              v-model="userData.credentialsExpired"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+            />
           </div>
           <div class="col-span-12">
             <label>Description</label>
@@ -390,6 +413,7 @@
         </div>
       </form>
     </Model>
+    <Tree :isShow="isTree" @treeAction="treeOperate" :datas="treeDatas" />
   </div>
 </template>
 
@@ -401,6 +425,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
+import Tree from "/@/components/global/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -416,85 +441,20 @@ export default defineComponent({
     Pagation,
     Confirm,
     Model,
-  },
-
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      userData: {},
-      username: "",
-      groups: [],
-      roles: [],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, username: string) {
-      this.userData = {};
-      if (isEdit) {
-        Promise.all([
-          this.fetch(username),
-          this.retrieveGroups(),
-          this.retrieveRoles(),
-        ]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 查询用户详情
-    fetch(username: string) {
-      if (username && username.length > 0) {
-        this.username = username
-        instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
-          this.userData = res.data;
-        });
-      }
-    },
-    // 查询groups
-    retrieveGroups() {
-      instance.get(SERVER_URL.group).then((res) => {
-        this.groups = res.data;
-      });
-    },
-    // 查询roles
-    retrieveRoles() {
-      instance.get(SERVER_URL.role).then((res) => {
-        this.roles = res.data;
-      });
-    },
-    // 新增/编辑：提交
-    commitOperate() {
-      let data = this.userData;
-      if (this.username && this.username.length > 0) {
-        instance.put(SERVER_URL.user.concat("/", this.username), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != this.username);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
-      } else {
-        instance.post(SERVER_URL.user, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
+    Tree,
   },
 
   setup() {
+    // 模态框参数
+    const isEdit = ref(false);
+    const isDel = ref(false);
+    const isTree = ref(false);
+    // 数据
+    const userData = ref({});
+    const username = ref("");
+    const treeDatas = ref([]);
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
@@ -525,6 +485,64 @@ export default defineComponent({
           datas.value = res.data;
         });
     }
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, account: string) {
+      userData.value = {};
+      if (operate && account && account.length > 0) {
+        username.value = account;
+        await instance.get(SERVER_URL.user.concat("/", account)).then((res) => {
+          userData.value = res.data;
+        });
+      }
+      isEdit.value = operate;
+    }
+    // 新增/编辑：提交
+    function commitOperate() {
+      let data = userData.value;
+      if (username.value && username.value.length > 0) {
+        instance
+          .put(SERVER_URL.user.concat("/", username.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != username.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        instance.post(SERVER_URL.user, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
+    // 分组/角色树：打开
+    async function treeOperate(operate: boolean, type: string) {
+      if (operate) {
+        if (type === "group") {
+          await instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
+            treeDatas.value = res.data;
+          });
+        } else if (type === "role") {
+          await instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
+            treeDatas.value = res.data;
+          });
+        }
+      }
+      isTree.value = operate;
+    }
 
     onMounted(() => {
       initDatas();
@@ -535,8 +553,18 @@ export default defineComponent({
       page,
       size,
       total,
+      isEdit,
+      isDel,
+      isTree,
+      userData,
+      treeDatas,
+      // 方法
       retrieve,
       setPage,
+      treeOperate,
+      confirmOperate,
+      modelOperate,
+      commitOperate,
     };
   },
 });

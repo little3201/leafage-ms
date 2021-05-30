@@ -15,7 +15,7 @@ export default [
         code: '20A23D2D1',
         name: 'Tech Dept',
         description: '技术部',
-        superior: '集团',
+        superior: '20A23D201',
         principal: 'admin'
       }
     },
@@ -52,11 +52,30 @@ export default [
     response: () => {
       return [
         {
+          code: '20A23D201',
+          name: '集团',
+          description: '技术部',
+          superior: '',
+          principal: 'admin',
+          count: 2,
+          modifyTime: new Date()
+        },
+        {
           code: '20A23D2D1',
           name: 'Tech Dept',
           description: '技术部',
           superior: '集团',
           principal: 'admin',
+          count: 2,
+          modifyTime: new Date()
+        },
+        {
+          code: '20A23D2X1',
+          name: 'Other Dept',
+          description: '架构部',
+          superior: '技术部',
+          principal: 'superior',
+          count: 4,
           modifyTime: new Date()
         },
       ];

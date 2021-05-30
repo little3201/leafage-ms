@@ -14,11 +14,6 @@ export default defineConfig({
     // to make tests faster
     minify: false
   },
-  css: {
-    modules: {
-      localsConvention: 'camelCaseOnly'
-    }
-  },
   // server: {
   //   proxy: {
   //     // 选项写法

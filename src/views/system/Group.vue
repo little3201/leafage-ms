@@ -87,7 +87,10 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
-            <label>Name</label>
+            <label
+              >Name
+              <span class="text-red-600 text-base ml-1">*</span>
+            </label>
             <input
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -120,7 +123,8 @@
               <option
                 v-for="(user, index) in users"
                 :key="index"
-                v-text="user.nickname + '(' + user.username + ')'"
+                :value="user.username"
+                v-text="user.nickname"
               ></option>
             </select>
           </div>
@@ -162,88 +166,17 @@ export default defineComponent({
     Model,
   },
 
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      groupData: {},
-      dataCode: "",
-      users: [],
-      superiors: [],
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    modelOperate(isEdit: boolean, code: string) {
-      this.groupData = {};
-      if (isEdit) {
-        Promise.all([
-          this.retrieveUsers(code),
-          this.fetch(isEdit, code),
-          this.retrieveSuperiors(),
-        ]);
-      }
-      this.isEdit = isEdit;
-    },
-    // 查询详情
-    fetch(isEdit: boolean, code: string) {
-      if (isEdit && code && code.length > 0) {
-        this.dataCode = code;
-        instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
-          this.groupData = res.data;
-        });
-      }
-    },
-    // 查询关联用户
-    retrieveUsers(code: string) {
-      if (code && code.length > 0) {
-        this.dataCode = code;
-        instance
-          .get(SERVER_URL.user.concat("/", code, "/relation"))
-          .then((res) => {
-            this.users = res.data;
-          });
-      }
-    },
-    // 查询所有
-    retrieveSuperiors() {
-      instance.get(SERVER_URL.group).then((res) => {
-        this.superiors = res.data;
-      });
-    },
-    // 新增/编辑：提交
-    commitOperate(code: string) {
-      let data = this.groupData;
-      if (code && code.length > 0) {
-        instance.put(SERVER_URL.group.concat("/", code), data).then((res) => {
-          // 将datas中修改项的历史数据删除
-          this.datas = this.datas.filter((item: any) => item.code != code);
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you updated the item", "success");
-        });
-      } else {
-        instance.post(SERVER_URL.group, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-  },
-
   setup() {
+    // 模态框参数
+    const isEdit = ref(false);
+    const isDel = ref(false);
+    // 数据
+    const groupData = ref({});
+    const dataCode = ref("");
+    const users = ref([]);
+    const superiors = ref([]);
     const datas = ref<any>([]);
+    // 分页参数
     let page = ref(0);
     let size = ref(10);
     const total = ref(0);
@@ -275,6 +208,77 @@ export default defineComponent({
         });
     }
 
+    // 删除确认
+    function confirmOperate(operate: boolean) {
+      isDel.value = operate;
+    }
+    // 新增/编辑：打开
+    async function modelOperate(operate: boolean, code: string) {
+      groupData.value = {};
+      if (operate) {
+        await Promise.all([
+          retrieveUsers(code),
+          fetch(operate, code),
+          retrieveSuperiors(),
+        ]);
+      }
+      isEdit.value = operate;
+    }
+    // 查询详情
+    async function fetch(operate: boolean, code: string) {
+      if (operate && code && code.length > 0) {
+        dataCode.value = code;
+        await instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
+          groupData.value = res.data;
+        });
+      }
+    }
+    // 查询关联用户
+    async function retrieveUsers(code: string) {
+      if (code && code.length > 0) {
+        dataCode.value = code;
+        await instance
+          .get(SERVER_URL.user.concat("/", code, "/relation"))
+          .then((res) => {
+            users.value = res.data;
+          });
+      }
+    }
+    // 查询所有
+    async function retrieveSuperiors() {
+      await instance.get(SERVER_URL.group).then((res) => {
+        superiors.value = res.data;
+      });
+    }
+    // 新增/编辑：提交
+    function commitOperate() {
+      let data = groupData.value;
+      if (dataCode.value && dataCode.value.length > 0) {
+        instance
+          .put(SERVER_URL.group.concat("/", dataCode.value), data)
+          .then((res) => {
+            // 将datas中修改项的历史数据删除
+            datas.value = datas.value.filter(
+              (item: any) => item.code != dataCode.value
+            );
+            // 将结果添加到第一个
+            datas.value.unshift(res.data);
+            swal("Operated Success!", "you updated the item", "success");
+          });
+      } else {
+        instance.post(SERVER_URL.group, data).then((res) => {
+          if (datas.value.length >= 10) {
+            // 删除第一个
+            datas.value.shift();
+          }
+          // 将结果添加到第一个
+          datas.value.unshift(res.data);
+          swal("Operated Success!", "you add a new item", "success");
+        });
+      }
+      isEdit.value = false;
+    }
+
     onMounted(() => {
       initDatas();
     });
@@ -284,8 +288,17 @@ export default defineComponent({
       page,
       size,
       total,
+      isEdit,
+      isDel,
+      groupData,
+      users,
+      superiors,
+      // 方法
       retrieve,
       setPage,
+      confirmOperate,
+      modelOperate,
+      commitOperate,
     };
   },
 });

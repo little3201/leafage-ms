@@ -18,6 +18,7 @@
           class="ml-4 cursor-pointer flex items-center"
         >
           <svg
+            v-if="data.expand && data.expand.icon"
             width="16"
             height="16"
             viewBox="0 0 24 24"

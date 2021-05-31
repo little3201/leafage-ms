@@ -222,7 +222,7 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-12">
         <div class="shadow-sm rounded-md bg-white p-4">
           <canvas id="lineChart" ref="lineChart"></canvas>
         </div>
@@ -258,7 +258,7 @@ export default defineComponent({
     // 请求七天内的统计数据
     async function retrieve() {
       await instance
-        .get(SERVER_URL.statistics.concat("?page=0&size=7"))
+        .get(SERVER_URL.statistics.concat("?page=0&size=30"))
         .then((res) => {
           let array: Array<any> = res.data;
           array.forEach((item: any) => {

@@ -5,6 +5,7 @@ import {
     PointElement,
     LinearScale,
     CategoryScale,
+    Legend,
     Tooltip
 } from 'chart.js';
 
@@ -14,6 +15,7 @@ Chart.register(
     PointElement,
     LinearScale,
     CategoryScale,
+    Legend,
     Tooltip
 );
 
@@ -24,24 +26,34 @@ export const createChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas
             labels: labels,
             datasets: [
                 {
-                    label: "viewed",
+                    label: "访问量",
                     data: datas,
                     tension: 0.3,
                     borderColor: '#91c714',
                     yAxisID: 'y',
+                    pointStyle: 'rect',
                 },
                 {
-                    label: "over viewed",
+                    label: "环比",
                     data: rates,
                     tension: 0.3,
                     yAxisID: 'y1',
+                    pointStyle: 'triangle',
                 },
             ],
         },
         options: {
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+            },
             responsive: true,
             interaction: {
                 intersect: false,
+                mode: 'index',
             },
             scales: {
                 y: {
@@ -53,7 +65,6 @@ export const createChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas
                     type: 'linear',
                     display: true,
                     position: 'right',
-
                     // grid line settings
                     grid: {
                         drawOnChartArea: false, // only want the grid lines for one axis to show up

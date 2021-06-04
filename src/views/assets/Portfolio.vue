@@ -232,8 +232,8 @@ export default defineComponent({
   },
 
   setup() {
-    const imgTypes = ref(["jpg", "jpeg", "png"]);
-    const videoTypes = ref(["mp4", "avi"]);
+    const imgTypes = ref(["png", "jpeg", "jpg", "svg", "webp"]);
+    const videoTypes = ref(["mov", "avi", "flv", "m4v", "rm", "rmvb", "wmv", "mp4"]);
     // 数据
     const portfolioData = ref({});
     const dataCode = ref("");

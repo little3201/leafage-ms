@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2 overflow-auto" style="height: calc(100vh - 80px)">
+  <div class="col-span-12 mt-2 overflow-auto" style="height: calc(100vh - 96px)">
     <div class="flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <a href="" class="ml-auto flex items-center text-blue-800">

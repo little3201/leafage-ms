@@ -238,7 +238,7 @@ export default defineComponent({
       if (code && code.length > 0) {
         dataCode.value = code;
         await instance
-          .get(SERVER_URL.user.concat("/", code, "/relation"))
+          .get(SERVER_URL.user.concat("/", code, "/user"))
           .then((res) => {
             users.value = res.data;
           });

@@ -207,7 +207,6 @@ export default defineComponent({
           datas.value = res.data;
         });
     }
-
     // 删除确认
     function confirmOperate(operate: boolean) {
       isDel.value = operate;
@@ -217,7 +216,6 @@ export default defineComponent({
       groupData.value = {};
       if (operate) {
         await Promise.all([
-          retrieveUsers(code),
           fetch(operate, code),
           retrieveSuperiors(),
         ]);
@@ -231,17 +229,6 @@ export default defineComponent({
         await instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
           groupData.value = res.data;
         });
-      }
-    }
-    // 查询关联用户
-    async function retrieveUsers(code: string) {
-      if (code && code.length > 0) {
-        dataCode.value = code;
-        await instance
-          .get(SERVER_URL.user.concat("/", code, "/user"))
-          .then((res) => {
-            users.value = res.data;
-          });
       }
     }
     // 查询所有

@@ -20,6 +20,41 @@ export default [
         response: () => {
             return [
                 {
+                    date: "05-30",
+                    viewed: 4978,
+                    overViewed: 23,
+                    likes: 30,
+                    comment: 0
+                },
+                {
+                    date: "05-29",
+                    viewed: 4780,
+                    overViewed: 23,
+                    likes: 30,
+                    comment: 0
+                },
+                {
+                    date: "05-28",
+                    viewed: 4678,
+                    overViewed: 23,
+                    likes: 30,
+                    comment: 0
+                },
+                {
+                    date: "05-27",
+                    viewed: 4290,
+                    overViewed: 10,
+                    likes: 30,
+                    comment: 0
+                },
+                {
+                    date: "05-26",
+                    viewed: 4199,
+                    overViewed: 2.98,
+                    likes: 30,
+                    comment: 0
+                },
+                {
                     date: "05-25",
                     viewed: 4678,
                     overViewed: 23,

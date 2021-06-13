@@ -23,7 +23,6 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-auto" style="height: calc(100vh - 190px)">
       <table class="mt-2 w-full truncate" aria-label="user">
@@ -167,11 +166,11 @@
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#91C714"
+                  stroke="currentColor"
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle"
+                  class="feather feather-check-circle text-green-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
@@ -207,11 +206,11 @@
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#91C714"
+                  stroke="currentColor"
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-unlock"
+                  class="feather feather-unlock text-green-600"
                 >
                   <rect
                     x="3"
@@ -260,11 +259,11 @@
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#91C714"
+                  stroke="currentColor"
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle"
+                  class="feather feather-check-circle text-green-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
@@ -296,7 +295,7 @@
                 @editAction="modelOperate"
               >
                 <a
-                  class="flex items-center mr-3 text-green-600"
+                  class="flex items-center mr-3 text-indigo-600"
                   href="javascript:;"
                   @click.prevent="treeOperate(true, 'group')"
                 >
@@ -316,7 +315,7 @@
                   Groups
                 </a>
                 <a
-                  class="flex items-center mr-3 text-yellow-600"
+                  class="flex items-center mr-3 text-pink-600"
                   href="javascript:;"
                   @click.prevent="treeOperate(true, 'role')"
                 >
@@ -420,7 +419,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
@@ -436,7 +434,6 @@ export default defineComponent({
   name: "User",
 
   components: {
-    Operation,
     Action,
     Pagation,
     Confirm,

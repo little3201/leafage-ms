@@ -8,7 +8,7 @@ export default [
     },
   },
   {
-    url: 'user/admin',
+    url: 'user/:username',
     method: 'get',
     response: () => {
       return {
@@ -26,7 +26,7 @@ export default [
     },
   },
   {
-    url: 'user/admin',
+    url: 'user/:username',
     method: 'put',
     response: () => {
       return {

@@ -8,7 +8,7 @@ export default [
     },
   },
   {
-    url: 'group/20A23D2D1',
+    url: 'group/:code',
     method: 'get',
     response: () => {
       return {
@@ -21,7 +21,7 @@ export default [
     },
   },
   {
-    url: 'group/20A23D2D1',
+    url: 'group/:code',
     method: 'put',
     response: () => {
       return {

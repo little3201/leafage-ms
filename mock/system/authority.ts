@@ -8,7 +8,7 @@ export default [
     },
   },
   {
-    url: 'authority/203315P3Q',
+    url: 'authority/:code',
     method: 'get',
     response: () => {
       return {
@@ -22,7 +22,7 @@ export default [
     },
   },
   {
-    url: 'authority/20A23D2D1',
+    url: 'authority/:code',
     method: 'put',
     response: () => {
       return {

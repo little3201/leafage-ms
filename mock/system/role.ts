@@ -9,7 +9,7 @@ export default [
     },
   },
   {
-    url: 'role/20A23D2D1',
+    url: 'role/:code',
     method: 'get',
     response: () => {
       return {
@@ -21,7 +21,7 @@ export default [
     },
   },
   {
-    url: 'role/20A23D2D1',
+    url: 'role/:code',
     method: 'put',
     response: () => {
       return {

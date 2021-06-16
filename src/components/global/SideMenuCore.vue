@@ -93,7 +93,7 @@
       </router-link>
       <SideMenuCore
         v-show="isOpen"
-        class="xl:ml-4 bg-blue-900 bg-opacity-30"
+        class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md"
         v-if="data.children && data.children.length > 0"
         :datas="data.children"
         :superior="data.expand.path"
@@ -134,9 +134,9 @@ export default defineComponent({
 }
 .router-link-exact-active:before {
   content: "";
-  width: 30px;
-  height: 30px;
-  margin-top: -1.875rem;
+  width: 28px;
+  height: 28px;
+  margin-top: -1.75rem;
   margin-right: -1.25rem;
   transform: rotate(90deg) scale(1.04);
   background-size: 100%;
@@ -147,8 +147,8 @@ export default defineComponent({
 }
 .router-link-exact-active:after {
   content: "";
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   margin-top: 3rem;
   margin-right: -1.25rem;
   transform: scale(1.04);

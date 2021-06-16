@@ -310,7 +310,7 @@
                     stroke-linejoin="round"
                     class="mr-2"
                   >
-                    <use xlink:href="/svg/feather-sprite.svg#users" />
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
                   </svg>
                   Groups
                 </a>
@@ -330,7 +330,7 @@
                     stroke-linejoin="round"
                     class="mr-2"
                   >
-                    <use xlink:href="/svg/feather-sprite.svg#pocket" />
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
                   Roles
                 </a>

@@ -64,7 +64,7 @@
                         stroke-linejoin="round"
                         class="mr-2"
                       >
-                        <use xlink:href="/svg/feather-sprite.svg#globe" />
+                        <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
                       </svg>
                       English
                     </a>
@@ -83,7 +83,7 @@
                         stroke-linejoin="round"
                         class="mr-2"
                       >
-                        <use xlink:href="/svg/feather-sprite.svg#globe" />
+                        <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
                       </svg>
                       Chinese
                       <div
@@ -126,7 +126,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#activity" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'activity'" />
               </svg>
               Personal Information
             </router-link>
@@ -142,7 +142,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#box" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'box'" />
               </svg>
               Account Settings
             </a>
@@ -158,7 +158,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#lock" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
               </svg>
               Change Password
             </router-link>
@@ -174,7 +174,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#settings" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
               </svg>
               User Settings
             </a>
@@ -192,7 +192,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#mail" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'mail'" />
               </svg>
               Email Settings
             </a>
@@ -208,7 +208,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#credit-card" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'credit-card'" />
               </svg>
               Credit Cards
             </a>
@@ -224,7 +224,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use xlink:href="/svg/feather-sprite.svg#link" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'link'" />
               </svg>
               Social Networks
             </router-link>

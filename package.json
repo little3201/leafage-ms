@@ -26,12 +26,14 @@
     "feather-icons": "^4.28.0",
     "highlight.js": "^11.0.1",
     "markdown-it": "^12.0.6",
+    "mockjs": "^1.1.0",
     "postcss": "^8.3.0",
     "qiniu-js": "^3.3.1",
     "sweetalert": "^2.1.2",
     "tailwindcss": "^2.1.4",
     "typescript": "^4.3.2",
-    "vite": "^2.3.6"
+    "vite": "^2.3.6",
+    "vite-plugin-mock": "^2.8.0"
   },
   "resolutions": {
     "postcss": "8.3.0"

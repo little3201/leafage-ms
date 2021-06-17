@@ -46,7 +46,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="/svg/feather-sprite.svg#chevron-down" />
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
           </svg>
           <svg
             v-else
@@ -60,7 +60,7 @@
             stroke-linejoin="round"
             class="ml-auto mr-2"
           >
-            <use xlink:href="/svg/feather-sprite.svg#chevron-right" />
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
           </svg>
         </span>
         <span

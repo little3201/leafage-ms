@@ -87,10 +87,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@rollup/plugin-node-resolve@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-13.0.0.tgz#352f07e430ff377809ec8ec8a6fd636547162dc4"
-  integrity sha512-41X411HJ3oikIDivT5OKe9EZ6ud6DXudtfNrGbC4nniaxx2esiWjkLOzgnZsWq1IM8YIeL2rzRGLZLBjlhnZtQ==
+"@rollup/plugin-node-resolve@^11.2.1":
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-11.2.1.tgz#82aa59397a29cd4e13248b106e6a4a1880362a60"
+  integrity sha512-yc2n43jcqVyGE2sqV5/YCmocy9ArjVAP/BeXyTtADTBBX6V0e5UMqwO8CdQ0kzjb6zu5P1qMzsScCMRvE9OlVg==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     "@types/resolve" "1.17.1"
@@ -456,7 +456,7 @@ chalk@^2.0.0:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.1.tgz#c80b3fab28bf6371e6863325eee67e618b77e6ad"
   integrity sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==
@@ -469,7 +469,7 @@ chart.js@^3.3.2:
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.3.2.tgz#667f3a0b6371b9719d8949c04a5bcbaec0d8c615"
   integrity sha512-H0hSO7xqTIrwxoACqnSoNromEMfXvfuVnrbuSt2TuXfBDDofbnto4zuZlRtRvC73/b37q3wGAWZyUU41QPvNbA==
 
-chokidar@^3.5.1, chokidar@^3.5.2:
+chokidar@^3.5.1:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
   integrity sha512-ekGhOnNVPgT77r4K/U3GDhu+FQ2S8TnK/s2KbIGXi0SZWuwkZ2QNyfWdZW+TVfn84DpEP7rLeCt2UI6bJ8GwbQ==
@@ -709,10 +709,10 @@ es6-object-assign@^1.1.0:
   resolved "https://registry.yarnpkg.com/es6-object-assign/-/es6-object-assign-1.1.0.tgz#c2c3582656247c39ea107cb1e6652b6f9f24523c"
   integrity sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=
 
-esbuild@0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.3.tgz#b57165b907be4ffba651f6450538ce8d8c1d5eb0"
-  integrity sha512-BzVRHcCtFepjS9WcqRjqoIxLqgpK21a8J4Zi4msSGxDxiXVO1IbcqT1KjhdDDnJxKfe7bvzZrvMEX+bVO0Elcw==
+esbuild@^0.11.4:
+  version "0.11.23"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.11.23.tgz#c42534f632e165120671d64db67883634333b4b8"
+  integrity sha512-iaiZZ9vUF5wJV8ob1tl+5aJTrwDczlvGP0JoMmnpC2B0ppiMCu8n8gmy5ZTGl5bcG081XBVn+U+jP+mPFm5T5Q==
 
 esbuild@^0.12.5:
   version "0.12.9"
@@ -1983,18 +1983,18 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vite-plugin-mock@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/vite-plugin-mock/-/vite-plugin-mock-2.8.0.tgz#497ab0018a73b8fd0e9165d3800566d6a4f240cc"
-  integrity sha512-AxARl9SIBUV/zHnPpLvyroQpNmIRUP1JmBoADf4xBNMcsIdwSC7Dh8xq7fJnOkUd6srJJVQIYhDOuWmbDx4svw==
+vite-plugin-mock@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-mock/-/vite-plugin-mock-2.6.0.tgz#d9291e15c049b4a35fd3d5eef3280574c026e160"
+  integrity sha512-aNHQaU5H0Ynv0z5Pk76BrtNK8kMmLOaOObQOAmu0Y5UTAJYMnLcPPuBIDeaYrRIm4mcVf5LzPMsApz9is9oK2g==
   dependencies:
-    "@rollup/plugin-node-resolve" "^13.0.0"
+    "@rollup/plugin-node-resolve" "^11.2.1"
     "@types/mockjs" "^1.0.3"
-    chalk "^4.1.1"
-    chokidar "^3.5.2"
+    chalk "^4.1.0"
+    chokidar "^3.5.1"
     connect "^3.7.0"
     debug "^4.3.2"
-    esbuild "0.11.3"
+    esbuild "^0.11.4"
     fast-glob "^3.2.5"
     path-to-regexp "^6.2.0"
 

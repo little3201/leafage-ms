@@ -1,6 +1,6 @@
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js/lib/core";
-import "highlight.js/styles/base16/darkmoss.css";
+import "highlight.js/styles/ir-black.css";
 
 import bash from 'highlight.js/lib/languages/bash'
 import javascript from 'highlight.js/lib/languages/javascript';

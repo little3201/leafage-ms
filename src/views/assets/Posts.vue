@@ -49,7 +49,15 @@
               {{ index + 1 }}
             </td>
             <td
-              class="px-4 py-2 md:px-5 md:py-3 text-center max-h-32 max-w-sm truncate"
+              class="
+                px-4
+                py-2
+                md:px-5
+                md:py-3
+                text-center
+                max-h-32 max-w-sm
+                truncate
+              "
             >
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
@@ -111,13 +119,27 @@
             />
             <div
               v-else
-              class="rounded-md border border-gray-300 w-48 h-36 flex items-center"
+              class="
+                rounded-md
+                border border-gray-300
+                w-48
+                h-36
+                flex
+                items-center
+              "
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
                     for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                    class="
+                      relative
+                      cursor-pointer
+                      bg-white
+                      rounded-md
+                      text-gray-400
+                      hover:text-indigo-500
+                    "
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -161,7 +183,15 @@
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
-                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 flex items-center"
+                class="
+                  mr-2
+                  border border-gray-300
+                  bg-gray-100
+                  rounded-md
+                  px-1
+                  flex
+                  items-center
+                "
                 >{{ tag }}
                 <svg
                   @click="removeTag(tag)"
@@ -182,7 +212,8 @@
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <select
-              v-model="postsData.category" required
+              v-model="postsData.category"
+              required
               class="w-full rounded-md border-gray-300 shadow-sm"
             >
               <option disabled>请选择</option>
@@ -207,7 +238,13 @@
         <div class="grid grid-cols-12 mt-1">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
+              class="
+                grid grid-flow-row grid-rows-1 grid-cols-1
+                rounded-md
+                h-52
+                md:h-80
+                relative
+              "
               :class="{ border: preview }"
             >
               <a
@@ -272,8 +309,8 @@
 </template>
 
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted, computed } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -286,208 +323,162 @@ import SERVER_URL from "../../api/request";
 import markdown from "../../plugins/markdown";
 import { uploadFile } from "../../plugins/upload";
 
-import swal from "sweetalert";
+let preview = ref(false);
+let content = ref("");
+const datas = ref<any>([]);
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+const total = ref(0);
+// 标签参数
+const tagValue = ref("");
+const tags = ref<Array<String>>([]);
+// 模态框参数
+let isEdit = ref(false);
+let isDel = ref(false);
+// 数据
+const postsData = ref({});
+const dataCode = ref("");
+const categories = ref([]);
 
-export default defineComponent({
-  name: "Posts",
-
-  components: {
-    Operation,
-    Action,
-    Pagation,
-    Confirm,
-    Model,
-  },
-
-  setup() {
-    let preview = ref(false);
-    let content = ref("");
-    const datas = ref<any>([]);
-    // 分页参数
-    let page = ref(0);
-    let size = ref(10);
-    const total = ref(0);
-    // 标签参数
-    const tagValue = ref("");
-    const tags = ref<Array<String>>([]);
-    // 模态框参数
-    let isEdit = ref(false);
-    let isDel = ref(false);
-    // 数据
-    const postsData = ref({});
-    const dataCode = ref("");
-    const categories = ref([]);
-
-    // 设置页码
-    function setPage(p: number, s: number) {
-      page.value = p;
-      size.value = s;
-    }
-    // 初始化数据
-    async function initDatas() {
-      await Promise.all([count(), retrieve()]);
-    }
-    // 统计数据
-    async function count() {
-      await instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
-        total.value = res.data;
+// 设置页码
+const setPage = (p: number, s: number) => {
+  page.value = p;
+  size.value = s;
+};
+// 初始化数据
+const initDatas = async () => {
+  await Promise.all([count(), retrieve()]);
+};
+// 统计数据
+const count = async () => {
+  await instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+    total.value = res.data;
+  });
+};
+// 查询列表
+const retrieve = async () => {
+  await instance
+    .get(SERVER_URL.posts.concat("?page=" + page.value, "&size=" + size.value))
+    .then((res) => {
+      datas.value = res.data;
+    });
+};
+// 添加tag
+const addTag = () => {
+  tags.value.push(tagValue.value);
+  postsData.value = { ...postsData.value, tags: tags.value };
+  tagValue.value = "";
+};
+// 删除tag
+const removeTag = (tag: String) => {
+  tags.value = tags.value.filter((item) => item !== tag);
+  postsData.value = { ...postsData.value, tags: tags.value };
+};
+// 删除确认
+const confirmOperate = (operate: boolean) => {
+  isDel.value = operate;
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean, code: string) => {
+  postsData.value = {};
+  content.value = "";
+  tags.value = [];
+  if (operate) {
+    await Promise.all([
+      retrieveCategories(),
+      fetchPosts(code),
+      fetchContent(code),
+    ]);
+  }
+  isEdit.value = operate;
+};
+// 获取所有分类
+const retrieveCategories = async () => {
+  await instance.get(SERVER_URL.category).then((res) => {
+    categories.value = res.data;
+  });
+};
+// 根据code查posts
+const fetchPosts = async (code: string) => {
+  if (code && code.length > 0) {
+    dataCode.value = code;
+    await instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
+      postsData.value = res.data;
+      tags.value = res.data.tags;
+    });
+  }
+};
+// 根据code查posts content
+const fetchContent = async (code: string) => {
+  if (code && code.length > 0) {
+    await instance
+      .get(SERVER_URL.posts.concat("/", code, "/content"))
+      .then((res) => {
+        content.value = res.data.content;
       });
-    }
-    // 查询列表
-    async function retrieve() {
-      await instance
-        .get(
-          SERVER_URL.posts.concat("?page=" + page.value, "&size=" + size.value)
-        )
-        .then((res) => {
-          datas.value = res.data;
-        });
-    }
-    // 添加tag
-    function addTag() {
-      tags.value.push(tagValue.value);
-      postsData.value = { ...postsData.value, tags: tags.value };
-      tagValue.value = "";
-    }
-    // 删除tag
-    function removeTag(tag: String) {
-      tags.value = tags.value.filter((item) => item !== tag);
-      postsData.value = { ...postsData.value, tags: tags.value };
-    }
-    // 删除确认
-    function confirmOperate(operate: boolean) {
-      isDel.value = operate;
-    }
-    // 新增/编辑：打开
-    async function modelOperate(operate: boolean, code: string) {
-      postsData.value = {};
-      content.value = "";
-      tags.value = [];
-      if (operate) {
-        await Promise.all([
-          retrieveCategories(),
-          fetchPosts(code),
-          fetchContent(code),
-        ]);
-      }
-      isEdit.value = operate;
-    }
-    // 获取所有分类
-    async function retrieveCategories() {
-      await instance.get(SERVER_URL.category).then((res) => {
-        categories.value = res.data;
+  }
+};
+// 新增/编辑：提交
+const commitOperate = async () => {
+  let data = {
+    ...postsData.value,
+    content: content.value,
+  };
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance
+      .put(SERVER_URL.posts.concat("/", dataCode.value), data)
+      .then((res) => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
       });
-    }
-    // 根据code查posts
-    async function fetchPosts(code: string) {
-      if (code && code.length > 0) {
-        dataCode.value = code;
-        await instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
-          postsData.value = res.data;
-          tags.value = res.data.tags;
-        });
+  } else {
+    await instance.post(SERVER_URL.posts, data).then((res) => {
+      if (datas.value.length >= 10) {
+        // 删除第一个
+        datas.value.shift();
       }
-    }
-    // 根据code查posts content
-    async function fetchContent(code: string) {
-      if (code && code.length > 0) {
-        await instance
-          .get(SERVER_URL.posts.concat("/", code, "/content"))
-          .then((res) => {
-            content.value = res.data.content;
-          });
-      }
-    }
-    // 新增/编辑：提交
-    async function commitOperate() {
-      let data = {
-        ...postsData.value,
-        content: content.value,
-      };
-      if (dataCode.value && dataCode.value.length > 0) {
-        await instance
-          .put(SERVER_URL.posts.concat("/", dataCode.value), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            datas.value = datas.value.filter(
-              (item: any) => item.code != dataCode.value
-            );
-            // 将结果添加到第一个
-            datas.value.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        await instance.post(SERVER_URL.posts, data).then((res) => {
-          if (datas.value.length >= 10) {
-            // 删除第一个
-            datas.value.shift();
-          }
-          // 将结果添加到第一个
-          datas.value.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      isEdit.value = false;
-    }
-
-    // 上传文件
-    function uploadImage(files: Array<File>) {
-      if (files.length > 0) {
-        uploadFile(files[0]).subscribe({
-          complete: (e: any) => {
-            postsData.value = {
-              ...postsData.value,
-              cover: "https://cdn.leafage.top/" + e.key,
-            };
-          },
-        });
-      }
-    }
-
-    const pl = computed(() => {
-      if (tags.value) {
-        return tags.value.length * 4 + 0.75;
-      }
-      return 0.75;
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
     });
+  }
+  isEdit.value = false;
+};
 
-    // 转换md为html
-    const rendedHtml = computed(() => {
-      if (content.value) {
-        return markdown.render(content.value);
-      }
-      return "";
+// 上传文件
+const uploadImage = (files: Array<File>) => {
+  if (files.length > 0) {
+    uploadFile(files[0]).subscribe({
+      complete: (e: any) => {
+        postsData.value = {
+          ...postsData.value,
+          cover: "https://cdn.leafage.top/" + e.key,
+        };
+      },
     });
+  }
+};
 
-    onMounted(() => {
-      initDatas();
-    });
+const pl = computed(() => {
+  if (tags.value) {
+    return tags.value.length * 4 + 0.75;
+  }
+  return 0.75;
+});
 
-    return {
-      preview,
-      content,
-      page,
-      size,
-      total,
-      datas,
-      rendedHtml,
-      tagValue,
-      tags,
-      isEdit,
-      isDel,
-      postsData,
-      categories,
-      pl,
-      // 方法
-      setPage,
-      retrieve,
-      addTag,
-      removeTag,
-      confirmOperate,
-      modelOperate,
-      commitOperate,
-      uploadImage,
-    };
-  },
+// 转换md为html
+const rendedHtml = computed(() => {
+  if (content.value) {
+    return markdown.render(content.value);
+  }
+  return "";
+});
+
+onMounted(() => {
+  initDatas();
 });
 </script>

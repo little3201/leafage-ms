@@ -48,11 +48,7 @@
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
-          <img
-            src="/svg/illustration.svg"
-            class="my-auto"
-            alt="leafage"
-          />
+          <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
             <p class="text-white font-medium text-xl leading-tight">
               一个使用 Vue3、 Tailwindcss 的网站管理系统
@@ -62,7 +58,19 @@
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
+            class="
+              max-w-xs
+              m-auto
+              bg-white
+              xl:bg-transparent
+              px-4
+              py-8
+              xl:p-0
+              rounded-md
+              shadow-sm
+              xl:shadow-none
+              w-full
+            "
           >
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign Up
@@ -72,7 +80,13 @@
                 <input
                   type="email"
                   v-model="formData.email"
-                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
+                  class="
+                    border border-gray-300
+                    rounded-md
+                    w-full
+                    my-6
+                    shadow-sm
+                  "
                   placeholder="Email"
                   required
                   autocomplete="off"
@@ -88,7 +102,13 @@
                 <input
                   type="password"
                   v-model.trim="confirmPassword"
-                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
+                  class="
+                    border border-gray-300
+                    rounded-md
+                    w-full
+                    my-6
+                    shadow-sm
+                  "
                   placeholder="Confirm Password"
                   required
                   autocomplete="off"
@@ -106,7 +126,17 @@
               <button
                 type="submit"
                 @click="onSumbit"
-                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
+                class="
+                  w-full
+                  mt-6
+                  focus:outline-none
+                  text-white
+                  bg-blue-600
+                  hover:bg-blue-700
+                  hover:text-white
+                  py-2
+                  rounded-md
+                "
               >
                 Sign up
               </button>
@@ -124,46 +154,34 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import router from "../../router";
 
 import instance from "../../api";
 
-export default defineComponent({
-  name: "SignUp",
+const formData = ref({});
+const confirmPassword = ref("");
 
-  setup() {
-    const formData = ref({});
-    const confirmPassword = ref("");
-
-    function onSubmit(): void {
-      instance
-        .post("/register", new URLSearchParams(formData.value))
-        .then(() => {
-          router.replace("/");
-        });
-    }
-
-    // 提交，请求csrfToken
-    function preSubmit() {
-      instance.get("/check");
-    }
-
-    const toSignIn = () => {
-      router.replace("/signin");
-    };
-    onMounted(() => {
-      preSubmit();
+const onSubmit = async () => {
+  await instance
+    .post("/register", new URLSearchParams(formData.value))
+    .then(() => {
+      router.replace("/");
     });
+};
 
-    return {
-      formData,
-      onSubmit,
-      toSignIn,
-      confirmPassword,
-    };
-  },
+// 提交，请求csrfToken
+const preSubmit = async () => {
+  instance.get("/check");
+};
+
+const toSignIn = () => {
+  router.replace("/signin");
+};
+
+onMounted(() => {
+  preSubmit();
 });
 </script>
 

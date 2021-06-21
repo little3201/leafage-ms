@@ -147,8 +147,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -160,150 +160,109 @@ import Tree from "/@/components/global/Tree.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-import swal from "sweetalert";
+// 模态框参数
+const isEdit = ref(false);
+const isDel = ref(false);
+const isTree = ref(false);
+// 数据
+const roleData = ref({});
+const dataCode = ref("");
+const superiors = ref([]);
+const authorities = ref([]);
+const datas = ref<any>([]);
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+const total = ref(0);
 
-export default defineComponent({
-  name: "Role",
+// 设置页码
+const setPage = (p: number, s: number) => {
+  page.value = p;
+  size.value = s;
+};
 
-  components: {
-    Operation,
-    Action,
-    Pagation,
-    Confirm,
-    Model,
-    Tree,
-  },
-
-  setup() {
-    // 模态框参数
-    const isEdit = ref(false);
-    const isDel = ref(false);
-    const isTree = ref(false);
-    // 数据
-    const roleData = ref({});
-    const dataCode = ref("");
-    const superiors = ref([]);
-    const authorities = ref([]);
-    const datas = ref<any>([]);
-    // 分页参数
-    let page = ref(0);
-    let size = ref(10);
-    const total = ref(0);
-
-    // 设置页码
-    function setPage(p: number, s: number) {
-      page.value = p;
-      size.value = s;
-    }
-
-    // 初始化数据
-    async function initDatas() {
-      await Promise.all([count(), retrieve()]);
-    }
-    // 统计数据
-    async function count() {
-      await instance.get(SERVER_URL.role.concat("/count")).then((res) => {
-        total.value = res.data;
-      });
-    }
-    // 查询列表
-    async function retrieve() {
-      await instance
-        .get(
-          SERVER_URL.role.concat("?page=" + page.value, "&size=" + size.value)
-        )
-        .then((response) => {
-          datas.value = response.data;
-        });
-    }
-    // 删除确认
-    function confirmOperate(operate: boolean) {
-      isDel.value = operate;
-    }
-    // 新增/编辑：打开
-    async function modelOperate(operate: boolean, code: string) {
-      roleData.value = {};
-      if (operate) {
-        await Promise.all([fetch(code), retrieveSuperiors()]);
-      }
-      isEdit.value = operate;
-    }
-    // 查详情
-    async function fetch(code: string) {
-      if (code && code.length > 0) {
-        dataCode.value = code;
-        await instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
-          roleData.value = res.data;
-        });
-      }
-    }
-    // 查所有角色
-    async function retrieveSuperiors() {
-      await instance.get(SERVER_URL.role).then((res) => {
-        superiors.value = res.data;
-      });
-    }
-    // 授权：打开
-    async function treeOperate(operate: boolean) {
-      if (operate) {
-        await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-          authorities.value = res.data;
-        });
-      }
-      isTree.value = operate;
-    }
-    // 新增/编辑：提交
-    function commitOperate() {
-      let data = roleData.value;
-      if (dataCode.value && dataCode.value.length > 0) {
-        instance
-          .put(SERVER_URL.role.concat("/", dataCode.value), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            datas.value = datas.value.filter(
-              (item: any) => item.code != dataCode.value
-            );
-            // 将结果添加到第一个
-            datas.value.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.role, data).then((res) => {
-          if (datas.value.length >= 10) {
-            // 删除第一个
-            datas.value.shift();
-          }
-          // 将结果添加到第一个
-          datas.value.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      isEdit.value = false;
-    }
-
-    onMounted(() => {
-      initDatas();
+// 初始化数据
+const initDatas = async () => {
+  await Promise.all([count(), retrieve()]);
+};
+// 统计数据
+const count = async () => {
+  await instance.get(SERVER_URL.role.concat("/count")).then((res) => {
+    total.value = res.data;
+  });
+};
+// 查询列表
+const retrieve = async () => {
+  await instance
+    .get(SERVER_URL.role.concat("?page=" + page.value, "&size=" + size.value))
+    .then((response) => {
+      datas.value = response.data;
     });
+};
+// 删除确认
+const confirmOperate = (operate: boolean) => {
+  isDel.value = operate;
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean, code: string) => {
+  roleData.value = {};
+  if (operate) {
+    await Promise.all([fetch(code), retrieveSuperiors()]);
+  }
+  isEdit.value = operate;
+};
+// 查详情
+const fetch = async (code: string) => {
+  if (code && code.length > 0) {
+    dataCode.value = code;
+    await instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
+      roleData.value = res.data;
+    });
+  }
+};
+// 查所有角色
+const retrieveSuperiors = async () => {
+  await instance.get(SERVER_URL.role).then((res) => {
+    superiors.value = res.data;
+  });
+};
+// 授权：打开
+const treeOperate = async (operate: boolean) => {
+  if (operate) {
+    await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+      authorities.value = res.data;
+    });
+  }
+  isTree.value = operate;
+};
+// 新增/编辑：提交
+const commitOperate = async () => {
+  let data = roleData.value;
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance
+      .put(SERVER_URL.role.concat("/", dataCode.value), data)
+      .then((res) => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+  } else {
+    await instance.post(SERVER_URL.role, data).then((res) => {
+      if (datas.value.length >= 10) {
+        // 删除第一个
+        datas.value.shift();
+      }
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+  }
+  isEdit.value = false;
+};
 
-    return {
-      datas,
-      page,
-      size,
-      total,
-      isEdit,
-      isDel,
-      isTree,
-      roleData,
-      superiors,
-      authorities,
-      // 方法
-      retrieve,
-      setPage,
-      confirmOperate,
-      modelOperate,
-      treeOperate,
-      commitOperate,
-    };
-  },
+onMounted(() => {
+  initDatas();
 });
 </script>

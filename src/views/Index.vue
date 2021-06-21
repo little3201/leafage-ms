@@ -4,15 +4,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 import Report from "/@/components/global/Report.vue";
-
-export default defineComponent({
-  name: "Dashboard",
-
-  components: {
-    Report,
-  },
-});
 </script>

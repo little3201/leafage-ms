@@ -416,8 +416,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
 
 import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
@@ -428,141 +428,101 @@ import Tree from "/@/components/global/Tree.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-import swal from "sweetalert";
+// 模态框参数
+const isEdit = ref(false);
+const isDel = ref(false);
+const isTree = ref(false);
+// 数据
+const userData = ref({});
+const username = ref("");
+const treeDatas = ref([]);
+const datas = ref<any>([]);
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+const total = ref(0);
 
-export default defineComponent({
-  name: "User",
-
-  components: {
-    Action,
-    Pagation,
-    Confirm,
-    Model,
-    Tree,
-  },
-
-  setup() {
-    // 模态框参数
-    const isEdit = ref(false);
-    const isDel = ref(false);
-    const isTree = ref(false);
-    // 数据
-    const userData = ref({});
-    const username = ref("");
-    const treeDatas = ref([]);
-    const datas = ref<any>([]);
-    // 分页参数
-    let page = ref(0);
-    let size = ref(10);
-    const total = ref(0);
-
-    // 设置页码
-    function setPage(p: number, s: number) {
-      page.value = p;
-      size.value = s;
-    }
-
-    // 初始化数据
-    async function initDatas() {
-      await Promise.all([count(), retrieve()]);
-    }
-    // 统计数据
-    async function count() {
-      await instance.get(SERVER_URL.user.concat("/count")).then((res) => {
-        total.value = res.data;
+// 设置页码
+const setPage = (p: number, s: number) => {
+  page.value = p;
+  size.value = s;
+};
+// 初始化数据
+const initDatas = async () => {
+  await Promise.all([count(), retrieve()]);
+};
+// 统计数据
+const count = async () => {
+  await instance.get(SERVER_URL.user.concat("/count")).then((res) => {
+    total.value = res.data;
+  });
+};
+// 查询列表
+const retrieve = async () => {
+  await instance
+    .get(SERVER_URL.user.concat("?page=" + page.value, "&size=" + size.value))
+    .then((res) => {
+      datas.value = res.data;
+    });
+};
+// 删除确认
+const confirmOperate = (operate: boolean) => {
+  isDel.value = operate;
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean, account: string) => {
+  userData.value = {};
+  if (operate && account && account.length > 0) {
+    username.value = account;
+    await instance.get(SERVER_URL.user.concat("/", account)).then((res) => {
+      userData.value = res.data;
+    });
+  }
+  isEdit.value = operate;
+};
+// 新增/编辑：提交
+const commitOperate = async () => {
+  let data = userData.value;
+  if (username.value && username.value.length > 0) {
+    await instance
+      .put(SERVER_URL.user.concat("/", username.value), data)
+      .then((res) => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != username.value
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+  } else {
+    await instance.post(SERVER_URL.user, data).then((res) => {
+      if (datas.value.length >= 10) {
+        // 删除第一个
+        datas.value.shift();
+      }
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+  }
+  isEdit.value = false;
+};
+// 分组/角色树：打开
+const treeOperate = async (operate: boolean, type: string) => {
+  if (operate) {
+    if (type === "group") {
+      await instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
+        treeDatas.value = res.data;
+      });
+    } else if (type === "role") {
+      await instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
+        treeDatas.value = res.data;
       });
     }
-    // 查询列表
-    async function retrieve() {
-      await instance
-        .get(
-          SERVER_URL.user.concat("?page=" + page.value, "&size=" + size.value)
-        )
-        .then((res) => {
-          datas.value = res.data;
-        });
-    }
-    // 删除确认
-    function confirmOperate(operate: boolean) {
-      isDel.value = operate;
-    }
-    // 新增/编辑：打开
-    async function modelOperate(operate: boolean, account: string) {
-      userData.value = {};
-      if (operate && account && account.length > 0) {
-        username.value = account;
-        await instance.get(SERVER_URL.user.concat("/", account)).then((res) => {
-          userData.value = res.data;
-        });
-      }
-      isEdit.value = operate;
-    }
-    // 新增/编辑：提交
-    function commitOperate() {
-      let data = userData.value;
-      if (username.value && username.value.length > 0) {
-        instance
-          .put(SERVER_URL.user.concat("/", username.value), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            datas.value = datas.value.filter(
-              (item: any) => item.code != username.value
-            );
-            // 将结果添加到第一个
-            datas.value.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.user, data).then((res) => {
-          if (datas.value.length >= 10) {
-            // 删除第一个
-            datas.value.shift();
-          }
-          // 将结果添加到第一个
-          datas.value.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      isEdit.value = false;
-    }
-    // 分组/角色树：打开
-    async function treeOperate(operate: boolean, type: string) {
-      if (operate) {
-        if (type === "group") {
-          await instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
-            treeDatas.value = res.data;
-          });
-        } else if (type === "role") {
-          await instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
-            treeDatas.value = res.data;
-          });
-        }
-      }
-      isTree.value = operate;
-    }
+  }
+  isTree.value = operate;
+};
 
-    onMounted(() => {
-      initDatas();
-    });
-
-    return {
-      datas,
-      page,
-      size,
-      total,
-      isEdit,
-      isDel,
-      isTree,
-      userData,
-      treeDatas,
-      // 方法
-      retrieve,
-      setPage,
-      treeOperate,
-      confirmOperate,
-      modelOperate,
-      commitOperate,
-    };
-  },
+onMounted(() => {
+  initDatas();
 });
 </script>

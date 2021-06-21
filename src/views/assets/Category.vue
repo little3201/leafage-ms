@@ -114,8 +114,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -126,183 +126,89 @@ import Model from "/@/components/global/Model.vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-import swal from "sweetalert";
+// 模态框参数
+const isEdit = ref(false);
+const isDel = ref(false);
+// 数据
+const categoryData = ref({});
+const dataCode = ref("");
+const datas = ref<any>([]);
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+const total = ref(0);
 
-export default defineComponent({
-  name: "Category",
+// 设置页码
+const setPage = (p: number, s: number) => {
+  page.value = p;
+  size.value = s;
+};
 
-  components: {
-    Operation,
-    Action,
-    Pagation,
-    Confirm,
-    Model,
-  },
-
-  data() {
-    return {
-      isEdit: false,
-      isDel: false,
-      categoryData: {},
-      dataCode: "",
-    };
-  },
-
-  methods: {
-    // 删除确认
-    confirmOperate(isDel: boolean) {
-      this.isDel = isDel;
-    },
-    // 新增/编辑：打开
-    async modelOperate(isEdit: boolean, code: string) {
-      this.categoryData = {};
-      if (isEdit && code && code.length > 0) {
-        this.dataCode = code;
-        await instance
-          .get(SERVER_URL.category.concat("/").concat(code))
-          .then((res) => {
-            this.categoryData = res.data;
-          });
-      }
-      this.isEdit = isEdit;
-    },
-    // 新增/编辑：提交
-    commitOperate() {
-      let data = this.categoryData;
-      if (this.dataCode && this.dataCode.length > 0) {
-        instance
-          .put(SERVER_URL.category.concat("/", this.dataCode), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            this.datas = this.datas.filter(
-              (item: any) => item.code != this.dataCode
-            );
-            // 将结果添加到第一个
-            this.datas.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.category, data).then((res) => {
-          if (this.datas.length >= 10) {
-            // 删除第一个
-            this.datas.shift();
-          }
-          // 将结果添加到第一个
-          this.datas.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      this.isEdit = false;
-    },
-  },
-
-  setup() {
-    // 模态框参数
-    const isEdit = ref(false);
-    const isDel = ref(false);
-    // 数据
-    const categoryData = ref({});
-    const dataCode = ref("");
-    const datas = ref<any>([]);
-    // 分页参数
-    let page = ref(0);
-    let size = ref(10);
-    const total = ref(0);
-
-    // 设置页码
-    function setPage(p: number, s: number) {
-      page.value = p;
-      size.value = s;
-    }
-
-    // 初始化数据
-    async function initDatas() {
-      await Promise.all([count(), retrieve()]);
-    }
-    // 统计数据
-    async function count() {
-      await instance.get(SERVER_URL.category.concat("/count")).then((res) => {
-        total.value = res.data;
-      });
-    }
-    // 查询列表
-    async function retrieve() {
-      await instance
-        .get(
-          SERVER_URL.category.concat(
-            "?page=" + page.value,
-            "&size=" + size.value
-          )
-        )
-        .then((res) => {
-          datas.value = res.data;
-        });
-    }
-    // 删除确认
-    function confirmOperate(operate: boolean) {
-      isDel.value = operate;
-    }
-    // 新增/编辑：打开
-    function modelOperate(operate: boolean, code: string) {
-      categoryData.value = {};
-      if (operate && code && code.length > 0) {
-        dataCode.value = code;
-        instance
-          .get(SERVER_URL.category.concat("/").concat(code))
-          .then((res) => {
-            categoryData.value = res.data;
-          });
-      }
-      isEdit.value = operate;
-    }
-    // 新增/编辑：提交
-    function commitOperate() {
-      let data = categoryData.value;
-      if (dataCode.value && dataCode.value.length > 0) {
-        instance
-          .put(SERVER_URL.category.concat("/", dataCode.value), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            datas.value = datas.value.filter(
-              (item: any) => item.code != dataCode.value
-            );
-            // 将结果添加到第一个
-            datas.value.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        instance.post(SERVER_URL.category, data).then((res) => {
-          if (datas.value.length >= 10) {
-            // 删除第一个
-            datas.value.shift();
-          }
-          // 将结果添加到第一个
-          datas.value.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      isEdit.value = false;
-    }
-
-    onMounted(() => {
-      initDatas();
+// 初始化数据
+const initDatas = async () => {
+  await Promise.all([count(), retrieve()]);
+};
+// 统计数据
+const count = async () => {
+  await instance.get(SERVER_URL.category.concat("/count")).then((res) => {
+    total.value = res.data;
+  });
+};
+// 查询列表
+const retrieve = async () => {
+  await instance
+    .get(
+      SERVER_URL.category.concat("?page=" + page.value, "&size=" + size.value)
+    )
+    .then((res) => {
+      datas.value = res.data;
     });
+};
+// 删除确认
+const confirmOperate = (operate: boolean) => {
+  isDel.value = operate;
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean, code: string) => {
+  categoryData.value = {};
+  if (operate && code && code.length > 0) {
+    dataCode.value = code;
+    await instance
+      .get(SERVER_URL.category.concat("/").concat(code))
+      .then((res) => {
+        categoryData.value = res.data;
+      });
+  }
+  isEdit.value = operate;
+};
+// 新增/编辑：提交
+const commitOperate = async () => {
+  let data = categoryData.value;
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance
+      .put(SERVER_URL.category.concat("/", dataCode.value), data)
+      .then((res) => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+  } else {
+    await instance.post(SERVER_URL.category, data).then((res) => {
+      if (datas.value.length >= 10) {
+        // 删除第一个
+        datas.value.shift();
+      }
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+  }
+  isEdit.value = false;
+};
 
-    return {
-      datas,
-      page,
-      size,
-      total,
-      isEdit,
-      isDel,
-      categoryData,
-      // 方法
-      retrieve,
-      setPage,
-      confirmOperate,
-      modelOperate,
-      commitOperate,
-    };
-  },
+onMounted(() => {
+  initDatas();
 });
 </script>

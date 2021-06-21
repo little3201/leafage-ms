@@ -5,7 +5,14 @@
     </div>
     <div class="grid grid-cols-12 gap-6">
       <div
-        class="col-span-12 lg:col-span-4 2xl:col-span-3 flex lg:block flex-col-reverse"
+        class="
+          col-span-12
+          lg:col-span-4
+          2xl:col-span-3
+          flex
+          lg:block
+          flex-col-reverse
+        "
       >
         <div class="bg-white rounded-md text-sm text-gray-600">
           <div class="flex items-center p-5">
@@ -42,7 +49,17 @@
               </a>
               <div
                 v-show="isShow"
-                class="bg-white shadow-md rounded-md mt-5 absolute w-56 top-0 right-0 z-20"
+                class="
+                  bg-white
+                  shadow-md
+                  rounded-md
+                  mt-5
+                  absolute
+                  w-56
+                  top-0
+                  right-0
+                  z-20
+                "
               >
                 <div class="dropdown-box__content box">
                   <div class="p-4 border-b border-gray-200 font-medium">
@@ -51,7 +68,17 @@
                   <div class="p-2">
                     <a
                       href=""
-                      class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                      class="
+                        flex
+                        items-center
+                        p-2
+                        transition
+                        duration-300
+                        ease-in-out
+                        bg-white
+                        hover:bg-gray-200
+                        rounded-md
+                      "
                     >
                       <svg
                         width="16"
@@ -64,13 +91,25 @@
                         stroke-linejoin="round"
                         class="mr-2"
                       >
-                        <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
+                        <use
+                          :xlink:href="'/svg/feather-sprite.svg#' + 'globe'"
+                        />
                       </svg>
                       English
                     </a>
                     <a
                       href=""
-                      class="flex items-center p-2 transition duration-300 ease-in-out bg-white hover:bg-gray-200 rounded-md"
+                      class="
+                        flex
+                        items-center
+                        p-2
+                        transition
+                        duration-300
+                        ease-in-out
+                        bg-white
+                        hover:bg-gray-200
+                        rounded-md
+                      "
                     >
                       <svg
                         width="16"
@@ -83,11 +122,19 @@
                         stroke-linejoin="round"
                         class="mr-2"
                       >
-                        <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
+                        <use
+                          :xlink:href="'/svg/feather-sprite.svg#' + 'globe'"
+                        />
                       </svg>
                       Chinese
                       <div
-                        class="text-xs text-white px-1 rounded-full bg-theme-6 ml-auto"
+                        class="
+                          text-xs text-white
+                          px-1
+                          rounded-full
+                          bg-theme-6
+                          ml-auto
+                        "
                       >
                         10
                       </div>
@@ -98,13 +145,28 @@
                   >
                     <button
                       type="button"
-                      class="p-2 rounded-md text-xs bg-blue-700 text-white focus:outline-none"
+                      class="
+                        p-2
+                        rounded-md
+                        text-xs
+                        bg-blue-700
+                        text-white
+                        focus:outline-none
+                      "
                     >
                       Settings
                     </button>
                     <button
                       type="button"
-                      class="p-2 rounded-md text-xs bg-gray-200 text-gray-600 ml-auto focus:outline-none"
+                      class="
+                        p-2
+                        rounded-md
+                        text-xs
+                        bg-gray-200
+                        text-gray-600
+                        ml-auto
+                        focus:outline-none
+                      "
                     >
                       View Profile
                     </button>
@@ -114,7 +176,10 @@
             </div>
           </div>
           <div class="p-5 border-t border-gray-200">
-            <router-link class="flex items-center text-blue-700 font-medium" to="profile">
+            <router-link
+              class="flex items-center text-blue-700 font-medium"
+              to="profile"
+            >
               <svg
                 width="16"
                 height="16"
@@ -238,7 +303,14 @@
             </button>
             <button
               type="button"
-              class="p-2 rounded-md border border-blue-600 text-blue-600 ml-auto focus:outline-none"
+              class="
+                p-2
+                rounded-md
+                border border-blue-600
+                text-blue-600
+                ml-auto
+                focus:outline-none
+              "
             >
               New Quick Link
             </button>
@@ -253,30 +325,19 @@
 </template>
 
 
-<script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+<script lang="ts" setup>
+import { ref, computed } from "vue";
 import { useStore } from "../../store";
 
-export default defineComponent({
-  name: "Settings",
-  
-  setup() {
-    const isShow = ref(false)
-    const store = useStore();
+const isShow = ref(false);
+const store = useStore();
 
-    const user = computed(() => {
-      let data = sessionStorage.getItem("user");
-      if (data) {
-        return JSON.parse(data);
-      } else {
-        return store.state.user;
-      }
-    });
-
-    return {
-      isShow,
-      user,
-    };
-  },
+const user = computed(() => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return store.state.user;
+  }
 });
 </script>

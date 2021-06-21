@@ -100,7 +100,8 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label>Title
+            <label
+              >Title
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
@@ -125,7 +126,15 @@
               <span
                 v-for="(tag, index) in portfolioData.tags"
                 :key="index"
-                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 flex items-center"
+                class="
+                  mr-2
+                  border border-gray-300
+                  bg-gray-100
+                  rounded-md
+                  px-1
+                  flex
+                  items-center
+                "
                 >{{ tag }}
                 <svg
                   @click="removeTag(tag)"
@@ -154,13 +163,28 @@
             />
             <div
               v-else
-              class="rounded-md border border-gray-300 shadow-sm h-32 mt-1 flex items-center"
+              class="
+                rounded-md
+                border border-gray-300
+                shadow-sm
+                h-32
+                mt-1
+                flex
+                items-center
+              "
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
                     for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                    class="
+                      relative
+                      cursor-pointer
+                      bg-white
+                      rounded-md
+                      text-gray-400
+                      hover:text-indigo-500
+                    "
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -205,8 +229,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted, computed } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -218,175 +242,137 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 import { uploadFile } from "../../plugins/upload";
 
-import swal from "sweetalert";
+const imgTypes = ref(["png", "jpeg", "jpg", "svg", "webp"]);
+const videoTypes = ref([
+  "mov",
+  "avi",
+  "flv",
+  "m4v",
+  "rm",
+  "rmvb",
+  "wmv",
+  "mp4",
+]);
+// 数据
+const portfolioData = ref({});
+const dataCode = ref("");
+const datas = ref<any>([]);
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+const total = ref(0);
+// 标签参数
+const tagValue = ref("");
+const tags = ref<Array<String>>([]);
+// 模态框参数
+let isEdit = ref(false);
+let isDel = ref(false);
 
-export default defineComponent({
-  name: "Portfolio",
-
-  components: {
-    Operation,
-    Action,
-    Pagation,
-    Confirm,
-    Model,
-  },
-
-  setup() {
-    const imgTypes = ref(["png", "jpeg", "jpg", "svg", "webp"]);
-    const videoTypes = ref(["mov", "avi", "flv", "m4v", "rm", "rmvb", "wmv", "mp4"]);
-    // 数据
-    const portfolioData = ref({});
-    const dataCode = ref("");
-    const datas = ref<any>([]);
-    // 分页参数
-    let page = ref(0);
-    let size = ref(10);
-    const total = ref(0);
-    // 标签参数
-    const tagValue = ref("");
-    const tags = ref<Array<String>>([]);
-    // 模态框参数
-    let isEdit = ref(false);
-    let isDel = ref(false);
-
-    // 设置页码
-    function setPage(p: number, s: number) {
-      page.value = p;
-      size.value = s;
-    }
-    // 添加tag
-    function addTag() {
-      tags.value.push(tagValue.value);
-      portfolioData.value = { ...portfolioData.value, tags: tags.value };
-      tagValue.value = "";
-    }
-    // 删除tag
-    function removeTag(tag: String) {
-      tags.value = tags.value.filter((item) => item !== tag);
-      portfolioData.value = { ...portfolioData.value, tags: tags.value };
-    }
-    // 初始化数据
-    async function initDatas() {
-      await Promise.all([count(), retrieve()]);
-    }
-    // 统计数据
-    async function count() {
-      await instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
-        total.value = res.data;
-      });
-    }
-    // 查询列表
-    async function retrieve() {
-      await instance
-        .get(
-          SERVER_URL.portfolio.concat(
-            "?page=" + page.value,
-            "&size=" + size.value
-          )
-        )
-        .then((res) => {
-          datas.value = res.data;
-        });
-    }
-    // 删除确认
-    function confirmOperate(operate: boolean) {
-      isDel.value = operate;
-    }
-    // 新增/编辑：打开
-    async function modelOperate(operate: boolean, code: string) {
-      portfolioData.value = {};
-      tags.value = [];
-      if (operate && code && code.length > 0) {
-        dataCode.value = code;
-        await instance
-          .get(SERVER_URL.portfolio.concat("/", code))
-          .then((res) => {
-            portfolioData.value = res.data;
-            tags.value = res.data.tags;
-          });
-      }
-      isEdit.value = operate;
-    }
-    // 新增/编辑：提交
-    async function commitOperate() {
-      let data = portfolioData.value;
-      if (dataCode.value && dataCode.value.length > 0) {
-        await instance
-          .put(SERVER_URL.portfolio.concat("/", dataCode.value), data)
-          .then((res) => {
-            // 将datas中修改项的历史数据删除
-            datas.value = datas.value.filter(
-              (item: any) => item.code != dataCode.value
-            );
-            // 将结果添加到第一个
-            datas.value.unshift(res.data);
-            swal("Operated Success!", "you updated the item", "success");
-          });
-      } else {
-        await instance.post(SERVER_URL.portfolio, data).then((res) => {
-          if (datas.value.length >= 10) {
-            // 删除第一个
-            datas.value.shift();
-          }
-          // 将结果添加到第一个
-          datas.value.unshift(res.data);
-          swal("Operated Success!", "you add a new item", "success");
-        });
-      }
-      isEdit.value = false;
-    }
-
-    // 上传文件
-    function uploadImage(files: Array<File>) {
-      if (files.length > 0) {
-        let urls = new Array(files.length);
-        Array.from(Array(files.length).keys()).forEach((id) =>
-          uploadFile(files[id]).subscribe({
-            // next: (result) => {},
-            // error: () => {},
-            complete: (e: any) => {
-              urls.push("https://cdn.leafage.top/" + e.key);
-            },
-          })
+// 设置页码
+const setPage = (p: number, s: number) => {
+  page.value = p;
+  size.value = s;
+};
+// 添加tag
+const addTag = () => {
+  tags.value.push(tagValue.value);
+  portfolioData.value = { ...portfolioData.value, tags: tags.value };
+  tagValue.value = "";
+};
+// 删除tag
+const removeTag = (tag: String) => {
+  tags.value = tags.value.filter((item) => item !== tag);
+  portfolioData.value = { ...portfolioData.value, tags: tags.value };
+};
+// 初始化数据
+const initDatas = async () => {
+  await Promise.all([count(), retrieve()]);
+};
+// 统计数据
+const count = async () => {
+  await instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
+    total.value = res.data;
+  });
+};
+// 查询列表
+const retrieve = async () => {
+  await instance
+    .get(
+      SERVER_URL.portfolio.concat("?page=" + page.value, "&size=" + size.value)
+    )
+    .then((res) => {
+      datas.value = res.data;
+    });
+};
+// 删除确认
+const confirmOperate = (operate: boolean) => {
+  isDel.value = operate;
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean, code: string) => {
+  portfolioData.value = {};
+  tags.value = [];
+  if (operate && code && code.length > 0) {
+    dataCode.value = code;
+    await instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
+      portfolioData.value = res.data;
+      tags.value = res.data.tags;
+    });
+  }
+  isEdit.value = operate;
+};
+// 新增/编辑：提交
+const commitOperate = async () => {
+  let data = portfolioData.value;
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance
+      .put(SERVER_URL.portfolio.concat("/", dataCode.value), data)
+      .then((res) => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
         );
-        portfolioData.value = { ...portfolioData.value, url: urls };
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+  } else {
+    await instance.post(SERVER_URL.portfolio, data).then((res) => {
+      if (datas.value.length >= 10) {
+        // 删除第一个
+        datas.value.shift();
       }
-    }
-
-    const pl = computed(() => {
-      if (tags.value) {
-        return tags.value.length * 4 + 0.75;
-      }
-      return 0.75;
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
     });
+  }
+  isEdit.value = false;
+};
 
-    onMounted(() => {
-      initDatas();
-    });
+// 上传文件
+const uploadImage = (files: Array<File>) => {
+  if (files.length > 0) {
+    let urls = new Array(files.length);
+    Array.from(Array(files.length).keys()).forEach((id) =>
+      uploadFile(files[id]).subscribe({
+        // next: (result) => {},
+        // error: () => {},
+        complete: (e: any) => {
+          urls.push("https://cdn.leafage.top/" + e.key);
+        },
+      })
+    );
+    portfolioData.value = { ...portfolioData.value, url: urls };
+  }
+};
 
-    return {
-      imgTypes,
-      videoTypes,
-      datas,
-      page,
-      size,
-      total,
-      tagValue,
-      tags,
-      isEdit,
-      isDel,
-      pl,
-      portfolioData,
-      // 方法
-      addTag,
-      removeTag,
-      retrieve,
-      setPage,
-      confirmOperate,
-      modelOperate,
-      commitOperate,
-      uploadImage,
-    };
-  },
+const pl = computed(() => {
+  if (tags.value) {
+    return tags.value.length * 4 + 0.75;
+  }
+  return 0.75;
+});
+
+onMounted(() => {
+  initDatas();
 });
 </script>

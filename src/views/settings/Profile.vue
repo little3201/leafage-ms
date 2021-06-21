@@ -16,7 +16,22 @@
                 />
                 <div
                   title="Remove this profile photo?"
-                  class="tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-red-600 right-0 top-0 -mr-2 -mt-2"
+                  class="
+                    tooltip
+                    w-5
+                    h-5
+                    flex
+                    items-center
+                    justify-center
+                    absolute
+                    rounded-full
+                    text-white
+                    bg-red-600
+                    right-0
+                    top-0
+                    -mr-2
+                    -mt-2
+                  "
                 >
                   <svg
                     width="14"
@@ -35,7 +50,14 @@
               <div class="w-40 mx-auto cursor-pointer relative mt-5">
                 <button
                   type="button"
-                  class="w-full bg-blue-700 text-white p-2 rounded-md focus:outline-none"
+                  class="
+                    w-full
+                    bg-blue-700
+                    text-white
+                    p-2
+                    rounded-md
+                    focus:outline-none
+                  "
                 >
                   Change Photo
                 </button>
@@ -51,7 +73,14 @@
               <label>Username</label>
               <input
                 type="text"
-                class="rounded-md w-full bg-gray-100 cursor-not-allowed mt-1 border border-gray-300"
+                class="
+                  rounded-md
+                  w-full
+                  bg-gray-100
+                  cursor-not-allowed
+                  mt-1
+                  border border-gray-300
+                "
                 placeholder="Input text"
                 value="leafage"
                 disabled
@@ -94,7 +123,15 @@
             </div>
             <button
               type="button"
-              class="p-2 rounded-md w-20 bg-blue-700 text-white mt-3 focus:outline-none"
+              class="
+                p-2
+                rounded-md
+                w-20
+                bg-blue-700
+                text-white
+                mt-3
+                focus:outline-none
+              "
             >
               Save
             </button>
@@ -115,7 +152,14 @@
               <label>Email</label>
               <input
                 type="text"
-                class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
+                class="
+                  rounded-md
+                  w-full
+                  border border-gray-300
+                  bg-gray-100
+                  cursor-not-allowed
+                  mt-1
+                "
                 placeholder="Input text"
                 value="leafage@leafage.com"
                 disabled
@@ -191,7 +235,14 @@
         <div class="flex justify-end mt-4">
           <a
             href=""
-            class="text-red-600 flex border border-red-600 p-2 rounded-md items-center"
+            class="
+              text-red-600
+              flex
+              border border-red-600
+              p-2
+              rounded-md
+              items-center
+            "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -216,7 +267,15 @@
           </a>
           <button
             type="button"
-            class="p-2 rounded-md w-20 bg-blue-700 text-white ml-auto focus:outline-none"
+            class="
+              p-2
+              rounded-md
+              w-20
+              bg-blue-700
+              text-white
+              ml-auto
+              focus:outline-none
+            "
           >
             Save
           </button>
@@ -226,21 +285,10 @@
   </div>
 </template>
 
+<script lang="ts" setup>
+import {} from "vue";
 
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "Profile",
-
-  data() {
-    return {};
-  },
-
-  methods: {
-    onSubmit() {
-      alert("提交了");
-    },
-  },
-});
+const onSubmit = () => {
+  alert("提交了");
+};
 </script>

@@ -48,11 +48,7 @@
               Leaf<span class="font-medium">age</span>
             </span>
           </a>
-          <img
-            src="/svg/illustration.svg"
-            class="my-auto"
-            alt="leafage"
-          />
+          <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
             <p class="text-white font-medium text-xl leading-tight">
               一个使用 Vue3、 Tailwindcss 的网站管理系统
@@ -62,7 +58,19 @@
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
+            class="
+              max-w-xs
+              m-auto
+              bg-white
+              xl:bg-transparent
+              px-4
+              py-8
+              xl:p-0
+              rounded-md
+              shadow-sm
+              xl:shadow-none
+              w-full
+            "
           >
             <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
               Sign In
@@ -73,7 +81,13 @@
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
+                  class="
+                    border border-gray-300
+                    rounded-md
+                    w-full
+                    my-6
+                    shadow-sm
+                  "
                   placeholder="Username/Email"
                   required
                   autocomplete="off"
@@ -82,7 +96,13 @@
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="border border-gray-300 rounded-md w-full mb-6 shadow-sm"
+                  class="
+                    border border-gray-300
+                    rounded-md
+                    w-full
+                    mb-6
+                    shadow-sm
+                  "
                   placeholder="Password"
                   required
                   autocomplete="off"
@@ -104,14 +124,26 @@
               <button
                 type="submit"
                 @click="onSumbit"
-                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
+                class="
+                  w-full
+                  mt-6
+                  focus:outline-none
+                  text-white
+                  bg-blue-600
+                  hover:bg-blue-700
+                  hover:text-white
+                  py-2
+                  rounded-md
+                "
               >
                 Sign in
               </button>
             </form>
             <div class="my-6 text-center xl:text-left">
-              Not registered? 
-              <router-link class="text-blue-600" to="/signup">Create account</router-link>
+              Not registered?
+              <router-link class="text-blue-600" to="/signup"
+                >Create account</router-link
+              >
             </div>
           </div>
         </div>
@@ -120,75 +152,63 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import router from "../../router";
 import { useStore } from "../../store";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-export default defineComponent({
-  name: "SignIn",
+const formData = ref({});
+const store = useStore();
 
-  setup() {
-    const formData = ref({});
-    const store = useStore();
-
-    function onSubmit(): void {
-      instance
-        .post("/login", new URLSearchParams(formData.value))
-        .then((res) => {
-          if (res.data.username) {
-            fetchUser(res.data.username);
-          }
-          router.replace("/");
-        });
-    }
-
-    async function fetchUser(username: string) {
-      await instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
-        sessionStorage.setItem("user", JSON.stringify(res.data));
-        store.commit("setUser", res.data);
-      });
-    }
-
-    // 请求获取csrfToken
-    async function preSubmit() {
-      await instance.get("/check");
-    }
-
-    // 请求链接webSocket
-    async function socket() {
-      var ws = new WebSocket("ws://localhost:8760/socket");
-      ws.onopen = function (evt) {
-        console.log("Connection open ...");
-        ws.send("Hello WebSocket!");
-      };
-
-      ws.onmessage = function (evt) {
-        console.log("Received Message: ", evt.data);
-      };
-
-      ws.onclose = function (evt) {
-        console.log("Connect closed.");
-      };
-    }
-
-    const toSignUp = () => {
-      router.push("/signup");
-    };
-
-    onMounted(() => {
-      preSubmit();
+const onSubmit = async () => {
+  await instance
+    .post("/login", new URLSearchParams(formData.value))
+    .then((res) => {
+      if (res.data.username) {
+        fetchUser(res.data.username);
+      }
+      router.replace("/");
     });
+};
 
-    return {
-      formData,
-      onSubmit,
-      toSignUp,
-    };
-  },
+const fetchUser = async (username: string) => {
+  await instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
+    sessionStorage.setItem("user", JSON.stringify(res.data));
+    store.commit("setUser", res.data);
+  });
+};
+
+// 请求获取csrfToken
+const preSubmit = async () => {
+  await instance.get("/check");
+};
+
+// 请求链接webSocket
+async function socket() {
+  var ws = new WebSocket("ws://localhost:8760/socket");
+  ws.onopen = function (evt) {
+    console.log("Connection open ...");
+    ws.send("Hello WebSocket!");
+  };
+
+  ws.onmessage = function (evt) {
+    console.log("Received Message: ", evt.data);
+  };
+
+  ws.onclose = function (evt) {
+    console.log("Connect closed.");
+  };
+}
+
+const toSignUp = () => {
+  router.push("/signup");
+};
+
+onMounted(() => {
+  preSubmit();
 });
 </script>
 

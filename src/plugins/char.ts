@@ -75,3 +75,46 @@ export const createChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas
     }
     return new Chart(ctx, config);
 }
+
+export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
+    const config: any = {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    backgroundColor: "rgba(101, 116, 205, 0.1)",
+                    borderColor: "rgba(101, 116, 205, 0.8)",
+                    borderWidth: 2,
+                    data: datas,
+                },
+            ],
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: false,
+                    scaleLabel: false,
+                    ticks: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: false,
+                    scaleLabel: false,
+                    ticks: {
+                        display: false,
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                }]
+            }
+        },
+    }
+    return new Chart(ctx, config);
+}

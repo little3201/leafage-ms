@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import MobileMenu from "/@/components/global/MobileMenu.vue";
+import MobileMenu from "/@/components/sections/MobileMenu.vue";
 import SideMenu from "/@/components/global/SideMenu.vue";
-import TopBar from "/@/components/global/TopBar.vue";
+import TopBar from "/@/components/sections/TopBar.vue";
 </script>

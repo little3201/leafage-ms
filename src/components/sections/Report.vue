@@ -1,5 +1,8 @@
 <template>
-  <div class="col-span-12 mt-2 overflow-auto" style="height: calc(100vh - 96px)">
+  <div
+    class="col-span-12 mt-2 overflow-auto"
+    style="height: calc(100vh - 96px)"
+  >
     <div class="flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <a href="" class="ml-auto flex items-center text-blue-800">
@@ -23,7 +26,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-5 relative">
           <div class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +47,15 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  cursor-pointer
+                "
                 style="background-color: #91c714"
                 title="viewed higher than last month"
               >
@@ -65,6 +76,9 @@
                   <polyline points="5 12 12 5 19 12"></polyline>
                 </svg>
               </div>
+            </div>
+            <div class="absolute bottom-0 inset-x-0">
+              <canvas id="miniChart" ref="miniChart" height="70"></canvas>
             </div>
           </div>
           <h2
@@ -96,7 +110,16 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  bg-red-600
+                  cursor-pointer
+                "
                 title="2% Lower than last month"
               >
                 2%
@@ -144,7 +167,15 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  cursor-pointer
+                "
                 style="background-color: #91c714"
                 title="12% Higher than last month"
               >
@@ -192,7 +223,15 @@
               </svg>
               <div class="ml-auto">
                 <div
-                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                  class="
+                    flex
+                    items-center
+                    rounded-full
+                    px-2
+                    py-1
+                    text-xs text-white
+                    cursor-pointer
+                  "
                   style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
@@ -233,7 +272,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from "vue";
-import { createChart } from "../../plugins/char";
+import { createChart, createMiniChart } from "../../plugins/char";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -243,6 +282,8 @@ export default defineComponent({
 
   setup() {
     const lineChart = ref();
+    const miniChart = ref();
+    // data
     const data = ref({});
     const labels = ref<Array<String>>([]);
     const datas = ref<Array<Number>>([]);
@@ -264,22 +305,23 @@ export default defineComponent({
           array.forEach((item: any) => {
             labels.value.unshift(item.date);
             datas.value.unshift(item.viewed);
-            rates.value.unshift(item.overViewed)
+            rates.value.unshift(item.overViewed);
           });
         });
     }
 
     async function initData() {
-      await Promise.all([fetch(), retrieve()]).then(() =>
-        createChart(lineChart.value, labels.value, datas.value, rates.value)
-      );
+      await Promise.all([fetch(), retrieve()]).then(() => {
+        createChart(lineChart.value, labels.value, datas.value, rates.value);
+        createMiniChart(miniChart.value, labels.value, datas.value);
+      });
     }
 
     onMounted(() => {
       initData();
     });
 
-    return { lineChart, data };
+    return { lineChart, miniChart, data };
   },
 });
 </script>

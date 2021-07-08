@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Posts</h2>
       <button
         @click="retrieve(0, page)"
-        class="ml-4 flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,40 +25,43 @@
       </button>
       <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto" style="height: calc(100vh - 190px)">
-      <table class="mt-2 w-full truncate" aria-label="posts">
+    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="posts"
+      >
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3 text-left">No.</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Title</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Code</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Category</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Viewed</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Likes</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Modify Time</th>
-            <th scope="col" class="px-4 py-2 md:px-5 md:py-3">Actions</th>
+          <tr
+            class="
+              sticky
+              top-0
+              bg-gray-100
+              uppercase
+              text-center text-xs
+              sm:text-sm
+              h-12
+            "
+          >
+            <th scope="col" class="px-4 text-left">No.</th>
+            <th scope="col" class="px-4">Title</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Category</th>
+            <th scope="col" class="px-4">Viewed</th>
+            <th scope="col" class="px-4">Likes</th>
+            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
-        <tbody class="overflow-auto" style="height: calc(100vh - 238px)">
+        <tbody>
           <tr
             class="text-center bg-white border-t-8 border-b-8 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:px-5 md:py-3 text-left">
+            <td class="px-4 py-2 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td
-              class="
-                px-4
-                py-2
-                md:px-5
-                md:py-3
-                text-center
-                max-h-32 max-w-sm
-                truncate
-              "
-            >
+            <td class="px-4 text-center max-h-32 max-w-sm truncate">
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"
@@ -66,15 +69,15 @@
                 v-text="data.title"
               ></a>
             </td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.code"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.category"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.viewed"></td>
-            <td class="px-4 py-2 md:px-5 md:py-3" v-text="data.likes"></td>
+            <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.category"></td>
+            <td class="px-4" v-text="data.viewed"></td>
+            <td class="px-4" v-text="data.likes"></td>
             <td
-              class="px-4 py-2 md:px-5 md:py-3"
+              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
-            <td class="px-4 py-2 md:px-5 md:py-3">
+            <td class="px-4">
               <Action
                 :code="data.code"
                 @delAction="confirmOperate"

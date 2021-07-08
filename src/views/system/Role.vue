@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Roles</h2>
       <button
         @click="retrieve()"
-        class="ml-4 flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,17 +25,27 @@
       </button>
       <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto" style="height: calc(100vh - 190px)">
-      <table class="mt-2 w-full truncate" aria-label="role">
+    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 py-2 text-left">No.</th>
-            <th scope="col" class="px-4 py-2">Name</th>
-            <th scope="col" class="px-4 py-2">Code</th>
-            <th scope="col" class="px-4 py-2">Superior</th>
-            <th scope="col" class="px-4 py-2">User Count</th>
-            <th scope="col" class="px-4 py-2">Modify Time</th>
-            <th scope="col" class="px-4 py-2">Actions</th>
+          <tr
+            class="
+              sticky
+              top-0
+              bg-gray-100
+              uppercase
+              text-center text-xs
+              sm:text-sm
+              h-12
+            "
+          >
+            <th scope="col" class="px-4 text-left">No.</th>
+            <th scope="col" class="px-4">Name</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Superior</th>
+            <th scope="col" class="px-4">User Count</th>
+            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -44,21 +54,21 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 text-left">
+            <td class="px-4 py-2 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
-            <td class="px-4 py-2" v-text="data.code"></td>
-            <td class="px-4 py-2" v-text="data.superior"></td>
-            <td class="px-4 py-2" v-text="data.count"></td>
+            <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.superior"></td>
+            <td class="px-4" v-text="data.count"></td>
             <td
-              class="px-4 py-2"
+              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <Action
                 :code="data.code"
                 @delAction="confirmOperate"

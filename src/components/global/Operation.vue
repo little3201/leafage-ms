@@ -1,10 +1,10 @@
 <template>
   <div
     v-if="user && Object.keys(user).length > 0"
-    class="flex items-center sm:ml-auto"
+    class="inline-flex items-center sm:ml-auto"
   >
     <button
-      class="hidden p-2 rounded-md bg-white sm:flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
+      class="hidden p-2 rounded-md bg-white sm:inline-flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

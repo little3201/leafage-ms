@@ -4,7 +4,7 @@ export default [
     url: 'authority/count',
     method: 'get',
     response: () => {
-      return 10
+      return 11
     },
   },
   {

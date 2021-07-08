@@ -21,28 +21,28 @@ export default [
                 {
                     date: "05-30",
                     viewed: 4978,
-                    overViewed: 23,
+                    overViewed: 1.3,
                     likes: 30,
                     comment: 0
                 },
                 {
                     date: "05-29",
                     viewed: 4780,
-                    overViewed: 23,
+                    overViewed: 2.3,
                     likes: 30,
                     comment: 0
                 },
                 {
                     date: "05-28",
                     viewed: 4678,
-                    overViewed: 23,
+                    overViewed: 0.93,
                     likes: 30,
                     comment: 0
                 },
                 {
                     date: "05-27",
                     viewed: 4290,
-                    overViewed: 10,
+                    overViewed: 1.0,
                     likes: 30,
                     comment: 0
                 },
@@ -56,14 +56,14 @@ export default [
                 {
                     date: "05-25",
                     viewed: 4678,
-                    overViewed: 23,
+                    overViewed: 1.03,
                     likes: 30,
                     comment: 0
                 },
                 {
                     date: "05-24",
                     viewed: 4290,
-                    overViewed: 10,
+                    overViewed: 0.7,
                     likes: 30,
                     comment: 0
                 },
@@ -71,34 +71,6 @@ export default [
                     date: "05-23",
                     viewed: 4199,
                     overViewed: 2.98,
-                    likes: 30,
-                    comment: 0
-                },
-                {
-                    date: "05-22",
-                    viewed: 4099,
-                    overViewed: 0.60,
-                    likes: 30,
-                    comment: 0
-                },
-                {
-                    date: "05-21",
-                    viewed: 4079,
-                    overViewed: 1.75,
-                    likes: 30,
-                    comment: 0
-                },
-                {
-                    date: "05-20",
-                    viewed: 4083,
-                    overViewed: 0.60,
-                    likes: 30,
-                    comment: 0
-                },
-                {
-                    date: "05-19",
-                    viewed: 4061,
-                    overViewed: 0.53,
                     likes: 30,
                     comment: 0
                 }

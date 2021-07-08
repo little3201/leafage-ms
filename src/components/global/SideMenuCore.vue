@@ -13,7 +13,14 @@
         v-if="data.children && data.children.length > 0"
         href="javascript:;"
         @click.prevent="isOpen = !isOpen"
-        class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-5"
+        class="
+          flex
+          items-center
+          h-12
+          hover:bg-blue-100 hover:bg-opacity-10
+          rounded-l-full
+          pl-5
+        "
       >
         <div class="mr-3">
           <svg
@@ -65,7 +72,7 @@
         </span>
         <span
           v-else
-          class="hidden xl:flex items-center w-full"
+          class="hidden xl:inline-flex items-center"
           v-text="data.name"
         ></span>
       </a>
@@ -89,7 +96,7 @@
             <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
           </svg>
         </div>
-        <div class="hidden xl:block w-full" v-text="data.name"></div>
+        <span class="hidden xl:block w-full" v-text="data.name"></span>
       </router-link>
       <SideMenuCore
         v-show="isOpen"
@@ -102,29 +109,21 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineProps, ref } from "vue";
 
-export default defineComponent({
-  name: "SideMenuCore",
-
-  props: {
-    datas: {
-      type: Array,
-      default: [],
-    },
-    superior: {
-      type: String,
-      default: "",
-    },
+defineProps({
+  datas: {
+    type: Array,
+    default: [],
   },
-
-  data() {
-    return {
-      isOpen: true,
-    };
+  superior: {
+    type: String,
+    default: "",
   },
 });
+
+const isOpen = ref(true);
 </script>
 
 <style scoped>

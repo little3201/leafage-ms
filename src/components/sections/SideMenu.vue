@@ -1,8 +1,8 @@
 <template>
-  <nav class="hidden md:block sm:w-20 xl:w-64 pr-5 text-sm overflow-hidden">
+  <aside class="sm:w-20 xl:w-64 pr-4 text-sm overflow-hidden">
     <router-link
       to="/"
-      class="flex items-center pl-5 pt-3"
+      class="flex items-center pl-4 pt-3"
       exact-active-class=""
     >
       <svg
@@ -51,40 +51,25 @@
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <SideMenuCore :datas="datas" />
-  </nav>
+  </aside>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import SideMenuCore from "./SideMenuCore.vue";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
+import SideMenuCore from "/@/components/global/SideMenuCore.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-export default defineComponent({
-  name: "SideMenu",
+const datas = ref([]);
 
-  components: {
-    SideMenuCore,
-  },
-
-  data() {
-    return {
-      isOpen: false,
-      datas: [],
-    };
-  },
-
-  mounted() {
-    this.retrieveAuthorities();
-  },
-
-  methods: {
-    retrieveAuthorities() {
-      instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-        this.datas = res.data;
-      });
-    },
-  },
+onMounted(() => {
+  retrieveAuthorities();
 });
+
+const retrieveAuthorities = async () => {
+  await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+    datas.value = res.data;
+  });
+};
 </script>

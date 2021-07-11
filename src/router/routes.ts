@@ -74,6 +74,12 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Secret',
             component: () => import('/src/views/settings/Secret.vue'),
             meta: { requiresAuth: true }
+          },
+          {
+            path: 'account',
+            name: 'Account',
+            component: () => import('/src/views/settings/Account.vue'),
+            meta: { requiresAuth: true }
           }
         ]
       }

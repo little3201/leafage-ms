@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Authorities</h2>
       <button
         @click="retrieve()"
-        class="ml-4 flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,20 +25,33 @@
       </button>
       <Operation @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-auto" style="height: calc(100vh - 190px)">
-      <table class="my-2 w-full truncate" aria-label="authority">
+    <div class="overflow-scroll my-2" style="height: calc(100vh - 12rem)">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="authority"
+      >
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 py-2 text-left">No.</th>
-            <th scope="col" class="px-4 py-2">Name</th>
-            <th scope="col" class="px-4 py-2">Code</th>
-            <th scope="col" class="px-4 py-2">Role Count</th>
-            <th scope="col" class="px-4 py-2">Superior</th>
-            <th scope="col" class="px-4 py-2">Type</th>
-            <th scope="col" class="px-4 py-2">Icon</th>
-            <th scope="col" class="px-4 py-2">Path</th>
-            <th scope="col" class="px-4 py-2">Modify Time</th>
-            <th scope="col" class="px-4 py-2">Actions</th>
+          <tr
+            class="
+              sticky
+              top-0
+              bg-gray-100
+              uppercase
+              text-center text-xs
+              sm:text-sm
+              h-12
+            "
+          >
+            <th scope="col" class="px-4 text-left">No.</th>
+            <th scope="col" class="px-4">Name</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Role Count</th>
+            <th scope="col" class="px-4">Superior</th>
+            <th scope="col" class="px-4">Type</th>
+            <th scope="col" class="px-4">Icon</th>
+            <th scope="col" class="px-4">Path</th>
+            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -47,24 +60,24 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 text-left">
+            <td class="px-4 py-2 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
-            <td class="px-4 py-2" v-text="data.code"></td>
-            <td class="px-4 py-2" v-text="data.count"></td>
-            <td class="px-4 py-2" v-text="data.superior"></td>
-            <td class="px-4 py-2">
+            <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.count"></td>
+            <td class="px-4" v-text="data.superior"></td>
+            <td class="px-4">
               <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
               <span class="text-blue-500" v-else-if="data.type == 'B'"
                 >Button</span
               >
               <span class="text-pink-500" v-else>Api</span>
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <svg
                 v-if="data.icon"
                 width="18"
@@ -80,12 +93,12 @@
                 <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
               </svg>
             </td>
-            <td class="px-4 py-2" v-text="data.path"></td>
+            <td class="px-4" v-text="data.path"></td>
             <td
-              class="px-4 py-2"
+              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             ></td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <Action
                 :code="data.code"
                 @delAction="confirmOperate"
@@ -134,7 +147,7 @@
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option value="M">Menu</option>
               <option value="B">Button</option>
               <option value="R">Router</option>
@@ -161,7 +174,7 @@
               v-model="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

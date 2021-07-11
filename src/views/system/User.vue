@@ -1,10 +1,10 @@
 <template>
   <div class="col-span-12 mt-2">
-    <div class="flex justify-between items-center h-10">
+    <div class="inline-flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Users</h2>
       <button
         @click="retrieve()"
-        class="ml-4 flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -24,21 +24,31 @@
         Reload Data
       </button>
     </div>
-    <div class="overflow-auto" style="height: calc(100vh - 190px)">
-      <table class="mt-2 w-full truncate" aria-label="user">
+    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
         <thead>
-          <tr class="uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 py-2 text-left">No.</th>
-            <th scope="col" class="px-4 py-2">Username</th>
-            <th scope="col" class="px-4 py-2">Avatar</th>
-            <th scope="col" class="px-4 py-2">Gender</th>
-            <th scope="col" class="px-4 py-2">Phone</th>
-            <th scope="col" class="px-4 py-2">Email</th>
-            <th scope="col" class="px-4 py-2">Birthday</th>
-            <th scope="col" class="px-4 py-2">NonExpired</th>
-            <th scope="col" class="px-4 py-2">Locked</th>
-            <th scope="col" class="px-4 py-2">Credentials</th>
-            <th scope="col" class="px-4 py-2">Actions</th>
+          <tr
+            class="
+              sticky
+              top-0
+              bg-gray-100
+              uppercase
+              text-center text-xs
+              sm:text-sm
+              h-12
+            "
+          >
+            <th scope="col" class="px-4 text-left">No.</th>
+            <th scope="col" class="px-4">Username</th>
+            <th scope="col" class="px-4">Avatar</th>
+            <th scope="col" class="px-4">Gender</th>
+            <th scope="col" class="px-4">Phone</th>
+            <th scope="col" class="px-4">Email</th>
+            <th scope="col" class="px-4">Birthday</th>
+            <th scope="col" class="px-4">NonExpired</th>
+            <th scope="col" class="px-4">Locked</th>
+            <th scope="col" class="px-4">Credentials</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -47,21 +57,21 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 text-left">
+            <td class="px-4 py-2 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
-            <td class="p-2">
+            <td class="px-4">
               <img
                 src="/images/avatar.jpg"
                 alt="avatar"
                 class="rounded-full w-8 h-8 mx-auto"
               />
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <svg
                 v-if="data.gender === 'M'"
                 width="18"
@@ -149,13 +159,13 @@
                 </g>
               </svg>
             </td>
-            <td class="px-4 py-2" v-text="data.phone"></td>
-            <td class="px-4 py-2" v-text="data.email"></td>
+            <td class="px-4" v-text="data.phone"></td>
+            <td class="px-4" v-text="data.email"></td>
             <td
-              class="px-4 py-2"
+              class="px-4"
               v-text="new Date(data.birthday).toLocaleDateString()"
             ></td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <div
                 v-if="data.accountNonExpired"
                 class="flex items-center justify-center"
@@ -195,7 +205,7 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <div
                 v-if="data.accountNonLocked"
                 class="flex items-center justify-center"
@@ -248,7 +258,7 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-2">
+            <td class="px-4">
               <div
                 v-if="data.credentialsNonExpired"
                 class="flex items-center justify-center"
@@ -288,7 +298,7 @@
                 </svg>
               </div>
             </td>
-            <td class="px-4 py-2 rounded-tr-lg rounded-br-lg">
+            <td class="px-4">
               <Action
                 :code="data.username"
                 @delAction="confirmOperate"

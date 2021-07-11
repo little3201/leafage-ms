@@ -7,6 +7,7 @@ const SERVER_PRE = {
 // 接口请求路径
 const SERVER_URL = {
   // hypervisor
+  account: SERVER_PRE.hypervisor.concat('/account'), // 账户
   user: SERVER_PRE.hypervisor.concat('/user'), // 用户
   role: SERVER_PRE.hypervisor.concat('/role'), // 角色
   authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限

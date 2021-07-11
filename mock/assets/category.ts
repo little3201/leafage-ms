@@ -45,11 +45,31 @@ export default [
         {
           code: '20A23D2D1',
           alias: 'Technology',
+          count: 14,
           modifyTime: new Date(),
         },
         {
           code: '20A23D2S1',
           alias: 'Lifestyle',
+          count: 1,
+          modifyTime: new Date(),
+        },
+        {
+          code: '20A23D2Q1',
+          alias: 'Expirence',
+          count: 4,
+          modifyTime: new Date(),
+        },
+        {
+          code: '20A23D2A1',
+          alias: 'Photograph',
+          count: 10,
+          modifyTime: new Date(),
+        },
+        {
+          code: '20A23D2V1',
+          alias: 'Others',
+          count: 1,
           modifyTime: new Date(),
         },
       ];

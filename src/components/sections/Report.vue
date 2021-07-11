@@ -1,8 +1,11 @@
 <template>
-  <div class="col-span-12 mt-2 overflow-auto" style="height: calc(100vh - 96px)">
-    <div class="flex items-center h-10">
+  <div
+    class="col-span-12 mt-2 overflow-scroll"
+    style="height: calc(100vh - 96px)"
+  >
+    <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
-      <a href="" class="ml-auto flex items-center text-blue-800">
+      <a href="" class="ml-4 inline-flex items-center text-blue-800">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -23,7 +26,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +47,15 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  cursor-pointer
+                "
                 style="background-color: #91c714"
                 title="viewed higher than last month"
               >
@@ -66,6 +77,13 @@
                 </svg>
               </div>
             </div>
+            <div class="absolute bottom-2 inset-x-4 opacity-50">
+              <canvas
+                id="miniChart"
+                ref="miniChart"
+                height="100"
+              ></canvas>
+            </div>
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
@@ -75,7 +93,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +114,16 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  bg-red-600
+                  cursor-pointer
+                "
                 title="2% Lower than last month"
               >
                 2%
@@ -123,7 +150,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +171,15 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="
+                  flex
+                  items-center
+                  rounded-full
+                  px-2
+                  py-1
+                  text-xs text-white
+                  cursor-pointer
+                "
                 style="background-color: #91c714"
                 title="12% Higher than last month"
               >
@@ -173,7 +208,7 @@
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="relative zoom-in">
-          <div class="shadow-sm rounded-md bg-white p-5">
+          <div class="shadow-sm rounded-md bg-white p-4">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +227,15 @@
               </svg>
               <div class="ml-auto">
                 <div
-                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                  class="
+                    flex
+                    items-center
+                    rounded-full
+                    px-2
+                    py-1
+                    text-xs text-white
+                    cursor-pointer
+                  "
                   style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
@@ -222,64 +265,74 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
-      <div class="col-span-12">
+      <div class="col-span-12 md:col-span-6">
         <div class="shadow-sm rounded-md bg-white p-4">
-          <canvas id="lineChart" ref="lineChart"></canvas>
+          <canvas id="doughnutChart" ref="doughnutChart"></canvas>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, reactive } from "vue";
-import { createChart } from "../../plugins/char";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
+import { createDoughnutChart, createMiniChart } from "../../plugins/char";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-export default defineComponent({
-  name: "Report",
+const doughnutChart = ref();
+const miniChart = ref();
+// data
+const data = ref({});
+// posts statistics
+const postsDatas = ref<Array<Number>>([]);
+const postsLabels = ref<Array<String>>([]);
+// viewed statistics
+const viewedLabels = ref<Array<String>>([]);
+const viewedDatas = ref<Array<Number>>([]);
 
-  setup() {
-    const lineChart = ref();
-    const data = ref({});
-    const labels = ref<Array<String>>([]);
-    const datas = ref<Array<Number>>([]);
-    const rates = ref<Array<Number>>([]);
-    // 请求最新统计数据
-    async function fetch() {
-      await instance
-        .get(SERVER_URL.statistics.concat("/viewed"))
-        .then((res) => {
-          data.value = res.data;
-        });
-    }
-    // 请求七天内的统计数据
-    async function retrieve() {
-      await instance
-        .get(SERVER_URL.statistics.concat("?page=0&size=30"))
-        .then((res) => {
-          let array: Array<any> = res.data;
-          array.forEach((item: any) => {
-            labels.value.unshift(item.date);
-            datas.value.unshift(item.viewed);
-            rates.value.unshift(item.overViewed)
-          });
-        });
-    }
-
-    async function initData() {
-      await Promise.all([fetch(), retrieve()]).then(() =>
-        createChart(lineChart.value, labels.value, datas.value, rates.value)
-      );
-    }
-
-    onMounted(() => {
-      initData();
+// 请求最新统计数据
+const fetch = async () => {
+  await instance.get(SERVER_URL.statistics.concat("/viewed")).then((res) => {
+    data.value = res.data;
+  });
+};
+// 请求七天内的统计数据
+const retrieve = async () => {
+  await instance
+    .get(SERVER_URL.statistics.concat("?page=0&size=7"))
+    .then((res) => {
+      res.data.forEach((item: any) => {
+        viewedLabels.value.unshift(item.date);
+        viewedDatas.value.unshift(item.overViewed);
+      });
     });
+};
 
-    return { lineChart, data };
-  },
+const category = async () => {
+  await instance
+    .get(SERVER_URL.category.concat("?page=0&size=10"))
+    .then((res) => {
+      res.data.forEach((item: any) => {
+        postsLabels.value.unshift(item.alias);
+        postsDatas.value.unshift(item.count);
+      });
+    });
+};
+
+const initData = async () => {
+  await Promise.all([fetch(), retrieve(), category()]).then(() => {
+    createMiniChart(miniChart.value, viewedLabels.value, viewedDatas.value);
+    createDoughnutChart(
+      doughnutChart.value,
+      postsLabels.value,
+      postsDatas.value
+    );
+  });
+};
+
+onMounted(() => {
+  initData();
 });
 </script>

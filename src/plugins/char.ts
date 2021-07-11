@@ -1,75 +1,101 @@
 import {
     Chart,
+    ArcElement,
     LineElement,
     LineController,
+    DoughnutController,
     PointElement,
     LinearScale,
     CategoryScale,
     Legend,
+    Title,
     Tooltip
 } from 'chart.js';
 
 Chart.register(
+    ArcElement,
     LineElement,
     LineController,
+    DoughnutController,
     PointElement,
     LinearScale,
     CategoryScale,
     Legend,
+    Title,
     Tooltip
 );
 
-export const createChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>, rates: Array<Number>) => {
+export const createDoughnutChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
+    const config: any = {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "帖子数",
+                    data: datas,
+                    backgroundColor: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white']
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    font: {
+                        size: 16
+                    },
+                    display: true,
+                    text: 'Categories Posts Count'
+                }
+            }
+        },
+    }
+    return new Chart(ctx, config);
+}
+
+export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
     const config: any = {
         type: "line",
         data: {
             labels: labels,
             datasets: [
                 {
-                    label: "访问量",
+                    backgroundColor: "rgba(101, 116, 205, 0.1)",
+                    borderColor: "rgba(101, 116, 205, 0.8)",
+                    borderWidth: 3,
+                    tension: 0.4,
                     data: datas,
-                    tension: 0.3,
-                    borderColor: '#91c714',
-                    yAxisID: 'y',
-                    pointStyle: 'rect',
-                },
-                {
-                    label: "环比",
-                    data: rates,
-                    tension: 0.3,
-                    yAxisID: 'y1',
-                    pointStyle: 'triangle',
+
                 },
             ],
         },
         options: {
             plugins: {
                 legend: {
-                    labels: {
-                        usePointStyle: true,
-                    },
-                },
+                    display: false
+                }
             },
-            responsive: true,
+            layout: {
+                padding: 4
+            },
+            elements: {
+                point: {
+                    radius: 0,
+                    hoverRadius: 2
+                }
+            },
             interaction: {
                 intersect: false,
-                mode: 'index',
             },
+            responsive: true,
             scales: {
-                y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
+                xAxis: {
+                    display: false
                 },
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    // grid line settings
-                    grid: {
-                        drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
-                },
+                yAxis: {
+                    display: false
+                }
             }
         },
     }

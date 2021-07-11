@@ -1,6 +1,12 @@
 <template>
   <div class="flex items-center mt-1 mb-3">
-    <ul class="flex items-center ml-auto">
+    <div class="hidden md:block">
+      当前展示第&nbsp;<span v-text="page * size + 1"></span>&nbsp;-
+      <span v-text="(page + 1) * size"></span>&nbsp;行记录，共&nbsp;
+      <span v-text="total"></span>
+      &nbsp;条记录
+    </div>
+    <ul class="inline-flex items-center ml-auto">
       <li>
         <button
           type="button"

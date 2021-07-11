@@ -4,7 +4,7 @@ export default [
     url: 'posts/count',
     method: 'get',
     response: () => {
-      return 3
+      return 10
     },
   },
   {

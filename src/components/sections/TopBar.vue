@@ -108,12 +108,12 @@
           v-show="notify"
           class="
             origin-top-left
-            md:origin-top-right
             p-4
             absolute
             w-72
             md:w-80
             left-0
+            md:left-auto
             md:right-0
             mt-4
             rounded-md
@@ -122,11 +122,11 @@
             z-10
           "
         >
-          <div class="mb-4">Notifications</div>
-          <div class="cursor-pointer divide-y">
+          <span class="p-2 text-lg">Notifications</span>
+          <div class="cursor-pointer divide-y mt-2">
             <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
               <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate mr-4"
+                <a href="javascript:;" class="font-medium truncate"
                   >John Travolta</a
                 >
                 <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">
@@ -141,7 +141,7 @@
             </div>
             <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
               <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate mr-4"
+                <a href="javascript:;" class="font-medium truncate"
                   >John Travolta</a
                 >
                 <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">

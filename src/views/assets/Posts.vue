@@ -178,11 +178,10 @@
               type="text"
               @keydown.enter="addTag"
               class="w-full rounded-md border-gray-300 shadow-sm"
-              :style="{ paddingLeft: pl + 'rem' }"
               placeholder="Tags"
               v-model="tagValue"
             />
-            <div class="absolute inset-y-0 left-3 flex items-center">
+            <div class="absolute inset-y-0 right-2 inline-flex items-center">
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
@@ -465,13 +464,6 @@ const uploadImage = (files: Array<File>) => {
     });
   }
 };
-
-const pl = computed(() => {
-  if (tags.value) {
-    return tags.value.length * 4 + 0.75;
-  }
-  return 0.75;
-});
 
 // 转换md为html
 const rendedHtml = computed(() => {

@@ -73,10 +73,10 @@
         </svg>
       </a>
     </div>
-    <div class="mb-6 mt-4 h-px w-full bg-gray-200 bg-opacity-30"></div>
+    <div class="mb-4 mt-2 h-px w-full bg-gray-200 bg-opacity-30"></div>
     <div
       v-show="isShow"
-      class="fixed inset-0 top-20 w-screen px-4 bg-blue-800 z-10"
+      class="fixed inset-0 top-16 w-screen px-4 bg-blue-800 z-10"
     >
       <transition
         enter-active-class="transition ease-out duration-150"

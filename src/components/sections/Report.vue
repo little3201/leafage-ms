@@ -1,6 +1,6 @@
 <template>
   <div
-    class="col-span-12 mt-2 overflow-auto"
+    class="col-span-12 mt-2 overflow-scroll"
     style="height: calc(100vh - 96px)"
   >
     <div class="inline-flex items-center h-10">
@@ -26,7 +26,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5 relative">
+        <div class="shadow-sm rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-5">
+        <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +208,7 @@
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="relative zoom-in">
-          <div class="shadow-sm rounded-md bg-white p-5">
+          <div class="shadow-sm rounded-md bg-white p-4">
             <div class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

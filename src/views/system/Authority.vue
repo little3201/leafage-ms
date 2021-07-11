@@ -26,7 +26,10 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll my-2" style="height: calc(100vh - 12rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="authority"
+      >
         <thead>
           <tr
             class="
@@ -144,7 +147,7 @@
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option value="M">Menu</option>
               <option value="B">Button</option>
               <option value="R">Router</option>
@@ -171,7 +174,7 @@
               v-model="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

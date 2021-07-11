@@ -114,7 +114,7 @@
               v-model="groupData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -129,7 +129,7 @@
               v-model="groupData.principal"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="(user, index) in users"
                 :key="index"

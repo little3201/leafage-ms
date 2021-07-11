@@ -29,7 +29,6 @@
           type="text"
           class="
             w-56
-            py-1
             border border-gray-300
             bg-blue-100 bg-opacity-50
             rounded-full
@@ -37,7 +36,6 @@
           placeholder="Search..."
         />
         <svg
-          xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
           viewBox="0 0 24 24"
@@ -46,18 +44,9 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="
-            feather feather-search
-            absolute
-            inset-y-0
-            right-0
-            my-auto
-            mr-3
-            opacity-60
-          "
+          class="absolute inset-y-0 right-0 my-auto mr-3 opacity-60"
         >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <use xlink:href="/svg/feather-sprite.svg#search" />
         </svg>
       </div>
     </div>
@@ -118,12 +107,15 @@
         <div
           v-show="notify"
           class="
-            origin-top-right
+            origin-top-left
+            md:origin-top-right
             p-4
             absolute
-            w-80
-            right-0
-            mt-5
+            w-72
+            md:w-80
+            left-0
+            md:right-0
+            mt-4
             rounded-md
             shadow-lg
             bg-white
@@ -134,7 +126,7 @@
           <div class="cursor-pointer divide-y">
             <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
               <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate mr-5"
+                <a href="javascript:;" class="font-medium truncate mr-4"
                   >John Travolta</a
                 >
                 <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">
@@ -149,7 +141,7 @@
             </div>
             <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
               <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate mr-5"
+                <a href="javascript:;" class="font-medium truncate mr-4"
                   >John Travolta</a
                 >
                 <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">
@@ -235,7 +227,9 @@
             bg-white
             z-10
           "
-          aria-orientation="vertical" aria-labelledby="account-down" tabindex="-1"
+          aria-orientation="vertical"
+          aria-labelledby="account-down"
+          tabindex="-1"
         >
           <div class="py-2">
             <h3 class="font-blod text-base" v-text="user.nickname"></h3>

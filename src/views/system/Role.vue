@@ -26,7 +26,10 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="role"
+      >
         <thead>
           <tr
             class="
@@ -134,7 +137,7 @@
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option disabled>请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

@@ -105,4 +105,13 @@ export default [
       ];
     },
   },
+  {
+    url: 'user',
+    method: 'patch',
+    response: () => {
+      return {
+        msg: "ok"
+      }
+    },
+  }
 ] as MockMethod[];

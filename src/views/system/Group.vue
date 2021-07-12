@@ -73,7 +73,7 @@
             ></td>
             <td class="px-4">
               <Action
-                :code="data.code"
+                @click="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -89,7 +89,11 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
+    <Confirm
+      :isShow="isDel"
+      @cancelAction="confirmOperate"
+      @commitAction="confirmCommit"
+    />
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
@@ -202,15 +206,25 @@ const retrieve = async () => {
       datas.value = res.data;
     });
 };
-// 删除确认
+// 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
+// 删除确认
+const confirmCommit = () => {
+  instance.delete(SERVER_URL.group.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+  });
+};
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean, code: string) => {
+const modelOperate = async (operate: boolean) => {
   groupData.value = {};
   if (operate) {
-    await Promise.all([fetch(operate, code), retrieveSuperiors()]);
+    await Promise.all([fetch(operate, dataCode.value), retrieveSuperiors()]);
   }
   isEdit.value = operate;
 };
@@ -242,6 +256,7 @@ const commitOperate = async () => {
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
+        isEdit.value = false;
       });
   } else {
     instance.post(SERVER_URL.group, data).then((res) => {
@@ -251,9 +266,9 @@ const commitOperate = async () => {
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
+      isEdit.value = false;
     });
   }
-  isEdit.value = false;
 };
 
 onMounted(() => {

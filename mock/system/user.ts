@@ -12,6 +12,12 @@ export default [
     method: 'get',
     response: () => {
       return {
+        username: 'admin',
+        nickname: 'admin',
+        avatar: '/images/avatar.jpg',
+        gender: 'F',
+        phone: "187****7895",
+        email: 'litt***1@163.com',
         accountNonExpired: "2021-12-23T12:00",
         accountNonLocked: true,
         credentialsExpired: "2021-12-23T12:00",
@@ -100,11 +106,19 @@ export default [
     },
   },
   {
-    url: 'user',
+    url: '/api/hypervisor/user',
     method: 'patch',
     response: () => {
       return {
         msg: "ok"
+      }
+    },
+  },
+  {
+    url: '/api/hypervisor/user/:username',
+    method: 'delete',
+    response: () => {
+      return {
       }
     },
   }

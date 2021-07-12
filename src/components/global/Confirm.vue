@@ -1,7 +1,24 @@
 <template>
-  <Model :isShow="isShow" :isConfirm="true" @cancelAction="cancelOperation">
+  <Model
+    :isShow="isShow"
+    :isConfirm="true"
+    @cancelAction="cancelOperation"
+    @commitAction="commitOperation"
+  >
     <div
-      class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+      class="
+        mx-auto
+        flex-shrink-0 flex
+        items-center
+        justify-center
+        h-12
+        w-12
+        rounded-full
+        bg-red-100
+        sm:mx-0
+        sm:h-10
+        sm:w-10
+      "
     >
       <svg
         class="h-6 w-6 text-red-600"
@@ -35,31 +52,23 @@
   </Model>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineProps, defineEmit } from "vue";
 import Model from "/@/components/global/Model.vue";
 
-export default defineComponent({
-  name: "Confirm",
-
-  components: {
-    Model,
-  },
-
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  methods: {
-    cancelOperation() {
-      this.$emit("cancelAction", false);
-    },
-    confirmOperation(){
-      this.$emit("confirmAction");
-    }
+defineProps({
+  isShow: {
+    type: Boolean,
+    default: false,
   },
 });
+
+const emit = defineEmit(["cancelAction", "commitAction"]);
+
+const cancelOperation = () => {
+  emit("cancelAction", false);
+};
+const commitOperation = () => {
+  emit("commitAction");
+};
 </script>

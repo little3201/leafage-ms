@@ -191,13 +191,9 @@ onMounted(() => {
     content: "";
     margin-left: -48%;
     min-width: 768px;
+    @apply absolute w-full h-full bg-no-repeat bg-right;
     background-image: url(/svg/bg-login-page.svg);
-    background-position: right;
-    background-repeat: no-repeat;
     background-size: auto 100%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
   }
 }
 </style>

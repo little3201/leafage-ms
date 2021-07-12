@@ -99,4 +99,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/hypervisor/group/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

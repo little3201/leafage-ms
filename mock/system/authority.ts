@@ -106,4 +106,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/hypervisor/authority/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

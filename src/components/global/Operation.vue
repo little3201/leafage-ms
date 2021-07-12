@@ -97,32 +97,23 @@
   </div>
 </template>
 
-
-<script lang="ts">
-import { defineComponent, computed } from "vue";
+<script lang="ts" setup>
+import { computed, defineEmit } from "vue";
 import { useStore } from "../../store";
 
-export default defineComponent({
-  name: "Operation",
+const emit = defineEmit(["modelOperate"]);
 
-  methods: {
-    operate() {
-      this.$emit("modelOperate", true);
-    },
-  },
+const operate = () => {
+  emit("modelOperate", true);
+};
 
-  setup() {
-    const store = useStore();
-    const user = computed(() => {
-      let data = sessionStorage.getItem("user");
-      if (data) {
-        return JSON.parse(data);
-      } else {
-        return store.state.user;
-      }
-    });
-
-    return { user };
-  },
+const store = useStore();
+const user = computed(() => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return store.state.user;
+  }
 });
 </script>

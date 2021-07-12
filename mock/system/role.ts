@@ -68,4 +68,12 @@ export default [
         { "code": "20C281HG2", "superior": null, "modifyTime": "2020-12-28T16:03:16.493", "name": "guest", "description": "访客", "count": 0 }];
     },
   },
+  {
+    url: '/api/hypervisor/role/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

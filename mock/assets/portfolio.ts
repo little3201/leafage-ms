@@ -52,7 +52,7 @@ export default [
           modifyTime: new Date(),
         },
         {
-          code: '20A23D2D1',
+          code: '20A23D2D2',
           title: 'Travel Video',
           type: 'mp4',
           modifyTime: new Date(),
@@ -60,4 +60,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/assets/portfolio/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

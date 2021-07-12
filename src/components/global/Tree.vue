@@ -4,37 +4,26 @@
   </Model>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineEmit, defineProps } from "vue";
 import Model from "/@/components/global/Model.vue";
 import TreeCore from "/@/components/global/TreeCore.vue";
 
-export default defineComponent({
-  name: "Tree",
-
-  components: {
-    Model,
-    TreeCore,
+defineProps({
+  isShow: {
+    type: Boolean,
+    default: false,
   },
-
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-    datas: {
-      type: Array,
-      default: [],
-    },
-  },
-
-  methods: {
-    cancelOperation() {
-      this.$emit("treeAction", false);
-    },
-    commitOperation() {
-      
-    },
+  datas: {
+    type: Array,
+    default: [],
   },
 });
+
+const emit = defineEmit(["treeAction"]);
+
+const cancelOperation = () => {
+  emit("treeAction", false);
+};
+const commitOperation = () => {};
 </script>

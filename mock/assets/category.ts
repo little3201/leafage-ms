@@ -75,4 +75,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/assets/category/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

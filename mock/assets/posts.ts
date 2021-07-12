@@ -27,7 +27,7 @@ export default [
         category: '20A23D2D1',
         subtitle: '分布式架构，是一套很复杂的系统',
         cover: 'https://cdn.pixabay.com/photo/2019/11/12/09/03/proxy-4620557_1280.jpg',
-        tags: ["java", "redis", "锁"]
+        tags: ["java", "redis", "分布式锁", "spring boot"]
       }
     },
   },
@@ -73,4 +73,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/assets/posts/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

@@ -77,5 +77,4 @@ export default [
             ]
         },
     },
-
 ] as MockMethod[];

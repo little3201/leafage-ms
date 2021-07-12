@@ -126,30 +126,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineProps, defineEmit } from "vue";
 
-export default defineComponent({
-  name: "Model",
-
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-    isConfirm: {
-      type: Boolean,
-      default: false,
-    },
+defineProps({
+  isShow: {
+    type: Boolean,
+    default: false,
   },
-
-  methods: {
-    cancelOperation() {
-      this.$emit("cancelAction", false);
-    },
-    commitOperation() {
-      this.$emit("commitAction");
-    },
+  isConfirm: {
+    type: Boolean,
+    default: false,
   },
 });
+
+const emit = defineEmit(["cancelAction", "commitAction"]);
+
+const cancelOperation = () => {
+  emit("cancelAction", false);
+};
+const commitOperation = () => {
+  emit("commitAction");
+};
 </script>

@@ -10,7 +10,7 @@
           type="checkbox"
           class="rounded"
           :value="data.code"
-          v-model="checkedDatas"
+          v-model.lazy="checkedDatas"
         />
         <span
           v-if="data.children && data.children.length > 0"

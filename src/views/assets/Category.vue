@@ -24,7 +24,10 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="category"
+      >
         <thead>
           <tr
             class="
@@ -165,9 +168,9 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(
-      SERVER_URL.category.concat("?page=" + page.value, "&size=" + size.value)
-    )
+    .get(SERVER_URL.category, {
+      params: { page: page.value, size: size.value },
+    })
     .then((res) => {
       datas.value = res.data;
     });

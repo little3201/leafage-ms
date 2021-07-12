@@ -1,14 +1,32 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'group/count',
+    url: '/api/hypervisor/group/count',
     method: 'get',
     response: () => {
-      return 5
+      return 3
     },
   },
   {
-    url: 'group/:code',
+    url: '/api/hypervisor/group/tree',
+    method: 'get',
+    response: () => {
+      return [
+        { "code": "21529ZEE7", "name": "normal", "superior": null, "expand": null, "children": [] },
+        {
+          "code": "21169GZC", "name": "vip", "superior": null, "expand": null, "children": [
+            {
+              "code": "21529WXDL", "name": "gold vip", "superior": "21169GZC", "expand": null, "children": [
+                { "code": "21529V1IM", "name": "diamond vip", "superior": "21529WXDL", "expand": null, "children": [] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    url: '/api/hypervisor/group/:code',
     method: 'get',
     response: () => {
       return {
@@ -21,7 +39,7 @@ export default [
     },
   },
   {
-    url: 'group/:code',
+    url: '/api/hypervisor/group/:code',
     method: 'put',
     response: () => {
       return {
@@ -34,7 +52,7 @@ export default [
     },
   },
   {
-    url: 'group',
+    url: '/api/hypervisor/group',
     method: 'post',
     response: () => {
       return {
@@ -47,7 +65,7 @@ export default [
     },
   },
   {
-    url: 'group',
+    url: '/api/hypervisor/group',
     method: 'get',
     response: () => {
       return [

@@ -1,32 +1,26 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'user/count',
+    url: '/api/hypervisor/user/count',
     method: 'get',
     response: () => {
-      return 5
+      return 3
     },
   },
   {
-    url: 'user/:username',
+    url: '/api/hypervisor/user/:username',
     method: 'get',
     response: () => {
       return {
-        username: 'admin',
-        nickname: 'admin',
-        avatar: '',
-        gender: 'M',
-        phone: "187****7895",
-        email: 'lit***@163.com',
-        birthday: new Date(),
-        accountNonExpired: true,
+        accountNonExpired: "2021-12-23T12:00",
         accountNonLocked: true,
-        credentialsNonExpired: true,
+        credentialsExpired: "2021-12-23T12:00",
+        description: "返回数据了"
       }
     },
   },
   {
-    url: 'user/:username',
+    url: '/api/hypervisor/user/:username',
     method: 'put',
     response: () => {
       return {
@@ -44,7 +38,7 @@ export default [
     },
   },
   {
-    url: 'user',
+    url: '/api/hypervisor/user',
     method: 'post',
     response: () => {
       return {
@@ -62,7 +56,7 @@ export default [
     },
   },
   {
-    url: 'user',
+    url: '/api/hypervisor/user',
     method: 'get',
     response: () => {
       return [

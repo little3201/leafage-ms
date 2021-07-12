@@ -308,9 +308,9 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(
-      SERVER_URL.portfolio.concat("?page=" + page.value, "&size=" + size.value)
-    )
+    .get(SERVER_URL.portfolio, {
+      params: { page: page.value, size: size.value },
+    })
     .then((res) => {
       datas.value = res.data;
     });

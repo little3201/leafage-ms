@@ -179,7 +179,17 @@
               placeholder="Tags"
               v-model="tagValue"
             />
-            <div class="absolute w-2/3 overflow-x-scroll inset-y-0 right-2 inline-flex items-center">
+            <div
+              class="
+                absolute
+                w-2/3
+                overflow-x-scroll
+                inset-y-0
+                right-2
+                inline-flex
+                items-center
+              "
+            >
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
@@ -359,7 +369,7 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(SERVER_URL.posts.concat("?page=" + page.value, "&size=" + size.value))
+    .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
     .then((res) => {
       datas.value = res.data;
     });

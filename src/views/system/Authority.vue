@@ -239,9 +239,9 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(
-      SERVER_URL.authority.concat("?page=" + page.value, "&size=" + size.value)
-    )
+    .get(SERVER_URL.authority, {
+      params: { page: page.value, size: size.value },
+    })
     .then((res) => {
       datas.value = res.data;
     });

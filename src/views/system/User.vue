@@ -471,7 +471,7 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(SERVER_URL.user.concat("?page=" + page.value, "&size=" + size.value))
+    .get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
     .then((res) => {
       datas.value = res.data;
     });

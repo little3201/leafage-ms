@@ -1,14 +1,14 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'posts/count',
+    url: '/api/assets/posts/count',
     method: 'get',
     response: () => {
       return 10
     },
   },
   {
-    url: 'posts/:code/content',
+    url: '/api/assets/posts/:code/content',
     method: 'get',
     response: () => {
       return {
@@ -18,7 +18,7 @@ export default [
     },
   },
   {
-    url: 'posts/:code',
+    url: '/api/assets/posts/:code',
     method: 'get',
     response: () => {
       return {
@@ -32,7 +32,7 @@ export default [
     },
   },
   {
-    url: 'posts/:code',
+    url: '/api/assets/posts/:code',
     method: 'put',
     response: () => {
       return {
@@ -44,7 +44,7 @@ export default [
     },
   },
   {
-    url: 'posts',
+    url: '/api/assets/posts',
     method: 'post',
     response: () => {
       return {
@@ -56,7 +56,7 @@ export default [
     },
   },
   {
-    url: 'posts',
+    url: '/api/assets/posts',
     method: 'get',
     response: () => {
       return [

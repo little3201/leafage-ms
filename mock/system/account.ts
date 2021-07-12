@@ -1,7 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'account/:username',
+    url: '/api/hypervisoraccount/:username',
     method: 'put',
     response: () => {
       return {

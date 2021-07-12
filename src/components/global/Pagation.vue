@@ -14,7 +14,6 @@
           @click="(this.page = 0), give(page)"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             viewBox="0 0 24 24"
@@ -23,10 +22,9 @@
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevrons-left"
+            class="mr-2"
           >
-            <polyline points="11 17 6 12 11 7"></polyline>
-            <polyline points="18 17 13 12 18 7"></polyline>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-left'" />
           </svg>
         </button>
       </li>
@@ -37,7 +35,6 @@
           @click="decrease"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             viewBox="0 0 24 24"
@@ -46,9 +43,9 @@
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-left"
+            class="mr-2"
           >
-            <polyline points="15 18 9 12 15 6"></polyline>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
           </svg>
         </button>
       </li>
@@ -81,7 +78,6 @@
           @click="increment"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             viewBox="0 0 24 24"
@@ -90,9 +86,9 @@
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-right"
+            class="mr-2"
           >
-            <polyline points="9 18 15 12 9 6"></polyline>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
           </svg>
         </button>
       </li>
@@ -103,7 +99,6 @@
           @click="(page = pages - 1), give(page)"
         >
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             viewBox="0 0 24 24"
@@ -112,10 +107,9 @@
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevrons-right"
+            class="mr-2"
           >
-            <polyline points="13 17 18 12 13 7"></polyline>
-            <polyline points="6 17 11 12 6 7"></polyline>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
           </svg>
         </button>
       </li>

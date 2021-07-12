@@ -4,18 +4,17 @@
     <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class="">Application</router-link>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="1.5"
+        stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="feather feather-chevron-right opacity-50"
+        class="opacity-60"
       >
-        <polyline points="9 18 15 12 9 6"></polyline>
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
       <router-link
         :to="this.$route.path"
@@ -46,7 +45,7 @@
           stroke-linejoin="round"
           class="absolute inset-y-0 right-0 my-auto mr-3 opacity-60"
         >
-          <use xlink:href="/svg/feather-sprite.svg#search" />
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'search'" />
         </svg>
       </div>
     </div>
@@ -56,7 +55,6 @@
         @click="(notify = !notify), (account = false)"
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
           viewBox="0 0 24 24"
@@ -65,10 +63,8 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-bell"
         >
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
         </svg>
         <span
           class="
@@ -110,7 +106,7 @@
             origin-top-left
             p-4
             absolute
-            w-72
+            w-64
             md:w-80
             left-0
             md:left-auto
@@ -170,7 +166,7 @@
         stroke-linejoin="round"
         class="mr-2"
       >
-        <use xlink:href="/svg/feather-sprite.svg#globe" />
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
       </svg>
     </div>
     <div class="relative">
@@ -250,19 +246,17 @@
               "
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-user mr-2"
+                class="mr-2"
               >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
               </svg>
               Profile
             </router-link>
@@ -280,21 +274,19 @@
               "
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-lock mr-2"
+                class="mr-2"
               >
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
               </svg>
-              Reset Password
+              Secret
             </router-link>
             <a
               href=""
@@ -309,20 +301,17 @@
               "
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-help-circle mr-2"
+                class="mr-2"
               >
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
               </svg>
               Help
             </a>
@@ -341,19 +330,17 @@
               "
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-toggle-right mr-2"
+                class="mr-2"
               >
-                <rect x="1" y="5" width="22" height="14" rx="7" ry="7"></rect>
-                <circle cx="16" cy="12" r="3"></circle>
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
               </svg>
               Logout
             </a>

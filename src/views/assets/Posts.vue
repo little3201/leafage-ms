@@ -7,19 +7,17 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-rotate-cw mr-2"
+          class="mr-2"
         >
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         Reload Data
       </button>
@@ -181,7 +179,7 @@
               placeholder="Tags"
               v-model="tagValue"
             />
-            <div class="absolute inset-y-0 right-2 inline-flex items-center">
+            <div class="absolute w-2/3 overflow-x-scroll inset-y-0 right-2 inline-flex items-center">
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"

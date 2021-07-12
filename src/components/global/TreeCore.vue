@@ -35,7 +35,6 @@
           >{{ data.name }}
           <svg
             v-if="isChildOpen"
-            xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -44,13 +43,12 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-down ml-6"
+            class="ml-6"
           >
-            <polyline points="6 9 12 15 18 9"></polyline>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
           </svg>
           <svg
             v-else
-            xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -59,10 +57,11 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-right ml-6"
+            class="ml-6"
           >
-            <polyline points="9 18 15 12 9 6"></polyline></svg
-        ></span>
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+          </svg>
+        </span>
         <span v-else class="ml-4 flex items-center">
           <svg
             v-if="data.expand && data.expand.icon"
@@ -92,24 +91,16 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref, defineProps } from "vue";
 
-export default defineComponent({
-  name: "TreeCore",
-
-  props: {
-    datas: {
-      type: Array,
-      default: [],
-    },
-  },
-
-  data() {
-    return {
-      isChildOpen: true,
-      checkedDatas: ["2122466RP"],
-    };
+defineProps({
+  datas: {
+    type: Array,
+    default: [],
   },
 });
+
+const isChildOpen = ref(true);
+const checkedDatas = ref(["2122466RP"]);
 </script>

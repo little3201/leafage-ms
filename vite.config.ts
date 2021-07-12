@@ -14,14 +14,14 @@ export default defineConfig({
     // to make tests faster
     minify: false
   },
-  // server: {
-  //   proxy: {
-  //     // 选项写法
-  //     '/api': {
-  //       target: 'https://console.leafage.top/api',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'https://console.leafage.top/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

@@ -7,19 +7,17 @@
       <h2 class="text-lg font-medium">General Report</h2>
       <a href="" class="ml-4 inline-flex items-center text-blue-800">
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="feather feather-rotate-cw mr-3"
+          class="mr-2"
         >
-          <polyline points="23 4 23 10 17 10"></polyline>
-          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         Reload Data
       </a>
@@ -29,7 +27,6 @@
         <div class="shadow-sm rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
               viewBox="0 0 24 24"
@@ -38,12 +35,9 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-book text-blue-600"
+              class="text-blue-600"
             >
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-              <path
-                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-              ></path>
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -61,28 +55,21 @@
               >
                 {{ data.overViewed }}%
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
+                  stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-arrow-up"
                 >
-                  <line x1="12" y1="19" x2="12" y2="5"></line>
-                  <polyline points="5 12 12 5 19 12"></polyline>
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
             <div class="absolute bottom-2 inset-x-4 opacity-50">
-              <canvas
-                id="miniChart"
-                ref="miniChart"
-                height="100"
-              ></canvas>
+              <canvas id="miniChart" ref="miniChart" height="100"></canvas>
             </div>
           </div>
           <h2
@@ -96,7 +83,6 @@
         <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
               viewBox="0 0 24 24"
@@ -105,12 +91,9 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-camera text-yellow-600"
+              class="text-yellow-600"
             >
-              <path
-                d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"
-              ></path>
-              <circle cx="12" cy="13" r="4"></circle>
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'camera'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -128,19 +111,18 @@
               >
                 2%
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
+                  stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-arrow-down"
                 >
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <polyline points="19 12 12 19 5 12"></polyline>
+                  <use
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
                 </svg>
               </div>
             </div>
@@ -153,7 +135,6 @@
         <div class="shadow-sm rounded-md bg-white p-4">
           <div class="flex">
             <svg
-              xmlns="http://www.w3.org/2000/svg"
               width="28"
               height="28"
               viewBox="0 0 24 24"
@@ -162,12 +143,9 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="feather feather-tag text-purple-600"
+              class="text-purple-600"
             >
-              <path
-                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
-              ></path>
-              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'tag'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -185,19 +163,16 @@
               >
                 12%
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
+                  stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-arrow-up"
                 >
-                  <line x1="12" y1="19" x2="12" y2="5"></line>
-                  <polyline points="5 12 12 5 19 12"></polyline>
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -211,19 +186,17 @@
           <div class="shadow-sm rounded-md bg-white p-4">
             <div class="flex">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 width="28"
                 height="28"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-user text-green-600"
+                class="text-green-600"
               >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
               </svg>
               <div class="ml-auto">
                 <div
@@ -241,19 +214,18 @@
                 >
                   22%
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
+                    stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-arrow-up w-4 h-4"
                   >
-                    <line x1="12" y1="19" x2="12" y2="5"></line>
-                    <polyline points="5 12 12 5 19 12"></polyline>
+                    <use
+                      :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
+                    />
                   </svg>
                 </div>
               </div>

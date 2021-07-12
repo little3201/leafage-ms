@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Model from "/@/components/global/Model.vue";
-import TreeCore from "./TreeCore.vue";
+import TreeCore from "/@/components/global/TreeCore.vue";
 
 export default defineComponent({
   name: "Tree",

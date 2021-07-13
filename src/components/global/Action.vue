@@ -47,41 +47,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from "vue";
+<script lang="ts" setup>
+import { defineEmit, computed } from "vue";
 import { useStore } from "../../store";
 
-export default defineComponent({
-  name: "Action",
+const emit = defineEmit(["delAction", "editAction"]);
 
-  props: {
-    code: {
-      type: String,
-      default: "",
-    },
-  },
+const openConfirm = () => {
+  emit("delAction", true);
+};
+const openModel = () => {
+  emit("editAction", true);
+};
 
-  methods: {
-    openConfirm() {
-      this.$emit("delAction", true);
-    },
-    openModel() {
-      this.$emit("editAction", true, this.code);
-    },
-  },
-
-  setup() {
-    const store = useStore();
-    const user = computed(() => {
-      let data = sessionStorage.getItem("user");
-      if (data) {
-        return JSON.parse(data);
-      } else {
-        return store.state.user;
-      }
-    });
-
-    return { user };
-  },
+const store = useStore();
+const user = computed(() => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return store.state.user;
+  }
 });
 </script>

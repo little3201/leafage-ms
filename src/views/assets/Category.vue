@@ -24,7 +24,10 @@
       <Operation @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="category"
+      >
         <thead>
           <tr
             class="
@@ -71,7 +74,7 @@
             ></td>
             <td class="px-4">
               <Action
-                :code="data.code"
+                @click="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -87,7 +90,11 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
+    <Confirm
+      :isShow="isDel"
+      @cancelAction="confirmOperate"
+      @commitAction="confirmCommit"
+    />
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
@@ -165,24 +172,36 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(
-      SERVER_URL.category.concat("?page=" + page.value, "&size=" + size.value)
-    )
+    .get(SERVER_URL.category, {
+      params: { page: page.value, size: size.value },
+    })
     .then((res) => {
       datas.value = res.data;
     });
 };
-// 删除确认
-const confirmOperate = (operate: boolean) => {
-  isDel.value = operate;
-};
-// 新增/编辑：打开
-const modelOperate = async (operate: boolean, code: string) => {
-  categoryData.value = {};
+// 删除取消
+const confirmOperate = (operate: boolean, code: string) => {
   if (operate && code && code.length > 0) {
     dataCode.value = code;
+  }
+  isDel.value = operate;
+};
+// 删除确认
+const confirmCommit = () => {
+  instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+  });
+};
+// 新增/编辑：打开
+const modelOperate = async (operate: boolean) => {
+  categoryData.value = {};
+  if (operate) {
     await instance
-      .get(SERVER_URL.category.concat("/").concat(code))
+      .get(SERVER_URL.category.concat("/").concat(dataCode.value))
       .then((res) => {
         categoryData.value = res.data;
       });
@@ -202,6 +221,7 @@ const commitOperate = async () => {
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
+        isEdit.value = false;
       });
   } else {
     await instance.post(SERVER_URL.category, data).then((res) => {
@@ -211,9 +231,9 @@ const commitOperate = async () => {
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
+      isEdit.value = false;
     });
   }
-  isEdit.value = false;
 };
 
 onMounted(() => {

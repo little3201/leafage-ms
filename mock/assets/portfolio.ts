@@ -1,14 +1,14 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'portfolio/count',
+    url: '/api/assets/portfolio/count',
     method: 'get',
     response: () => {
-      return 3
+      return 2
     },
   },
   {
-    url: 'portfolio/:code',
+    url: '/api/assets/portfolio/:code',
     method: 'get',
     response: () => {
       return {
@@ -21,7 +21,7 @@ export default [
     },
   },
   {
-    url: 'portfolio/:code',
+    url: '/api/assets/portfolio/:code',
     method: 'put',
     response: () => {
       return {
@@ -31,7 +31,7 @@ export default [
     },
   },
   {
-    url: 'portfolio',
+    url: '/api/assets/portfolio',
     method: 'post',
     response: () => {
       return {
@@ -41,7 +41,7 @@ export default [
     },
   },
   {
-    url: 'portfolio',
+    url: '/api/assets/portfolio',
     method: 'get',
     response: () => {
       return [
@@ -52,7 +52,7 @@ export default [
           modifyTime: new Date(),
         },
         {
-          code: '20A23D2D1',
+          code: '20A23D2D2',
           title: 'Travel Video',
           type: 'mp4',
           modifyTime: new Date(),
@@ -60,4 +60,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/assets/portfolio/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

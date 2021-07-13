@@ -340,7 +340,9 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
+                <use
+                  :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'"
+                />
               </svg>
               Logout
             </a>
@@ -351,48 +353,59 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+<script lang="ts" setup>
+import { ref, computed, onMounted } from "vue";
 import router from "../../router";
 import { useStore } from "../../store";
 
 import instance from "../../api";
 
-export default defineComponent({
-  name: "TopBar",
+// 控制通知是否打开
+let notify = ref(false);
+// 控制账号操作是否打开
+let account = ref(false);
 
-  setup() {
-    // 控制通知是否打开
-    let notify = ref(false);
-    // 控制账号操作是否打开
-    let account = ref(false);
+const store = useStore();
 
-    const store = useStore();
+const user = computed(() => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return store.state.user;
+  }
+});
 
-    const user = computed(() => {
-      let data = sessionStorage.getItem("user");
-      if (data) {
-        return JSON.parse(data);
-      } else {
-        return store.state.user;
-      }
-    });
+const signout = async () => {
+  await instance.post("/logout").then(() => {
+    // 退出登录，设置user为空
+    store.commit("setUser", {});
+    sessionStorage.removeItem("user");
+    router.replace("/signin");
+  });
+};
 
-    const signout = () => {
-      instance.post("/logout").then(() => {
-        // 退出登录，设置user为空
-        store.commit("setUser", {});
-        sessionStorage.removeItem("user");
-        router.replace("/signin");
-      });
-    };
+// 请求链接webSocket
+async function socket() {
+  var ws = new WebSocket("wss://console.leafage.top/api/socket");
+  ws.onopen = function (evt) {
+    console.log("Connection open ...", evt);
+    ws.send("Hello WebSocket!");
+  };
 
-    return {
-      notify,
-      account,
-      user,
-      signout,
-    };
-  },
+  ws.onmessage = function (msg) {
+    console.log("Received Message: ", msg.data);
+  };
+
+  ws.onclose = function (evt) {
+    console.log("Connect closed.", evt);
+  };
+}
+
+onMounted(() => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    // socket();
+  }
 });
 </script>

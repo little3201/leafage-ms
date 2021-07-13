@@ -77,7 +77,7 @@
             ></td>
             <td class="px-4">
               <Action
-                :code="data.code"
+                @click="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -93,7 +93,11 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
+    <Confirm
+      :isShow="isDel"
+      @cancelAction="confirmOperate"
+      @commitAction="confirmCommit"
+    />
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
@@ -179,7 +183,17 @@
               placeholder="Tags"
               v-model="tagValue"
             />
-            <div class="absolute w-2/3 overflow-x-scroll inset-y-0 right-2 inline-flex items-center">
+            <div
+              class="
+                absolute
+                w-2/3
+                overflow-x-scroll
+                inset-y-0
+                right-2
+                inline-flex
+                items-center
+              "
+            >
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
@@ -189,7 +203,8 @@
                   bg-gray-100
                   rounded-md
                   px-1
-                  flex
+                  whitespace-nowrap
+                  inline-flex
                   items-center
                 "
                 >{{ tag }}
@@ -359,7 +374,7 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(SERVER_URL.posts.concat("?page=" + page.value, "&size=" + size.value))
+    .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
     .then((res) => {
       datas.value = res.data;
     });
@@ -375,20 +390,30 @@ const removeTag = (tag: String) => {
   tags.value = tags.value.filter((item) => item !== tag);
   postsData.value = { ...postsData.value, tags: tags.value };
 };
-// 删除确认
+// 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
+// 删除确认
+const confirmCommit = () => {
+  instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+  });
+};
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean, code: string) => {
+const modelOperate = async (operate: boolean) => {
   postsData.value = {};
   content.value = "";
   tags.value = [];
   if (operate) {
     await Promise.all([
       retrieveCategories(),
-      fetchPosts(code),
-      fetchContent(code),
+      fetchPosts(dataCode.value),
+      fetchContent(dataCode.value),
     ]);
   }
   isEdit.value = operate;
@@ -435,6 +460,7 @@ const commitOperate = async () => {
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
+        isEdit.value = false;
       });
   } else {
     await instance.post(SERVER_URL.posts, data).then((res) => {
@@ -444,9 +470,9 @@ const commitOperate = async () => {
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
+      isEdit.value = false;
     });
   }
-  isEdit.value = false;
 };
 
 // 上传文件

@@ -125,82 +125,68 @@
 </template>
 
 
-<script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+<script lang="ts" setup>
+import { computed, ref, watch, defineProps, defineEmit } from "vue";
 
-export default defineComponent({
-  name: "Pagation",
-
-  props: {
-    total: {
-      type: Number,
-      default: 0,
-    },
-    page: {
-      type: Number,
-      default: 0,
-    },
-    size: {
-      type: Number,
-      default: 10,
-    },
+const props = defineProps({
+  total: {
+    type: Number,
+    default: 0,
   },
-
-  setup(props, ctx) {
-    let page = ref(props.page);
-    let size = ref(props.size);
-
-    // 监听size, 调用查询方法
-    watch(size, (curSize, prevSize) => {
-      if (curSize != prevSize) {
-        give(page.value);
-      }
-    });
-
-    // 设置
-    function give(p: number) {
-      page.value = p;
-      ctx.emit("setPage", page.value, size.value);
-      ctx.emit("retrieve");
-    }
-
-    let pages = computed(() => {
-      if (props.total) {
-        if (props.total % size.value > 0) {
-          // 通过 ~~number 来取整
-          return ~~(props.total / size.value) + 1;
-        } else {
-          return ~~(props.total / size.value);
-        }
-      } else {
-        return 1;
-      }
-    });
-
-    // 递增
-    function increment() {
-      if (page.value < pages.value - 1) {
-        page.value++;
-        give(page.value);
-      }
-    }
-
-    // 递减
-    function decrease() {
-      if (page.value > 0) {
-        page.value--;
-        give(page.value);
-      }
-    }
-
-    return {
-      page,
-      size,
-      pages,
-      give,
-      increment,
-      decrease,
-    };
+  page: {
+    type: Number,
+    default: 0,
+  },
+  size: {
+    type: Number,
+    default: 10,
   },
 });
+
+const page = ref(props.page);
+const size = ref(props.size);
+
+// 监听size, 调用查询方法
+watch(size, (curSize, prevSize) => {
+  if (curSize != prevSize) {
+    give(page.value);
+  }
+});
+
+const emit = defineEmit(["setPage", "retrieve"]);
+// 设置
+function give(p: number) {
+  page.value = p;
+  emit("setPage", page.value, size.value);
+  emit("retrieve");
+}
+
+const pages = computed(() => {
+  if (props.total) {
+    if (props.total % size.value > 0) {
+      // 通过 ~~number 来取整
+      return ~~(props.total / size.value) + 1;
+    } else {
+      return ~~(props.total / size.value);
+    }
+  } else {
+    return 1;
+  }
+});
+
+// 递增
+const increment = () => {
+  if (page.value < pages.value - 1) {
+    page.value++;
+    give(page.value);
+  }
+};
+
+// 递减
+const decrease = () => {
+  if (page.value > 0) {
+    page.value--;
+    give(page.value);
+  }
+};
 </script>

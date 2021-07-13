@@ -1,14 +1,14 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
   {
-    url: 'posts/count',
+    url: '/api/assets/posts/count',
     method: 'get',
     response: () => {
       return 10
     },
   },
   {
-    url: 'posts/:code/content',
+    url: '/api/assets/posts/:code/content',
     method: 'get',
     response: () => {
       return {
@@ -18,7 +18,7 @@ export default [
     },
   },
   {
-    url: 'posts/:code',
+    url: '/api/assets/posts/:code',
     method: 'get',
     response: () => {
       return {
@@ -27,12 +27,12 @@ export default [
         category: '20A23D2D1',
         subtitle: '分布式架构，是一套很复杂的系统',
         cover: 'https://cdn.pixabay.com/photo/2019/11/12/09/03/proxy-4620557_1280.jpg',
-        tags: ["java", "redis", "锁"]
+        tags: ["java", "redis", "分布式锁", "spring boot"]
       }
     },
   },
   {
-    url: 'posts/:code',
+    url: '/api/assets/posts/:code',
     method: 'put',
     response: () => {
       return {
@@ -44,7 +44,7 @@ export default [
     },
   },
   {
-    url: 'posts',
+    url: '/api/assets/posts',
     method: 'post',
     response: () => {
       return {
@@ -56,7 +56,7 @@ export default [
     },
   },
   {
-    url: 'posts',
+    url: '/api/assets/posts',
     method: 'get',
     response: () => {
       return [
@@ -73,4 +73,12 @@ export default [
       ];
     },
   },
+  {
+    url: '/api/assets/posts/:code',
+    method: 'delete',
+    response: () => {
+      return {
+      }
+    },
+  }
 ] as MockMethod[];

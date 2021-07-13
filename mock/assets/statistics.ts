@@ -1,7 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
     {
-        url: 'statistics/viewed',
+        url: '/api/assets/statistics/viewed',
         method: 'get',
         response: () => {
             return {
@@ -14,7 +14,7 @@ export default [
         },
     },
     {
-        url: 'statistics',
+        url: '/api/assets/statistics',
         method: 'get',
         response: () => {
             return [
@@ -77,5 +77,4 @@ export default [
             ]
         },
     },
-
 ] as MockMethod[];

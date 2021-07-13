@@ -301,7 +301,7 @@
             </td>
             <td class="px-4">
               <Action
-                :code="data.username"
+                @click="username = data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               >
@@ -358,7 +358,11 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
+    <Confirm
+      :isShow="isDel"
+      @cancelAction="confirmOperate"
+      @commitAction="confirmCommit"
+    />
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
@@ -471,23 +475,34 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(SERVER_URL.user.concat("?page=" + page.value, "&size=" + size.value))
+    .get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
     .then((res) => {
       datas.value = res.data;
     });
 };
-// 删除确认
+// 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
+// 删除确认
+const confirmCommit = () => {
+  instance.delete(SERVER_URL.user.concat("/", username.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.username != username.value
+    );
+    isDel.value = false;
+  });
+};
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean, account: string) => {
+const modelOperate = async (operate: boolean) => {
   userData.value = {};
-  if (operate && account && account.length > 0) {
-    username.value = account;
-    await instance.get(SERVER_URL.user.concat("/", account)).then((res) => {
-      userData.value = res.data;
-    });
+  if (operate) {
+    await instance
+      .get(SERVER_URL.user.concat("/", username.value))
+      .then((res) => {
+        userData.value = res.data;
+      });
   }
   isEdit.value = operate;
 };
@@ -504,6 +519,7 @@ const commitOperate = async () => {
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
+        isEdit.value = false;
       });
   } else {
     await instance.post(SERVER_URL.user, data).then((res) => {
@@ -513,9 +529,9 @@ const commitOperate = async () => {
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
+      isEdit.value = false;
     });
   }
-  isEdit.value = false;
 };
 // 分组/角色树：打开
 const treeOperate = async (operate: boolean, type: string) => {

@@ -165,7 +165,7 @@ const store = useStore();
 
 const onSubmit = async () => {
   await instance
-    .post("/login", new URLSearchParams(formData.value))
+    .post("/login", { data: new URLSearchParams(formData.value) })
     .then((res) => {
       if (res.data.username) {
         fetchUser(res.data.username);
@@ -186,23 +186,6 @@ const preSubmit = async () => {
   await instance.get("/check");
 };
 
-// 请求链接webSocket
-async function socket() {
-  var ws = new WebSocket("ws://localhost:8760/socket");
-  ws.onopen = function (evt) {
-    console.log("Connection open ...");
-    ws.send("Hello WebSocket!");
-  };
-
-  ws.onmessage = function (evt) {
-    console.log("Received Message: ", evt.data);
-  };
-
-  ws.onclose = function (evt) {
-    console.log("Connect closed.");
-  };
-}
-
 const toSignUp = () => {
   router.push("/signup");
 };
@@ -218,13 +201,9 @@ onMounted(() => {
     content: "";
     margin-left: -48%;
     min-width: 768px;
+    @apply absolute w-full h-full bg-no-repeat bg-right;
     background-image: url(/svg/bg-login-page.svg);
-    background-position: right;
-    background-repeat: no-repeat;
     background-size: auto 100%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
   }
 }
 </style>

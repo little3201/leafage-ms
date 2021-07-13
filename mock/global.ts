@@ -1,7 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 export default [
     {
-        url: 'check',
+        url: '/api/check',
         method: 'get',
         response: () => {
             return {
@@ -10,7 +10,7 @@ export default [
         },
     },
     {
-        url: 'login',
+        url: '/api/login',
         method: 'post',
         response: () => {
             return {
@@ -19,7 +19,7 @@ export default [
         },
     },
     {
-        url: 'logout',
+        url: '/api/logout',
         method: 'post',
         response: () => {
             return {

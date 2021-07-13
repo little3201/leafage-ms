@@ -86,7 +86,7 @@
             ></td>
             <td class="px-4">
               <Action
-                :code="data.code"
+                @click="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -102,7 +102,11 @@
       :size="size"
       @setPage="setPage"
     />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" />
+    <Confirm
+      :isShow="isDel"
+      @cancelAction="confirmOperate"
+      @commitAction="confirmCommit"
+    />
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
@@ -111,9 +115,9 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label
+            <label class="inline-flex items-center"
               >Title
-              <span class="text-red-600 text-base ml-1">*</span>
+              <span class="text-red-600 ml-1">*</span>
             </label>
             <input
               type="text"
@@ -124,16 +128,27 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6 relative">
-            <label>Tags</label>
+            <label class="inline-flex items-center"
+              >Tags <span class="text-red-600 ml-1">*</span></label
+            >
             <input
               type="text"
               @keydown.enter="addTag"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              :style="{ paddingLeft: pl + 'rem' }"
               placeholder="Tags"
               v-model="tagValue"
             />
-            <div class="absolute inset-y-0 mt-7 left-2 flex items-center">
+            <div
+              class="
+                absolute
+                w-2/3
+                overflow-x-scroll
+                bottom-2
+                right-2
+                inline-flex
+                items-center
+              "
+            >
               <span
                 v-for="(tag, index) in portfolioData.tags"
                 :key="index"
@@ -143,7 +158,8 @@
                   bg-gray-100
                   rounded-md
                   px-1
-                  flex
+                  whitespace-nowrap
+                  inline-flex
                   items-center
                 "
                 >{{ tag }}
@@ -308,27 +324,38 @@ const count = async () => {
 // 查询列表
 const retrieve = async () => {
   await instance
-    .get(
-      SERVER_URL.portfolio.concat("?page=" + page.value, "&size=" + size.value)
-    )
+    .get(SERVER_URL.portfolio, {
+      params: { page: page.value, size: size.value },
+    })
     .then((res) => {
       datas.value = res.data;
     });
 };
-// 删除确认
+// 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
+// 删除确认
+const confirmCommit = () => {
+  instance.delete(SERVER_URL.portfolio.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+  });
+};
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean, code: string) => {
+const modelOperate = async (operate: boolean) => {
   portfolioData.value = {};
   tags.value = [];
-  if (operate && code && code.length > 0) {
-    dataCode.value = code;
-    await instance.get(SERVER_URL.portfolio.concat("/", code)).then((res) => {
-      portfolioData.value = res.data;
-      tags.value = res.data.tags;
-    });
+  if (operate) {
+    await instance
+      .get(SERVER_URL.portfolio.concat("/", dataCode.value))
+      .then((res) => {
+        portfolioData.value = res.data;
+        tags.value = res.data.tags;
+      });
   }
   isEdit.value = operate;
 };
@@ -345,6 +372,7 @@ const commitOperate = async () => {
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
+        isEdit.value = false;
       });
   } else {
     await instance.post(SERVER_URL.portfolio, data).then((res) => {
@@ -354,9 +382,9 @@ const commitOperate = async () => {
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
+      isEdit.value = false;
     });
   }
-  isEdit.value = false;
 };
 
 // 上传文件
@@ -375,13 +403,6 @@ const uploadImage = (files: Array<File>) => {
     portfolioData.value = { ...portfolioData.value, url: urls };
   }
 };
-
-const pl = computed(() => {
-  if (tags.value) {
-    return tags.value.length * 4 + 0.75;
-  }
-  return 0.75;
-});
 
 onMounted(() => {
   initDatas();

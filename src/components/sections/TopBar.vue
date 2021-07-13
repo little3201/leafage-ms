@@ -17,9 +17,9 @@
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
       <router-link
-        :to="this.$route.path"
+        :to="$route.path"
         class="text-blue-600 font-medium"
-        v-text="this.$route.name"
+        v-text="$route.name"
       ></router-link>
     </div>
     <div class="mr-3 sm:mr-6">
@@ -386,7 +386,7 @@ const signout = async () => {
 };
 
 // 请求链接webSocket
-async function socket() {
+const socket = () => {
   var ws = new WebSocket("wss://console.leafage.top/api/socket");
   ws.onopen = function (evt) {
     console.log("Connection open ...", evt);

@@ -165,7 +165,7 @@ const store = useStore();
 
 const onSubmit = async () => {
   await instance
-    .post("/login", { data: new URLSearchParams(formData.value) })
+    .post("/login", new URLSearchParams(formData.value))
     .then((res) => {
       if (res.data.username) {
         fetchUser(res.data.username);

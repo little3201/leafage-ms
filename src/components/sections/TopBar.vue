@@ -405,7 +405,7 @@ const socket = () => {
 onMounted(() => {
   let data = sessionStorage.getItem("user");
   if (data) {
-    // socket();
+    socket();
   }
 });
 </script>

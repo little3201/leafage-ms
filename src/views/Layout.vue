@@ -1,8 +1,8 @@
 <template>
   <div class="px-4 py-3">
-    <MobileMenu class="md:hidden" />
+    <MobileMenu class="md:hidden" :datas="datas" />
     <div class="flex">
-      <SideMenu class="hidden md:block" />
+      <SideMenu class="hidden md:block" :datas="datas" />
       <main
         class="px-4 rounded-3xl bg-gray-100 w-full overflow-hidden"
         style="height: calc(100vh - 1.5rem)"
@@ -15,7 +15,23 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import MobileMenu from "/@/components/sections/MobileMenu.vue";
 import SideMenu from "/@/components/sections/SideMenu.vue";
 import TopBar from "/@/components/sections/TopBar.vue";
+
+import instance from "../api";
+import SERVER_URL from "../api/request";
+
+const datas = ref([]);
+
+onMounted(() => {
+  retrieveAuthorities();
+});
+
+const retrieveAuthorities = async () => {
+  await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+    datas.value = res.data;
+  });
+};
 </script>

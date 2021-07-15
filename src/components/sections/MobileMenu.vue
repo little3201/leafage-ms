@@ -83,24 +83,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, defineProps } from "vue";
 import MobileMenuCore from "/@/components/global/MobileMenuCore.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
-
 const isShow = ref(false);
-const datas = ref([]);
-
-onMounted(() => {
-  retrieveAuthorities();
+defineProps({
+  datas: {
+    type: Array,
+    default: [],
+  },
 });
-
-const retrieveAuthorities = async () => {
-  await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-    datas.value = res.data;
-  });
-};
 
 const menuOperate = () => {
   isShow.value = false;

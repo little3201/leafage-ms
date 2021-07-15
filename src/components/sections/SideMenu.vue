@@ -55,21 +55,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { defineProps } from "vue";
 import SideMenuCore from "/@/components/global/SideMenuCore.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
-
-const datas = ref([]);
-
-onMounted(() => {
-  retrieveAuthorities();
-});
-
-const retrieveAuthorities = async () => {
-  await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-    datas.value = res.data;
-  });
-};
+defineProps({
+  datas: {
+    type: Array,
+    default: []
+  }
+})
 </script>

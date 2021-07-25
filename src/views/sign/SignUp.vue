@@ -156,7 +156,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import router from "../../router";
 
 import instance from "../../api";
 
@@ -164,24 +163,16 @@ const formData = ref({});
 const confirmPassword = ref("");
 
 const onSubmit = async () => {
-  await instance
-    .post("/register", new URLSearchParams(formData.value))
-    .then(() => {
-      router.replace("/");
-    });
-};
-
-// 提交，请求csrfToken
-const preSubmit = async () => {
-  instance.get("/check");
-};
-
-const toSignIn = () => {
-  router.replace("/signin");
+  // await instance
+  //   .post("/register", new URLSearchParams(formData.value))
+  //   .then(() => {
+  //     router.replace("/");
+  //   });
+  alert("注册功能在加速开发中...")
 };
 
 onMounted(() => {
-  preSubmit();
+  instance.get("/check");
 });
 </script>
 

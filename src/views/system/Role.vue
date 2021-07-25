@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Roles</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -21,7 +21,10 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
+      <Operation
+        @click.capture="dataCode = undefined"
+        @modelOperate="modelOperate"
+      />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
       <table
@@ -71,7 +74,7 @@
             ></td>
             <td class="px-4">
               <Action
-                @click="dataCode = data.code"
+                @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               >
@@ -195,24 +198,18 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
-
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.role.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
-    .then((response) => {
-      datas.value = response.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
+      .then((response) => {
+        datas.value = response.data;
+      }),
+    instance.get(SERVER_URL.role.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 删除取消
 const confirmOperate = (operate: boolean) => {
@@ -232,7 +229,12 @@ const confirmCommit = () => {
 const modelOperate = async (operate: boolean) => {
   roleData.value = {};
   if (operate) {
-    await Promise.all([fetch(dataCode.value), retrieveSuperiors()]);
+    await Promise.all([
+      fetch(dataCode.value),
+      instance.get(SERVER_URL.role).then((res) => {
+        superiors.value = res.data;
+      }),
+    ]);
   }
   isEdit.value = operate;
 };
@@ -244,12 +246,6 @@ const fetch = async (code: string) => {
       roleData.value = res.data;
     });
   }
-};
-// 查所有角色
-const retrieveSuperiors = async () => {
-  await instance.get(SERVER_URL.role).then((res) => {
-    superiors.value = res.data;
-  });
 };
 // 授权：打开
 const treeOperate = async (operate: boolean) => {
@@ -289,6 +285,6 @@ const commitOperate = async () => {
 };
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

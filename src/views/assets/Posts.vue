@@ -21,7 +21,10 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
+      <Operation
+        @click.capture="dataCode = undefined"
+        @modelOperate="modelOperate"
+      />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
       <table
@@ -77,7 +80,7 @@
             ></td>
             <td class="px-4">
               <Action
-                @click="dataCode = data.code"
+                @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -361,23 +364,18 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
+      .then((res) => {
+        datas.value = res.data;
+      }),
+    instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 添加tag
 const addTag = () => {
@@ -411,38 +409,21 @@ const modelOperate = async (operate: boolean) => {
   tags.value = [];
   if (operate) {
     await Promise.all([
-      retrieveCategories(),
-      fetchPosts(dataCode.value),
-      fetchContent(dataCode.value),
+      instance.get(SERVER_URL.category).then((res) => {
+        categories.value = res.data;
+      }),
+      instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
+        postsData.value = res.data;
+        tags.value = res.data.tags;
+      }),
+      instance
+        .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
+        .then((res) => {
+          content.value = res.data.content;
+        }),
     ]);
   }
   isEdit.value = operate;
-};
-// 获取所有分类
-const retrieveCategories = async () => {
-  await instance.get(SERVER_URL.category).then((res) => {
-    categories.value = res.data;
-  });
-};
-// 根据code查posts
-const fetchPosts = async (code: string) => {
-  if (code && code.length > 0) {
-    dataCode.value = code;
-    await instance.get(SERVER_URL.posts.concat("/", code)).then((res) => {
-      postsData.value = res.data;
-      tags.value = res.data.tags;
-    });
-  }
-};
-// 根据code查posts content
-const fetchContent = async (code: string) => {
-  if (code && code.length > 0) {
-    await instance
-      .get(SERVER_URL.posts.concat("/", code, "/content"))
-      .then((res) => {
-        content.value = res.data.content;
-      });
-  }
 };
 // 新增/编辑：提交
 const commitOperate = async () => {
@@ -498,6 +479,6 @@ const rendedHtml = computed(() => {
 });
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

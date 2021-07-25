@@ -127,7 +127,7 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               required
-              v-model="portfolioData.title"
+              v-model.trim="portfolioData.title"
             />
           </div>
           <div class="col-span-12 sm:col-span-6 relative">
@@ -139,7 +139,7 @@
               @keydown.enter="addTag"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Tags"
-              v-model="tagValue"
+              v-model.trim="tagValue"
             />
             <div
               class="
@@ -249,7 +249,7 @@
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="portfolioData.description"
+              v-model.trim="portfolioData.description"
               placeholder="Description"
             />
           </div>

@@ -11,6 +11,7 @@
           class="rounded"
           :value="data.code"
           v-model.lazy="checkedDatas"
+          @change="dataChange"
         />
         <span
           v-if="data.children && data.children.length > 0"
@@ -92,7 +93,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 
 defineProps({
   datas: {
@@ -102,5 +103,12 @@ defineProps({
 });
 
 const isChildOpen = ref(true);
-const checkedDatas = ref(["2122466RP"]);
+const checkedDatas = ref<Array<String>>(["2122466RP"]);
+
+const emit = defineEmits(["checkedChange"]);
+
+const dataChange = () => {
+  console.log(checkedDatas.value.toString())
+  emit("checkedChange", checkedDatas.value);
+};
 </script>

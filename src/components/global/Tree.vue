@@ -1,6 +1,6 @@
 <template>
-  <Model :isShow="isShow" @cancelAction="cancelOperation">
-    <TreeCore :datas="datas" />
+  <Model :isShow="isShow" @cancelAction="cancelOperation" @commitAction="commitOperation">
+    <TreeCore :datas="datas" @checkedChange="commitOperation" />
   </Model>
 </template>
 
@@ -25,5 +25,8 @@ const emit = defineEmits(["treeAction"]);
 const cancelOperation = () => {
   emit("treeAction", false);
 };
-const commitOperation = () => {};
+
+const commitOperation = (checkedDatas: Array<String>) => {
+  alert(checkedDatas);
+};
 </script>

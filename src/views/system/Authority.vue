@@ -138,7 +138,7 @@
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
-              v-model="authorityData.name"
+              v-model.trim="authorityData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -148,7 +148,7 @@
             </label>
             <select
               :disabled="authorityData.code"
-              v-model="authorityData.type"
+              v-model.lazy="authorityData.type"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
@@ -170,13 +170,13 @@
                 'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
               }"
               placeholder="Path"
-              v-model="authorityData.path"
+              v-model.trim="authorityData.path"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
             <select
-              v-model="authorityData.superior"
+              v-model.lazy="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option value="undefined">请选择</option>
@@ -192,7 +192,7 @@
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="authorityData.description"
+              v-model.trim="authorityData.description"
               placeholder="Description"
             />
           </div>

@@ -387,7 +387,7 @@
                 type="radio"
                 value="false"
                 class="ml-4"
-                v-model="userData.accountNonLocked"
+                v-model="userData.accountNonExpired"
               />
               <span class="ml-2">True</span>
             </div>
@@ -424,7 +424,7 @@
                 type="radio"
                 checked
                 value="true"
-                v-model="userData.accountNonLocked"
+                v-model="userData.credentialsExpired"
               />
               <span class="ml-2">False</span>
               <input

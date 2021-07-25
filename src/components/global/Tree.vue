@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmit, defineProps } from "vue";
+import { defineEmits, defineProps } from "vue";
 import Model from "/@/components/global/Model.vue";
 import TreeCore from "/@/components/global/TreeCore.vue";
 
@@ -20,7 +20,7 @@ defineProps({
   },
 });
 
-const emit = defineEmit(["treeAction"]);
+const emit = defineEmits(["treeAction"]);
 
 const cancelOperation = () => {
   emit("treeAction", false);

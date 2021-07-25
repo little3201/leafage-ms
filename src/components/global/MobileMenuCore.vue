@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmit } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 
 defineProps({
   datas: {
@@ -102,7 +102,7 @@ defineProps({
   },
 });
 
-const emit = defineEmit(["menuAction"]);
+const emit = defineEmits(["menuAction"]);
 
 const isOpen = ref(true);
 

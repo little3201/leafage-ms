@@ -30,8 +30,10 @@ onMounted(() => {
 });
 
 const retrieveAuthorities = async () => {
-  await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-    datas.value = res.data;
-  });
+  await instance
+    .get(SERVER_URL.authority.concat("/tree"), { params: { type: "M" } })
+    .then((res) => {
+      datas.value = res.data;
+    });
 };
 </script>

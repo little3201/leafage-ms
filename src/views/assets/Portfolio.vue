@@ -21,7 +21,10 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
+      <Operation
+        @click.capture="dataCode = undefined"
+        @modelOperate="modelOperate"
+      />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
       <table
@@ -86,7 +89,7 @@
             ></td>
             <td class="px-4">
               <Action
-                @click="dataCode = data.code"
+                @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -311,39 +314,36 @@ const removeTag = (tag: String) => {
   tags.value = tags.value.filter((item) => item !== tag);
   portfolioData.value = { ...portfolioData.value, tags: tags.value };
 };
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.portfolio, {
-      params: { page: page.value, size: size.value },
-    })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.portfolio, {
+        params: { page: page.value, size: size.value },
+      })
+      .then((res) => {
+        datas.value = res.data;
+      }),
+    instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = () => {
-  instance.delete(SERVER_URL.portfolio.concat("/", dataCode.value)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: any) => item.code != dataCode.value
-    );
-    isDel.value = false;
-  });
+const confirmCommit = async () => {
+  await instance
+    .delete(SERVER_URL.portfolio.concat("/", dataCode.value))
+    .then(() => {
+      // 将datas中修改项的历史数据删除
+      datas.value = datas.value.filter(
+        (item: any) => item.code != dataCode.value
+      );
+      isDel.value = false;
+    });
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
@@ -405,6 +405,6 @@ const uploadImage = (files: Array<File>) => {
 };
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

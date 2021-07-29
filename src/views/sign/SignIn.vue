@@ -154,7 +154,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import router from "../../router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "../../store";
 
 import instance from "../../api";
@@ -163,6 +163,9 @@ import SERVER_URL from "../../api/request";
 const formData = ref({});
 const store = useStore();
 
+const route = useRoute();
+const router = useRouter();
+
 const onSubmit = async () => {
   await instance
     .post("/login", new URLSearchParams(formData.value))
@@ -170,7 +173,8 @@ const onSubmit = async () => {
       if (res.data.username) {
         fetchUser(res.data.username);
       }
-      router.replace("/");
+      // 登录完成后，调整原请求页
+      router.push({ path: route.query.redirect?.toString() || "/" });
     });
 };
 
@@ -181,17 +185,8 @@ const fetchUser = async (username: string) => {
   });
 };
 
-// 请求获取csrfToken
-const preSubmit = async () => {
-  await instance.get("/check");
-};
-
-const toSignUp = () => {
-  router.push("/signup");
-};
-
 onMounted(() => {
-  preSubmit();
+  instance.get("/check");
 });
 </script>
 

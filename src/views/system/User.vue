@@ -3,7 +3,7 @@
     <div class="inline-flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Users</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -301,7 +301,7 @@
             </td>
             <td class="px-4">
               <Action
-                @click="username = data.username"
+                @click.capture="username = data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               >
@@ -370,19 +370,29 @@
     >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12">
+          <div class="col-span-12 md:col-span-6">
             <label
               >Account Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
-            <input
-              type="datetime-local"
-              v-model="userData.accountNonExpired"
-              required
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            />
+            <div class="mt-3">
+              <input
+                type="radio"
+                checked
+                value="true"
+                v-model="userData.accountNonExpired"
+              />
+              <span class="ml-2">False</span>
+              <input
+                type="radio"
+                value="false"
+                class="ml-4"
+                v-model="userData.accountNonLocked"
+              />
+              <span class="ml-2">True</span>
+            </div>
           </div>
-          <div class="col-span-12">
+          <div class="col-span-12 md:col-span-6">
             <label
               >Account Locked
               <span class="text-red-600 text-base ml-1">*</span>
@@ -404,17 +414,27 @@
               <span class="ml-2">True</span>
             </div>
           </div>
-          <div class="col-span-12">
+          <div class="col-span-12 md:col-span-6">
             <label
               >Credentials Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
-            <input
-              type="datetime-local"
-              required
-              v-model="userData.credentialsExpired"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            />
+            <div class="mt-3">
+              <input
+                type="radio"
+                checked
+                value="true"
+                v-model="userData.accountNonLocked"
+              />
+              <span class="ml-2">False</span>
+              <input
+                type="radio"
+                value="false"
+                class="ml-4"
+                v-model="userData.credentialsExpired"
+              />
+              <span class="ml-2">True</span>
+            </div>
           </div>
           <div class="col-span-12">
             <label>Description</label>
@@ -462,23 +482,18 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.user.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
+      .then((res) => {
+        datas.value = res.data;
+      }),
+    instance.get(SERVER_URL.user.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 删除取消
 const confirmOperate = (operate: boolean) => {
@@ -550,6 +565,6 @@ const treeOperate = async (operate: boolean, type: string) => {
 };
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

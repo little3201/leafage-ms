@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center h-10">
       <h2 class="text-lg font-medium">Authorities</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       >
         <svg
@@ -21,7 +21,10 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
+      <Operation
+        @click.capture="dataCode = undefined"
+        @modelOperate="modelOperate"
+      />
     </div>
     <div class="overflow-scroll my-2" style="height: calc(100vh - 12rem)">
       <table
@@ -98,7 +101,7 @@
             ></td>
             <td class="px-4">
               <Action
-                @click="dataCode = data.code"
+                @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -229,26 +232,20 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
-
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.authority, {
-      params: { page: page.value, size: size.value },
-    })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.authority, {
+        params: { page: page.value, size: size.value },
+      })
+      .then((res) => {
+        datas.value = res.data;
+      }),
+    instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 删除取消
 const confirmOperate = (operate: boolean) => {
@@ -268,32 +265,30 @@ const confirmCommit = () => {
 const modelOperate = async (operate: boolean) => {
   authorityData.value = {};
   if (operate) {
-    await Promise.all([fetch(dataCode.value), retrieveMenu()]);
+    await Promise.all([
+      fetch(dataCode.value),
+      instance
+        .get(SERVER_URL.authority, { params: { type: "M" } })
+        .then((res) => {
+          superiors.value = res.data;
+        }),
+    ]);
   }
   isEdit.value = operate;
 };
 // 查详情
 const fetch = async (code: string) => {
   if (code && code.length > 0) {
-    dataCode.value = code;
     await instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
       authorityData.value = res.data;
     });
   }
 };
-// 查所有菜单
-const retrieveMenu = async () => {
-  await instance
-    .get(SERVER_URL.authority, { params: { type: "M" } })
-    .then((res) => {
-      superiors.value = res.data;
-    });
-};
 // 新增/编辑：提交
 const commitOperate = async () => {
   let data = authorityData.value;
   if (dataCode.value && dataCode.value.length > 0) {
-    instance
+    await instance
       .put(SERVER_URL.authority.concat("/", dataCode.value), data)
       .then((res) => {
         // 将datas中修改项的历史数据删除
@@ -305,7 +300,7 @@ const commitOperate = async () => {
         isEdit.value = false;
       });
   } else {
-    instance.post(SERVER_URL.authority, data).then((res) => {
+    await instance.post(SERVER_URL.authority, data).then((res) => {
       if (datas.value.length >= 10) {
         // 删除第一个
         datas.value.shift();
@@ -318,6 +313,6 @@ const commitOperate = async () => {
 };
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

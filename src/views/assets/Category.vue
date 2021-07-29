@@ -21,7 +21,10 @@
         </svg>
         Reload Data
       </button>
-      <Operation @modelOperate="modelOperate" />
+      <Operation
+        @click.capture="dataCode = undefined"
+        @modelOperate="modelOperate"
+      />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
       <table
@@ -74,7 +77,7 @@
             ></td>
             <td class="px-4">
               <Action
-                @click="dataCode = data.code"
+                @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               />
@@ -158,26 +161,20 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
-
-// 初始化数据
-const initDatas = async () => {
-  await Promise.all([count(), retrieve()]);
-};
-// 统计数据
-const count = async () => {
-  await instance.get(SERVER_URL.category.concat("/count")).then((res) => {
-    total.value = res.data;
-  });
-};
 // 查询列表
 const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.category, {
-      params: { page: page.value, size: size.value },
-    })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  await Promise.all([
+    instance
+      .get(SERVER_URL.category, {
+        params: { page: page.value, size: size.value },
+      })
+      .then((res) => {
+        datas.value = res.data;
+      }),
+    instance.get(SERVER_URL.category.concat("/count")).then((res) => {
+      total.value = res.data;
+    }),
+  ]);
 };
 // 删除取消
 const confirmOperate = (operate: boolean, code: string) => {
@@ -237,6 +234,6 @@ const commitOperate = async () => {
 };
 
 onMounted(() => {
-  initDatas();
+  retrieve();
 });
 </script>

@@ -196,7 +196,7 @@ const confirmCommit = () => {
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   categoryData.value = {};
-  if (operate) {
+  if (operate && dataCode.value && dataCode.value.length > 0) {
     await instance
       .get(SERVER_URL.category.concat("/").concat(dataCode.value))
       .then((res) => {

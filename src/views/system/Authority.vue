@@ -266,7 +266,7 @@ const modelOperate = async (operate: boolean) => {
   authorityData.value = {};
   if (operate) {
     await Promise.all([
-      fetch(dataCode.value),
+      fetch(),
       instance
         .get(SERVER_URL.authority, { params: { type: "M" } })
         .then((res) => {
@@ -277,11 +277,13 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查详情
-const fetch = async (code: string) => {
-  if (code && code.length > 0) {
-    await instance.get(SERVER_URL.authority.concat("/", code)).then((res) => {
-      authorityData.value = res.data;
-    });
+const fetch = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance
+      .get(SERVER_URL.authority.concat("/", dataCode.value))
+      .then((res) => {
+        authorityData.value = res.data;
+      });
   }
 };
 // 新增/编辑：提交

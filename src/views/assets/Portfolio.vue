@@ -349,7 +349,7 @@ const confirmCommit = async () => {
 const modelOperate = async (operate: boolean) => {
   portfolioData.value = {};
   tags.value = [];
-  if (operate) {
+  if (operate && dataCode.value && dataCode.value.length > 0) {
     await instance
       .get(SERVER_URL.portfolio.concat("/", dataCode.value))
       .then((res) => {

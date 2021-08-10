@@ -341,9 +341,6 @@ import SERVER_URL from "../../api/request";
 import markdown from "../../plugins/markdown";
 import { uploadFile } from "../../plugins/upload";
 
-let preview = ref(false);
-let content = ref("");
-const datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -354,11 +351,13 @@ const tags = ref<Array<String>>([]);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
+let preview = ref(false);
 // 数据
 const postsData = ref({});
 const dataCode = ref("");
 const categories = ref([]);
-
+let content = ref("");
+const datas = ref<any>([]);
 // 设置页码
 const setPage = (p: number, s: number) => {
   page.value = p;
@@ -412,19 +411,32 @@ const modelOperate = async (operate: boolean) => {
       instance.get(SERVER_URL.category).then((res) => {
         categories.value = res.data;
       }),
-      instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
-        postsData.value = res.data;
-        tags.value = res.data.tags;
-      }),
-      instance
-        .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
-        .then((res) => {
-          content.value = res.data.content;
-        }),
+      fetch(),
+      fetchContent(),
     ]);
   }
   isEdit.value = operate;
 };
+
+const fetch = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
+      postsData.value = res.data;
+      tags.value = res.data.tags;
+    });
+  }
+};
+
+const fetchContent = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance
+      .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
+      .then((res) => {
+        content.value = res.data.content;
+      });
+  }
+};
+
 // 新增/编辑：提交
 const commitOperate = async () => {
   let data = {

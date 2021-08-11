@@ -30,10 +30,16 @@ onMounted(() => {
 });
 
 const retrieveAuthorities = async () => {
-  await instance
-    .get(SERVER_URL.authority.concat("/tree"), { params: { type: "M" } })
-    .then((res) => {
-      datas.value = res.data;
-    });
+  let user = sessionStorage.getItem("user");
+  if (user) {
+    let username = JSON.parse(user).username;
+    await instance
+      .get(SERVER_URL.user.concat("/", username, "/authority"), {
+        params: { type: "M" },
+      })
+      .then((res) => {
+        datas.value = res.data;
+      });
+  }
 };
 </script>

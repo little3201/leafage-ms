@@ -126,7 +126,7 @@
 
 
 <script lang="ts" setup>
-import { computed, ref, watch, defineProps, defineEmit } from "vue";
+import { computed, ref, watch, defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   total: {
@@ -153,7 +153,7 @@ watch(size, (curSize, prevSize) => {
   }
 });
 
-const emit = defineEmit(["setPage", "retrieve"]);
+const emit = defineEmits(["setPage", "retrieve"]);
 // 设置
 function give(p: number) {
   page.value = p;

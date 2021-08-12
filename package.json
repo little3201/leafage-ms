@@ -34,7 +34,7 @@
     "vite-plugin-mock": "^2.9.4"
   },
   "resolutions": {
-    "postcss": "8.3.5"
+    "postcss": "8.3.6"
   },
   "keywords": [
     "vue3",

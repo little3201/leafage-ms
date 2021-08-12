@@ -98,10 +98,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineEmit } from "vue";
+import { computed, defineEmits } from "vue";
 import { useStore } from "../../store";
 
-const emit = defineEmit(["modelOperate"]);
+const emit = defineEmits(["modelOperate"]);
 
 const operate = () => {
   emit("modelOperate", true);

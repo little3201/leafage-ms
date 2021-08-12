@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmit } from "vue";
+import { defineProps, defineEmits } from "vue";
 import Model from "/@/components/global/Model.vue";
 
 defineProps({
@@ -63,7 +63,7 @@ defineProps({
   },
 });
 
-const emit = defineEmit(["cancelAction", "commitAction"]);
+const emit = defineEmits(["cancelAction", "commitAction"]);
 
 const cancelOperation = () => {
   emit("cancelAction", false);

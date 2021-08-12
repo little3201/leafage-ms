@@ -48,10 +48,10 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmit, computed } from "vue";
+import { defineEmits, computed } from "vue";
 import { useStore } from "../../store";
 
-const emit = defineEmit(["delAction", "editAction"]);
+const emit = defineEmits(["delAction", "editAction"]);
 
 const openConfirm = () => {
   emit("delAction", true);

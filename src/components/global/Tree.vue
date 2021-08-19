@@ -1,11 +1,10 @@
 <template>
-  <Model :isShow="isShow" @cancelAction="cancelOperation">
-    <TreeCore :datas="datas" />
+  <Model :isShow="isShow" @cancelAction="cancelOperation" @commitAction="commitOperation">
+    <TreeCore :datas="datas" @checkedChange="commitOperation" />
   </Model>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps } from "vue";
 import Model from "/@/components/global/Model.vue";
 import TreeCore from "/@/components/global/TreeCore.vue";
 
@@ -25,5 +24,5 @@ const emit = defineEmits(["treeAction"]);
 const cancelOperation = () => {
   emit("treeAction", false);
 };
-const commitOperation = () => {};
+const commitOperation = () => { };
 </script>

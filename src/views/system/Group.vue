@@ -113,13 +113,13 @@
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
-              v-model="groupData.name"
+              v-model.trim="groupData.name"
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
             <select
-              v-model="groupData.superior"
+              v-model.lazy="groupData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option value="undefined">请选择</option>
@@ -134,7 +134,7 @@
           <div class="col-span-12 sm:col-span-6">
             <label>Principal</label>
             <select
-              v-model="groupData.principal"
+              v-model.lazy="groupData.principal"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option value="undefined">请选择</option>
@@ -150,7 +150,7 @@
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="groupData.description"
+              v-model.trim="groupData.description"
             />
           </div>
         </div>

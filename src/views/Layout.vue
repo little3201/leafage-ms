@@ -15,13 +15,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, watchEffect } from "vue";
 import MobileMenu from "/@/components/sections/MobileMenu.vue";
 import SideMenu from "/@/components/sections/SideMenu.vue";
 import TopBar from "/@/components/sections/TopBar.vue";
-
-import instance from "../api";
-import SERVER_URL from "../api/request";
 
 const datas = ref([
   { "code": "2122466RP", "name": "Dashboard", "superior": "2122466RP", "expand": { "path": "/", "icon": "home" }, "children": [] },
@@ -30,19 +27,11 @@ const datas = ref([
   { "code": "21224HMLG", "name": "Category", "superior": "21224HMLG", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
 ]);
 
-onMounted(() => {
-  retrieveAuthorities();
-});
-
-const retrieveAuthorities = async () => {
-  let user = sessionStorage.getItem("user");
-  if (user) {
-    let username = JSON.parse(user).username;
-    await instance
-      .get(SERVER_URL.user.concat("/", username, "/authority"))
-      .then((res) => {
-        datas.value = res.data;
-      });
+// 监听size, 调用查询方法
+watchEffect(() => {
+  let menus = sessionStorage.getItem("menus");
+  if (menus) {
+    datas.value = JSON.parse(menus)
   }
-};
+});
 </script>

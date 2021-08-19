@@ -381,7 +381,7 @@
                 type="radio"
                 checked
                 value="true"
-                v-model="userData.accountNonExpired"
+                v-model.lazy="userData.accountNonExpired"
               />
               <span class="ml-2">False</span>
               <input
@@ -389,7 +389,7 @@
                 type="radio"
                 value="false"
                 class="ml-4"
-                v-model="userData.accountNonLocked"
+                v-model.lazy="userData.accountNonExpired"
               />
               <span class="ml-2">True</span>
             </div>
@@ -405,7 +405,7 @@
                 type="radio"
                 checked
                 value="true"
-                v-model="userData.accountNonLocked"
+                v-model.lazy="userData.accountNonLocked"
               />
               <span class="ml-2">False</span>
               <input
@@ -413,7 +413,7 @@
                 type="radio"
                 value="false"
                 class="ml-4"
-                v-model="userData.accountNonLocked"
+                v-model.lazy="userData.accountNonLocked"
               />
               <span class="ml-2">True</span>
             </div>
@@ -429,7 +429,7 @@
                 type="radio"
                 checked
                 value="true"
-                v-model="userData.accountNonLocked"
+                v-model.lazy="userData.credentialsExpired"
               />
               <span class="ml-2">False</span>
               <input
@@ -437,7 +437,7 @@
                 type="radio"
                 value="false"
                 class="ml-4"
-                v-model="userData.credentialsExpired"
+                v-model.lazy="userData.credentialsExpired"
               />
               <span class="ml-2">True</span>
             </div>
@@ -447,7 +447,7 @@
             <textarea
               aria-label="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="userData.description"
+              v-model.trim="userData.description"
               placeholder="Description"
             />
           </div>

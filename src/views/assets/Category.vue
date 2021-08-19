@@ -46,6 +46,7 @@
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Posts Count</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
@@ -70,6 +71,7 @@
               ></a>
             </td>
             <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.count"></td>
             <td
               class="px-4"
@@ -115,14 +117,14 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               required
-              v-model="categoryData.alias"
+              v-model.trim="categoryData.alias"
             />
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="categoryData.description"
+              v-model.trim="categoryData.description"
               placeholder="Description"
             />
           </div>

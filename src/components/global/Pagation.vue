@@ -1,7 +1,8 @@
 <template>
   <div class="flex items-center mt-1 mb-3">
     <div class="hidden md:block">
-      当前展示第&nbsp;<span v-text="page * size + 1"></span>&nbsp;-
+      当前展示第&nbsp;
+      <span v-text="page * size + 1"></span>&nbsp;-
       <span v-text="(page + 1) * size"></span>&nbsp;行记录，共&nbsp;
       <span v-text="total"></span>
       &nbsp;条记录
@@ -29,11 +30,7 @@
         </button>
       </li>
       <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          @click="decrease"
-        >
+        <button type="button" class="focus:outline-none w-8 h-8" @click="decrease">
           <svg
             width="20"
             height="20"
@@ -50,9 +47,7 @@
         </button>
       </li>
       <li v-if="page > 3">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">
-          ...
-        </button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li v-for="index in pages" :key="index">
         <button
@@ -67,16 +62,10 @@
         ></button>
       </li>
       <li v-if="pages / size > 6 && page < 4">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">
-          ...
-        </button>
+        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          @click="increment"
-        >
+        <button type="button" class="focus:outline-none w-8 h-8" @click="increment">
           <svg
             width="20"
             height="20"
@@ -126,7 +115,7 @@
 
 
 <script lang="ts" setup>
-import { computed, ref, watch, defineProps, defineEmits } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps({
   total: {

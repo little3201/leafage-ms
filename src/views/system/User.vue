@@ -377,6 +377,7 @@
             </label>
             <div class="mt-3">
               <input
+                aria-label="account expired"
                 type="radio"
                 checked
                 value="true"
@@ -384,6 +385,7 @@
               />
               <span class="ml-2">False</span>
               <input
+                aria-label="account expired"
                 type="radio"
                 value="false"
                 class="ml-4"
@@ -399,6 +401,7 @@
             </label>
             <div class="mt-3">
               <input
+                aria-label="account locked"
                 type="radio"
                 checked
                 value="true"
@@ -406,6 +409,7 @@
               />
               <span class="ml-2">False</span>
               <input
+                aria-label="account locked"
                 type="radio"
                 value="false"
                 class="ml-4"
@@ -421,6 +425,7 @@
             </label>
             <div class="mt-3">
               <input
+                aria-label="credentials expired"
                 type="radio"
                 checked
                 value="true"
@@ -428,6 +433,7 @@
               />
               <span class="ml-2">False</span>
               <input
+                aria-label="credentials expired"
                 type="radio"
                 value="false"
                 class="ml-4"
@@ -439,6 +445,7 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
+              aria-label="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="userData.description"
               placeholder="Description"
@@ -512,7 +519,7 @@ const confirmCommit = () => {
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   userData.value = {};
-  if (operate) {
+  if (operate && username.value && username.value.length > 0) {
     await instance
       .get(SERVER_URL.user.concat("/", username.value))
       .then((res) => {

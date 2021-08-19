@@ -381,6 +381,10 @@ const signout = async () => {
     // 退出登录，设置user为空
     store.commit("setUser", {});
     sessionStorage.removeItem("user");
+    // 清空menus
+    store.commit("setMenus", []);
+    sessionStorage.removeItem("menus");
+
     router.replace("/signin");
   });
 };
@@ -390,7 +394,7 @@ const socket = () => {
   var ws = new WebSocket("wss://console.leafage.top/api/socket");
   ws.onopen = function (evt) {
     console.log("Connection open ...", evt);
-    ws.send("Hello WebSocket!");
+    ws.send("Hi! Can you speak chinese?");
   };
 
   ws.onmessage = function (msg) {

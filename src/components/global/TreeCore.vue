@@ -6,6 +6,7 @@
       class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
     >
       <div class="flex items-center">
+<<<<<<< HEAD
         <input
           type="checkbox"
           class="rounded"
@@ -13,6 +14,9 @@
           v-model.lazy="checkedDatas"
           @change="dataChange"
         />
+=======
+        <input type="checkbox" class="rounded" :value="data.code" v-model.lazy="checkedDatas" />
+>>>>>>> 6bc92400ef4cae933d72028d5414d76f9d8fc2a9
         <span
           v-if="data.children && data.children.length > 0"
           @click="isChildOpen = !isChildOpen"
@@ -30,10 +34,9 @@
             stroke-linejoin="round"
             class="mr-2"
           >
-            <use
-              :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon"
-            /></svg
-          >{{ data.name }}
+            <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
+          </svg>
+          {{ data.name }}
           <svg
             v-if="isChildOpen"
             width="16"
@@ -93,7 +96,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { ref } from "vue";
 
 defineProps({
   datas: {

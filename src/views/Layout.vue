@@ -8,32 +8,30 @@
         style="height: calc(100vh - 1.5rem)"
       >
         <TopBar />
-        <router-view> </router-view>
+        <router-view></router-view>
       </main>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, watchEffect } from "vue";
 import MobileMenu from "/@/components/sections/MobileMenu.vue";
 import SideMenu from "/@/components/sections/SideMenu.vue";
 import TopBar from "/@/components/sections/TopBar.vue";
 
-import instance from "../api";
-import SERVER_URL from "../api/request";
+const datas = ref([
+  { "code": "2122466RP", "name": "Dashboard", "superior": "2122466RP", "expand": { "path": "/", "icon": "home" }, "children": [] },
+  { "code": "21224B8JZ", "name": "Posts", "superior": "21224B8JZ", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
+  { "code": "21224QI72", "name": "Portfolio", "superior": "21224QI72", "expand": { "path": "/portfolio", "icon": "camera" }, "children": [] },
+  { "code": "21224HMLG", "name": "Category", "superior": "21224HMLG", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
+]);
 
-const datas = ref([]);
-
-onMounted(() => {
-  retrieveAuthorities();
+// 监听size, 调用查询方法
+watchEffect(() => {
+  let menus = sessionStorage.getItem("menus");
+  if (menus) {
+    datas.value = JSON.parse(menus)
+  }
 });
-
-const retrieveAuthorities = async () => {
-  await instance
-    .get(SERVER_URL.authority.concat("/tree"), { params: { type: "M" } })
-    .then((res) => {
-      datas.value = res.data;
-    });
-};
 </script>

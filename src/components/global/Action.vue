@@ -1,14 +1,7 @@
 <template>
-  <div
-    v-if="user && Object.keys(user).length > 0"
-    class="flex justify-center items-center"
-  >
+  <div v-if="user && Object.keys(user).length > 0" class="flex justify-center items-center">
     <slot></slot>
-    <a
-      class="flex items-center mr-3"
-      href="javascript:;"
-      @click.prevent="openModel"
-    >
+    <a class="flex items-center mr-3" href="javascript:;" @click.prevent="openModel">
       <svg
         width="16"
         height="16"
@@ -24,11 +17,7 @@
       </svg>
       Edit
     </a>
-    <a
-      class="flex items-center text-red-600"
-      href="javascript:;"
-      @click.prevent="openConfirm"
-    >
+    <a class="flex items-center text-red-600" href="javascript:;" @click.prevent="openConfirm">
       <svg
         width="16"
         height="16"
@@ -48,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "../../store";
 
 const emit = defineEmits(["delAction", "editAction"]);

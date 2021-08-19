@@ -46,6 +46,7 @@
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Posts Count</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
@@ -70,6 +71,7 @@
               ></a>
             </td>
             <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.count"></td>
             <td
               class="px-4"
@@ -196,7 +198,7 @@ const confirmCommit = () => {
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   categoryData.value = {};
-  if (operate) {
+  if (operate && dataCode.value && dataCode.value.length > 0) {
     await instance
       .get(SERVER_URL.category.concat("/").concat(dataCode.value))
       .then((res) => {

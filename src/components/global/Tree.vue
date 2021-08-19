@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps } from "vue";
 import Model from "/@/components/global/Model.vue";
 import TreeCore from "/@/components/global/TreeCore.vue";
 
@@ -25,8 +24,5 @@ const emit = defineEmits(["treeAction"]);
 const cancelOperation = () => {
   emit("treeAction", false);
 };
-
-const commitOperation = (checkedDatas: Array<String>) => {
-  alert(checkedDatas);
-};
+const commitOperation = () => { };
 </script>

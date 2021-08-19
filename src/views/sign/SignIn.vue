@@ -22,11 +22,7 @@
                   transform="translate(0.07 0)"
                   fill="#b5c8ff"
                 />
-                <g
-                  id="Group_1"
-                  data-name="Group 1"
-                  transform="translate(4.493 135.941)"
-                >
+                <g id="Group_1" data-name="Group 1" transform="translate(4.493 135.941)">
                   <path
                     id="Path_10"
                     data-name="Path 10"
@@ -45,49 +41,28 @@
               </g>
             </svg>
             <span class="text-white text-xl ml-3">
-              Leaf<span class="font-medium">age</span>
+              Leaf
+              <span class="font-medium">age</span>
             </span>
           </a>
           <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
-            <p class="text-white font-medium text-xl leading-tight">
-              一个使用 Vue3、 Tailwindcss 的网站管理系统
-            </p>
+            <p class="text-white font-medium text-xl leading-tight">一个使用 Vue3、 Tailwindcss 的网站管理系统</p>
             <p class="text-white">致力于提供一个开源、好用、好看的管理系统</p>
           </div>
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="
-              max-w-xs
-              m-auto
-              bg-white
-              xl:bg-transparent
-              px-4
-              py-8
-              xl:p-0
-              rounded-md
-              shadow-sm
-              xl:shadow-none
-              w-full
-            "
+            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
           >
-            <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
-              Sign In
-            </h2>
+            <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">Sign In</h2>
             <form @submit.prevent="onSubmit">
               <div class="mt-6">
                 <input
                   type="text"
                   name="username"
                   v-model="formData.username"
-                  class="
-                    border border-gray-300
-                    rounded-md
-                    w-full
-                    my-6
-                    shadow-sm
-                  "
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Username/Email"
                   required
                   autocomplete="off"
@@ -96,13 +71,7 @@
                   type="password"
                   name="password"
                   v-model="formData.password"
-                  class="
-                    border border-gray-300
-                    rounded-md
-                    w-full
-                    mb-6
-                    shadow-sm
-                  "
+                  class="border border-gray-300 rounded-md w-full mb-6 shadow-sm"
                   placeholder="Password"
                   required
                   autocomplete="off"
@@ -115,35 +84,19 @@
                     class="rounded border-gray-300 shadow-sm mr-2"
                     id="remember-me"
                   />
-                  <label class="cursor-pointer" for="remember-me"
-                    >Remember me</label
-                  >
+                  <label class="cursor-pointer" for="remember-me">Remember me</label>
                 </div>
-                <a href="" class="text-blue-600">Forgot Password ?</a>
+                <a href class="text-blue-600">Forgot Password ?</a>
               </div>
               <button
                 type="submit"
                 @click="onSumbit"
-                class="
-                  w-full
-                  mt-6
-                  focus:outline-none
-                  text-white
-                  bg-blue-600
-                  hover:bg-blue-700
-                  hover:text-white
-                  py-2
-                  rounded-md
-                "
-              >
-                Sign in
-              </button>
+                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
+              >Sign in</button>
             </form>
             <div class="my-6 text-center xl:text-left">
               Not registered?
-              <router-link class="text-blue-600" to="/signup"
-                >Create account</router-link
-              >
+              <router-link class="text-blue-600" to="/signup">Create account</router-link>
             </div>
           </div>
         </div>
@@ -171,19 +124,27 @@ const onSubmit = async () => {
     .post("/login", new URLSearchParams(formData.value))
     .then((res) => {
       if (res.data.username) {
-        fetchUser(res.data.username);
+        init(res.data.username);
       }
       // 登录完成后，调整原请求页
-      router.push({ path: route.query.redirect?.toString() || "/" });
+      router.replace({ path: route.query.redirect?.toString() || "/" });
     });
 };
 
-const fetchUser = async (username: string) => {
-  await instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
-    sessionStorage.setItem("user", JSON.stringify(res.data));
-    store.commit("setUser", res.data);
-  });
-};
+const init = async (username: string) => {
+  await Promise.all([
+    instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
+      sessionStorage.setItem("user", JSON.stringify(res.data));
+      store.commit("setUser", res.data);
+    }),
+    instance
+      .get(SERVER_URL.user.concat("/", username, "/authority"))
+      .then((res) => {
+        sessionStorage.setItem("menus", JSON.stringify(res.data));
+        store.commit("setMenus", res.data);
+      })
+  ])
+}
 
 onMounted(() => {
   instance.get("/check");

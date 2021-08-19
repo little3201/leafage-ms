@@ -131,6 +131,7 @@
             </label>
             <input
               type="text"
+              aria-label="name"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model.trim="roleData.name"
@@ -139,7 +140,8 @@
           <div class="col-span-12 sm:col-span-6">
             <label>Superior</label>
             <select
-              v-model.lazy="roleData.superior"
+              aria-label="superior"
+              v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
               <option value="undefined">请选择</option>
@@ -154,6 +156,8 @@
           <div class="col-span-12">
             <label>Description</label>
             <textarea
+              aria-label="description"
+              name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="roleData.description"
             />
@@ -230,7 +234,7 @@ const modelOperate = async (operate: boolean) => {
   roleData.value = {};
   if (operate) {
     await Promise.all([
-      fetch(dataCode.value),
+      fetch(),
       instance.get(SERVER_URL.role).then((res) => {
         superiors.value = res.data;
       }),
@@ -239,10 +243,9 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查详情
-const fetch = async (code: string) => {
-  if (code && code.length > 0) {
-    dataCode.value = code;
-    await instance.get(SERVER_URL.role.concat("/", code)).then((res) => {
+const fetch = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance.get(SERVER_URL.role.concat("/", dataCode.value)).then((res) => {
       roleData.value = res.data;
     });
   }

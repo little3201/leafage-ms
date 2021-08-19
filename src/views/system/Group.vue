@@ -233,7 +233,7 @@ const modelOperate = async (operate: boolean) => {
   groupData.value = {};
   if (operate) {
     await Promise.all([
-      fetch(operate, dataCode.value),
+      fetch(),
       instance.get(SERVER_URL.group).then((res) => {
         superiors.value = res.data;
       }),
@@ -242,10 +242,9 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查询详情
-const fetch = async (operate: boolean, code: string) => {
-  if (operate && code && code.length > 0) {
-    dataCode.value = code;
-    await instance.get(SERVER_URL.group.concat("/", code)).then((res) => {
+const fetch = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance.get(SERVER_URL.group.concat("/", dataCode.value)).then((res) => {
       groupData.value = res.data;
     });
   }

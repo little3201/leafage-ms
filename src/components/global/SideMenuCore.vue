@@ -13,14 +13,7 @@
         v-if="data.children && data.children.length > 0"
         href="javascript:;"
         @click.prevent="isOpen = !isOpen"
-        class="
-          flex
-          items-center
-          h-12
-          hover:bg-blue-100 hover:bg-opacity-10
-          rounded-l-full
-          pl-4
-        "
+        class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4"
       >
         <div class="mr-3">
           <svg
@@ -70,11 +63,7 @@
             <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
           </svg>
         </span>
-        <span
-          v-else
-          class="hidden xl:inline-flex items-center"
-          v-text="data.name"
-        ></span>
+        <span v-else class="hidden xl:inline-flex items-center" v-text="data.name"></span>
       </a>
       <router-link
         v-else
@@ -110,7 +99,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 
 defineProps({
   datas: {

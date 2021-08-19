@@ -49,6 +49,7 @@
             <th scope="col" class="px-4">Category</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Likes</th>
+            <th scope="col" class="px-4">Comment</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -62,7 +63,7 @@
             <td class="px-4 py-2 md:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4 text-center max-h-32 max-w-sm truncate">
+            <td class="px-4 text-center max-w-xs truncate">
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"
@@ -74,6 +75,7 @@
             <td class="px-4" v-text="data.category"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.likes"></td>
+            <td class="px-4" v-text="data.comment"></td>
             <td
               class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"

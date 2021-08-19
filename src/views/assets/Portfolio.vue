@@ -49,6 +49,7 @@
             <th scope="col" class="px-4">Type</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Likes</th>
+            <th scope="col" class="px-4">Comment</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -83,6 +84,7 @@
             </td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.likes"></td>
+            <td class="px-4" v-text="data.comment"></td>
             <td
               class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"

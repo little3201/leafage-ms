@@ -21,28 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = undefined"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll my-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="authority"
-      >
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
@@ -61,9 +45,7 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
@@ -73,9 +55,7 @@
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4">
               <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
-              <span class="text-blue-500" v-else-if="data.type == 'B'"
-                >Button</span
-              >
+              <span class="text-blue-500" v-else-if="data.type == 'B'">Button</span>
               <span class="text-pink-500" v-else>Api</span>
             </td>
             <td class="px-4">
@@ -95,10 +75,7 @@
               </svg>
             </td>
             <td class="px-4" v-text="data.path"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -110,31 +87,18 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="commitOperate"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="commitOperate">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label
-              >Name
+            <label>
+              Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
+              @blur="exist"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
@@ -142,8 +106,8 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.code }"
-              >Type
+            <label :class="{ 'text-gray-300': authorityData.code }">
+              Type
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <select
@@ -152,16 +116,14 @@
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option value="M">Menu</option>
               <option value="B">Button</option>
               <option value="R">Router</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.type == 'B' }"
-              >Path</label
-            >
+            <label :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
             <input
               :disabled="authorityData.type == 'B'"
               type="url"
@@ -179,7 +141,7 @@
               v-model="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -268,7 +230,7 @@ const modelOperate = async (operate: boolean) => {
     await Promise.all([
       fetch(),
       instance
-        .get(SERVER_URL.authority, { params: { type: "M" } })
+        .get(SERVER_URL.authority, { params: { page: 0, size: 10 } })
         .then((res) => {
           superiors.value = res.data;
         }),
@@ -286,6 +248,10 @@ const fetch = () => {
       });
   }
 };
+// 检查唯一
+const exist = () => {
+  console.log("失去了焦点")
+}
 // 新增/编辑：提交
 const commitOperate = async () => {
   let data = authorityData.value;

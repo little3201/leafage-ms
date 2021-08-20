@@ -229,11 +229,9 @@ const modelOperate = async (operate: boolean) => {
   if (operate) {
     await Promise.all([
       fetch(),
-      instance
-        .get(SERVER_URL.authority, { params: { page: 0, size: 10 } })
-        .then((res) => {
-          superiors.value = res.data;
-        }),
+      instance.get(SERVER_URL.authority).then((res) => {
+        superiors.value = res.data;
+      }),
     ]);
   }
   isEdit.value = operate;

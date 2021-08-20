@@ -22,7 +22,7 @@
         Reload Data
       </button>
       <Operation
-        @click.capture="dataCode = undefined"
+        @click.capture="dataCode = null"
         @modelOperate="modelOperate"
       />
     </div>
@@ -144,7 +144,7 @@
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

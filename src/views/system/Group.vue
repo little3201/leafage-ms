@@ -21,28 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = undefined"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="group"
-      >
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
@@ -59,9 +43,7 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
@@ -70,10 +52,7 @@
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.principal"></td>
             <td class="px-4" v-text="data.count"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -85,28 +64,14 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="commitOperate"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="commitOperate">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
-            <label
-              >Name
+            <label>
+              Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
@@ -122,7 +87,7 @@
               v-model.lazy="groupData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -137,7 +102,7 @@
               v-model.lazy="groupData.principal"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option
                 v-for="(user, index) in users"
                 :key="index"
@@ -204,14 +169,6 @@ const retrieve = async () => {
     }),
   ]);
 };
-// 查询关联用户
-const retrieveUsers = async () => {
-  instance
-    .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
-    .then((res) => {
-      users.value = res.data;
-    });
-};
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
@@ -237,6 +194,11 @@ const modelOperate = async (operate: boolean) => {
       instance.get(SERVER_URL.group).then((res) => {
         superiors.value = res.data;
       }),
+      instance
+        .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
+        .then((res) => {
+          users.value = res.data;
+        })
     ]);
   }
   isEdit.value = operate;

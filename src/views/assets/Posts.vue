@@ -22,7 +22,7 @@
         Reload Data
       </button>
       <Operation
-        @click.capture="dataCode = undefined"
+        @click.capture="dataCode = null"
         @modelOperate="modelOperate"
       />
     </div>
@@ -236,7 +236,7 @@
               required
               class="w-full rounded-md border-gray-300 shadow-sm"
             >
-              <option value="undefined">请选择</option>
+              <option value="null">请选择</option>
               <option
                 v-for="category in categories"
                 :key="category.code"

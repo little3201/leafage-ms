@@ -22,7 +22,7 @@
         Reload Data
       </button>
       <Operation
-        @click.capture="dataCode = undefined"
+        @click.capture="dataCode = null"
         @modelOperate="modelOperate"
       />
     </div>

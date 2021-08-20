@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import MobileMenu from "/@/components/sections/MobileMenu.vue";
 import SideMenu from "/@/components/sections/SideMenu.vue";
 import TopBar from "/@/components/sections/TopBar.vue";
@@ -27,8 +27,7 @@ const datas = ref([
   { "code": "21224HMLG", "name": "Category", "superior": "21224HMLG", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
 ]);
 
-// 监听size, 调用查询方法
-watchEffect(() => {
+onMounted(() => {
   let menus = sessionStorage.getItem("menus");
   if (menus) {
     datas.value = JSON.parse(menus)

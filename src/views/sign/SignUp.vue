@@ -22,11 +22,7 @@
                   transform="translate(0.07 0)"
                   fill="#b5c8ff"
                 />
-                <g
-                  id="Group_1"
-                  data-name="Group 1"
-                  transform="translate(4.493 135.941)"
-                >
+                <g id="Group_1" data-name="Group 1" transform="translate(4.493 135.941)">
                   <path
                     id="Path_10"
                     data-name="Path 10"
@@ -45,48 +41,27 @@
               </g>
             </svg>
             <span class="text-white text-xl ml-3">
-              Leaf<span class="font-medium">age</span>
+              Leaf
+              <span class="font-medium">age</span>
             </span>
           </a>
           <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
-            <p class="text-white font-medium text-xl leading-tight">
-              一个使用 Vue3、 Tailwindcss 的网站管理系统
-            </p>
+            <p class="text-white font-medium text-xl leading-tight">一个使用 Vue3、 Tailwindcss 的网站管理系统</p>
             <p class="text-white">致力于提供一个开源、好用、好看的管理系统</p>
           </div>
         </div>
         <div class="h-screen flex px-2">
           <div
-            class="
-              max-w-xs
-              m-auto
-              bg-white
-              xl:bg-transparent
-              px-4
-              py-8
-              xl:p-0
-              rounded-md
-              shadow-sm
-              xl:shadow-none
-              w-full
-            "
+            class="max-w-xs m-auto bg-white xl:bg-transparent px-4 py-8 xl:p-0 rounded-md shadow-sm xl:shadow-none w-full"
           >
-            <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">
-              Sign Up
-            </h2>
+            <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">Sign Up</h2>
             <form @submit.prevent="onSubmit" class="mx-auto">
               <div class="mt-6">
                 <input
                   type="email"
                   v-model="formData.email"
-                  class="
-                    border border-gray-300
-                    rounded-md
-                    w-full
-                    my-6
-                    shadow-sm
-                  "
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Email"
                   required
                   autocomplete="off"
@@ -102,13 +77,7 @@
                 <input
                   type="password"
                   v-model.trim="confirmPassword"
-                  class="
-                    border border-gray-300
-                    rounded-md
-                    w-full
-                    my-6
-                    shadow-sm
-                  "
+                  class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Confirm Password"
                   required
                   autocomplete="off"
@@ -126,26 +95,12 @@
               <button
                 type="submit"
                 @click="onSumbit"
-                class="
-                  w-full
-                  mt-6
-                  focus:outline-none
-                  text-white
-                  bg-blue-600
-                  hover:bg-blue-700
-                  hover:text-white
-                  py-2
-                  rounded-md
-                "
-              >
-                Sign up
-              </button>
+                class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
+              >Sign up</button>
             </form>
             <div class="my-6 text-center xl:text-left">
               Already have an account?
-              <router-link class="text-blue-600" to="/signin"
-                >Sign in</router-link
-              >
+              <router-link class="text-blue-600" to="/signin">Sign in</router-link>
             </div>
           </div>
         </div>
@@ -155,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 import instance from "../../api";
 
@@ -163,17 +118,15 @@ const formData = ref({});
 const confirmPassword = ref("");
 
 const onSubmit = async () => {
-  // await instance
-  //   .post("/register", new URLSearchParams(formData.value))
-  //   .then(() => {
-  //     router.replace("/");
-  //   });
-  alert("注册功能在加速开发中...")
+  await instance.get("/check").then(() => {
+    // await instance
+    //   .post("/register", new URLSearchParams(formData.value))
+    //   .then(() => {
+    //     router.replace("/");
+    //   });
+    alert("注册功能在加速开发中...")
+  })
 };
-
-onMounted(() => {
-  instance.get("/check");
-});
 </script>
 
 <style scoped>

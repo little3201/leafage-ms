@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "../../store";
 
@@ -120,15 +120,15 @@ const route = useRoute();
 const router = useRouter();
 
 const onSubmit = async () => {
-  await instance
-    .post("/login", new URLSearchParams(formData.value))
-    .then((res) => {
-      if (res.data.username) {
+  await instance.get("/check").then(() => {
+    instance
+      .post("/login", new URLSearchParams(formData.value))
+      .then((res) => {
         init(res.data.username);
-      }
-      // 登录完成后，调整原请求页
-      router.replace({ path: route.query.redirect?.toString() || "/" });
-    });
+        // 登录完成后，调整原请求页
+        router.replace({ path: route.query.redirect?.toString() || "/" });
+      });
+  })
 };
 
 const init = async (username: string) => {
@@ -146,9 +146,6 @@ const init = async (username: string) => {
   ])
 }
 
-onMounted(() => {
-  instance.get("/check");
-});
 </script>
 
 <style scoped>

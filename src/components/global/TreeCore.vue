@@ -6,7 +6,17 @@
       class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md"
     >
       <div class="flex items-center">
+<<<<<<< HEAD
+        <input
+          type="checkbox"
+          class="rounded"
+          :value="data.code"
+          v-model.lazy="checkedDatas"
+          @change="dataChange"
+        />
+=======
         <input type="checkbox" class="rounded" :value="data.code" v-model.lazy="checkedDatas" />
+>>>>>>> 6bc92400ef4cae933d72028d5414d76f9d8fc2a9
         <span
           v-if="data.children && data.children.length > 0"
           @click="isChildOpen = !isChildOpen"
@@ -96,5 +106,12 @@ defineProps({
 });
 
 const isChildOpen = ref(true);
-const checkedDatas = ref(["2122466RP"]);
+const checkedDatas = ref<Array<String>>(["2122466RP"]);
+
+const emit = defineEmits(["checkedChange"]);
+
+const dataChange = () => {
+  console.log(checkedDatas.value.toString())
+  emit("checkedChange", checkedDatas.value);
+};
 </script>

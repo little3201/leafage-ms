@@ -186,7 +186,7 @@
               @keydown.enter="addTag"
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Tags"
-              v-model="tagValue"
+              v-model.trim="tagValue"
             />
             <div
               class="
@@ -232,7 +232,7 @@
           </div>
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <select
-              v-model="postsData.category"
+              v-model.lazy="postsData.category"
               required
               class="w-full rounded-md border-gray-300 shadow-sm"
             >
@@ -310,7 +310,7 @@
               <textarea
                 v-if="!preview"
                 class="w-full rounded-md border-gray-300 shadow-sm"
-                v-model="content"
+                v-model.trim="content"
                 required
                 placeholder="write with markdown..."
               ></textarea>

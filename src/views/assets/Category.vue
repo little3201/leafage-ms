@@ -117,14 +117,14 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               required
-              v-model="categoryData.alias"
+              v-model.trim="categoryData.alias"
             />
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model="categoryData.description"
+              v-model.trim="categoryData.description"
               placeholder="Description"
             />
           </div>

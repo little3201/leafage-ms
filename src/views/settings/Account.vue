@@ -18,7 +18,6 @@
           class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Last Name"
           value="Russell Crowe"
-          disabled
         />
       </div>
       <div class="col-span-12 md:col-span-6">
@@ -28,7 +27,6 @@
           class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="First Name"
           value="Russell Crowe"
-          disabled
         />
       </div>
       <div class="col-span-12 md:col-span-6">

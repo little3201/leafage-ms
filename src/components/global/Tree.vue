@@ -1,6 +1,6 @@
 <template>
-  <Model :isShow="isShow" @cancelAction="cancelOperation">
-    <TreeCore :datas="datas" />
+  <Model :isShow="isShow" @cancelAction="cancelOperation" @commitAction="commitOperation">
+    <TreeCore :datas="datas" @checkedChange="commitOperation" />
   </Model>
 </template>
 

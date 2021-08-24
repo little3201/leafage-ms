@@ -30,7 +30,7 @@
     "qiniu-js": "^3.3.3",
     "tailwindcss": "^2.2.7",
     "typescript": "^4.3.5",
-    "vite": "^2.4.4",
+    "vite": "^2.5.0",
     "vite-plugin-mock": "^2.9.4"
   },
   "resolutions": {

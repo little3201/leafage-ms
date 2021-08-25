@@ -65,6 +65,7 @@
                   class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
                   placeholder="Username/Email"
                   required
+                  autofocus
                   autocomplete="off"
                 />
                 <input

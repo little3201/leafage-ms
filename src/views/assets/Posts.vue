@@ -117,6 +117,7 @@
               placeholder="Title"
               maxlength="50"
               required
+              autofocus
               v-model.trim="postsData.title"
             />
           </div>

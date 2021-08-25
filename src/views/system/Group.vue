@@ -79,6 +79,7 @@
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
               v-model.trim="groupData.name"
+              autofocus
             />
           </div>
           <div class="col-span-12 sm:col-span-6">

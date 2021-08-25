@@ -23,6 +23,7 @@
           required
           minlength="8"
           maxlength="16"
+          autofocus
         />
       </div>
       <div class="col-span-12 md:col-span-6">

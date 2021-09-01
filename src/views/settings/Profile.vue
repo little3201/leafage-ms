@@ -98,6 +98,7 @@
               placeholder="Nickname"
               value="布吉岛"
               required
+              autofocus
             />
           </div>
           <div class="col-span-2 md:col-span-1">

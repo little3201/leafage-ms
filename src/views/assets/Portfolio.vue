@@ -129,6 +129,7 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               required
+              autofocus
               v-model.trim="portfolioData.title"
             />
           </div>

@@ -117,6 +117,7 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               required
+              autofocus
               v-model.trim="categoryData.alias"
             />
           </div>

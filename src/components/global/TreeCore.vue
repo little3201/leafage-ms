@@ -93,10 +93,14 @@ defineProps({
     type: Array,
     default: [],
   },
+  checked: {
+    type: Array,
+    default: [],
+  }
 });
 
 const isChildOpen = ref(true);
-const checkedDatas = ref<Array<String>>(["2122466RP"]);
+const checkedDatas = ref<Array<String>>([]);
 
 const emit = defineEmits(["checkedChange"]);
 

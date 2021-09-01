@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://console.leafage.top" target="_blank">
-    <img alt="Leafage Logo" width="200" src="src/assets/logo.svg">
+    <img alt="Leafage Logo" width="200" src="public/svg/logo.svg">
   </a>
 </p>
 

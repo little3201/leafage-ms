@@ -14,16 +14,11 @@
 
 ## 项目介绍
 
-一个使用 Vue3、Tailwindcss 的 CMS 网站管理系统，包含帖子管理、作品资料管理、权限管理。网站建立之初为了实现一套可用的、通用的权限管理解决方案，因为在工作中几乎每个公司甚至每个项目都离不开一套权限管理的实现，然而这些年经历的都是凑活能用的一些权限管理方案。同时为了作为博客网站的帖子管理系统。
-
-之前看到过一些比较好的方案的讲解说明，但是没有一个好看的、好用的开源的项目，大都是基于antd或者element-ui的模版提供的，都还没有成型，仅仅学习可以，或者很简单的权限也能凑活用，没有更加细粒度的权限管理，所以就自己试着来将想法落地实现，并开源供以后借鉴或者使用。
+一个使用 Vue3、Tailwindcss 的 后台管理系统，将提供完善的基础数据管理逻辑，作为后台管理系统的基础，将持续完善，提供一套完整的权限管理方案。同时为了作为个人[博客网站](https://www.leafage.top)的帖子管理系统。
 
 ### 功能依赖
 
-- [x] @nuxt/sitemap —— 自生成sitemap
-- [x] @nuxt/image —— 图片加载优化
 - [x] @tailwindcss/typography —— 排版优化
-- [x] @tailwindcss/aspect-ratio —— 图片排版优化
 - [x] markdown-it/hightlight.js —— markdown解析，代码高亮
 
 **访问地址：**<a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">后台管理系统</a>

@@ -1,6 +1,6 @@
 <template>
   <div class="col-span-12 mt-2">
-    <div class="flex justify-between items-center h-10">
+    <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Roles</h2>
       <button
         @click="retrieve"
@@ -277,7 +277,7 @@ const commitOperate = async () => {
       });
   } else {
     await instance.post(SERVER_URL.role, data).then((res) => {
-      if (datas.value.length >= 10) {
+      if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
       }

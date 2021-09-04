@@ -1,16 +1,7 @@
 <template>
-  <aside class="sm:w-20 xl:w-64 pr-4 text-sm ">
-    <router-link
-      to="/"
-      class="flex items-center pl-4 pt-3"
-      exact-active-class=""
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 311.983 311.929"
-      >
+  <aside class="sm:w-20 xl:w-64 pr-4 text-sm">
+    <router-link to="/" class="inline-flex items-center pl-4 pt-3" exact-active-class>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 311.983 311.929">
         <g
           id="Icon_ionic-ios-apps"
           data-name="Icon ionic-ios-apps"
@@ -23,11 +14,7 @@
             transform="translate(0.07 0)"
             fill="#b5c8ff"
           />
-          <g
-            id="Group_1"
-            data-name="Group 1"
-            transform="translate(4.493 135.941)"
-          >
+          <g id="Group_1" data-name="Group 1" transform="translate(4.493 135.941)">
             <path
               id="Path_10"
               data-name="Path 10"
@@ -45,8 +32,8 @@
           </g>
         </g>
       </svg>
-      <h1 class="hidden xl:block text-white text-xl ml-3">
-        Leaf<span class="font-medium">age</span>
+      <h1 class="hidden xl:block text-white text-2xl ml-4">
+        Leafage
       </h1>
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>

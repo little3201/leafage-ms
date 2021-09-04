@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Authorities</h2>
+      <h2 class="text-lg font-medium">Regions</h2>
       <button
         @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
@@ -23,18 +23,14 @@
       </button>
       <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-scroll my-2" style="height: calc(100vh - 12rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
+    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Role Count</th>
             <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Icon</th>
-            <th scope="col" class="px-4">Path</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -51,30 +47,7 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.superior"></td>
-            <td class="px-4">
-              <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
-              <span class="text-blue-500" v-else-if="data.type == 'B'">Button</span>
-              <span class="text-pink-500" v-else>Api</span>
-            </td>
-            <td class="px-4">
-              <svg
-                v-if="data.icon"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mx-auto"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
-              </svg>
-            </td>
-            <td class="px-4" v-text="data.path"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
@@ -98,78 +71,18 @@
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
-              @blur="exist"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
-              v-model.trim="authorityData.name"
+              v-model.trim="regionData.name"
               autofocus
             />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.code }">
-              Type
-              <span class="text-red-600 text-base ml-1">*</span>
-            </label>
-            <select
-              :disabled="authorityData.code"
-              v-model.lazy="authorityData.type"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              :class="{ 'text-gray-300': authorityData.code }"
-            >
-              <option value="null">请选择</option>
-              <option value="M">Menu</option>
-              <option value="B">Button</option>
-              <option value="R">Router</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>
-              Icon
-              <span class="text-red-600 text-base ml-1">*</span>
-            </label>
-            <input
-              type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              placeholder="Icon"
-              v-model.trim="authorityData.icon"
-              autofocus
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
-            <input
-              :disabled="authorityData.type == 'B'"
-              type="url"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-              :class="{
-                'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
-              }"
-              placeholder="Path"
-              v-model.trim="authorityData.path"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label>Superior</label>
-            <select
-              v-model.lazy="authorityData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
-            >
-              <option value="null">请选择</option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-                v-text="superior.name"
-              ></option>
-            </select>
           </div>
           <div class="col-span-12">
             <label>Description</label>
             <textarea
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model.trim="authorityData.description"
-              placeholder="Description"
+              v-model.trim="regionData.description"
             />
           </div>
         </div>
@@ -194,9 +107,8 @@ import SERVER_URL from "../../api/request";
 const isEdit = ref(false);
 const isDel = ref(false);
 // 数据
-const authorityData = ref({});
+const regionData = ref({});
 const dataCode = ref("");
-const superiors = ref([]);
 const datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
@@ -208,17 +120,16 @@ const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
 };
+
 // 查询列表
 const retrieve = async () => {
   await Promise.all([
     instance
-      .get(SERVER_URL.authority, {
-        params: { page: page.value, size: size.value },
-      })
+      .get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
+    instance.get(SERVER_URL.region.concat("/count")).then((res) => {
       total.value = res.data;
     }),
   ]);
@@ -228,48 +139,33 @@ const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = () => {
-  instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: any) => item.code != dataCode.value
-    );
-    isDel.value = false;
-  });
+const confirmCommit = async () => {
+  await instance
+    .delete(SERVER_URL.region.concat("/", dataCode.value))
+    .then(() => {
+      // 将datas中修改项的历史数据删除
+      datas.value = datas.value.filter(
+        (item: any) => item.code != dataCode.value
+      );
+      isDel.value = false;
+    });
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
-  authorityData.value = {};
-  if (operate) {
-    await Promise.all([
-      fetch(),
-      instance.get(SERVER_URL.authority).then((res) => {
-        superiors.value = res.data;
-      }),
-    ]);
+  regionData.value = {};
+  if (operate && dataCode.value && dataCode.value.length > 0) {
+    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
+      regionData.value = res.data;
+    });
   }
   isEdit.value = operate;
 };
-// 查详情
-const fetch = () => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    instance
-      .get(SERVER_URL.authority.concat("/", dataCode.value))
-      .then((res) => {
-        authorityData.value = res.data;
-      });
-  }
-};
-// 检查唯一
-const exist = () => {
-  console.log("失去了焦点")
-}
 // 新增/编辑：提交
 const commitOperate = async () => {
-  let data = authorityData.value;
+  let data = regionData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.authority.concat("/", dataCode.value), data)
+      .put(SERVER_URL.region.concat("/", dataCode.value), data)
       .then((res) => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -280,7 +176,7 @@ const commitOperate = async () => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.authority, data).then((res) => {
+    await instance.post(SERVER_URL.region, data).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();

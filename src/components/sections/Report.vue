@@ -93,7 +93,7 @@
               stroke-linejoin="round"
               class="text-yellow-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'camera'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'monitor'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -128,7 +128,7 @@
             </div>
           </div>
           <div class="text-3xl font-bold leading-8 mt-6">0</div>
-          <div class="text-base text-gray-600 mt-1">Portfolio Viewed</div>
+          <div class="text-base text-gray-600 mt-1">Resource Viewed</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">

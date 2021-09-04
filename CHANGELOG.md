@@ -6,6 +6,11 @@
 
 ## 更新记录
 
+2021-09-04:
+  1. 删除 portfolio 页面，替换对应的接口；
+  2. 优化分页样式，resource 编辑样式；
+  3. 处理 group 新增打开报错的问题；
+
 2021-08-19:
   1. posts、portfolio 页面列表添加属性；
   2. 删除 defineEmits, defineProps 警告操作；

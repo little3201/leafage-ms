@@ -13,7 +13,7 @@
         stroke-linejoin="round"
         class="mr-2"
       >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'check-square'" />
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'edit-3'" />
       </svg>
       Edit
     </a>

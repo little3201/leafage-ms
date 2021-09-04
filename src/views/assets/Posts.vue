@@ -110,7 +110,7 @@
     >
       <form class="w-full">
         <div class="grid grid-rows-3 grid-cols-12 gap-x-4 gap-y-2">
-          <div class="col-span-12 sm:col-span-8 md:flex items-center">
+          <div class="col-span-12 sm:col-span-8">
             <input
               type="text"
               class="w-full rounded-md border-gray-300 shadow-sm"

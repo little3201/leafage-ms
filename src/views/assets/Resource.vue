@@ -21,28 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = null"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="portfolio"
-      >
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
             <th scope="col" class="px-4 text-left">No.</th>
             <th scope="col" class="px-4">Title</th>
             <th scope="col" class="px-4">Code</th>
@@ -60,13 +44,11 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <a
                 rel="noopener"
-                href="https://www.leafage.top/portfolio"
+                href="https://www.leafage.top/resource"
                 target="_blank"
                 class="font-medium text-blue-600"
                 v-text="data.title"
@@ -85,10 +67,7 @@
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.likes"></td>
             <td class="px-4" v-text="data.comment"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -100,28 +79,14 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="commitOperate"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="commitOperate">
       <form class="w-full">
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 sm:col-span-6">
-            <label class="inline-flex items-center"
-              >Title
+        <div class="grid grid-cols-12 grid-rows-4 gap-4">
+          <div class="col-span-12 sm:col-span-7">
+            <label class="inline-flex items-center">
+              Title
               <span class="text-red-600 ml-1">*</span>
             </label>
             <input
@@ -130,94 +95,26 @@
               placeholder="Title"
               required
               autofocus
-              v-model.trim="portfolioData.title"
+              v-model.trim="resourceData.title"
             />
           </div>
-          <div class="col-span-12 sm:col-span-6 relative">
-            <label class="inline-flex items-center"
-              >Tags <span class="text-red-600 ml-1">*</span></label
-            >
-            <input
-              type="text"
-              @keydown.enter="addTag"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              placeholder="Tags"
-              v-model.trim="tagValue"
-            />
-            <div
-              class="
-                absolute
-                w-2/3
-                overflow-x-scroll
-                bottom-2
-                right-2
-                inline-flex
-                items-center
-              "
-            >
-              <span
-                v-for="(tag, index) in portfolioData.tags"
-                :key="index"
-                class="
-                  mr-2
-                  border border-gray-300
-                  bg-gray-100
-                  rounded-md
-                  px-1
-                  whitespace-nowrap
-                  inline-flex
-                  items-center
-                "
-                >{{ tag }}
-                <svg
-                  @click="removeTag(tag)"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="ml-1 cursor-pointer opacity-30"
-                >
-                  <use xlink:href="/svg/feather-sprite.svg#x" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="col-span-12">
-            <label>Content</label>
+          <div class="col-span-5 row-span-4 mb-6">
+            <label>Cover</label>
             <img
-              v-if="portfolioData.url"
-              :src="portfolioData.url"
+              v-if="resourceData.url"
+              :src="resourceData.url"
               alt="portfolio content"
-              class="rounded-md object-cover h-32 mt-1"
+              class="rounded-md object-cover h-full mt-1 border"
             />
             <div
               v-else
-              class="
-                rounded-md
-                border border-gray-300
-                shadow-sm
-                h-32
-                mt-1
-                flex
-                items-center
-              "
+              class="rounded-md border border-gray-300 shadow-sm mt-1 h-full flex items-center"
             >
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
                     for="file-upload"
-                    class="
-                      relative
-                      cursor-pointer
-                      bg-white
-                      rounded-md
-                      text-gray-400
-                      hover:text-indigo-500
-                    "
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -235,11 +132,11 @@
                     </svg>
                     <input
                       id="file-upload"
-                      name="portfolioData.cover"
+                      name="resourceData.cover"
                       multiple
                       type="file"
                       class="sr-only"
-                      accept="image/png,image/jpeg,image/jpg,vedio/mp4"
+                      accept="image/png, image/jpeg, image/jpg, vedio/mp4"
                       @change="uploadImage($event.target.files)"
                     />
                   </label>
@@ -248,11 +145,24 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12">
+          <div class="col-span-12 sm:col-span-7">
+            <label class="inline-flex items-center">
+              Type
+              <span class="text-red-600 ml-1">*</span>
+            </label>
+            <select
+              v-model="resourceData.type"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+            >
+              <option value="undefined">请选择</option>
+              <option value="ebook">EBook</option>
+            </select>
+          </div>
+          <div class="col-span-7 row-span-2 mb-6">
             <label>Description</label>
             <textarea
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model.trim="portfolioData.description"
+              class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
+              v-model.trim="resourceData.description"
               placeholder="Description"
             />
           </div>
@@ -287,7 +197,7 @@ const videoTypes = ref([
   "mp4",
 ]);
 // 数据
-const portfolioData = ref({});
+const resourceData = ref({});
 const dataCode = ref("");
 const datas = ref<any>([]);
 // 分页参数
@@ -309,25 +219,25 @@ const setPage = (p: number, s: number) => {
 // 添加tag
 const addTag = () => {
   tags.value.push(tagValue.value);
-  portfolioData.value = { ...portfolioData.value, tags: tags.value };
+  resourceData.value = { ...resourceData.value, tags: tags.value };
   tagValue.value = "";
 };
 // 删除tag
 const removeTag = (tag: String) => {
   tags.value = tags.value.filter((item) => item !== tag);
-  portfolioData.value = { ...portfolioData.value, tags: tags.value };
+  resourceData.value = { ...resourceData.value, tags: tags.value };
 };
 // 查询列表
 const retrieve = async () => {
   await Promise.all([
     instance
-      .get(SERVER_URL.portfolio, {
+      .get(SERVER_URL.resource, {
         params: { page: page.value, size: size.value },
       })
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.portfolio.concat("/count")).then((res) => {
+    instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
       total.value = res.data;
     }),
   ]);
@@ -339,7 +249,7 @@ const confirmOperate = (operate: boolean) => {
 // 删除确认
 const confirmCommit = async () => {
   await instance
-    .delete(SERVER_URL.portfolio.concat("/", dataCode.value))
+    .delete(SERVER_URL.resource.concat("/", dataCode.value))
     .then(() => {
       // 将datas中修改项的历史数据删除
       datas.value = datas.value.filter(
@@ -350,13 +260,13 @@ const confirmCommit = async () => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
-  portfolioData.value = {};
+  resourceData.value = {};
   tags.value = [];
   if (operate && dataCode.value && dataCode.value.length > 0) {
     await instance
-      .get(SERVER_URL.portfolio.concat("/", dataCode.value))
+      .get(SERVER_URL.resource.concat("/", dataCode.value))
       .then((res) => {
-        portfolioData.value = res.data;
+        resourceData.value = res.data;
         tags.value = res.data.tags;
       });
   }
@@ -364,10 +274,10 @@ const modelOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const commitOperate = async () => {
-  let data = portfolioData.value;
+  let data = resourceData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.portfolio.concat("/", dataCode.value), data)
+      .put(SERVER_URL.resource.concat("/", dataCode.value), data)
       .then((res) => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -378,7 +288,7 @@ const commitOperate = async () => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.portfolio, data).then((res) => {
+    await instance.post(SERVER_URL.resource, data).then((res) => {
       if (datas.value.length >= 10) {
         // 删除第一个
         datas.value.shift();
@@ -403,7 +313,7 @@ const uploadImage = (files: Array<File>) => {
         },
       })
     );
-    portfolioData.value = { ...portfolioData.value, url: urls };
+    resourceData.value = { ...resourceData.value, url: urls };
   }
 };
 

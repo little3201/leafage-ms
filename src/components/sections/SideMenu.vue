@@ -1,5 +1,5 @@
 <template>
-  <aside class="sm:w-20 xl:w-64 pr-4 text-sm overflow-hidden">
+  <aside class="sm:w-20 xl:w-64 pr-4 text-sm ">
     <router-link
       to="/"
       class="flex items-center pl-4 pt-3"

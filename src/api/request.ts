@@ -15,7 +15,7 @@ const SERVER_URL = {
   // assets
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别
-  portfolio: SERVER_PRE.assets.concat('/portfolio'), // 作品集
+  resource: SERVER_PRE.assets.concat('/resource'), // 作品集
   statistics: SERVER_PRE.assets.concat('/statistics') // 统计
 }
 

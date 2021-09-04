@@ -186,6 +186,16 @@ const confirmCommit = async () => {
       isDel.value = false;
     });
 };
+// 查询关联用户
+const retrieveUsers = () => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance
+      .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
+      .then((res) => {
+        users.value = res.data;
+      })
+  }
+}
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   groupData.value = {};
@@ -195,11 +205,7 @@ const modelOperate = async (operate: boolean) => {
       instance.get(SERVER_URL.group).then((res) => {
         superiors.value = res.data;
       }),
-      instance
-        .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
-        .then((res) => {
-          users.value = res.data;
-        })
+      retrieveUsers()
     ]);
   }
   isEdit.value = operate;

@@ -12,7 +12,8 @@
         <button
           type="button"
           class="focus:outline-none w-8 h-8"
-          @click="(this.page = 0), give(page)"
+          :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+          @click="(page = 0), give(page)"
         >
           <svg
             width="20"
@@ -30,7 +31,12 @@
         </button>
       </li>
       <li>
-        <button type="button" class="focus:outline-none w-8 h-8" @click="decrease">
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+          @click="decrease"
+        >
           <svg
             width="20"
             height="20"
@@ -65,7 +71,12 @@
         <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li>
-        <button type="button" class="focus:outline-none w-8 h-8" @click="increment">
+        <button
+          type="button"
+          class="focus:outline-none w-8 h-8"
+          :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
+          @click="increment"
+        >
           <svg
             width="20"
             height="20"
@@ -85,6 +96,7 @@
         <button
           type="button"
           class="focus:outline-none w-8 h-8"
+          :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
           @click="(page = pages - 1), give(page)"
         >
           <svg
@@ -103,7 +115,7 @@
         </button>
       </li>
     </ul>
-    <select v-model="size" class="py-1 border border-gray-300 rounded-md">
+    <select v-model.number="size" class="py-1 border border-gray-300 rounded-md">
       <option>10</option>
       <option>15</option>
       <option>20</option>

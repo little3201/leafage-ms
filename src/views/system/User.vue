@@ -4,7 +4,7 @@
       <h2 class="text-lg font-medium">Users</h2>
       <button
         @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
           width="18"

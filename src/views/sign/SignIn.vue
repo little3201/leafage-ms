@@ -3,11 +3,11 @@
     <div class="container mx-auto">
       <div class="xl:grid grid-cols-2 gap-4">
         <div class="hidden xl:flex flex-col h-screen my-auto md:ml-36 relative">
-          <a href="/" class="flex items-center z-0 absolute top-28">
+          <router-link to="/" class="flex items-center z-0 absolute top-28">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="28"
+              height="28"
               viewBox="0 0 311.983 311.929"
             >
               <g
@@ -40,11 +40,8 @@
                 </g>
               </g>
             </svg>
-            <span class="text-white text-xl ml-3">
-              Leaf
-              <span class="font-medium">age</span>
-            </span>
-          </a>
+            <span class="text-white text-3xl ml-3">Leafage</span>
+          </router-link>
           <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
             <p class="text-white font-medium text-xl leading-tight">一个使用 Vue3、 Tailwindcss 的网站管理系统</p>

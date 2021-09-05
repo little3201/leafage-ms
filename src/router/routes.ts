@@ -40,12 +40,6 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Authority',
             component: () => import('/src/views/system/Authority.vue'),
             meta: { requiresAuth: true }
-          },
-          {
-            path: 'region',
-            name: 'Region',
-            component: () => import('/src/views/system/Region.vue'),
-            meta: { requiresAuth: true }
           }
         ]
       },
@@ -63,6 +57,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'category',
         name: 'Category',
         component: () => import('/src/views/assets/Category.vue')
+      },
+      {
+        path: 'region',
+        name: 'Region',
+        component: () => import('/src/views/assets/Region.vue')
       },
       {
         path: '/settings',

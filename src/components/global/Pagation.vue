@@ -52,10 +52,10 @@
           </svg>
         </button>
       </li>
-      <li v-if="page > 3">
+      <li v-if="pages > 5 && page > 0">
         <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
-      <li v-for="index in pages" :key="index">
+      <li v-for="index in pages <= 5 ? pages : page + 5" :key="index">
         <button
           type="button"
           @click.prevent="give(index - 1)"
@@ -63,11 +63,11 @@
           class="focus:outline-none w-8 h-8 mr-2"
           :class="{
             'bg-white rounded-full border shadow-sm': index == page + 1,
-            hidden: page > 3 && index < 4,
+            hidden: pages > 5 && (index > page + 5 || index < page + 1),
           }"
         ></button>
       </li>
-      <li v-if="pages / size > 6 && page < 4">
+      <li v-if="pages > 5 && page < pages">
         <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
       </li>
       <li>

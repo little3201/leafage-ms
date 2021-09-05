@@ -10,7 +10,7 @@ import authorityMock from '../../mock/system/authority';
 
 import postsMock from '../../mock/assets/posts';
 import categoryMock from '../../mock/assets/category';
-import portofioMock from '../../mock/assets/portfolio';
+import resourceMock from '../../mock/assets/resource';
 import statisticsMock from '../../mock/assets/statistics';
 
 export function setupProdMockServer() {
@@ -23,7 +23,7 @@ export function setupProdMockServer() {
     ...authorityMock,
     ...postsMock, 
     ...categoryMock, 
-    ...portofioMock,
+    ...resourceMock,
     ...statisticsMock
   ]);
 }

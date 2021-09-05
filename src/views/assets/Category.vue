@@ -1,10 +1,10 @@
 <template>
   <div class="col-span-12 mt-2">
-    <div class="flex justify-between items-center h-10">
+    <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Category</h2>
       <button
         @click="retrieve()"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
           width="18"
@@ -225,7 +225,7 @@ const commitOperate = async () => {
       });
   } else {
     await instance.post(SERVER_URL.category, data).then((res) => {
-      if (datas.value.length >= 10) {
+      if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
       }

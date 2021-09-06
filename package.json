@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "vue": "^3.2.2",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"

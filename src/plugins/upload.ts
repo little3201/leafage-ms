@@ -3,7 +3,7 @@ import CryptoJS from 'crypto-js'
 
 // 请求接口上传图片
 export function uploadFile(file: File) {
-    const uptoken = getToken("ss", "xx", "xx");
+    const uptoken = getToken("accessKey", "secretKey", "bucketName");
     const key = file.name;
     const config = {
         useCdnDomain: true,

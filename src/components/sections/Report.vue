@@ -37,7 +37,7 @@
               stroke-linejoin="round"
               class="text-blue-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -93,7 +93,7 @@
               stroke-linejoin="round"
               class="text-yellow-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'monitor'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'message-square'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -128,7 +128,7 @@
             </div>
           </div>
           <div class="text-3xl font-bold leading-8 mt-6">0</div>
-          <div class="text-base text-gray-600 mt-1">Resource Viewed</div>
+          <div class="text-base text-gray-600 mt-1">Posts Comments</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -145,7 +145,7 @@
               stroke-linejoin="round"
               class="text-purple-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'tag'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'heart'" />
             </svg>
             <div class="ml-auto">
               <div
@@ -178,7 +178,7 @@
             </div>
           </div>
           <div class="text-3xl font-bold leading-8 mt-6">4</div>
-          <div class="text-base text-gray-600 mt-1">Category Created</div>
+          <div class="text-base text-gray-600 mt-1">Posts Likes</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
@@ -231,13 +231,13 @@
               </div>
             </div>
             <div class="text-3xl font-bold leading-8 mt-6">1520</div>
-            <div class="text-base text-gray-600 mt-1">Unique Visitor</div>
+            <div class="text-base text-gray-600 mt-1">Visitor</div>
           </div>
         </div>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-12 md:col-span-3">
         <div class="shadow-sm rounded-md bg-white p-4">
           <canvas id="doughnutChart" ref="doughnutChart"></canvas>
         </div>

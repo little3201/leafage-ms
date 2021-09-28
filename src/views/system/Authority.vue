@@ -89,7 +89,7 @@
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="commitOperate">
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
@@ -265,7 +265,7 @@ const exist = () => {
   console.log("失去了焦点")
 }
 // 新增/编辑：提交
-const commitOperate = async () => {
+const modelCommit = async () => {
   let data = authorityData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance

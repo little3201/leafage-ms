@@ -81,7 +81,7 @@
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="commitOperate">
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-cols-12 grid-rows-4 gap-4">
           <div class="col-span-12 sm:col-span-7">
@@ -273,7 +273,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 新增/编辑：提交
-const commitOperate = async () => {
+const modelCommit = async () => {
   let data = resourceData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance

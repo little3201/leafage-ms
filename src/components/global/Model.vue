@@ -53,6 +53,7 @@ const emit = defineEmits(["cancelAction", "commitAction"]);
 const cancelOperation = () => {
   emit("cancelAction", false);
 };
+
 const commitOperation = () => {
   emit("commitAction");
 };

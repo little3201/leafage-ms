@@ -58,10 +58,26 @@ export default [
         {
           "code": "21224DRMU", "name": "System", "superior": "21224DRMU", "expand": { "path": "/system", "icon": "layers" }, "children": [
             { "code": "21224UJ5C", "name": "Group", "superior": "21224DRMU", "expand": { "path": "/group", "icon": "users" }, "children": [] },
-            { "code": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/role", "icon": "pocket" }, "children": [] },
+            {
+              "code": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/role", "icon": "pocket" }, "children": [
+                {
+                  "code": "203315P21", "name": "Add", "superior": "21224PV6C", "expand": { "path": "", "icon": "plus-circle" }, "children": []
+                },
+                {
+                  "code": "203315P22", "name": "Delete", "superior": "21224PV6C", "expand": { "path": "", "icon": "trash-2" }, "children": []
+                }
+              ]
+            },
             { "code": "212240439", "name": "Authority", "superior": "21224DRMU", "expand": { "path": "/authority", "icon": "power" }, "children": [] },
             {
-              "code": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/user", "icon": "user" }, "children": []
+              "code": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/user", "icon": "user" }, "children": [
+                {
+                  "code": "203315P31", "name": "Add", "superior": "203315P3Q", "expand": { "path": "", "icon": "plus-circle" }, "children": []
+                },
+                {
+                  "code": "203315P32", "name": "Delete", "superior": "203315P3Q", "expand": { "path": "", "icon": "trash-2" }, "children": []
+                }
+              ]
             }]
         },
         { "code": "21224B8JZ", "name": "Posts", "superior": "21224B8JZ", "expand": { "path": "/posts", "icon": "book" }, "children": [] },

@@ -1,11 +1,8 @@
 <template>
-  <div
-    class="col-span-12 mt-2 overflow-scroll"
-    style="height: calc(100vh - 96px)"
-  >
+  <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 96px)">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
-      <a href="" class="ml-4 inline-flex items-center text-blue-800">
+      <a href class="ml-4 inline-flex items-center text-blue-800">
         <svg
           width="18"
           height="18"
@@ -37,19 +34,11 @@
               stroke-linejoin="round"
               class="text-blue-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye'" />
             </svg>
             <div class="ml-auto">
               <div
-                class="
-                  flex
-                  items-center
-                  rounded-full
-                  px-2
-                  py-1
-                  text-xs text-white
-                  cursor-pointer
-                "
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
                 style="background-color: #91c714"
                 title="viewed higher than last month"
               >
@@ -72,10 +61,7 @@
               <canvas id="miniChart" ref="miniChart" height="100"></canvas>
             </div>
           </div>
-          <h2
-            class="text-3xl font-bold leading-8 mt-6"
-            v-text="data.viewed"
-          ></h2>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.viewed"></h2>
           <div class="text-base text-gray-600 mt-1">Posts Viewed</div>
         </div>
       </div>
@@ -93,23 +79,14 @@
               stroke-linejoin="round"
               class="text-yellow-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'monitor'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'message-square'" />
             </svg>
             <div class="ml-auto">
               <div
-                class="
-                  flex
-                  items-center
-                  rounded-full
-                  px-2
-                  py-1
-                  text-xs text-white
-                  bg-red-600
-                  cursor-pointer
-                "
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
                 title="2% Lower than last month"
               >
-                2%
+                {{ data.overComment }}%
                 <svg
                   width="16"
                   height="16"
@@ -120,15 +97,13 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                  />
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
             </div>
           </div>
-          <div class="text-3xl font-bold leading-8 mt-6">0</div>
-          <div class="text-base text-gray-600 mt-1">Resource Viewed</div>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.comment"></h2>
+          <div class="text-base text-gray-600 mt-1">Posts Comment</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -145,23 +120,15 @@
               stroke-linejoin="round"
               class="text-purple-600"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'tag'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'heart'" />
             </svg>
             <div class="ml-auto">
               <div
-                class="
-                  flex
-                  items-center
-                  rounded-full
-                  px-2
-                  py-1
-                  text-xs text-white
-                  cursor-pointer
-                "
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
                 style="background-color: #91c714"
                 title="12% Higher than last month"
               >
-                12%
+                {{ data.overLikes }}%
                 <svg
                   width="16"
                   height="16"
@@ -177,8 +144,8 @@
               </div>
             </div>
           </div>
-          <div class="text-3xl font-bold leading-8 mt-6">4</div>
-          <div class="text-base text-gray-600 mt-1">Category Created</div>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.likes"></h2>
+          <div class="text-base text-gray-600 mt-1">Posts Likes</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
@@ -200,19 +167,11 @@
               </svg>
               <div class="ml-auto">
                 <div
-                  class="
-                    flex
-                    items-center
-                    rounded-full
-                    px-2
-                    py-1
-                    text-xs text-white
-                    cursor-pointer
-                  "
+                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
                   style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
-                  22%
+                  {{ data.overVisitor }}%
                   <svg
                     width="16"
                     height="16"
@@ -223,15 +182,13 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <use
-                      :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                    />
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   </svg>
                 </div>
               </div>
             </div>
-            <div class="text-3xl font-bold leading-8 mt-6">1520</div>
-            <div class="text-base text-gray-600 mt-1">Unique Visitor</div>
+            <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.visitor"></h2>
+            <div class="text-base text-gray-600 mt-1">Visitor</div>
           </div>
         </div>
       </div>

@@ -106,7 +106,7 @@
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
-      @commitAction="commitOperate"
+      @commitAction="modelCommit"
     >
       <form class="w-full">
         <div class="grid grid-rows-3 grid-cols-12 gap-x-4 gap-y-2">
@@ -441,7 +441,7 @@ const fetchContent = () => {
 };
 
 // 新增/编辑：提交
-const commitOperate = async () => {
+const modelCommit = async () => {
   let data = {
     ...postsData.value,
     content: content.value,

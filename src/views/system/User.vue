@@ -366,7 +366,7 @@
     <Model
       :isShow="isEdit"
       @cancelAction="modelOperate"
-      @commitAction="commitOperate"
+      @commitAction="modelCommit"
     >
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
@@ -529,7 +529,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 新增/编辑：提交
-const commitOperate = async () => {
+const modelCommit = async () => {
   let data = userData.value;
   if (username.value && username.value.length > 0) {
     await instance

@@ -62,7 +62,7 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.viewed"></h2>
-          <div class="text-base text-gray-600 mt-1">Posts Viewed</div>
+          <div class="text-base text-gray-600 mt-1">Total Viewed</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -86,7 +86,7 @@
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
                 title="2% Lower than last month"
               >
-                {{ data.overComment }}%
+                {{ data.overComment || 0 }}%
                 <svg
                   width="16"
                   height="16"
@@ -103,7 +103,7 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.comment"></h2>
-          <div class="text-base text-gray-600 mt-1">Posts Comment</div>
+          <div class="text-base text-gray-600 mt-1">Total Comments</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -128,7 +128,7 @@
                 style="background-color: #91c714"
                 title="12% Higher than last month"
               >
-                {{ data.overLikes }}%
+                {{ data.overLikes || 0 }}%
                 <svg
                   width="16"
                   height="16"
@@ -145,7 +145,7 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.likes"></h2>
-          <div class="text-base text-gray-600 mt-1">Posts Likes</div>
+          <div class="text-base text-gray-600 mt-1">Total Likes</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
@@ -171,7 +171,7 @@
                   style="background-color: #91c714"
                   title="22% Higher than last month"
                 >
-                  {{ data.overVisitor }}%
+                  {{ data.overVisitor || 0 }}%
                   <svg
                     width="16"
                     height="16"
@@ -187,8 +187,8 @@
                 </div>
               </div>
             </div>
-            <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.visitor"></h2>
-            <div class="text-base text-gray-600 mt-1">Visitor</div>
+            <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.visitor || 0"></h2>
+            <div class="text-base text-gray-600 mt-1">Visitors</div>
           </div>
         </div>
       </div>

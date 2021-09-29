@@ -66,7 +66,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/settings',
         name: 'Settings',
-        component: () => import('/src/views/settings/Settings.vue'),
+        component: () => import('/src/views/settings/Index.vue'),
         children: [
           {
             path: 'profile',

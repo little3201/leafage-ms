@@ -186,17 +186,13 @@
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import { useStore } from "../../store";
 
 const isShow = ref(false);
-const store = useStore();
 
 const user = computed(() => {
   let data = sessionStorage.getItem("user");
   if (data) {
     return JSON.parse(data);
-  } else {
-    return store.state.user;
   }
 });
 </script>

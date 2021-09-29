@@ -10,10 +10,7 @@ export default defineConfig({
     }
   },
   plugins: [vue()],
-  build: {
-    // to make tests faster
-    minify: false
-  },
+
   // server: {
   //   proxy: {
   //     // 选项写法

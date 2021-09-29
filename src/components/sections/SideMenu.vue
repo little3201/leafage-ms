@@ -32,22 +32,32 @@
           </g>
         </g>
       </svg>
-      <h1 class="hidden xl:block text-white text-2xl ml-4">
-        Leafage
-      </h1>
+      <h1 class="hidden xl:block text-white text-2xl ml-4">Leafage</h1>
     </router-link>
     <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
-    <SideMenuCore :datas="datas" />
+    <ul>
+      <SideMenuCore v-for="data in datas" :key="data.code" :data="data" />
+    </ul>
   </aside>
 </template>
 
 <script lang="ts" setup>
+import { ref, onMounted } from "vue";
+
 import SideMenuCore from "/@/components/global/SideMenuCore.vue";
 
-defineProps({
-  datas: {
-    type: Array,
-    default: []
+const datas = ref([
+  { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
+  { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
+  { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "monitor" }, "children": [] },
+  { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
+  { "code": "21953KO8", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
+]);
+
+onMounted(() => {
+  let menus = sessionStorage.getItem("menus");
+  if (menus && menus.length > 0) {
+    datas.value = JSON.parse(menus)
   }
-})
+});
 </script>

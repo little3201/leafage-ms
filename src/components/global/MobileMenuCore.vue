@@ -1,10 +1,9 @@
 <template>
   <li class="text-white">
-    <a
+    <div
       v-if="data.children && data.children.length > 0"
-      href="javascript:;"
       @click.prevent="isOpen = !isOpen"
-      class="flex items-center rounded-full h-10 pl-4"
+      class="flex items-center rounded-full h-10 pl-4 cursor-pointer"
     >
       <div class="mr-3">
         <svg
@@ -51,7 +50,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-    </a>
+    </div>
     <router-link
       v-else
       @click="itemOperation"

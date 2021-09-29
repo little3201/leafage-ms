@@ -122,6 +122,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
+
 import MobileMenuCore from "/@/components/global/MobileMenuCore.vue";
 
 const isShow = ref(false);
@@ -135,6 +136,7 @@ const datas = ref([
 ]);
 
 onMounted(() => {
+
   let menus = sessionStorage.getItem("menus");
   if (menus && menus.length > 0) {
     datas.value = JSON.parse(menus)

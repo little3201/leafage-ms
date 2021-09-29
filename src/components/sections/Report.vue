@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="absolute bottom-2 inset-x-4 opacity-50">
-              <canvas id="miniChart" ref="miniChart" height="100"></canvas>
+              <canvas id="viewedChart" ref="viewedChart" height="100"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.viewed"></h2>
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-4">
+        <div class="shadow-sm rounded-md bg-white p-4 relative">
           <div class="flex">
             <svg
               width="28"
@@ -101,13 +101,16 @@
                 </svg>
               </div>
             </div>
+            <div class="absolute bottom-2 inset-x-4 opacity-50">
+              <canvas id="commentChart" ref="commentChart" height="100"></canvas>
+            </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.comment"></h2>
           <div class="text-base text-gray-600 mt-1">Total Comments</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-4">
+        <div class="shadow-sm rounded-md bg-white p-4 relative">
           <div class="flex">
             <svg
               width="28"
@@ -142,6 +145,9 @@
                   <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
+            </div>
+            <div class="absolute bottom-2 inset-x-4 opacity-50">
+              <canvas id="likesChart" ref="likesChart" height="100"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.likes"></h2>
@@ -186,6 +192,9 @@
                   </svg>
                 </div>
               </div>
+              <div class="absolute bottom-2 inset-x-4 opacity-50">
+                <canvas id="visitorChart" ref="visitorChart" height="100"></canvas>
+              </div>
             </div>
             <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.visitor || 0"></h2>
             <div class="text-base text-gray-600 mt-1">Visitors</div>
@@ -210,16 +219,26 @@ import { createDoughnutChart, createMiniChart } from "../../plugins/char";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
+// chart
 const doughnutChart = ref();
-const miniChart = ref();
+const viewedChart = ref();
+const commentChart = ref();
+const likesChart = ref();
+const visitorChart = ref();
 // data
 const data = ref({});
 // posts statistics
 const postsDatas = ref<Array<Number>>([]);
 const postsLabels = ref<Array<String>>([]);
 // viewed statistics
-const viewedLabels = ref<Array<String>>([]);
+const labels = ref<Array<String>>([]);
 const viewedDatas = ref<Array<Number>>([]);
+// comment statistics
+const commentDatas = ref<Array<Number>>([]);
+// likes statistics
+const likesDatas = ref<Array<Number>>([]);
+// visitor statistics
+const visitorDatas = ref<Array<Number>>([]);
 
 // 请求最新统计数据
 const fetch = async () => {
@@ -230,18 +249,24 @@ const fetch = async () => {
 // 请求七天内的统计数据
 const retrieve = async () => {
   await instance
-    .get(SERVER_URL.statistics.concat("?page=0&size=7"))
+    .get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
     .then((res) => {
       res.data.forEach((item: any) => {
-        viewedLabels.value.unshift(item.date);
+        labels.value.unshift(item.date);
         viewedDatas.value.unshift(item.overViewed);
+
+        commentDatas.value.unshift(item.overCommnet);
+
+        likesDatas.value.unshift(item.overLikes);
+
+        visitorDatas.value.unshift(item.overVisitor);
       });
     });
 };
 
 const category = async () => {
   await instance
-    .get(SERVER_URL.category.concat("?page=0&size=10"))
+    .get(SERVER_URL.category, { params: { page: 0, size: 10 } })
     .then((res) => {
       res.data.forEach((item: any) => {
         postsLabels.value.unshift(item.alias);
@@ -252,7 +277,10 @@ const category = async () => {
 
 const initData = async () => {
   await Promise.all([fetch(), retrieve(), category()]).then(() => {
-    createMiniChart(miniChart.value, viewedLabels.value, viewedDatas.value);
+    createMiniChart(viewedChart.value, labels.value, viewedDatas.value);
+    createMiniChart(likesChart.value, labels.value, likesDatas.value);
+    createMiniChart(commentChart.value, labels.value, commentDatas.value);
+    createMiniChart(visitorChart.value, labels.value, visitorDatas.value);
     createDoughnutChart(
       doughnutChart.value,
       postsLabels.value,

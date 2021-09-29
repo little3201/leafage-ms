@@ -106,13 +106,11 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useStore } from "../../store";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 const formData = ref({});
-const store = useStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -133,13 +131,11 @@ const init = async (username: string) => {
   await Promise.all([
     instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
       sessionStorage.setItem("user", JSON.stringify(res.data));
-      store.commit("setUser", res.data);
     }),
     instance
       .get(SERVER_URL.user.concat("/", username, "/authority"))
       .then((res) => {
         sessionStorage.setItem("menus", JSON.stringify(res.data));
-        store.commit("setMenus", res.data);
       })
   ])
 }

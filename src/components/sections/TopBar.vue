@@ -59,45 +59,36 @@
         ></span>
         <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
       </div>
-      <transition
-        enter-active-class="transition ease-out duration-100"
-        enter-from-class="transform opacity-0 scale-95"
-        enter-to-class="transform opacity-100 scale-100"
-        leave-active-class="transition ease-in duration-75"
-        leave-from-class="transform opacity-100 scale-100"
-        leave-to-class="transform opacity-0 scale-95"
+      <div
+        v-show="notify"
+        class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
-        <div
-          v-show="notify"
-          class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-4 rounded-md shadow-lg bg-white z-10"
-        >
-          <span class="p-2 text-lg">Notifications</span>
-          <div class="cursor-pointer divide-y mt-2">
-            <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
-              <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate">John Travolta</a>
-                <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">06:05 AM</div>
-              </div>
-              <div class="w-full truncate text-gray-600">
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 20
-              </div>
+        <span class="p-2 text-lg">Notifications</span>
+        <div class="cursor-pointer divide-y mt-2">
+          <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
+            <div class="flex items-center">
+              <a href="javascript:;" class="font-medium truncate">John Travolta</a>
+              <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">06:05 AM</div>
             </div>
-            <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
-              <div class="flex items-center">
-                <a href="javascript:;" class="font-medium truncate">John Travolta</a>
-                <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">06:05 AM</div>
-              </div>
-              <div class="w-full truncate text-gray-600">
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 20
-              </div>
+            <div class="w-full truncate text-gray-600">
+              Contrary to popular belief, Lorem Ipsum is not simply random
+              text. It has roots in a piece of classical Latin literature from
+              45 BC, making it over 20
+            </div>
+          </div>
+          <div class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
+            <div class="flex items-center">
+              <a href="javascript:;" class="font-medium truncate">John Travolta</a>
+              <div class="text-xs text-gray-500 ml-auto whitespace-no-wrap">06:05 AM</div>
+            </div>
+            <div class="w-full truncate text-gray-600">
+              Contrary to popular belief, Lorem Ipsum is not simply random
+              text. It has roots in a piece of classical Latin literature from
+              45 BC, making it over 20
             </div>
           </div>
         </div>
-      </transition>
+      </div>
     </div>
     <div class="mr-auto sm:mr-6 cursor-pointer">
       <svg
@@ -239,7 +230,6 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
 import router from "../../router";
-import { useStore } from "../../store";
 
 import instance from "../../api";
 
@@ -248,24 +238,18 @@ let notify = ref(false);
 // 控制账号操作是否打开
 let account = ref(false);
 
-const store = useStore();
-
 const user = computed(() => {
   let data = sessionStorage.getItem("user");
-  if (data) {
+  if (data && data.length > 0) {
     return JSON.parse(data);
-  } else {
-    return store.state.user;
   }
 });
 
 const signout = async () => {
   await instance.post("/logout").then(() => {
     // 退出登录，设置user为空
-    store.commit("setUser", {});
     sessionStorage.removeItem("user");
     // 清空menus
-    store.commit("setMenus", []);
     sessionStorage.removeItem("menus");
 
     router.replace("/signin");

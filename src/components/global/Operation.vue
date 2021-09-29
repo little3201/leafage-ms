@@ -60,7 +60,6 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useStore } from "../../store";
 
 const emit = defineEmits(["modelOperate"]);
 
@@ -68,13 +67,10 @@ const operate = () => {
   emit("modelOperate", true);
 };
 
-const store = useStore();
 const user = computed(() => {
   let data = sessionStorage.getItem("user");
   if (data) {
     return JSON.parse(data);
-  } else {
-    return store.state.user;
   }
 });
 </script>

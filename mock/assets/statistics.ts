@@ -27,7 +27,7 @@ export default [
                     viewed: 4978,
                     overViewed: 1.3,
                     likes: 30,
-                    overCommnet: 1.3,
+                    overCommnet: 0.3,
                     comment: 0,
                     overLikes: 1.3
                 },

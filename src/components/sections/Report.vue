@@ -2,7 +2,11 @@
   <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 96px)">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
-      <a href class="ml-4 inline-flex items-center text-blue-800">
+      <button
+        type="button"
+        @click="initData"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+      >
         <svg
           width="18"
           height="18"
@@ -17,7 +21,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         Reload Data
-      </a>
+      </button>
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -204,6 +208,30 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
+        <div class="shadow-sm rounded-md bg-white p-4 overflow-scroll">
+          <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+            <thead>
+              <tr class=" bg-gray-100 uppercase text-center text-xs sm:text-sm">
+                <th scope="col" class="p-4 pb-2 text-left">No.</th>
+                <th scope="col" class="p-4 pb-2">Nickname</th>
+                <th scope="col" class="p-4 pb-2">Content</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+                v-for="(comment, index) in recentComments"
+                :key="index"
+              >
+                <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
+                <td class="px-4" v-text="comment.nickname"></td>
+                <td class="px-4" v-text="comment.content"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-6">
         <div class="shadow-sm rounded-md bg-white p-4">
           <canvas id="doughnutChart" ref="doughnutChart"></canvas>
         </div>
@@ -227,9 +255,10 @@ const likesChart = ref();
 const visitorChart = ref();
 // data
 const data = ref({});
+const recentComments = ref([])
 // posts statistics
 const postsDatas = ref<Array<Number>>([]);
-const postsLabels = ref<Array<String>>([]);
+const categoryLables = ref<Array<String>>([]);
 // viewed statistics
 const labels = ref<Array<String>>([]);
 const viewedDatas = ref<Array<Number>>([]);
@@ -269,27 +298,38 @@ const category = async () => {
     .get(SERVER_URL.category, { params: { page: 0, size: 10 } })
     .then((res) => {
       res.data.forEach((item: any) => {
-        postsLabels.value.unshift(item.alias);
+        categoryLables.value.unshift(item.alias);
         postsDatas.value.unshift(item.count);
       });
     });
 };
 
+const comments = async () => {
+  await instance
+    .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+    .then((res) => {
+      console.log(res.data)
+      recentComments.value = res.data
+    });
+}
+
 const initData = async () => {
   await Promise.all([fetch(), retrieve(), category()]).then(() => {
-    createMiniChart(viewedChart.value, labels.value, viewedDatas.value);
-    createMiniChart(likesChart.value, labels.value, likesDatas.value);
-    createMiniChart(commentChart.value, labels.value, commentDatas.value);
-    createMiniChart(visitorChart.value, labels.value, visitorDatas.value);
-    createDoughnutChart(
-      doughnutChart.value,
-      postsLabels.value,
-      postsDatas.value
-    );
+    // 浏览量统计
+    createMiniChart(viewedChart.value, labels.value, viewedDatas.value, "rgba(37, 99, 235, 0.8)");
+    // 喜欢数统计
+    createMiniChart(likesChart.value, labels.value, likesDatas.value, "rgba(124, 58, 237, 0.8)");
+    // 评论数统计
+    createMiniChart(commentChart.value, labels.value, commentDatas.value, "rgba(217, 119, 6, 0.8)");
+    // 访问用户统计
+    createMiniChart(visitorChart.value, labels.value, visitorDatas.value, "rgba(5, 150, 105, 0.8)");
+    // 帖子分类统计
+    createDoughnutChart(doughnutChart.value, categoryLables.value, postsDatas.value);
   });
 };
 
 onMounted(() => {
   initData();
+  comments();
 });
 </script>

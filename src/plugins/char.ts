@@ -54,15 +54,15 @@ export const createDoughnutChart = (ctx: HTMLCanvasElement, labels: Array<String
     return new Chart(ctx, config);
 }
 
-export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
+export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>, color: String) => {
     const config: any = {
         type: "line",
         data: {
             labels: labels,
             datasets: [
                 {
-                    backgroundColor: "rgba(101, 116, 205, 0.1)",
-                    borderColor: "rgba(101, 116, 205, 0.8)",
+                    backgroundColor: color,
+                    borderColor: color,
                     borderWidth: 3,
                     tension: 0.4,
                     data: datas,

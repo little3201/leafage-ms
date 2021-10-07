@@ -22,34 +22,21 @@
         Reload Data
       </button>
     </div>
-    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="user"
-      >
+    <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
-            <th scope="col" class="px-4 text-left">No.</th>
-            <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">Avatar</th>
-            <th scope="col" class="px-4">Gender</th>
-            <th scope="col" class="px-4">Phone</th>
-            <th scope="col" class="px-4">Email</th>
-            <th scope="col" class="px-4">Birthday</th>
-            <th scope="col" class="px-4">NonExpired</th>
-            <th scope="col" class="px-4">Locked</th>
-            <th scope="col" class="px-4">Credentials</th>
-            <th scope="col" class="px-4">Actions</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="p-4 pb-2 text-left">No.</th>
+            <th scope="col" class="p-4 pb-2">Username</th>
+            <th scope="col" class="p-4 pb-2">Avatar</th>
+            <th scope="col" class="p-4 pb-2">Gender</th>
+            <th scope="col" class="p-4 pb-2">Phone</th>
+            <th scope="col" class="p-4 pb-2">Email</th>
+            <th scope="col" class="p-4 pb-2">Birthday</th>
+            <th scope="col" class="p-4 pb-2">NonExpired</th>
+            <th scope="col" class="p-4 pb-2">Locked</th>
+            <th scope="col" class="p-4 pb-2">Credentials</th>
+            <th scope="col" class="p-4 pb-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -58,19 +45,13 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>
             </td>
             <td class="px-4">
-              <img
-                src="/images/avatar.jpg"
-                alt="avatar"
-                class="rounded-full w-8 h-8 mx-auto"
-              />
+              <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8 mx-auto" />
             </td>
             <td class="px-4">
               <svg
@@ -162,15 +143,9 @@
             </td>
             <td class="px-4" v-text="data.phone"></td>
             <td class="px-4" v-text="data.email"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.birthday).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.birthday).toLocaleDateString()"></td>
             <td class="px-4">
-              <div
-                v-if="data.accountNonExpired"
-                class="flex items-center justify-center"
-              >
+              <div v-if="data.accountNonExpired" class="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -183,8 +158,8 @@
                   stroke-linejoin="round"
                   class="feather feather-check-circle text-green-600"
                 >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
               <div v-else class="flex items-center justify-center text-red-600">
@@ -200,17 +175,14 @@
                   stroke-linejoin="round"
                   class="feather feather-x-circle"
                 >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="15" y1="9" x2="9" y2="15"></line>
-                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="15" y1="9" x2="9" y2="15" />
+                  <line x1="9" y1="9" x2="15" y2="15" />
                 </svg>
               </div>
             </td>
             <td class="px-4">
-              <div
-                v-if="data.accountNonLocked"
-                class="flex items-center justify-center"
-              >
+              <div v-if="data.accountNonLocked" class="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -223,15 +195,8 @@
                   stroke-linejoin="round"
                   class="feather feather-unlock text-green-600"
                 >
-                  <rect
-                    x="3"
-                    y="11"
-                    width="18"
-                    height="11"
-                    rx="2"
-                    ry="2"
-                  ></rect>
-                  <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 9.9-1" />
                 </svg>
               </div>
               <div v-else class="flex items-center justify-center text-red-600">
@@ -247,23 +212,13 @@
                   stroke-linejoin="round"
                   class="feather feather-lock"
                 >
-                  <rect
-                    x="3"
-                    y="11"
-                    width="18"
-                    height="11"
-                    rx="2"
-                    ry="2"
-                  ></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
               </div>
             </td>
             <td class="px-4">
-              <div
-                v-if="data.credentialsNonExpired"
-                class="flex items-center justify-center"
-              >
+              <div v-if="data.credentialsNonExpired" class="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -276,8 +231,8 @@
                   stroke-linejoin="round"
                   class="feather feather-check-circle text-green-600"
                 >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
               <div v-else class="flex items-center justify-center text-red-600">
@@ -293,9 +248,9 @@
                   stroke-linejoin="round"
                   class="feather feather-x-circle"
                 >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="15" y1="9" x2="9" y2="15"></line>
-                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="15" y1="9" x2="9" y2="15" />
+                  <line x1="9" y1="9" x2="15" y2="15" />
                 </svg>
               </div>
             </td>
@@ -351,28 +306,14 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="modelCommit"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 md:col-span-6">
-            <label
-              >Account Expired
+            <label>
+              Account Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">
@@ -395,8 +336,8 @@
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label
-              >Account Locked
+            <label>
+              Account Locked
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">
@@ -419,8 +360,8 @@
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label
-              >Credentials Expired
+            <label>
+              Credentials Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">

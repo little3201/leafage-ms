@@ -239,10 +239,10 @@ let notify = ref(false);
 let account = ref(false);
 
 const user = computed(() => {
-  let data = sessionStorage.getItem("user");
-  if (data && data.length > 0) {
-    return JSON.parse(data);
+  if (sessionStorage.getItem("user") != null) {
+    return JSON.parse(sessionStorage.getItem("user") || '');
   }
+  return {}
 });
 
 const signout = async () => {

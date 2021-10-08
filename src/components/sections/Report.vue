@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                style="background-color: #91c714"
+                :class="{ 'up': over.overViewed <= data.overViewed, 'bg-red-600': over.overViewed > data.overViewed }"
                 title="viewed higher than last month"
               >
                 {{ data.overViewed }}%
@@ -57,7 +57,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use
+                    v-if="over.overViewed > data.overViewed"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -87,10 +91,11 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                :class="{ 'up': over.overComment <= data.overComment, 'bg-red-600': over.overComment > data.overComment }"
                 title="2% Lower than last month"
               >
-                {{ data.overComment || 0 }}%
+                {{ data.overComment }}%
                 <svg
                   width="16"
                   height="16"
@@ -101,7 +106,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
+                  <use
+                    v-if="over.overComment > data.overComment"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -132,10 +141,10 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                style="background-color: #91c714"
+                :class="{ 'up': over.overLikes <= data.overLikes, 'bg-red-600': over.overLikes > data.overLikes }"
                 title="12% Higher than last month"
               >
-                {{ data.overLikes || 0 }}%
+                {{ data.overLikes }}%
                 <svg
                   width="16"
                   height="16"
@@ -146,7 +155,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use
+                    v-if="over.overLikes > data.overLikes"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -178,10 +191,10 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91c714"
+                  :class="{ 'up': over.overVisitor <= data.overVisitor, 'bg-red-600': over.overVisitor > data.overVisitor }"
                   title="22% Higher than last month"
                 >
-                  {{ data.overVisitor || 0 }}%
+                  {{ data.overVisitor }}%
                   <svg
                     width="16"
                     height="16"
@@ -192,7 +205,11 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                    <use
+                      v-if="over.overVisitor > data.overVisitor"
+                      :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                    />
+                    <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   </svg>
                 </div>
               </div>
@@ -207,11 +224,11 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
-      <div class="col-span-12 md:col-span-6">
-        <div class="shadow-sm rounded-md bg-white p-4 overflow-scroll">
-          <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+      <div class="col-span-12 md:col-span-6 bg-white">
+        <div class="shadow-sm rounded-md m-4 overflow-auto">
+          <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="comment">
             <thead>
-              <tr class=" bg-gray-100 uppercase text-center text-xs sm:text-sm">
+              <tr class="bg-gray-100 uppercase text-center text-xs sm:text-sm">
                 <th scope="col" class="p-4 pb-2 text-left">No.</th>
                 <th scope="col" class="p-4 pb-2">Nickname</th>
                 <th scope="col" class="p-4 pb-2">Content</th>
@@ -255,6 +272,7 @@ const likesChart = ref();
 const visitorChart = ref();
 // data
 const data = ref({});
+const over = ref({})
 const recentComments = ref([])
 // posts statistics
 const postsDatas = ref<Array<Number>>([]);
@@ -271,8 +289,8 @@ const visitorDatas = ref<Array<Number>>([]);
 
 // 请求最新统计数据
 const fetch = async () => {
-  await instance.get(SERVER_URL.statistics.concat("/viewed")).then((res) => {
-    data.value = res.data;
+  await instance.get(SERVER_URL.statistics.concat("/over")).then((res) => {
+    over.value = res.data;
   });
 };
 // 请求七天内的统计数据
@@ -280,11 +298,12 @@ const retrieve = async () => {
   await instance
     .get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
     .then((res) => {
+      data.value = res.data[0]
       res.data.forEach((item: any) => {
         labels.value.unshift(item.date);
         viewedDatas.value.unshift(item.overViewed);
 
-        commentDatas.value.unshift(item.overCommnet);
+        commentDatas.value.unshift(item.overComment);
 
         likesDatas.value.unshift(item.overLikes);
 
@@ -333,3 +352,9 @@ onMounted(() => {
   comments();
 });
 </script>
+
+<style scoped>
+.up {
+  background-color: #91c714;
+}
+</style>

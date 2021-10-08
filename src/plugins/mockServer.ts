@@ -12,6 +12,7 @@ import postsMock from '../../mock/assets/posts';
 import categoryMock from '../../mock/assets/category';
 import resourceMock from '../../mock/assets/resource';
 import statisticsMock from '../../mock/assets/statistics';
+import commentMock from '../../mock/assets/comment';
 
 export function setupProdMockServer() {
   createProdMockServer([
@@ -24,6 +25,7 @@ export function setupProdMockServer() {
     ...postsMock, 
     ...categoryMock, 
     ...resourceMock,
-    ...statisticsMock
+    ...statisticsMock,
+    ...commentMock
   ]);
 }

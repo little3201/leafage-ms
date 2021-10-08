@@ -21,35 +21,19 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = null"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="role"
-      >
+    <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
-            <th scope="col" class="px-4 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">User Count</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="p-4 pb-2 text-left">No.</th>
+            <th scope="col" class="p-4 pb-2">Name</th>
+            <th scope="col" class="p-4 pb-2">Code</th>
+            <th scope="col" class="p-4 pb-2">Superior</th>
+            <th scope="col" class="p-4 pb-2">User Count</th>
+            <th scope="col" class="p-4 pb-2">Modify Time</th>
+            <th scope="col" class="p-4 pb-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -58,9 +42,7 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
@@ -68,10 +50,7 @@
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.count"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -95,8 +74,8 @@
                     stroke-linejoin="round"
                     class="feather feather-power mr-2"
                   >
-                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
-                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                    <line x1="12" y1="2" x2="12" y2="12" />
                   </svg>
                   Auz
                 </a>
@@ -106,27 +85,14 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="modelCommit"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label
-              >Name
+            <label>
+              Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input

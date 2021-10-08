@@ -23,19 +23,19 @@
       </button>
       <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
+    <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 text-left">No.</th>
-            <th scope="col" class="px-4">Title</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Viewed</th>
-            <th scope="col" class="px-4">Likes</th>
-            <th scope="col" class="px-4">Comment</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="p-4 pb-2 text-left">No.</th>
+            <th scope="col" class="p-4 pb-2">Title</th>
+            <th scope="col" class="p-4 pb-2">Code</th>
+            <th scope="col" class="p-4 pb-2">Type</th>
+            <th scope="col" class="p-4 pb-2">Viewed</th>
+            <th scope="col" class="p-4 pb-2">Likes</th>
+            <th scope="col" class="p-4 pb-2">Comment</th>
+            <th scope="col" class="p-4 pb-2">Modify Time</th>
+            <th scope="col" class="p-4 pb-2">Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -16,8 +16,9 @@ const SERVER_URL = {
   // assets
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别
-  resource: SERVER_PRE.assets.concat('/resource'), // 作品集
-  statistics: SERVER_PRE.assets.concat('/statistics') // 统计
+  resource: SERVER_PRE.assets.concat('/resource'), // 资源
+  statistics: SERVER_PRE.assets.concat('/statistics'), // 统计
+  comment: SERVER_PRE.assets.concat('/comment'), // 评论
 }
 
 export default SERVER_URL;

@@ -2,7 +2,11 @@
   <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 96px)">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
-      <a href class="ml-4 inline-flex items-center text-blue-800">
+      <button
+        type="button"
+        @click="initData"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+      >
         <svg
           width="18"
           height="18"
@@ -17,7 +21,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         Reload Data
-      </a>
+      </button>
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
@@ -39,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                style="background-color: #91c714"
+                :class="{ 'up': over.overViewed <= data.overViewed, 'bg-red-600': over.overViewed > data.overViewed }"
                 title="viewed higher than last month"
               >
                 {{ data.overViewed }}%
@@ -53,7 +57,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use
+                    v-if="over.overViewed > data.overViewed"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -83,10 +91,11 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                :class="{ 'up': over.overComment <= data.overComment, 'bg-red-600': over.overComment > data.overComment }"
                 title="2% Lower than last month"
               >
-                {{ data.overComment || 0 }}%
+                {{ data.overComment }}%
                 <svg
                   width="16"
                   height="16"
@@ -97,7 +106,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
+                  <use
+                    v-if="over.overComment > data.overComment"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -128,10 +141,10 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                style="background-color: #91c714"
+                :class="{ 'up': over.overLikes <= data.overLikes, 'bg-red-600': over.overLikes > data.overLikes }"
                 title="12% Higher than last month"
               >
-                {{ data.overLikes || 0 }}%
+                {{ data.overLikes }}%
                 <svg
                   width="16"
                   height="16"
@@ -142,7 +155,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use
+                    v-if="over.overLikes > data.overLikes"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
@@ -174,10 +191,10 @@
               <div class="ml-auto">
                 <div
                   class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  style="background-color: #91c714"
+                  :class="{ 'up': over.overVisitor <= data.overVisitor, 'bg-red-600': over.overVisitor > data.overVisitor }"
                   title="22% Higher than last month"
                 >
-                  {{ data.overVisitor || 0 }}%
+                  {{ data.overVisitor }}%
                   <svg
                     width="16"
                     height="16"
@@ -188,7 +205,11 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                    <use
+                      v-if="over.overVisitor > data.overVisitor"
+                      :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                    />
+                    <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   </svg>
                 </div>
               </div>
@@ -203,6 +224,30 @@
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
+      <div class="col-span-12 md:col-span-6 bg-white">
+        <div class="shadow-sm rounded-md m-4 overflow-auto">
+          <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="comment">
+            <thead>
+              <tr class="bg-gray-100 uppercase text-center text-xs sm:text-sm">
+                <th scope="col" class="p-4 pb-2 text-left">No.</th>
+                <th scope="col" class="p-4 pb-2">Nickname</th>
+                <th scope="col" class="p-4 pb-2">Content</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+                v-for="(comment, index) in recentComments"
+                :key="index"
+              >
+                <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
+                <td class="px-4" v-text="comment.nickname"></td>
+                <td class="px-4" v-text="comment.content"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="col-span-12 md:col-span-6">
         <div class="shadow-sm rounded-md bg-white p-4">
           <canvas id="doughnutChart" ref="doughnutChart"></canvas>
@@ -227,9 +272,11 @@ const likesChart = ref();
 const visitorChart = ref();
 // data
 const data = ref({});
+const over = ref({})
+const recentComments = ref([])
 // posts statistics
 const postsDatas = ref<Array<Number>>([]);
-const postsLabels = ref<Array<String>>([]);
+const categoryLables = ref<Array<String>>([]);
 // viewed statistics
 const labels = ref<Array<String>>([]);
 const viewedDatas = ref<Array<Number>>([]);
@@ -242,8 +289,8 @@ const visitorDatas = ref<Array<Number>>([]);
 
 // 请求最新统计数据
 const fetch = async () => {
-  await instance.get(SERVER_URL.statistics.concat("/viewed")).then((res) => {
-    data.value = res.data;
+  await instance.get(SERVER_URL.statistics.concat("/over")).then((res) => {
+    over.value = res.data;
   });
 };
 // 请求七天内的统计数据
@@ -251,11 +298,12 @@ const retrieve = async () => {
   await instance
     .get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
     .then((res) => {
+      data.value = res.data[0]
       res.data.forEach((item: any) => {
         labels.value.unshift(item.date);
         viewedDatas.value.unshift(item.overViewed);
 
-        commentDatas.value.unshift(item.overCommnet);
+        commentDatas.value.unshift(item.overComment);
 
         likesDatas.value.unshift(item.overLikes);
 
@@ -269,27 +317,44 @@ const category = async () => {
     .get(SERVER_URL.category, { params: { page: 0, size: 10 } })
     .then((res) => {
       res.data.forEach((item: any) => {
-        postsLabels.value.unshift(item.alias);
+        categoryLables.value.unshift(item.alias);
         postsDatas.value.unshift(item.count);
       });
     });
 };
 
+const comments = async () => {
+  await instance
+    .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+    .then((res) => {
+      console.log(res.data)
+      recentComments.value = res.data
+    });
+}
+
 const initData = async () => {
   await Promise.all([fetch(), retrieve(), category()]).then(() => {
-    createMiniChart(viewedChart.value, labels.value, viewedDatas.value);
-    createMiniChart(likesChart.value, labels.value, likesDatas.value);
-    createMiniChart(commentChart.value, labels.value, commentDatas.value);
-    createMiniChart(visitorChart.value, labels.value, visitorDatas.value);
-    createDoughnutChart(
-      doughnutChart.value,
-      postsLabels.value,
-      postsDatas.value
-    );
+    // 浏览量统计
+    createMiniChart(viewedChart.value, labels.value, viewedDatas.value, "rgba(37, 99, 235, 0.8)");
+    // 喜欢数统计
+    createMiniChart(likesChart.value, labels.value, likesDatas.value, "rgba(124, 58, 237, 0.8)");
+    // 评论数统计
+    createMiniChart(commentChart.value, labels.value, commentDatas.value, "rgba(217, 119, 6, 0.8)");
+    // 访问用户统计
+    createMiniChart(visitorChart.value, labels.value, visitorDatas.value, "rgba(5, 150, 105, 0.8)");
+    // 帖子分类统计
+    createDoughnutChart(doughnutChart.value, categoryLables.value, postsDatas.value);
   });
 };
 
 onMounted(() => {
   initData();
+  comments();
 });
 </script>
+
+<style scoped>
+.up {
+  background-color: #91c714;
+}
+</style>

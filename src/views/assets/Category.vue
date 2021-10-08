@@ -21,35 +21,19 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = null"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-scroll mt-2" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="category"
-      >
+    <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-              h-12
-            "
-          >
-            <th scope="col" class="px-4 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Posts Count</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="p-4 pb-2 text-left">No.</th>
+            <th scope="col" class="p-4 pb-2">Name</th>
+            <th scope="col" class="p-4 pb-2">Code</th>
+            <th scope="col" class="p-4 pb-2">Description</th>
+            <th scope="col" class="p-4 pb-2">Posts Count</th>
+            <th scope="col" class="p-4 pb-2">Modify Time</th>
+            <th scope="col" class="p-4 pb-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -58,9 +42,7 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <a
                 rel="noopener"
@@ -73,10 +55,7 @@
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.count"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -88,28 +67,14 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="modelCommit"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label
-              >Name
+            <label>
+              Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input

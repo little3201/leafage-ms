@@ -34,7 +34,7 @@ export const createDoughnutChart = (ctx: HTMLCanvasElement, labels: Array<String
                 {
                     label: "帖子数",
                     data: datas,
-                    backgroundColor: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white']
+                    backgroundColor: ['#DC2626', '#4F46E5', '#D97706', '#059669', '#2563EB', '#7C3AED', '#DB2777']
                 }
             ],
         },

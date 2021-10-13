@@ -21,47 +21,30 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = null"
-        @modelOperate="modelOperate"
-      />
+      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
-      <table
-        class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="posts"
-      >
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
         <thead>
-          <tr
-            class="
-              sticky
-              top-0
-              bg-gray-100
-              uppercase
-              text-center text-xs
-              sm:text-sm
-            "
-          >
-            <th scope="col" class="p-4 pb-2 text-left">No.</th>
-            <th scope="col" class="p-4 pb-2">Title</th>
-            <th scope="col" class="p-4 pb-2">Code</th>
-            <th scope="col" class="p-4 pb-2">Category</th>
-            <th scope="col" class="p-4 pb-2">Viewed</th>
-            <th scope="col" class="p-4 pb-2">Likes</th>
-            <th scope="col" class="p-4 pb-2">Comment</th>
-            <th scope="col" class="p-4 pb-2">Modify Time</th>
-            <th scope="col" class="p-4 pb-2">Actions</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
+            <th scope="col" class="px-4 text-left">No.</th>
+            <th scope="col" class="px-4">Title</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Category</th>
+            <th scope="col" class="px-4">Viewed</th>
+            <th scope="col" class="px-4">Likes</th>
+            <th scope="col" class="px-4">Comment</th>
+            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+            class="text-center bg-white border-t-8 border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">
-              {{ index + 1 }}
-            </td>
+            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4 text-center max-w-xs truncate">
               <a
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
@@ -75,10 +58,7 @@
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.likes"></td>
             <td class="px-4" v-text="data.comment"></td>
-            <td
-              class="px-4"
-              v-text="new Date(data.modifyTime).toLocaleDateString()"
-            ></td>
+            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
                 @click.capture="dataCode = data.code"
@@ -90,23 +70,9 @@
         </tbody>
       </table>
     </div>
-    <Pagation
-      @retrieve="retrieve"
-      :total="total"
-      :page="page"
-      :size="size"
-      @setPage="setPage"
-    />
-    <Confirm
-      :isShow="isDel"
-      @cancelAction="confirmOperate"
-      @commitAction="confirmCommit"
-    />
-    <Model
-      :isShow="isEdit"
-      @cancelAction="modelOperate"
-      @commitAction="modelCommit"
-    >
+    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
         <div class="grid grid-rows-3 grid-cols-12 gap-x-4 gap-y-2">
           <div class="col-span-12 sm:col-span-8">
@@ -127,29 +93,12 @@
               alt="cover"
               class="rounded-md object-cover w-48 h-36"
             />
-            <div
-              v-else
-              class="
-                rounded-md
-                border border-gray-300
-                w-48
-                h-36
-                flex
-                items-center
-              "
-            >
+            <div v-else class="rounded-md border border-gray-300 w-48 h-36 flex items-center">
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
                     for="file-upload"
-                    class="
-                      relative
-                      cursor-pointer
-                      bg-white
-                      rounded-md
-                      text-gray-400
-                      hover:text-indigo-500
-                    "
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -170,7 +119,7 @@
                       name="cover"
                       type="file"
                       class="sr-only"
-                      accept="image/png,image/jpeg,image/jpg"
+                      accept="image/png, image/jpeg, image/jpg"
                       @change="uploadImage($event.target.files)"
                     />
                   </label>
@@ -189,30 +138,14 @@
               v-model.trim="tagValue"
             />
             <div
-              class="
-                absolute
-                w-2/3
-                overflow-x-scroll
-                inset-y-0
-                right-2
-                inline-flex
-                items-center
-              "
+              class="absolute w-2/3 overflow-x-scroll inset-y-0 right-2 inline-flex items-center"
             >
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
-                class="
-                  mr-2
-                  border border-gray-300
-                  bg-gray-100
-                  rounded-md
-                  px-1
-                  whitespace-nowrap
-                  inline-flex
-                  items-center
-                "
-                >{{ tag }}
+                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+              >
+                {{ tag }}
                 <svg
                   @click="removeTag(tag)"
                   width="14"
@@ -258,20 +191,10 @@
         <div class="grid grid-cols-12 mt-1">
           <div class="col-span-12">
             <div
-              class="
-                grid grid-flow-row grid-rows-1 grid-cols-1
-                rounded-md
-                h-52
-                md:h-80
-                relative
-              "
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
               :class="{ border: preview }"
             >
-              <a
-                href="javascript:;"
-                @click="preview = !preview"
-                class="top-0 right-0 absolute"
-              >
+              <a href="javascript:;" @click="preview = !preview" class="top-0 right-0 absolute">
                 <svg
                   v-if="preview"
                   xmlns="http://www.w3.org/2000/svg"
@@ -287,8 +210,8 @@
                 >
                   <path
                     d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
-                  ></path>
-                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                  />
+                  <line x1="1" y1="1" x2="23" y2="23" />
                 </svg>
                 <svg
                   v-else
@@ -303,8 +226,8 @@
                   stroke-linejoin="round"
                   class="feather feather-eye opacity-30"
                 >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
                 </svg>
               </a>
               <textarea

@@ -208,24 +208,24 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="shadow-sm rounded-md bg-white p-4 overflow-scroll">
+        <div class="bg-white p-4 overflow-scroll shadow-sm rounded-md">
           <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
             <thead>
-              <tr class=" bg-gray-100 uppercase text-center text-xs sm:text-sm">
-                <th scope="col" class="p-4 pb-2 text-left">No.</th>
-                <th scope="col" class="p-4 pb-2">Nickname</th>
-                <th scope="col" class="p-4 pb-2">Content</th>
+              <tr class="bg-gray-100 uppercase text-center text-xs sm:text-sm">
+                <th scope="col" class="p-3 text-left">No.</th>
+                <th scope="col" class="p-3">Nickname</th>
+                <th scope="col" class="p-3">Content</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+                class="text-center bg-white border-t-4 border-b-4 first:border-t-0 last:border-b-0 border-gray-100"
                 v-for="(comment, index) in recentComments"
                 :key="index"
               >
-                <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
-                <td class="px-4" v-text="comment.nickname"></td>
-                <td class="px-4" v-text="comment.content"></td>
+                <td class="px-3 py-1 md:py-2 text-left">{{ index + 1 }}</td>
+                <td class="px-3" v-text="comment.nickname"></td>
+                <td class="px-3" v-text="comment.content"></td>
               </tr>
             </tbody>
           </table>

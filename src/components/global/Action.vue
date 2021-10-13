@@ -49,9 +49,9 @@ const openModel = () => {
 };
 
 const user = computed(() => {
-  let data = sessionStorage.getItem("user");
-  if (data) {
-    return JSON.parse(data);
+  if (sessionStorage.getItem("user") != null) {
+    return JSON.parse(sessionStorage.getItem("user") || '');
   }
+  return {}
 });
 </script>

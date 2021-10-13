@@ -55,10 +55,8 @@ const datas = ref([
 ]);
 
 onMounted(() => {
-
-  let menus = sessionStorage.getItem("menus");
-  if (menus && menus.length > 0) {
-    datas.value = JSON.parse(menus)
+  if (sessionStorage.getItem("menus") != null) {
+    datas.value = JSON.parse(sessionStorage.getItem("menus") || '')
   }
 });
 </script>

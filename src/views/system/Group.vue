@@ -26,8 +26,8 @@
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group">
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 text-left">No.</th>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Superior</th>
@@ -39,11 +39,11 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-t-8 border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
+            class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>

@@ -119,110 +119,97 @@
         to="/signin"
         class="bg-blue-600 text-white hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-full"
       >Sign In</router-link>
-      <transition
-        enter-active-class="transition ease-out duration-100"
-        enter-from-class="transform opacity-0 scale-95"
-        enter-to-class="transform opacity-100 scale-100"
-        leave-active-class="transition ease-in duration-75"
-        leave-from-class="transform opacity-100 scale-100"
-        leave-to-class="transform opacity-0 scale-95"
+      <div
+        v-show="account"
+        class="origin-top-right py-4 px-2 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
+        aria-orientation="vertical"
+        aria-labelledby="account-down"
+        tabindex="-1"
       >
-        <div
-          v-show="account"
-          class="origin-top-right p-4 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
-          aria-orientation="vertical"
-          aria-labelledby="account-down"
-          tabindex="-1"
-        >
-          <div class="py-2">
-            <h3 class="font-blod text-base" v-text="user.nickname"></h3>
-            <h4 class="text-gray-500" v-text="user.username"></h4>
-          </div>
-          <div>
-            <router-link
-              @click="account = false"
-              to="/settings/profile"
-              class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
-              </svg>
-              Profile
-            </router-link>
-            <router-link
-              @click="account = false"
-              to="/settings/secret"
-              class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
-              </svg>
-              Secret
-            </router-link>
-            <a
-              href
-              class="flex items-center py-2 transition duration-300 ease-in-out hover:text-blue-600"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
-              </svg>
-              Help
-            </a>
-          </div>
-          <div class="py-2 border-t border-theme-40">
-            <a
-              href="javascript:;"
-              @click.prevent="signout"
-              class="flex items-center transition duration-300 ease-in-out hover:text-blue-600"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
-              </svg>
-              Logout
-            </a>
-          </div>
+        <div class="p-2">
+          <h3 class="font-blod text-base" v-text="user.nickname"></h3>
+          <h4 class="text-gray-500" v-text="user.username"></h4>
         </div>
-      </transition>
+        <router-link
+          @click="account = false"
+          to="/settings/profile"
+          class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
+          </svg>
+          Profile
+        </router-link>
+        <router-link
+          @click="account = false"
+          to="/settings/secret"
+          class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
+          </svg>
+          Secret
+        </router-link>
+        <button
+          type="button"
+          class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md p-2"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
+          </svg>
+          Help
+        </button>
+        <button
+          type="button"
+          @click.prevent="signout"
+          class="flex items-center w-full border-t hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md p-2"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="mr-2"
+          >
+            <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
+          </svg>
+          Logout
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -239,10 +226,10 @@ let notify = ref(false);
 let account = ref(false);
 
 const user = computed(() => {
-  let data = sessionStorage.getItem("user");
-  if (data && data.length > 0) {
-    return JSON.parse(data);
+  if (sessionStorage.getItem("user") != null) {
+    return JSON.parse(sessionStorage.getItem("user") || '');
   }
+  return {}
 });
 
 const signout = async () => {

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSumbit" class="bg-white rounded-md">
+  <form @submit.prevent="onSubmit" class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
       <h2 class="font-medium text-lg mr-auto">Account</h2>
       <button
@@ -10,8 +10,9 @@
     </div>
     <div class="grid grid-cols-12 gap-4 p-4">
       <div class="col-span-12 lg:col-span-6">
-        <label>Last Name</label>
+        <label for="lastName">Last Name</label>
         <input
+          id="lastName"
           type="text"
           class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Last Name"
@@ -20,8 +21,9 @@
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label>First Name</label>
+        <label for="firstName">First Name</label>
         <input
+          id="firstName"
           type="text"
           class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="First Name"
@@ -29,8 +31,9 @@
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label>Email</label>
+        <label for="email">Email</label>
         <input
+          id="email"
           type="email"
           class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
           placeholder="Email"
@@ -39,11 +42,12 @@
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label>Phone Number</label>
+        <label for="phoneNumber">Phone Number</label>
         <input
+          id="phoneNumber"
           type="tel"
           class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Phone Number"
+          placeholder="Tel Number"
           value="65570828"
         />
       </div>

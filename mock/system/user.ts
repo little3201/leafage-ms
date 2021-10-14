@@ -18,9 +18,9 @@ export default [
         gender: 'F',
         phone: "187****7895",
         email: 'litt***1@163.com',
-        accountNonExpired: "2021-12-23T12:00",
+        accountNonExpired: true,
         accountNonLocked: true,
-        credentialsExpired: "2021-12-23T12:00",
+        credentialsExpired: false,
         description: "返回数据了"
       }
     },

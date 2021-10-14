@@ -10,11 +10,9 @@
     </div>
     <div class="grid grid-cols-12 gap-4 p-4">
       <div class="col-span-12 lg:col-span-6">
-        <label>
-          Old Password
-          <span class="text-red-600 text-base ml-1">*</span>
-        </label>
+        <label for="oldPassword">Old Password</label>
         <input
+          id="oldPassword"
           type="password"
           v-model="password"
           class="rounded-md w-full border border-gray-300 mt-1"
@@ -26,11 +24,9 @@
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label>
-          New Password
-          <span class="text-red-600 text-base ml-1">*</span>
-        </label>
+        <label for="newPassword">New Password</label>
         <input
+          id="newPassword"
           type="password"
           v-model="newPassword"
           class="rounded-md w-full border border-gray-300 mt-1"
@@ -41,11 +37,9 @@
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label>
-          Confirm New Password
-          <span class="text-red-600 text-base ml-1">*</span>
-        </label>
+        <label for="confirmPassword">Confirm New Password</label>
         <input
+          id="confirmPassword"
           type="password"
           v-model="confirmPassword"
           class="rounded-md w-full border border-gray-300 mt-1"

@@ -91,11 +91,12 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 sm:col-span-6">
-            <label>
+            <label for="name">
               Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
+              id="name"
               type="text"
               aria-label="name"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -105,8 +106,9 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Superior</label>
+            <label for="superior">Superior</label>
             <select
+              id="superior"
               aria-label="superior"
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -121,8 +123,9 @@
             </select>
           </div>
           <div class="col-span-12">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               aria-label="description"
               name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"

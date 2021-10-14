@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSumbit" class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
-      <h2 class="font-medium text-lg mr-auto">Personal Information</h2>
+      <h2 class="font-medium text-lg mr-auto">Profile</h2>
       <button
         type="submit"
         @click="onSubmit"
@@ -35,20 +35,26 @@
               </svg>
             </span>
           </div>
-          <div class="w-40 mx-auto cursor-pointer relative my-4">
-            <button
-              type="button"
-              class="w-full bg-blue-700 text-white p-2 rounded-md focus:outline-none"
-            >Change Photo</button>
-            <input type="file" class="sr-only" />
+          <div class="w-40 mx-auto relative my-4">
+            <label
+              for="avatar-upload"
+              class="bg-blue-700 flex justify-center text-white py-2 rounded-md cursor-pointer"
+            >Change Photo</label>
+            <input
+              id="avatar-upload"
+              type="file"
+              class="sr-only"
+              accept="image/png, image/jpeg, image/jpg"
+            />
           </div>
         </div>
       </div>
       <div class="col-span-12 lg:col-span-8">
         <div class="grid grid-cols-2 gap-4">
           <div class="col-span-2 lg:col-span-1">
-            <label>Username</label>
+            <label for="username">Username</label>
             <input
+              id="username"
               type="text"
               class="mt-1 rounded-md w-full bg-gray-100 cursor-not-allowed border border-gray-300"
               placeholder="Username"
@@ -57,8 +63,9 @@
             />
           </div>
           <div class="col-span-2 lg:col-span-1">
-            <label>Nickname</label>
+            <label for="nickname">Nickname</label>
             <input
+              id="nickname"
               type="text"
               class="mt-1 rounded-md w-full border border-gray-300"
               placeholder="Nickname"
@@ -68,20 +75,28 @@
             />
           </div>
           <div class="col-span-2 lg:col-span-1">
-            <label>Birthday</label>
-            <input type="date" class="w-full mt-1 rounded-md border-gray-300 shadow-sm" />
+            <label for="birthday">Birthday</label>
+            <input
+              id="birthday"
+              type="date"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+            />
           </div>
           <div class="col-span-2 md:col-span-1">
-            <label>Gender</label>
-            <select class="rounded-md mt-1 w-full border border-gray-300">
+            <label for="gender">Gender</label>
+            <select id="gender" class="rounded-md mt-1 w-full border border-gray-300">
               <option>请选择</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
           <div class="col-span-2">
-            <label>Address</label>
-            <textarea class="rounded-md w-full border border-gray-300 mt-1" placeholder="Adress"></textarea>
+            <label for="address">Address</label>
+            <textarea
+              id="address"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              placeholder="Adress"
+            ></textarea>
           </div>
         </div>
       </div>

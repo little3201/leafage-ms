@@ -87,6 +87,25 @@ const routes: Array<RouteRecordRaw> = [
             meta: { requiresAuth: true }
           }
         ]
+      },
+      {
+        path: '/notification',
+        name: 'Notification',
+        component: () => import('/src/views/notification/Index.vue'),
+        children: [
+          {
+            path: 'unread',
+            name: 'Unread',
+            component: () => import('/src/views/notification/Unread.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'readed',
+            name: 'Readed',
+            component: () => import('/src/views/notification/Readed.vue'),
+            meta: { requiresAuth: true }
+          }
+        ]
       }
     ]
   },

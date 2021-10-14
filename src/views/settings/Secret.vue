@@ -5,16 +5,15 @@
       <button
         type="submit"
         @click="onSumbit"
-        class="p-2 rounded-md bg-blue-700 text-white focus:outline-none"
-      >
-        Save
-      </button>
+        class="px-3 py-2 rounded-md bg-blue-700 text-white focus:outline-none"
+      >Save</button>
     </div>
     <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 md:col-span-6">
-        <label
-          >Old Password<span class="text-red-600 text-base ml-1">*</span></label
-        >
+      <div class="col-span-12 lg:col-span-6">
+        <label>
+          Old Password
+          <span class="text-red-600 text-base ml-1">*</span>
+        </label>
         <input
           type="password"
           v-model="password"
@@ -26,10 +25,11 @@
           autofocus
         />
       </div>
-      <div class="col-span-12 md:col-span-6">
-        <label
-          >New Password<span class="text-red-600 text-base ml-1">*</span></label
-        >
+      <div class="col-span-12 lg:col-span-6">
+        <label>
+          New Password
+          <span class="text-red-600 text-base ml-1">*</span>
+        </label>
         <input
           type="password"
           v-model="newPassword"
@@ -40,12 +40,11 @@
           maxlength="16"
         />
       </div>
-      <div class="col-span-12 md:col-span-6">
-        <label
-          >Confirm New Password<span class="text-red-600 text-base ml-1"
-            >*</span
-          ></label
-        >
+      <div class="col-span-12 lg:col-span-6">
+        <label>
+          Confirm New Password
+          <span class="text-red-600 text-base ml-1">*</span>
+        </label>
         <input
           type="password"
           v-model="confirmPassword"
@@ -83,9 +82,3 @@ const onSumbit = async () => {
   }
 };
 </script>
-
-<style scoped>
-.router-link-exact-active {
-  @apply text-blue-700 font-medium;
-}
-</style>

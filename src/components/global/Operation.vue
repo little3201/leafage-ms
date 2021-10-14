@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user && Object.keys(user).length > 0" class="inline-flex items-center sm:ml-auto">
+  <div v-if="user && Object.keys(user).length > 0" class="inline-flex items-center sm:ml-auto text-sm">
     <button
       class="hidden p-2 rounded-md bg-white sm:inline-flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
     >
@@ -53,7 +53,7 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
       </svg>
-      Add New
+      <span class="hidden sm:block">Add</span>&nbsp;New
     </button>
   </div>
 </template>

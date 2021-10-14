@@ -27,24 +27,24 @@
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="p-4 pb-2 text-left">No.</th>
-            <th scope="col" class="p-4 pb-2">Title</th>
-            <th scope="col" class="p-4 pb-2">Code</th>
-            <th scope="col" class="p-4 pb-2">Type</th>
-            <th scope="col" class="p-4 pb-2">Viewed</th>
-            <th scope="col" class="p-4 pb-2">Likes</th>
-            <th scope="col" class="p-4 pb-2">Comment</th>
-            <th scope="col" class="p-4 pb-2">Modify Time</th>
-            <th scope="col" class="p-4 pb-2">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
+            <th scope="col" class="px-4">Title</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Type</th>
+            <th scope="col" class="px-4">Viewed</th>
+            <th scope="col" class="px-4">Likes</th>
+            <th scope="col" class="px-4">Comment</th>
+            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+            class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <a
                 rel="noopener"

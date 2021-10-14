@@ -26,26 +26,26 @@
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="p-4 pb-2 text-left">No.</th>
-            <th scope="col" class="p-4 pb-2">Username</th>
-            <th scope="col" class="p-4 pb-2">Avatar</th>
-            <th scope="col" class="p-4 pb-2">Gender</th>
-            <th scope="col" class="p-4 pb-2">Phone</th>
-            <th scope="col" class="p-4 pb-2">Email</th>
-            <th scope="col" class="p-4 pb-2">Birthday</th>
-            <th scope="col" class="p-4 pb-2">NonExpired</th>
-            <th scope="col" class="p-4 pb-2">Locked</th>
-            <th scope="col" class="p-4 pb-2">Credentials</th>
-            <th scope="col" class="p-4 pb-2">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
+            <th scope="col" class="px-4">Username</th>
+            <th scope="col" class="px-4">Avatar</th>
+            <th scope="col" class="px-4">Gender</th>
+            <th scope="col" class="px-4">Phone</th>
+            <th scope="col" class="px-4">Email</th>
+            <th scope="col" class="px-4">Birthday</th>
+            <th scope="col" class="px-4">NonExpired</th>
+            <th scope="col" class="px-4">Locked</th>
+            <th scope="col" class="px-4">Credentials</th>
+            <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-t-8 border-b-8 border-gray-100"
+            class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 md:py-3 text-left">{{ index + 1 }}</td>
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.username"></span>
               <p class="text-gray-600 text-xs" v-text="data.nickname"></p>

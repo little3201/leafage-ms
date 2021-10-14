@@ -225,11 +225,11 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="bg-white p-4 overflow-scroll shadow-sm rounded-md">
+        <div class="bg-white p-4 overflow-auto shadow-sm rounded-md">
           <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
             <thead>
               <tr class="bg-gray-100 uppercase text-center text-xs sm:text-sm">
-                <th scope="col" class="py-2 sm:py-3 text-left">No.</th>
+                <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
                 <th scope="col" class="px-3">Nickname</th>
                 <th scope="col" class="px-3">Content</th>
               </tr>

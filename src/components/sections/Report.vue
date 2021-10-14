@@ -42,7 +42,7 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'up': over.overViewed <= data.overViewed, 'bg-red-600': over.overViewed > data.overViewed }"
                 title="viewed higher than last month"
               >
@@ -91,7 +91,7 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'up': over.overComment <= data.overComment, 'bg-red-600': over.overComment > data.overComment }"
                 title="2% Lower than last month"
               >
@@ -228,7 +228,7 @@
         <div class="bg-white p-4 overflow-auto shadow-sm rounded-md">
           <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
             <thead>
-              <tr class="bg-gray-100 uppercase text-center text-xs sm:text-sm">
+              <tr class="bg-gray-100 uppercase text-center text-sm">
                 <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
                 <th scope="col" class="px-3">Nickname</th>
                 <th scope="col" class="px-3">Content</th>

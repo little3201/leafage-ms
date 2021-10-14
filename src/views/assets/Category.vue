@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
@@ -116,7 +116,10 @@ import SERVER_URL from "../../api/request";
 const isEdit = ref(false);
 const isDel = ref(false);
 // 数据
-const categoryData = ref({});
+const categoryData = ref({
+  alias: '',
+  description: ''
+});
 const dataCode = ref("");
 const datas = ref<any>([]);
 // 分页参数

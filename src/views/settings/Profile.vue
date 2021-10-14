@@ -5,13 +5,11 @@
       <button
         type="submit"
         @click="onSubmit"
-        class="p-2 rounded-md bg-blue-700 text-white focus:outline-none"
-      >
-        Save
-      </button>
+        class="px-3 py-2 rounded-md bg-blue-700 text-white focus:outline-none"
+      >Save</button>
     </div>
     <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 md:col-span-4">
+      <div class="col-span-12 lg:col-span-4">
         <div class="border border-gray-200 rounded-md p-4">
           <div class="w-40 h-40 relative mx-auto">
             <img
@@ -21,23 +19,7 @@
             />
             <span
               title="Remove this photo?"
-              class="
-                cursor-pointer
-                tooltip
-                w-5
-                h-5
-                inline-flex
-                items-center
-                justify-center
-                absolute
-                rounded-full
-                text-white
-                bg-red-600
-                right-0
-                top-0
-                -mr-2
-                -mt-2
-              "
+              class="cursor-pointer tooltip w-5 h-5 inline-flex items-center justify-center absolute rounded-full text-white bg-red-600 right-0 top-0 -mr-2 -mt-2"
             >
               <svg
                 width="14"
@@ -56,41 +38,25 @@
           <div class="w-40 mx-auto cursor-pointer relative my-4">
             <button
               type="button"
-              class="
-                w-full
-                bg-blue-700
-                text-white
-                p-2
-                rounded-md
-                focus:outline-none
-              "
-            >
-              Change Photo
-            </button>
+              class="w-full bg-blue-700 text-white p-2 rounded-md focus:outline-none"
+            >Change Photo</button>
             <input type="file" class="sr-only" />
           </div>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-8">
+      <div class="col-span-12 lg:col-span-8">
         <div class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 md:col-span-1">
+          <div class="col-span-2 lg:col-span-1">
             <label>Username</label>
             <input
               type="text"
-              class="
-                mt-1
-                rounded-md
-                w-full
-                bg-gray-100
-                cursor-not-allowed
-                border border-gray-300
-              "
+              class="mt-1 rounded-md w-full bg-gray-100 cursor-not-allowed border border-gray-300"
               placeholder="Username"
               value="leafage"
               disabled
             />
           </div>
-          <div class="col-span-2 md:col-span-1">
+          <div class="col-span-2 lg:col-span-1">
             <label>Nickname</label>
             <input
               type="text"
@@ -101,12 +67,9 @@
               autofocus
             />
           </div>
-          <div class="col-span-2 md:col-span-1">
+          <div class="col-span-2 lg:col-span-1">
             <label>Birthday</label>
-            <input
-              type="date"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-            />
+            <input type="date" class="w-full mt-1 rounded-md border-gray-300 shadow-sm" />
           </div>
           <div class="col-span-2 md:col-span-1">
             <label>Gender</label>
@@ -118,10 +81,7 @@
           </div>
           <div class="col-span-2">
             <label>Address</label>
-            <textarea
-              class="rounded-md w-full border border-gray-300 mt-1"
-              placeholder="Adress"
-            ></textarea>
+            <textarea class="rounded-md w-full border border-gray-300 mt-1" placeholder="Adress"></textarea>
           </div>
         </div>
       </div>

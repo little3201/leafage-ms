@@ -20,7 +20,7 @@
 import { ref } from "vue";
 
 import Model from "/@/components/global/Model.vue";
-import TreeCore from "/@/components/global/TreeCore.vue";
+import TreeCore from "/@/components/tree/TreeCore.vue";
 
 defineProps({
   isShow: {

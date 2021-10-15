@@ -85,11 +85,12 @@
       <form class="w-full">
         <div class="grid grid-cols-12 grid-rows-4 gap-4">
           <div class="col-span-12 sm:col-span-7">
-            <label class="inline-flex items-center">
+            <label for="title">
               Title
               <span class="text-red-600 ml-1">*</span>
             </label>
             <input
+              id="title"
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
@@ -99,8 +100,9 @@
             />
           </div>
           <div class="col-span-5 row-span-4 mb-6">
-            <label>Cover</label>
+            <label for="cover">Cover</label>
             <img
+              id="cover"
               v-if="resourceData.url"
               :src="resourceData.url"
               alt="portfolio content"
@@ -146,11 +148,12 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label class="inline-flex items-center">
+            <label for="type" class="inline-flex items-center">
               Type
               <span class="text-red-600 ml-1">*</span>
             </label>
             <select
+              id="type"
               v-model="resourceData.type"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
             >
@@ -159,8 +162,9 @@
             </select>
           </div>
           <div class="col-span-7 row-span-2 mb-6">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="resourceData.description"
               placeholder="Description"

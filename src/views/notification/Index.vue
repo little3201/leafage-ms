@@ -3,7 +3,7 @@
         <div class="flex items-center">
             <h2 class="text-lg font-medium mr-auto my-2">Notification</h2>
             <router-link
-                class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-md rounded-br-none rounded-bl-none p-2"
+                class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-t-md p-2"
                 to="unread"
             >
                 <svg
@@ -22,7 +22,7 @@
                 Unread
             </router-link>
             <router-link
-                class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-md rounded-br-none rounded-bl-none p-2"
+                class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-t-md p-2"
                 to="readed"
             >
                 <svg

@@ -312,80 +312,87 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 md:col-span-6">
-            <label>
+            <label for="accountExpired">
               Account Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">
               <input
+                id="accountExpired"
+                aria-label="account expired"
+                type="radio"
+                value="false"
+                v-model.lazy="userData.accountNonExpired"
+              />
+              <span class="ml-2">True</span>
+              <input
+                id="accountExpired"
                 aria-label="account expired"
                 type="radio"
                 checked
+                class="ml-4"
                 value="true"
                 v-model.lazy="userData.accountNonExpired"
               />
               <span class="ml-2">False</span>
-              <input
-                aria-label="account expired"
-                type="radio"
-                value="false"
-                class="ml-4"
-                v-model.lazy="userData.accountNonExpired"
-              />
-              <span class="ml-2">True</span>
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label>
+            <label for="accountLocked">
               Account Locked
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">
               <input
+                id="accountLocked"
+                aria-label="account locked"
+                type="radio"
+                value="false"
+                v-model.lazy="userData.accountNonLocked"
+              />
+              <span class="ml-2">True</span>
+              <input
+                id="accountLocked"
                 aria-label="account locked"
                 type="radio"
                 checked
                 value="true"
-                v-model.lazy="userData.accountNonLocked"
-              />
-              <span class="ml-2">False</span>
-              <input
-                aria-label="account locked"
-                type="radio"
-                value="false"
                 class="ml-4"
                 v-model.lazy="userData.accountNonLocked"
               />
-              <span class="ml-2">True</span>
+              <span class="ml-2">False</span>
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label>
+            <label for="credentialsExpired">
               Credentials Expired
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <div class="mt-3">
               <input
+                id="credentialsExpired"
                 aria-label="credentials expired"
                 type="radio"
                 checked
                 value="true"
                 v-model.lazy="userData.credentialsExpired"
               />
-              <span class="ml-2">False</span>
+              <span class="ml-2">True</span>
               <input
+                id="credentialsExpired"
                 aria-label="credentials expired"
                 type="radio"
                 value="false"
                 class="ml-4"
                 v-model.lazy="userData.credentialsExpired"
               />
-              <span class="ml-2">True</span>
+              <span class="ml-2">False</span>
             </div>
           </div>
           <div class="col-span-12">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               aria-label="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="userData.description"
@@ -406,7 +413,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
-import Tree from "/@/components/global/Tree.vue";
+import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

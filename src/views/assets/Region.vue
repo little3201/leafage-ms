@@ -27,7 +27,7 @@
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
-            <th scope="col" class="px-4 py-2 sm:py-3  text-left">No.</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Superior</th>
@@ -41,7 +41,7 @@
             v-for="(data, index) in datas"
             :key="index"
           >
-            <td class="px-4 py-2 sm:py-3  text-left">{{ index + 1 }}</td>
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <span class="font-medium" v-text="data.name"></span>
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
@@ -66,11 +66,12 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
-            <label>
+            <label for="name">
               Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
+              id="name"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
@@ -79,8 +80,9 @@
             />
           </div>
           <div class="col-span-12">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="regionData.description"
             />

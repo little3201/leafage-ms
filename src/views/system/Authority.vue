@@ -93,11 +93,12 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12">
-            <label>
+            <label for="name">
               Name
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
+              id="name"
               @blur="exist"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -107,28 +108,30 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.code }">
+            <label for="type" :class="{ 'text-gray-300': authorityData.code }">
               Type
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <select
+              id="type"
               :disabled="authorityData.code"
               v-model.lazy="authorityData.type"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option value="M">Menu</option>
               <option value="B">Button</option>
               <option value="R">Router</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>
+            <label for="icon">
               Icon
               <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
+              id="icon"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Icon"
@@ -137,8 +140,9 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
+            <label for="path" :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
             <input
+              id="path"
               :disabled="authorityData.type == 'B'"
               type="url"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -150,12 +154,13 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label>Superior</label>
+            <label for="superior">Superior</label>
             <select
+              id="superior"
               v-model.lazy="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -165,8 +170,9 @@
             </select>
           </div>
           <div class="col-span-12">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="authorityData.description"
               placeholder="Description"

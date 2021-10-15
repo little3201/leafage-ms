@@ -73,22 +73,21 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label>
-              Name
-              <span class="text-red-600 text-base ml-1">*</span>
-            </label>
+            <label for="name">Name</label>
             <input
+              id="name"
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              placeholder="Alias"
+              placeholder="Name"
               required
               autofocus
               v-model.trim="categoryData.alias"
             />
           </div>
           <div class="col-span-12">
-            <label>Description</label>
+            <label for="description">Description</label>
             <textarea
+              id="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="categoryData.description"
               placeholder="Description"

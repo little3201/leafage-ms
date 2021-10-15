@@ -74,7 +74,7 @@
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
-        <div class="grid grid-rows-3 grid-cols-12 gap-x-4 gap-y-2">
+        <div class="grid grid-rows-3 grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-8">
             <input
               type="text"
@@ -91,9 +91,9 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover w-48 h-36"
+              class="rounded-md h-full"
             />
-            <div v-else class="rounded-md border border-gray-300 w-48 h-36 flex items-center">
+            <div v-else class="rounded-md border border-gray-300 h-full flex items-center">
               <div class="mx-auto text-center">
                 <div class="text-center text-gray-600">
                   <label
@@ -129,7 +129,7 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-8 relative">
+          <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <input
               type="text"
               @keydown.enter="addTag"
@@ -137,13 +137,18 @@
               placeholder="Tags"
               v-model.trim="tagValue"
             />
-            <div
-              class="absolute w-2/3 overflow-x-scroll inset-y-0 right-2 inline-flex items-center"
-            >
+          </div>
+          <div
+            class="row-span-2 col-span-12 sm:col-span-4 border border-gray-300 rounded-md flex items-center"
+          >
+            <div v-if="!postsData.tags" class="mx-auto text-center">
+              <span class="text-sm text-gray-500">Show Tags</span>
+            </div>
+            <div v-else class="overflow-auto p-2 text-sm">
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
-                class="mr-2 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+                class="mr-2 mb-1 last:mb-0 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
               >
                 {{ tag }}
                 <svg
@@ -169,7 +174,7 @@
               required
               class="w-full rounded-md border-gray-300 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="category in categories"
                 :key="category.code"
@@ -188,7 +193,7 @@
             ></textarea>
           </div>
         </div>
-        <div class="grid grid-cols-12 mt-1">
+        <div class="grid grid-cols-12 mt-3">
           <div class="col-span-12">
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
@@ -303,8 +308,10 @@ const retrieve = async () => {
 };
 // 添加tag
 const addTag = () => {
-  tags.value.push(tagValue.value);
-  postsData.value = { ...postsData.value, tags: tags.value };
+  if (tagValue.value && tagValue.value.length > 0) {
+    tags.value.push(tagValue.value);
+    postsData.value = { ...postsData.value, tags: tags.value };
+  }
   tagValue.value = "";
 };
 // 删除tag

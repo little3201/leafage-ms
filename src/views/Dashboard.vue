@@ -225,27 +225,29 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="bg-white p-4 overflow-auto shadow-sm rounded-md">
-          <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
-            <thead>
-              <tr class="bg-gray-100 uppercase text-center text-sm">
-                <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                <th scope="col" class="px-3">Nickname</th>
-                <th scope="col" class="px-3">Content</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
-                v-for="(comment, index) in recentComments"
-                :key="index"
-              >
-                <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                <td class="px-3" v-text="comment.nickname"></td>
-                <td class="px-3" v-text="comment.content"></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="bg-white p-4 shadow-sm rounded-md">
+          <div class="overflow-auto">
+            <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+              <thead>
+                <tr class="bg-gray-100 uppercase text-center text-sm">
+                  <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
+                  <th scope="col" class="px-3">Nickname</th>
+                  <th scope="col" class="px-3">Content</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
+                  v-for="(comment, index) in recentComments"
+                  :key="index"
+                >
+                  <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
+                  <td class="px-3" v-text="comment.nickname"></td>
+                  <td class="px-3" v-text="comment.content"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div class="col-span-12 md:col-span-6">
@@ -259,10 +261,10 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { createDoughnutChart, createMiniChart } from "../../plugins/char";
+import { createDoughnutChart, createMiniChart } from "../plugins/char";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "../api";
+import SERVER_URL from "../api/request";
 
 // chart
 const doughnutChart = ref();
@@ -327,7 +329,6 @@ const comments = async () => {
   await instance
     .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
     .then((res) => {
-      console.log(res.data)
       recentComments.value = res.data
     });
 }

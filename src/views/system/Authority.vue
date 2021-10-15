@@ -119,7 +119,7 @@
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               :class="{ 'text-gray-300': authorityData.code }"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option value="M">Menu</option>
               <option value="B">Button</option>
               <option value="R">Router</option>
@@ -160,7 +160,7 @@
               v-model.lazy="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"

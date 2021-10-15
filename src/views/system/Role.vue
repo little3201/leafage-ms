@@ -113,7 +113,7 @@
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -147,7 +147,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
-import Tree from "/@/components/global/Tree.vue";
+import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

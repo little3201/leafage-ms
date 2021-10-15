@@ -84,15 +84,13 @@
       <span class="hidden xl:block w-full" v-text="data.name"></span>
     </router-link>
     <ul v-show="isOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md">
-      <SideMenuCore v-for="child in data.children" :data="child" :superior="data.expand.path" />
+      <AsideCore v-for="child in data.children" :data="child" :superior="data.expand.path" />
     </ul>
   </li>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-
-import SideMenuCore from "/@/components/global/SideMenuCore.vue";
 
 defineProps({
   data: {

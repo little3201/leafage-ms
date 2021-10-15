@@ -90,7 +90,7 @@
               v-model.lazy="groupData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -106,7 +106,7 @@
               v-model.lazy="groupData.principal"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
-              <option value="null">请选择</option>
+              <option value="undefined">请选择</option>
               <option
                 v-for="(user, index) in users"
                 :key="index"

@@ -1,16 +1,16 @@
 import { RouteRecordRaw } from 'vue-router';
-import Layout from '/@/views/Layout.vue'
+import Index from '/@/views/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Application',
-    component: Layout,
+    component: Index,
     children: [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import('/src/views/Index.vue')
+        component: () => import('/src/views/Dashboard.vue')
       },
       {
         path: 'system',

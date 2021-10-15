@@ -413,7 +413,7 @@ import Action from "/@/components/global/Action.vue";
 import Pagation from "/@/components/global/Pagation.vue";
 import Confirm from "/@/components/global/Confirm.vue";
 import Model from "/@/components/global/Model.vue";
-import Tree from "/@/components/global/Tree.vue";
+import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

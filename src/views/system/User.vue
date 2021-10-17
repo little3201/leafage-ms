@@ -329,7 +329,6 @@
                 id="accountExpired"
                 aria-label="account expired"
                 type="radio"
-                checked
                 class="ml-4"
                 value="true"
                 v-model.lazy="userData.accountNonExpired"
@@ -355,7 +354,6 @@
                 id="accountLocked"
                 aria-label="account locked"
                 type="radio"
-                checked
                 value="true"
                 class="ml-4"
                 v-model.lazy="userData.accountNonLocked"
@@ -373,7 +371,6 @@
                 id="credentialsExpired"
                 aria-label="credentials expired"
                 type="radio"
-                checked
                 value="true"
                 v-model.lazy="userData.credentialsExpired"
               />

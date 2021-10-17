@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-auto" style="height: calc(100vh - 5rem)">
+  <div class="overflow-auto" style="height: calc(100vh - 6rem)">
     <div class="flex items-center my-2">
       <h2 class="text-lg font-medium mr-auto">Settings</h2>
     </div>
@@ -52,7 +52,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
               </svg>
               Account
             </router-link>

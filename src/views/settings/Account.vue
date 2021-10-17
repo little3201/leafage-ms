@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" class="bg-white rounded-md">
+  <form @submit.prevent class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
       <h2 class="font-medium text-lg mr-auto">Account</h2>
       <button
@@ -10,64 +10,71 @@
     </div>
     <div class="grid grid-cols-12 gap-4 p-4">
       <div class="col-span-12 lg:col-span-6">
-        <label for="lastName">Last Name</label>
+        <label for="code">Code</label>
         <input
-          id="lastName"
+          id="code"
           type="text"
           class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Last Name"
-          value="Russell Crowe"
+          placeholder="Code"
+          v-model.trim="account.code"
+          required
           autofocus
         />
       </div>
       <div class="col-span-12 lg:col-span-6">
-        <label for="firstName">First Name</label>
-        <input
-          id="firstName"
-          type="text"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="First Name"
-          value="Russell Crowe"
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
-          placeholder="Email"
-          value="leafage@leafage.com"
-          disabled
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="phoneNumber">Phone Number</label>
-        <input
-          id="phoneNumber"
-          type="tel"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Tel Number"
-          value="65570828"
-        />
+        <label for="type">Type</label>
+        <select
+          id="type"
+          class="rounded-md mt-1 w-full border border-gray-300"
+          v-model="account.type"
+        >
+          <option value="undefined">请选择</option>
+          <option value="B">Bank</option>
+          <option value="A">Alipay</option>
+          <option value="W">WechatPay</option>
+        </select>
       </div>
     </div>
   </form>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-const account = ref();
+const account = ref({});
+
+const username = computed(() => {
+  if (sessionStorage.getItem("user") != null) {
+    return JSON.parse(sessionStorage.getItem("user") || '').username;
+  }
+  return '';
+})
+
+const fetch = async () => {
+  if (username.value && username.value.length > 0) {
+    await instance.get(SERVER_URL.account.concat("/", username.value)).then(res => {
+      if (res.data.length > 0) {
+        account.value = res.data
+      }
+    })
+  }
+}
 
 const onSubmit = async () => {
-  await instance
-    .put(SERVER_URL.account.concat("/leafage"), account.value)
-    .then((res) => {
-      alert(res.data.balance);
-    });
+  if (username.value && username.value.length > 0) {
+    let data = { ...account.value, modifier: username.value }
+    await instance
+      .post(SERVER_URL.account, data)
+      .then((res) => {
+        account.value = res.data
+      });
+  }
 };
+
+onMounted(() => {
+  fetch()
+})
 </script>

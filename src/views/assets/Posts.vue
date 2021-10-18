@@ -91,7 +91,7 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md h-full"
+              class="rounded-md object-cover h-full"
             />
             <div v-else class="rounded-md border border-gray-300 h-full flex items-center">
               <div class="mx-auto text-center">
@@ -144,7 +144,7 @@
             <div v-if="!postsData.tags" class="mx-auto text-center">
               <span class="text-sm text-gray-500">Show Tags</span>
             </div>
-            <div v-else class="overflow-auto p-2 text-sm">
+            <div v-else class="overflow-auto p-2 text-sm max-h-24">
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
@@ -168,7 +168,7 @@
               </span>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-4 md:flex items-center">
+          <div class="col-span-12 sm:col-span-4">
             <select
               v-model.lazy="postsData.category"
               required

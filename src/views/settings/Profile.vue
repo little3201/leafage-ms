@@ -106,7 +106,7 @@
               minlength="11"
             />
           </div>
-          <div class="col-span-2">
+          <div class="col-span-2 md:col-span-1">
             <label for="email">Email</label>
             <input
               id="email"

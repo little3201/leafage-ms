@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 96px)">
+  <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 6rem)">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <button
@@ -43,10 +43,10 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overViewed <= data.overViewed, 'bg-red-600': over.overViewed > data.overViewed }"
+                :class="{ 'up': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
                 title="viewed higher than last month"
               >
-                {{ data.overViewed }}%
+                {{ latest.overViewed }}%
                 <svg
                   width="16"
                   height="16"
@@ -58,18 +58,24 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overViewed > data.overViewed"
+                    v-if="over.overViewed > latest.overViewed"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
-            <div class="absolute bottom-2 inset-x-4 opacity-50">
-              <canvas id="viewedChart" ref="viewedChart" height="100"></canvas>
+            <div class="absolute inset-4 opacity-50">
+              <canvas
+                id="viewedChart"
+                ref="viewedChart"
+                height="100"
+                aria-label="total-viewed"
+                role="img"
+              ></canvas>
             </div>
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.viewed"></h2>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
           <div class="text-base text-gray-600 mt-1">Total Viewed</div>
         </div>
       </div>
@@ -92,10 +98,10 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overComment <= data.overComment, 'bg-red-600': over.overComment > data.overComment }"
+                :class="{ 'up': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
                 title="2% Lower than last month"
               >
-                {{ data.overComment }}%
+                {{ latest.overComment }}%
                 <svg
                   width="16"
                   height="16"
@@ -107,18 +113,24 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overComment > data.overComment"
+                    v-if="over.overComment > latest.overComment"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
-            <div class="absolute bottom-2 inset-x-4 opacity-50">
-              <canvas id="commentChart" ref="commentChart" height="100"></canvas>
+            <div class="absolute inset-4 opacity-50">
+              <canvas
+                id="commentChart"
+                ref="commentChart"
+                height="100"
+                aria-label="total-comments"
+                role="img"
+              ></canvas>
             </div>
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.comment"></h2>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
           <div class="text-base text-gray-600 mt-1">Total Comments</div>
         </div>
       </div>
@@ -141,10 +153,10 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'up': over.overLikes <= data.overLikes, 'bg-red-600': over.overLikes > data.overLikes }"
+                :class="{ 'up': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
                 title="12% Higher than last month"
               >
-                {{ data.overLikes }}%
+                {{ latest.overLikes }}%
                 <svg
                   width="16"
                   height="16"
@@ -156,70 +168,46 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overLikes > data.overLikes"
+                    v-if="over.overLikes > latest.overLikes"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                 </svg>
               </div>
             </div>
-            <div class="absolute bottom-2 inset-x-4 opacity-50">
-              <canvas id="likesChart" ref="likesChart" height="100"></canvas>
+            <div class="absolute inset-4 opacity-50">
+              <canvas
+                id="likesChart"
+                ref="likesChart"
+                height="100"
+                aria-label="total-likes"
+                role="img"
+              ></canvas>
             </div>
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.likes"></h2>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
           <div class="text-base text-gray-600 mt-1">Total Likes</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
-        <div class="relative zoom-in">
-          <div class="shadow-sm rounded-md bg-white p-4">
-            <div class="flex">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="text-green-600"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
-              </svg>
-              <div class="ml-auto">
-                <div
-                  class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                  :class="{ 'up': over.overVisitor <= data.overVisitor, 'bg-red-600': over.overVisitor > data.overVisitor }"
-                  title="22% Higher than last month"
-                >
-                  {{ data.overVisitor }}%
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use
-                      v-if="over.overVisitor > data.overVisitor"
-                      :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                    />
-                    <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
-                  </svg>
-                </div>
-              </div>
-              <div class="absolute bottom-2 inset-x-4 opacity-50">
-                <canvas id="visitorChart" ref="visitorChart" height="100"></canvas>
-              </div>
-            </div>
-            <h2 class="text-3xl font-bold leading-8 mt-6" v-text="data.visitor || 0"></h2>
-            <div class="text-base text-gray-600 mt-1">Visitors</div>
+        <div class="shadow-sm rounded-md bg-white p-4">
+          <div class="flex">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-green-600"
+            >
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
+            </svg>
           </div>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="totalPosts"></h2>
+          <div class="text-base text-gray-600 mt-1">Total Posts</div>
         </div>
       </div>
     </div>
@@ -238,7 +226,7 @@
               <tbody>
                 <tr
                   class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
-                  v-for="(comment, index) in recentComments"
+                  v-for="(comment, index) in comments"
                   :key="index"
                 >
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
@@ -251,8 +239,8 @@
         </div>
       </div>
       <div class="col-span-12 md:col-span-6">
-        <div class="shadow-sm rounded-md bg-white p-4">
-          <canvas id="doughnutChart" ref="doughnutChart"></canvas>
+        <div class="relative shadow-sm rounded-md bg-white p-4">
+          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
     </div>
@@ -260,97 +248,72 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import { createDoughnutChart, createMiniChart } from "../plugins/char";
+import { ref, computed, onMounted } from "vue";
+import { createBarChart, createMiniChart } from "../plugins/char";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";
 
+// data
+let comments = ref([])
+let totalPosts = ref(0)
+let datas = ref([])
+const latest = computed(() => datas.value[0] || {});
+const over = computed(() => datas.value[1] || {});
+
 // chart
-const doughnutChart = ref();
+const barChart = ref();
 const viewedChart = ref();
 const commentChart = ref();
 const likesChart = ref();
-const visitorChart = ref();
-// data
-const data = ref({});
-const over = ref({})
-const recentComments = ref([])
-// posts statistics
-const postsDatas = ref<Array<Number>>([]);
-const categoryLables = ref<Array<String>>([]);
-// viewed statistics
-const labels = ref<Array<String>>([]);
-const viewedDatas = ref<Array<Number>>([]);
-// comment statistics
-const commentDatas = ref<Array<Number>>([]);
-// likes statistics
-const likesDatas = ref<Array<Number>>([]);
-// visitor statistics
-const visitorDatas = ref<Array<Number>>([]);
 
-// 请求最新统计数据
-const fetch = async () => {
-  await instance.get(SERVER_URL.statistics.concat("/over")).then((res) => {
-    over.value = res.data;
-  });
-};
-// 请求七天内的统计数据
-const retrieve = async () => {
-  await instance
-    .get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
-    .then((res) => {
-      data.value = res.data[0]
-      res.data.forEach((item: any) => {
-        labels.value.unshift(item.date);
-        viewedDatas.value.unshift(item.overViewed);
-
-        commentDatas.value.unshift(item.overComment);
-
-        likesDatas.value.unshift(item.overLikes);
-
-        visitorDatas.value.unshift(item.overVisitor);
-      });
-    });
-};
-
-const category = async () => {
-  await instance
-    .get(SERVER_URL.category, { params: { page: 0, size: 10 } })
-    .then((res) => {
-      res.data.forEach((item: any) => {
-        categoryLables.value.unshift(item.alias);
-        postsDatas.value.unshift(item.count);
-      });
-    });
-};
-
-const comments = async () => {
+const retrieveComments = async () => {
   await instance
     .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
     .then((res) => {
-      recentComments.value = res.data
+      comments.value = res.data
     });
 }
 
 const initData = async () => {
-  await Promise.all([fetch(), retrieve(), category()]).then(() => {
-    // 浏览量统计
-    createMiniChart(viewedChart.value, labels.value, viewedDatas.value, "rgba(37, 99, 235, 0.8)");
-    // 喜欢数统计
-    createMiniChart(likesChart.value, labels.value, likesDatas.value, "rgba(124, 58, 237, 0.8)");
-    // 评论数统计
-    createMiniChart(commentChart.value, labels.value, commentDatas.value, "rgba(217, 119, 6, 0.8)");
-    // 访问用户统计
-    createMiniChart(visitorChart.value, labels.value, visitorDatas.value, "rgba(5, 150, 105, 0.8)");
-    // 帖子分类统计
-    createDoughnutChart(doughnutChart.value, categoryLables.value, postsDatas.value);
-  });
+  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
+    .then(res => {
+      datas.value = res.data;
+      construceChart()
+    }), instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+      totalPosts.value = res.data;
+    })])
 };
+
+const construceChart = () => {
+  let obj = {
+    labels: new Array<String>(),
+    viewed: new Array<Number>(),
+    overViewed: new Array<Number>(),
+    overLikes: new Array<Number>(),
+    overComment: new Array<Number>()
+  }
+  datas.value.forEach((item: any) => {
+    obj.labels.unshift(item.date);
+    obj.viewed.unshift(Math.round(item.viewed * item.overViewed / 100));
+    obj.overViewed.unshift(item.overViewed)
+    obj.overComment.unshift(item.overComment);
+    obj.overLikes.unshift(item.overLikes);
+  });
+  let labels = obj.labels
+  // 浏览量统计
+  createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
+  // 喜欢数统计
+  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
+  // 评论数统计
+  createMiniChart(commentChart.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
+  // 帖子分类统计
+  createBarChart(barChart.value, labels, obj.viewed);
+}
 
 onMounted(() => {
   initData();
-  comments();
+  retrieveComments();
 });
 </script>
 

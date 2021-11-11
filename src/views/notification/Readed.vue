@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const notifications = ref([
+let notifications = ref([
     {
         title: 'sdf',
         content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',

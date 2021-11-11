@@ -44,7 +44,7 @@ import { ref, computed, onMounted } from "vue";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-const account = ref({});
+let account = ref({});
 
 const username = computed(() => {
   if (sessionStorage.getItem("user") != null) {

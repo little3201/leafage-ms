@@ -15,7 +15,7 @@ export default [
         code: '20A23D2D1',
         title: 'Travel Photos',
         type: 'jpg',
-        tags: ['travel', 'xian'],
+        cover: 'https://cdn.leafage.top/kafka.webp',
         category: '20A23D2D1'
       }
     },
@@ -48,15 +48,21 @@ export default [
         {
           code: '20A23D2D1',
           title: 'Travel Photos',
-          type: 'jpg',
+          type: 'E',
           modifyTime: new Date(),
         },
         {
           code: '20A23D2D2',
           title: 'Travel Video',
-          type: 'mp4',
+          type: 'P',
           modifyTime: new Date(),
         },
+        {
+          code: '20A23D2D2',
+          title: 'Travel Video',
+          type: 'T',
+          modifyTime: new Date(),
+        }
       ];
     },
   },

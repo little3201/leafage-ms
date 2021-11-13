@@ -1,54 +1,41 @@
 import {
     Chart,
-    ArcElement,
+    BarElement,
     LineElement,
-    LineController,
-    DoughnutController,
     PointElement,
-    LinearScale,
+    LineController,
+    BarController,
     CategoryScale,
-    Legend,
-    Title,
+    LinearScale,
     Tooltip
 } from 'chart.js';
 
 Chart.register(
-    ArcElement,
+    BarElement,
     LineElement,
-    LineController,
-    DoughnutController,
     PointElement,
-    LinearScale,
+    LineController,
+    BarController,
     CategoryScale,
-    Legend,
-    Title,
+    LinearScale,
     Tooltip
 );
 
-export const createDoughnutChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
+export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Number>) => {
     const config: any = {
-        type: "doughnut",
+        type: "bar",
         data: {
             labels: labels,
             datasets: [
                 {
-                    label: "帖子数",
+                    label: "访问量",
                     data: datas,
-                    backgroundColor: ['#DC2626', '#4F46E5', '#D97706', '#059669', '#2563EB', '#7C3AED', '#DB2777']
+                    backgroundColor: "rgba(37, 99, 235, 0.8)",
+                    borderColor: "rgba(37, 99, 235, 0.5)",
                 }
             ],
         },
         options: {
-            responsive: true,
-            plugins: {
-                title: {
-                    font: {
-                        size: 16
-                    },
-                    display: true,
-                    text: 'Categories Posts Count'
-                }
-            }
         },
     }
     return new Chart(ctx, config);
@@ -61,24 +48,16 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
             labels: labels,
             datasets: [
                 {
+                    label: '环比',
+                    data: datas,
                     backgroundColor: color,
                     borderColor: color,
                     borderWidth: 3,
-                    tension: 0.4,
-                    data: datas,
-                    fill: true
+                    tension: 0.4
                 },
             ],
         },
         options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            layout: {
-                padding: 4
-            },
             elements: {
                 point: {
                     radius: 0,
@@ -88,7 +67,6 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
             interaction: {
                 intersect: false,
             },
-            responsive: true,
             scales: {
                 xAxis: {
                     display: false

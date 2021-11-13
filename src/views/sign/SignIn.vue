@@ -100,7 +100,7 @@ import { useRoute, useRouter } from "vue-router";
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-const formData = ref({});
+let formData = ref({});
 
 const route = useRoute();
 const router = useRouter();

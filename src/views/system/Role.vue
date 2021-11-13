@@ -57,9 +57,10 @@
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
               >
-                <a
-                  class="flex items-center mr-3 text-purple-600"
-                  href="javascript:;"
+                <button
+                  type="button"
+                  title="Authority"
+                  class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click.prevent="treeOperate(true)"
                 >
                   <svg
@@ -78,7 +79,7 @@
                     <line x1="12" y1="2" x2="12" y2="12" />
                   </svg>
                   Auz
-                </a>
+                </button>
               </Action>
             </td>
           </tr>
@@ -153,19 +154,19 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 // 模态框参数
-const isEdit = ref(false);
-const isDel = ref(false);
-const isTree = ref(false);
+let isEdit = ref(false);
+let isDel = ref(false);
+let isTree = ref(false);
 // 数据
-const roleData = ref({});
-const dataCode = ref("");
-const superiors = ref([]);
-const authorities = ref([]);
-const datas = ref<any>([]);
+let roleData = ref({});
+let dataCode = ref("");
+let superiors = ref([]);
+let authorities = ref([]);
+let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
-const total = ref(0);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number) => {
@@ -180,23 +181,25 @@ const retrieve = async () => {
       .then((response) => {
         datas.value = response.data;
       }),
-    instance.get(SERVER_URL.role.concat("/count")).then((res) => {
-      total.value = res.data;
-    }),
+    count()
   ]);
 };
+const count = () => {
+  instance.get(SERVER_URL.role.concat("/count")).then((res) => {
+    total.value = res.data;
+  })
+}
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = () => {
-  instance.delete(SERVER_URL.role.concat("/", dataCode.value)).then(() => {
+const confirmCommit = async () => {
+  await instance.delete(SERVER_URL.role.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: any) => item.code != dataCode.value
-    );
+    datas.value.splice(datas.value.indexOf(dataCode.value), 1)
     isDel.value = false;
+    count()
   });
 };
 // 新增/编辑：打开
@@ -231,21 +234,19 @@ const treeOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
-  let data = roleData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.role.concat("/", dataCode.value), data)
+      .put(SERVER_URL.role.concat("/", dataCode.value), roleData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: any) => item.code != dataCode.value
-        );
+        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
+        count()
       });
   } else {
-    await instance.post(SERVER_URL.role, data).then((res) => {
+    await instance.post(SERVER_URL.role, roleData.value).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
@@ -253,6 +254,7 @@ const modelCommit = async () => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
+      count()
     });
   }
 };

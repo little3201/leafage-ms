@@ -102,7 +102,7 @@ import { ref } from "vue";
 
 import instance from "../../api";
 
-const formData = ref({});
+let formData = ref({});
 const confirmPassword = ref("");
 
 const onSubmit = async () => {

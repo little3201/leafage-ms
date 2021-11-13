@@ -64,9 +64,9 @@ import SERVER_URL from "../../api/request";
 
 const router = useRouter();
 
-const password = ref("");
-const newPassword = ref("");
-const confirmPassword = ref("");
+let password = ref("");
+let newPassword = ref("");
+let confirmPassword = ref("");
 
 const isEquals = computed(() => {
   return newPassword.value === confirmPassword.value;

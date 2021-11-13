@@ -40,8 +40,54 @@
         </svg>
       </div>
     </div>
-    <div class="relative mr-auto sm:mr-6">
-      <div class="cursor-pointer" @click="operate('notify')">
+    <div class="mr-3 sm:mr-6 inline-flex items-center">
+      <button
+        title="Toggle Theme"
+        @click="theme"
+        class="relative focus:outline-none transition-colors duration-500 ease-in border-transparent"
+      >
+        <svg
+          v-if="isDark"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-moon"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <svg
+          v-else
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-sun"
+        >
+          <circle cx="12" cy="12" r="5" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
+      </button>
+    </div>
+    <div class="relative mr-auto sm:mr-6 inline-flex items-center">
+      <button type="button" class="focus:outline-none" @click="operate('notify')">
         <svg
           width="20"
           height="20"
@@ -58,29 +104,34 @@
           class="absolute animate-ping inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
         ></span>
         <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
-      </div>
+      </button>
       <div
         v-show="isNotify"
-        class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-6 rounded-md shadow-lg bg-white z-10"
+        class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-5 rounded-md shadow-lg bg-white z-10"
       >
         <span class="p-2 text-lg">Notifications</span>
         <div class="divide-y mt-2">
-          <div v-for="(notification, index) in notifications" :key="index" class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
+          <div
+            v-for="(notification, index) in notifications"
+            :key="index"
+            class="overflow-hidden p-2 hover:bg-gray-100 rounded-md"
+          >
             <router-link to="/notification/unread" @click="operate('')">
               <div class="flex items-center">
                 <p class="font-medium truncate" v-text="notification.title"></p>
-                <span class="text-xs text-gray-500 ml-auto whitespace-no-wrap" v-text="new Date(notification.modifyTime).toLocaleTimeString()"></span>
+                <span
+                  class="text-xs text-gray-500 ml-auto whitespace-no-wrap"
+                  v-text="new Date(notification.modifyTime).toLocaleTimeString()"
+                ></span>
               </div>
-              <div class="w-full truncate text-gray-600">
-                {{ notification.content }}
-              </div>
+              <div class="w-full truncate text-gray-600">{{ notification.content }}</div>
             </router-link>
           </div>
         </div>
       </div>
     </div>
-    <div class="relative mr-auto sm:mr-6">
-      <div class="cursor-pointer" @click="operate('language')">
+    <div class="relative mr-auto sm:mr-6 inline-flex items-center">
+      <button type="button" class="focus:outline-none" @click="operate('language')">
         <svg
           width="20"
           height="20"
@@ -90,11 +141,10 @@
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="mr-2"
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
         </svg>
-      </div>
+      </button>
       <div
         v-show="isLanguage"
         class="origin-top-right py-4 px-2 divide-y absolute w-40 right-0 mt-6 rounded-md shadow-lg bg-white z-10"
@@ -255,23 +305,25 @@ import router from "../../router";
 import instance from "../../api";
 
 // 控制通知是否打开
-let isNotify = ref(false);
+const isNotify = ref(false);
 // 控制账号操作是否打开
-let isAccount = ref(false);
+const isAccount = ref(false);
 // 语言设置是否打开
-let isLanguage = ref(false)
+const isLanguage = ref(false)
+// 暗黑模式
+const isDark = ref(false)
 
 const notifications = ref([
-    {
-        title: 'leafage 系统通知',
-        content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
-        modifyTime: new Date()
-    },
-    {
-        title: 'leafage 系统通知',
-        content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
-        modifyTime: new Date()
-    }
+  {
+    title: 'leafage 系统通知',
+    content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
+    modifyTime: new Date()
+  },
+  {
+    title: 'leafage 系统通知',
+    content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
+    modifyTime: new Date()
+  }
 ])
 
 const user = computed(() => {
@@ -280,6 +332,10 @@ const user = computed(() => {
   }
   return {}
 });
+
+const theme = () => {
+  isDark.value = !isDark.value
+}
 
 const signout = async () => {
   await instance.post("/logout").then(() => {

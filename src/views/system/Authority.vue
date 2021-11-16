@@ -56,7 +56,7 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-green-300': data.type === 'M', 'bg-blue-300': data.type === 'B', 'bg-pink-300': data.type === 'A' }"
+                :class="{ 'bg-indigo-300': data.type === 'M', 'bg-blue-300': data.type === 'B', 'bg-pink-300': data.type === 'A' }"
               >{{ data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api') }}</span>
             </td>
             <td class="px-4">
@@ -241,7 +241,9 @@ const confirmOperate = (operate: boolean) => {
 const confirmCommit = async () => {
   await instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
     isDel.value = false;
     count()
   });
@@ -278,7 +280,9 @@ const modelCommit = async () => {
       .put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;

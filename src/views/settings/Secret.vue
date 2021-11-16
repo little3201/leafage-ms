@@ -55,7 +55,7 @@
 
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 import { useRouter } from "vue-router";
 
@@ -68,12 +68,8 @@ let password = ref("");
 let newPassword = ref("");
 let confirmPassword = ref("");
 
-const isEquals = computed(() => {
-  return newPassword.value === confirmPassword.value;
-});
-
 const onSumbit = async () => {
-  if (isEquals) {
+  if (newPassword.value === confirmPassword.value) {
     await instance.patch(SERVER_URL.user).then(() => {
       router.replace("/signin");
     });

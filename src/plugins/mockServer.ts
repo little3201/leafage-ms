@@ -7,6 +7,7 @@ import roleMock from '../../mock/system/role';
 import userMock from '../../mock/system/user';
 import groupMock from '../../mock/system/group';
 import authorityMock from '../../mock/system/authority';
+import regionMock from '../../mock/system/region';
 
 import postsMock from '../../mock/assets/posts';
 import categoryMock from '../../mock/assets/category';
@@ -22,6 +23,7 @@ export function setupProdMockServer() {
     ...userMock, 
     ...groupMock, 
     ...authorityMock,
+    ...regionMock,
     ...postsMock, 
     ...categoryMock, 
     ...resourceMock,

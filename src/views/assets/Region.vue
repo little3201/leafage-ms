@@ -106,16 +106,16 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 // 模态框参数
-const isEdit = ref(false);
-const isDel = ref(false);
+let isEdit = ref(false);
+let isDel = ref(false);
 // 数据
-const regionData = ref({});
-const dataCode = ref("");
-const datas = ref<any>([]);
+let regionData = ref({});
+let dataCode = ref("");
+let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
-const total = ref(0);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number) => {
@@ -131,26 +131,28 @@ const retrieve = async () => {
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.region.concat("/count")).then((res) => {
-      total.value = res.data;
-    }),
+    count()
   ]);
 };
+const count = () => {
+  instance.get(SERVER_URL.region.concat("/count")).then((res) => {
+    total.value = res.data;
+  })
+}
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
 const confirmCommit = async () => {
-  await instance
-    .delete(SERVER_URL.region.concat("/", dataCode.value))
-    .then(() => {
-      // 将datas中修改项的历史数据删除
-      datas.value = datas.value.filter(
-        (item: any) => item.code != dataCode.value
-      );
-      isDel.value = false;
-    });
+  await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+    count()
+  });
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
@@ -164,10 +166,9 @@ const modelOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
-  let data = regionData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.region.concat("/", dataCode.value), data)
+      .put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -176,9 +177,10 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
+        count()
       });
   } else {
-    await instance.post(SERVER_URL.region, data).then((res) => {
+    await instance.post(SERVER_URL.region, regionData.value).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
@@ -186,6 +188,7 @@ const modelCommit = async () => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
+      count()
     });
   }
 };

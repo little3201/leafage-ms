@@ -17,6 +17,7 @@ export default [
         avatar: '/images/avatar.jpg',
         gender: 'F',
         phone: "187****7895",
+        birthday: '1992-10-12',
         email: 'litt***1@163.com',
         accountNonExpired: true,
         accountNonLocked: true,

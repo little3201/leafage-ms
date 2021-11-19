@@ -17,7 +17,7 @@
                     stroke-linejoin="round"
                     class="mr-2"
                 >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'activity'" />
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
                 </svg>
                 Unread
             </router-link>
@@ -36,7 +36,7 @@
                     stroke-linejoin="round"
                     class="mr-2"
                 >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'book-open'" />
                 </svg>
                 Readed
             </router-link>

@@ -5,7 +5,7 @@
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
-        v-model="checked"
+        v-model="isChecked"
         @change="dataChecked(data.code)"
       />
       <span
@@ -91,20 +91,25 @@
 import { ref } from "vue";
 import TreeCore from "/@/components/tree/TreeCore.vue";
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
+    default: ''
+  },
+  checked: {
+    type: Boolean,
+    default: false
   }
 });
 
 const isOpen = ref(false);
 
-const checked = ref(false);
+const isChecked = ref(props.checked);
 
 const emit = defineEmits(["addChecked", "delChecked"]);
 
 const dataChecked = (code: String) => {
-  if (checked.value) {
+  if (isChecked.value) {
     emit("addChecked", code);
   } else {
     emit("delChecked", code);

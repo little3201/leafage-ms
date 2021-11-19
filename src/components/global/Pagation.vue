@@ -7,114 +7,98 @@
       <span v-text="total"></span>
       &nbsp;条记录
     </div>
-    <ul class="inline-flex items-center ml-auto">
-      <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
-          @click="(page = 0), give(page)"
+    <div class="inline-flex items-center space-x-2 ml-auto">
+      <button
+        type="button"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+        @click="(page = 0), give(page)"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-left'" />
-          </svg>
-        </button>
-      </li>
-      <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
-          @click="decrease"
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-left'" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+        @click="decrease"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
-          </svg>
-        </button>
-      </li>
-      <li v-if="pages > 5 && page > 0">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
-      </li>
-      <li v-for="index in pages <= 5 ? pages : page + 5" :key="index">
-        <button
-          type="button"
-          @click.prevent="give(index - 1)"
-          v-text="index"
-          class="focus:outline-none w-8 h-8 mr-2"
-          :class="{
-            'bg-white rounded-full border shadow-sm': index == page + 1,
-            hidden: pages > 5 && (index > page + 5 || index < page + 1),
-          }"
-        ></button>
-      </li>
-      <li v-if="pages > 5 && page < pages">
-        <button type="button" class="focus:outline-none w-8 h-8 mr-2">...</button>
-      </li>
-      <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
-          @click="increment"
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
+        </svg>
+      </button>
+      <span v-if="pages > 5 && page > 2" class>...</span>
+      <button
+        v-for="index in pages <= 5 ? pages : page + 5"
+        :key="index"
+        type="button"
+        @click.prevent="give(index - 1)"
+        v-text="index"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        :class="{
+          'bg-white rounded-full border shadow-sm': index == page + 1,
+          hidden: pages > 5 && (index > page + 3 || index < page - 1),
+        }"
+      ></button>
+      <span v-if="pages > 5 && page < pages">...</span>
+      <button
+        type="button"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
+        @click="increment"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-          </svg>
-        </button>
-      </li>
-      <li>
-        <button
-          type="button"
-          class="focus:outline-none w-8 h-8"
-          :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
-          @click="(page = pages - 1), give(page)"
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
+        @click="(page = pages - 1), give(page)"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
-          </svg>
-        </button>
-      </li>
-    </ul>
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
+        </svg>
+      </button>
+    </div>
     <select v-model.number="size" class="py-1 border border-gray-300 rounded-md">
       <option>10</option>
       <option>15</option>

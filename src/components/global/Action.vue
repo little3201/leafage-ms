@@ -1,7 +1,7 @@
 <template>
   <div v-if="user && Object.keys(user).length > 0" class="flex justify-center items-center">
     <slot></slot>
-    <a class="flex items-center mr-3" href="javascript:;" @click.prevent="openModel">
+    <button type="button" class="flex items-center mr-3 focus:outline-none" @click="openModel">
       <svg
         width="16"
         height="16"
@@ -16,8 +16,12 @@
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'edit-3'" />
       </svg>
       Edit
-    </a>
-    <a class="flex items-center text-red-600" href="javascript:;" @click.prevent="openConfirm">
+    </button>
+    <button
+      type="button"
+      class="flex items-center text-red-600 focus:outline-none"
+      @click="openConfirm"
+    >
       <svg
         width="16"
         height="16"
@@ -32,12 +36,12 @@
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
       </svg>
       Delete
-    </a>
+    </button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref, onMounted } from "vue";
 
 const emit = defineEmits(["delAction", "editAction"]);
 
@@ -48,10 +52,12 @@ const openModel = () => {
   emit("editAction", true);
 };
 
-const user = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '');
+const user = ref({})
+
+onMounted(() => {
+  let data = sessionStorage.getItem("user")
+  if (data) {
+    user.value = JSON.parse(data);
   }
-  return {}
 });
 </script>

@@ -15,7 +15,7 @@ export default [
         code: '20A23D2D1',
         title: 'Travel Photos',
         type: 'jpg',
-        tags: ['travel', 'xian'],
+        cover: 'https://cdn.leafage.top/kafka.webp',
         category: '20A23D2D1'
       }
     },
@@ -47,16 +47,28 @@ export default [
       return [
         {
           code: '20A23D2D1',
-          title: 'Travel Photos',
-          type: 'jpg',
+          title: 'Spring boot',
+          type: 'E',
           modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
         },
         {
           code: '20A23D2D2',
-          title: 'Travel Video',
-          type: 'mp4',
+          title: 'Spring cloud',
+          type: 'P',
           modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
         },
+        {
+          code: '20A23D2D3',
+          title: 'Spring security',
+          type: 'T',
+          modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
+        }
       ];
     },
   },

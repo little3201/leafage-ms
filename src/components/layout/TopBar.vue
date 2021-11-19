@@ -1,6 +1,5 @@
 <template>
   <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
-    <!-- BEGIN: Breadcrumb -->
     <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class>Application</router-link>
       <svg
@@ -65,15 +64,20 @@
       >
         <span class="p-2 text-lg">Notifications</span>
         <div class="divide-y mt-2">
-          <div v-for="(notification, index) in notifications" :key="index" class="overflow-hidden p-2 hover:bg-gray-100 rounded-md">
+          <div
+            v-for="(notification, index) in notifications"
+            :key="index"
+            class="overflow-hidden p-2 hover:bg-gray-100 rounded-md"
+          >
             <router-link to="/notification/unread" @click="operate('')">
               <div class="flex items-center">
                 <p class="font-medium truncate" v-text="notification.title"></p>
-                <span class="text-xs text-gray-500 ml-auto whitespace-no-wrap" v-text="new Date(notification.modifyTime).toLocaleTimeString()"></span>
+                <span
+                  class="text-xs text-gray-500 ml-auto whitespace-no-wrap"
+                  v-text="new Date(notification.modifyTime).toLocaleTimeString()"
+                ></span>
               </div>
-              <div class="w-full truncate text-gray-600">
-                {{ notification.content }}
-              </div>
+              <div class="w-full truncate text-gray-600">{{ notification.content }}</div>
             </router-link>
           </div>
         </div>
@@ -161,8 +165,8 @@
         tabindex="-1"
       >
         <div class="p-2">
-          <h3 class="font-blod text-base" v-text="user.nickname"></h3>
-          <h4 class="text-gray-500" v-text="user.username"></h4>
+          <h3 class="font-blod text-base">{{ user.nickname }}</h3>
+          <h4 class="text-gray-500">{{ user.username }}</h4>
         </div>
         <router-link
           @click="operate('')"
@@ -249,7 +253,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import router from "../../router";
 
 import instance from "../../api";
@@ -262,24 +266,19 @@ let isAccount = ref(false);
 let isLanguage = ref(false)
 
 const notifications = ref([
-    {
-        title: 'leafage 系统通知',
-        content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
-        modifyTime: new Date()
-    },
-    {
-        title: 'leafage 系统通知',
-        content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
-        modifyTime: new Date()
-    }
+  {
+    title: 'leafage 系统通知',
+    content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
+    modifyTime: new Date()
+  },
+  {
+    title: 'leafage 系统通知',
+    content: 'Contrary to popular belief, Lorem Ipsum is not simply randomtext. It has roots in a piece of classical Latin literature from 45 BC, making it over 20',
+    modifyTime: new Date()
+  }
 ])
 
-const user = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '');
-  }
-  return {}
-});
+const user = ref({});
 
 const signout = async () => {
   await instance.post("/logout").then(() => {
@@ -336,6 +335,7 @@ const socket = () => {
 onMounted(() => {
   let data = sessionStorage.getItem("user");
   if (data) {
+    user.value = JSON.parse(data)
     socket();
   }
 });

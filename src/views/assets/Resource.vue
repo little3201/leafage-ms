@@ -32,8 +32,7 @@
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
             <th scope="col" class="px-4">Viewed</th>
-            <th scope="col" class="px-4">Likes</th>
-            <th scope="col" class="px-4">Comment</th>
+            <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -57,16 +56,12 @@
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4">
               <span
-                v-text="data.type"
-                :class="[
-                  { 'text-blue-500': imgTypes.includes(data.type) },
-                  { 'text-pink-500': videoTypes.includes(data.type) },
-                ]"
-              ></span>
+                class="text-xs px-2 py-1 rounded-md"
+                :class="{ 'bg-indigo-300': data.type === 'E', 'bg-blue-300': data.type === 'P', 'bg-pink-300': data.type === 'T' }"
+              >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.viewed"></td>
-            <td class="px-4" v-text="data.likes"></td>
-            <td class="px-4" v-text="data.comment"></td>
+            <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
@@ -83,7 +78,7 @@
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form class="w-full">
-        <div class="grid grid-cols-12 grid-rows-4 gap-4">
+        <div class="grid grid-cols-12 grid-rows-3 gap-4">
           <div class="col-span-12 sm:col-span-7">
             <label for="title">
               Title
@@ -99,21 +94,20 @@
               v-model.trim="resourceData.title"
             />
           </div>
-          <div class="col-span-5 row-span-4 mb-6">
+          <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
             <label for="cover">Cover</label>
             <img
               id="cover"
-              v-if="resourceData.url"
-              :src="resourceData.url"
+              v-if="resourceData.cover"
+              :src="resourceData.cover"
               alt="portfolio content"
-              class="rounded-md object-cover h-full mt-1 border"
+              class="rounded-md object-cover h-56 mt-1 border"
             />
-            <div
-              v-else
-              class="rounded-md border border-gray-300 shadow-sm mt-1 h-full flex items-center"
-            >
-              <div class="mx-auto text-center">
-                <div class="text-center text-gray-600">
+            <div v-else class="mt-1">
+              <div
+                class="h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
+              >
+                <div class="text-gray-600">
                   <label
                     for="file-upload"
                     class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
@@ -142,10 +136,29 @@
                       @change="uploadImage($event.target.files)"
                     />
                   </label>
+                  <p class="text-xs text-gray-500">png, jpeg, jpg, mp4</p>
                 </div>
-                <p class="text-xs text-gray-500">png, jpeg, jpg, mp4</p>
               </div>
             </div>
+          </div>
+          <div class="col-span-12 sm:col-span-7">
+            <label for="type" class="inline-flex items-center">
+              Category
+              <span class="text-red-600 ml-1">*</span>
+            </label>
+            <select
+              id="type"
+              v-model="resourceData.category"
+              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+            >
+              <option value="undefined">请选择</option>
+              <option
+                v-for="category in categories"
+                :key="category.code"
+                :value="category.code"
+                v-text="category.alias"
+              ></option>
+            </select>
           </div>
           <div class="col-span-12 sm:col-span-7">
             <label for="type" class="inline-flex items-center">
@@ -158,18 +171,20 @@
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
             >
               <option value="undefined">请选择</option>
-              <option value="ebook">EBook</option>
+              <option value="E">Epub</option>
+              <option value="P">Pdf</option>
+              <option value="T">Txt</option>
             </select>
           </div>
-          <div class="col-span-7 row-span-2 mb-6">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
-              v-model.trim="resourceData.description"
-              placeholder="Description"
-            />
-          </div>
+        </div>
+        <div class="col-span-7 row-span-2 mt-4">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
+            v-model.trim="resourceData.description"
+            placeholder="Description"
+          />
         </div>
       </form>
     </Model>
@@ -177,7 +192,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 
 import Operation from "/@/components/global/Operation.vue";
 import Action from "/@/components/global/Action.vue";
@@ -189,28 +204,15 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 import { uploadFile } from "../../plugins/upload";
 
-const imgTypes = ref(["png", "jpeg", "jpg", "svg", "webp"]);
-const videoTypes = ref([
-  "mov",
-  "avi",
-  "flv",
-  "m4v",
-  "rm",
-  "rmvb",
-  "wmv",
-  "mp4",
-]);
 // 数据
-const resourceData = ref({});
-const dataCode = ref("");
-const datas = ref<any>([]);
+let resourceData = ref({});
+let dataCode = ref("");
+let datas = ref<any>([]);
+let categories = ref([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
-const total = ref(0);
-// 标签参数
-const tagValue = ref("");
-const tags = ref<Array<String>>([]);
+let total = ref(0);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
@@ -219,17 +221,6 @@ let isDel = ref(false);
 const setPage = (p: number, s: number) => {
   page.value = p;
   size.value = s;
-};
-// 添加tag
-const addTag = () => {
-  tags.value.push(tagValue.value);
-  resourceData.value = { ...resourceData.value, tags: tags.value };
-  tagValue.value = "";
-};
-// 删除tag
-const removeTag = (tag: String) => {
-  tags.value = tags.value.filter((item) => item !== tag);
-  resourceData.value = { ...resourceData.value, tags: tags.value };
 };
 // 查询列表
 const retrieve = async () => {
@@ -241,47 +232,52 @@ const retrieve = async () => {
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
-      total.value = res.data;
-    }),
+    count()
   ]);
 };
+const count = () => {
+  instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
+    total.value = res.data;
+  })
+}
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
 const confirmCommit = async () => {
-  await instance
-    .delete(SERVER_URL.resource.concat("/", dataCode.value))
-    .then(() => {
-      // 将datas中修改项的历史数据删除
-      datas.value = datas.value.filter(
-        (item: any) => item.code != dataCode.value
-      );
-      isDel.value = false;
-    });
+  await instance.delete(SERVER_URL.resource.concat("/", dataCode.value)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+    count()
+  });
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   resourceData.value = {};
-  tags.value = [];
   if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .get(SERVER_URL.resource.concat("/", dataCode.value))
-      .then((res) => {
-        resourceData.value = res.data;
-        tags.value = res.data.tags;
-      });
+    await Promise.all([instance.get(SERVER_URL.category).then((res) => {
+      categories.value = res.data;
+    }),
+    fetch()]);
   }
   isEdit.value = operate;
 };
+const fetch = () => {
+  instance
+    .get(SERVER_URL.resource.concat("/", dataCode.value))
+    .then(res =>
+      resourceData.value = res.data
+    )
+}
 // 新增/编辑：提交
 const modelCommit = async () => {
-  let data = resourceData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.resource.concat("/", dataCode.value), data)
+      .put(SERVER_URL.resource.concat("/", dataCode.value), resourceData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -290,9 +286,10 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
+        count()
       });
   } else {
-    await instance.post(SERVER_URL.resource, data).then((res) => {
+    await instance.post(SERVER_URL.resource, resourceData.value).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
@@ -300,24 +297,21 @@ const modelCommit = async () => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
+      count()
     });
   }
 };
 
 // 上传文件
 const uploadImage = (files: Array<File>) => {
-  if (files.length > 0) {
-    let urls = new Array(files.length);
-    Array.from(Array(files.length).keys()).forEach((id) =>
-      uploadFile(files[id]).subscribe({
-        // next: (result) => {},
-        // error: () => {},
-        complete: (e: any) => {
-          urls.push("https://cdn.leafage.top/" + e.key);
-        },
-      })
-    );
-    resourceData.value = { ...resourceData.value, url: urls };
+  if (files[0]) {
+    uploadFile(files[0]).subscribe({
+      // next: (result) => {},
+      // error: () => {},
+      complete: (e: any) => {
+        resourceData.value = { ...resourceData.value, cover: "https://cdn.leafage.top/" + e.key };
+      }
+    })
   }
 };
 

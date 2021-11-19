@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSumbit" class="bg-white rounded-md">
+  <form @submit.prevent class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
       <h2 class="font-medium text-lg mr-auto">Profile</h2>
       <button
@@ -12,11 +12,7 @@
       <div class="col-span-12 lg:col-span-4">
         <div class="border border-gray-200 rounded-md p-4">
           <div class="w-40 h-40 relative mx-auto">
-            <img
-              class="rounded-md"
-              alt="Midone Tailwind HTML Admin Template"
-              src="/images/avatar.jpg"
-            />
+            <img class="rounded-md" alt="avatar" :src="user.avatar" />
             <span
               title="Remove this photo?"
               class="cursor-pointer tooltip w-5 h-5 inline-flex items-center justify-center absolute rounded-full text-white bg-red-600 right-0 top-0 -mr-2 -mt-2"
@@ -58,8 +54,10 @@
               type="text"
               class="mt-1 rounded-md w-full bg-gray-100 cursor-not-allowed border border-gray-300"
               placeholder="Username"
-              value="leafage"
+              v-model="user.username"
               disabled
+              minlength="4"
+              maxlength="16"
             />
           </div>
           <div class="col-span-2 lg:col-span-1">
@@ -69,9 +67,11 @@
               type="text"
               class="mt-1 rounded-md w-full border border-gray-300"
               placeholder="Nickname"
-              value="布吉岛"
+              v-model="user.nickname"
               required
               autofocus
+              minlength="4"
+              maxlength="16"
             />
           </div>
           <div class="col-span-2 lg:col-span-1">
@@ -80,23 +80,41 @@
               id="birthday"
               type="date"
               class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              v-model="user.birthday"
             />
           </div>
           <div class="col-span-2 md:col-span-1">
             <label for="gender">Gender</label>
-            <select id="gender" class="rounded-md mt-1 w-full border border-gray-300">
+            <select
+              id="gender"
+              class="rounded-md mt-1 w-full border border-gray-300"
+              v-model="user.gender"
+            >
               <option>请选择</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
-          <div class="col-span-2">
-            <label for="address">Address</label>
-            <textarea
-              id="address"
+          <div class="col-span-2 md:col-span-1">
+            <label for="phoneNumber">Phone Number</label>
+            <input
+              id="phoneNumber"
+              type="tel"
               class="rounded-md w-full border border-gray-300 mt-1"
-              placeholder="Adress"
-            ></textarea>
+              placeholder="Tel Number"
+              v-model="user.phone"
+              minlength="11"
+            />
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
+              placeholder="Email"
+              v-model="user.email"
+            />
           </div>
         </div>
       </div>
@@ -105,18 +123,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-const user = ref();
+let user = ref({});
+
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
+
+const fetch = async () => {
+  if (username.value && username.value.length > 0) {
+    await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => {
+      user.value = res.data
+    })
+  }
+}
 
 const onSubmit = async () => {
-  await instance
-    .put(SERVER_URL.user.concat("/leafage"), user.value)
-    .then((res) => {
-      alert(res.data.username);
-    });
+  if (username.value && username.value.length > 0) {
+    await instance
+      .put(SERVER_URL.user.concat("/", username.value), user.value)
+      .then(res => {
+        user.value = res.data
+      });
+  }
 };
+
+onMounted(() => {
+  fetch()
+})
 </script>

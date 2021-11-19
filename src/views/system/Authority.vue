@@ -54,9 +54,10 @@
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4">
-              <span class="text-green-500" v-if="data.type == 'M'">Menu</span>
-              <span class="text-blue-500" v-else-if="data.type == 'B'">Button</span>
-              <span class="text-pink-500" v-else>Api</span>
+              <span
+                class="text-xs px-2 py-1 rounded-md"
+                :class="{ 'bg-indigo-300': data.type === 'M', 'bg-blue-300': data.type === 'B', 'bg-pink-300': data.type === 'A' }"
+              >{{ data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api') }}</span>
             </td>
             <td class="px-4">
               <svg
@@ -197,17 +198,17 @@ import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 // 模态框参数
-const isEdit = ref(false);
-const isDel = ref(false);
+let isEdit = ref(false);
+let isDel = ref(false);
 // 数据
-const authorityData = ref({});
-const dataCode = ref("");
-const superiors = ref([]);
-const datas = ref<any>([]);
+let authorityData = ref({});
+let dataCode = ref("");
+let superiors = ref([]);
+let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
-const total = ref(0);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number) => {
@@ -224,23 +225,27 @@ const retrieve = async () => {
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
-      total.value = res.data;
-    }),
+    count()
   ]);
 };
+const count = () => {
+  instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
+    total.value = res.data;
+  })
+}
 // 删除取消
 const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = () => {
-  instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
+const confirmCommit = async () => {
+  await instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
+    count()
   });
 };
 // 新增/编辑：打开
@@ -259,11 +264,9 @@ const modelOperate = async (operate: boolean) => {
 // 查详情
 const fetch = () => {
   if (dataCode.value && dataCode.value.length > 0) {
-    instance
-      .get(SERVER_URL.authority.concat("/", dataCode.value))
-      .then((res) => {
-        authorityData.value = res.data;
-      });
+    instance.get(SERVER_URL.authority.concat("/", dataCode.value)).then((res) => {
+      authorityData.value = res.data;
+    });
   }
 };
 // 检查唯一
@@ -272,10 +275,9 @@ const exist = () => {
 }
 // 新增/编辑：提交
 const modelCommit = async () => {
-  let data = authorityData.value;
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
-      .put(SERVER_URL.authority.concat("/", dataCode.value), data)
+      .put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -284,9 +286,10 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
+        count()
       });
   } else {
-    await instance.post(SERVER_URL.authority, data).then((res) => {
+    await instance.post(SERVER_URL.authority, authorityData.value).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
@@ -294,6 +297,7 @@ const modelCommit = async () => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
+      count()
     });
   }
 };

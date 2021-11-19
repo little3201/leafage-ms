@@ -91,11 +91,13 @@
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md h-full"
+              class="rounded-md object-cover h-full"
             />
-            <div v-else class="rounded-md border border-gray-300 h-full flex items-center">
-              <div class="mx-auto text-center">
-                <div class="text-center text-gray-600">
+            <div v-else class="h-full">
+              <div
+                class="rounded-md border border-gray-300 h-full flex items-center justify-center"
+              >
+                <div class="text-gray-600">
                   <label
                     for="file-upload"
                     class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
@@ -123,9 +125,9 @@
                       @change="uploadImage($event.target.files)"
                     />
                   </label>
+                  <p class="text-xs text-gray-500">png, jpeg, jpg</p>
+                  <p class="text-xs text-gray-500">up to 2MB</p>
                 </div>
-                <p class="text-xs text-gray-500">png, jpeg, jpg</p>
-                <p class="text-xs text-gray-500">up to 2MB</p>
               </div>
             </div>
           </div>
@@ -144,7 +146,7 @@
             <div v-if="!postsData.tags" class="mx-auto text-center">
               <span class="text-sm text-gray-500">Show Tags</span>
             </div>
-            <div v-else class="overflow-auto p-2 text-sm">
+            <div v-else class="overflow-auto p-2 text-sm max-h-24">
               <span
                 v-for="(tag, index) in postsData.tags"
                 :key="index"
@@ -168,7 +170,7 @@
               </span>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-4 md:flex items-center">
+          <div class="col-span-12 sm:col-span-4">
             <select
               v-model.lazy="postsData.category"
               required
@@ -183,7 +185,7 @@
               ></option>
             </select>
           </div>
-          <div class="col-span-12">
+          <!-- <div class="col-span-12">
             <textarea
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Subtitle"
@@ -191,12 +193,12 @@
               required
               v-model.trim="postsData.subtitle"
             ></textarea>
-          </div>
+          </div>-->
         </div>
         <div class="grid grid-cols-12 mt-3">
           <div class="col-span-12">
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-80 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
               :class="{ border: preview }"
             >
               <a href="javascript:;" @click="preview = !preview" class="top-0 right-0 absolute">
@@ -274,20 +276,20 @@ import { uploadFile } from "../../plugins/upload";
 // 分页参数
 let page = ref(0);
 let size = ref(10);
-const total = ref(0);
+let total = ref(0);
 // 标签参数
-const tagValue = ref("");
-const tags = ref<Array<String>>([]);
+let tagValue = ref("");
+let tags = ref<Array<String>>([]);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 let preview = ref(false);
 // 数据
-const postsData = ref({});
-const dataCode = ref("");
-const categories = ref([]);
+let postsData = ref({});
+let dataCode = ref("");
+let categories = ref([]);
 let content = ref("");
-const datas = ref<any>([]);
+let datas = ref<any>([]);
 // 设置页码
 const setPage = (p: number, s: number) => {
   page.value = p;
@@ -301,11 +303,14 @@ const retrieve = async () => {
       .then((res) => {
         datas.value = res.data;
       }),
-    instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
-      total.value = res.data;
-    }),
+    count()
   ]);
 };
+const count = () => {
+  instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+    total.value = res.data;
+  })
+}
 // 添加tag
 const addTag = () => {
   if (tagValue.value && tagValue.value.length > 0) {
@@ -316,7 +321,7 @@ const addTag = () => {
 };
 // 删除tag
 const removeTag = (tag: String) => {
-  tags.value = tags.value.filter((item) => item !== tag);
+  tags.value.splice(tags.value.indexOf(tag), 1)
   postsData.value = { ...postsData.value, tags: tags.value };
 };
 // 删除取消
@@ -324,13 +329,14 @@ const confirmOperate = (operate: boolean) => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = () => {
-  instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
+const confirmCommit = async () => {
+  await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
+    count()
   });
 };
 // 新增/编辑：打开
@@ -386,23 +392,25 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
+        count()
       });
   } else {
     await instance.post(SERVER_URL.posts, data).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
-        datas.value.shift();
+        datas.value.pop();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
+      count()
     });
   }
 };
 
 // 上传文件
 const uploadImage = (files: Array<File>) => {
-  if (files.length > 0) {
+  if (files[0]) {
     uploadFile(files[0]).subscribe({
       complete: (e: any) => {
         postsData.value = {

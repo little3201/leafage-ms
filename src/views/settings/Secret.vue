@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSumbit" class="bg-white rounded-md">
+  <form @submit.prevent class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
       <h2 class="font-medium text-lg mr-auto">Change Password</h2>
       <button
@@ -55,23 +55,23 @@
 
 
 <script lang="ts" setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
+
+import { useRouter } from "vue-router";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
-const password = ref("");
-const newPassword = ref("");
-const confirmPassword = ref("");
+const router = useRouter();
 
-const isEquals = computed(() => {
-  return newPassword.value === confirmPassword.value;
-});
+let password = ref("");
+let newPassword = ref("");
+let confirmPassword = ref("");
 
 const onSumbit = async () => {
-  if (isEquals) {
-    await instance.patch(SERVER_URL.user).then((res) => {
-      alert(res.data.msg);
+  if (newPassword.value === confirmPassword.value) {
+    await instance.patch(SERVER_URL.user).then(() => {
+      router.replace("/signin");
     });
   }
 };

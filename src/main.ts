@@ -7,9 +7,9 @@ import { setupProdMockServer } from './plugins/mockServer';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {
-    sessionStorage.setItem("user", JSON.stringify({ username: "little3201", nickname: "布吉岛", 
-    avatar: "https://cdn.leafage.top/logo.png" }));
-    setupProdMockServer();
+    // sessionStorage.setItem("user", JSON.stringify({ username: "little3201", nickname: "布吉岛", 
+    // avatar: "https://cdn.leafage.top/logo.png" }));
+    // setupProdMockServer();
 }
 
 createApp(App).use(router).mount('#app')

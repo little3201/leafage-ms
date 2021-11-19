@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref, onMounted } from "vue";
 
 const emit = defineEmits(["delAction", "editAction"]);
 
@@ -52,10 +52,12 @@ const openModel = () => {
   emit("editAction", true);
 };
 
-const user = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '');
+const user = ref({})
+
+onMounted(() => {
+  let data = sessionStorage.getItem("user")
+  if (data) {
+    user.value = JSON.parse(data);
   }
-  return {}
 });
 </script>

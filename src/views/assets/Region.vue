@@ -146,11 +146,13 @@ const confirmOperate = (operate: boolean) => {
 // 删除确认
 const confirmCommit = async () => {
   await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
-      // 将datas中修改项的历史数据删除
-      datas.value.splice(datas.value.indexOf(dataCode.value), 1)
-      isDel.value = false;
-      count()
-    });
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
+    isDel.value = false;
+    count()
+  });
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
@@ -169,7 +171,9 @@ const modelCommit = async () => {
       .put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;

@@ -332,7 +332,9 @@ const confirmOperate = (operate: boolean) => {
 const confirmCommit = async () => {
   await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
     isDel.value = false;
     count()
   });
@@ -384,7 +386,9 @@ const modelCommit = async () => {
       .put(SERVER_URL.posts.concat("/", dataCode.value), data)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
@@ -394,7 +398,7 @@ const modelCommit = async () => {
     await instance.post(SERVER_URL.posts, data).then((res) => {
       if (datas.value.length >= size.value) {
         // 删除第一个
-        datas.value.shift();
+        datas.value.pop();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
@@ -406,7 +410,7 @@ const modelCommit = async () => {
 
 // 上传文件
 const uploadImage = (files: Array<File>) => {
-  if (files.length > 0) {
+  if (files[0]) {
     uploadFile(files[0]).subscribe({
       complete: (e: any) => {
         postsData.value = {

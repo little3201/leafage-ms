@@ -74,11 +74,11 @@
                   />
                   <label class="cursor-pointer" for="remember-me">Remember me</label>
                 </div>
-                <a href class="text-blue-600">Forgot Password ?</a>
+                <a href="#" class="text-blue-600">Forgot Password ?</a>
               </div>
               <button
                 type="submit"
-                @click="onSumbit"
+                @click="onSubmit"
                 class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
               >Sign in</button>
             </form>
@@ -107,27 +107,22 @@ const router = useRouter();
 
 const onSubmit = async () => {
   await instance.get("/check").then(() => {
-    instance
-      .post("/login", new URLSearchParams(formData.value))
-      .then((res) => {
-        init(res.data.username);
-        // 登录完成后，调整原请求页
-        router.replace({ path: route.query.redirect?.toString() || "/" });
-      });
+    instance.post("/login", new URLSearchParams(formData.value))
+      .then(res => init(res.data.username));
   })
 };
 
 const init = async (username: string) => {
   await Promise.all([
-    instance.get(SERVER_URL.user.concat("/", username)).then((res) => {
-      sessionStorage.setItem("user", JSON.stringify(res.data));
-    }),
+    instance.get(SERVER_URL.user.concat("/", username)).then(res =>
+      sessionStorage.setItem("user", JSON.stringify(res.data))),
     instance
       .get(SERVER_URL.user.concat("/", username, "/authority"))
-      .then((res) => {
-        sessionStorage.setItem("menus", JSON.stringify(res.data));
-      })
-  ])
+      .then(res => sessionStorage.setItem("menus", JSON.stringify(res.data)))
+  ]).then(() => {
+    // 登录完成后，调整原请求页
+    router.replace({ path: route.query.redirect?.toString() || "/" });
+  })
 }
 
 </script>

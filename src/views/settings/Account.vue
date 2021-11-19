@@ -39,38 +39,29 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 let account = ref({});
 
-const username = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '').username;
-  }
-  return '';
-})
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 const fetch = async () => {
   if (username.value && username.value.length > 0) {
-    await instance.get(SERVER_URL.account.concat("/", username.value)).then(res => {
-      if (res.data.length > 0) {
-        account.value = res.data
-      }
-    })
+    await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
+      account.value = res.data
+    )
   }
 }
 
 const onSubmit = async () => {
   if (username.value && username.value.length > 0) {
     let data = { ...account.value, modifier: username.value }
-    await instance
-      .post(SERVER_URL.account, data)
-      .then((res) => {
-        account.value = res.data
-      });
+    await instance.post(SERVER_URL.account, data).then((res) =>
+      account.value = res.data
+    );
   }
 };
 

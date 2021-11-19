@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="" class="bg-white rounded-md">
+  <form @submit.prevent class="bg-white rounded-md">
     <div class="flex items-center p-4 border-b border-gray-200">
       <h2 class="font-medium text-lg mr-auto">Profile</h2>
       <button
@@ -123,19 +123,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
 
 let user = ref({});
 
-const username = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '').username;
-  }
-  return '';
-})
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 const fetch = async () => {
   if (username.value && username.value.length > 0) {

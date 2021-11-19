@@ -47,21 +47,27 @@ export default [
       return [
         {
           code: '20A23D2D1',
-          title: 'Travel Photos',
+          title: 'Spring boot',
           type: 'E',
           modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
         },
         {
           code: '20A23D2D2',
-          title: 'Travel Video',
+          title: 'Spring cloud',
           type: 'P',
           modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
         },
         {
-          code: '20A23D2D2',
-          title: 'Travel Video',
+          code: '20A23D2D3',
+          title: 'Spring security',
           type: 'T',
           modifyTime: new Date(),
+          viewed: 902,
+          downloads: 12
         }
       ];
     },

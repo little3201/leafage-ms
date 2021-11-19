@@ -57,7 +57,7 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-green-300': data.type === 'E', 'bg-blue-300': data.type === 'P', 'bg-pink-300': data.type === 'T' }"
+                :class="{ 'bg-indigo-300': data.type === 'E', 'bg-blue-300': data.type === 'P', 'bg-pink-300': data.type === 'T' }"
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.viewed"></td>
@@ -208,6 +208,7 @@ import { uploadFile } from "../../plugins/upload";
 let resourceData = ref({});
 let dataCode = ref("");
 let datas = ref<any>([]);
+let categories = ref([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -247,7 +248,9 @@ const confirmOperate = (operate: boolean) => {
 const confirmCommit = async () => {
   await instance.delete(SERVER_URL.resource.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
     isDel.value = false;
     count()
   });
@@ -256,14 +259,20 @@ const confirmCommit = async () => {
 const modelOperate = async (operate: boolean) => {
   resourceData.value = {};
   if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .get(SERVER_URL.resource.concat("/", dataCode.value))
-      .then(res =>
-        resourceData.value = res.data
-      );
+    await Promise.all([instance.get(SERVER_URL.category).then((res) => {
+      categories.value = res.data;
+    }),
+    fetch()]);
   }
   isEdit.value = operate;
 };
+const fetch = () => {
+  instance
+    .get(SERVER_URL.resource.concat("/", dataCode.value))
+    .then(res =>
+      resourceData.value = res.data
+    )
+}
 // 新增/编辑：提交
 const modelCommit = async () => {
   if (dataCode.value && dataCode.value.length > 0) {
@@ -271,7 +280,9 @@ const modelCommit = async () => {
       .put(SERVER_URL.resource.concat("/", dataCode.value), resourceData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
@@ -293,18 +304,14 @@ const modelCommit = async () => {
 
 // 上传文件
 const uploadImage = (files: Array<File>) => {
-  if (files.length > 0) {
-    let urls = new Array(files.length);
-    Array.from(Array(files.length).keys()).forEach((id) =>
-      uploadFile(files[id]).subscribe({
-        // next: (result) => {},
-        // error: () => {},
-        complete: (e: any) => {
-          urls.push("https://cdn.leafage.top/" + e.key);
-        },
-      })
-    );
-    resourceData.value = { ...resourceData.value, url: urls };
+  if (files[0]) {
+    uploadFile(files[0]).subscribe({
+      // next: (result) => {},
+      // error: () => {},
+      complete: (e: any) => {
+        resourceData.value = { ...resourceData.value, cover: "https://cdn.leafage.top/" + e.key };
+      }
+    })
   }
 };
 

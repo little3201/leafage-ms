@@ -157,7 +157,9 @@ const confirmOperate = (operate: boolean, code: string) => {
 const confirmCommit = async () => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+    datas.value = datas.value.filter(
+      (item: any) => item.code != dataCode.value
+    );
     isDel.value = false;
     count()
   });
@@ -176,12 +178,15 @@ const modelOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
+  debugger
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)
       .then((res) => {
         // 将datas中修改项的历史数据删除
-        datas.value.splice(datas.value.indexOf(dataCode.value), 1)
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;

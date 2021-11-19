@@ -15,22 +15,24 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref, onMounted } from "vue";
 
 import Drawer from "/@/components/layout/Drawer.vue";
 import Aside from "/@/components/layout/Aside.vue";
 import TopBar from "/@/components/layout/TopBar.vue";
 
-const menus = computed(() => {
+const menus = ref<Array<any>>([]);
+
+onMounted(() => {
   if (sessionStorage.getItem("menus") != null) {
-    return JSON.parse(sessionStorage.getItem("menus") || '')
-  }
-  return [
-    { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
+    menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
+  } else {
+    menus.value = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
     { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
     { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "monitor" }, "children": [] },
-    { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
-    { "code": "21953KO8", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
-  ]
+    { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
+    ]
+  }
+
 });
 </script>

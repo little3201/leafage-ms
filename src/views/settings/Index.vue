@@ -89,13 +89,9 @@
 
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref } from "vue";
 
-const user = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '');
-  }
-});
+const user = ref(JSON.parse(sessionStorage.getItem("user") || ''))
 </script>
 
 <style scoped>

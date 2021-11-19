@@ -1,5 +1,8 @@
 <template>
-  <div v-if="user && Object.keys(user).length > 0" class="inline-flex items-center sm:ml-auto text-sm">
+  <div
+    v-if="user && Object.keys(user).length > 0"
+    class="inline-flex items-center sm:ml-auto text-sm"
+  >
     <button
       class="hidden p-2 rounded-md bg-white sm:inline-flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
     >
@@ -59,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref, onMounted } from "vue";
 
 const emit = defineEmits(["modelOperate"]);
 
@@ -67,10 +70,12 @@ const operate = () => {
   emit("modelOperate", true);
 };
 
-const user = computed(() => {
-  if (sessionStorage.getItem("user") != null) {
-    return JSON.parse(sessionStorage.getItem("user") || '');
+const user = ref({})
+
+onMounted(() => {
+  let data = sessionStorage.getItem("user")
+  if (data) {
+    user.value = JSON.parse(data);
   }
-  return {}
 });
 </script>

@@ -24,7 +24,7 @@ import TopBar from "/@/components/layout/TopBar.vue";
 const menus = ref([]);
 
 onMounted(() => {
-  if (sessionStorage.getItem("menus") != null) {
+  if (sessionStorage.getItem("menus") == null) {
     let authorities = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
     { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
     { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "monitor" }, "children": [] },

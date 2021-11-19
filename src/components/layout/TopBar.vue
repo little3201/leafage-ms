@@ -1,6 +1,5 @@
 <template>
   <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
-    <!-- BEGIN: Breadcrumb -->
     <div class="mr-auto hidden md:flex items-center">
       <router-link to="/" class>Application</router-link>
       <svg
@@ -166,8 +165,8 @@
         tabindex="-1"
       >
         <div class="p-2">
-          <h3 class="font-blod text-base" v-text="user.nickname"></h3>
-          <h4 class="text-gray-500" v-text="user.username"></h4>
+          <h3 class="font-blod text-base">{{ user.nickname }}</h3>
+          <h4 class="text-gray-500">{{ user.username }}</h4>
         </div>
         <router-link
           @click="operate('')"
@@ -279,7 +278,7 @@ const notifications = ref([
   }
 ])
 
-const user = ref(JSON.parse(sessionStorage.getItem("user") || ''));
+const user = ref({});
 
 const signout = async () => {
   await instance.post("/logout").then(() => {
@@ -336,6 +335,7 @@ const socket = () => {
 onMounted(() => {
   let data = sessionStorage.getItem("user");
   if (data) {
+    user.value = JSON.parse(data)
     socket();
   }
 });

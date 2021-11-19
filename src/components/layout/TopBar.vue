@@ -282,13 +282,12 @@ const user = ref({});
 
 const signout = async () => {
   await instance.post("/logout").then(() => {
-    // 退出登录，设置user为空
-    sessionStorage.removeItem("user");
-    // 清空menus
-    sessionStorage.removeItem("menus");
+    // 退出登录，清空sessionStorage
+    sessionStorage.clear()
 
-    router.replace("/signin");
   });
+
+  router.replace("/signin");
 };
 
 const operate = (operation: string) => {

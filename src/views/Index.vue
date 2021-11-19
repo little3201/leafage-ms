@@ -21,17 +21,18 @@ import Drawer from "/@/components/layout/Drawer.vue";
 import Aside from "/@/components/layout/Aside.vue";
 import TopBar from "/@/components/layout/TopBar.vue";
 
-const menus = ref([]);
+const menus = ref<Array<any>>([]);
 
 onMounted(() => {
-  if (sessionStorage.getItem("menus") == null) {
-    let authorities = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
+  if (sessionStorage.getItem("menus") != null) {
+    menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
+  } else {
+    menus.value = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
     { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
     { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "monitor" }, "children": [] },
     { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
     ]
-    sessionStorage.setItem('menus', JSON.stringify(authorities))
   }
-  menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
+
 });
 </script>

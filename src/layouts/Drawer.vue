@@ -108,7 +108,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-import DrawerCore from "/@/components/layout/DrawerCore.vue";
+import DrawerCore from "/@/layouts/DrawerCore.vue";
 
 defineProps({
   datas: {

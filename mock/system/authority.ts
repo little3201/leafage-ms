@@ -81,7 +81,7 @@ export default [
             }]
         },
         { "code": "21224B8JZ", "name": "Posts", "superior": "21224B8JZ", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
-        { "code": "21224QI72", "name": "Portfolio", "superior": "21224QI72", "expand": { "path": "/portfolio", "icon": "camera" }, "children": [] },
+        { "code": "21224QI72", "name": "Resource", "superior": "21224QI72", "expand": { "path": "/resource", "icon": "camera" }, "children": [] },
         { "code": "21224HMLG", "name": "Category", "superior": "21224HMLG", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
       ];
     },

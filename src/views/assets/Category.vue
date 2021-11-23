@@ -28,7 +28,7 @@
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
+            <th scope="col" class="px-4">Alias</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Posts Count</th>
@@ -73,12 +73,12 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label for="name">Name</label>
+            <label for="alias">Alias</label>
             <input
-              id="name"
+              id="alias"
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              placeholder="Name"
+              placeholder="Alias"
               required
               autofocus
               v-model.trim="categoryData.alias"

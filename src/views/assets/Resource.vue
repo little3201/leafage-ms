@@ -31,6 +31,7 @@
             <th scope="col" class="px-4">Title</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
+            <th scope="col" class="px-4">Category</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -57,9 +58,10 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-300': data.type === 'E', 'bg-blue-300': data.type === 'P', 'bg-pink-300': data.type === 'T' }"
+                :class="{ 'bg-indigo-100': data.type === 'E', 'bg-blue-100': data.type === 'P', 'bg-pink-100': data.type === 'T' }"
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
+            <td class="px-4" v-text="data.category"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>

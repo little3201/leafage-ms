@@ -17,9 +17,9 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Drawer from "/@/components/layout/Drawer.vue";
-import Aside from "/@/components/layout/Aside.vue";
-import TopBar from "/@/components/layout/TopBar.vue";
+import Drawer from "/@/layouts/Drawer.vue";
+import Aside from "/@/layouts/Aside.vue";
+import TopBar from "/@/layouts/TopBar.vue";
 
 const menus = ref<Array<any>>([]);
 

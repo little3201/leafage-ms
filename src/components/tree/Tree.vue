@@ -1,24 +1,16 @@
 <template>
   <Model
     :isShow="isShow"
-    @cancelAction="$emit('treeAction', false)"
-    @commitAction="$emit('treeAction', checked)"
+    @cancelAction="$emit('treeOperate', false)"
+    @commitAction="$emit('treeCommit', tracked)"
   >
     <ul>
-      <TreeCore
-        v-for="data in datas"
-        :key="data.code"
-        :data="data"
-        @addChecked="addChecked"
-        @delChecked="delChecked"
-      />
+      <TreeCore v-for="data in datas" :key="data.code" :data="data" />
     </ul>
   </Model>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-
 import Model from "/@/components/global/Model.vue";
 import TreeCore from "/@/components/tree/TreeCore.vue";
 
@@ -32,14 +24,4 @@ defineProps({
     default: [],
   },
 });
-
-const checked = ref<Array<String>>([])
-
-const addChecked = (code: String) => {
-  checked.value.push(code)
-}
-
-const delChecked = (code: String) => {
-  checked.value.splice(checked.value.indexOf(code), 1)
-}
 </script>

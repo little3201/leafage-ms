@@ -2,11 +2,11 @@
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
       <input
+        :id="data.name"
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
-        v-model="isChecked"
-        @change="dataChecked(data.code)"
+        v-model="tracked"
       />
       <span
         v-if="data.children && data.children.length > 0"
@@ -38,7 +38,7 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="ml-6"
+          class="ml-8"
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
         </svg>
@@ -52,12 +52,12 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="ml-6"
+          class="ml-8"
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-      <span v-else class="ml-4 flex items-center">
+      <label :for="data.name" v-else class="ml-4 flex items-center cursor-pointer">
         <svg
           v-if="data.expand && data.expand.icon"
           width="16"
@@ -73,46 +73,33 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
         {{ data.name }}
-      </span>
+      </label>
     </div>
     <ul v-show="isOpen" class="ml-4 mt-1">
-      <TreeCore
-        v-for="child in data.children"
-        :key="child.code"
-        :data="child"
-        @addChecked="$emit('addChecked', child.code)"
-        @delChecked="$emit('delChecked', child.code)"
-      />
+      <TreeCore v-for="child in data.children" :key="child.code" :data="child" />
     </ul>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import TreeCore from "/@/components/tree/TreeCore.vue";
 
-const props = defineProps({
+defineProps({
   data: {
     type: Object,
     default: ''
-  },
-  checked: {
-    type: Boolean,
-    default: false
   }
 });
 
 const isOpen = ref(false);
 
-const isChecked = ref(props.checked);
+const tracked = ref(["21224B8JZ"]);
 
-const emit = defineEmits(["addChecked", "delChecked"]);
-
-const dataChecked = (code: String) => {
-  if (isChecked.value) {
-    emit("addChecked", code);
-  } else {
-    emit("delChecked", code);
+watch(
+  () => [...tracked.value],
+  (tracked, pre) => {
+    console.log(tracked)
   }
-};
+)
 </script>

@@ -299,9 +299,9 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import router from "../../router";
+import router from "../router";
 
-import instance from "../../api";
+import instance from "../api";
 
 // 控制通知是否打开
 const isNotify = ref(false);

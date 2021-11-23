@@ -303,10 +303,10 @@ const construceChart = () => {
   let labels = obj.labels
   // 浏览量统计
   createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
-  // 喜欢数统计
-  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 评论数统计
   createMiniChart(commentChart.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
+  // 喜欢数统计
+  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 帖子分类统计
   createBarChart(barChart.value, labels, obj.viewed);
 }

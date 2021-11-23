@@ -136,7 +136,12 @@
         </div>
       </form>
     </Model>
-    <Tree :isShow="isTree" @treeAction="treeOperate" :datas="authorities" />
+    <Tree
+      :isShow="isTree"
+      @cancelAction="treeOperate"
+      @commitAction="treeCommit"
+      :datas="authorities"
+    />
   </div>
 </template>
 
@@ -233,6 +238,13 @@ const treeOperate = async (operate: boolean) => {
     });
   }
   isTree.value = operate;
+};
+// 提交
+const treeCommit = async (tracked: Array<String>) => {
+  if (tracked && tracked.length > 0) {
+    alert("commit " + tracked)
+  }
+  isTree.value = false;
 };
 // 新增/编辑：提交
 const modelCommit = async () => {

@@ -2,7 +2,7 @@
     <div>
         <div class="flex items-center">
             <h2 class="text-lg font-medium mr-auto my-2">Notification</h2>
-            <router-link
+            <RouterLink
                 class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-t-md p-2"
                 to="unread"
             >
@@ -20,8 +20,8 @@
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
                 </svg>
                 Unread
-            </router-link>
-            <router-link
+            </RouterLink>
+            <RouterLink
                 class="inline-flex items-center justify-center w-36 hover:text-blue-600 hover:bg-gray-100 rounded-t-md p-2"
                 to="readed"
             >
@@ -39,11 +39,11 @@
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'book-open'" />
                 </svg>
                 Readed
-            </router-link>
+            </RouterLink>
         </div>
         <div class="bg-white px-4 rounded-md text-gray-600">
             <!-- 子组件 -->
-            <router-view />
+            <RouterView />
         </div>
     </div>
 </template>
@@ -54,7 +54,7 @@
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.RouterLink-exact-active {
     @apply text-blue-700 font-medium bg-white -mb-1;
 }
 </style>

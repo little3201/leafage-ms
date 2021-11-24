@@ -3,7 +3,7 @@
     <div class="container mx-auto">
       <div class="xl:grid grid-cols-2 gap-4">
         <div class="hidden xl:flex flex-col h-screen my-auto md:ml-36 relative">
-          <router-link to="/" class="flex items-center z-0 absolute top-28">
+          <RouterLink to="/" class="flex items-center z-0 absolute top-28">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -31,7 +31,7 @@
               </g>
             </svg>
             <span class="text-white text-3xl ml-3">Leafage</span>
-          </router-link>
+          </RouterLink>
           <img src="/svg/illustration.svg" class="my-auto" alt="leafage" />
           <div class="z-0 absolute bottom-28">
             <p class="text-white font-medium text-xl leading-tight">一个使用 Vue3、 Tailwindcss 的网站管理系统</p>
@@ -84,7 +84,7 @@
             </form>
             <div class="my-6 text-center xl:text-left">
               Not registered?
-              <router-link class="text-blue-600" to="/signup">Create account</router-link>
+              <RouterLink class="text-blue-600" to="/signup">Create account</RouterLink>
             </div>
           </div>
         </div>

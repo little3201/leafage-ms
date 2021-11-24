@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="py-4">
-            <router-link
+            <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="profile"
             >
@@ -36,8 +36,8 @@
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'activity'" />
               </svg>
               Profile
-            </router-link>
-            <router-link
+            </RouterLink>
+            <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="account"
             >
@@ -55,10 +55,10 @@
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
               </svg>
               Account
-            </router-link>
+            </RouterLink>
           </div>
           <div class="py-4">
-            <router-link
+            <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="secret"
             >
@@ -76,12 +76,12 @@
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
               </svg>
               Secret
-            </router-link>
+            </RouterLink>
           </div>
         </div>
       </div>
       <div class="col-span-12 md:col-span-8 lg:col-span-9 rounded-md">
-        <router-view />
+        <RouterView />
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@ const user = ref(JSON.parse(sessionStorage.getItem("user") || ''))
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.RouterLink-exact-active {
   @apply text-blue-700 font-medium bg-gray-100;
 }
 </style>

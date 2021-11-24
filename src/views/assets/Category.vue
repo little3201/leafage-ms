@@ -102,11 +102,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
-import Action from "/@/components/global/Action.vue";
-import Pagation from "/@/components/global/Pagation.vue";
-import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
+import Operation from "/@/components/Operation.vue";
+import Action from "/@/components/Action.vue";
+import Pagation from "/@/components/Pagation.vue";
+import Confirm from "/@/components/Confirm.vue";
+import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";

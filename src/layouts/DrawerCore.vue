@@ -51,7 +51,7 @@
         </svg>
       </span>
     </div>
-    <router-link
+    <RouterLink
       v-else
       @click="itemOperation"
       :to="superior.concat(data.expand.path)"
@@ -73,7 +73,7 @@
         </svg>
       </div>
       <span class="flex items-center" v-text="data.name"></span>
-    </router-link>
+    </RouterLink>
     <ul v-show="isOpen" class="mx-4 bg-blue-900 bg-opacity-30 rounded-md">
       <DrawerCore
         v-for="child in data.children"
@@ -109,7 +109,7 @@ const itemOperation = () => {
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.RouterLink-exact-active {
   @apply bg-gray-100 text-black;
 }
 </style>

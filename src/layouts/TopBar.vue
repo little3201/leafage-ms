@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
     <div class="mr-auto hidden md:flex items-center">
-      <router-link to="/" class>Application</router-link>
+      <RouterLink to="/" class>Application</RouterLink>
       <svg
         width="20"
         height="20"
@@ -15,7 +15,7 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
-      <router-link :to="$route.path" class="text-blue-600 font-medium" v-text="$route.name"></router-link>
+      <RouterLink :to="$route.path" class="text-blue-600 font-medium" v-text="$route.name"></RouterLink>
     </div>
     <div class="mr-3 sm:mr-6">
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
@@ -115,7 +115,7 @@
             :key="index"
             class="overflow-hidden p-2 hover:bg-gray-100 rounded-md"
           >
-            <router-link to="/notification/unread" @click="operate('')">
+            <RouterLink to="/notification/unread" @click="operate('')">
               <div class="flex items-center">
                 <p class="font-medium truncate" v-text="notification.title"></p>
                 <span
@@ -124,7 +124,7 @@
                 ></span>
               </div>
               <div class="w-full truncate text-gray-600">{{ notification.content }}</div>
-            </router-link>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -197,11 +197,11 @@
         <img v-if="user.avatar" alt="leafage" :src="user.avatar" class="rounded-full" />
         <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
       </div>
-      <router-link
+      <RouterLink
         v-else
         to="/signin"
         class="bg-blue-600 text-white hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-full"
-      >Sign In</router-link>
+      >Sign In</RouterLink>
       <div
         v-show="isAccount"
         class="origin-top-right py-4 px-2 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
@@ -213,7 +213,7 @@
           <h3 class="font-blod text-base">{{ user.nickname }}</h3>
           <h4 class="text-gray-500">{{ user.username }}</h4>
         </div>
-        <router-link
+        <RouterLink
           @click="operate('')"
           to="/settings/profile"
           class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
@@ -232,8 +232,8 @@
             <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
           </svg>
           Profile
-        </router-link>
-        <router-link
+        </RouterLink>
+        <RouterLink
           @click="operate('')"
           to="/settings/secret"
           class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
@@ -252,7 +252,7 @@
             <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
           </svg>
           Settings
-        </router-link>
+        </RouterLink>
         <button
           type="button"
           class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md p-2"

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import Model from "/@/components/global/Model.vue";
+import Model from "/@/components/Model.vue";
 
 defineProps({
   isShow: {

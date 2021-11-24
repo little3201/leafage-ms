@@ -8,7 +8,7 @@
         style="height: calc(100vh - 1.5rem)"
       >
         <TopBar />
-        <router-view></router-view>
+        <RouterView></RouterView>
       </main>
     </div>
   </div>

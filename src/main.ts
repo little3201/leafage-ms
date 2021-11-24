@@ -3,7 +3,7 @@ import App from './App.vue'
 import './assets/main.css'
 import router from './router'
 
-import { setupProdMockServer } from './plugins/mockServer';
+import { setupProdMockServer } from './mock';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {

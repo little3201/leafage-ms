@@ -288,7 +288,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.resource, resourceData.value).then((res) => {

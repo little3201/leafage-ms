@@ -140,6 +140,7 @@
       :isShow="isTree"
       @cancelAction="treeOperate"
       @commitAction="treeCommit"
+      :codes="codes"
       :datas="authorities"
     />
   </div>
@@ -167,6 +168,7 @@ let roleData = ref({});
 let dataCode = ref("");
 let superiors = ref([]);
 let authorities = ref([]);
+let codes = ref<Array<String>>([])
 let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
@@ -233,9 +235,16 @@ const fetch = () => {
 // 授权：打开
 const treeOperate = async (operate: boolean) => {
   if (operate) {
-    await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-      authorities.value = res.data;
-    });
+    await Promise.all([
+      instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+        authorities.value = res.data;
+      }),
+      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then((res) => {
+        res.data.forEach((item: any) => {
+          codes.value.push(item.code)
+        });
+      })
+    ])
   }
   isTree.value = operate;
 };
@@ -259,7 +268,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.role, roleData.value).then((res) => {

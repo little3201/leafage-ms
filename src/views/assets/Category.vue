@@ -178,7 +178,6 @@ const modelOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
-  debugger
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)
@@ -190,7 +189,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.category, categoryData.value).then((res) => {

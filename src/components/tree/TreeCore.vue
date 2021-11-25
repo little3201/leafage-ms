@@ -2,7 +2,6 @@
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
       <input
-        :id="data.name"
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
@@ -57,7 +56,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-      <label :for="data.name" v-else class="ml-4 flex items-center cursor-pointer">
+      <span v-else class="ml-4 flex items-center">
         <svg
           v-if="data.expand && data.expand.icon"
           width="16"
@@ -73,33 +72,35 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
         {{ data.name }}
-      </label>
+      </span>
     </div>
-    <ul v-show="isOpen" class="ml-4 mt-1">
-      <TreeCore v-for="child in data.children" :key="child.code" :data="child" />
+    <ul v-show="isOpen" class="ml-4 my-1">
+      <TreeCore
+        v-for="child in data.children"
+        :key="child.code"
+        :data="child"
+        :checked="tracked"
+        @trackedOperate="$emit('trackedOperate', child.code)"
+      />
     </ul>
   </li>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import TreeCore from "/@/components/tree/TreeCore.vue";
+import { ref } from "vue";
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object,
     default: ''
+  },
+  checked: {
+    type: Array,
+    default: []
   }
 });
 
-const isOpen = ref(false);
+let isOpen = ref(false);
 
-const tracked = ref(["21224B8JZ"]);
-
-watch(
-  () => [...tracked.value],
-  (tracked, pre) => {
-    console.log(tracked)
-  }
-)
+let tracked = ref(props.checked);
 </script>

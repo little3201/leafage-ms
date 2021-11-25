@@ -312,78 +312,78 @@
       <form class="w-full">
         <div class="grid grid-cols-12 gap-4 row-gap-3">
           <div class="col-span-12 md:col-span-6">
-            <label for="accountExpired">
+            <span>
               Account Expired
               <span class="text-red-600 text-base ml-1">*</span>
-            </label>
+            </span>
             <div class="mt-3">
               <input
-                id="accountExpired"
+                id="accountExpired_false"
                 aria-label="account expired"
                 type="radio"
                 value="false"
-                v-model.lazy="userData.accountNonExpired"
+                v-model="userData.accountNonExpired"
               />
-              <span class="ml-2">True</span>
+              <label for="accountExpired_false" class="ml-2 cursor-pointer">True</label>
               <input
-                id="accountExpired"
+                id="accountExpired_true"
                 aria-label="account expired"
                 type="radio"
                 class="ml-4"
                 value="true"
-                v-model.lazy="userData.accountNonExpired"
+                v-model="userData.accountNonExpired"
               />
-              <span class="ml-2">False</span>
+              <label for="accountExpired_true" class="ml-2 cursor-pointer">False</label>
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label for="accountLocked">
+            <span>
               Account Locked
               <span class="text-red-600 text-base ml-1">*</span>
-            </label>
+            </span>
             <div class="mt-3">
               <input
-                id="accountLocked"
+                id="accountLocked_false"
                 aria-label="account locked"
                 type="radio"
                 value="false"
-                v-model.lazy="userData.accountNonLocked"
+                v-model="userData.accountNonLocked"
               />
-              <span class="ml-2">True</span>
+              <label for="accountLocked_false" class="ml-2 cursor-pointer">True</label>
               <input
-                id="accountLocked"
+                id="accountLocked_true"
                 aria-label="account locked"
                 type="radio"
                 value="true"
                 class="ml-4"
-                v-model.lazy="userData.accountNonLocked"
+                v-model="userData.accountNonLocked"
               />
-              <span class="ml-2">False</span>
+              <label for="accountLocked_true" class="ml-2 cursor-pointer">False</label>
             </div>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label for="credentialsExpired">
+            <span>
               Credentials Expired
               <span class="text-red-600 text-base ml-1">*</span>
-            </label>
+            </span>
             <div class="mt-3">
               <input
-                id="credentialsExpired"
-                aria-label="credentials expired"
-                type="radio"
-                value="true"
-                v-model.lazy="userData.credentialsExpired"
-              />
-              <span class="ml-2">True</span>
-              <input
-                id="credentialsExpired"
+                id="credentialsExpired_false"
                 aria-label="credentials expired"
                 type="radio"
                 value="false"
-                class="ml-4"
-                v-model.lazy="userData.credentialsExpired"
+                v-model="userData.credentialsNonExpired"
               />
-              <span class="ml-2">False</span>
+              <label for="credentialsExpired_false" class="ml-2 cursor-pointer">True</label>
+              <input
+                id="credentialsExpired_true"
+                aria-label="credentials expired"
+                type="radio"
+                value="true"
+                class="ml-4"
+                v-model="userData.credentialsNonExpired"
+              />
+              <label for="credentialsExpired_true" class="ml-2 cursor-pointer">False</label>
             </div>
           </div>
           <div class="col-span-12">
@@ -399,7 +399,13 @@
         </div>
       </form>
     </Model>
-    <Tree :isShow="isTree" @treeAction="treeOperate" :datas="treeDatas" />
+    <Tree
+      :isShow="isTree"
+      @cancelAction="treeOperate"
+      @commitAction="treeCommit"
+      :datas="treeDatas"
+      :codes="codes"
+    />
   </div>
 </template>
 
@@ -423,6 +429,7 @@ let isTree = ref(false);
 let userData = ref({});
 let username = ref("");
 let treeDatas = ref([]);
+let codes = ref<Array<String>>([])
 let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
@@ -490,7 +497,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.user, userData.value).then((res) => {
@@ -509,18 +515,38 @@ const modelCommit = async () => {
 const treeOperate = async (operate: boolean, type: string) => {
   if (operate) {
     if (type === "group") {
-      await instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
-        treeDatas.value = res.data;
-      });
+      await Promise.all([
+        instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
+          treeDatas.value = res.data;
+        }),
+        relation(type)
+      ])
     } else if (type === "role") {
-      await instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
-        treeDatas.value = res.data;
-      });
+      await Promise.all([
+        instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
+          treeDatas.value = res.data;
+        }),
+        relation(type)
+      ])
     }
   }
   isTree.value = operate;
 };
 
+const relation = (type: string) => {
+  instance.get(SERVER_URL.user.concat('/', username.value, '/', type)).then(res =>
+    res.data.forEach((item: any) => {
+      codes.value.push(item.code)
+    })
+  )
+}
+// 提交
+const treeCommit = async (tracked: Array<String>) => {
+  if (tracked && tracked.length > 0) {
+    alert("commit " + tracked)
+  }
+  isTree.value = false;
+};
 onMounted(() => {
   retrieve();
 });

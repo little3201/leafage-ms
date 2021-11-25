@@ -1,8 +1,8 @@
 <template>
   <Model
     :isShow="isShow"
-    @cancelAction="$emit('treeOperate')"
-    @commitAction="$emit('treeCommit', checked)"
+    @cancelAction="$emit('cancelAction')"
+    @commitAction="$emit('commitAction', checked)"
   >
     <ul>
       <TreeCore

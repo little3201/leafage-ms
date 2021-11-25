@@ -56,8 +56,8 @@ const cancelOperation = () => {
   emit("cancelAction", false);
 };
 
-const commitOperation = (data: any) => {
-  emit("commitAction", data);
+const commitOperation = () => {
+  emit("commitAction");
 };
 </script>
 

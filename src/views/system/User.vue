@@ -1,6 +1,6 @@
 <template>
   <div class="col-span-12 mt-2">
-    <div class="inline-flex justify-between items-center">
+    <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Users</h2>
       <button
         @click="retrieve"
@@ -21,6 +21,7 @@
         </svg>
         Reload Data
       </button>
+      <Operation @click.capture="username = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
@@ -275,7 +276,7 @@
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="mr-2"
+                    class="mr-1"
                   >
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
                   </svg>
@@ -294,7 +295,7 @@
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="mr-2"
+                    class="mr-1"
                   >
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
@@ -309,8 +310,8 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
+      <form>
+        <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 md:col-span-6">
             <span>
               Account Expired
@@ -412,6 +413,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
+import Operation from "/@/components/Operation.vue";
 import Action from "/@/components/Action.vue";
 import Pagation from "/@/components/Pagation.vue";
 import Confirm from "/@/components/Confirm.vue";
@@ -535,9 +537,7 @@ const treeOperate = async (operate: boolean, type: string) => {
 
 const relation = (type: string) => {
   instance.get(SERVER_URL.user.concat('/', username.value, '/', type)).then(res =>
-    res.data.forEach((item: any) => {
-      codes.value.push(item.code)
-    })
+    codes.value = res.data
   )
 }
 // 提交

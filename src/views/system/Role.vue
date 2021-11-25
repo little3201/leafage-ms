@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
@@ -73,7 +73,7 @@
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-power mr-2"
+                    class="feather feather-power mr-1"
                   >
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
                     <line x1="12" y1="2" x2="12" y2="12" />
@@ -89,9 +89,9 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
+      <form>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12">
             <label for="name">
               Name
               <span class="text-red-600 text-base ml-1">*</span>
@@ -106,7 +106,7 @@
               autofocus
             />
           </div>
-          <div class="col-span-12 sm:col-span-6">
+          <div class="col-span-12">
             <label for="superior">Superior</label>
             <select
               id="superior"
@@ -240,9 +240,7 @@ const treeOperate = async (operate: boolean) => {
         authorities.value = res.data;
       }),
       instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then((res) => {
-        res.data.forEach((item: any) => {
-          codes.value.push(item.code)
-        });
+        codes.value = res.data
       })
     ])
   }

@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Category</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
@@ -70,7 +70,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
+      <form>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="alias">Alias</label>

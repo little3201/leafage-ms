@@ -2,15 +2,17 @@
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
       <input
+        :id="data.name"
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="tracked"
+        @change="$emit('trackedOperate', data.code)"
       />
       <span
         v-if="data.children && data.children.length > 0"
         @click="isOpen = !isOpen"
-        class="ml-4 cursor-pointer flex items-center"
+        class="ml-4 cursor-pointer inline-flex items-center"
       >
         <svg
           v-if="data.expand && data.expand.icon"
@@ -56,7 +58,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-      <span v-else class="ml-4 flex items-center">
+      <label :for="data.name" v-else class="ml-4 flex items-center cursor-pointer">
         <svg
           v-if="data.expand && data.expand.icon"
           width="16"
@@ -72,14 +74,14 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
         {{ data.name }}
-      </span>
+      </label>
     </div>
     <ul v-show="isOpen" class="ml-4 my-1">
       <TreeCore
         v-for="child in data.children"
         :key="child.code"
         :data="child"
-        :checked="tracked"
+        :checked="checked"
         @trackedOperate="$emit('trackedOperate', child.code)"
       />
     </ul>

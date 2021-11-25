@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
@@ -79,7 +79,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
+      <form>
         <div class="grid grid-cols-12 grid-rows-3 gap-4">
           <div class="col-span-12 sm:col-span-7">
             <label for="title">

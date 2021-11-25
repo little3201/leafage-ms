@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group">
@@ -58,7 +58,27 @@
                 @click.capture="dataCode = data.code"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
-              />
+              >
+                <button
+                  class="flex items-center mr-3 text-green-600 focus:outline-none"
+                  @click="relation"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-1"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
+                  </svg>
+                  Users
+                </button>
+              </Action>
             </td>
           </tr>
         </tbody>
@@ -67,8 +87,8 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
+      <form>
+        <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="name">
               Name
@@ -251,7 +271,9 @@ const modelCommit = async () => {
     });
   }
 };
-
+const relation = () => {
+  alert("users")
+}
 onMounted(() => {
   retrieve();
 });

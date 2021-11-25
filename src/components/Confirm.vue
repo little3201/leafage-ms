@@ -2,8 +2,8 @@
   <Model
     :isShow="isShow"
     :isConfirm="true"
-    @cancelAction="cancelOperation"
-    @commitAction="commitOperation"
+    @cancelAction="$emit('cancelAction', false)"
+    @commitAction="$emit('commitAction')"
   >
     <div
       class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
@@ -42,13 +42,4 @@ defineProps({
     default: false,
   },
 });
-
-const emit = defineEmits(["cancelAction", "commitAction"]);
-
-const cancelOperation = () => {
-  emit("cancelAction", false);
-};
-const commitOperation = () => {
-  emit("commitAction");
-};
 </script>

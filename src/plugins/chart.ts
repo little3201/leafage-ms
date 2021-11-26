@@ -30,8 +30,11 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, da
                 {
                     label: "访问量",
                     data: datas,
-                    backgroundColor: "rgba(37, 99, 235, 0.8)",
-                    borderColor: "rgba(37, 99, 235, 0.5)",
+                    backgroundColor: "rgba(37, 99, 235)",
+                    barPercentage: 0.5,
+                    barThickness: 6,
+                    maxBarThickness: 8,
+                    minBarLength: 2,
                 }
             ],
         },
@@ -50,7 +53,8 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
                 {
                     label: '环比',
                     data: datas,
-                    backgroundColor: color,
+                    backgroundColor: 'transparent',
+                    pointBorderColor: 'transparent',
                     borderColor: color,
                     borderWidth: 3,
                     tension: 0.4
@@ -58,6 +62,7 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
             ],
         },
         options: {
+            maintainAspectRatio: false,
             elements: {
                 point: {
                     radius: 0,

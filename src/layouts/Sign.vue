@@ -3,7 +3,11 @@
         <div class="container mx-auto">
             <div class="xl:grid grid-cols-2 gap-4">
                 <div class="hidden xl:flex flex-col h-screen my-auto md:ml-36 relative">
-                    <RouterLink title="leafage" to="/" class="flex items-center z-0 absolute top-24">
+                    <RouterLink
+                        title="leafage"
+                        to="/"
+                        class="flex items-center z-0 absolute top-24"
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="28"
@@ -58,8 +62,9 @@
         content: "";
         margin-left: -48%;
         min-width: 768px;
-        @apply absolute w-full h-full bg-no-repeat bg-right object-cover;
+        @apply absolute w-full h-full bg-no-repeat bg-right;
         background-image: url(/svg/background.svg);
+        background-size: auto 100%;
     }
 }
 </style>

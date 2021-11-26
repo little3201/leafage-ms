@@ -10,7 +10,7 @@
         :key="data.code"
         :data="data"
         :checked="checked"
-        @trackedOperate="tracked"
+        @treeOperate="tracked"
       />
     </ul>
   </Model>

@@ -240,7 +240,7 @@
       </div>
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
+          <canvas id="barChart" ref="barChart" height="200" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart } from "../plugins/char";
+import { createBarChart, createMiniChart } from "../plugins/chart";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";

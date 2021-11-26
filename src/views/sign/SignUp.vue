@@ -71,15 +71,3 @@ const onSubmit = async () => {
   })
 };
 </script>
-
-<style scoped>
-@media (min-width: 1280px) {
-  .login:before {
-    content: "";
-    margin-left: -48%;
-    min-width: 768px;
-    @apply absolute w-full h-full bg-no-repeat bg-right object-cover;
-    background-image: url(/svg/background.svg);
-  }
-}
-</style>

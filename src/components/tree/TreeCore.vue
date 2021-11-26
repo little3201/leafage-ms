@@ -7,7 +7,7 @@
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="tracked"
-        @change="$emit('trackedOperate', data.code)"
+        @change="$emit('treeOperate', data.code)"
       />
       <span
         v-if="data.children && data.children.length > 0"
@@ -82,7 +82,7 @@
         :key="child.code"
         :data="child"
         :checked="checked"
-        @trackedOperate="$emit('trackedOperate', child.code)"
+        @treeOperate="$emit('treeOperate', child.code)"
       />
     </ul>
   </li>

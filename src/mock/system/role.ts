@@ -69,6 +69,14 @@ export default [
     },
   },
   {
+    url: '/api/hypervisor/role/:code/authority',
+    method: 'get',
+    response: () => {
+      return ["2122466RP", "21224DRMU", "21224UJ5C", "21224PV6C", "212240439", "203315P3Q", "21224B8JZ",
+        "21224QI72", "21224HMLG"];
+    },
+  },
+  {
     url: '/api/hypervisor/role/:code',
     method: 'delete',
     response: () => {

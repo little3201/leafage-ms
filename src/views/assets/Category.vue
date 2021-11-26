@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Category</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
@@ -28,7 +28,7 @@
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
+            <th scope="col" class="px-4">Alias</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Posts Count</th>
@@ -70,15 +70,15 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
+      <form>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label for="name">Name</label>
+            <label for="alias">Alias</label>
             <input
-              id="name"
+              id="alias"
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              placeholder="Name"
+              placeholder="Alias"
               required
               autofocus
               v-model.trim="categoryData.alias"
@@ -102,11 +102,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
-import Action from "/@/components/global/Action.vue";
-import Pagation from "/@/components/global/Pagation.vue";
-import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
+import Operation from "/@/components/Operation.vue";
+import Action from "/@/components/Action.vue";
+import Pagation from "/@/components/Pagation.vue";
+import Confirm from "/@/components/Confirm.vue";
+import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -178,7 +178,6 @@ const modelOperate = async (operate: boolean) => {
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
-  debugger
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)
@@ -190,7 +189,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.category, categoryData.value).then((res) => {

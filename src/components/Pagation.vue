@@ -140,7 +140,7 @@ watch(size, (curSize, prevSize) => {
 
 const emit = defineEmits(["setPage", "retrieve"]);
 // 设置
-function give(p: number) {
+const give = (p: number) => {
   page.value = p;
   emit("setPage", page.value, size.value);
   emit("retrieve");

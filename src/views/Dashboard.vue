@@ -240,7 +240,7 @@
       </div>
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
+          <canvas id="barChart" ref="barChart" height="200" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart } from "../plugins/char";
+import { createBarChart, createMiniChart } from "../plugins/chart";
 
 import instance from "../api";
 import SERVER_URL from "../api/request";
@@ -303,10 +303,10 @@ const construceChart = () => {
   let labels = obj.labels
   // 浏览量统计
   createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
-  // 喜欢数统计
-  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 评论数统计
   createMiniChart(commentChart.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
+  // 喜欢数统计
+  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 帖子分类统计
   createBarChart(barChart.value, labels, obj.viewed);
 }

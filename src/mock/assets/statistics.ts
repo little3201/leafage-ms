@@ -11,9 +11,7 @@ export default [
                 likes: 3009,
                 overComment: 1.3,
                 comment: 1001,
-                overLikes: 1.3,
-                visitor: 1209,
-                overVisitor: 1.5
+                overLikes: 1.3
             }
         },
     },
@@ -29,9 +27,7 @@ export default [
                     likes: 30,
                     overCommnet: 0.3,
                     comment: 0,
-                    overLikes: 0.3,
-                    visitor: 1209,
-                    overVisitor: 1.5
+                    overLikes: 0.3
                 },
                 {
                     date: "05-29",
@@ -40,9 +36,7 @@ export default [
                     likes: 30,
                     overCommnet: 1.3,
                     comment: 0,
-                    overLikes: 5.3,
-                    visitor: 1209,
-                    overVisitor: 0.5
+                    overLikes: 5.3
                 },
                 {
                     date: "05-28",
@@ -51,9 +45,7 @@ export default [
                     likes: 30,
                     overCommnet: 1.63,
                     comment: 0,
-                    overLikes: 0.43,
-                    visitor: 1209,
-                    overVisitor: 1.75
+                    overLikes: 0.43
                 },
                 {
                     date: "05-27",
@@ -62,9 +54,7 @@ export default [
                     likes: 30,
                     overCommnet: 0.89,
                     comment: 0,
-                    overLikes: 0.3,
-                    visitor: 1209,
-                    overVisitor: 0.25
+                    overLikes: 0.3
                 },
                 {
                     date: "05-26",
@@ -73,9 +63,7 @@ export default [
                     likes: 30,
                     overCommnet: 2.3,
                     comment: 0,
-                    overLikes: 1.3,
-                    visitor: 1209,
-                    overVisitor: 0.52
+                    overLikes: 1.3
                 },
                 {
                     date: "05-25",
@@ -84,9 +72,7 @@ export default [
                     likes: 30,
                     overCommnet: 0.13,
                     comment: 0,
-                    overLikes: 2.3,
-                    visitor: 1209,
-                    overVisitor: 1.25
+                    overLikes: 2.3
                 },
                 {
                     date: "05-24",
@@ -95,9 +81,7 @@ export default [
                     likes: 30,
                     overCommnet: 0.3,
                     comment: 0,
-                    overLikes: 0.3,
-                    visitor: 1209,
-                    overVisitor: 1.0
+                    overLikes: 0.3
                 },
                 {
                     date: "05-23",
@@ -106,9 +90,7 @@ export default [
                     likes: 30,
                     overCommnet: 0.43,
                     comment: 0,
-                    overLikes: 1.3,
-                    visitor: 1209,
-                    overVisitor: 0.5
+                    overLikes: 1.3
                 }
             ]
         },

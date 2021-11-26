@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
@@ -73,7 +73,7 @@
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="feather feather-power mr-2"
+                    class="feather feather-power mr-1"
                   >
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
                     <line x1="12" y1="2" x2="12" y2="12" />
@@ -89,9 +89,9 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
-        <div class="grid grid-cols-12 gap-4 row-gap-3">
-          <div class="col-span-12 sm:col-span-6">
+      <form>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12">
             <label for="name">
               Name
               <span class="text-red-600 text-base ml-1">*</span>
@@ -106,7 +106,7 @@
               autofocus
             />
           </div>
-          <div class="col-span-12 sm:col-span-6">
+          <div class="col-span-12">
             <label for="superior">Superior</label>
             <select
               id="superior"
@@ -136,18 +136,24 @@
         </div>
       </form>
     </Model>
-    <Tree :isShow="isTree" @treeAction="treeOperate" :datas="authorities" />
+    <Tree
+      :isShow="isTree"
+      @cancelAction="treeOperate"
+      @commitAction="treeCommit"
+      :codes="codes"
+      :datas="authorities"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
-import Action from "/@/components/global/Action.vue";
-import Pagation from "/@/components/global/Pagation.vue";
-import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
+import Operation from "/@/components/Operation.vue";
+import Action from "/@/components/Action.vue";
+import Pagation from "/@/components/Pagation.vue";
+import Confirm from "/@/components/Confirm.vue";
+import Model from "/@/components/Model.vue";
 import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
@@ -162,6 +168,7 @@ let roleData = ref({});
 let dataCode = ref("");
 let superiors = ref([]);
 let authorities = ref([]);
+let codes = ref<Array<String>>([])
 let datas = ref<any>([]);
 // 分页参数
 let page = ref(0);
@@ -228,11 +235,23 @@ const fetch = () => {
 // 授权：打开
 const treeOperate = async (operate: boolean) => {
   if (operate) {
-    await instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-      authorities.value = res.data;
-    });
+    await Promise.all([
+      instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
+        authorities.value = res.data;
+      }),
+      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then((res) => {
+        codes.value = res.data
+      })
+    ])
   }
   isTree.value = operate;
+};
+// 提交
+const treeCommit = async (tracked: Array<String>) => {
+  if (tracked && tracked.length > 0) {
+    alert("commit " + tracked)
+  }
+  isTree.value = false;
 };
 // 新增/编辑：提交
 const modelCommit = async () => {
@@ -247,7 +266,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.role, roleData.value).then((res) => {

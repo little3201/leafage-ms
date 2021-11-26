@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Posts</h2>
       <button
-        @click="retrieve(0, page)"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
@@ -73,7 +73,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
+      <form>
         <div class="grid grid-rows-3 grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-8">
             <input
@@ -262,11 +262,11 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
-import Action from "/@/components/global/Action.vue";
-import Pagation from "/@/components/global/Pagation.vue";
-import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
+import Operation from "/@/components/Operation.vue";
+import Action from "/@/components/Action.vue";
+import Pagation from "/@/components/Pagation.vue";
+import Confirm from "/@/components/Confirm.vue";
+import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -392,7 +392,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.posts, data).then((res) => {

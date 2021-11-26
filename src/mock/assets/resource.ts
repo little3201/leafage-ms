@@ -14,9 +14,10 @@ export default [
       return {
         code: '20A23D2D1',
         title: 'Travel Photos',
-        type: 'jpg',
+        type: 'E',
         cover: 'https://cdn.leafage.top/kafka.webp',
-        category: '20A23D2D1'
+        category: '20A23D2D1',
+        description: ' Spring boot is a java platform ...'
       }
     },
   },
@@ -26,7 +27,10 @@ export default [
     response: () => {
       return {
         code: '20A23D2D1',
-        title: 'Travel Photos'
+        title: 'Travel Photos',
+        type: 'E',
+        cover: 'https://cdn.leafage.top/kafka.webp',
+        category: '20A23D2D1'
       }
     },
   },
@@ -36,7 +40,10 @@ export default [
     response: () => {
       return {
         code: '20A23D2D1',
-        title: 'Travel Photos'
+        title: 'Travel Photos',
+        type: 'E',
+        cover: 'https://cdn.leafage.top/kafka.webp',
+        category: '20A23D2D1'
       }
     },
   },
@@ -49,25 +56,34 @@ export default [
           code: '20A23D2D1',
           title: 'Spring boot',
           type: 'E',
+          category: 'Technology',
           modifyTime: new Date(),
           viewed: 902,
-          downloads: 12
+          downloads: 12,
+          cover: 'https://cdn.leafage.top/kafka.webp',
+          description: ' Spring boot'
         },
         {
           code: '20A23D2D2',
           title: 'Spring cloud',
           type: 'P',
+          category: 'Technology',
           modifyTime: new Date(),
           viewed: 902,
-          downloads: 12
+          downloads: 12,
+          cover: 'https://cdn.leafage.top/kafka.webp',
+          description: ' Spring boot'
         },
         {
           code: '20A23D2D3',
           title: 'Spring security',
           type: 'T',
+          category: 'Technology',
           modifyTime: new Date(),
           viewed: 902,
-          downloads: 12
+          downloads: 12,
+          cover: 'https://cdn.leafage.top/kafka.webp',
+          description: ' Spring boot'
         }
       ];
     },

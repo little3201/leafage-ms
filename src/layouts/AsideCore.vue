@@ -61,7 +61,7 @@
       </span>
       <span v-else class="hidden xl:inline-flex items-center" v-text="data.name"></span>
     </div>
-    <router-link
+    <RouterLink
       v-else
       :to="superior.concat(data.expand.path)"
       class="flex items-center h-12 rounded-l-full pl-4 -mr-4"
@@ -82,7 +82,7 @@
         </svg>
       </div>
       <span class="hidden xl:block w-full" v-text="data.name"></span>
-    </router-link>
+    </RouterLink>
     <ul v-show="isOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md">
       <AsideCore v-for="child in data.children" :data="child" :superior="data.expand.path" />
     </ul>

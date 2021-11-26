@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div class="flex h-8">
-      <router-link to="/" class="flex mr-auto" exact-active-class>
+      <RouterLink to="/" class="flex mr-auto" exact-active-class>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -31,7 +31,7 @@
             </g>
           </g>
         </svg>
-      </router-link>
+      </RouterLink>
       <a href="javascript:;" @click.prevent="isShow = !isShow" class="outline-none">
         <svg
           width="32"
@@ -59,7 +59,7 @@
       <div class="fixed inset-y-0 left-0 flex">
         <div class="w-64">
           <div class="h-full flex flex-col px-4 py-3 bg-blue-800 shadow-2xl overflow-y-scroll">
-            <router-link to="/" class="flex mr-auto" exact-active-class>
+            <RouterLink to="/" class="flex mr-auto" exact-active-class>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -88,7 +88,7 @@
                   </g>
                 </g>
               </svg>
-            </router-link>
+            </RouterLink>
             <div class="my-4 h-px bg-gray-200 bg-opacity-30"></div>
             <ul>
               <DrawerCore
@@ -108,7 +108,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-import DrawerCore from "/@/components/layout/DrawerCore.vue";
+import DrawerCore from "/@/layouts/DrawerCore.vue";
 
 defineProps({
   datas: {

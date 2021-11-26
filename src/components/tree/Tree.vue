@@ -1,28 +1,28 @@
 <template>
   <Model
     :isShow="isShow"
-    @cancelAction="$emit('treeAction', false)"
-    @commitAction="$emit('treeAction', checked)"
+    @cancelAction="$emit('cancelAction')"
+    @commitAction="$emit('commitAction', checked)"
   >
     <ul>
       <TreeCore
         v-for="data in datas"
         :key="data.code"
         :data="data"
-        @addChecked="addChecked"
-        @delChecked="delChecked"
+        :checked="checked"
+        @treeOperate="tracked"
       />
     </ul>
   </Model>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import Model from "/@/components/global/Model.vue";
+import Model from "/@/components/Model.vue";
 import TreeCore from "/@/components/tree/TreeCore.vue";
 
-defineProps({
+const props = defineProps({
   isShow: {
     type: Boolean,
     default: false,
@@ -31,15 +31,20 @@ defineProps({
     type: Array,
     default: [],
   },
+  codes: {
+    type: Array,
+    default: []
+  }
 });
 
-const checked = ref<Array<String>>([])
+let checked = ref(props.codes)
 
-const addChecked = (code: String) => {
-  checked.value.push(code)
-}
-
-const delChecked = (code: String) => {
-  checked.value.splice(checked.value.indexOf(code), 1)
+const tracked = (code: string) => {
+  console.log("code: " + code)
+  if (checked.value.includes(code)) {
+    checked.value.splice(checked.value.indexOf(code), 1)
+  } else {
+    checked.value.push(code)
+  }
 }
 </script>

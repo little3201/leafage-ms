@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">Portfolio</h2>
       <button
-        @click="retrieve()"
+        @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
       >
         <svg
@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = null" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
@@ -31,6 +31,7 @@
             <th scope="col" class="px-4">Title</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
+            <th scope="col" class="px-4">Category</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -57,9 +58,10 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-300': data.type === 'E', 'bg-blue-300': data.type === 'P', 'bg-pink-300': data.type === 'T' }"
+                :class="{ 'bg-indigo-100': data.type === 'E', 'bg-blue-100': data.type === 'P', 'bg-pink-100': data.type === 'T' }"
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
+            <td class="px-4" v-text="data.category"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -77,7 +79,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form class="w-full">
+      <form>
         <div class="grid grid-cols-12 grid-rows-3 gap-4">
           <div class="col-span-12 sm:col-span-7">
             <label for="title">
@@ -194,11 +196,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/global/Operation.vue";
-import Action from "/@/components/global/Action.vue";
-import Pagation from "/@/components/global/Pagation.vue";
-import Confirm from "/@/components/global/Confirm.vue";
-import Model from "/@/components/global/Model.vue";
+import Operation from "/@/components/Operation.vue";
+import Action from "/@/components/Action.vue";
+import Pagation from "/@/components/Pagation.vue";
+import Confirm from "/@/components/Confirm.vue";
+import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
@@ -286,7 +288,6 @@ const modelCommit = async () => {
         // 将结果添加到第一个
         datas.value.unshift(res.data);
         isEdit.value = false;
-        count()
       });
   } else {
     await instance.post(SERVER_URL.resource, resourceData.value).then((res) => {

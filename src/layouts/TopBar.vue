@@ -189,14 +189,15 @@
       </div>
     </div>
     <div class="relative">
-      <div
+      <button
+        type="button"
         v-if="user && Object.keys(user).length > 0"
         @click="operate('account')"
-        class="rounded-full cursor-pointer w-8 h-8 text-center bg-white"
+        class="rounded-full w-8 h-8 text-center bg-white"
       >
         <img v-if="user.avatar" alt="leafage" :src="user.avatar" class="rounded-full" />
         <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
-      </div>
+      </button>
       <RouterLink
         v-else
         to="/signin"
@@ -335,7 +336,6 @@ const signout = async () => {
   await instance.post("/logout").then(() => {
     // 退出登录，清空sessionStorage
     sessionStorage.clear()
-
   });
 
   router.replace("/signin");

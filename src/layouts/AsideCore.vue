@@ -8,6 +8,7 @@
   >
     <div
       v-if="data.children && data.children.length > 0"
+      :title="data.name"
       @click.prevent="isOpen = !isOpen"
       class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 cursor-pointer"
     >
@@ -62,6 +63,7 @@
       <span v-else class="hidden xl:inline-flex items-center" v-text="data.name"></span>
     </div>
     <RouterLink
+      :title="data.name"
       v-else
       :to="superior.concat(data.expand.path)"
       class="flex items-center h-12 rounded-l-full pl-4 -mr-4"

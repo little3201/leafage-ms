@@ -66,13 +66,7 @@
               </div>
             </div>
             <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="viewedChart"
-                ref="viewedChart"
-                height="100"
-                aria-label="total-viewed"
-                role="img"
-              ></canvas>
+              <canvas id="viewedChart" ref="viewedChart" aria-label="total-viewed" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
@@ -121,13 +115,7 @@
               </div>
             </div>
             <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="commentChart"
-                ref="commentChart"
-                height="100"
-                aria-label="total-comments"
-                role="img"
-              ></canvas>
+              <canvas id="commentChart" ref="commentChart" aria-label="total-comments" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
@@ -176,13 +164,7 @@
               </div>
             </div>
             <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="likesChart"
-                ref="likesChart"
-                height="100"
-                aria-label="total-likes"
-                role="img"
-              ></canvas>
+              <canvas id="likesChart" ref="likesChart" aria-label="total-likes" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
@@ -240,7 +222,7 @@
       </div>
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" height="200" aria-label="viewed" role="img"></canvas>
+          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
     </div>

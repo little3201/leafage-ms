@@ -82,7 +82,7 @@
         :key="child.code"
         :data="child"
         :checked="checked"
-        @treeOperate="$emit('treeOperate', child.code)"
+        @treeOperate="track"
       />
     </ul>
   </li>
@@ -102,7 +102,13 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['treeOperate'])
+
 let isOpen = ref(false);
 
 let tracked = ref(props.checked);
+
+const track = (code: string) => {
+  emit('treeOperate', code)
+}
 </script>

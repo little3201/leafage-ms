@@ -2,12 +2,12 @@
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
       <input
-        :id="data.name"
+        :id="data.code"
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="tracked"
-        @change="$emit('treeOperate', data.code)"
+        @change="track(data.code)"
       />
       <span
         v-if="data.children && data.children.length > 0"
@@ -58,7 +58,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-      <label :for="data.name" v-else class="ml-4 flex items-center cursor-pointer">
+      <label :for="data.code" v-else class="ml-4 flex items-center cursor-pointer">
         <svg
           v-if="data.expand && data.expand.icon"
           width="16"
@@ -81,7 +81,7 @@
         v-for="child in data.children"
         :key="child.code"
         :data="child"
-        :checked="checked"
+        :checked="tracked"
         @treeOperate="track"
       />
     </ul>

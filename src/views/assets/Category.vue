@@ -77,6 +77,7 @@
             <input
               id="alias"
               type="text"
+              name="alias"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Alias"
               required
@@ -88,6 +89,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="categoryData.description"
               placeholder="Description"

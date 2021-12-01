@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Portfolio</h2>
+      <h2 class="text-lg font-medium">Resource</h2>
       <button
         @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
@@ -88,6 +88,7 @@
             </label>
             <input
               id="title"
+              name="title"
               type="text"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
@@ -130,7 +131,7 @@
                     </svg>
                     <input
                       id="file-upload"
-                      name="resourceData.cover"
+                      name="cover"
                       multiple
                       type="file"
                       class="sr-only"
@@ -144,12 +145,13 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="type" class="inline-flex items-center">
+            <label for="category" class="inline-flex items-center">
               Category
               <span class="text-red-600 ml-1">*</span>
             </label>
             <select
-              id="type"
+              id="category"
+              name="category"
               v-model="resourceData.category"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
             >
@@ -169,6 +171,7 @@
             </label>
             <select
               id="type"
+              name="type"
               v-model="resourceData.type"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
             >
@@ -183,6 +186,7 @@
           <label for="description">Description</label>
           <textarea
             id="description"
+            name="description"
             class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
             v-model.trim="resourceData.description"
             placeholder="Description"

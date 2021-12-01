@@ -78,6 +78,7 @@
           <div class="col-span-12 sm:col-span-8">
             <input
               type="text"
+              name="title"
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
@@ -134,6 +135,7 @@
           <div class="col-span-12 sm:col-span-4 md:flex items-center">
             <input
               type="text"
+              name="tags"
               @keydown.enter="addTag"
               class="w-full rounded-md border-gray-300 shadow-sm"
               placeholder="Tags"
@@ -172,6 +174,7 @@
           </div>
           <div class="col-span-12 sm:col-span-4">
             <select
+              name="category"
               v-model.lazy="postsData.category"
               required
               class="w-full rounded-md border-gray-300 shadow-sm"
@@ -185,15 +188,6 @@
               ></option>
             </select>
           </div>
-          <!-- <div class="col-span-12">
-            <textarea
-              class="w-full rounded-md border-gray-300 shadow-sm"
-              placeholder="Subtitle"
-              maxlength="100"
-              required
-              v-model.trim="postsData.subtitle"
-            ></textarea>
-          </div>-->
         </div>
         <div class="grid grid-cols-12 mt-3">
           <div class="col-span-12">

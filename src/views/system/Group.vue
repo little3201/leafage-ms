@@ -96,6 +96,7 @@
             </label>
             <input
               id="name"
+              name="name"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
@@ -107,6 +108,7 @@
             <label for="superior">Superior</label>
             <select
               id="superior"
+              name="superior"
               v-model.lazy="groupData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
@@ -123,6 +125,7 @@
             <label for="principal">Principal</label>
             <select
               id="principal"
+              name="principal"
               v-model.lazy="groupData.principal"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
@@ -139,6 +142,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="groupData.description"
             />

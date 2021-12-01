@@ -320,6 +320,7 @@
             <div class="mt-3">
               <input
                 id="accountExpired_false"
+                name="accountNonExpired"
                 aria-label="account expired"
                 type="radio"
                 value="false"
@@ -328,6 +329,7 @@
               <label for="accountExpired_false" class="ml-2 cursor-pointer">True</label>
               <input
                 id="accountExpired_true"
+                name="accountNonExpired"
                 aria-label="account expired"
                 type="radio"
                 class="ml-4"
@@ -345,6 +347,7 @@
             <div class="mt-3">
               <input
                 id="accountLocked_false"
+                name="accountLocked"
                 aria-label="account locked"
                 type="radio"
                 value="false"
@@ -353,6 +356,7 @@
               <label for="accountLocked_false" class="ml-2 cursor-pointer">True</label>
               <input
                 id="accountLocked_true"
+                name="accountLocked"
                 aria-label="account locked"
                 type="radio"
                 value="true"
@@ -370,6 +374,7 @@
             <div class="mt-3">
               <input
                 id="credentialsExpired_false"
+                name="credentialsNonExpired"
                 aria-label="credentials expired"
                 type="radio"
                 value="false"
@@ -378,6 +383,7 @@
               <label for="credentialsExpired_false" class="ml-2 cursor-pointer">True</label>
               <input
                 id="credentialsExpired_true"
+                name="credentialsNonExpired"
                 aria-label="credentials expired"
                 type="radio"
                 value="true"
@@ -391,6 +397,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               aria-label="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="userData.description"

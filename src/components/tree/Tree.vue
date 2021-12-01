@@ -40,7 +40,6 @@ const props = defineProps({
 let checked = ref(props.codes)
 
 const tracked = (code: string) => {
-  console.log("code: " + code)
   if (checked.value.includes(code)) {
     checked.value.splice(checked.value.indexOf(code), 1)
   } else {

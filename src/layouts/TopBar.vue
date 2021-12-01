@@ -21,6 +21,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
+          name="search"
           class="w-56 border border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           placeholder="Search..."
         />
@@ -195,8 +196,8 @@
         @click="operate('account')"
         class="rounded-full w-8 h-8 text-center bg-white"
       >
-        <img v-if="user.avatar" alt="leafage" :src="user.avatar" class="rounded-full" />
-        <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
+        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" />
+        <span v-else v-text="user.nickname.substr(0, 1)"></span>
       </button>
       <RouterLink
         v-else

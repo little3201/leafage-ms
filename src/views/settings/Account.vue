@@ -13,6 +13,7 @@
         <label for="code">Code</label>
         <input
           id="code"
+          name="code"
           type="text"
           class="rounded-md w-full border border-gray-300 mt-1"
           placeholder="Code"
@@ -25,6 +26,7 @@
         <label for="type">Type</label>
         <select
           id="type"
+          name="type"
           class="rounded-md mt-1 w-full border border-gray-300"
           v-model="account.type"
         >

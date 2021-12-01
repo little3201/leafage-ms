@@ -38,6 +38,7 @@
             >Change Photo</label>
             <input
               id="avatar-upload"
+              name="avatar"
               type="file"
               class="sr-only"
               accept="image/png, image/jpeg, image/jpg"
@@ -51,6 +52,7 @@
             <label for="username">Username</label>
             <input
               id="username"
+              name="username"
               type="text"
               class="mt-1 rounded-md w-full bg-gray-100 cursor-not-allowed border border-gray-300"
               placeholder="Username"
@@ -64,6 +66,7 @@
             <label for="nickname">Nickname</label>
             <input
               id="nickname"
+              name="nickname"
               type="text"
               class="mt-1 rounded-md w-full border border-gray-300"
               placeholder="Nickname"
@@ -78,6 +81,7 @@
             <label for="birthday">Birthday</label>
             <input
               id="birthday"
+              name="birthday"
               type="date"
               class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
               v-model="user.birthday"
@@ -87,33 +91,115 @@
             <label for="gender">Gender</label>
             <select
               id="gender"
+              name="gender"
               class="rounded-md mt-1 w-full border border-gray-300"
               v-model="user.gender"
             >
-              <option>请选择</option>
+              <option value="undefined">请选择</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
           <div class="col-span-2 md:col-span-1">
-            <label for="phoneNumber">Phone Number</label>
-            <input
-              id="phoneNumber"
-              type="tel"
-              class="rounded-md w-full border border-gray-300 mt-1"
-              placeholder="Tel Number"
-              v-model="user.phone"
-              minlength="11"
-            />
+            <label for="ethnicity">Ethnicity</label>
+            <select
+              id="ethnicity"
+              name="ethnicity"
+              class="rounded-md mt-1 w-full border border-gray-300"
+              v-model="user.ethnicity"
+            >
+              <option value="undefined">请选择</option>
+              <option value="H">汉族</option>
+              <option value="Z">藏族</option>
+            </select>
           </div>
           <div class="col-span-2 md:col-span-1">
-            <label for="email">Email</label>
+            <label for="nation">Degree</label>
+            <select
+              id="degree"
+              name="degree"
+              class="rounded-md mt-1 w-full border border-gray-300"
+              v-model="user.degree"
+            >
+              <option value="undefined">请选择</option>
+              <option value="x">学士</option>
+              <option value="s">硕士</option>
+            </select>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="nation">Marital Status</label>
+            <select
+              id="degree"
+              name="degree"
+              class="rounded-md mt-1 w-full border border-gray-300"
+              v-model="user.degree"
+            >
+              <option value="undefined">请选择</option>
+              <option value="y">已婚</option>
+              <option value="w">未婚</option>
+            </select>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="country">Country</label>
+            <select
+              id="country"
+              name="country"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              v-model="user.country"
+            >
+              <option value="undefined">请选择</option>
+              <option value="china">China</option>
+              <option value="america">America</option>
+            </select>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="province">Province</label>
+            <select
+              id="province"
+              name="province"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              v-model="user.province"
+            >
+              <option value="undefined">请选择</option>
+              <option value="shaanxi">Shaanxi</option>
+              <option value="shanghai">Shanghai</option>
+            </select>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="city">City</label>
+            <select
+              id="city"
+              name="city"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              v-model="user.city"
+            >
+              <option value="undefined">请选择</option>
+              <option value="xian">Xi'an</option>
+              <option value="xianyang">Xianyang</option>
+            </select>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <label for="area">Area</label>
+            <select
+              id="area"
+              name="area"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              v-model="user.area"
+            >
+              <option value="undefined">请选择</option>
+              <option value="beilin">Beilin</option>
+              <option value="gaoxin">Gaoxin</option>
+            </select>
+          </div>
+          <div class="col-span-2">
+            <label for="address">Address</label>
             <input
-              id="email"
-              type="email"
-              class="rounded-md w-full border border-gray-300 bg-gray-100 cursor-not-allowed mt-1"
-              placeholder="Email"
-              v-model="user.email"
+              id="address"
+              name="address"
+              type="text"
+              class="rounded-md w-full border border-gray-300 mt-1"
+              placeholder="Address"
+              v-model="user.address"
             />
           </div>
         </div>

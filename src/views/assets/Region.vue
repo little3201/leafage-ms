@@ -72,6 +72,7 @@
             </label>
             <input
               id="name"
+              name="name"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Name"
@@ -83,6 +84,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="regionData.description"
             />

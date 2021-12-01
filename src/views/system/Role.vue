@@ -98,6 +98,7 @@
             </label>
             <input
               id="name"
+              name="name"
               type="text"
               aria-label="name"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -110,6 +111,7 @@
             <label for="superior">Superior</label>
             <select
               id="superior"
+              name="superior"
               aria-label="superior"
               v-model="roleData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"

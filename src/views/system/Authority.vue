@@ -120,6 +120,7 @@
             </label>
             <input
               id="name"
+              name="name"
               @blur="exist"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -135,6 +136,7 @@
             </label>
             <select
               id="type"
+              name="type"
               :disabled="authorityData.code"
               v-model.lazy="authorityData.type"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -153,6 +155,7 @@
             </label>
             <input
               id="icon"
+              name="icon"
               type="text"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
               placeholder="Icon"
@@ -164,6 +167,7 @@
             <label for="path" :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
             <input
               id="path"
+              name="path"
               :disabled="authorityData.type == 'B'"
               type="url"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
@@ -178,6 +182,7 @@
             <label for="superior">Superior</label>
             <select
               id="superior"
+              name="superior"
               v-model.lazy="authorityData.superior"
               class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
             >
@@ -194,6 +199,7 @@
             <label for="description">Description</label>
             <textarea
               id="description"
+              name="description"
               class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
               v-model.trim="authorityData.description"
               placeholder="Description"

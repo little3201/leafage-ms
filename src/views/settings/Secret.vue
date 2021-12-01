@@ -1,56 +1,69 @@
 <template>
-  <form @submit.prevent class="bg-white rounded-md">
-    <div class="flex items-center p-4 border-b border-gray-200">
-      <h2 class="font-medium text-lg mr-auto">Change Password</h2>
-      <button
-        type="submit"
-        @click="onSumbit"
-        class="px-3 py-2 rounded-md bg-blue-700 text-white focus:outline-none"
-      >Save</button>
-    </div>
-    <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 lg:col-span-6">
-        <label for="oldPassword">Old Password</label>
-        <input
-          id="oldPassword"
-          type="password"
-          v-model="password"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Old Password"
-          required
-          minlength="8"
-          maxlength="16"
-          autofocus
-        />
+  <div>
+    <div class="bg-white rounded-md">
+      <div class="flex items-center p-4 border-b border-gray-200">
+        <h2 class="font-medium text-lg mr-auto">Change Password</h2>
       </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="newPassword">New Password</label>
-        <input
-          id="newPassword"
-          type="password"
-          v-model="newPassword"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="New Password"
-          required
-          minlength="8"
-          maxlength="16"
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="confirmPassword">Confirm New Password</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          v-model="confirmPassword"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Confirm New Password"
-          required
-          minlength="8"
-          maxlength="16"
-        />
+      <div class="divide-y p-4">
+        <div class="pb-4">
+          <p class="mr-auto">Cell Phone</p>
+          <button type="button" @click="isShow = true" class="focus:outline-none text-gray-400">Edit</button>
+        </div>
+        <div class="py-4">
+          <p class="mr-auto">Email</p>
+          <span class="text-xs">test@leafage.top</span>
+          <button type="button" @click="isShow = true" class="focus:outline-none text-gray-400">Edit</button>
+        </div>
       </div>
     </div>
-  </form>
+    <Model :isShow="isShow" @cancelAction="modelOperate" @commitAction="modelCommit">
+      <div class="grid gap-4">
+        <div>
+          <label for="oldPassword">Old Password</label>
+          <input
+            id="oldPassword"
+            name="oldPassword"
+            type="password"
+            v-model="password"
+            class="rounded-md w-full border border-gray-300 mt-1"
+            placeholder="Old Password"
+            required
+            minlength="8"
+            maxlength="16"
+            autofocus
+          />
+        </div>
+        <div>
+          <label for="newPassword">New Password</label>
+          <input
+            id="newPassword"
+            name="newPassword"
+            type="password"
+            v-model="newPassword"
+            class="rounded-md w-full border border-gray-300 mt-1"
+            placeholder="New Password"
+            required
+            minlength="8"
+            maxlength="16"
+          />
+        </div>
+        <div>
+          <label for="confirmPassword">Confirm New Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            v-model="confirmPassword"
+            class="rounded-md w-full border border-gray-300 mt-1"
+            placeholder="Confirm New Password"
+            required
+            minlength="8"
+            maxlength="16"
+          />
+        </div>
+      </div>
+    </Model>
+  </div>
 </template>
 
 
@@ -61,9 +74,11 @@ import { useRouter } from "vue-router";
 
 import instance from "../../api";
 import SERVER_URL from "../../api/request";
+import Model from "/@/components/Model.vue";
 
 const router = useRouter();
 
+let isShow = ref(false)
 let password = ref("");
 let newPassword = ref("");
 let confirmPassword = ref("");
@@ -75,4 +90,10 @@ const onSumbit = async () => {
     });
   }
 };
+
+const modelOperate = (operate: boolean) => {
+  isShow.value = operate
+}
+
+const modelCommit = () => { }
 </script>

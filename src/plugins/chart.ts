@@ -56,7 +56,7 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
                     backgroundColor: 'transparent',
                     pointBorderColor: 'transparent',
                     borderColor: color,
-                    borderWidth: 3,
+                    borderWidth: 2,
                     tension: 0.4
                 },
             ],

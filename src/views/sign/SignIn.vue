@@ -50,21 +50,21 @@ import Sign from "/@/layouts/Sign.vue";
 import { useRoute, useRouter } from "vue-router";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL } from "../../api/request";
 
 let formData = ref({});
 
 const route = useRoute();
 const router = useRouter();
 
-const onSubmit = async () => {
+const onSubmit = async (): Promise<void> => {
   await instance.get("/check").then(() => {
     instance.post("/login", new URLSearchParams(formData.value))
       .then(res => init(res.data.username));
   })
 };
 
-const init = async (username: string) => {
+const init = async (username: string): Promise<void> => {
   await Promise.all([
     instance.get(SERVER_URL.user.concat("/", username)).then(res =>
       sessionStorage.setItem("user", JSON.stringify(res.data))),

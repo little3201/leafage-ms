@@ -1,30 +1,23 @@
-import axios, { Canceler } from 'axios'
+import axios from 'axios'
 import router from '../router'
 
+const controller = new AbortController()
+
 const redirectTo = (path: string) => {
-  requestList.length && requestList.length > 0 && requestList.forEach((cancleRequest, index) => {
-    cancleRequest() // 取消请求
-    requestList.splice(index)
-  })
+  controller.abort()
   router.replace(path)
 }
 
-// 默认配置
-const config = {
+const instance = axios.create({
   withCredentials: true,
   // 请求的完整路径就是baseURL中的
   baseURL: '/api'
-}
-
-const instance = axios.create(config)
-let requestList: Canceler[] = []
+})
 
 // 请求拦截
 instance.interceptors.request.use(
   config => {
-    config.cancelToken = new axios.CancelToken(function executor(cancel: Canceler): void {
-      requestList.push(cancel)
-    })
+    config.signal = controller.signal
     return config
   },
   error => {
@@ -59,7 +52,7 @@ instance.interceptors.response.use(
         default:
           response.statusText = '请求可能跑丢了，再试一下。'
       }
-      return Promise.reject(res)
+      return response
     }
     return Promise.reject(error)
   }

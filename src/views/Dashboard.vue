@@ -65,7 +65,7 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
+            <div class="absolute inset-4 top-10 opacity-50">
               <canvas id="viewedChart" ref="viewedChart" aria-label="total-viewed" role="img"></canvas>
             </div>
           </div>
@@ -114,7 +114,7 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
+            <div class="absolute inset-4 top-10 opacity-50">
               <canvas id="commentChart" ref="commentChart" aria-label="total-comments" role="img"></canvas>
             </div>
           </div>
@@ -163,7 +163,7 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
+            <div class="absolute inset-4 top-10 opacity-50">
               <canvas id="likesChart" ref="likesChart" aria-label="total-likes" role="img"></canvas>
             </div>
           </div>
@@ -234,12 +234,12 @@ import { ref, computed, onMounted } from "vue";
 import { createBarChart, createMiniChart } from "../plugins/chart";
 
 import instance from "../api";
-import SERVER_URL from "../api/request";
+import { SERVER_URL, Comment, Statistics } from "../api/request";
 
 // data
-let comments = ref([])
+let comments = ref<Comment>([])
 let totalPosts = ref(0)
-let datas = ref([])
+let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
 const over = computed(() => datas.value[1] || {});
 
@@ -249,7 +249,7 @@ const viewedChart = ref();
 const commentChart = ref();
 const likesChart = ref();
 
-const retrieveComments = async () => {
+const retrieveComments = async (): Promise<void> => {
   await instance
     .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
     .then((res) => {
@@ -257,7 +257,7 @@ const retrieveComments = async () => {
     });
 }
 
-const initData = async () => {
+const initData = async (): Promise<void> => {
   await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
     .then(res => {
       datas.value = res.data;
@@ -267,7 +267,7 @@ const initData = async () => {
     })])
 };
 
-const construceChart = () => {
+const construceChart = (): void => {
   let obj = {
     labels: new Array<String>(),
     viewed: new Array<Number>(),

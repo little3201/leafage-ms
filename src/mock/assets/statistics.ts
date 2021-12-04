@@ -8,7 +8,7 @@ export default [
                 {
                     date: "05-30",
                     viewed: 4978,
-                    overViewed: 1.3,
+                    overViewed: 0.1,
                     likes: 30,
                     overComment: 0.3,
                     comment: 98,
@@ -71,7 +71,7 @@ export default [
                 {
                     date: "05-23",
                     viewed: 4199,
-                    overViewed: 2.98,
+                    overViewed: 0.98,
                     likes: 30,
                     overComment: 0.43,
                     comment: 9,

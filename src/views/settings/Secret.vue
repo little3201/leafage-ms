@@ -1,19 +1,72 @@
 <template>
   <div>
-    <div class="bg-white rounded-md">
-      <div class="flex items-center p-4 border-b border-gray-200">
-        <h2 class="font-medium text-lg mr-auto">Change Password</h2>
-      </div>
-      <div class="divide-y p-4">
-        <div class="pb-4">
-          <p class="mr-auto">Cell Phone</p>
-          <button type="button" @click="isShow = true" class="focus:outline-none text-gray-400">Edit</button>
-        </div>
-        <div class="py-4">
-          <p class="mr-auto">Email</p>
-          <span class="text-xs">test@leafage.top</span>
-          <button type="button" @click="isShow = true" class="focus:outline-none text-gray-400">Edit</button>
-        </div>
+    <div class="shadow overflow-hidden sm:rounded-md">
+      <div class="px-4 py-5 bg-white space-y-6 sm:p-6 divide-y">
+        <fieldset>
+          <legend class="text-base font-medium text-gray-900">Privileges</legend>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-start justify-between">
+              <div class="text-sm">
+                <label for="comments" class="font-medium text-gray-700">Password</label>
+                <input
+                  id="comments"
+                  name="comments"
+                  type="text"
+                  class="border-gray-300 rounded cursor-pointer sr-only"
+                />
+                <p class="text-gray-500">187****3090</p>
+              </div>
+              <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-base font-medium text-gray-900 pr-4">OAuth2</legend>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="comments"
+                  name="comments"
+                  type="checkbox"
+                  class="border-gray-300 rounded cursor-pointer"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="comments" class="font-medium text-gray-700">Github</label>
+                <p class="text-gray-500">{{ new Date().toString() }}</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="candidates"
+                  name="candidates"
+                  type="checkbox"
+                  class="border-gray-300 rounded cursor-pointer"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="candidates" class="font-medium text-gray-700">Candidates</label>
+                <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="offers"
+                  name="offers"
+                  type="checkbox"
+                  class="border-gray-300 rounded cursor-pointer"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="offers" class="font-medium text-gray-700">Offers</label>
+                <p class="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
     <Model :isShow="isShow" @cancelAction="modelOperate" @commitAction="modelCommit">
@@ -73,7 +126,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL } from "../../api/request";
 import Model from "/@/components/Model.vue";
 
 const router = useRouter();
@@ -83,7 +136,7 @@ let password = ref("");
 let newPassword = ref("");
 let confirmPassword = ref("");
 
-const onSumbit = async () => {
+const onSumbit = async (): Promise<void> => {
   if (newPassword.value === confirmPassword.value) {
     await instance.patch(SERVER_URL.user).then(() => {
       router.replace("/signin");
@@ -91,7 +144,7 @@ const onSumbit = async () => {
   }
 };
 
-const modelOperate = (operate: boolean) => {
+const modelOperate = (operate: boolean): void => {
   isShow.value = operate
 }
 

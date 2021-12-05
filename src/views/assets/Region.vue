@@ -108,16 +108,16 @@ import instance from "../../api";
 import { SERVER_URL, Region } from "../../api/request";
 
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
 // 数据
 let regionData = ref<Region>({});
-let dataCode = ref<string>("");
+let dataCode = ref("");
 let datas = ref<Array<Region>>([]);
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number): void => {

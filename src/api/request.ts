@@ -31,6 +31,8 @@ export interface Account {
 }
 
 export interface User extends Account {
+  firstname: string,
+  lastname: string,
   gender: string,
   birthday: Date,
   ethnicity: string,
@@ -48,25 +50,25 @@ interface AbstractVO<T> {
   modifyTime: Date
 }
 
-export interface Role extends AbstractVO<String> {
+export interface Role extends AbstractVO {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Group extends AbstractVO<String> {
+export interface Group extends AbstractVO {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Authority extends AbstractVO<String> {
+export interface Authority extends AbstractVO {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Region extends AbstractVO<Number> {
+export interface Region extends AbstractVO {
   name: string,
   superior: string,
   count: number
@@ -76,15 +78,16 @@ export interface TreeNode {
   code: string,
   name: string,
   superior: string,
+  children: TreeNode[],
   expand: Object
 }
 
-export interface Category extends AbstractVO<String> {
+export interface Category extends AbstractVO {
   alias: string,
   count: number
 }
 
-export interface Posts extends AbstractVO<String> {
+export interface Posts extends AbstractVO {
   title: string,
   cover: string,
   category: string,
@@ -94,25 +97,26 @@ export interface Posts extends AbstractVO<String> {
 }
 
 export interface PostsDetails extends Posts {
-  tags: Array<String>,
+  tags: Array,
   content: string
 }
 
-export interface Resource extends AbstractVO<String> {
+export interface Resource extends AbstractVO {
   title: string,
   type: string,
   category: string,
-  count: number
+  viewed: number,
+  downloads: number
 }
 
-export interface Comment extends AbstractVO<String> {
+export interface Comment extends AbstractVO {
   name: string,
   replier: string,
   content: string,
   email: string
 }
 
-export interface Statistics extends AbstractVO<String> {
+export interface Statistics extends AbstractVO {
   date: Date,
   viewed: number,
   overViewed: number,

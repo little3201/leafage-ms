@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import router from '../router'
 
 const controller = new AbortController()
@@ -16,7 +16,7 @@ const instance = axios.create({
 
 // 请求拦截
 instance.interceptors.request.use(
-  config => {
+  (config: AxiosRequestConfig) => {
     config.signal = controller.signal
     return config
   },
@@ -27,7 +27,7 @@ instance.interceptors.request.use(
 
 // 响应拦截
 instance.interceptors.response.use(
-  res => {
+  (res: AxiosResponse) => {
     // 用户不存在，跳转注册
     if (res.status === 204) {
       redirectTo('/signup')
@@ -52,7 +52,7 @@ instance.interceptors.response.use(
         default:
           response.statusText = '请求可能跑丢了，再试一下。'
       }
-      return response
+      alert(response.statusText)
     }
     return Promise.reject(error)
   }

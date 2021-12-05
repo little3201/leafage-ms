@@ -269,11 +269,11 @@ const initData = async (): Promise<void> => {
 
 const construceChart = (): void => {
   let obj = {
-    labels: new Array<String>(),
-    viewed: new Array<Number>(),
-    overViewed: new Array<Number>(),
-    overLikes: new Array<Number>(),
-    overComment: new Array<Number>()
+    labels: new Array(),
+    viewed: new Array(),
+    overViewed: new Array(),
+    overLikes: new Array(),
+    overComment: new Array()
   }
   datas.value.forEach((item: any) => {
     obj.labels.unshift(item.date);

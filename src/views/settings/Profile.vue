@@ -10,6 +10,7 @@
               name="first-name"
               id="first-name"
               autocomplete="given-name"
+              v-model="user.firstname"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -21,6 +22,7 @@
               name="last-name"
               id="last-name"
               autocomplete="family-name"
+              v-model="user.lastname"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -31,6 +33,7 @@
               id="birthday"
               name="birthday"
               type="date"
+              v-model="user.birthday"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -41,10 +44,11 @@
               id="gender"
               name="gender"
               autocomplete="gender-name"
+              v-model="user.gender"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option>Male</option>
-              <option>Female</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
             </select>
           </div>
 
@@ -54,6 +58,7 @@
               id="education"
               name="education"
               autocomplete="education-name"
+              v-model="user.education"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>1</option>
@@ -67,6 +72,7 @@
               id="country"
               name="country"
               autocomplete="country-name"
+              v-model="user.country"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>United States</option>
@@ -81,6 +87,7 @@
               id="ethnicity"
               name="ethnicity"
               autocomplete="ethnicity-name"
+              v-model="user.ethnicity"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>1</option>
@@ -94,6 +101,7 @@
               id="province"
               name="province"
               autocomplete="province-name"
+              v-model="user.province"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>1</option>
@@ -107,6 +115,7 @@
               id="city"
               name="city"
               autocomplete="city-name"
+              v-model="user.city"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>1</option>
@@ -120,6 +129,7 @@
               id="region"
               name="region"
               autocomplete="region-name"
+              v-model="user.region"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
               <option>1</option>
@@ -137,6 +147,7 @@
               name="street-address"
               id="street-address"
               autocomplete="street-address"
+              v-model="user.address"
               class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>

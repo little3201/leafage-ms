@@ -162,20 +162,20 @@ import instance from "../../api";
 import { SERVER_URL, Role, Authority } from "../../api/request";
 
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
-let isTree = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
+let isTree = ref(false);
 // 数据
 let roleData = ref<Role>({});
-let dataCode = ref<string>("");
+let dataCode = ref("");
 let superiors = ref<Array<Role>>([]);
 let authorities = ref<Array<Authority>>([]);
-let codes = ref<Array<String>>([])
+let codes = ref<Array>([])
 let datas = ref<Array<Role>>([]);
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number): void => {
@@ -249,7 +249,7 @@ const treeOperate = async (operate: boolean): Promise<void> => {
   isTree.value = operate;
 };
 // 提交
-const treeCommit = async (tracked: Array<String>) => {
+const treeCommit = async (tracked: Array) => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }

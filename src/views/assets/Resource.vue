@@ -32,6 +32,7 @@
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
             <th scope="col" class="px-4">Category</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -62,6 +63,7 @@
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.category"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -212,16 +214,16 @@ import { uploadFile } from "../../plugins/upload";
 
 // 数据
 let resourceData = ref<Resource>({});
-let dataCode = ref<string>("");
+let dataCode = ref("");
 let datas = ref<Array<Resource>>([]);
 let categories = ref<Array<Category>>([])
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
 
 // 设置页码
 const setPage = (p: number, s: number): void => {

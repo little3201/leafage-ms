@@ -31,9 +31,6 @@
             <th scope="col" class="px-4">Username</th>
             <th scope="col" class="px-4">Nickname</th>
             <th scope="col" class="px-4">Gender</th>
-            <th scope="col" class="px-4">Phone</th>
-            <th scope="col" class="px-4">Email</th>
-            <th scope="col" class="px-4">Birthday</th>
             <th scope="col" class="px-4">NonExpired</th>
             <th scope="col" class="px-4">Locked</th>
             <th scope="col" class="px-4">Credentials</th>
@@ -146,9 +143,6 @@
                 </g>
               </svg>
             </td>
-            <td class="px-4" v-text="data.phone"></td>
-            <td class="px-4" v-text="data.email"></td>
-            <td class="px-4" v-text="new Date(data.birthday).toLocaleDateString()"></td>
             <td class="px-4">
               <div v-if="data.accountNonExpired" class="flex items-center justify-center">
                 <svg
@@ -432,22 +426,22 @@ import Model from "/@/components/Model.vue";
 import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
-import { SERVER_URL, Account, User, TreeNode } from "../../api/request";
+import { SERVER_URL, Account, TreeNode } from "../../api/request";
 
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
-let isTree = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
+let isTree = ref(false);
 // 数据
 let userData = ref<Account>({});
-let username = ref<string>("");
-let treeDatas = ref<TreeNode>([]);
+let username = ref("");
+let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
-let datas = ref<User>([]);
+let datas = ref<Array<Account>>([]);
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number): void => {
@@ -552,7 +546,7 @@ const relation = (type: string): void => {
   )
 }
 // 提交
-const treeCommit = async (tracked: Array<String>): Promise<void> => {
+const treeCommit = async (tracked: Array): Promise<void> => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }

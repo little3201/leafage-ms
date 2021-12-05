@@ -196,7 +196,7 @@
         @click="operate('account')"
         class="rounded-full w-8 h-8 text-center bg-white shadow"
       >
-        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" />
+        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" class="rounded-full" />
         <span v-else v-text="user.nickname.substr(0, 1)"></span>
       </button>
       <RouterLink

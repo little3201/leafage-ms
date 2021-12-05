@@ -268,21 +268,21 @@ import markdown from "../../plugins/markdown";
 import { uploadFile } from "../../plugins/upload";
 
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 // 标签参数
-let tagValue = ref<string>("");
-let tags = ref<Array<String>>([]);
+let tagValue = ref("");
+let tags = ref<Array>([]);
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
-let preview = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
+let preview = ref(false);
 // 数据
 let postsData = ref<PostsDetails>({});
-let dataCode = ref<string>("");
+let dataCode = ref("");
 let categories = ref<Array<Category>>([]);
-let content = ref<string>("");
+let content = ref("");
 let datas = ref<Array<Posts>>([]);
 // 设置页码
 const setPage = (p: number, s: number): void => {

@@ -166,18 +166,18 @@ import instance from "../../api";
 import { SERVER_URL, Group, User } from "../../api/request";
 
 // 模态框参数
-let isEdit = ref<boolean>(false);
-let isDel = ref<boolean>(false);
+let isEdit = ref(false);
+let isDel = ref(false);
 // 数据
-let groupData = ref<boolean>({});
-let dataCode = ref<string>("");
+let groupData = ref({});
+let dataCode = ref("");
 let users = ref<User>([]);
 let superiors = ref<Group>([]);
 let datas = ref<Array<Group>>([]);
 // 分页参数
-let page = ref<number>(0);
-let size = ref<number>(10);
-let total = ref<number>(0);
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
 
 // 设置页码
 const setPage = (p: number, s: number): void => {

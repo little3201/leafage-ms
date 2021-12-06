@@ -1,208 +1,163 @@
 <template>
-  <form @submit.prevent class="bg-white rounded-md">
-    <div class="flex items-center p-4 border-b border-gray-200">
-      <h2 class="font-medium text-lg mr-auto">Profile</h2>
-      <button
-        type="submit"
-        @click="onSubmit"
-        class="px-3 py-2 rounded-md bg-blue-700 text-white focus:outline-none"
-      >Save</button>
-    </div>
-    <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 lg:col-span-4">
-        <div class="border border-gray-200 rounded-md p-4">
-          <div class="w-40 h-40 relative mx-auto">
-            <img class="rounded-md" alt="avatar" :src="user.avatar" />
-            <span
-              title="Remove this photo?"
-              class="cursor-pointer tooltip w-5 h-5 inline-flex items-center justify-center absolute rounded-full text-white bg-red-600 right-0 top-0 -mr-2 -mt-2"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use xlink:href="/svg/feather-sprite.svg#x" />
-              </svg>
-            </span>
-          </div>
-          <div class="w-40 mx-auto relative my-4">
-            <label
-              for="avatar-upload"
-              class="bg-blue-700 flex justify-center text-white py-2 rounded-md cursor-pointer"
-            >Change Photo</label>
+  <form @submit.prevent>
+    <div class="shadow overflow-hidden sm:rounded-md">
+      <div class="px-4 py-5 bg-white">
+        <div class="grid grid-cols-6 gap-4">
+          <div class="col-span-6 sm:col-span-3">
+            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
             <input
-              id="avatar-upload"
-              name="avatar"
-              type="file"
-              class="sr-only"
-              accept="image/png, image/jpeg, image/jpg"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="col-span-12 lg:col-span-8">
-        <div class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 lg:col-span-1">
-            <label for="username">Username</label>
-            <input
-              id="username"
-              name="username"
               type="text"
-              class="mt-1 rounded-md w-full bg-gray-100 cursor-not-allowed border border-gray-300"
-              placeholder="Username"
-              v-model="user.username"
-              disabled
-              minlength="4"
-              maxlength="16"
+              name="first-name"
+              id="first-name"
+              autocomplete="given-name"
+              v-model="user.firstname"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
-          <div class="col-span-2 lg:col-span-1">
-            <label for="nickname">Nickname</label>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
             <input
-              id="nickname"
-              name="nickname"
               type="text"
-              class="mt-1 rounded-md w-full border border-gray-300"
-              placeholder="Nickname"
-              v-model="user.nickname"
-              required
-              autofocus
-              minlength="4"
-              maxlength="16"
+              name="last-name"
+              id="last-name"
+              autocomplete="family-name"
+              v-model="user.lastname"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
-          <div class="col-span-2 lg:col-span-1">
-            <label for="birthday">Birthday</label>
+
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
             <input
               id="birthday"
               name="birthday"
               type="date"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
               v-model="user.birthday"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="gender">Gender</label>
+
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
             <select
               id="gender"
               name="gender"
-              class="rounded-md mt-1 w-full border border-gray-300"
+              autocomplete="gender-name"
               v-model="user.gender"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="ethnicity">Ethnicity</label>
+
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="education" class="block text-sm font-medium text-gray-700">Education</label>
             <select
-              id="ethnicity"
-              name="ethnicity"
-              class="rounded-md mt-1 w-full border border-gray-300"
-              v-model="user.ethnicity"
+              id="education"
+              name="education"
+              autocomplete="education-name"
+              v-model="user.education"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
-              <option value="H">汉族</option>
-              <option value="Z">藏族</option>
+              <option>1</option>
+              <option>2</option>
             </select>
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="nation">Degree</label>
-            <select
-              id="degree"
-              name="degree"
-              class="rounded-md mt-1 w-full border border-gray-300"
-              v-model="user.degree"
-            >
-              <option value="undefined">请选择</option>
-              <option value="x">学士</option>
-              <option value="s">硕士</option>
-            </select>
-          </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="nation">Marital Status</label>
-            <select
-              id="degree"
-              name="degree"
-              class="rounded-md mt-1 w-full border border-gray-300"
-              v-model="user.degree"
-            >
-              <option value="undefined">请选择</option>
-              <option value="y">已婚</option>
-              <option value="w">未婚</option>
-            </select>
-          </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="country">Country</label>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
             <select
               id="country"
               name="country"
-              class="rounded-md w-full border border-gray-300 mt-1"
+              autocomplete="country-name"
               v-model="user.country"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
-              <option value="china">China</option>
-              <option value="america">America</option>
+              <option>United States</option>
+              <option>Canada</option>
+              <option>Mexico</option>
             </select>
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="province">Province</label>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label for="ethnicity" class="block text-sm font-medium text-gray-700">Ethnicity</label>
+            <select
+              id="ethnicity"
+              name="ethnicity"
+              autocomplete="ethnicity-name"
+              v-model="user.ethnicity"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
+            >
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </div>
+
+          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+            <label for="privince" class="block text-sm font-medium text-gray-700">State / Province</label>
             <select
               id="province"
               name="province"
-              class="rounded-md w-full border border-gray-300 mt-1"
+              autocomplete="province-name"
               v-model="user.province"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
-              <option value="shaanxi">Shaanxi</option>
-              <option value="shanghai">Shanghai</option>
+              <option>1</option>
+              <option>2</option>
             </select>
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="city">City</label>
+
+          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
             <select
               id="city"
               name="city"
-              class="rounded-md w-full border border-gray-300 mt-1"
+              autocomplete="city-name"
               v-model="user.city"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
-              <option value="xian">Xi'an</option>
-              <option value="xianyang">Xianyang</option>
+              <option>1</option>
+              <option>2</option>
             </select>
           </div>
-          <div class="col-span-2 md:col-span-1">
-            <label for="area">Area</label>
+
+          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
+            <label for="region" class="block text-sm font-medium text-gray-700">Region</label>
             <select
-              id="area"
-              name="area"
-              class="rounded-md w-full border border-gray-300 mt-1"
-              v-model="user.area"
+              id="region"
+              name="region"
+              autocomplete="region-name"
+              v-model="user.region"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             >
-              <option value="undefined">请选择</option>
-              <option value="beilin">Beilin</option>
-              <option value="gaoxin">Gaoxin</option>
+              <option>1</option>
+              <option>2</option>
             </select>
           </div>
-          <div class="col-span-2">
-            <label for="address">Address</label>
+
+          <div class="col-span-6">
+            <label
+              for="street-address"
+              class="block text-sm font-medium text-gray-700"
+            >Street address</label>
             <input
-              id="address"
-              name="address"
               type="text"
-              class="rounded-md w-full border border-gray-300 mt-1"
-              placeholder="Address"
+              name="street-address"
+              id="street-address"
+              autocomplete="street-address"
               v-model="user.address"
+              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
         </div>
+      </div>
+      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <button
+          type="submit"
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+        >Save</button>
       </div>
     </div>
   </form>
@@ -212,13 +167,13 @@
 import { ref, onMounted } from "vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, User } from "../../api/request";
 
-let user = ref({});
+let user = ref<User>({});
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
-const fetch = async () => {
+const fetch = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => {
       user.value = res.data
@@ -226,7 +181,7 @@ const fetch = async () => {
   }
 }
 
-const onSubmit = async () => {
+const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance
       .put(SERVER_URL.user.concat("/", username.value), user.value)

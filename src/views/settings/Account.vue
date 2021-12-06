@@ -1,56 +1,65 @@
 <template>
-  <form @submit.prevent class="bg-white rounded-md">
-    <div class="flex items-center p-4 border-b border-gray-200">
-      <h2 class="font-medium text-lg mr-auto">Account</h2>
-      <button
-        type="submit"
-        @click="onSubmit"
-        class="px-3 py-2 rounded-md bg-blue-700 text-white ml-auto focus:outline-none"
-      >Save</button>
+  <div class="shadow overflow-hidden sm:rounded-md">
+    <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+      <fieldset>
+        <legend class="text-base font-medium text-gray-900">Privileges</legend>
+        <div class="mt-4 space-y-4">
+          <div class="flex items-start justify-between">
+            <div class="text-sm">
+              <label for="comments" class="font-medium text-gray-700">Nickname</label>
+              <input
+                id="comments"
+                name="comments"
+                type="text"
+                class="border-gray-300 rounded cursor-pointer sr-only"
+              />
+              <p class="text-gray-500">布吉岛</p>
+            </div>
+            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+          </div>
+          <div class="flex items-start justify-between">
+            <div class="text-sm">
+              <label for="comments" class="font-medium text-gray-700">Phone Number</label>
+              <input
+                id="comments"
+                name="comments"
+                type="text"
+                class="border-gray-300 rounded cursor-pointer sr-only"
+              />
+              <p class="text-gray-500">187****3090</p>
+            </div>
+            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+          </div>
+          <div class="flex items-start justify-between">
+            <div class="text-sm">
+              <label for="candidates" class="font-medium text-gray-700">Email Address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="border-gray-300 rounded cursor-pointer sr-only"
+              />
+              <p class="text-gray-500">lea***e@leafage.top</p>
+            </div>
+            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+          </div>
+        </div>
+      </fieldset>
     </div>
-    <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 lg:col-span-6">
-        <label for="code">Code</label>
-        <input
-          id="code"
-          name="code"
-          type="text"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Code"
-          v-model.trim="account.code"
-          required
-          autofocus
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="type">Type</label>
-        <select
-          id="type"
-          name="type"
-          class="rounded-md mt-1 w-full border border-gray-300"
-          v-model="account.type"
-        >
-          <option value="undefined">请选择</option>
-          <option value="B">Bank</option>
-          <option value="A">Alipay</option>
-          <option value="W">WechatPay</option>
-        </select>
-      </div>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, Account } from "../../api/request";
 
-let account = ref({});
+let account = ref<Account>({});
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
-const fetch = async () => {
+const fetch = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
       account.value = res.data
@@ -58,7 +67,7 @@ const fetch = async () => {
   }
 }
 
-const onSubmit = async () => {
+const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     let data = { ...account.value, modifier: username.value }
     await instance.post(SERVER_URL.account, data).then((res) =>

@@ -3,9 +3,9 @@
     <div class="flex items-center my-2">
       <h2 class="text-lg font-medium mr-auto">Settings</h2>
     </div>
-    <div class="flex space-x-4">
-      <div>
-        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56">
+    <div class="flex md:space-x-4">
+      <div class="hidden md:block">
+        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 shadow">
           <div class="inline-flex items-center py-4">
             <img :alt="user.nickname" class="rounded-full w-12 h-12 border" :src="user.avatar" />
             <div class="ml-4 mr-auto">
@@ -51,6 +51,25 @@
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
               </svg>
               Account
+            </RouterLink>
+            <RouterLink
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              to="notifications"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mr-2"
+              >
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
+              </svg>
+              Notifications
             </RouterLink>
           </div>
           <div class="py-4">

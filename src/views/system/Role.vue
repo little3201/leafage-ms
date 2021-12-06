@@ -159,31 +159,31 @@ import Model from "/@/components/Model.vue";
 import Tree from "/@/components/tree/Tree.vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, Role, Authority } from "../../api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 let isTree = ref(false);
 // 数据
-let roleData = ref({});
+let roleData = ref<Role>({});
 let dataCode = ref("");
-let superiors = ref([]);
-let authorities = ref([]);
-let codes = ref<Array<String>>([])
-let datas = ref<any>([]);
+let superiors = ref<Array<Role>>([]);
+let authorities = ref<Array<Authority>>([]);
+let codes = ref<Array>([])
+let datas = ref<Array<Role>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
@@ -193,17 +193,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.role.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.role.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -227,7 +227,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查详情
-const fetch = () => {
+const fetch = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance.get(SERVER_URL.role.concat("/", dataCode.value)).then((res) => {
       roleData.value = res.data;
@@ -235,7 +235,7 @@ const fetch = () => {
   }
 };
 // 授权：打开
-const treeOperate = async (operate: boolean) => {
+const treeOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     await Promise.all([
       instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
@@ -249,14 +249,14 @@ const treeOperate = async (operate: boolean) => {
   isTree.value = operate;
 };
 // 提交
-const treeCommit = async (tracked: Array<String>) => {
+const treeCommit = async (tracked: Array) => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }
   isTree.value = false;
 };
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.role.concat("/", dataCode.value), roleData.value)

@@ -32,6 +32,7 @@
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
             <th scope="col" class="px-4">Category</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -62,6 +63,7 @@
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.category"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -113,7 +115,7 @@
                 <div class="text-gray-600">
                   <label
                     for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -207,14 +209,14 @@ import Confirm from "/@/components/Confirm.vue";
 import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, Resource, Category } from "../../api/request";
 import { uploadFile } from "../../plugins/upload";
 
 // 数据
-let resourceData = ref({});
+let resourceData = ref<Resource>({});
 let dataCode = ref("");
-let datas = ref<any>([]);
-let categories = ref([])
+let datas = ref<Array<Resource>>([]);
+let categories = ref<Array<Category>>([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -224,12 +226,12 @@ let isEdit = ref(false);
 let isDel = ref(false);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.resource, {
@@ -241,17 +243,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.resource.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -262,7 +264,7 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
+const modelOperate = async (operate: boolean): Promise<void> => {
   resourceData.value = {};
   if (operate && dataCode.value && dataCode.value.length > 0) {
     await Promise.all([instance.get(SERVER_URL.category).then((res) => {
@@ -272,7 +274,7 @@ const modelOperate = async (operate: boolean) => {
   }
   isEdit.value = operate;
 };
-const fetch = () => {
+const fetch = (): void => {
   instance
     .get(SERVER_URL.resource.concat("/", dataCode.value))
     .then(res =>
@@ -280,7 +282,7 @@ const fetch = () => {
     )
 }
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.resource.concat("/", dataCode.value), resourceData.value)
@@ -308,7 +310,7 @@ const modelCommit = async () => {
 };
 
 // 上传文件
-const uploadImage = (files: Array<File>) => {
+const uploadImage = (files: Array<File>): void => {
   if (files[0]) {
     uploadFile(files[0]).subscribe({
       // next: (result) => {},

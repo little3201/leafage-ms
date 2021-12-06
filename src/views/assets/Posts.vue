@@ -101,7 +101,7 @@
                 <div class="text-gray-600">
                   <label
                     for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -263,7 +263,7 @@ import Confirm from "/@/components/Confirm.vue";
 import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, Posts, PostsDetails, Category } from "../../api/request";
 import markdown from "../../plugins/markdown";
 import { uploadFile } from "../../plugins/upload";
 
@@ -273,24 +273,24 @@ let size = ref(10);
 let total = ref(0);
 // 标签参数
 let tagValue = ref("");
-let tags = ref<Array<String>>([]);
+let tags = ref<Array>([]);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 let preview = ref(false);
 // 数据
-let postsData = ref({});
+let postsData = ref<PostsDetails>({});
 let dataCode = ref("");
-let categories = ref([]);
+let categories = ref<Array<Category>>([]);
 let content = ref("");
-let datas = ref<any>([]);
+let datas = ref<Array<Posts>>([]);
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
@@ -300,13 +300,13 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 添加tag
-const addTag = () => {
+const addTag = (): void => {
   if (tagValue.value && tagValue.value.length > 0) {
     tags.value.push(tagValue.value);
     postsData.value = { ...postsData.value, tags: tags.value };
@@ -314,16 +314,16 @@ const addTag = () => {
   tagValue.value = "";
 };
 // 删除tag
-const removeTag = (tag: String) => {
+const removeTag = (tag: String): void => {
   tags.value.splice(tags.value.indexOf(tag), 1)
   postsData.value = { ...postsData.value, tags: tags.value };
 };
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -334,7 +334,7 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
+const modelOperate = async (operate: boolean): Promise<void> => {
   postsData.value = {};
   content.value = "";
   tags.value = [];
@@ -350,7 +350,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 
-const fetch = () => {
+const fetch = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
       postsData.value = res.data;
@@ -359,7 +359,7 @@ const fetch = () => {
   }
 };
 
-const fetchContent = () => {
+const fetchContent = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance
       .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
@@ -370,7 +370,7 @@ const fetchContent = () => {
 };
 
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   let data = {
     ...postsData.value,
     content: content.value,
@@ -402,7 +402,7 @@ const modelCommit = async () => {
 };
 
 // 上传文件
-const uploadImage = (files: Array<File>) => {
+const uploadImage = (files: Array<File>): void => {
   if (files[0]) {
     uploadFile(files[0]).subscribe({
       complete: (e: any) => {

@@ -60,7 +60,7 @@ import instance from "../../api";
 let formData = ref({});
 const confirmPassword = ref("");
 
-const onSubmit = async () => {
+const onSubmit = async (): Promise<void> => {
   await instance.get("/check").then(() => {
     // await instance
     //   .post("/register", new URLSearchParams(formData.value))

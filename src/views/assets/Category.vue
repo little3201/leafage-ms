@@ -111,27 +111,27 @@ import Confirm from "/@/components/Confirm.vue";
 import Model from "/@/components/Model.vue";
 
 import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import { SERVER_URL, Category } from "../../api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
-let categoryData = ref({});
+let categoryData = ref<Category>({});
 let dataCode = ref("");
-let datas = ref<any>([]);
+let datas = ref<Array<Category>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.category, {
@@ -143,20 +143,20 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.category.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean, code: string) => {
+const confirmOperate = (operate: boolean, code: string): void => {
   if (operate && code && code.length > 0) {
     dataCode.value = code;
   }
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -167,7 +167,7 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
+const modelOperate = async (operate: boolean): Promise<void> => {
   categoryData.value = {};
   if (operate && dataCode.value && dataCode.value.length > 0) {
     await instance
@@ -179,7 +179,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)

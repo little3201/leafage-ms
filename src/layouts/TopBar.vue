@@ -194,19 +194,19 @@
         type="button"
         v-if="user && Object.keys(user).length > 0"
         @click="operate('account')"
-        class="rounded-full w-8 h-8 text-center bg-white"
+        class="rounded-full w-8 h-8 text-center bg-white shadow"
       >
-        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" />
+        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" class="rounded-full" />
         <span v-else v-text="user.nickname.substr(0, 1)"></span>
       </button>
       <RouterLink
         v-else
         to="/signin"
-        class="bg-blue-600 text-white hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-full"
+        class="bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-full"
       >Sign In</RouterLink>
       <div
         v-show="isAccount"
-        class="origin-top-right py-4 px-2 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
+        class="origin-top-right py-4 px-2 absolute w-48 right-0 mt-4 rounded-md shadow-md bg-white z-10"
         aria-orientation="vertical"
         aria-labelledby="account-down"
         tabindex="-1"

@@ -5,7 +5,7 @@ const SERVER_PRE = {
 }
 
 // 接口请求路径
-const SERVER_URL = {
+export const SERVER_URL = {
   // hypervisor
   account: SERVER_PRE.hypervisor.concat('/account'), // 账户
   user: SERVER_PRE.hypervisor.concat('/user'), // 用户
@@ -21,4 +21,107 @@ const SERVER_URL = {
   comment: SERVER_PRE.assets.concat('/comment'), // 评论
 }
 
-export default SERVER_URL;
+export interface Account {
+  username: string,
+  nickname: string,
+  avatar: string,
+  accountNonExpired: boolean,
+  accountNonLocked: boolean,
+  credentialsNonExpired: boolean
+}
+
+export interface User extends Account {
+  firstname: string,
+  lastname: string,
+  gender: string,
+  birthday: Date,
+  ethnicity: string,
+  education: string,
+  country: string,
+  province: string,
+  city: string,
+  region: string,
+  address: string
+}
+
+interface AbstractVO<T> {
+  code: T,
+  description: string,
+  modifyTime: Date
+}
+
+export interface Role extends AbstractVO {
+  name: string,
+  superior: string,
+  count: number
+}
+
+export interface Group extends AbstractVO {
+  name: string,
+  superior: string,
+  count: number
+}
+
+export interface Authority extends AbstractVO {
+  name: string,
+  superior: string,
+  count: number
+}
+
+export interface Region extends AbstractVO {
+  name: string,
+  superior: string,
+  count: number
+}
+
+export interface TreeNode {
+  code: string,
+  name: string,
+  superior: string,
+  children: TreeNode[],
+  expand: Object
+}
+
+export interface Category extends AbstractVO {
+  alias: string,
+  count: number
+}
+
+export interface Posts extends AbstractVO {
+  title: string,
+  cover: string,
+  category: string,
+  viewed: number,
+  likes: number,
+  comment: number
+}
+
+export interface PostsDetails extends Posts {
+  tags: Array,
+  content: string
+}
+
+export interface Resource extends AbstractVO {
+  title: string,
+  type: string,
+  category: string,
+  viewed: number,
+  downloads: number
+}
+
+export interface Comment extends AbstractVO {
+  name: string,
+  replier: string,
+  content: string,
+  email: string
+}
+
+export interface Statistics extends AbstractVO {
+  date: Date,
+  viewed: number,
+  overViewed: number,
+  likes: number,
+  overLikes: number,
+  comment: number,
+  overComment: number
+}

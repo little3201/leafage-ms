@@ -91,10 +91,12 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
+import { TreeNode } from "@/api/request";
+
 const props = defineProps({
   data: {
     type: Object,
-    default: ''
+    default: {}
   },
   checked: {
     type: Array,
@@ -106,9 +108,21 @@ const emit = defineEmits(['treeOperate'])
 
 let isOpen = ref(false);
 
-let tracked = ref(props.checked);
+let tracked = ref<Array<String>>(props.checked);
 
 const track = (code: string) => {
   emit('treeOperate', code)
+  recurrence(code)
+}
+/**
+ * 递归
+ */
+const recurrence = (code: string) => {
+  debugger
+  props.data.children.forEach((item: TreeNode) => {
+    if (code == item.superior) {
+      tracked.value.push(item.code)
+    }
+  });
 }
 </script>

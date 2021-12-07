@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import AsideCore from "/@/layouts/AsideCore.vue";
+import AsideCore from "@/layouts/AsideCore.vue";
 
 defineProps({
   datas: {

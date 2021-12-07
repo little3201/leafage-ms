@@ -52,13 +52,16 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import instance from "../../api";
-import { SERVER_URL, Account } from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Account } from "@/api/request";
 
 let account = ref<Account>({});
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
+/**
+ * 查询
+ */
 const fetch = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
@@ -67,6 +70,9 @@ const fetch = async (): Promise<void> => {
   }
 }
 
+/**
+ * 提交
+ */
 const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     let data = { ...account.value, modifier: username.value }

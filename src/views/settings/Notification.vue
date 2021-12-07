@@ -159,9 +159,9 @@ import { ref } from "vue";
 
 import { useRouter } from "vue-router";
 
-import instance from "../../api";
-import { SERVER_URL } from "../../api/request";
-import Model from "/@/components/Model.vue";
+import instance from "@/api";
+import { SERVER_URL } from "@/api/request";
+import Model from "@/components/Model.vue";
 
 const router = useRouter();
 
@@ -170,6 +170,9 @@ let password = ref("");
 let newPassword = ref("");
 let confirmPassword = ref("");
 
+/**
+ * 表单提交
+ */
 const onSumbit = async (): Promise<void> => {
   if (newPassword.value === confirmPassword.value) {
     await instance.patch(SERVER_URL.user).then(() => {
@@ -178,9 +181,14 @@ const onSumbit = async (): Promise<void> => {
   }
 };
 
+/**
+ * 开关
+ */
 const modelOperate = (operate: boolean): void => {
   isShow.value = operate
 }
-
+/**
+ * 提交
+ */
 const modelCommit = (): void => { }
 </script>

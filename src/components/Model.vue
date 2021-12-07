@@ -38,7 +38,6 @@
 </template>
 
 <script lang="ts" setup>
-
 defineProps({
   isShow: {
     type: Boolean,

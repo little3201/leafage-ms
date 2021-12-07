@@ -74,12 +74,14 @@
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form>
-        <div class="grid grid-rows-3 grid-cols-12 gap-4">
+        <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-8">
+            <label for="title">Title</label>
             <input
+              id="title"
               type="text"
               name="title"
-              class="w-full rounded-md border-gray-300 shadow-sm"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
               placeholder="Title"
               maxlength="50"
               required
@@ -87,12 +89,12 @@
               v-model.trim="postsData.title"
             />
           </div>
-          <div class="row-span-3 col-span-12 sm:col-span-4">
+          <!-- <div class="row-span-3 col-span-12 sm:col-span-4">
             <img
               v-if="postsData.cover"
               :src="postsData.cover"
               alt="cover"
-              class="rounded-md object-cover h-full"
+              class="rounded-md object-cover w-full"
             />
             <div v-else class="h-full">
               <div
@@ -171,13 +173,15 @@
                 </svg>
               </span>
             </div>
-          </div>
+          </div>-->
           <div class="col-span-12 sm:col-span-4">
+            <label for="category">Category</label>
             <select
+              id="category"
               name="category"
               v-model.lazy="postsData.category"
               required
-              class="w-full rounded-md border-gray-300 shadow-sm"
+              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
             >
               <option value="undefined">请选择</option>
               <option
@@ -191,8 +195,9 @@
         </div>
         <div class="grid grid-cols-12 mt-3">
           <div class="col-span-12">
+            <label for="content">Content</label>
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md h-52 md:h-96 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md mt-1 h-52 md:h-96 relative"
               :class="{ border: preview }"
             >
               <a href="javascript:;" @click="preview = !preview" class="top-0 right-0 absolute">
@@ -232,6 +237,8 @@
                 </svg>
               </a>
               <textarea
+                id="content"
+                name="content"
                 v-if="!preview"
                 class="w-full rounded-md border-gray-300 shadow-sm"
                 v-model.trim="content"
@@ -256,16 +263,16 @@
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import { SERVER_URL, Posts, PostsDetails, Category } from "../../api/request";
-import markdown from "../../plugins/markdown";
-import { uploadFile } from "../../plugins/upload";
+import instance from "@/api";
+import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
+import markdown from "@/plugins/markdown";
+import { uploadFile } from "@/plugins/upload";
 
 // 分页参数
 let page = ref(0);
@@ -273,7 +280,7 @@ let size = ref(10);
 let total = ref(0);
 // 标签参数
 let tagValue = ref("");
-let tags = ref<Array>([]);
+let tags = ref<Array<String>>([]);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);

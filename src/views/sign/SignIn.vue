@@ -45,26 +45,32 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Sign from "/@/layouts/Sign.vue";
+import Sign from "@/layouts/Sign.vue";
 
 import { useRoute, useRouter } from "vue-router";
 
-import instance from "../../api";
-import { SERVER_URL } from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL } from "@/api/request";
 
 let formData = ref({});
 
 const route = useRoute();
 const router = useRouter();
 
+/**
+ * 表单提交
+ */
 const onSubmit = async (): Promise<void> => {
   await instance.get("/check").then(() => {
     instance.post("/login", new URLSearchParams(formData.value))
-      .then(res => init(res.data.username));
+      .then(res => storage(res.data.username));
   })
 };
 
-const init = async (username: string): Promise<void> => {
+/**
+ * 数据存储
+ */
+const storage = async (username: string): Promise<void> => {
   await Promise.all([
     instance.get(SERVER_URL.user.concat("/", username)).then(res =>
       sessionStorage.setItem("user", JSON.stringify(res.data))),

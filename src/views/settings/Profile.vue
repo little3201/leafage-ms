@@ -34,7 +34,7 @@
               name="birthday"
               type="date"
               v-model="user.birthday"
-              class="mt-1 w-full shadow-sm border-gray-300 rounded-md"
+              class="mt-1 py-1.5 w-full shadow-sm border-gray-300 rounded-md"
             />
           </div>
 
@@ -166,13 +166,16 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import instance from "../../api";
-import { SERVER_URL, User } from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, User } from "@/api/request";
 
 let user = ref<User>({});
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
+/**
+ * 查询
+ */
 const fetch = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => {
@@ -181,6 +184,9 @@ const fetch = async (): Promise<void> => {
   }
 }
 
+/**
+ * 表单提交
+ */
 const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     await instance

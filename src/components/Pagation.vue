@@ -131,7 +131,9 @@ const props = defineProps({
 const page = ref(props.page);
 const size = ref(props.size);
 
-// 监听size, 调用查询方法
+/**
+ * 监听size, 调用查询方法
+ */
 watch(size, (curSize, prevSize) => {
   if (curSize != prevSize) {
     give(page.value);
@@ -139,13 +141,18 @@ watch(size, (curSize, prevSize) => {
 });
 
 const emit = defineEmits(["setPage", "retrieve"]);
-// 设置
+/**
+ * 设置分页
+ */
 const give = (p: number) => {
   page.value = p;
   emit("setPage", page.value, size.value);
   emit("retrieve");
 }
 
+/**
+ * 计算总页数
+ */
 const pages = computed(() => {
   if (props.total) {
     if (props.total % size.value > 0) {
@@ -159,7 +166,9 @@ const pages = computed(() => {
   }
 });
 
-// 递增
+/**
+ * 页码递增
+ */
 const increment = () => {
   if (page.value < pages.value - 1) {
     page.value++;
@@ -167,7 +176,9 @@ const increment = () => {
   }
 };
 
-// 递减
+/**
+ * 页码递减
+ */
 const decrease = () => {
   if (page.value > 0) {
     page.value--;

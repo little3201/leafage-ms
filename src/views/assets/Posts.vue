@@ -262,7 +262,7 @@ import Pagation from "/@/components/Pagation.vue";
 import Confirm from "/@/components/Confirm.vue";
 import Model from "/@/components/Model.vue";
 
-import instance from "../../api";
+import instance from "@/api";
 import { SERVER_URL, Posts, PostsDetails, Category } from "../../api/request";
 import markdown from "../../plugins/markdown";
 import { uploadFile } from "../../plugins/upload";

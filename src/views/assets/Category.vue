@@ -104,14 +104,14 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import { SERVER_URL, Category } from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Category } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);

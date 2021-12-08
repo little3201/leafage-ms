@@ -3,18 +3,20 @@
     "target": "esnext",
     "module": "esnext",
     "strict": false,
+    "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "src/*"
       ]
     },
     "lib": [

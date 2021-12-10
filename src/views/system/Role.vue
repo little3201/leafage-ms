@@ -151,15 +151,15 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
-import Tree from "/@/components/tree/Tree.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
+import Tree from "@/components/tree/Tree.vue";
 
-import instance from "../../api";
-import { SERVER_URL, Role, Authority } from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Role, Authority } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
@@ -170,7 +170,7 @@ let roleData = ref<Role>({});
 let dataCode = ref("");
 let superiors = ref<Array<Role>>([]);
 let authorities = ref<Array<Authority>>([]);
-let codes = ref<Array>([])
+let codes = ref<Array<String>>([])
 let datas = ref<Array<Role>>([]);
 // 分页参数
 let page = ref(0);

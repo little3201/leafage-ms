@@ -2,7 +2,7 @@ import * as qiniu from 'qiniu-js';
 import CryptoJS from 'crypto-js'
 
 // 请求接口上传图片
-export function uploadFile(file: File) {
+export const uploadFile = (file: File) => {
     const uptoken = getToken("accessKey", "secretKey", "bucketName");
     const key = file.name;
     const config = {
@@ -17,7 +17,7 @@ export function uploadFile(file: File) {
     return qiniu.upload(file, key, uptoken, putExtra, config);
 }
 
-function getToken(access_key: string, secret_key: string, bucketname: string) {
+const getToken = (access_key: string, secret_key: string, bucketname: string):string => {
     // 构造策略
     var putPolicy = {
         "scope": bucketname,
@@ -30,10 +30,8 @@ function getToken(access_key: string, secret_key: string, bucketname: string) {
     return access_key + ':' + encodedSign + ':' + encoded;
 }
 
-function utf16to8(str: string) {
-    var out, i, len, c;
-    out = "";
-    len = str.length;
+const utf16to8 = (str: string):string => {
+    let out: string = "", i: number, len: number = str.length, c: number;
     for (i = 0; i < len; i++) {
         c = str.charCodeAt(i);
         if ((c >= 0x0001) && (c <= 0x007F)) {
@@ -50,13 +48,10 @@ function utf16to8(str: string) {
     return out;
 }
 
-function base64Encode(str: string) {
-    var out, i, len;
-    var c1, c2, c3;
-    len = str.length;
-    i = 0;
-    out = "";
-    var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+const base64Encode = (str: string): string => {
+    let out: string = "", i: number = 0, len: number = str.length;
+    let c1: number, c2: number, c3: number;
+    const base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
     while (i < len) {
         c1 = str.charCodeAt(i++) & 0xff;
         if (i == len) {

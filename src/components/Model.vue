@@ -2,12 +2,11 @@
   <transition name="model">
     <div v-show="isShow" class="fixed inset-0 overflow-y-auto" role="dialog">
       <div
-        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        class="flex items-end justify-center bg-black bg-opacity-60 min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
       >
-        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true"></div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <span class="inline-block align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div
-          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle max-w-2xl"
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden sm:align-middle md:max-w-lg lg:max-w-2xl"
         >
           <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
@@ -38,7 +37,6 @@
 </template>
 
 <script lang="ts" setup>
-
 defineProps({
   isShow: {
     type: Boolean,

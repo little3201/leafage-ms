@@ -53,9 +53,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Sign from "/@/layouts/Sign.vue";
+import Sign from "@/layouts/Sign.vue";
 
-import instance from "../../api";
+import instance from "@/api";
 
 let formData = ref({});
 const confirmPassword = ref("");

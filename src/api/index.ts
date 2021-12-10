@@ -17,7 +17,6 @@ const instance = axios.create({
 // 请求拦截
 instance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    config.signal = controller.signal
     return config
   },
   error => {

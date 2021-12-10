@@ -125,12 +125,16 @@ let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
-// 设置页码
+/**
+ * 设置页码
+ */
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-// 查询列表
+/**
+ * 查询列表
+ */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
@@ -143,19 +147,26 @@ const retrieve = async (): Promise<void> => {
     count()
   ]);
 };
+/**
+ * 统计记录数
+ */
 const count = (): void => {
   instance.get(SERVER_URL.category.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
-// 删除取消
+/**
+ * 删除开关
+ */
 const confirmOperate = (operate: boolean, code: string): void => {
   if (operate && code && code.length > 0) {
     dataCode.value = code;
   }
   isDel.value = operate;
 };
-// 删除确认
+/**
+ * 删除确认
+ */
 const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
@@ -166,7 +177,9 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
+/**
+ * 新增/编辑：打开
+ */
 const modelOperate = async (operate: boolean): Promise<void> => {
   categoryData.value = {};
   if (operate && dataCode.value && dataCode.value.length > 0) {
@@ -178,7 +191,9 @@ const modelOperate = async (operate: boolean): Promise<void> => {
   }
   isEdit.value = operate;
 };
-// 新增/编辑：提交
+/**
+ * 新增/编辑：提交
+ */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance

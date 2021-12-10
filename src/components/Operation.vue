@@ -17,7 +17,7 @@
         stroke-linejoin="round"
         class="mr-2"
       >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
       </svg>
       Import
     </button>

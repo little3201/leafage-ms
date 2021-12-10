@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import Index from '/@/views/Index.vue'
+import Index from '@/views/Index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,35 +10,35 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '',
         name: 'Dashboard',
-        component: () => import('/src/views/Dashboard.vue')
+        component: () => import('@/views/Dashboard.vue')
       },
       {
         path: 'system',
         name: 'System',
-        component: () => import('/src/views/system/Index.vue'),
+        component: () => import('@/views/system/Index.vue'),
         children: [
           {
             path: 'group',
             name: 'Group',
-            component: () => import('/src/views/system/Group.vue'),
+            component: () => import('@/views/system/Group.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'user',
             name: 'User',
-            component: () => import('/src/views/system/User.vue'),
+            component: () => import('@/views/system/User.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'role',
             name: 'Role',
-            component: () => import('/src/views/system/Role.vue'),
+            component: () => import('@/views/system/Role.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'authority',
             name: 'Authority',
-            component: () => import('/src/views/system/Authority.vue'),
+            component: () => import('@/views/system/Authority.vue'),
             meta: { requiresAuth: true }
           }
         ]
@@ -46,50 +46,50 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'posts',
         name: 'Posts',
-        component: () => import('/src/views/assets/Posts.vue')
+        component: () => import('@/views/assets/Posts.vue')
       },
       {
         path: 'resource',
         name: 'Resource',
-        component: () => import('/src/views/assets/Resource.vue')
+        component: () => import('@/views/assets/Resource.vue')
       },
       {
         path: 'category',
         name: 'Category',
-        component: () => import('/src/views/assets/Category.vue')
+        component: () => import('@/views/assets/Category.vue')
       },
       {
         path: 'region',
         name: 'Region',
-        component: () => import('/src/views/assets/Region.vue')
+        component: () => import('@/views/assets/Region.vue')
       },
       {
         path: '/settings',
         name: 'Settings',
-        component: () => import('/src/views/settings/Index.vue'),
+        component: () => import('@/views/settings/Index.vue'),
         children: [
           {
             path: 'profile',
             name: 'Profile',
-            component: () => import('/src/views/settings/Profile.vue'),
+            component: () => import('@/views/settings/Profile.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'secret',
             name: 'Secret',
-            component: () => import('/src/views/settings/Secret.vue'),
+            component: () => import('@/views/settings/Secret.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'account',
             name: 'Account',
-            component: () => import('/src/views/settings/Account.vue'),
+            component: () => import('@/views/settings/Account.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'notifications',
             name: 'Notifications',
-            component: () => import('/src/views/settings/Notification.vue'),
+            component: () => import('@/views/settings/Notification.vue'),
             meta: { requiresAuth: true }
           }
         ]
@@ -97,18 +97,18 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/notification',
         name: 'Notification',
-        component: () => import('/src/views/notification/Index.vue'),
+        component: () => import('@/views/notification/Index.vue'),
         children: [
           {
             path: 'unread',
             name: 'Unread',
-            component: () => import('/src/views/notification/Unread.vue'),
+            component: () => import('@/views/notification/Unread.vue'),
             meta: { requiresAuth: true }
           },
           {
             path: 'readed',
             name: 'Readed',
-            component: () => import('/src/views/notification/Readed.vue'),
+            component: () => import('@/views/notification/Readed.vue'),
             meta: { requiresAuth: true }
           }
         ]

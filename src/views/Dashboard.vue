@@ -212,7 +212,18 @@
                   :key="index"
                 >
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                  <td class="px-3" v-text="comment.nickname"></td>
+                  <td class="px-3">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-8 w-8">
+                        <img
+                          :src="comment.avatar || '/svg/logo.svg'"
+                          alt="avatar"
+                          class="rounded-full w-8 h-8 my-auto"
+                        />
+                      </div>
+                      <span class="ml-2">{{ comment.nickname }}</span>
+                    </div>
+                  </td>
                   <td class="px-3" v-text="comment.content"></td>
                 </tr>
               </tbody>
@@ -231,10 +242,10 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart } from "../plugins/chart";
+import { createBarChart, createMiniChart } from "@/plugins/chart";
 
-import instance from "../api";
-import { SERVER_URL, Comment, Statistics } from "../api/request";
+import instance from "@/api";
+import { SERVER_URL, Comment, Statistics } from "@/api/request";
 
 // data
 let comments = ref<Comment>([])
@@ -258,7 +269,7 @@ const retrieveComments = async (): Promise<void> => {
 }
 
 const initData = async (): Promise<void> => {
-  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
+  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 10 } })
     .then(res => {
       datas.value = res.data;
       construceChart()

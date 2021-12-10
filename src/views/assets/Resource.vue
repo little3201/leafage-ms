@@ -202,15 +202,15 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import { SERVER_URL, Resource, Category } from "../../api/request";
-import { uploadFile } from "../../plugins/upload";
+import instance from "@/api";
+import { SERVER_URL, Resource, Category } from "@/api/request";
+import { uploadFile } from "@/plugins/upload";
 
 // 数据
 let resourceData = ref<Resource>({});

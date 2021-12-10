@@ -21,7 +21,7 @@ Chart.register(
     Tooltip
 );
 
-export const createBarChart = (ctx: HTMLCanvasElement, labels: Array, datas: Array) => {
+export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>) => {
     const config: any = {
         type: "bar",
         data: {
@@ -44,7 +44,7 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array, datas: Arr
     return new Chart(ctx, config);
 }
 
-export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array, datas: Array, color: String) => {
+export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>, color: String) => {
     const config: any = {
         type: "line",
         data: {

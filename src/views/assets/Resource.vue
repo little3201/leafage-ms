@@ -92,7 +92,7 @@
               id="title"
               name="title"
               type="text"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Title"
               required
               autofocus
@@ -101,16 +101,17 @@
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
             <label for="cover">Cover</label>
-            <img
-              id="cover"
-              v-if="resourceData.cover"
-              :src="resourceData.cover"
-              alt="portfolio content"
-              class="rounded-md object-cover h-56 mt-1 border"
-            />
+            <figure v-if="resourceData.cover" class="w-44 h-56">
+              <img
+                id="cover"
+                :src="resourceData.cover"
+                alt="portfolio content"
+                class="rounded-md w-full h-full mt-1 border"
+              />
+            </figure>
             <div v-else class="mt-1">
               <div
-                class="h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
+                class="w-44 h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
               >
                 <div class="text-gray-600">
                   <label
@@ -155,7 +156,7 @@
               id="category"
               name="category"
               v-model="resourceData.category"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -175,7 +176,7 @@
               id="type"
               name="type"
               v-model="resourceData.type"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option value="E">Epub</option>
@@ -189,7 +190,7 @@
           <textarea
             id="description"
             name="description"
-            class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
+            class="mt-1 w-full block rounded-md border-gray-300"
             v-model.trim="resourceData.description"
             placeholder="Description"
           />
@@ -265,12 +266,14 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  resourceData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await Promise.all([instance.get(SERVER_URL.category).then((res) => {
-      categories.value = res.data;
-    }),
-    fetch()]);
+  if (operate) {
+    resourceData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await Promise.all([instance.get(SERVER_URL.category).then((res) => {
+        categories.value = res.data;
+      }),
+      fetch()]);
+    }
   }
   isEdit.value = operate;
 };

@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
+                :class="{ 'bg-lime-500': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
                 title="viewed higher than last month"
               >
                 {{ latest.overViewed }}%
@@ -92,7 +92,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
+                :class="{ 'bg-lime-500': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
                 title="2% Lower than last month"
               >
                 {{ latest.overComment }}%
@@ -141,7 +141,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'up': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
+                :class="{ 'bg-lime-500': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
                 title="12% Higher than last month"
               >
                 {{ latest.overLikes }}%
@@ -309,9 +309,3 @@ onMounted(() => {
   retrieveComments();
 });
 </script>
-
-<style scoped>
-.up {
-  background-color: #91c714;
-}
-</style>

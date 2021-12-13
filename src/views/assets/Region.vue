@@ -74,7 +74,7 @@
               id="name"
               name="name"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="regionData.name"
               autofocus
@@ -85,7 +85,7 @@
             <textarea
               id="description"
               name="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="regionData.description"
             />
           </div>
@@ -158,11 +158,13 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  regionData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
-      regionData.value = res.data;
-    });
+  if (operate) {
+    regionData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
+        regionData.value = res.data;
+      });
+    }
   }
   isEdit.value = operate;
 };

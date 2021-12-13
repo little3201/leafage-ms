@@ -81,7 +81,7 @@
               id="title"
               type="text"
               name="title"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Title"
               maxlength="50"
               required
@@ -90,17 +90,15 @@
             />
           </div>
           <div class="row-span-3 col-span-12 sm:col-span-4">
-            <img
-              v-if="postsData.cover"
-              :src="postsData.cover"
-              alt="cover"
-              class="rounded-md object-cover w-full"
-            />
-            <div v-else class="h-full">
+            <label for="cover">Cover</label>
+            <figure v-if="postsData.cover" class="w-full h-32 mt-1">
+              <img :src="postsData.cover" :alt="postsData.title" class="rounded-md w-full h-full" />
+            </figure>
+            <div v-else>
               <div
-                class="rounded-md border border-gray-300 h-full flex items-center justify-center"
+                class="h-32 mt-1 rounded-md border border-gray-300 flex items-center px-12 justify-center"
               >
-                <div class="text-gray-600">
+                <div class="text-gray-600 text-center">
                   <label
                     for="file-upload"
                     class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
@@ -134,18 +132,7 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 sm:col-span-8">
-            <label for="tags">Tags</label>
-            <input
-              id="tags"
-              type="text"
-              name="tags"
-              @keydown.enter="addTag"
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
-              placeholder="Tags"
-              v-model.trim="tagValue"
-            />
-          </div>
+
           <!-- <div
             class="row-span-2 col-span-12 sm:col-span-4 border border-gray-300 rounded-md flex items-center"
           >
@@ -176,14 +163,14 @@
               </span>
             </div>
           </div>-->
-          <div class="col-span-12 md:col-span-4">
+          <div class="col-span-12 md:col-span-8">
             <label for="category">Category</label>
             <select
               id="category"
               name="category"
               v-model.lazy="postsData.category"
               required
-              class="w-full mt-1 rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -195,64 +182,75 @@
             </select>
           </div>
         </div>
+        <div class="col-span-12 mt-4 sm:mt-0">
+          <label for="tags">Tags</label>
+          <input
+            id="tags"
+            type="text"
+            name="tags"
+            @keydown.enter="addTag"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            placeholder="Tags"
+            v-model.trim="tagValue"
+          />
+        </div>
         <div class="grid grid-cols-12 mt-3">
-          <div class="col-span-12">
+          <div class="col-span-12 relative">
             <label for="content">Content</label>
+            <button
+              type="button"
+              @click="preview = !preview"
+              class="top-3 right-1 absolute focus:outline-none"
+            >
+              <svg
+                v-if="preview"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-eye-off opacity-30"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+              <svg
+                v-else
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-eye opacity-30"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </button>
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md mt-1 h-52 md:h-96 relative"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md mt-1 h-52 md:h-96"
               :class="{ border: preview }"
             >
-              <a href="javascript:;" @click="preview = !preview" class="top-0 right-0 absolute">
-                <svg
-                  v-if="preview"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-eye-off opacity-30"
-                >
-                  <path
-                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
-                  />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-eye opacity-30"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </a>
               <textarea
                 id="content"
                 name="content"
                 v-if="!preview"
-                class="w-full rounded-md border-gray-300 shadow-sm"
+                class="mt-1 w-full block rounded-md border-gray-300"
                 v-model.trim="content"
                 required
                 placeholder="write with markdown..."
               ></textarea>
-              <figure
-                v-else
-                class="p-2 prose overflow-auto"
-                style="width: 606px"
-                v-html="rendedHtml"
-              ></figure>
+              <div v-else class="p-2 prose" style="width: 606px" v-html="rendedHtml"></div>
             </div>
           </div>
         </div>
@@ -344,10 +342,10 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  postsData.value = {};
-  content.value = "";
-  tags.value = [];
   if (operate) {
+    postsData.value = {};
+    content.value = "";
+    tags.value = [];
     await Promise.all([
       instance.get(SERVER_URL.category).then((res) => {
         categories.value = res.data;

@@ -101,7 +101,7 @@
               name="name"
               type="text"
               aria-label="name"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="roleData.name"
               autofocus
@@ -114,7 +114,7 @@
               name="superior"
               aria-label="superior"
               v-model="roleData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -131,7 +131,7 @@
               id="description"
               aria-label="description"
               name="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="roleData.description"
             />
           </div>
@@ -215,8 +215,8 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
-  roleData.value = {};
   if (operate) {
+  roleData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.role).then((res) => {

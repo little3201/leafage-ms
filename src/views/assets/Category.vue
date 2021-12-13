@@ -78,7 +78,7 @@
               id="alias"
               type="text"
               name="alias"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Alias"
               required
               autofocus
@@ -90,7 +90,7 @@
             <textarea
               id="description"
               name="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="categoryData.description"
               placeholder="Description"
             />
@@ -181,13 +181,14 @@ const confirmCommit = async (): Promise<void> => {
  * 新增/编辑：打开
  */
 const modelOperate = async (operate: boolean): Promise<void> => {
-  categoryData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .get(SERVER_URL.category.concat("/").concat(dataCode.value))
-      .then((res) => {
-        categoryData.value = res.data;
-      });
+  if (operate) {
+    categoryData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))
+        .then((res) => {
+          categoryData.value = res.data;
+        });
+    }
   }
   isEdit.value = operate;
 };

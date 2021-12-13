@@ -43,7 +43,7 @@
     <div class="mr-3 sm:mr-6 mt-2">
       <button
         title="Toggle Theme"
-        @click="theme"
+        @click="themeMode"
         class="relative focus:outline-none transition-colors duration-500 ease-in border-transparent"
       >
         <svg
@@ -303,7 +303,7 @@ const notifications = ref([
 
 const user = ref({});
 
-const theme = () => {
+const themeMode = () => {
   isDark.value = !isDark.value
 }
 

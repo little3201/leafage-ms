@@ -98,7 +98,7 @@
               id="name"
               name="name"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="groupData.name"
               autofocus
@@ -110,7 +110,7 @@
               id="superior"
               name="superior"
               v-model.lazy="groupData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -127,7 +127,7 @@
               id="principal"
               name="principal"
               v-model.lazy="groupData.principal"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -143,7 +143,7 @@
             <textarea
               id="description"
               name="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="groupData.description"
             />
           </div>
@@ -228,8 +228,8 @@ const retrieveUsers = (): void => {
 }
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  groupData.value = {};
   if (operate) {
+    groupData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.group).then((res) => {

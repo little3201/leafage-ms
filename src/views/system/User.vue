@@ -481,13 +481,15 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  userData.value = {};
-  if (operate && username.value && username.value.length > 0) {
-    await instance
-      .get(SERVER_URL.user.concat("/", username.value))
-      .then((res) => {
-        userData.value = res.data;
-      });
+  if (operate) {
+    userData.value = {};
+    if (username.value && username.value.length > 0) {
+      await instance
+        .get(SERVER_URL.user.concat("/", username.value))
+        .then((res) => {
+          userData.value = res.data;
+        });
+    }
   }
   isEdit.value = operate;
 };

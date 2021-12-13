@@ -127,7 +127,7 @@
               name="name"
               @blur="exist"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="authorityData.name"
               autofocus
@@ -143,7 +143,7 @@
               name="type"
               :disabled="authorityData.code"
               v-model.lazy="authorityData.type"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               :class="{ 'text-gray-300': authorityData.code }"
             >
               <option value="undefined">请选择</option>
@@ -161,7 +161,7 @@
               id="icon"
               name="icon"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Icon"
               v-model.trim="authorityData.icon"
               autofocus
@@ -174,7 +174,7 @@
               name="path"
               :disabled="authorityData.type == 'B'"
               type="url"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               :class="{
                 'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
               }"
@@ -188,7 +188,7 @@
               id="superior"
               name="superior"
               v-model.lazy="authorityData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -204,7 +204,7 @@
             <textarea
               id="description"
               name="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="authorityData.description"
               placeholder="Description"
             />
@@ -280,8 +280,8 @@ const confirmCommit = async (): Promise<void> => {
 };
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean): Promise<void> => {
-  authorityData.value = {};
   if (operate) {
+    authorityData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.authority).then((res) => {

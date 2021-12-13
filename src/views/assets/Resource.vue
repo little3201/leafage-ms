@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Portfolio</h2>
+      <h2 class="text-lg font-medium">Resource</h2>
       <button
         @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
@@ -32,6 +32,7 @@
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Type</th>
             <th scope="col" class="px-4">Category</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Viewed</th>
             <th scope="col" class="px-4">Downloads</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -62,6 +63,7 @@
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.category"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -88,8 +90,9 @@
             </label>
             <input
               id="title"
+              name="title"
               type="text"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Title"
               required
               autofocus
@@ -98,21 +101,22 @@
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
             <label for="cover">Cover</label>
-            <img
-              id="cover"
-              v-if="resourceData.cover"
-              :src="resourceData.cover"
-              alt="portfolio content"
-              class="rounded-md object-cover h-56 mt-1 border"
-            />
+            <figure v-if="resourceData.cover" class="w-44 h-56">
+              <img
+                id="cover"
+                :src="resourceData.cover"
+                alt="portfolio content"
+                class="rounded-md w-full h-full mt-1 border"
+              />
+            </figure>
             <div v-else class="mt-1">
               <div
-                class="h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
+                class="w-44 h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
               >
                 <div class="text-gray-600">
                   <label
                     for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-indigo-500"
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
                   >
                     <svg
                       class="mx-auto h-8 w-8"
@@ -130,7 +134,7 @@
                     </svg>
                     <input
                       id="file-upload"
-                      name="resourceData.cover"
+                      name="cover"
                       multiple
                       type="file"
                       class="sr-only"
@@ -144,14 +148,15 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="type" class="inline-flex items-center">
+            <label for="category" class="inline-flex items-center">
               Category
               <span class="text-red-600 ml-1">*</span>
             </label>
             <select
-              id="type"
+              id="category"
+              name="category"
               v-model="resourceData.category"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -169,8 +174,9 @@
             </label>
             <select
               id="type"
+              name="type"
               v-model="resourceData.type"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option value="E">Epub</option>
@@ -183,7 +189,8 @@
           <label for="description">Description</label>
           <textarea
             id="description"
-            class="mt-1 w-full h-full rounded-md border-gray-300 shadow-sm"
+            name="description"
+            class="mt-1 w-full block rounded-md border-gray-300"
             v-model.trim="resourceData.description"
             placeholder="Description"
           />
@@ -196,21 +203,21 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
-import { uploadFile } from "../../plugins/upload";
+import instance from "@/api";
+import { SERVER_URL, Resource, Category } from "@/api/request";
+import { uploadFile } from "@/plugins/upload";
 
 // 数据
-let resourceData = ref({});
+let resourceData = ref<Resource>({});
 let dataCode = ref("");
-let datas = ref<any>([]);
-let categories = ref([])
+let datas = ref<Array<Resource>>([]);
+let categories = ref<Array<Category>>([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -220,12 +227,12 @@ let isEdit = ref(false);
 let isDel = ref(false);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.resource, {
@@ -237,17 +244,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.resource.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -258,17 +265,19 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
-  resourceData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await Promise.all([instance.get(SERVER_URL.category).then((res) => {
-      categories.value = res.data;
-    }),
-    fetch()]);
+const modelOperate = async (operate: boolean): Promise<void> => {
+  if (operate) {
+    resourceData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await Promise.all([instance.get(SERVER_URL.category).then((res) => {
+        categories.value = res.data;
+      }),
+      fetch()]);
+    }
   }
   isEdit.value = operate;
 };
-const fetch = () => {
+const fetch = (): void => {
   instance
     .get(SERVER_URL.resource.concat("/", dataCode.value))
     .then(res =>
@@ -276,7 +285,7 @@ const fetch = () => {
     )
 }
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.resource.concat("/", dataCode.value), resourceData.value)
@@ -304,7 +313,7 @@ const modelCommit = async () => {
 };
 
 // 上传文件
-const uploadImage = (files: Array<File>) => {
+const uploadImage = (files: Array<File>): void => {
   if (files[0]) {
     uploadFile(files[0]).subscribe({
       // next: (result) => {},

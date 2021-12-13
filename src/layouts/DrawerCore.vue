@@ -102,7 +102,9 @@ defineProps({
 const emit = defineEmits(["menuAction"]);
 
 const isOpen = ref(true);
-
+/**
+ * 操作
+ */
 const itemOperation = () => {
   emit("menuAction");
 };

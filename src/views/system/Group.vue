@@ -96,8 +96,9 @@
             </label>
             <input
               id="name"
+              name="name"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="groupData.name"
               autofocus
@@ -107,8 +108,9 @@
             <label for="superior">Superior</label>
             <select
               id="superior"
+              name="superior"
               v-model.lazy="groupData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -123,8 +125,9 @@
             <label for="principal">Principal</label>
             <select
               id="principal"
+              name="principal"
               v-model.lazy="groupData.principal"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -139,7 +142,8 @@
             <label for="description">Description</label>
             <textarea
               id="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              name="description"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="groupData.description"
             />
           </div>
@@ -152,14 +156,14 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Group, User } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
@@ -167,22 +171,22 @@ let isDel = ref(false);
 // 数据
 let groupData = ref({});
 let dataCode = ref("");
-let users = ref([]);
-let superiors = ref([]);
-let datas = ref<any>([]);
+let users = ref<User>([]);
+let superiors = ref<Group>([]);
+let datas = ref<Array<Group>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.group, { params: { page: page.value, size: size.value } })
@@ -192,17 +196,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.group.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.group.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -213,7 +217,7 @@ const confirmCommit = async () => {
   });
 };
 // 查询关联用户
-const retrieveUsers = () => {
+const retrieveUsers = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance
       .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
@@ -223,9 +227,9 @@ const retrieveUsers = () => {
   }
 }
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
-  groupData.value = {};
+const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
+    groupData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.group).then((res) => {
@@ -237,7 +241,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查询详情
-const fetch = () => {
+const fetch = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance.get(SERVER_URL.group.concat("/", dataCode.value)).then((res) => {
       groupData.value = res.data;
@@ -245,7 +249,7 @@ const fetch = () => {
   }
 };
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.group.concat("/", dataCode.value), groupData.value)
@@ -271,7 +275,7 @@ const modelCommit = async () => {
     });
   }
 };
-const relation = () => {
+const relation = (): void => {
   alert("users")
 }
 onMounted(() => {

@@ -19,8 +19,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import Model from "/@/components/Model.vue";
-import TreeCore from "/@/components/tree/TreeCore.vue";
+import Model from "@/components/Model.vue";
+import TreeCore from "@/components/tree/TreeCore.vue";
 
 const props = defineProps({
   isShow: {
@@ -37,10 +37,12 @@ const props = defineProps({
   }
 });
 
-let checked = ref(props.codes)
+let checked = ref<Array<String>(props.codes)
 
+/**
+ * 选中
+ */
 const tracked = (code: string) => {
-  console.log("code: " + code)
   if (checked.value.includes(code)) {
     checked.value.splice(checked.value.indexOf(code), 1)
   } else {

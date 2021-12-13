@@ -2,12 +2,12 @@
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
       <input
-        :id="data.name"
+        :id="data.code"
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="tracked"
-        @change="$emit('treeOperate', data.code)"
+        @change="track(data.code)"
       />
       <span
         v-if="data.children && data.children.length > 0"
@@ -58,7 +58,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
-      <label :for="data.name" v-else class="ml-4 flex items-center cursor-pointer">
+      <label :for="data.code" v-else class="ml-4 flex items-center cursor-pointer">
         <svg
           v-if="data.expand && data.expand.icon"
           width="16"
@@ -81,8 +81,8 @@
         v-for="child in data.children"
         :key="child.code"
         :data="child"
-        :checked="checked"
-        @treeOperate="$emit('treeOperate', child.code)"
+        :checked="tracked"
+        @treeOperate="track"
       />
     </ul>
   </li>
@@ -91,10 +91,12 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
+import { TreeNode } from "@/api/request";
+
 const props = defineProps({
   data: {
     type: Object,
-    default: ''
+    default: {}
   },
   checked: {
     type: Array,
@@ -102,7 +104,25 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['treeOperate'])
+
 let isOpen = ref(false);
 
-let tracked = ref(props.checked);
+let tracked = ref<Array<String>>(props.checked);
+
+const track = (code: string) => {
+  emit('treeOperate', code)
+  recurrence(code)
+}
+/**
+ * 递归
+ */
+const recurrence = (code: string) => {
+  debugger
+  props.data.children.forEach((item: TreeNode) => {
+    if (code == item.superior) {
+      tracked.value.push(item.code)
+    }
+  });
+}
 </script>

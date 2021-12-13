@@ -21,6 +21,7 @@
       <div class="hidden sm:block relative w-56 rounded-full pr-8 bg-gray-300">
         <input
           type="text"
+          name="search"
           class="w-56 border border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           placeholder="Search..."
         />
@@ -39,10 +40,10 @@
         </svg>
       </div>
     </div>
-    <div class="mr-3 sm:mr-6 inline-flex items-center">
+    <div class="mr-3 sm:mr-6 mt-2">
       <button
         title="Toggle Theme"
-        @click="theme"
+        @click="themeMode"
         class="relative focus:outline-none transition-colors duration-500 ease-in border-transparent"
       >
         <svg
@@ -85,7 +86,7 @@
         </svg>
       </button>
     </div>
-    <div class="relative mr-auto sm:mr-6 inline-flex items-center">
+    <div class="relative mr-auto sm:mr-6 mt-2">
       <button type="button" class="focus:outline-none" @click="operate('notify')">
         <svg
           width="20"
@@ -106,7 +107,7 @@
       </button>
       <div
         v-show="isNotify"
-        class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-5 rounded-md shadow-lg bg-white z-10"
+        class="origin-top-left p-4 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
         <span class="p-2 text-lg">Notifications</span>
         <div class="divide-y mt-2">
@@ -129,7 +130,7 @@
         </div>
       </div>
     </div>
-    <div class="relative mr-auto sm:mr-6 inline-flex items-center">
+    <div class="relative mr-auto sm:mr-6 mt-2">
       <button type="button" class="focus:outline-none" @click="operate('language')">
         <svg
           width="20"
@@ -146,65 +147,40 @@
       </button>
       <div
         v-show="isLanguage"
-        class="origin-top-right py-4 px-2 divide-y absolute w-40 right-0 mt-6 rounded-md shadow-lg bg-white z-10"
+        class="origin-top-right py-4 px-2 divide-y absolute right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
         <button
           type="button"
-          class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+          class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
-          </svg>
           English
         </button>
         <button
           type="button"
-          class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+          class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
-          </svg>
           Chinese
         </button>
       </div>
     </div>
     <div class="relative">
-      <div
+      <button
+        type="button"
         v-if="user && Object.keys(user).length > 0"
         @click="operate('account')"
-        class="rounded-full cursor-pointer w-8 h-8 text-center bg-white"
+        class="rounded-full w-8 h-8 text-center bg-white shadow focus:outline-none"
       >
-        <img v-if="user.avatar" alt="leafage" :src="user.avatar" class="rounded-full" />
-        <span v-else v-text="user.nickname.substr(0, 1)" class="text-xl rounded-full"></span>
-      </div>
+        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" class="rounded-full" />
+        <span v-else v-text="user.nickname.substr(0, 1)"></span>
+      </button>
       <RouterLink
         v-else
         to="/signin"
-        class="bg-blue-600 text-white hover:shadow-md hover:bg-blue-700 px-3 py-2 rounded-full"
+        class="bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-full"
       >Sign In</RouterLink>
       <div
         v-show="isAccount"
-        class="origin-top-right py-4 px-2 absolute w-48 right-0 mt-4 rounded-md shadow-lg bg-white z-10"
+        class="origin-top-right py-4 px-2 absolute w-40 right-0 mt-4 rounded-md shadow-md bg-white z-10"
         aria-orientation="vertical"
         aria-labelledby="account-down"
         tabindex="-1"
@@ -299,9 +275,9 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import router from "../router";
+import router from "@/router";
 
-import instance from "../api";
+import instance from "@/api";
 
 // 控制通知是否打开
 const isNotify = ref(false);
@@ -327,20 +303,25 @@ const notifications = ref([
 
 const user = ref({});
 
-const theme = () => {
+const themeMode = () => {
   isDark.value = !isDark.value
 }
 
+/**
+ * 登出
+ */
 const signout = async () => {
   await instance.post("/logout").then(() => {
     // 退出登录，清空sessionStorage
     sessionStorage.clear()
-
   });
 
   router.replace("/signin");
 };
 
+/**
+ * 开关
+ */
 const operate = (operation: string) => {
   switch (operation) {
     case "notify":
@@ -366,7 +347,9 @@ const operate = (operation: string) => {
 
 }
 
-// 请求链接webSocket
+/**
+ * 请求链接webSocket
+ */
 const socket = () => {
   var ws = new WebSocket("wss://console.leafage.top/api/socket");
   ws.onopen = (event) => {

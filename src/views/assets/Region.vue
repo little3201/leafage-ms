@@ -72,8 +72,9 @@
             </label>
             <input
               id="name"
+              name="name"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="regionData.name"
               autofocus
@@ -83,7 +84,8 @@
             <label for="description">Description</label>
             <textarea
               id="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              name="description"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="regionData.description"
             />
           </div>
@@ -96,35 +98,35 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Region } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
-let regionData = ref({});
+let regionData = ref<Region>({});
 let dataCode = ref("");
-let datas = ref<any>([]);
+let datas = ref<Array<Region>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
@@ -134,17 +136,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.region.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -155,17 +157,19 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
-  regionData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
-      regionData.value = res.data;
-    });
+const modelOperate = async (operate: boolean): Promise<void> => {
+  if (operate) {
+    regionData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
+        regionData.value = res.data;
+      });
+    }
   }
   isEdit.value = operate;
 };
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)

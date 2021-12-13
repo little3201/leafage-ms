@@ -77,7 +77,8 @@
             <input
               id="alias"
               type="text"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              name="alias"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Alias"
               required
               autofocus
@@ -88,7 +89,8 @@
             <label for="description">Description</label>
             <textarea
               id="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              name="description"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="categoryData.description"
               placeholder="Description"
             />
@@ -102,34 +104,38 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Category } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
-let categoryData = ref({});
+let categoryData = ref<Category>({});
 let dataCode = ref("");
-let datas = ref<any>([]);
+let datas = ref<Array<Category>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
-// 设置页码
-const setPage = (p: number, s: number) => {
+/**
+ * 设置页码
+ */
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-// 查询列表
-const retrieve = async () => {
+/**
+ * 查询列表
+ */
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.category, {
@@ -141,20 +147,27 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+/**
+ * 统计记录数
+ */
+const count = (): void => {
   instance.get(SERVER_URL.category.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
-// 删除取消
-const confirmOperate = (operate: boolean, code: string) => {
+/**
+ * 删除开关
+ */
+const confirmOperate = (operate: boolean, code: string): void => {
   if (operate && code && code.length > 0) {
     dataCode.value = code;
   }
   isDel.value = operate;
 };
-// 删除确认
-const confirmCommit = async () => {
+/**
+ * 删除确认
+ */
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -164,20 +177,25 @@ const confirmCommit = async () => {
     count()
   });
 };
-// 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
-  categoryData.value = {};
-  if (operate && dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .get(SERVER_URL.category.concat("/").concat(dataCode.value))
-      .then((res) => {
-        categoryData.value = res.data;
-      });
+/**
+ * 新增/编辑：打开
+ */
+const modelOperate = async (operate: boolean): Promise<void> => {
+  if (operate) {
+    categoryData.value = {};
+    if (dataCode.value && dataCode.value.length > 0) {
+      await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))
+        .then((res) => {
+          categoryData.value = res.data;
+        });
+    }
   }
   isEdit.value = operate;
 };
-// 新增/编辑：提交
-const modelCommit = async () => {
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)

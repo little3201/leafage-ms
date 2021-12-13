@@ -45,6 +45,20 @@ export default [
     },
   },
   {
+    url: '/api/hypervisor/user/:username/group',
+    method: 'post',
+    response: () => {
+      return ["20A23D2D1", "20A23D201"]
+    }
+  },
+  {
+    url: '/api/hypervisor/user/:username/role',
+    method: 'post',
+    response: () => {
+      return ["20A23D2D1", "20C28YH7X"]
+    }
+  },
+  {
     url: '/api/hypervisor/user',
     method: 'post',
     response: () => {

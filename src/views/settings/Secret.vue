@@ -1,78 +1,50 @@
 <template>
-  <form @submit.prevent class="bg-white rounded-md">
-    <div class="flex items-center p-4 border-b border-gray-200">
-      <h2 class="font-medium text-lg mr-auto">Change Password</h2>
-      <button
-        type="submit"
-        @click="onSumbit"
-        class="px-3 py-2 rounded-md bg-blue-700 text-white focus:outline-none"
-      >Save</button>
-    </div>
-    <div class="grid grid-cols-12 gap-4 p-4">
-      <div class="col-span-12 lg:col-span-6">
-        <label for="oldPassword">Old Password</label>
-        <input
-          id="oldPassword"
-          type="password"
-          v-model="password"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Old Password"
-          required
-          minlength="8"
-          maxlength="16"
-          autofocus
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="newPassword">New Password</label>
-        <input
-          id="newPassword"
-          type="password"
-          v-model="newPassword"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="New Password"
-          required
-          minlength="8"
-          maxlength="16"
-        />
-      </div>
-      <div class="col-span-12 lg:col-span-6">
-        <label for="confirmPassword">Confirm New Password</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          v-model="confirmPassword"
-          class="rounded-md w-full border border-gray-300 mt-1"
-          placeholder="Confirm New Password"
-          required
-          minlength="8"
-          maxlength="16"
-        />
+  <div>
+    <div class="shadow overflow-hidden sm:rounded-md">
+      <div class="px-4 py-5 bg-white space-y-6 sm:p-6 divide-y">
+        <fieldset>
+          <legend class="text-base font-medium text-gray-900">Privileges</legend>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-start justify-between">
+              <div class="text-sm">
+                <label for="comments" class="font-medium text-gray-700">Password</label>
+                <input
+                  id="comments"
+                  name="comments"
+                  type="text"
+                  class="border-gray-300 rounded cursor-pointer sr-only"
+                />
+                <p class="text-gray-500">187****3090</p>
+              </div>
+              <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-base font-medium text-gray-900 pr-4">OAuth2</legend>
+          <div class="mt-4 space-y-4">
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input
+                  id="comments"
+                  name="comments"
+                  type="checkbox"
+                  class="border-gray-300 rounded cursor-pointer"
+                />
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="comments" class="font-medium text-gray-700">Github</label>
+                <p class="text-gray-500">{{ new Date().toString() }}</p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 
 <script lang="ts" setup>
-import { ref } from "vue";
 
-import { useRouter } from "vue-router";
-
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
-
-const router = useRouter();
-
-let password = ref("");
-let newPassword = ref("");
-let confirmPassword = ref("");
-
-const onSumbit = async () => {
-  if (newPassword.value === confirmPassword.value) {
-    await instance.patch(SERVER_URL.user).then(() => {
-      router.replace("/signin");
-    });
-  }
-};
 </script>

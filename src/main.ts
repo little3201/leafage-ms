@@ -7,7 +7,7 @@ import { setupProdMockServer } from './mock';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {
-    let user = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.png" }
+    let user = { username: "little3201", nickname: "布吉岛", avatar: "" }
     let menus = [
         { "code": "2122466RP", "name": "Dashboard", "superior": "2122466RP", "expand": { "path": "/", "icon": "home" }, "children": [] },
         {

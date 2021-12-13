@@ -30,10 +30,10 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Role Count</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Icon</th>
+            <th scope="col" class="px-4">Description</th>
+            <th scope="col" class="px-4">Role Count</th>
             <th scope="col" class="px-4">Path</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
@@ -47,11 +47,27 @@
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
-              <span class="font-medium" v-text="data.name"></span>
-              <p class="text-gray-600 text-xs" v-text="data.description"></p>
+              <div class="flex items-center">
+                <div class="flex-shrink-0">
+                  <svg
+                    v-if="data.icon"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mx-auto"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
+                  </svg>
+                </div>
+                <span class="font-medium ml-2" v-text="data.name"></span>
+              </div>
             </td>
             <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4">
               <span
@@ -60,21 +76,9 @@
               >{{ data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api') }}</span>
             </td>
             <td class="px-4">
-              <svg
-                v-if="data.icon"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mx-auto"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
-              </svg>
+              <span v-text="data.description"></span>
             </td>
+            <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.path"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
@@ -120,9 +124,10 @@
             </label>
             <input
               id="name"
+              name="name"
               @blur="exist"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="authorityData.name"
               autofocus
@@ -135,9 +140,10 @@
             </label>
             <select
               id="type"
+              name="type"
               :disabled="authorityData.code"
               v-model.lazy="authorityData.type"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               :class="{ 'text-gray-300': authorityData.code }"
             >
               <option value="undefined">请选择</option>
@@ -153,8 +159,9 @@
             </label>
             <input
               id="icon"
+              name="icon"
               type="text"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Icon"
               v-model.trim="authorityData.icon"
               autofocus
@@ -164,9 +171,10 @@
             <label for="path" :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
             <input
               id="path"
+              name="path"
               :disabled="authorityData.type == 'B'"
               type="url"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
               :class="{
                 'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
               }"
@@ -178,8 +186,9 @@
             <label for="superior">Superior</label>
             <select
               id="superior"
+              name="superior"
               v-model.lazy="authorityData.superior"
-              class="border border-gray-300 rounded-md w-full mt-1 shadow-sm"
+              class="mt-1 w-full block rounded-md border-gray-300"
             >
               <option value="undefined">请选择</option>
               <option
@@ -194,7 +203,8 @@
             <label for="description">Description</label>
             <textarea
               id="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
+              name="description"
+              class="mt-1 w-full block rounded-md border-gray-300"
               v-model.trim="authorityData.description"
               placeholder="Description"
             />
@@ -208,35 +218,35 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "/@/components/Operation.vue";
-import Action from "/@/components/Action.vue";
-import Pagation from "/@/components/Pagation.vue";
-import Confirm from "/@/components/Confirm.vue";
-import Model from "/@/components/Model.vue";
+import Operation from "@/components/Operation.vue";
+import Action from "@/components/Action.vue";
+import Pagation from "@/components/Pagation.vue";
+import Confirm from "@/components/Confirm.vue";
+import Model from "@/components/Model.vue";
 
-import instance from "../../api";
-import SERVER_URL from "../../api/request";
+import instance from "@/api";
+import { SERVER_URL, Authority } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
-let authorityData = ref({});
+let authorityData = ref<Authority>({});
 let dataCode = ref("");
-let superiors = ref([]);
-let datas = ref<any>([]);
+let superiors = ref<Array<Authority>>([]);
+let datas = ref<Array<Authority>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 // 设置页码
-const setPage = (p: number, s: number) => {
+const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
 // 查询列表
-const retrieve = async () => {
+const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
       .get(SERVER_URL.authority, {
@@ -248,17 +258,17 @@ const retrieve = async () => {
     count()
   ]);
 };
-const count = () => {
+const count = (): void => {
   instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
 // 删除取消
-const confirmOperate = (operate: boolean) => {
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 // 删除确认
-const confirmCommit = async () => {
+const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
@@ -269,9 +279,9 @@ const confirmCommit = async () => {
   });
 };
 // 新增/编辑：打开
-const modelOperate = async (operate: boolean) => {
-  authorityData.value = {};
+const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
+    authorityData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.authority).then((res) => {
@@ -282,7 +292,7 @@ const modelOperate = async (operate: boolean) => {
   isEdit.value = operate;
 };
 // 查详情
-const fetch = () => {
+const fetch = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance.get(SERVER_URL.authority.concat("/", dataCode.value)).then((res) => {
       authorityData.value = res.data;
@@ -290,11 +300,11 @@ const fetch = () => {
   }
 };
 // 检查唯一
-const exist = () => {
+const exist = (): void => {
   console.log("失去了焦点")
 }
 // 新增/编辑：提交
-const modelCommit = async () => {
+const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
       .put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
@@ -320,7 +330,7 @@ const modelCommit = async () => {
     });
   }
 };
-const relation = () => {
+const relation = (): void => {
   alert("roles")
 }
 onMounted(() => {

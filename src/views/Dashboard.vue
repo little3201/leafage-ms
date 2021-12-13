@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
+                :class="{ 'bg-lime-500': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
                 title="viewed higher than last month"
               >
                 {{ latest.overViewed }}%
@@ -65,14 +65,8 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="viewedChart"
-                ref="viewedChart"
-                height="100"
-                aria-label="total-viewed"
-                role="img"
-              ></canvas>
+            <div class="absolute inset-4 top-10 opacity-50">
+              <canvas id="viewedChart" ref="viewedChart" aria-label="total-viewed" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
@@ -98,7 +92,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'up': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
+                :class="{ 'bg-lime-500': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
                 title="2% Lower than last month"
               >
                 {{ latest.overComment }}%
@@ -120,14 +114,8 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="commentChart"
-                ref="commentChart"
-                height="100"
-                aria-label="total-comments"
-                role="img"
-              ></canvas>
+            <div class="absolute inset-4 top-10 opacity-50">
+              <canvas id="commentChart" ref="commentChart" aria-label="total-comments" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
@@ -153,7 +141,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'up': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
+                :class="{ 'bg-lime-500': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
                 title="12% Higher than last month"
               >
                 {{ latest.overLikes }}%
@@ -175,14 +163,8 @@
                 </svg>
               </div>
             </div>
-            <div class="absolute inset-4 opacity-50">
-              <canvas
-                id="likesChart"
-                ref="likesChart"
-                height="100"
-                aria-label="total-likes"
-                role="img"
-              ></canvas>
+            <div class="absolute inset-4 top-10 opacity-50">
+              <canvas id="likesChart" ref="likesChart" aria-label="total-likes" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
@@ -230,7 +212,18 @@
                   :key="index"
                 >
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                  <td class="px-3" v-text="comment.nickname"></td>
+                  <td class="px-3">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-8 w-8">
+                        <img
+                          :src="comment.avatar || '/svg/logo.svg'"
+                          alt="avatar"
+                          class="rounded-full w-8 h-8 my-auto"
+                        />
+                      </div>
+                      <span class="ml-2">{{ comment.nickname }}</span>
+                    </div>
+                  </td>
                   <td class="px-3" v-text="comment.content"></td>
                 </tr>
               </tbody>
@@ -240,7 +233,7 @@
       </div>
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" height="200" aria-label="viewed" role="img"></canvas>
+          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
     </div>
@@ -249,15 +242,15 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart } from "../plugins/chart";
+import { createBarChart, createMiniChart } from "@/plugins/chart";
 
-import instance from "../api";
-import SERVER_URL from "../api/request";
+import instance from "@/api";
+import { SERVER_URL, Comment, Statistics } from "@/api/request";
 
 // data
-let comments = ref([])
+let comments = ref<Comment>([])
 let totalPosts = ref(0)
-let datas = ref([])
+let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
 const over = computed(() => datas.value[1] || {});
 
@@ -267,7 +260,7 @@ const viewedChart = ref();
 const commentChart = ref();
 const likesChart = ref();
 
-const retrieveComments = async () => {
+const retrieveComments = async (): Promise<void> => {
   await instance
     .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
     .then((res) => {
@@ -275,8 +268,8 @@ const retrieveComments = async () => {
     });
 }
 
-const initData = async () => {
-  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } })
+const initData = async (): Promise<void> => {
+  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 10 } })
     .then(res => {
       datas.value = res.data;
       construceChart()
@@ -285,13 +278,13 @@ const initData = async () => {
     })])
 };
 
-const construceChart = () => {
+const construceChart = (): void => {
   let obj = {
-    labels: new Array<String>(),
-    viewed: new Array<Number>(),
-    overViewed: new Array<Number>(),
-    overLikes: new Array<Number>(),
-    overComment: new Array<Number>()
+    labels: new Array(),
+    viewed: new Array(),
+    overViewed: new Array(),
+    overLikes: new Array(),
+    overComment: new Array()
   }
   datas.value.forEach((item: any) => {
     obj.labels.unshift(item.date);
@@ -316,9 +309,3 @@ onMounted(() => {
   retrieveComments();
 });
 </script>
-
-<style scoped>
-.up {
-  background-color: #91c714;
-}
-</style>

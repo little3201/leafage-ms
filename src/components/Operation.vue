@@ -17,9 +17,9 @@
         stroke-linejoin="round"
         class="mr-2"
       >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
       </svg>
-      Export to Excel
+      Import
     </button>
     <button
       class="hidden ml-3 p-2 rounded-md bg-white sm:flex items-center text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
@@ -37,7 +37,7 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
       </svg>
-      Export to PDF
+      Export
     </button>
     <button
       @click="operate"

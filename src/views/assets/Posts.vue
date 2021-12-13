@@ -96,7 +96,7 @@
             </figure>
             <div v-else>
               <div
-                class="h-32 mt-1 rounded-md border border-gray-300 flex items-center px-12 justify-center"
+                class="h-36 mt-1 rounded-md border border-gray-300 flex items-center px-12 justify-center"
               >
                 <div class="text-gray-600 text-center">
                   <label
@@ -133,37 +133,19 @@
             </div>
           </div>
 
-          <!-- <div
-            class="row-span-2 col-span-12 sm:col-span-4 border border-gray-300 rounded-md flex items-center"
-          >
-            <div v-if="!postsData.tags" class="mx-auto text-center">
-              <span class="text-sm text-gray-500">Show Tags</span>
-            </div>
-            <div v-else class="overflow-auto p-2 text-sm max-h-24">
-              <span
-                v-for="(tag, index) in postsData.tags"
-                :key="index"
-                class="mr-2 mb-1 last:mb-0 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
-              >
-                {{ tag }}
-                <svg
-                  @click="removeTag(tag)"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="ml-1 cursor-pointer opacity-30"
-                >
-                  <use xlink:href="/svg/feather-sprite.svg#x" />
-                </svg>
-              </span>
-            </div>
-          </div>-->
-          <div class="col-span-12 md:col-span-8">
+          <div class="col-span-12 md:col-span-4">
+            <label for="tags">Tags</label>
+            <input
+              id="tags"
+              type="text"
+              name="tags"
+              @keydown.enter="addTag"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Tags"
+              v-model.trim="tagValue"
+            />
+          </div>
+          <div class="col-span-12 md:col-span-4">
             <label for="category">Category</label>
             <select
               id="category"
@@ -182,19 +164,31 @@
             </select>
           </div>
         </div>
-        <div class="col-span-12 mt-4 sm:mt-0">
-          <label for="tags">Tags</label>
-          <input
-            id="tags"
-            type="text"
-            name="tags"
-            @keydown.enter="addTag"
-            class="mt-1 w-full block rounded-md border-gray-300"
-            placeholder="Tags"
-            v-model.trim="tagValue"
-          />
+
+        <div class="overflow-auto text-sm -mt-2">
+          <span
+            v-for="(tag, index) in postsData.tags"
+            :key="index"
+            class="mr-1 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+          >
+            {{ tag }}
+            <svg
+              @click="removeTag(tag)"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="ml-1 cursor-pointer opacity-30"
+            >
+              <use xlink:href="/svg/feather-sprite.svg#x" />
+            </svg>
+          </span>
         </div>
-        <div class="grid grid-cols-12 mt-3">
+        <div class="grid grid-cols-12 mt-2">
           <div class="col-span-12 relative">
             <label for="content">Content</label>
             <button

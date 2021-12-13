@@ -33,8 +33,8 @@
         {{ data.name }}
         <svg
           v-if="isOpen"
-          width="16"
-          height="16"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -47,8 +47,8 @@
         </svg>
         <svg
           v-else
-          width="16"
-          height="16"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

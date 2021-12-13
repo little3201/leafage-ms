@@ -13,6 +13,7 @@
               <slot></slot>
             </div>
           </div>
+          <!-- Modal footer -->
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse text-sm">
             <button
               type="button"

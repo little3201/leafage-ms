@@ -244,7 +244,7 @@
                 required
                 placeholder="write with markdown..."
               ></textarea>
-              <div v-else class="p-2 prose" style="width: 606px" v-html="rendedHtml"></div>
+              <div v-else class="mt-1 p-2 prose overflow-y-auto" style="width: 606px" v-html="rendedHtml"></div>
             </div>
           </div>
         </div>

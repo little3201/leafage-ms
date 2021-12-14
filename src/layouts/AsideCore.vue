@@ -114,8 +114,7 @@ const isOpen = ref(true);
 }
 .router-link-exact-active:before {
   content: "";
-  @apply absolute top-0 right-0 w-7 h-7 -mt-7 -mr-4;
-  transform: rotate(90deg);
+  @apply absolute top-0 right-0 w-7 h-7 -mt-7 -mr-4 rotate-90;
   background-size: 100%;
   background-image: url("/svg/radius.svg");
 }

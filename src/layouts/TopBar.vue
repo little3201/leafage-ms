@@ -152,15 +152,11 @@
         <button
           type="button"
           class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
-        >
-          English
-        </button>
+        >English</button>
         <button
           type="button"
           class="flex items-center w-full bg-white hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
-        >
-          Chinese
-        </button>
+        >Chinese</button>
       </div>
     </div>
     <div class="relative">
@@ -278,6 +274,7 @@ import { ref, onMounted } from "vue";
 import router from "@/router";
 
 import instance from "@/api";
+import { User } from "@/api/request";
 
 // 控制通知是否打开
 const isNotify = ref(false);
@@ -301,7 +298,7 @@ const notifications = ref([
   }
 ])
 
-const user = ref({});
+const user = ref<User>({});
 
 const themeMode = () => {
   isDark.value = !isDark.value

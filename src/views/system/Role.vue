@@ -216,7 +216,7 @@ const confirmCommit = async (): Promise<void> => {
 // 新增/编辑：打开
 const modelOperate = async (operate: boolean) => {
   if (operate) {
-  roleData.value = {};
+    roleData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.role).then((res) => {
@@ -249,7 +249,7 @@ const treeOperate = async (operate: boolean): Promise<void> => {
   isTree.value = operate;
 };
 // 提交
-const treeCommit = async (tracked: Array) => {
+const treeCommit = async (tracked: Array<String>) => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }

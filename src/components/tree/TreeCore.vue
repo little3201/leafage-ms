@@ -4,10 +4,11 @@
       <input
         :id="data.code"
         type="checkbox"
+        name="code"
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="tracked"
-        @change="track(data.code)"
+        @change="track(data)"
       />
       <span
         v-if="data.children && data.children.length > 0"
@@ -89,17 +90,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, PropType } from "vue";
 
 import { TreeNode } from "@/api/request";
 
 const props = defineProps({
   data: {
-    type: Object,
+    type: Object as PropType<TreeNode>,
     default: {}
   },
   checked: {
-    type: Array,
+    type: Array as PropType<String[]>,
     default: []
   }
 });
@@ -110,19 +111,7 @@ let isOpen = ref(false);
 
 let tracked = ref<Array<String>>(props.checked);
 
-const track = (code: string) => {
-  emit('treeOperate', code)
-  recurrence(code)
-}
-/**
- * 递归
- */
-const recurrence = (code: string) => {
-  debugger
-  props.data.children.forEach((item: TreeNode) => {
-    if (code == item.superior) {
-      tracked.value.push(item.code)
-    }
-  });
+const track = (node: TreeNode) => {
+  emit('treeOperate', node)
 }
 </script>

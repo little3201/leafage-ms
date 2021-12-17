@@ -28,8 +28,8 @@
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Username</th>
             <th scope="col" class="px-4">Nickname</th>
+            <th scope="col" class="px-4">Username</th>
             <th scope="col" class="px-4">Gender</th>
             <th scope="col" class="px-4">NonExpired</th>
             <th scope="col" class="px-4">Locked</th>
@@ -45,15 +45,15 @@
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
-              <span class="font-medium" v-text="data.username"></span>
-            </td>
-            <td class="px-4">
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-8 w-8">
                   <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
                 </div>
                 <span class="ml-2">{{ data.nickname }}</span>
               </div>
+            </td>
+            <td class="px-4">
+              <span class="font-medium" v-text="data.username"></span>
             </td>
             <td class="px-4">
               <svg
@@ -548,7 +548,7 @@ const relation = (type: string): void => {
   )
 }
 // 提交
-const treeCommit = async (tracked: Array): Promise<void> => {
+const treeCommit = async (tracked: Array<String>): Promise<void> => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }

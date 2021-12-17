@@ -268,21 +268,21 @@ const confirmCommit = async (): Promise<void> => {
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     resourceData.value = {};
-    if (dataCode.value && dataCode.value.length > 0) {
-      await Promise.all([instance.get(SERVER_URL.category).then((res) => {
-        categories.value = res.data;
-      }),
-      fetch()]);
-    }
+    await Promise.all([instance.get(SERVER_URL.category).then((res) => {
+      categories.value = res.data;
+    }),
+    fetch()]);
   }
   isEdit.value = operate;
 };
 const fetch = (): void => {
-  instance
-    .get(SERVER_URL.resource.concat("/", dataCode.value))
-    .then(res =>
-      resourceData.value = res.data
-    )
+  if (dataCode.value && dataCode.value.length > 0) {
+    instance
+      .get(SERVER_URL.resource.concat("/", dataCode.value))
+      .then(res =>
+        resourceData.value = res.data
+      )
+  }
 }
 // 新增/编辑：提交
 const modelCommit = async (): Promise<void> => {

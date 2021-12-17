@@ -1,9 +1,7 @@
 <template>
   <aside class="sm:w-20 xl:w-64 pr-4 text-sm">
     <RouterLink to="/">
-      <h1
-        class="inline-flex items-center mt-3 space-x-4 text-white text-2xl ml-4"
-      >
+      <h1 class="inline-flex items-center mt-3 space-x-4 text-white text-2xl ml-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -41,11 +39,15 @@
 </template>
 
 <script lang="ts" setup>
+import { PropType } from 'vue'
+
 import AsideCore from "@/layouts/AsideCore.vue";
+
+import { Authority } from '@/api/request'
 
 defineProps({
   datas: {
-    type: Array,
+    type: Array as PropType<Authority[]>,
     default: [],
   }
 });

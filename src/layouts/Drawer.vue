@@ -8,10 +8,7 @@
           height="24"
           viewBox="0 0 311.983 311.929"
         >
-          <g
-            data-name="Icon ionic-ios-apps"
-            transform="translate(-4.494 -4.496)"
-          >
+          <g data-name="Icon ionic-ios-apps" transform="translate(-4.494 -4.496)">
             <path
               d="M305.678,64.318,184.327,9a65.721,65.721,0,0,0-47.842,0L15.22,64.318c-14.293,6.5-14.293,17.117,0,23.639l120.221,54.826a69.059,69.059,0,0,0,50.033,0L305.687,87.956C319.971,81.46,319.971,70.822,305.678,64.318Z"
               transform="translate(0.07 0)"
@@ -66,9 +63,7 @@
                 height="24"
                 viewBox="0 0 311.983 311.929"
               >
-                <g
-                  transform="translate(-4.494 -4.496)"
-                >
+                <g transform="translate(-4.494 -4.496)">
                   <path
                     d="M305.678,64.318,184.327,9a65.721,65.721,0,0,0-47.842,0L15.22,64.318c-14.293,6.5-14.293,17.117,0,23.639l120.221,54.826a69.059,69.059,0,0,0,50.033,0L305.687,87.956C319.971,81.46,319.971,70.822,305.678,64.318Z"
                     transform="translate(0.07 0)"
@@ -106,13 +101,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, PropType } from "vue";
 
 import DrawerCore from "@/layouts/DrawerCore.vue";
 
+import { Authority } from '@/api/request'
+
 defineProps({
   datas: {
-    type: Array,
+    type: Array as PropType<Authority[]>,
     default: [],
   }
 });

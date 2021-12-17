@@ -64,13 +64,15 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
+import { User } from "@/api/request";
+
 const emit = defineEmits(["modelOperate"]);
 
 const operate = () => {
   emit("modelOperate", true);
 };
 
-const user = ref({})
+const user = ref<User>({})
 
 onMounted(() => {
   let data = sessionStorage.getItem("user")

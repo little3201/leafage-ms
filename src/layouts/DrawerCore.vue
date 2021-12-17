@@ -86,11 +86,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, PropType } from "vue";
+
+import { Authority } from '@/api/request'
 
 defineProps({
   data: {
-    type: Object,
+    type: Object as PropType<Authority>,
     default: {},
   },
   superior: {

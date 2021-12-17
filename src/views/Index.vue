@@ -17,11 +17,13 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
+import { Authority } from "@/api/request";
+
 import Drawer from "@/layouts/Drawer.vue";
 import Aside from "@/layouts/Aside.vue";
 import TopBar from "@/layouts/TopBar.vue";
 
-const menus = ref<Array<any>>([]);
+const menus = ref<Array<Authority>>([]);
 
 onMounted(() => {
   if (sessionStorage.getItem("menus") != null) {

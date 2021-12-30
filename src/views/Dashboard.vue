@@ -25,7 +25,7 @@
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-4 relative">
+        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <svg
               width="28"
@@ -74,7 +74,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-4 relative">
+        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
             <svg
               width="28"
@@ -123,7 +123,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
-        <div class="shadow-sm rounded-md bg-white p-4 relative">
+        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
             <svg
               width="28"
@@ -172,7 +172,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
-        <div class="shadow-sm rounded-md bg-white p-4">
+        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4">
           <div class="flex">
             <svg
               width="28"
@@ -207,7 +207,7 @@
               </thead>
               <tbody>
                 <tr
-                  class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
+                  class="text-center bg-white border-y-4 md:border-y-8 first:border-t-0 last:border-b-0 border-gray-100"
                   v-for="(comment, index) in comments"
                   :key="index"
                 >

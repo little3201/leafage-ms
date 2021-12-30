@@ -7,7 +7,7 @@
         name="code"
         class="rounded cursor-pointer"
         :value="data.code"
-        v-model="tracked"
+        v-model="checked"
         @change="track(data)"
       />
       <span

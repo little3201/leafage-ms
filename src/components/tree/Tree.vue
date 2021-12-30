@@ -10,7 +10,7 @@
         :key="data.code"
         :data="data"
         :checked="checked"
-        @treeOperate="tracked"
+        @treeOperate="track"
       />
     </ul>
   </Model>
@@ -44,31 +44,28 @@ let checked = ref<Array<String>>(props.codes)
 /**
  * 选中/取消
  */
-const tracked = (node: TreeNode) => {
-  debugger
+const track = (node: TreeNode) => {
   if (checked.value.indexOf(node.code) === -1) {
     checked.value.push(node.code)
-    recurrence(node, true)
+    recurrence(node.children, true)
   } else {
+    recurrence(node.children, false)
     checked.value.splice(checked.value.indexOf(node.code), 1)
-    recurrence(node, false)
   }
-  console.log("tracked: "  + checked.value)
 }
 /**
  * 递归
  */
-const recurrence = (node: TreeNode, isChecked: boolean) => {
-  if (node.children && node.children.length > 0) {
-    node.children.forEach((item: TreeNode) => {
+const recurrence = (children: Array<TreeNode>, isChecked: boolean) => {
+  if (children && children.length > 0) {
+    children.forEach((item: TreeNode) => {
       if (isChecked && checked.value.indexOf(item.code) === -1) {
         checked.value.push(item.code)
       } else {
         checked.value.splice(checked.value.indexOf(item.code), 1)
       }
-      recurrence(item, isChecked)
+      recurrence(item.children, isChecked)
     })
   }
-
 }
 </script>

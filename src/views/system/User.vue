@@ -23,7 +23,7 @@
       </button>
       <Operation @click.capture="username = ''" @modelOperate="modelOperate" />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 12rem)">
+    <div class="overflow-scroll" style="height: calc(100vh - 11.5remrem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-t-4 border-b-4 sm:border-t-8 sm:border-b-8 first:border-t-0 last:border-b-0 border-gray-100"
+            class="text-center bg-white border-y-4 md:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
             v-for="(data, index) in datas"
             :key="index"
           >

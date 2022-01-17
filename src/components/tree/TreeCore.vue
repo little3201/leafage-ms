@@ -4,11 +4,10 @@
       <input
         :id="data.code"
         type="checkbox"
-        name="code"
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="checked"
-        @change="track(data)"
+        @click.stop="track(data)"
       />
       <span
         v-if="data.children && data.children.length > 0"

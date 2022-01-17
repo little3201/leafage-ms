@@ -45,26 +45,29 @@ let checked = ref<Array<String>>(props.codes)
  * 选中/取消
  */
 const track = (node: TreeNode) => {
+  let isCheck = false;
   if (checked.value.indexOf(node.code) === -1) {
     checked.value.push(node.code)
-    recurrence(node.children, true)
+    isCheck = true
   } else {
-    recurrence(node.children, false)
     checked.value.splice(checked.value.indexOf(node.code), 1)
   }
+  recurrence(node.children, isCheck)
 }
 /**
  * 递归
  */
-const recurrence = (children: Array<TreeNode>, isChecked: boolean) => {
+const recurrence = (children: Array<TreeNode>, isCheck: boolean) => {
   if (children && children.length > 0) {
     children.forEach((item: TreeNode) => {
-      if (isChecked && checked.value.indexOf(item.code) === -1) {
-        checked.value.push(item.code)
+      if (isCheck) {
+        if (checked.value.indexOf(item.code) === -1) {
+          checked.value.push(item.code)
+        }
       } else {
         checked.value.splice(checked.value.indexOf(item.code), 1)
       }
-      recurrence(item.children, isChecked)
+      recurrence(item.children, isCheck)
     })
   }
 }

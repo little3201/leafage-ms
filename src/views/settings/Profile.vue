@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent>
-    <div class="shadow overflow-hidden sm:rounded-md">
-      <div class="px-4 py-5 bg-white">
+    <div class="shadow overflow-hidden bg-white sm:rounded-md">
+      <div class="px-6 py-4">
         <div class="grid grid-cols-6 gap-4">
           <div class="col-span-6 sm:col-span-3">
             <label for="first-name">First name</label>
@@ -10,7 +10,7 @@
               name="first-name"
               id="first-name"
               autocomplete="given-name"
-              v-model="user.firstname"
+              v-model.trim="user.firstname"
               class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -22,7 +22,7 @@
               name="last-name"
               id="last-name"
               autocomplete="family-name"
-              v-model="user.lastname"
+              v-model.trim="user.lastname"
               class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -33,7 +33,7 @@
               id="birthday"
               name="birthday"
               type="date"
-              v-model="user.birthday"
+              v-model.trim="user.birthday"
               class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
             />
           </div>
@@ -144,7 +144,7 @@
               name="street-address"
               id="street-address"
               autocomplete="street-address"
-              v-model="user.address"
+              v-model.trim="user.address"
               class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
             />
           </div>

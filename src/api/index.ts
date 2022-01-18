@@ -51,7 +51,6 @@ instance.interceptors.response.use(
         default:
           response.statusText = '请求可能跑丢了，再试一下。'
       }
-      alert(response.statusText)
     }
     return Promise.reject(error)
   }

@@ -207,7 +207,7 @@
               </thead>
               <tbody>
                 <tr
-                  class="text-center bg-white border-y-4 md:border-y-8 first:border-t-0 last:border-b-0 border-gray-100"
+                  class="text-center bg-white border-y-4 lg:border-y-6 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
                   v-for="(comment, index) in comments"
                   :key="index"
                 >

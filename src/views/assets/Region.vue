@@ -30,6 +30,7 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Alias</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
@@ -37,7 +38,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-y-4 md:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -47,6 +48,7 @@
               <p class="text-gray-600 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.alias"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
@@ -63,7 +65,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form>
+      <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="name">

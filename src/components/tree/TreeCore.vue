@@ -7,7 +7,7 @@
         class="rounded cursor-pointer"
         :value="data.code"
         v-model="checked"
-        @click.stop="track(data)"
+        @click="track(data)"
       />
       <span
         v-if="data.children && data.children.length > 0"

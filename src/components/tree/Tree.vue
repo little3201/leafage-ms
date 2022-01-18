@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, PropType } from 'vue'
+import { ref, onMounted, PropType } from 'vue'
 
 import Model from "@/components/Model.vue";
 import TreeCore from "@/components/tree/TreeCore.vue";

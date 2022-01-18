@@ -39,7 +39,11 @@ const props = defineProps({
   }
 });
 
-let checked = ref<Array<String>>(props.codes)
+let checked = ref<Array<String>>([])
+
+onMounted(() => {
+  checked.value.push(props.codes)
+})
 
 /**
  * 选中/取消

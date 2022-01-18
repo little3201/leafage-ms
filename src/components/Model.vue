@@ -1,6 +1,6 @@
 <template>
   <transition name="model">
-    <div v-show="isShow" class="fixed inset-0 overflow-y-auto" role="dialog">
+    <div v-show="isShow" class="fixed inset-0 overflow-y-auto" role="dialog" aria-modal="true">
       <div
         class="flex items-end justify-center bg-black bg-opacity-60 min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
       >

@@ -1,12 +1,12 @@
 <template>
   <Sign>
     <h2 class="font-bold text-2xl xl:text-3xl text-center xl:text-left">Sign Up</h2>
-    <form @submit.prevent="onSubmit" class="mx-auto">
+    <form @submit.prevent class="mx-auto">
       <div class="mt-6">
         <input
           type="email"
           v-model="formData.email"
-          class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
+          class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Email"
           required
           autofocus
@@ -15,7 +15,7 @@
         <input
           type="password"
           v-model.trim="formData.password"
-          class="border border-gray-300 rounded-md w-full shadow-sm"
+          class="block border-gray-300 rounded-md w-full shadow-sm"
           placeholder="Password"
           required
           autocomplete="off"
@@ -23,7 +23,7 @@
         <input
           type="password"
           v-model.trim="confirmPassword"
-          class="border border-gray-300 rounded-md w-full my-6 shadow-sm"
+          class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Confirm Password"
           required
           autocomplete="off"

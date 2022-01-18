@@ -13,6 +13,7 @@ export const SERVER_URL = {
   authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
   group: SERVER_PRE.hypervisor.concat('/group'), // 分组
   region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
+  notification: SERVER_PRE.hypervisor.concat('/notification'), // 消息通知
   // assets
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别
@@ -50,28 +51,33 @@ interface AbstractVO<T> {
   modifyTime: Date
 }
 
-export interface Role extends AbstractVO {
+export interface Role extends AbstractVO<String> {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Group extends AbstractVO {
+export interface Group extends AbstractVO<String> {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Authority extends AbstractVO {
+export interface Authority extends AbstractVO<String> {
   name: string,
   superior: string,
   count: number
 }
 
-export interface Region extends AbstractVO {
+export interface Region extends AbstractVO<Number> {
   name: string,
   superior: string,
   count: number
+}
+
+export interface Notification extends AbstractVO<String> {
+  title: string,
+  content: string
 }
 
 export interface TreeNode {
@@ -82,12 +88,12 @@ export interface TreeNode {
   expand: Object
 }
 
-export interface Category extends AbstractVO {
+export interface Category extends AbstractVO<String> {
   alias: string,
   count: number
 }
 
-export interface Posts extends AbstractVO {
+export interface Posts extends AbstractVO<String> {
   title: string,
   cover: string,
   category: string,
@@ -97,11 +103,11 @@ export interface Posts extends AbstractVO {
 }
 
 export interface PostsDetails extends Posts {
-  tags: Array,
+  tags: Array<String>,
   content: string
 }
 
-export interface Resource extends AbstractVO {
+export interface Resource extends AbstractVO<String> {
   title: string,
   type: string,
   category: string,
@@ -109,14 +115,14 @@ export interface Resource extends AbstractVO {
   downloads: number
 }
 
-export interface Comment extends AbstractVO {
+export interface Comment extends AbstractVO<String> {
   name: string,
   replier: string,
   content: string,
   email: string
 }
 
-export interface Statistics extends AbstractVO {
+export interface Statistics extends AbstractVO<String> {
   date: Date,
   viewed: number,
   overViewed: number,

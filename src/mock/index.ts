@@ -6,6 +6,7 @@ import userMock from './system/user';
 import groupMock from './system/group';
 import authorityMock from './system/authority';
 import regionMock from './system/region';
+import notificationMock from './system/notification';
 
 import postsMock from './assets/posts';
 import categoryMock from './assets/category';
@@ -21,6 +22,8 @@ export function setupProdMockServer() {
     ...groupMock, 
     ...authorityMock,
     ...regionMock,
+    ...notificationMock,
+    
     ...postsMock, 
     ...categoryMock, 
     ...resourceMock,

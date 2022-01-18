@@ -53,27 +53,6 @@
               Account
             </RouterLink>
             <RouterLink
-              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="notifications"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
-              </svg>
-              Notifications
-            </RouterLink>
-          </div>
-          <div class="py-4">
-            <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="secret"
             >
@@ -93,9 +72,30 @@
               Secret
             </RouterLink>
           </div>
+          <div class="py-4">
+            <RouterLink
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              to="notification"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mr-2"
+              >
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
+              </svg>
+              Notification
+            </RouterLink>
+          </div>
         </div>
       </div>
-      <div class="w-full rounded-md overflow-y-auto" style="height: calc(100vh - 9rem)">
+      <div class="w-full overflow-y-auto" style="height: calc(100vh - 9rem)">
         <RouterView />
       </div>
     </div>

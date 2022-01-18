@@ -38,7 +38,7 @@
         </thead>
         <tbody>
           <tr
-            class="text-center bg-white border-y-4 md:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
             v-for="(data, index) in datas"
             :key="index"
           >
@@ -70,7 +70,7 @@
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form>
+      <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="alias">Alias</label>

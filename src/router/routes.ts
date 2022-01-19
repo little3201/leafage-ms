@@ -75,9 +75,9 @@ const routes: Array<RouteRecordRaw> = [
             meta: { requiresAuth: true }
           },
           {
-            path: 'secret',
-            name: 'Secret',
-            component: () => import('@/views/settings/Secret.vue'),
+            path: 'security',
+            name: 'Security',
+            component: () => import('@/views/settings/Security.vue'),
             meta: { requiresAuth: true }
           },
           {

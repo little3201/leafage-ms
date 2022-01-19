@@ -1,160 +1,188 @@
 <template>
   <form @submit.prevent>
     <div class="shadow overflow-hidden bg-white sm:rounded-md">
-      <div class="px-6 py-4">
-        <div class="grid grid-cols-6 gap-4">
-          <div class="col-span-6 sm:col-span-3">
-            <label for="first-name">First name</label>
-            <input
-              type="text"
-              name="first-name"
-              id="first-name"
-              autocomplete="given-name"
-              v-model.trim="user.firstname"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            />
+      <div class="px-6 py-4 space-y-6 divide-y">
+        <fieldset class="-mb-4"></fieldset>
+        <fieldset>
+          <legend class="font-medium text-gray-900 pr-4">Public email</legend>
+          <div class="mt-4 text-sm">
+            <label for="email" class="font-medium text-gray-700">Public email</label>
+            <div class="flex items-center space-x-4 mt-1">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="block border-gray-300 py-1 rounded-md"
+                :disabled="isEdit"
+              />
+              <button
+                type="button"
+                @click="editAllow"
+                class="text-blue-600"
+              >{{ isEdit ? 'Edit' : 'Save' }}</button>
+            </div>
+            <span
+              class="text-xs text-gray-400"
+            >You can manage verified email addresses in your email settings.</span>
           </div>
-
-          <div class="col-span-6 sm:col-span-3">
-            <label for="last-name">Last name</label>
-            <input
-              type="text"
-              name="last-name"
-              id="last-name"
-              autocomplete="family-name"
-              v-model.trim="user.lastname"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            />
-          </div>
-
-          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label for="birthday">Birthday</label>
-            <input
-              id="birthday"
-              name="birthday"
-              type="date"
-              v-model.trim="user.birthday"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            />
-          </div>
-
-          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label for="gender">Gender</label>
-            <select
-              id="gender"
-              name="gender"
-              autocomplete="gender-name"
-              v-model="user.gender"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label for="education">Education</label>
-            <select
-              id="education"
-              name="education"
-              autocomplete="education-name"
-              v-model="user.education"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-3">
-            <label for="country">Country</label>
-            <select
-              id="country"
-              name="country"
-              autocomplete="country-name"
-              v-model="user.country"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-3">
-            <label for="ethnicity">Ethnicity</label>
-            <select
-              id="ethnicity"
-              name="ethnicity"
-              autocomplete="ethnicity-name"
-              v-model="user.ethnicity"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-            <label for="privince">State / Province</label>
-            <select
-              id="province"
-              name="province"
-              autocomplete="province-name"
-              v-model="user.province"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-            <label for="city">City</label>
-            <select
-              id="city"
-              name="city"
-              autocomplete="city-name"
-              v-model="user.city"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-            <label for="region">Region</label>
-            <select
-              id="region"
-              name="region"
-              autocomplete="region-name"
-              v-model="user.region"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            >
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </div>
-
-          <div class="col-span-6">
-            <label for="street-address">Street address</label>
-            <input
-              type="text"
-              name="street-address"
-              id="street-address"
-              autocomplete="street-address"
-              v-model.trim="user.address"
-              class="mt-1 w-full block shadow-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-        <button
-          type="submit"
-          class="inline-flex justify-center py-2 px-3 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-        >Save</button>
+        </fieldset>
+        <fieldset>
+          <legend class="font-medium text-gray-900 pr-4">Public profile</legend>
+          <form @submit.prevent>
+            <div class="mt-4 space-y-2 max-w-md">
+              <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="firstname" class="font-medium text-gray-700">Firstname</label>
+                  <input
+                    id="firstname"
+                    name="firstname"
+                    type="text"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  />
+                </div>
+                <div>
+                  <label for="lastname" class="font-medium text-gray-700">Lastname</label>
+                  <input
+                    id="lastname"
+                    name="lastname"
+                    type="text"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  />
+                </div>
+              </div>
+              <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="gender" class="font-medium text-gray-700">Gender</label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>Female</option>
+                    <option>Male</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="married" class="font-medium text-gray-700">Married</label>
+                  <select
+                    id="married"
+                    name="married"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>Single</option>
+                    <option>Married</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="education" class="font-medium text-gray-700">Education</label>
+                  <select
+                    id="education"
+                    name="education"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>高中</option>
+                    <option>大学本科</option>
+                  </select>
+                </div>
+              </div>
+              <div class="text-sm">
+                <label for="bio" class="font-medium text-gray-700">Bio</label>
+                <textarea id="bio" name="bio" class="border-gray-300 py-1 mt-1 rounded-md w-full" />
+                <span
+                  class="text-xs text-gray-400"
+                >You can @mention other users and organizations to link to them.</span>
+              </div>
+              <div>
+                <button
+                  @click="onSubmit"
+                  type="submit"
+                  class="border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 block border px-2 py-1 rounded-md"
+                >Update profile</button>
+              </div>
+            </div>
+          </form>
+        </fieldset>
+        <fieldset>
+          <legend class="font-medium text-gray-900 pr-4">Public address</legend>
+          <form @submit.prevent>
+            <div class="mt-4 space-y-2 max-w-xl">
+              <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="country" class="font-medium text-gray-700">Country</label>
+                  <select
+                    id="country"
+                    name="country"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>China</option>
+                    <option>America</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="province" class="font-medium text-gray-700">Province</label>
+                  <select
+                    id="province"
+                    name="province"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>Shaanxi</option>
+                    <option>Beijing</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="city" class="font-medium text-gray-700">City</label>
+                  <select id="city" name="city" class="border-gray-300 py-1 mt-1 rounded-md w-full">
+                    <option>Xian</option>
+                    <option>Xianyang</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="region" class="font-medium text-gray-700">Region</label>
+                  <select
+                    id="region"
+                    name="region"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>莲湖区</option>
+                    <option>未央区</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="street" class="font-medium text-gray-700">Street</label>
+                  <select
+                    id="street"
+                    name="street"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  >
+                    <option>北大街</option>
+                    <option>南大街</option>
+                  </select>
+                </div>
+                <div class="w-full">
+                  <label for="details" class="font-medium text-gray-700">Details</label>
+                  <input
+                    id="details"
+                    name="details"
+                    type="text"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  />
+                </div>
+              </div>
+              <div>
+                <span
+                  class="text-xs text-gray-400"
+                >All of the fields on this page are optional and can be deleted at any time</span>
+                <button
+                  @click.stop="submitAddress"
+                  type="submit"
+                  class="border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 block border px-2 py-1 rounded-md"
+                >Update address</button>
+              </div>
+            </div>
+          </form>
+        </fieldset>
       </div>
     </div>
   </form>
@@ -167,6 +195,7 @@ import instance from "@/api";
 import { SERVER_URL, User } from "@/api/request";
 
 let user = ref<User>({});
+let isEdit = ref(false)
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
@@ -181,16 +210,29 @@ const fetch = async (): Promise<void> => {
   }
 }
 
+const editAllow = () => {
+  isEdit.value = !isEdit.value
+  if (isEdit.value) {
+    alert('保存成功')
+  }
+}
+
+const onSubmit = async (): Promise<void> => {
+  if (username.value && username.value.length > 0) {
+    // await instance
+    //   .put(SERVER_URL.user.concat("/", username.value), user.value)
+    //   .then(res => {
+    //     user.value = res.data
+    //   });
+      alert("修改成功")
+  }
+};
 /**
  * 表单提交
  */
-const onSubmit = async (): Promise<void> => {
+const submitAddress = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
-    await instance
-      .put(SERVER_URL.user.concat("/", username.value), user.value)
-      .then(res => {
-        user.value = res.data
-      });
+    alert("提交成功")
   }
 };
 

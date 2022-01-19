@@ -3,47 +3,87 @@
     <div class="px-6 py-4 space-y-6 divide-y">
       <fieldset class="-mb-4"></fieldset>
       <fieldset>
-        <legend class="font-medium text-gray-900 pr-4">Privileges</legend>
-        <div class="mt-4 space-y-4">
-          <div class="flex items-start justify-between">
-            <div class="text-sm">
-              <label for="nickname" class="font-medium text-gray-700">Nickname</label>
+        <legend class="font-medium text-gray-900 pr-4">Change nicknmae</legend>
+        <p class="text-sm text-gray-500">Changing your username can have unintended side effects.</p>
+        <div class="flex">
+          <div class="mt-4 text-sm">
+            <label for="password" class="font-medium text-gray-700">Nicknmae</label>
+            <div class="flex items-center space-x-4 mt-1">
               <input
-                id="nickname"
-                name="nickname"
+                id="password"
+                name="password"
                 type="text"
-                class="border-gray-300 rounded cursor-pointer sr-only"
+                class="block border-gray-300 py-1 rounded-md"
+                :disabled="isEdit"
               />
-              <p class="text-gray-500">布吉岛</p>
+              <button
+                type="button"
+                @click="editAllow"
+                class="text-blue-600"
+              >{{ isEdit ? 'Edit' : 'Save' }}</button>
             </div>
-            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+            <span
+              class="text-xs text-gray-400"
+            >Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</span>
           </div>
-          <div class="flex items-start justify-between">
-            <div class="text-sm">
-              <label for="phoneNumber" class="font-medium text-gray-700">Phone Number</label>
-              <input
-                id="phoneNumber"
-                name="phoneNumber"
-                type="text"
-                class="border-gray-300 rounded cursor-pointer sr-only"
+          <div class="mr-20 ml-8 text-center relative group">
+            <figure class="w-32 h-32 border rounded-full">
+              <img
+                alt="avatar"
+                class="w-full h-full rounded-full"
+                src="https://cdn.leafage.top/logo.svg"
               />
-              <p class="text-gray-500">187****3090</p>
-            </div>
-            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
+            </figure>
+            <button
+              type="button"
+              class="absolute top-2 right-2 text-sm group-hover:inline-flex group-hover:bg-red-600 group-hover:text-white rounded-full items-center hidden"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
+              </svg>
+              <span class="sr-only">Delete</span>
+            </button>
           </div>
-          <div class="flex items-start justify-between">
-            <div class="text-sm">
-              <label for="email" class="font-medium text-gray-700">Email Address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                class="border-gray-300 rounded cursor-pointer sr-only"
-              />
-              <p class="text-gray-500">lea***e@leafage.top</p>
-            </div>
-            <button type="button" class="text-gray-500 hover:text-blue-600">edit</button>
-          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="font-medium text-gray-900 pr-4">Change usernmae</legend>
+        <p class="text-sm text-gray-500">Changing your username can have unintended side effects.</p>
+        <div class="mt-4">
+          <button
+            id="del_account"
+            name="del_account"
+            type="button"
+            class="border block border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 px-2 py-1 rounded-md"
+          >Change usernmae</button>
+          <span class="text-xs text-gray-400 inline-flex items-center">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="mr-1"
+            >
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
+            </svg> Looking to manage account security settings? You can find them in the
+            <RouterLink
+              to="/settings/secret"
+              class="text-blue-600 mx-1 hover:underline"
+            >Account security</RouterLink>tab.
+          </span>
         </div>
       </fieldset>
       <fieldset>
@@ -135,6 +175,20 @@
           </div>
         </div>
       </fieldset>
+      <fieldset>
+        <legend class="font-medium text-gray-900 pr-4">Delete Account</legend>
+        <p
+          class="text-sm text-gray-500"
+        >Once you delete your account, there is no going back. Please be certain.</p>
+        <button
+          @click="onSubmit"
+          type="submit"
+          class="text-red-600 border block mt-4 border-red-400 hover:bg-red-600 hover:text-white px-2 py-1 rounded-md"
+        >Delete Account</button>
+        <span
+          class="text-xs text-gray-400"
+        >Are you sure you don’t want to just downgrade your account to a FREE account? We won’t charge your payment information anymore.</span>
+      </fieldset>
     </div>
   </div>
 </template>
@@ -146,6 +200,7 @@ import instance from "@/api";
 import { SERVER_URL, Account } from "@/api/request";
 
 let account = ref<Account>({});
+let isEdit = ref(false)
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
@@ -154,9 +209,16 @@ const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
  */
 const fetch = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
-    // await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
-    //   account.value = res.data
-    // )
+    await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
+      account.value = res.data
+    )
+  }
+}
+
+const editAllow = () => {
+  isEdit.value = !isEdit.value
+  if (isEdit.value) {
+    alert('保存成功')
   }
 }
 
@@ -165,14 +227,15 @@ const fetch = async (): Promise<void> => {
  */
 const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
-    let data = { ...account.value, modifier: username.value }
-    await instance.post(SERVER_URL.account, data).then((res) =>
-      account.value = res.data
-    );
+    // let data = { ...account.value, modifier: username.value }
+    // await instance.delete(SERVER_URL.account, data).then((res) =>
+    //   account.value = res.data
+    // );
+    alert("删除成功")
   }
 };
 
 onMounted(() => {
-  fetch()
+  // fetch()
 })
 </script>

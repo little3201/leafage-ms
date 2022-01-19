@@ -7,13 +7,15 @@
       <div class="hidden md:block">
         <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 shadow">
           <div class="inline-flex items-center py-4">
-            <img :alt="user.nickname" class="rounded-full w-12 h-12 border" :src="user.avatar" />
+            <figure class="rounded-full w-12 h-12 border">
+              <img :alt="user.nickname" class="w-full h-full rounded-full" :src="user.avatar" />
+            </figure>
             <div class="ml-4 mr-auto">
-              <h4 class="font-blod text-base" v-text="user.nickname"></h4>
-              <h3 class="text-gray-500" v-text="user.username"></h3>
+              <strong v-text="user.nickname"></strong>
+              <p class="text-gray-400 text-sm" v-text="user.username"></p>
             </div>
           </div>
-          <div class="py-4">
+          <div class="py-4 space-y-1">
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="profile"
@@ -54,7 +56,7 @@
             </RouterLink>
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="secret"
+              to="security"
             >
               <svg
                 width="16"
@@ -69,8 +71,27 @@
               >
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
               </svg>
-              Secret
+              Account Security
             </RouterLink>
+            <!-- <RouterLink
+              class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              to="billing"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mr-2"
+              >
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
+              </svg>
+              Billing & Plans
+            </RouterLink>-->
           </div>
           <div class="py-4">
             <RouterLink

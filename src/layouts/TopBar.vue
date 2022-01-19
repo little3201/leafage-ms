@@ -106,7 +106,7 @@
         <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
       </button>
       <div
-        v-show="isNotify"
+        v-show="isNotify && notifications.length > 0"
         class="origin-top-left p-2 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-4 rounded-md shadow-lg bg-white z-10"
       >
         <span class="mt-4 mb-2 px-2">Notifications</span>
@@ -204,7 +204,7 @@
           </RouterLink>
           <RouterLink
             @click="operate('')"
-            to="/settings/secret"
+            to="/settings/account"
             class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
           >
             <svg

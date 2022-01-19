@@ -41,7 +41,7 @@
                 <button
                   @click="onSubmit"
                   type="submit"
-                  class="border block border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 px-2 py-1 rounded-md"
+                  class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
                 >Update password</button>
                 <RouterLink to="/forgot" class="text-blue-600 hover:underline">I forgot my password</RouterLink>
               </div>
@@ -75,7 +75,7 @@
             id="del_account"
             name="del_account"
             type="button"
-            class="my-4 border border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 px-2 py-1 rounded-md"
+            class="my-4 border border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
           >Enable Two factor authentication</button>
           <RouterLink to="/" class="text-blue-600 hover:underline">
             <p>Learn more</p>

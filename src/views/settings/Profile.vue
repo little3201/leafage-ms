@@ -13,13 +13,13 @@
                 name="email"
                 type="email"
                 class="block border-gray-300 py-1 rounded-md"
-                :disabled="isEdit"
+                :disabled="!isEdit"
               />
               <button
                 type="button"
                 @click="editAllow"
-                class="text-blue-600"
-              >{{ isEdit ? 'Edit' : 'Save' }}</button>
+                class="text-blue-600 hover:underline"
+              >{{ isEdit ? 'Save' : 'Edit' }}</button>
             </div>
             <span
               class="text-xs text-gray-400"
@@ -96,7 +96,7 @@
                 <button
                   @click="onSubmit"
                   type="submit"
-                  class="border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 block border px-2 py-1 rounded-md"
+                  class="border-blue-400 text-blue-600 hover:bg-blue-600 hover:text-white block border px-2 py-1 rounded-md"
                 >Update profile</button>
               </div>
             </div>
@@ -177,7 +177,7 @@
                 <button
                   @click.stop="submitAddress"
                   type="submit"
-                  class="border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 block border px-2 py-1 rounded-md"
+                  class="border-blue-400 text-blue-600 hover:bg-blue-600 hover:text-white block border px-2 py-1 rounded-md"
                 >Update address</button>
               </div>
             </div>
@@ -212,7 +212,7 @@ const fetch = async (): Promise<void> => {
 
 const editAllow = () => {
   isEdit.value = !isEdit.value
-  if (isEdit.value) {
+  if (!isEdit.value) {
     alert('保存成功')
   }
 }
@@ -224,7 +224,7 @@ const onSubmit = async (): Promise<void> => {
     //   .then(res => {
     //     user.value = res.data
     //   });
-      alert("修改成功")
+    alert("修改成功")
   }
 };
 /**

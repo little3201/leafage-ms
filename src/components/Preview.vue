@@ -16,7 +16,6 @@
                     >
                         <span class="sr-only">Close</span>
                         <svg
-                            xmlns="http://www.w3.org/2000/svg"
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -25,10 +24,9 @@
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            class="feather feather-x -mt-2 -mr-2"
+                            class="-mt-2 -mr-2"
                         >
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
+                            <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
                         </svg>
                     </button>
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">

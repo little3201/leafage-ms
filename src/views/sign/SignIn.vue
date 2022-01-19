@@ -32,7 +32,7 @@
       </div>
       <button
         type="submit"
-        @click.stop="onSubmit"
+        @click="onSubmit"
         class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
       >Sign in</button>
     </form>

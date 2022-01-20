@@ -8,13 +8,14 @@ const data: User = {
   lastname: Random.clast(),
   gender: 'F',
   email: Random.email(),
-  education: '',
-  country: '',
-  province: Random.province(),
-  city: 'string',
-  region: 'string',
-  address: 'string',
-  description: "这里是描述信息。。。"
+  education: 'G',
+  country: '中华人民共和国',
+  province: "陕西省",
+  city: "西安市",
+  region: "主城区",
+  street: '新街',
+  address: 'xx街22号',
+  description: Random.csentence(),
 }
 
 export default [

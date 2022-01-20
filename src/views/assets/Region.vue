@@ -69,10 +69,9 @@
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
+          <div class="col-span-12 sm:col-span-6">
             <label for="name">
               Name
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
               id="name"
@@ -81,7 +80,48 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="regionData.name"
+              required
               autofocus
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="alias">
+              Alias
+            </label>
+            <input
+              id="alias"
+              name="alias"
+              type="text"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Alias"
+              v-model.trim="regionData.alias"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="superior">
+              Superior
+            </label>
+            <select
+              id="superior"
+              name="superior"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              v-model="regionData.superior"
+            >
+            <option value="undefined">请选择</option>
+              <option v-for="region in datas" :key="region.code" :value="region.code">{{region.name}}</option>
+            </select>
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="zip">
+              Zip
+            </label>
+            <input
+              id="zip"
+              name="zip"
+              type="text"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Zip"
+              v-model.trim="regionData.zip"
             />
           </div>
           <div class="col-span-12">

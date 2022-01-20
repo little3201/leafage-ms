@@ -9,7 +9,7 @@ for (let i = 0; i < 139; i++) {
   datas.push({
     username: Random.name(),
     nickname: Random.cname(),
-    avatar: '',
+    avatar: Random.image('32x32'),
     accountNonExpired: Random.boolean(),
     accountNonLocked: Random.boolean(),
     credentialsNonExpired: Random.boolean(),

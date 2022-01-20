@@ -91,10 +91,9 @@
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
+          <div class="col-span-12 md:col-span-6">
             <label for="name">
               Name
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
               id="name"
@@ -107,7 +106,7 @@
               autofocus
             />
           </div>
-          <div class="col-span-12">
+          <div class="col-span-12 md:col-span-6">
             <label for="superior">Superior</label>
             <select
               id="superior"

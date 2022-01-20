@@ -46,7 +46,9 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      if (url.split('?').length > 1) {
+      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) === 'role') {
+        return datas.slice(1, 6)
+      } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (params.page + 1) * params.size)
       } else {

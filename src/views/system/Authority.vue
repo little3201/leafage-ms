@@ -120,7 +120,6 @@
           <div class="col-span-12">
             <label for="name">
               Name
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
               id="name"
@@ -136,7 +135,6 @@
           <div class="col-span-12 sm:col-span-6">
             <label for="type" :class="{ 'text-gray-300': authorityData.code }">
               Type
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <select
               id="type"
@@ -155,7 +153,6 @@
           <div class="col-span-12 sm:col-span-6">
             <label for="icon">
               Icon
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
               id="icon"

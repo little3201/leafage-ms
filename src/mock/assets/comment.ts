@@ -9,7 +9,7 @@ for (let i = 0; i < 19; i++) {
     datas.push({
         code: Random.id(),
         name: Random.cname(),
-        avatar: Random.image('40x40'),
+        avatar: Random.image('32x32'),
         content: Random.cparagraph(2),
         email: Random.email(),
         replier: Random.cname(),

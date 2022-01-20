@@ -43,6 +43,7 @@ export interface User {
   province: string,
   city: string,
   region: string,
+  street: string,
   address: string,
   description: string
 }
@@ -61,6 +62,7 @@ export interface Role extends AbstractVO<String> {
 
 export interface Group extends AbstractVO<String> {
   name: string,
+  alias: string,
   superior: string,
   principal: string,
   count: number

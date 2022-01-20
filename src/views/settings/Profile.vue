@@ -39,7 +39,7 @@
                     name="firstname"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                v-model="user.firstname"
+                    v-model="user.firstname"
                   />
                 </div>
                 <div>
@@ -49,7 +49,7 @@
                     name="lastname"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                v-model="user.lastname"
+                    v-model="user.lastname"
                   />
                 </div>
               </div>
@@ -60,7 +60,7 @@
                     id="gender"
                     name="gender"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                v-model="user.gender"
+                    v-model="user.gender"
                   >
                     <option value="F">Female</option>
                     <option value="M">Male</option>
@@ -83,16 +83,21 @@
                     id="education"
                     name="education"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.education"
                   >
-                    <option>高中</option>
-                    <option>大学本科</option>
+                    <option value="G">高中</option>
+                    <option value="B">大学本科</option>
                   </select>
                 </div>
               </div>
               <div class="text-sm">
                 <label for="bio" class="font-medium text-gray-700">Bio</label>
-                <textarea id="bio" name="bio" class="border-gray-300 py-1 mt-1 rounded-md w-full" 
-                v-model="user.description" />
+                <textarea
+                  id="bio"
+                  name="bio"
+                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.description"
+                />
                 <span
                   class="text-xs text-gray-400"
                 >You can @mention other users and organizations to link to them.</span>
@@ -118,9 +123,9 @@
                     id="country"
                     name="country"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.country"
                   >
-                    <option>China</option>
-                    <option>America</option>
+                    <option>中华人民共和国</option>
                   </select>
                 </div>
                 <div>
@@ -129,16 +134,20 @@
                     id="province"
                     name="province"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.province"
                   >
-                    <option>Shaanxi</option>
-                    <option>Beijing</option>
+                    <option>陕西省</option>
                   </select>
                 </div>
                 <div>
                   <label for="city" class="font-medium text-gray-700">City</label>
-                  <select id="city" name="city" class="border-gray-300 py-1 mt-1 rounded-md w-full">
-                    <option>Xian</option>
-                    <option>Xianyang</option>
+                  <select
+                    id="city"
+                    name="city"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.city"
+                  >
+                    <option>西安市</option>
                   </select>
                 </div>
                 <div>
@@ -147,9 +156,9 @@
                     id="region"
                     name="region"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.region"
                   >
-                    <option>莲湖区</option>
-                    <option>未央区</option>
+                    <option>主城区</option>
                   </select>
                 </div>
               </div>
@@ -160,18 +169,19 @@
                     id="street"
                     name="street"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.street"
                   >
-                    <option>北大街</option>
-                    <option>南大街</option>
+                    <option>新街</option>
                   </select>
                 </div>
                 <div class="w-full">
-                  <label for="details" class="font-medium text-gray-700">Details</label>
+                  <label for="address" class="font-medium text-gray-700">Address</label>
                   <input
-                    id="details"
-                    name="details"
+                    id="address"
+                    name="address"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.address"
                   />
                 </div>
               </div>

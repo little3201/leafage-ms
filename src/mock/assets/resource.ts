@@ -9,7 +9,7 @@ for (let i = 0; i < 79; i++) {
   datas.push({
     code: Random.id(),
     title: Random.ctitle(),
-    cover: Random.image('360x198'),
+    cover: Random.image('176x224'),
     category: Random.word(),
     type: 'E',
     viewed: Random.integer(1, 900),

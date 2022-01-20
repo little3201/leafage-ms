@@ -47,7 +47,7 @@
             <td class="px-4">
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-8 w-8">
-                  <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
+                  <img :src="data.avatar" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
                 </div>
                 <span class="ml-2">{{ data.nickname }}</span>
               </div>
@@ -70,7 +70,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle text-green-600"
+                  class="feather feather-check-circle text-lime-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
@@ -107,7 +107,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-unlock text-green-600"
+                  class="feather feather-unlock text-lime-600"
                 >
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
@@ -143,7 +143,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle text-green-600"
+                  class="feather feather-check-circle text-lime-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
@@ -152,8 +152,8 @@
               <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -228,7 +228,6 @@
           <div class="col-span-12 md:col-span-6">
             <span>
               Account Expired
-              <span class="text-red-600 text-base ml-1">*</span>
             </span>
             <div class="mt-3">
               <input
@@ -255,7 +254,6 @@
           <div class="col-span-12 md:col-span-6">
             <span>
               Account Locked
-              <span class="text-red-600 text-base ml-1">*</span>
             </span>
             <div class="mt-3">
               <input
@@ -282,7 +280,6 @@
           <div class="col-span-12 md:col-span-6">
             <span>
               Credentials Expired
-              <span class="text-red-600 text-base ml-1">*</span>
             </span>
             <div class="mt-3">
               <input

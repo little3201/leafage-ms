@@ -30,6 +30,7 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Alias</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Principal</th>
             <th scope="col" class="px-4">User Count</th>
@@ -49,6 +50,7 @@
               <p class="text-gray-600 group-hover:text-blue-400 text-xs" v-text="data.description"></p>
             </td>
             <td class="px-4" v-text="data.code"></td>
+            <td class="px-4" v-text="data.alias"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.principal"></td>
             <td class="px-4" v-text="data.count"></td>
@@ -89,10 +91,9 @@
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
+          <div class="col-span-12 sm:col-span-6">
             <label for="name">
               Name
-              <span class="text-red-600 text-base ml-1">*</span>
             </label>
             <input
               id="name"
@@ -101,6 +102,20 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Name"
               v-model.trim="groupData.name"
+              autofocus
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="alias">
+              Alias
+            </label>
+            <input
+              id="alias"
+              name="alias"
+              type="text"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Alias"
+              v-model.trim="groupData.alias"
               autofocus
             />
           </div>

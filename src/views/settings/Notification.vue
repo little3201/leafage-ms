@@ -92,9 +92,9 @@ const retrieve = async () => {
 
 const switchType = async (readed: boolean) => {
   isRead.value = readed
-  let page = 0
-  if (!readed) {
-    page = 1
+  let page = 1
+  if (readed) {
+    page = 0
   }
   await instance.get(SERVER_URL.notification, { params: { page: page, size: 12 } })
     .then((res) => notifications.value = res.data);

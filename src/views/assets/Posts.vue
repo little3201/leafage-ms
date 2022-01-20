@@ -92,7 +92,7 @@
           <div class="row-span-3 col-span-12 sm:col-span-4">
             <label for="cover">Cover</label>
             <figure v-if="postsData.cover" class="w-full h-32 mt-1">
-              <img :src="postsData.cover" :alt="postsData.title" class="rounded-md w-full h-full" />
+              <img :src="postsData.cover" :alt="postsData.title" class="rounded-md w-full h-full" width="198" height="128" />
             </figure>
             <div v-else>
               <div

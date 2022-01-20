@@ -6,6 +6,9 @@
 
 ## 更新记录
 
+2022-01-20:
+  1. 移除 vite-mock-plugin 依赖，mock代码重写，解决了mock遗留的问题；
+
 2022-01-19:
   1. 移除 Notification 模块，添加到 Settings 模块下；
   2. 重构整个 Settings 下的所有页面；

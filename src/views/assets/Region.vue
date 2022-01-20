@@ -31,6 +31,7 @@
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Alias</th>
+            <th scope="col" class="px-4">Zip</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
@@ -49,6 +50,7 @@
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.alias"></td>
+            <td class="px-4" v-text="data.zip"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">

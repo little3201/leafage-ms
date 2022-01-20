@@ -7,3 +7,8 @@ declare module 'crypto-js' {
     import CryptoJS from 'crypto-js'
     export default CryptoJS
 }
+
+declare module 'mockjs' {
+    import Mock from 'mockjs'
+    export default Mock
+}

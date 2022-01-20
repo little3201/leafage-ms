@@ -40,6 +40,7 @@
       Export
     </button>
     <button
+      v-if="needAdd"
       @click="operate"
       class="ml-3 p-2 rounded-md bg-blue-600 flex items-center text-white hover:bg-blue-700 focus:outline-none border active:cursor-wait"
     >
@@ -65,6 +66,13 @@
 import { ref, onMounted } from "vue";
 
 import { User } from "@/api/request";
+
+defineProps({
+  needAdd: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 const emit = defineEmits(["modelOperate"]);
 

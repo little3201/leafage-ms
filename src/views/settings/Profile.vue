@@ -13,6 +13,7 @@
                 name="email"
                 type="email"
                 class="block border-gray-300 py-1 rounded-md"
+                v-model="user.email"
                 :disabled="!isEdit"
               />
               <button
@@ -38,6 +39,7 @@
                     name="firstname"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                v-model="user.firstname"
                   />
                 </div>
                 <div>
@@ -47,6 +49,7 @@
                     name="lastname"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                v-model="user.lastname"
                   />
                 </div>
               </div>
@@ -57,9 +60,10 @@
                     id="gender"
                     name="gender"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                v-model="user.gender"
                   >
-                    <option>Female</option>
-                    <option>Male</option>
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
                   </select>
                 </div>
                 <div>
@@ -87,7 +91,8 @@
               </div>
               <div class="text-sm">
                 <label for="bio" class="font-medium text-gray-700">Bio</label>
-                <textarea id="bio" name="bio" class="border-gray-300 py-1 mt-1 rounded-md w-full" />
+                <textarea id="bio" name="bio" class="border-gray-300 py-1 mt-1 rounded-md w-full" 
+                v-model="user.description" />
                 <span
                   class="text-xs text-gray-400"
                 >You can @mention other users and organizations to link to them.</span>

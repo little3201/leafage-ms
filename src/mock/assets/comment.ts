@@ -1,31 +1,36 @@
-import { MockMethod } from 'vite-plugin-mock';
+import { Random } from 'mockjs'
+
+import { Comment } from '@/api/request'
+import { parse } from '@/api/util';
+
+const datas: Array<Comment> = [];
+
+for (let i = 0; i < 19; i++) {
+    datas.push({
+        code: Random.id(),
+        name: Random.cname(),
+        avatar: Random.image('40x40'),
+        content: Random.cparagraph(2),
+        email: Random.email(),
+        replier: Random.cname(),
+        description: Random.csentence(5),
+        modifyTime: Random.date()
+    })
+}
+
 export default [
     {
         url: '/api/assets/comment',
         method: 'get',
-        response: () => {
-            return [
-                {
-                    nickname: '布吉岛',
-                    avatar: '/images/avatar.jpg',
-                    content: '优秀呀，怎么弄的？'
-                },
-                {
-                    nickname: '跟着风吹',
-                    avatar: '',
-                    content: '很棒很棒！'
-                },
-                {
-                    nickname: '无名之辈',
-                    avatar: '',
-                    content: '找了很久的vue+tailwindcss, 你这个很优秀，收藏了'
-                },
-                {
-                    nickname: '无名之徒',
-                    avatar: '',
-                    content: '哇塞，关注了，喜欢'
-                }
-            ];
-        },
+        response: (options: any) => {
+            let url = options.url
+            if (url.split('?').length > 1) {
+                let params: any = parse(url)
+                return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+            } else {
+                let code = url.substring(url.lastIndexOf('/') + 1)
+                return datas.filter(item => item.code === code)[0]
+            }
+        }
     }
-] as MockMethod[];
+]

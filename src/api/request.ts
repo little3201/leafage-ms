@@ -28,21 +28,23 @@ export interface Account {
   avatar: string,
   accountNonExpired: boolean,
   accountNonLocked: boolean,
-  credentialsNonExpired: boolean
+  credentialsNonExpired: boolean,
+  description: string
 }
 
-export interface User extends Account {
+export interface User {
+  username: string,
   firstname: string,
   lastname: string,
   gender: string,
-  birthday: Date,
-  ethnicity: string,
+  email: string,
   education: string,
   country: string,
   province: string,
   city: string,
   region: string,
-  address: string
+  address: string,
+  description: string
 }
 
 interface AbstractVO<T> {
@@ -60,19 +62,24 @@ export interface Role extends AbstractVO<String> {
 export interface Group extends AbstractVO<String> {
   name: string,
   superior: string,
+  principal: string,
   count: number
 }
 
 export interface Authority extends AbstractVO<String> {
   name: string,
+  type: string,
+  icon: string,
   superior: string,
+  path: string,
   count: number
 }
 
 export interface Region extends AbstractVO<Number> {
   name: string,
   superior: string,
-  count: number
+  alias: string,
+  zip: string
 }
 
 export interface Notification extends AbstractVO<String> {
@@ -110,6 +117,7 @@ export interface PostsDetails extends Posts {
 export interface Resource extends AbstractVO<String> {
   title: string,
   type: string,
+  cover: string,
   category: string,
   viewed: number,
   downloads: number
@@ -117,6 +125,7 @@ export interface Resource extends AbstractVO<String> {
 
 export interface Comment extends AbstractVO<String> {
   name: string,
+  avatar: string,
   replier: string,
   content: string,
   email: string

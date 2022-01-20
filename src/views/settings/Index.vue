@@ -18,7 +18,7 @@
           <div class="py-4 space-y-1">
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="profile"
+              to="/settings/profile"
             >
               <svg
                 width="16"
@@ -37,7 +37,8 @@
             </RouterLink>
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="account"
+              to="/settings"
+              exact
             >
               <svg
                 width="16"
@@ -56,7 +57,7 @@
             </RouterLink>
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="security"
+              to="/settings/security"
             >
               <svg
                 width="16"
@@ -96,7 +97,7 @@
           <div class="py-4">
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="notification"
+              to="/settings/notification"
             >
               <svg
                 width="16"

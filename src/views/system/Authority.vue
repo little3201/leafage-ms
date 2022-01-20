@@ -330,8 +330,13 @@ const modelCommit = async (): Promise<void> => {
     });
   }
 };
-const relation = (): void => {
-  alert("roles")
+/**
+ * 查询关联角色信息
+ */
+const relation = async (): Promise<void> => {
+  await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then((res) => {
+    alert(res.data);
+  });
 }
 onMounted(() => {
   retrieve();

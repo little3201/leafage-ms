@@ -1,154 +1,86 @@
-import { MockMethod } from 'vite-plugin-mock';
+import { Random } from 'mockjs'
+
+import { Group } from '@/api/request'
+import { parse } from '@/api/util';
+
+const datas: Array<Group> = [];
+
+for (let i = 0; i < 39; i++) {
+  datas.push({
+    code: Random.id(),
+    name: Random.word(),
+    superior: Random.word(),
+    principal: Random.cname(),
+    count: Random.integer(1, 99),
+    description: Random.csentence(5),
+    modifyTime: Random.date()
+  })
+}
+
+const treeDatas = [
+  { "code": "21529ZEE7", "name": "normal", "superior": null, "expand": null, "children": [] },
+  {
+    "code": "21169GZC", "name": "vip", "superior": null, "expand": null, "children": [
+      {
+        "code": "21529WXDL", "name": "gold vip", "superior": "21169GZC", "expand": null, "children": [
+          { "code": "21529V1IM", "name": "diamond vip", "superior": "21529WXDL", "expand": null, "children": [] }
+        ]
+      }
+    ]
+  }
+];
+
 export default [
   {
     url: '/api/hypervisor/group/count',
     method: 'get',
     response: () => {
-      return 3
+      return datas.length
     },
   },
   {
     url: '/api/hypervisor/group/tree',
     method: 'get',
     response: () => {
-      return [
-        { "code": "21529ZEE7", "name": "normal", "superior": null, "expand": null, "children": [] },
-        {
-          "code": "21169GZC", "name": "vip", "superior": null, "expand": null, "children": [
-            {
-              "code": "21529WXDL", "name": "gold vip", "superior": "21169GZC", "expand": null, "children": [
-                { "code": "21529V1IM", "name": "diamond vip", "superior": "21529WXDL", "expand": null, "children": [] }
-              ]
-            }
-          ]
-        }
-      ]
+      return treeDatas;
     }
   },
   {
-    url: '/api/hypervisor/group/:code/user',
+    url: '/api/hypervisor/group',
     method: 'get',
-    response: () => {
-      return [
-        {
-          username: 'admin',
-          nickname: '布吉岛',
-          avatar: '',
-          gender: 'M',
-          phone: "187****7895",
-          email: 'lit***@163.com',
-          birthday: new Date(),
-          accountNonExpired: true,
-          accountNonLocked: true,
-          credentialsNonExpired: true,
-        },
-        {
-          username: 'kitty',
-          nickname: 'lily',
-          avatar: '',
-          gender: 'F',
-          phone: "187****7895",
-          email: 'lit****@163.com',
-          birthday: new Date(),
-          accountNonExpired: true,
-          accountNonLocked: true,
-          credentialsNonExpired: true,
-        },
-        {
-          username: 'john',
-          nickname: 'john',
-          avatar: '',
-          gender: null,
-          phone: "187****7895",
-          email: 'li****1@163.com',
-          birthday: new Date(),
-          accountNonExpired: true,
-          accountNonLocked: true,
-          credentialsNonExpired: true,
-        },
-      ];
-    },
-  },
-  {
-    url: '/api/hypervisor/group/:code',
-    method: 'get',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'Tech Dept',
-        description: '技术部',
-        superior: '20A23D201',
-        principal: 'admin'
+    response: (options: any) => {
+      let url = options.url
+      if (url.split('?').length > 1) {
+        let params: any = parse(url)
+        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+      } else {
+        let code = url.substring(url.lastIndexOf('/') + 1)
+        return datas.filter(item => item.code === code)[0]
       }
-    },
+    }
   },
   {
-    url: '/api/hypervisor/group/:code',
+    url: '/api/hypervisor/group',
     method: 'put',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'Tech Dept',
-        description: '技术部',
-        superior: '集团',
-        principal: 'admin'
-      }
-    },
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.code === code)[0]
+    }
   },
   {
     url: '/api/hypervisor/group',
     method: 'post',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'Tech Dept',
-        description: '技术部',
-        superior: '集团',
-        principal: 'admin'
-      }
-    },
-  },
-  {
-    url: '/api/hypervisor/group',
-    method: 'get',
-    response: () => {
-      return [
-        {
-          code: '20A23D201',
-          name: '集团',
-          description: '技术部',
-          superior: '',
-          principal: 'admin',
-          count: 2,
-          modifyTime: new Date()
-        },
-        {
-          code: '20A23D2D1',
-          name: 'Tech Dept',
-          description: '技术部',
-          superior: '集团',
-          principal: 'admin',
-          count: 2,
-          modifyTime: new Date()
-        },
-        {
-          code: '20A23D2X1',
-          name: 'Other Dept',
-          description: '架构部',
-          superior: '技术部',
-          principal: 'superior',
-          count: 4,
-          modifyTime: new Date()
-        },
-      ];
-    },
+    response: (options: any) => {
+      let data: Group = JSON.parse(options.body)
+      data = { ...data, code: Random.id() }
+      return data
+    }
   },
   {
     url: '/api/hypervisor/group/:code',
     method: 'delete',
     response: () => {
-      return {
-      }
+      return {}
     },
   }
-] as MockMethod[];
+]

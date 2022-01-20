@@ -204,7 +204,7 @@
           </RouterLink>
           <RouterLink
             @click="operate('')"
-            to="/settings/account"
+            to="/settings"
             class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
           >
             <svg
@@ -271,7 +271,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
 import instance from "@/api";
 import { SERVER_URL, User, Notification } from "@/api/request";
@@ -287,6 +287,7 @@ let isDark = ref(false)
 
 let notifications = ref<Array<Notification>>([])
 
+const router = useRouter();
 const user = ref<User>({});
 
 const themeMode = () => {
@@ -294,7 +295,8 @@ const themeMode = () => {
 }
 
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification.concat("/unread")).then((res) => notifications.value = res.data);
+  await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
+    .then((res) => notifications.value = res.data);
 }
 
 /**

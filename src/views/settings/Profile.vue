@@ -212,7 +212,7 @@ import { SERVER_URL, User } from "@/api/request";
 let user = ref<User>({});
 let isEdit = ref(false)
 
-const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
+const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
 
 /**
  * 查询

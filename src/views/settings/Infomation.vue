@@ -193,9 +193,11 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
 
+import { Account } from '@/api/request'
+
 let isEdit = ref(false)
 
-const account: Account = reactive(JSON.parse(sessionStorage.getItem("user") || ''))
+const account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
 
 const editAllow = () => {
   isEdit.value = !isEdit.value

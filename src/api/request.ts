@@ -28,8 +28,7 @@ export interface Account {
   avatar: string,
   accountNonExpired: boolean,
   accountNonLocked: boolean,
-  credentialsNonExpired: boolean,
-  description: string
+  credentialsNonExpired: boolean
 }
 
 export interface User {

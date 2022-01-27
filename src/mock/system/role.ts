@@ -10,7 +10,7 @@ for (let i = 0; i < 39; i++) {
     code: Random.id(),
     name: Random.word(),
     superior: Random.word(),
-    count: Random.integer(1, 99),
+    count: Random.integer(0, 99),
     description: Random.csentence(5),
     modifyTime: Random.date()
   })

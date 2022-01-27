@@ -158,12 +158,12 @@
     <div class="relative">
       <button
         type="button"
-        v-if="user && Object.keys(user).length > 0"
+        v-if="account && Object.keys(account).length > 0"
         @click="operate('account')"
         class="rounded-full w-8 h-8 text-center bg-white shadow focus:outline-none"
       >
-        <img v-if="user.avatar" :alt="user.nickname" :src="user.avatar" class="rounded-full" />
-        <span v-else v-text="user.nickname.substr(0, 1)"></span>
+        <img v-if="account.avatar" :alt="account.nickname" :src="account.avatar" class="rounded-full" />
+        <span v-else v-text="account.nickname.substr(0, 1)"></span>
       </button>
       <RouterLink
         v-else
@@ -178,8 +178,8 @@
         tabindex="-1"
       >
         <div class="px-2 py-1">
-          <h3 class="font-blod">{{ user.nickname }}</h3>
-          <h4 class="text-gray-400 text-sm">{{ user.username }}</h4>
+          <h3 class="font-blod">{{ account.nickname }}</h3>
+          <h4 class="text-gray-400 text-sm">{{ account.username }}</h4>
         </div>
         <div class="text-sm py-1">
           <RouterLink
@@ -274,7 +274,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import instance from "@/api";
-import { SERVER_URL, User, Notification } from "@/api/request";
+import { SERVER_URL, Account, Notification } from "@/api/request";
 
 // 控制通知是否打开
 let isNotify = ref(false);
@@ -288,7 +288,7 @@ let isDark = ref(false)
 let notifications = ref<Array<Notification>>([])
 
 const router = useRouter();
-const user = ref<User>({});
+const account = ref<Account>({});
 
 const themeMode = () => {
   isDark.value = !isDark.value
@@ -358,9 +358,9 @@ const socket = () => {
 }
 
 onMounted(() => {
-  let data = sessionStorage.getItem("user");
+  let data = sessionStorage.getItem("account");
   if (data) {
-    user.value = JSON.parse(data)
+    account.value = JSON.parse(data)
     socket();
     retrieve();
   }

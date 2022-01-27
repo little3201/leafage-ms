@@ -12,7 +12,7 @@ for (let i = 0; i < 39; i++) {
     alias: Random.word(),
     superior: Random.word(),
     principal: Random.cname(),
-    count: Random.integer(1, 99),
+    count: Random.integer(0, 99),
     description: Random.csentence(5),
     modifyTime: Random.date()
   })

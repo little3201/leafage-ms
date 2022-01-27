@@ -12,8 +12,7 @@ for (let i = 0; i < 139; i++) {
     avatar: Random.image('32x32'),
     accountNonExpired: Random.boolean(),
     accountNonLocked: Random.boolean(),
-    credentialsNonExpired: Random.boolean(),
-    description: Random.csentence()
+    credentialsNonExpired: Random.boolean()
   })
 }
 

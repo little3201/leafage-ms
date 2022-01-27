@@ -11,7 +11,7 @@ let menus = [
       },
       { "code": "212240439", "name": "Authority", "superior": "21224DRMU", "expand": { "path": "/authority", "icon": "power" }, "children": [] },
       {
-        "code": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/user", "icon": "user" }, "children": []
+        "code": "203315P3Q", "name": "Account", "superior": "21224DRMU", "expand": { "path": "/account", "icon": "user" }, "children": []
       }
     ]
   },
@@ -20,7 +20,7 @@ let menus = [
   { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
   { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
 ]
-sessionStorage.setItem("user", JSON.stringify(user));
+sessionStorage.setItem("account", JSON.stringify(user));
 sessionStorage.setItem("menus", JSON.stringify(menus))
 
 import signMock from './sign'

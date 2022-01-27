@@ -62,6 +62,7 @@
                 @editAction="modelOperate"
               >
                 <button
+                  v-if="data.count > 0"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
                   @click="relation"
                 >
@@ -92,9 +93,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label for="name">
-              Name
-            </label>
+            <label for="name">Name</label>
             <input
               id="name"
               name="name"
@@ -106,9 +105,7 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="alias">
-              Alias
-            </label>
+            <label for="alias">Alias</label>
             <input
               id="alias"
               name="alias"

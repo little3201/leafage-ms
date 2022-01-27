@@ -92,9 +92,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 md:col-span-6">
-            <label for="name">
-              Name
-            </label>
+            <label for="name">Name</label>
             <input
               id="name"
               name="name"

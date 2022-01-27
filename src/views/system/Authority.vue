@@ -88,6 +88,7 @@
                 @editAction="modelOperate"
               >
                 <button
+                  v-if="data.count > 0"
                   class="flex items-center mr-3 text-pink-600 focus:outline-none"
                   @click="relation"
                 >
@@ -118,9 +119,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label for="name">
-              Name
-            </label>
+            <label for="name">Name</label>
             <input
               id="name"
               name="name"
@@ -133,9 +132,7 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="type" :class="{ 'text-gray-300': authorityData.code }">
-              Type
-            </label>
+            <label for="type" :class="{ 'text-gray-300': authorityData.code }">Type</label>
             <select
               id="type"
               name="type"
@@ -151,9 +148,7 @@
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="icon">
-              Icon
-            </label>
+            <label for="icon">Icon</label>
             <input
               id="icon"
               name="icon"

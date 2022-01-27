@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation :needAdd="false"  @modelOperate="modelOperate" />
+      <Operation :needAdd="false" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
@@ -30,7 +30,6 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Nickname</th>
             <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">NonExpired</th>
             <th scope="col" class="px-4">Locked</th>
             <th scope="col" class="px-4">Credentials</th>
@@ -54,9 +53,6 @@
             </td>
             <td class="px-4">
               <span class="font-medium" v-text="data.username"></span>
-            </td>
-            <td class="px-4">
-              <span class="font-medium" v-text="data.description"></span>
             </td>
             <td class="px-4">
               <div v-if="data.accountNonExpired" class="flex items-center justify-center">
@@ -173,6 +169,8 @@
                 @click.capture="username = data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
+                :needEdit="false"
+                :needDel="false"
               >
                 <button
                   type="button"
@@ -214,6 +212,26 @@
                   </svg>
                   Roles
                 </button>
+                <button
+                  v-if="!data.accountNonLocked"
+                  class="flex items-center mr-3 text-green-600 focus:outline-none"
+                  @click="treeOperate(true, 'role')"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-1"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'key'" />
+                  </svg>
+                  Unlock
+                </button>
               </Action>
             </td>
           </tr>
@@ -222,101 +240,6 @@
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Account Expired
-            </span>
-            <div class="mt-3">
-              <input
-                id="accountExpired_false"
-                name="accountNonExpired"
-                aria-label="account expired"
-                type="radio"
-                value="false"
-                v-model="userData.accountNonExpired"
-              />
-              <label for="accountExpired_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="accountExpired_true"
-                name="accountNonExpired"
-                aria-label="account expired"
-                type="radio"
-                class="ml-4"
-                value="true"
-                v-model="userData.accountNonExpired"
-              />
-              <label for="accountExpired_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Account Locked
-            </span>
-            <div class="mt-3">
-              <input
-                id="accountLocked_false"
-                name="accountLocked"
-                aria-label="account locked"
-                type="radio"
-                value="false"
-                v-model="userData.accountNonLocked"
-              />
-              <label for="accountLocked_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="accountLocked_true"
-                name="accountLocked"
-                aria-label="account locked"
-                type="radio"
-                value="true"
-                class="ml-4"
-                v-model="userData.accountNonLocked"
-              />
-              <label for="accountLocked_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Credentials Expired
-            </span>
-            <div class="mt-3">
-              <input
-                id="credentialsExpired_false"
-                name="credentialsNonExpired"
-                aria-label="credentials expired"
-                type="radio"
-                value="false"
-                v-model="userData.credentialsNonExpired"
-              />
-              <label for="credentialsExpired_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="credentialsExpired_true"
-                name="credentialsNonExpired"
-                aria-label="credentials expired"
-                type="radio"
-                value="true"
-                class="ml-4"
-                v-model="userData.credentialsNonExpired"
-              />
-              <label for="credentialsExpired_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              aria-label="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model.trim="userData.description"
-              placeholder="Description"
-            />
-          </div>
-        </div>
-      </form>
-    </Model>
     <Tree
       :isShow="isTree"
       @cancelAction="treeOperate"
@@ -334,18 +257,15 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
 import Tree from "@/components/tree/Tree.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Account, TreeNode } from "@/api/request";
 
 // 模态框参数
-let isEdit = ref(false);
 let isDel = ref(false);
 let isTree = ref(false);
 // 数据
-let userData = ref<Account>({});
 let username = ref("");
 let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
@@ -391,36 +311,7 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
-const modelOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    userData.value = {};
-    if (username.value && username.value.length > 0) {
-      await instance
-        .get(SERVER_URL.account.concat("/", username.value))
-        .then((res) => {
-          userData.value = res.data;
-        });
-    }
-  }
-  isEdit.value = operate;
-};
-// 新增/编辑：提交
-const modelCommit = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
-    await instance
-      .put(SERVER_URL.account.concat("/", username.value), userData.value)
-      .then((res) => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: any) => item.username != username.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
-  }
-};
+
 // 分组/角色树：打开
 const treeOperate = async (operate: boolean, type: string): Promise<void> => {
   if (operate) {

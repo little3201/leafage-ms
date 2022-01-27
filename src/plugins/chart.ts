@@ -34,7 +34,7 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, da
                     barPercentage: 0.5,
                     barThickness: 6,
                     maxBarThickness: 8,
-                    minBarLength: 2,
+                    minBarLength: 2
                 }
             ],
         },

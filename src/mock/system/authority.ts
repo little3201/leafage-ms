@@ -41,11 +41,11 @@ const datas: Array<Authority> = [
     "code": "203315P3Q",
     "modifyTime": Random.date(),
     "superior": "System",
-    "name": "User",
+    "name": "Account",
     "type": "M",
     "icon": "user",
-    "path": "/user",
-    "description": "用户",
+    "path": "/account",
+    "description": "账号",
     "count": 1
   },
   {
@@ -271,23 +271,13 @@ const treeDatas = [
     "children": [
       {
         "code": "203315P3Q",
-        "name": "User",
+        "name": "Account",
         "superior": "System",
         "expand": {
           "icon": "user",
-          "path": "/user"
+          "path": "/account"
         },
         "children": [
-          {
-            "code": "2194SU9R",
-            "name": "Delete",
-            "superior": "User",
-            "expand": {
-              "icon": "trash-2",
-              "path": null
-            },
-            "children": []
-          },
           {
             "code": "2194AKOP",
             "name": "Groups",
@@ -310,10 +300,10 @@ const treeDatas = [
           },
           {
             "code": "2194Z7HC",
-            "name": "Edit",
+            "name": "Unlock",
             "superior": "User",
             "expand": {
-              "icon": "edit-3",
+              "icon": "key",
               "path": null
             },
             "children": []

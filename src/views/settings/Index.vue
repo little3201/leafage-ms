@@ -31,7 +31,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'activity'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
               </svg>
               Profile
             </RouterLink>
@@ -51,7 +51,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
               </svg>
               Account
             </RouterLink>
@@ -70,7 +70,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'shield'" />
               </svg>
               Account Security
             </RouterLink>

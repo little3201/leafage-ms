@@ -1,80 +1,78 @@
+import { Random } from 'mockjs'
 
-import { MockMethod } from 'vite-plugin-mock';
+import { Role } from '@/api/request'
+import { parse } from '@/api/util';
+
+const datas: Array<Role> = [];
+
+for (let i = 0; i < 39; i++) {
+  datas.push({
+    code: Random.id(),
+    name: Random.word(),
+    superior: Random.word(),
+    count: Random.integer(0, 99),
+    description: Random.csentence(5),
+    modifyTime: Random.date()
+  })
+}
+
+const treeDatas = [
+  { "code": "20C11MJEB", "name": "Supper", "superior": null, "expand": null, "children": [] },
+  { "code": "20C281HG2", "name": "Guest", "superior": null, "expand": null, "children": [] },
+  {
+    "code": "20C287LBJ", "name": "Relation", "superior": null, "expand": null, "children":
+      [{ "code": "20C28YH7X", "name": "Supplier", "superior": "20C287LBJ", "expand": null, "children": [] }
+      ]
+  }
+]
+
 export default [
   {
     url: '/api/hypervisor/role/count',
     method: 'get',
     response: () => {
-      return 4
+      return datas.length
     },
   },
   {
     url: '/api/hypervisor/role/tree',
     method: 'get',
     response: () => {
-      return [
-        { "code": "20C11MJEB", "name": "Supper", "superior": null, "expand": null, "children": [] },
-        { "code": "20C281HG2", "name": "Guest", "superior": null, "expand": null, "children": [] },
-        {
-          "code": "20C287LBJ", "name": "Relation", "superior": null, "expand": null, "children":
-            [{ "code": "20C28YH7X", "name": "Supplier", "superior": "20C287LBJ", "expand": null, "children": [] }
-            ]
-        }
-      ]
+      return treeDatas
     }
   },
   {
-    url: '/api/hypervisor/role/:code',
+    url: '/api/hypervisor/role',
     method: 'get',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'admin',
-        superior: "20C11MJEB",
-        description: 'admin'
+    response: (options: any) => {
+      let url = options.url
+      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) === 'role') {
+        return datas.slice(1, 6)
+      } else if (url.split('?').length > 1) {
+        let params: any = parse(url)
+        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+      } else {
+        let code = url.substring(url.lastIndexOf('/') + 1)
+        return datas.filter(item => item.code === code)[0]
       }
-    },
+    }
   },
   {
-    url: '/api/hypervisor/role/:code',
+    url: '/api/hypervisor/role',
     method: 'put',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'admin',
-        description: 'admin'
-      }
-    },
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.code === code)[0]
+    }
   },
   {
     url: '/api/hypervisor/role',
     method: 'post',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        name: 'admin',
-        description: 'admin'
-      }
-    },
-  },
-  {
-    url: '/api/hypervisor/role',
-    method: 'get',
-    response: () => {
-      return [
-        { "code": "20A23D2D1", "superior": "supper", "modifyTime": "2020-12-28T16:03:55.134", "name": "relation", "description": "合作伙伴", "count": 1 },
-        { "code": "20C28YH7X", "superior": "relation", "modifyTime": "2020-12-30T19:21:19.926", "name": "supplier", "description": "供应商", "count": 0 },
-        { "code": "20C11MJEB", "superior": null, "modifyTime": "2020-12-18T13:59:51.429", "name": "supper", "description": "超级管理员", "count": 1 },
-        { "code": "20C281HG2", "superior": null, "modifyTime": "2020-12-28T16:03:16.493", "name": "guest", "description": "访客", "count": 0 }];
-    },
-  },
-  {
-    url: '/api/hypervisor/role/:code/authority',
-    method: 'get',
-    response: () => {
-      return ["2122466RP", "21224DRMU", "21224UJ5C", "21224PV6C", "212240439", "203315P3Q", "21224B8JZ",
-        "21224QI72", "21224HMLG"];
-    },
+    response: (options: any) => {
+      let data: Role = JSON.parse(options.body)
+      data = { ...data, code: Random.id() }
+      return data
+    }
   },
   {
     url: '/api/hypervisor/role/:code',
@@ -82,6 +80,6 @@ export default [
     response: () => {
       return {
       }
-    },
+    }
   }
-] as MockMethod[];
+]

@@ -8,17 +8,17 @@
         <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 shadow">
           <div class="inline-flex items-center py-4">
             <figure class="rounded-full w-12 h-12 border">
-              <img :alt="user.nickname" class="w-full h-full rounded-full" :src="user.avatar" />
+              <img :alt="account.nickname" class="w-full h-full rounded-full" :src="account.avatar" />
             </figure>
             <div class="ml-4 mr-auto">
-              <strong v-text="user.nickname"></strong>
-              <p class="text-gray-400 text-sm" v-text="user.username"></p>
+              <strong v-text="account.nickname"></strong>
+              <p class="text-gray-400 text-sm" v-text="account.username"></p>
             </div>
           </div>
           <div class="py-4 space-y-1">
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="profile"
+              to="/settings/profile"
             >
               <svg
                 width="16"
@@ -31,13 +31,14 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'activity'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
               </svg>
               Profile
             </RouterLink>
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="account"
+              to="/settings"
+              exact
             >
               <svg
                 width="16"
@@ -50,13 +51,13 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
               </svg>
               Account
             </RouterLink>
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="security"
+              to="/settings/security"
             >
               <svg
                 width="16"
@@ -69,7 +70,7 @@
                 stroke-linejoin="round"
                 class="mr-2"
               >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'shield'" />
               </svg>
               Account Security
             </RouterLink>
@@ -96,7 +97,7 @@
           <div class="py-4">
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="notification"
+              to="/settings/notification"
             >
               <svg
                 width="16"
@@ -126,8 +127,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { Account } from "@/api/request";
 
-const user = ref(JSON.parse(sessionStorage.getItem("user") || ''))
+const account: Account = ref(JSON.parse(sessionStorage.getItem("account") || ''))
 </script>
 
 <style scoped>

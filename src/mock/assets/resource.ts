@@ -1,99 +1,70 @@
-import { MockMethod } from 'vite-plugin-mock';
+import { Random } from 'mockjs'
+
+import { Resource } from '@/api/request'
+import { parse } from '@/api/util';
+
+const datas: Array<Resource> = [];
+
+for (let i = 0; i < 79; i++) {
+  datas.push({
+    code: Random.id(),
+    title: Random.ctitle(),
+    cover: Random.image('176x224'),
+    category: Random.word(),
+    type: 'E',
+    viewed: Random.integer(1, 900),
+    downloads: Random.integer(1, 100),
+    description: Random.csentence(5),
+    modifyTime: Random.date()
+  })
+}
+
 export default [
   {
     url: '/api/assets/resource/count',
     method: 'get',
     response: () => {
-      return 2
+      return datas.length
     },
   },
   {
-    url: '/api/assets/resource/:code',
+    url: '/api/assets/resource',
     method: 'get',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        title: 'Travel Photos',
-        type: 'E',
-        cover: 'https://cdn.leafage.top/kafka.webp',
-        category: '20A23D2D1',
-        description: ' Spring boot is a java platform ...'
+    response: (options: any) => {
+      let url = options.url
+      if (url.split('?').length > 1) {
+        let params: any = parse(url)
+        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
       }
-    },
+      else {
+        let code = url.substring(url.lastIndexOf('/') + 1)
+        return datas.filter(item => item.code === code)[0]
+      }
+    }
   },
   {
-    url: '/api/assets/resource/:code',
+    url: '/api/assets/resource',
     method: 'put',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        title: 'Travel Photos',
-        type: 'E',
-        cover: 'https://cdn.leafage.top/kafka.webp',
-        category: '20A23D2D1'
-      }
-    },
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.code === code)[0]
+    }
   },
   {
     url: '/api/assets/resource',
     method: 'post',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        title: 'Travel Photos',
-        type: 'E',
-        cover: 'https://cdn.leafage.top/kafka.webp',
-        category: '20A23D2D1'
-      }
-    },
+    response: (options: any) => {
+      let data: Resource = JSON.parse(options.body)
+      data = { ...data, code: Random.id() }
+      return data
+    }
   },
   {
     url: '/api/assets/resource',
-    method: 'get',
-    response: () => {
-      return [
-        {
-          code: '20A23D2D1',
-          title: 'Spring boot',
-          type: 'E',
-          category: 'Technology',
-          modifyTime: new Date(),
-          viewed: 902,
-          downloads: 12,
-          cover: 'https://cdn.leafage.top/kafka.webp',
-          description: ' Spring boot'
-        },
-        {
-          code: '20A23D2D2',
-          title: 'Spring cloud',
-          type: 'P',
-          category: 'Technology',
-          modifyTime: new Date(),
-          viewed: 902,
-          downloads: 12,
-          cover: 'https://cdn.leafage.top/kafka.webp',
-          description: ' Spring boot'
-        },
-        {
-          code: '20A23D2D3',
-          title: 'Spring security',
-          type: 'T',
-          category: 'Technology',
-          modifyTime: new Date(),
-          viewed: 902,
-          downloads: 12,
-          cover: 'https://cdn.leafage.top/kafka.webp',
-          description: ' Spring boot'
-        }
-      ];
-    },
-  },
-  {
-    url: '/api/assets/resource/:code',
     method: 'delete',
     response: () => {
       return {
       }
     },
   }
-] as MockMethod[];
+]

@@ -221,7 +221,7 @@
                           class="rounded-full w-8 h-8 my-auto"
                         />
                       </div>
-                      <span class="ml-2">{{ comment.nickname }}</span>
+                      <span class="ml-2">{{ comment.name }}</span>
                     </div>
                   </td>
                   <td class="px-3" v-text="comment.content"></td>

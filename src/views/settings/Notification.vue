@@ -3,7 +3,7 @@
     <div class="px-6 py-4">
       <div class="flex items-center border-b">
         <button
-          @click="isRead = false"
+          @click="switchType(false)"
           type="button"
           class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
           :class="{ 'text-blue-600 border border-b-0 ': !isRead }"
@@ -24,7 +24,7 @@
           Unread
         </button>
         <button
-          @click="isRead = true"
+          @click="switchType(true)"
           type="button"
           class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
           :class="{ 'text-blue-600 border border-b-0': isRead }"
@@ -50,7 +50,7 @@
           <div class="flex items-center">
             <p
               class="cursor-pointer hover:underline"
-              @click="previewOperation(true)"
+              @click="previewOperation(true, notification.code)"
             >{{ notification.title }}</p>
             <span
               class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
@@ -86,12 +86,23 @@ let isShow = ref(false)
 let data = ref<Notification>({})
 
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification.concat("/unread")).then((res) => notifications.value = res.data);
+  await instance.get(SERVER_URL.notification, { params: { page: 0, size: 12 } })
+    .then((res) => notifications.value = res.data);
 }
 
-const previewOperation = (show: boolean) => {
+const switchType = async (readed: boolean) => {
+  isRead.value = readed
+  let page = 1
+  if (readed) {
+    page = 0
+  }
+  await instance.get(SERVER_URL.notification, { params: { page: page, size: 12 } })
+    .then((res) => notifications.value = res.data);
+}
+
+const previewOperation = (show: boolean, code: string) => {
   if (show) {
-    instance.get(SERVER_URL.notification.concat("/1233")).then((res) => data.value = res.data);
+    instance.get(SERVER_URL.notification.concat("/", code)).then((res) => data.value = res.data);
   }
   isShow.value = show
 }

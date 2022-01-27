@@ -48,7 +48,7 @@
       </button>
       <span v-if="pages > 5 && page > 2" class>...</span>
       <button
-        v-for="index in pages <= 5 ? pages : page + 5"
+        v-for="index in (pages <= 5 ? pages : (page < (pages - 5) ? page + 5 : pages))"
         :key="index"
         type="button"
         @click.prevent="give(index - 1)"

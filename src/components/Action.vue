@@ -1,7 +1,8 @@
 <template>
-  <div v-if="user && Object.keys(user).length > 0" class="flex justify-center items-center">
+  <div v-if="account && Object.keys(account).length > 0" class="flex justify-center items-center">
     <slot></slot>
     <button
+      v-if="needEdit"
       type="button"
       class="flex items-center mr-3 focus:outline-none"
       @click="$emit('editAction', true)"
@@ -22,6 +23,7 @@
       Edit
     </button>
     <button
+      v-if="needDel"
       type="button"
       class="flex items-center text-red-600 focus:outline-none"
       @click="$emit('delAction', true)"
@@ -47,14 +49,25 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import { User } from "@/api/request";
+import { Account } from "@/api/request";
 
-const user = ref<User>({})
+defineProps({
+  needEdit: {
+    type: Boolean,
+    default: true,
+  },
+  needDel: {
+    type: Boolean,
+    default: true,
+  },
+})
+
+const account = ref<Account>({})
 
 onMounted(() => {
-  let data = sessionStorage.getItem("user")
+  let data = sessionStorage.getItem("account")
   if (data) {
-    user.value = JSON.parse(data);
+    account.value = JSON.parse(data);
   }
 });
 </script>

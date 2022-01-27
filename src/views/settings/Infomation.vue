@@ -14,13 +14,14 @@
                 name="password"
                 type="text"
                 class="block border-gray-300 py-1 rounded-md"
-                :disabled="isEdit"
+                v-model="account.nickname"
+                :disabled="!isEdit"
               />
               <button
                 type="button"
                 @click="editAllow"
-                class="text-blue-600"
-              >{{ isEdit ? 'Edit' : 'Save' }}</button>
+                class="text-blue-600 hover:underline"
+              >{{ isEdit ? 'Save' : 'Edit' }}</button>
             </div>
             <span
               class="text-xs text-gray-400"
@@ -28,11 +29,7 @@
           </div>
           <div class="mr-20 ml-8 text-center relative group">
             <figure class="w-32 h-32 border rounded-full">
-              <img
-                alt="avatar"
-                class="w-full h-full rounded-full"
-                src="https://cdn.leafage.top/logo.svg"
-              />
+              <img alt="avatar" class="w-full h-full rounded-full" :src="account.avatar" />
             </figure>
             <button
               type="button"
@@ -63,7 +60,7 @@
             id="del_account"
             name="del_account"
             type="button"
-            class="border block border-gray-300 text-gray-600 hover:border-gray-600 hover:text-gray-900 px-2 py-1 rounded-md"
+            class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
           >Change usernmae</button>
           <span class="text-xs text-gray-400 inline-flex items-center">
             <svg
@@ -194,30 +191,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
-import instance from "@/api";
-import { SERVER_URL, Account } from "@/api/request";
+import { Account } from '@/api/request'
 
-let account = ref<Account>({});
 let isEdit = ref(false)
 
-const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
-
-/**
- * 查询
- */
-const fetch = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
-    await instance.get(SERVER_URL.account.concat("/", username.value)).then(res =>
-      account.value = res.data
-    )
-  }
-}
+const account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
 
 const editAllow = () => {
   isEdit.value = !isEdit.value
-  if (isEdit.value) {
+  if (!isEdit.value) {
     alert('保存成功')
   }
 }
@@ -226,7 +210,7 @@ const editAllow = () => {
  * 提交
  */
 const onSubmit = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
+  if (account.username && account.username.length > 0) {
     // let data = { ...account.value, modifier: username.value }
     // await instance.delete(SERVER_URL.account, data).then((res) =>
     //   account.value = res.data

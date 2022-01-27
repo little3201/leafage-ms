@@ -86,7 +86,6 @@
           <div class="col-span-12 sm:col-span-7">
             <label for="title">
               Title
-              <span class="text-red-600 ml-1">*</span>
             </label>
             <input
               id="title"
@@ -107,6 +106,8 @@
                 :src="resourceData.cover"
                 alt="portfolio content"
                 class="rounded-md w-full h-full mt-1 border"
+                height="176"
+                width="224"
               />
             </figure>
             <div v-else class="mt-1">
@@ -150,7 +151,6 @@
           <div class="col-span-12 sm:col-span-7">
             <label for="category" class="inline-flex items-center">
               Category
-              <span class="text-red-600 ml-1">*</span>
             </label>
             <select
               id="category"
@@ -170,7 +170,6 @@
           <div class="col-span-12 sm:col-span-7">
             <label for="type" class="inline-flex items-center">
               Type
-              <span class="text-red-600 ml-1">*</span>
             </label>
             <select
               id="type"

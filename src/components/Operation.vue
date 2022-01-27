@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="user && Object.keys(user).length > 0"
+    v-if="account && Object.keys(account).length > 0"
     class="inline-flex items-center sm:ml-auto text-sm"
   >
     <button
@@ -40,6 +40,7 @@
       Export
     </button>
     <button
+      v-if="needAdd"
       @click="operate"
       class="ml-3 p-2 rounded-md bg-blue-600 flex items-center text-white hover:bg-blue-700 focus:outline-none border active:cursor-wait"
     >
@@ -64,7 +65,14 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import { User } from "@/api/request";
+import { Account } from "@/api/request";
+
+defineProps({
+  needAdd: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 const emit = defineEmits(["modelOperate"]);
 
@@ -72,12 +80,12 @@ const operate = () => {
   emit("modelOperate", true);
 };
 
-const user = ref<User>({})
+const account = ref<Account>({})
 
 onMounted(() => {
-  let data = sessionStorage.getItem("user")
+  let data = sessionStorage.getItem("account")
   if (data) {
-    user.value = JSON.parse(data);
+    account.value = JSON.parse(data);
   }
 });
 </script>

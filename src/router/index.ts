@@ -12,8 +12,8 @@ const router = createRouter({
 /* 路由之前 */
 router.beforeEach((to, from, next) => {
   progress.start()
-  const user = sessionStorage.getItem("user")
-  let isAuthenticated = user && Object.keys(user).length > 0;
+  const account = sessionStorage.getItem("account")
+  let isAuthenticated = account && Object.keys(account).length > 0;
   if (to.meta.requiresAuth && to.name !== 'SignIn' && !isAuthenticated) next({ name: 'SignIn' })
   else next()
 })

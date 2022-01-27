@@ -1,87 +1,60 @@
-import { MockMethod } from 'vite-plugin-mock';
+import { Random } from 'mockjs'
+
+import { Category } from '@/api/request'
+import { parse } from '@/api/util';
+
+const datas: Array<Category> = [];
+
+for (let i = 0; i < 19; i++) {
+  datas.push({
+    code: Random.id(),
+    alias: Random.word(),
+    count: Random.integer(1, 99),
+    description: Random.csentence(5),
+    modifyTime: Random.date()
+  })
+}
+
 export default [
   {
     url: '/api/assets/category/count',
     method: 'get',
     response: () => {
-      return 5
+      return datas.length
     },
   },
   {
-    url: '/api/assets/category/:code',
+    url: '/api/assets/category',
     method: 'get',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        alias: 'Technology',
-        description: '这里是描述。。。'
+    response: (options: any) => {
+      let url = options.url
+      if (url.split('?').length > 1) {
+        let params: any = parse(url)
+        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+      } else if (url.substring(url.lastIndexOf('/') + 1) === "category") {
+        return datas
+      } else {
+        let code = url.substring(url.lastIndexOf('/') + 1)
+        return datas.filter(item => item.code === code)[0]
       }
-    },
+    }
   },
   {
-    url: '/api/assets/category/:code',
+    url: '/api/assets/category',
     method: 'put',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        alias: 'Technology',
-        description: '这里是描述。。。'
-      }
-    },
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.code === code)[0]
+    }
   },
   {
     url: '/api/assets/category',
     method: 'post',
-    response: () => {
-      return {
-        code: '20A23D2D1',
-        alias: 'Technology',
-        description: '这里是描述。。。'
-      }
-    },
-  },
-  {
-    url: '/api/assets/category',
-    method: 'get',
-    response: () => {
-      return [
-        {
-          code: '20A23D2D1',
-          alias: 'Technology',
-          count: 14,
-          modifyTime: new Date(),
-          description: '这里是描述。。。'
-        },
-        {
-          code: '20A23D2S1',
-          alias: 'Lifestyle',
-          count: 1,
-          modifyTime: new Date(),
-          description: '这里是描述。。。'
-        },
-        {
-          code: '20A23D2Q1',
-          alias: 'Expirence',
-          count: 4,
-          modifyTime: new Date(),
-          description: '这里是描述。。。'
-        },
-        {
-          code: '20A23D2A1',
-          alias: 'Photograph',
-          count: 10,
-          modifyTime: new Date(),
-          description: '这里是描述。。。'
-        },
-        {
-          code: '20A23D2V1',
-          alias: 'Others',
-          count: 1,
-          modifyTime: new Date(),
-          description: '这里是描述。。。'
-        },
-      ];
-    },
+    response: (options: any) => {
+      let data: Category = JSON.parse(options.body)
+      data = { ...data, code: Random.id() }
+      return data
+    }
   },
   {
     url: '/api/assets/category/:code',
@@ -91,4 +64,4 @@ export default [
       }
     },
   }
-] as MockMethod[];
+]

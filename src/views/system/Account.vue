@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="username = ''" @modelOperate="modelOperate" />
+      <Operation :needAdd="false" @modelOperate="modelOperate" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
@@ -30,7 +30,6 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Nickname</th>
             <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">Gender</th>
             <th scope="col" class="px-4">NonExpired</th>
             <th scope="col" class="px-4">Locked</th>
             <th scope="col" class="px-4">Credentials</th>
@@ -47,101 +46,13 @@
             <td class="px-4">
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-8 w-8">
-                  <img src="/images/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
+                  <img :src="data.avatar" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
                 </div>
                 <span class="ml-2">{{ data.nickname }}</span>
               </div>
             </td>
             <td class="px-4">
               <span class="font-medium" v-text="data.username"></span>
-            </td>
-            <td class="px-4">
-              <svg
-                v-if="data.gender === 'M'"
-                width="18"
-                height="18"
-                viewBox="0 0 48 48"
-                class="mx-auto"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="48" height="48" fill="white" fill-opacity="0.01" />
-                <path
-                  d="M41.9514 15.0485V6.04846H32.9514"
-                  stroke="#3B82F6"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M10.413 38.001C15.8803 43.4683 24.7447 43.4683 30.212 38.001C32.9457 35.2673 34.3125 31.6844 34.3125 28.1015C34.3125 24.5186 32.9457 20.9357 30.212 18.202C24.7447 12.7346 15.8803 12.7346 10.413 18.202C4.94567 23.6693 4.94567 32.5336 10.413 38.001Z"
-                  fill="none"
-                  stroke="#3B82F6"
-                  stroke-width="4"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M29.9999 18L39.9515 8.0485"
-                  stroke="#3B82F6"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <svg
-                v-else-if="data.gender === 'F'"
-                width="18"
-                height="18"
-                viewBox="0 0 48 48"
-                class="mx-auto"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g>
-                  <g transform="translate(-6.000000, -2.000000)">
-                    <rect
-                      fill-opacity="0.01"
-                      fill="#FFFFFF"
-                      x="6"
-                      y="2"
-                      width="48"
-                      height="48"
-                      stroke-width="1.5"
-                      stroke="none"
-                      fill-rule="evenodd"
-                    />
-                    <g
-                      transform="translate(28.000000, 28.000000) scale(-1, -1) rotate(45.000000) translate(-28.000000, -28.000000) translate(13.500000, 4.000000)"
-                    >
-                      <path
-                        d="M14.3370491,47 C22.0690356,47 28.3370491,40.7319865 28.3370491,33 C28.3370491,29.1340068 26.7700457,25.6340068 24.236544,23.1005051 C21.7030423,20.5670034 18.2030423,19 14.3370491,19 C6.6050626,19 0.337049096,25.2680135 0.337049096,33 C0.337049096,40.7319865 6.6050626,47 14.3370491,47 Z"
-                        fill="none"
-                        fill-rule="nonzero"
-                        stroke-linejoin="round"
-                        stroke-width="4"
-                        stroke="#EC4899"
-                      />
-                      <path
-                        d="M14.5,19 L14.5,1"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="4"
-                        stroke="#EC4899"
-                        fill="none"
-                        fill-rule="evenodd"
-                      />
-                      <path
-                        d="M5.5,11 L23.5,11"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="4"
-                        stroke="#EC4899"
-                        fill="none"
-                        fill-rule="evenodd"
-                      />
-                    </g>
-                  </g>
-                </g>
-              </svg>
             </td>
             <td class="px-4">
               <div v-if="data.accountNonExpired" class="flex items-center justify-center">
@@ -155,7 +66,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle text-green-600"
+                  class="feather feather-check-circle text-lime-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
@@ -192,7 +103,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-unlock text-green-600"
+                  class="feather feather-unlock text-lime-600"
                 >
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
@@ -228,7 +139,7 @@
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  class="feather feather-check-circle text-green-600"
+                  class="feather feather-check-circle text-lime-600"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
@@ -237,8 +148,8 @@
               <div v-else class="flex items-center justify-center text-red-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -258,6 +169,8 @@
                 @click.capture="username = data.username"
                 @delAction="confirmOperate"
                 @editAction="modelOperate"
+                :needEdit="false"
+                :needDel="false"
               >
                 <button
                   type="button"
@@ -299,6 +212,26 @@
                   </svg>
                   Roles
                 </button>
+                <button
+                  v-if="!data.accountNonLocked"
+                  class="flex items-center mr-3 text-green-600 focus:outline-none"
+                  @click="treeOperate(true, 'role')"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-1"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'key'" />
+                  </svg>
+                  Unlock
+                </button>
               </Action>
             </td>
           </tr>
@@ -307,104 +240,6 @@
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Account Expired
-              <span class="text-red-600 text-base ml-1">*</span>
-            </span>
-            <div class="mt-3">
-              <input
-                id="accountExpired_false"
-                name="accountNonExpired"
-                aria-label="account expired"
-                type="radio"
-                value="false"
-                v-model="userData.accountNonExpired"
-              />
-              <label for="accountExpired_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="accountExpired_true"
-                name="accountNonExpired"
-                aria-label="account expired"
-                type="radio"
-                class="ml-4"
-                value="true"
-                v-model="userData.accountNonExpired"
-              />
-              <label for="accountExpired_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Account Locked
-              <span class="text-red-600 text-base ml-1">*</span>
-            </span>
-            <div class="mt-3">
-              <input
-                id="accountLocked_false"
-                name="accountLocked"
-                aria-label="account locked"
-                type="radio"
-                value="false"
-                v-model="userData.accountNonLocked"
-              />
-              <label for="accountLocked_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="accountLocked_true"
-                name="accountLocked"
-                aria-label="account locked"
-                type="radio"
-                value="true"
-                class="ml-4"
-                v-model="userData.accountNonLocked"
-              />
-              <label for="accountLocked_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <span>
-              Credentials Expired
-              <span class="text-red-600 text-base ml-1">*</span>
-            </span>
-            <div class="mt-3">
-              <input
-                id="credentialsExpired_false"
-                name="credentialsNonExpired"
-                aria-label="credentials expired"
-                type="radio"
-                value="false"
-                v-model="userData.credentialsNonExpired"
-              />
-              <label for="credentialsExpired_false" class="ml-2 cursor-pointer">True</label>
-              <input
-                id="credentialsExpired_true"
-                name="credentialsNonExpired"
-                aria-label="credentials expired"
-                type="radio"
-                value="true"
-                class="ml-4"
-                v-model="userData.credentialsNonExpired"
-              />
-              <label for="credentialsExpired_true" class="ml-2 cursor-pointer">False</label>
-            </div>
-          </div>
-          <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              aria-label="description"
-              class="mt-1 w-full rounded-md border-gray-300 shadow-sm"
-              v-model.trim="userData.description"
-              placeholder="Description"
-            />
-          </div>
-        </div>
-      </form>
-    </Model>
     <Tree
       :isShow="isTree"
       @cancelAction="treeOperate"
@@ -422,18 +257,15 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
 import Tree from "@/components/tree/Tree.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Account, TreeNode } from "@/api/request";
 
 // 模态框参数
-let isEdit = ref(false);
 let isDel = ref(false);
 let isTree = ref(false);
 // 数据
-let userData = ref<Account>({});
 let username = ref("");
 let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
@@ -452,7 +284,7 @@ const setPage = (p: number, s: number): void => {
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
-      .get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
+      .get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
       .then((res) => {
         datas.value = res.data;
       }),
@@ -460,7 +292,7 @@ const retrieve = async (): Promise<void> => {
   ]);
 };
 const count = (): void => {
-  instance.get(SERVER_URL.user.concat("/count")).then((res) => {
+  instance.get(SERVER_URL.account.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
@@ -470,7 +302,7 @@ const confirmOperate = (operate: boolean): void => {
 };
 // 删除确认
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.user.concat("/", username.value)).then(() => {
+  await instance.delete(SERVER_URL.account.concat("/", username.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
       (item: any) => item.username != username.value
@@ -479,47 +311,7 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
-const modelOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    userData.value = {};
-    if (username.value && username.value.length > 0) {
-      await instance
-        .get(SERVER_URL.user.concat("/", username.value))
-        .then((res) => {
-          userData.value = res.data;
-        });
-    }
-  }
-  isEdit.value = operate;
-};
-// 新增/编辑：提交
-const modelCommit = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
-    await instance
-      .put(SERVER_URL.user.concat("/", username.value), userData.value)
-      .then((res) => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: any) => item.username != username.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
-  } else {
-    await instance.post(SERVER_URL.user, userData.value).then((res) => {
-      if (datas.value.length >= size.value) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-      isEdit.value = false;
-      count()
-    });
-  }
-};
+
 // 分组/角色树：打开
 const treeOperate = async (operate: boolean, type: string): Promise<void> => {
   if (operate) {
@@ -543,7 +335,7 @@ const treeOperate = async (operate: boolean, type: string): Promise<void> => {
 };
 
 const relation = (type: string): void => {
-  instance.get(SERVER_URL.user.concat('/', username.value, '/', type)).then(res =>
+  instance.get(SERVER_URL.account.concat('/', username.value, '/', type)).then(res =>
     codes.value = res.data
   )
 }

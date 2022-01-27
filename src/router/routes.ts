@@ -24,9 +24,9 @@ const routes: Array<RouteRecordRaw> = [
             meta: { requiresAuth: true }
           },
           {
-            path: 'user',
-            name: 'User',
-            component: () => import('@/views/system/User.vue'),
+            path: 'account',
+            name: 'Account',
+            component: () => import('@/views/system/Account.vue'),
             meta: { requiresAuth: true }
           },
           {
@@ -69,6 +69,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/settings/Index.vue'),
         children: [
           {
+            path: '',
+            name: 'Infomation',
+            component: () => import('@/views/settings/Infomation.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
             path: 'profile',
             name: 'Profile',
             component: () => import('@/views/settings/Profile.vue'),
@@ -78,12 +84,6 @@ const routes: Array<RouteRecordRaw> = [
             path: 'security',
             name: 'Security',
             component: () => import('@/views/settings/Security.vue'),
-            meta: { requiresAuth: true }
-          },
-          {
-            path: 'account',
-            name: 'Account',
-            component: () => import('@/views/settings/Account.vue'),
             meta: { requiresAuth: true }
           },
           {

@@ -6,6 +6,10 @@
 
 ## 更新记录
 
+2022-01-28:
+  1. 替换 markdown-it 为 marked;
+  2. 修改 markdown 中连接的解析，更新为新窗口打开；
+
 2022-01-20:
   1. 移除 vite-mock-plugin 依赖，mock代码重写，解决了mock遗留的问题；
 

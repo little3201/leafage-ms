@@ -270,7 +270,7 @@ import Model from "@/components/Model.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
-import markdown from "@/plugins/markdown";
+import marked from "@/plugins/markdown";
 import { uploadFile } from "@/plugins/upload";
 
 // 分页参数
@@ -424,7 +424,7 @@ const uploadImage = (files: Array<File>): void => {
 // 转换md为html
 const rendedHtml = computed(() => {
   if (content.value) {
-    return markdown.render(content.value);
+    return marked.parse(content.value);
   }
   return "";
 });

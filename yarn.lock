@@ -897,13 +897,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"entities@npm:~2.1.0":
-  version: 2.1.0
-  resolution: "entities@npm:2.1.0"
-  checksum: a10a877e489586a3f6a691fe49bf3fc4e58f06c8e80522f08214a5150ba457e7017b447d4913a3fa041bda06ee4c92517baa4d8d75373eaa79369e9639225ffd
-  languageName: node
-  linkType: hard
-
 "env-paths@npm:^2.2.0":
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
@@ -1779,7 +1772,7 @@ __metadata:
     eslint-plugin-vue: ^8.3.0
     feather-icons: ^4.28.0
     highlight.js: ^11.4.0
-    markdown-it: ^12.3.2
+    marked: ^4.0.12
     mockjs: ^1.1.0
     postcss: ^8.4.5
     qiniu-js: ^3.4.0
@@ -1812,15 +1805,6 @@ __metadata:
   version: 1.2.4
   resolution: "lines-and-columns@npm:1.2.4"
   checksum: 0c37f9f7fa212b38912b7145e1cd16a5f3cd34d782441c3e6ca653485d326f58b3caccda66efce1c5812bde4961bbde3374fae4b0d11bf1226152337f3894aa5
-  languageName: node
-  linkType: hard
-
-"linkify-it@npm:^3.0.1":
-  version: 3.0.3
-  resolution: "linkify-it@npm:3.0.3"
-  dependencies:
-    uc.micro: ^1.0.1
-  checksum: 31367a4bb70c5bbc9703246236b504b0a8e049bcd4e0de4291fa50f0ebdebf235b5eb54db6493cb0b1319357c6eeafc4324c9f4aa34b0b943d9f2e11a1268fbc
   languageName: node
   linkType: hard
 
@@ -1901,25 +1885,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-it@npm:^12.3.2":
-  version: 12.3.2
-  resolution: "markdown-it@npm:12.3.2"
-  dependencies:
-    argparse: ^2.0.1
-    entities: ~2.1.0
-    linkify-it: ^3.0.1
-    mdurl: ^1.0.1
-    uc.micro: ^1.0.5
+"marked@npm:^4.0.12":
+  version: 4.0.12
+  resolution: "marked@npm:4.0.12"
   bin:
-    markdown-it: bin/markdown-it.js
-  checksum: 890555711c1c00fa03b936ca2b213001a3b9b37dea140d8445ae4130ce16628392aad24b12e2a0a9935336ca5951f2957a38f4e5309a2e38eab44e25ff32a41e
-  languageName: node
-  linkType: hard
-
-"mdurl@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "mdurl@npm:1.0.1"
-  checksum: 71731ecba943926bfbf9f9b51e28b5945f9411c4eda80894221b47cc105afa43ba2da820732b436f0798fd3edbbffcd1fc1415843c41a87fea08a41cc1e3d02b
+    marked: bin/marked.js
+  checksum: 7575117f85a8986652f3ac8b8a7b95056c4c5fce01a1fc76dc4c7960412cb4c9bd9da8133487159b6b3ff84f52b543dfe9a36f826a5f358892b5ec4b6824f192
   languageName: node
   linkType: hard
 
@@ -2786,13 +2757,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 2e488dde7d2c4a2fa2e79cf2470600f8ce81bc0563c276b72df8ff412d74456ae532ba824650ae936ce207440c79720ddcfaa25e3cb4477572b8534fa4e34d49
-  languageName: node
-  linkType: hard
-
-"uc.micro@npm:^1.0.1, uc.micro@npm:^1.0.5":
-  version: 1.0.6
-  resolution: "uc.micro@npm:1.0.6"
-  checksum: 6898bb556319a38e9cf175e3628689347bd26fec15fc6b29fa38e0045af63075ff3fea4cf1fdba9db46c9f0cbf07f2348cd8844889dd31ebd288c29fe0d27e7a
   languageName: node
   linkType: hard
 

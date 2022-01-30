@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-let user = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.svg" }
+let account = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.svg" }
 let menus = [
   { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
   {
@@ -20,7 +20,7 @@ let menus = [
   { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
   { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
 ]
-sessionStorage.setItem("account", JSON.stringify(user));
+sessionStorage.setItem("account", JSON.stringify(account));
 sessionStorage.setItem("menus", JSON.stringify(menus))
 
 import signMock from './sign'

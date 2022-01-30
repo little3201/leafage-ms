@@ -25,10 +25,10 @@ for (let i = 0; i < 5; i++) {
     username: Random.name(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
-    accountNonExpired: Random.boolean(),
-    accountNonLocked: Random.boolean(),
-    credentialsNonExpired: Random.boolean(),
-    description: Random.csentence()
+    accountExpiresAt: Random.date(),
+    accountLocked: Random.boolean(),
+    credentialsExpiresAt: Random.date(),
+    modifyTime: Random.date()
   })
 }
 
@@ -65,12 +65,12 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) !== "user") {
+      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) !== "account") {
         return datas.slice(1, 6)
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (params.page + 1) * params.size)
-      } else if (url.substring(url.lastIndexOf('/') + 1) === "user") {
+      } else if (url.substring(url.lastIndexOf('/') + 1) === "account") {
         return accounts
       } else {
         let code = url.substring(url.lastIndexOf('/') + 1)

@@ -26,9 +26,10 @@ export interface Account {
   username: string,
   nickname: string,
   avatar: string,
-  accountNonExpired: boolean,
-  accountNonLocked: boolean,
-  credentialsNonExpired: boolean
+  accountExpiresAt: Date,
+  accountLocked: boolean,
+  credentialsExpiresAt: Date,
+  modifyTime: Date
 }
 
 export interface User {
@@ -36,14 +37,9 @@ export interface User {
   firstname: string,
   lastname: string,
   gender: string,
+  phone: string,
   email: string,
-  education: string,
-  country: string,
-  province: string,
-  city: string,
-  region: string,
-  street: string,
-  address: string,
+  birthday: Date,
   description: string
 }
 

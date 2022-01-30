@@ -1,6 +1,6 @@
 <template>
-  <div class="shadow overflow-hidden bg-white sm:rounded-md">
-    <div class="px-6 py-4">
+  <div class="overflow-hidden">
+    <div class="px-6 py-4 bg-white sm:rounded-md">
       <div class="flex items-center border-b">
         <button
           @click="switchType(false)"
@@ -49,12 +49,12 @@
         <div v-for="(notification, index) in notifications" :key="index" class="p-2">
           <div class="flex items-center">
             <p
-              class="cursor-pointer hover:underline"
+              class="cursor-pointer hover:underline hover:text-blue-600"
               @click="previewOperation(true, notification.code)"
             >{{ notification.title }}</p>
             <span
               class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
-              v-text="new Date(notification.modifyTime).toLocaleString()"
+              v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"
             ></span>
           </div>
           <div class="w-full text-sm text-gray-500 py-2 truncate">{{ notification.content }}</div>
@@ -85,18 +85,27 @@ let isRead = ref(false)
 let isShow = ref(false)
 let data = ref<Notification>({})
 
+// 分页参数
+let page = ref(0);
+let size = ref(10);
+let total = ref(0);
+
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification, { params: { page: 0, size: 12 } })
-    .then((res) => notifications.value = res.data);
+  await Promise.all([
+    instance.get(SERVER_URL.notification, { params: { isRead: isRead.value, page: page.value, size: size.value } })
+      .then((res) => notifications.value = res.data),
+    count()
+  ]);
 }
 
-const switchType = async (readed: boolean) => {
-  isRead.value = readed
-  let page = 1
-  if (readed) {
-    page = 0
-  }
-  await instance.get(SERVER_URL.notification, { params: { page: page, size: 12 } })
+const count = async () => {
+  await instance.get(SERVER_URL.notification.concat("/count"), { params: { isRead: isRead.value } })
+    .then((res) => total.value = res.data);
+}
+
+const switchType = async (read: boolean) => {
+  isRead.value = read
+  await instance.get(SERVER_URL.notification, { params: { isRead: isRead.value, page: page.value, size: size.value } })
     .then((res) => notifications.value = res.data);
 }
 

@@ -21,7 +21,7 @@ const datas: Array<Authority> = [
     "superior": "System",
     "name": "Authority",
     "type": "M",
-    "icon": "power",
+    "icon": "link",
     "path": "/authority",
     "description": "权限",
     "count": 1
@@ -407,7 +407,7 @@ const treeDatas = [
         "name": "Authority",
         "superior": "System",
         "expand": {
-          "icon": "power",
+          "icon": "link",
           "path": "/authority"
         },
         "children": [

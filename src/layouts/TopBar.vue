@@ -160,9 +160,14 @@
         type="button"
         v-if="account && Object.keys(account).length > 0"
         @click="operate('account')"
-        class="rounded-full w-8 h-8 text-center bg-white shadow focus:outline-none"
+        class="rounded-full w-8 h-8 text-center flex items-center bg-white shadow focus:outline-none"
       >
-        <img v-if="account.avatar" :alt="account.nickname" :src="account.avatar" class="rounded-full" />
+        <img
+          v-if="account.avatar"
+          :alt="account.nickname"
+          :src="account.avatar"
+          class="rounded-full"
+        />
         <span v-else v-text="account.nickname.substr(0, 1)"></span>
       </button>
       <RouterLink
@@ -198,7 +203,7 @@
               stroke-linejoin="round"
               class="mr-2"
             >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
             </svg>
             Profile
           </RouterLink>
@@ -295,8 +300,8 @@ const themeMode = () => {
 }
 
 const retrieve = async () => {
-  // await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
-  //   .then((res) => notifications.value = res.data);
+  await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
+    .then((res) => notifications.value = res.data);
 }
 
 /**
@@ -361,7 +366,7 @@ onMounted(() => {
   let data = sessionStorage.getItem("account");
   if (data) {
     account.value = JSON.parse(data)
-    retrieve();
+    // retrieve();
     socket();
   }
 });

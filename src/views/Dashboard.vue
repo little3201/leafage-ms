@@ -201,7 +201,8 @@
               <thead>
                 <tr class="bg-gray-100 uppercase text-center text-sm">
                   <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                  <th scope="col" class="px-3">Nickname</th>
+                  <th scope="col" class="px-3">Name</th>
+                  <th scope="col" class="px-3">Posts</th>
                   <th scope="col" class="px-3">Content</th>
                 </tr>
               </thead>
@@ -216,7 +217,7 @@
                     <div class="flex items-center">
                       <div class="flex-shrink-0 h-8 w-8">
                         <img
-                          :src="comment.avatar || '/svg/logo.svg'"
+                          :src="comment.avatar || '/svg/avatar.svg'"
                           alt="avatar"
                           class="rounded-full w-8 h-8 my-auto"
                         />
@@ -224,7 +225,14 @@
                       <span class="ml-2">{{ comment.name }}</span>
                     </div>
                   </td>
-                  <td class="px-3" v-text="comment.content"></td>
+                  <td class="px-3">
+                    <a
+                      :href="'https://www.leafage.top/posts/detail/' + comment.posts"
+                      target="_blank"
+                      class="font-medium hover:underline"
+                    >{{ comment.posts }}</a>
+                  </td>
+                  <td class="px-3 max-w-md truncate" v-text="comment.content"></td>
                 </tr>
               </tbody>
             </table>

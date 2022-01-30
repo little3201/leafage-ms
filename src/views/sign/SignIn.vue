@@ -80,7 +80,7 @@ const storage = async (username: string): Promise<void> => {
   if (username && username.length > 0) {
     await Promise.all([
       instance.get(SERVER_URL.user.concat("/", username)).then(res =>
-        sessionStorage.setItem("user", JSON.stringify(res.data))),
+        sessionStorage.setItem("account", JSON.stringify(res.data))),
       instance
         .get(SERVER_URL.user.concat("/", username, "/authority"))
         .then(res => sessionStorage.setItem("menus", JSON.stringify(res.data)))

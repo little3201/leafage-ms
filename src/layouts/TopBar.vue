@@ -295,8 +295,8 @@ const themeMode = () => {
 }
 
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
-    .then((res) => notifications.value = res.data);
+  // await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
+  //   .then((res) => notifications.value = res.data);
 }
 
 /**
@@ -361,8 +361,8 @@ onMounted(() => {
   let data = sessionStorage.getItem("account");
   if (data) {
     account.value = JSON.parse(data)
-    socket();
     retrieve();
+    socket();
   }
 });
 </script>

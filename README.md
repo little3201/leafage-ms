@@ -1,50 +1,46 @@
-<p align="center">
-  <a href="https://console.leafage.top" target="_blank">
-    <img alt="Leafage Logo" width="200" src="public/svg/logo.svg">
-  </a>
-</p>
+# Getting Started with Create React App
 
-<p align="center">
-  <br>
-  <a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/little3201/leafage-ms.svg" alt="License">
-  </a>
-  <img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=little3201_leafage-ms&metric=alert_status">
-</p>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 项目介绍
+## Available Scripts
 
-一个使用 Vue3、Tailwindcss 的 后台管理系统，将提供完善的基础数据管理逻辑，作为后台管理系统的基础，将持续完善，提供一套完整的权限管理方案。同时为了作为个人[博客网站](https://www.leafage.top)的帖子管理系统。
+In the project directory, you can run:
 
-### 功能依赖
+### `yarn start`
 
-- [x] @tailwindcss/typography —— 排版优化
-- [x] @tailwindcss/forms —— 统一表单样式
-- [x] markdown-it/hightlight.js —— markdown解析，代码高亮
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-**访问地址：**<a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">后台管理系统</a>
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### 更新
+### `yarn test`
 
-项目创建与 2019-11-08 历经好几次改版，从最初的html+css到vue2+iview(viewui)/element-ui/vuetify再到vue3+tailwindcss，虽然过程很折腾，但是也明白和体会了很多，对于一些技术点理接更深了，近期更新请查看[更新日志](CHANGELOG.md) 。
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-如果你遇到了 [FAQ文档](FAQ.md) 中没有出现的问题，并且已经解决了，欢迎联系我进行修改。
+### `yarn build`
 
-## Project setup
-```
-yarn install
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Compiles and hot-reloads for development
-```
-yarn dev
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Compiles and minifies for production
-```
-yarn build
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-<a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
-  <h2>MIT</h2>
-</a>
+### `yarn eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

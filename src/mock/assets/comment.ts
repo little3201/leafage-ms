@@ -8,7 +8,7 @@ const datas: Array<Comment> = [];
 for (let i = 0; i < 19; i++) {
     datas.push({
         code: Random.id(),
-        name: Random.cname(),
+        nickname: Random.cname(),
         avatar: Random.image('32x32'),
         content: Random.cparagraph(2),
         email: Random.email(),

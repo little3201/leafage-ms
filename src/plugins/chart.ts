@@ -51,7 +51,7 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
             labels: labels,
             datasets: [
                 {
-                    label: '环比',
+                    label: '增长率',
                     data: datas,
                     backgroundColor: 'transparent',
                     pointBorderColor: 'transparent',

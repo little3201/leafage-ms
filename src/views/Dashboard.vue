@@ -222,7 +222,7 @@
                           class="rounded-full w-8 h-8 my-auto"
                         />
                       </div>
-                      <span class="ml-2">{{ comment.name }}</span>
+                      <span class="ml-2">{{ comment.nickname }}</span>
                     </div>
                   </td>
                   <td class="px-3">
@@ -277,7 +277,7 @@ const retrieveComments = async (): Promise<void> => {
 }
 
 const initData = async (): Promise<void> => {
-  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 10 } })
+  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 31 } })
     .then(res => {
       datas.value = res.data;
       construceChart()
@@ -294,13 +294,13 @@ const construceChart = (): void => {
     overLikes: new Array(),
     overComment: new Array()
   }
-  datas.value.forEach((item: any) => {
-    obj.labels.unshift(item.date);
-    obj.viewed.unshift(Math.round(item.viewed * item.overViewed / 100));
-    obj.overViewed.unshift(item.overViewed)
-    obj.overComment.unshift(item.overComment);
-    obj.overLikes.unshift(item.overLikes);
-  });
+  for (let i = 0; i < datas.value.length - 1; i++) {
+    obj.labels.unshift(datas.value[i].date);
+    obj.viewed.unshift(datas.value[i].viewed - datas.value[i + 1].viewed);
+    obj.overViewed.unshift(datas.value[i].overViewed)
+    obj.overComment.unshift(datas.value[i].overComment);
+    obj.overLikes.unshift(datas.value[i].overLikes);
+  }
   let labels = obj.labels
   // 浏览量统计
   createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");

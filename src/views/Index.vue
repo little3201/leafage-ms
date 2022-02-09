@@ -30,8 +30,8 @@ onMounted(() => {
     menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
   } else {
     menus.value = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
-    { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "book" }, "children": [] },
-    { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "monitor" }, "children": [] },
+    { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
+    { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "book" }, "children": [] },
     { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
     ]
   }

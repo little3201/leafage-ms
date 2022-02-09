@@ -1,7 +1,7 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Users</h2>
+      <h2 class="text-lg font-medium">Accounts</h2>
       <button
         @click="retrieve"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
@@ -21,18 +21,18 @@
         </svg>
         Reload Data
       </button>
-      <Operation :needAdd="false" @modelOperate="modelOperate" />
+      <Operation :needAdd="false" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Nickname</th>
             <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">NonExpired</th>
-            <th scope="col" class="px-4">Locked</th>
-            <th scope="col" class="px-4">Credentials</th>
+            <th scope="col" class="px-4">Nickname</th>
+            <th scope="col" class="px-4">Account Expires At</th>
+            <th scope="col" class="px-4">Account Locked State</th>
+            <th scope="col" class="px-4">Credentials Expires At</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
         </thead>
@@ -45,17 +45,26 @@
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <div class="flex items-center">
-                <div class="flex-shrink-0 h-8 w-8">
+                <figure class="flex-shrink-0 h-8 w-8">
                   <img :src="data.avatar" alt="avatar" class="rounded-full w-8 h-8 my-auto" />
-                </div>
-                <span class="ml-2">{{ data.nickname }}</span>
+                </figure>
+                <span class="ml-2">{{ data.username }}</span>
+              </div>
+            </td>
+            <td class="px-4">{{ data.nickname }}</td>
+            <td class="px-4">
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"
+                ></span>
+                <span
+                  class="ml-2"
+                >{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
               </div>
             </td>
             <td class="px-4">
-              <span class="font-medium" v-text="data.username"></span>
-            </td>
-            <td class="px-4">
-              <div v-if="data.accountNonExpired" class="flex items-center justify-center">
+              <div v-if="data.accountLocked" class="flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -63,44 +72,7 @@
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-check-circle text-lime-600"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <div v-else class="flex items-center justify-center text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-x-circle"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="15" y1="9" x2="9" y2="15" />
-                  <line x1="9" y1="9" x2="15" y2="15" />
-                </svg>
-              </div>
-            </td>
-            <td class="px-4">
-              <div v-if="data.accountNonLocked" class="flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
+                  stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-unlock text-lime-600"
@@ -117,7 +89,7 @@
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
+                  stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   class="feather feather-lock"
@@ -128,50 +100,18 @@
               </div>
             </td>
             <td class="px-4">
-              <div v-if="data.credentialsNonExpired" class="flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-check-circle text-lime-600"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <div v-else class="flex items-center justify-center text-red-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-x-circle"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="15" y1="9" x2="9" y2="15" />
-                  <line x1="9" y1="9" x2="15" y2="15" />
-                </svg>
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(data.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(data.credentialsExpiresAt) <= new Date() }"
+                ></span>
+                <span
+                  class="ml-2"
+                >{{ new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
               </div>
             </td>
             <td class="px-4">
-              <Action
-                @click.capture="username = data.username"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-                :needEdit="false"
-                :needDel="false"
-              >
+              <Action @click.capture="username = data.username" :needEdit="false" :needDel="false">
                 <button
                   type="button"
                   title="groups"
@@ -213,9 +153,9 @@
                   Roles
                 </button>
                 <button
-                  v-if="!data.accountNonLocked"
+                  v-if="!data.accountLocked"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="treeOperate(true, 'role')"
+                  @click="confirmOperate(true)"
                 >
                   <svg
                     width="16"
@@ -239,7 +179,7 @@
       </table>
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+    <Confirm :isShow="isShow" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Tree
       :isShow="isTree"
       @cancelAction="treeOperate"
@@ -263,7 +203,7 @@ import instance from "@/api";
 import { SERVER_URL, Account, TreeNode } from "@/api/request";
 
 // 模态框参数
-let isDel = ref(false);
+let isShow = ref(false);
 let isTree = ref(false);
 // 数据
 let username = ref("");
@@ -298,17 +238,14 @@ const count = (): void => {
 }
 // 删除取消
 const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+  isShow.value = operate;
 };
 // 删除确认
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.account.concat("/", username.value)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: any) => item.username != username.value
-    );
-    isDel.value = false;
-    count()
+  await instance.patch(SERVER_URL.account.concat("/", username.value)).then(() => {
+    // 结果处理
+
+    isShow.value = false;
   });
 };
 

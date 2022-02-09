@@ -7,14 +7,9 @@ const data: User = {
   firstname: Random.cfirst(),
   lastname: Random.clast(),
   gender: 'F',
+  phone: Random.integer(13000000000, 18700000000),
   email: Random.email(),
-  education: 'G',
-  country: '中华人民共和国',
-  province: "陕西省",
-  city: "西安市",
-  region: "主城区",
-  street: '新街',
-  address: 'xx街22号',
+  birthday: Random.date(),
   description: Random.csentence(),
 }
 

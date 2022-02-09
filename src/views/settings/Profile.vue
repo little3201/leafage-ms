@@ -5,32 +5,56 @@
         <fieldset class="-mb-4"></fieldset>
         <fieldset>
           <legend class="font-medium text-gray-900 pr-4">Public email</legend>
-          <div class="mt-4 text-sm">
+          <div class="mt-4 text-sm max-w-sm">
             <label for="email" class="font-medium text-gray-700">Public email</label>
             <div class="flex items-center space-x-4 mt-1">
               <input
                 id="email"
                 name="email"
                 type="email"
-                class="block border-gray-300 py-1 rounded-md"
+                class="w-full border-gray-300 py-1 rounded-md"
                 v-model="user.email"
-                :disabled="!isEdit"
+                :disabled="!editEmail"
               />
               <button
                 type="button"
-                @click="editAllow"
+                @click="editAllow(true)"
                 class="text-blue-600 hover:underline"
-              >{{ isEdit ? 'Save' : 'Edit' }}</button>
+              >{{ editEmail ? 'Save' : 'Edit' }}</button>
             </div>
             <span
               class="text-xs text-gray-400"
             >You can manage verified email addresses in your email settings.</span>
           </div>
         </fieldset>
+        <!-- <fieldset>
+          <legend class="font-medium text-gray-900 pr-4">Phone number</legend>
+          <div class="mt-4 text-sm max-w-sm">
+            <label for="phone" class="font-medium text-gray-700">Phone number</label>
+            <div class="flex items-center space-x-4 mt-1">
+              <input
+                id="phone"
+                name="phone"
+                type="number"
+                class="w-full border-gray-300 py-1 rounded-md"
+                v-model="user.phone"
+                :disabled="!editPhone"
+              />
+              <button
+                type="button"
+                @click="editAllow(false)"
+                class="text-blue-600 hover:underline"
+              >{{ editPhone ? 'Save' : 'Edit' }}</button>
+            </div>
+            <span
+              class="text-xs text-gray-400"
+            >You can manage verified phone number in your phone number settings.</span>
+          </div>
+        </fieldset> -->
         <fieldset>
           <legend class="font-medium text-gray-900 pr-4">Public profile</legend>
           <form @submit.prevent>
-            <div class="mt-4 space-y-2 max-w-md">
+            <div class="mt-4 space-y-2 max-w-lg">
               <div class="flex space-x-4 text-sm">
                 <div>
                   <label for="firstname" class="font-medium text-gray-700">Firstname</label>
@@ -67,31 +91,18 @@
                   </select>
                 </div>
                 <div>
-                  <label for="married" class="font-medium text-gray-700">Married</label>
-                  <select
-                    id="married"
-                    name="married"
+                  <label for="birthday" class="font-medium text-gray-700">Birthday</label>
+                  <input
+                    id="birthday"
+                    name="birthday"
+                    type="date"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  >
-                    <option>Single</option>
-                    <option>Married</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="education" class="font-medium text-gray-700">Education</label>
-                  <select
-                    id="education"
-                    name="education"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.education"
-                  >
-                    <option value="G">高中</option>
-                    <option value="B">大学本科</option>
-                  </select>
+                    v-model="user.birthday"
+                  />
                 </div>
               </div>
               <div class="text-sm">
-                <label for="bio" class="font-medium text-gray-700">Bio</label>
+                <label for="bio" class="font-medium text-gray-700">Description</label>
                 <textarea
                   id="bio"
                   name="bio"
@@ -112,7 +123,7 @@
             </div>
           </form>
         </fieldset>
-        <fieldset>
+        <!-- <fieldset>
           <legend class="font-medium text-gray-900 pr-4">Public address</legend>
           <form @submit.prevent>
             <div class="mt-4 space-y-2 max-w-xl">
@@ -197,7 +208,7 @@
               </div>
             </div>
           </form>
-        </fieldset>
+        </fieldset>-->
       </div>
     </div>
   </form>
@@ -210,7 +221,8 @@ import instance from "@/api";
 import { SERVER_URL, User } from "@/api/request";
 
 let user = ref<User>({});
-let isEdit = ref(false)
+let editEmail = ref(false)
+let editPhone = ref(false)
 
 const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
 
@@ -225,10 +237,11 @@ const fetch = async (): Promise<void> => {
   }
 }
 
-const editAllow = () => {
-  isEdit.value = !isEdit.value
-  if (!isEdit.value) {
-    alert('保存成功')
+const editAllow = (isEmail: boolean) => {
+  if (isEmail) {
+    editEmail.value = !editEmail.value
+  } else {
+    editPhone.value = !editPhone.value
   }
 }
 

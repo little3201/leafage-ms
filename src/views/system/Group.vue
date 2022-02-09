@@ -34,6 +34,7 @@
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Principal</th>
             <th scope="col" class="px-4">User Count</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -45,15 +46,13 @@
             :key="index"
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-            <td class="px-4">
-              <span class="font-medium" v-text="data.name"></span>
-              <p class="text-gray-600 group-hover:text-blue-400 text-xs" v-text="data.description"></p>
-            </td>
+            <td class="px-4" v-text="data.name"></td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.alias"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.principal"></td>
             <td class="px-4" v-text="data.count"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
@@ -79,7 +78,7 @@
                   >
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
                   </svg>
-                  Users
+                  Accounts
                 </button>
               </Action>
             </td>
@@ -143,10 +142,10 @@
             >
               <option value="undefined">请选择</option>
               <option
-                v-for="(user, index) in users"
+                v-for="(account, index) in accounts"
                 :key="index"
-                :value="user.username"
-                v-text="user.nickname"
+                :value="account.username"
+                v-text="account.nickname"
               ></option>
             </select>
           </div>
@@ -175,7 +174,7 @@ import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 
 import instance from "@/api";
-import { SERVER_URL, Group, User } from "@/api/request";
+import { SERVER_URL, Group, Account } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
@@ -183,7 +182,7 @@ let isDel = ref(false);
 // 数据
 let groupData = ref({});
 let dataCode = ref("");
-let users = ref<User>([]);
+let accounts = ref<Account>([]);
 let superiors = ref<Group>([]);
 let datas = ref<Array<Group>>([]);
 // 分页参数
@@ -228,13 +227,13 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 查询关联用户
-const retrieveUsers = (): void => {
+// 查询关联账号
+const retrieveAccounts = (): void => {
   if (dataCode.value && dataCode.value.length > 0) {
     instance
-      .get(SERVER_URL.group.concat("/", dataCode.value, "/user"))
+      .get(SERVER_URL.group.concat("/", dataCode.value, "/account"))
       .then((res) => {
-        users.value = res.data;
+        accounts.value = res.data;
       })
   }
 }
@@ -247,7 +246,7 @@ const modelOperate = async (operate: boolean): Promise<void> => {
       instance.get(SERVER_URL.group).then((res) => {
         superiors.value = res.data;
       }),
-      retrieveUsers()
+      retrieveAccounts()
     ]);
   }
   isEdit.value = operate;
@@ -288,7 +287,7 @@ const modelCommit = async (): Promise<void> => {
   }
 };
 const relation = (): void => {
-  alert("users")
+  alert("accounts")
 }
 onMounted(() => {
   retrieve();

@@ -10,9 +10,10 @@ for (let i = 0; i < 139; i++) {
     username: Random.name(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
-    accountNonExpired: Random.boolean(),
-    accountNonLocked: Random.boolean(),
-    credentialsNonExpired: Random.boolean()
+    accountExpiresAt: Random.datetime(),
+    accountLocked: Random.boolean(),
+    credentialsExpiresAt: Random.datetime(),
+    modifyTime: Random.date()
   })
 }
 

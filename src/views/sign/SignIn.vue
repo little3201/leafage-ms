@@ -79,10 +79,10 @@ const onSubmit = async (): Promise<void> => {
 const storage = async (username: string): Promise<void> => {
   if (username && username.length > 0) {
     await Promise.all([
-      instance.get(SERVER_URL.user.concat("/", username)).then(res =>
+      instance.get(SERVER_URL.account.concat("/", username)).then(res =>
         sessionStorage.setItem("account", JSON.stringify(res.data))),
       instance
-        .get(SERVER_URL.user.concat("/", username, "/authority"))
+        .get(SERVER_URL.account.concat("/", username, "/authority"))
         .then(res => sessionStorage.setItem("menus", JSON.stringify(res.data)))
     ]).then(() => {
       // 登录完成后，调整原请求页

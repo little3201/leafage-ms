@@ -5,14 +5,14 @@
       <fieldset>
         <legend class="font-medium text-gray-900 pr-4">Change password</legend>
         <form @submit.prevent>
-          <div class="mt-4 space-y-2">
+          <div class="mt-4 space-y-2 max-w-sm">
             <div class="text-sm">
               <label for="password" class="font-medium text-gray-700">Old password</label>
               <input
                 id="password"
                 name="password"
                 type="text"
-                class="block border-gray-300 py-1 mt-1 rounded-md"
+                class="w-full border-gray-300 py-1 mt-1 rounded-md"
               />
             </div>
             <div class="text-sm">
@@ -21,7 +21,7 @@
                 id="npassword"
                 name="npassword"
                 type="text"
-                class="block border-gray-300 py-1 mt-1 rounded-md"
+                class="w-full border-gray-300 py-1 mt-1 rounded-md"
               />
             </div>
             <div class="text-sm">
@@ -30,7 +30,7 @@
                 id="cnpassword"
                 name="cnpassword"
                 type="text"
-                class="block border-gray-300 py-1 mt-1 rounded-md"
+                class="w-full border-gray-300 py-1 mt-1 rounded-md"
               />
             </div>
             <div>
@@ -41,7 +41,7 @@
                 <button
                   @click="onSubmit"
                   type="submit"
-                  class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
+                  class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 mt-1 rounded-md"
                 >Update password</button>
                 <RouterLink to="/forgot" class="text-blue-600 hover:underline">I forgot my password</RouterLink>
               </div>

@@ -5,7 +5,7 @@ import { parse } from '@/api/util';
 
 const datas: Array<Notification> = [];
 
-for (let i = 0; i < 16; i++) {
+for (let i = 0; i < 36; i++) {
     datas.push({
         code: Random.id(),
         title: Random.ctitle(),
@@ -30,7 +30,11 @@ export default [
             let url = options.url
             if (url.split('?').length > 1) {
                 let params: any = parse(url)
-                return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+                if (!params.isRead || params.isRead === "false") {
+                    return datas.slice(0, 5)
+                } else {
+                    return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+                }
             } else {
                 let code = url.substring(url.lastIndexOf('/') + 1)
                 return datas.filter(item => item.code === code)[0]

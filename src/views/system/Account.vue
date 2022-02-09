@@ -156,7 +156,7 @@
                   Roles
                 </button>
                 <button
-                  v-if="!data.accountLocked"
+                  v-if="data.accountLocked"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
                   @click="confirmOperate(true)"
                 >

@@ -225,12 +225,21 @@ let total = ref(0);
 let isEdit = ref(false);
 let isDel = ref(false);
 
-// 设置页码
+onMounted(() => {
+  retrieve();
+});
+/**
+ * 设置页码
+ * @param p 页码
+ * @param s 大小
+ */
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-// 查询列表
+/**
+ * 查询列表
+ */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
@@ -243,16 +252,24 @@ const retrieve = async (): Promise<void> => {
     count()
   ]);
 };
+/**
+ * 统计
+ */
 const count = (): void => {
   instance.get(SERVER_URL.resource.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
-// 删除取消
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
 const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
-// 删除确认
+/**
+ * confirm 提交
+ */
 const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.resource.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
@@ -263,7 +280,10 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
+/**
+ * 新增/编辑：打开
+ * @param operate 是否打开
+ */
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     resourceData.value = {};
@@ -283,7 +303,9 @@ const fetch = (): void => {
       )
   }
 }
-// 新增/编辑：提交
+/**
+ * 新增/编辑：提交
+ */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
@@ -324,7 +346,4 @@ const uploadImage = (files: Array<File>): void => {
   }
 };
 
-onMounted(() => {
-  retrieve();
-});
 </script>

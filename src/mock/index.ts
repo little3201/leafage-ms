@@ -20,8 +20,6 @@ let menus = [
   { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
   { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
 ]
-sessionStorage.setItem("account", JSON.stringify(account));
-sessionStorage.setItem("menus", JSON.stringify(menus))
 
 import signMock from './sign'
 
@@ -41,7 +39,7 @@ import commentMock from './assets/comment';
 
 const mocks = [
   ...signMock,
-  
+
   ...accountMock,
   ...roleMock,
   ...userMock,
@@ -62,4 +60,6 @@ export function mockXHR() {
   for (i of mocks) {
     Mock.mock(new RegExp(i.url), i.method || 'get', i.response);
   }
+  sessionStorage.setItem("account", JSON.stringify(account));
+  sessionStorage.setItem("menus", JSON.stringify(menus))
 }

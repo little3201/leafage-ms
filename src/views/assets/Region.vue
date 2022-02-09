@@ -33,6 +33,7 @@
             <th scope="col" class="px-4">Alias</th>
             <th scope="col" class="px-4">Zip</th>
             <th scope="col" class="px-4">Superior</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -52,6 +53,7 @@
             <td class="px-4" v-text="data.alias"></td>
             <td class="px-4" v-text="data.zip"></td>
             <td class="px-4" v-text="data.superior"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action
@@ -118,7 +120,7 @@
             <input
               id="zip"
               name="zip"
-              type="text"
+              type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Zip"
               v-model.trim="regionData.zip"
@@ -156,7 +158,7 @@ let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
 let regionData = ref<Region>({});
-let dataCode = ref("");
+let dataCode = ref(null);
 let datas = ref<Array<Region>>([]);
 // 分页参数
 let page = ref(0);
@@ -204,7 +206,7 @@ const confirmCommit = async (): Promise<void> => {
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     regionData.value = {};
-    if (dataCode.value && dataCode.value.length > 0) {
+    if (dataCode.value) {
       await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
         regionData.value = res.data;
       });

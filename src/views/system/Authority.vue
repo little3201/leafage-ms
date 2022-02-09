@@ -32,9 +32,9 @@
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Role Count</th>
             <th scope="col" class="px-4">Path</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -75,11 +75,9 @@
                 :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }"
               >{{ data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api') }}</span>
             </td>
-            <td class="px-4">
-              <span v-text="data.description"></span>
-            </td>
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.path"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action

@@ -34,6 +34,7 @@
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Principal</th>
             <th scope="col" class="px-4">User Count</th>
+            <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -45,15 +46,13 @@
             :key="index"
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-            <td class="px-4">
-              <span class="font-medium" v-text="data.name"></span>
-              <p class="text-gray-600 group-hover:text-blue-400 text-xs" v-text="data.description"></p>
-            </td>
+            <td class="px-4" v-text="data.name"></td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.alias"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.principal"></td>
             <td class="px-4" v-text="data.count"></td>
+            <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
               <Action

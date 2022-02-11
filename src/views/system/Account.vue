@@ -113,12 +113,12 @@
               </div>
             </td>
             <td class="px-4">
-              <Action @click.capture="username = data.username" :needEdit="false" :needDel="false">
+              <Action :needEdit="false" :needDel="false">
                 <button
                   type="button"
                   title="groups"
                   class="flex items-center mr-3 text-indigo-600 focus:outline-none"
-                  @click="treeOperate(true, 'group')"
+                  @click="treeOperate(true, 'group', data.username)"
                 >
                   <svg
                     width="16"
@@ -137,7 +137,7 @@
                 </button>
                 <button
                   class="flex items-center mr-3 text-pink-600 focus:outline-none"
-                  @click="treeOperate(true, 'role')"
+                  @click="treeOperate(true, 'role', data.username)"
                 >
                   <svg
                     width="16"
@@ -157,7 +157,7 @@
                 <button
                   v-if="data.accountLocked"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="confirmOperate(true)"
+                  @click="unlock(data.username)"
                 >
                   <svg
                     width="16"
@@ -181,7 +181,6 @@
       </table>
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Confirm :isShow="isShow" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Tree
       :isShow="isTree"
       @cancelAction="treeOperate"
@@ -198,17 +197,14 @@ import { onMounted, ref } from "vue";
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
-import Confirm from "@/components/Confirm.vue";
 import Tree from "@/components/tree/Tree.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Account, TreeNode } from "@/api/request";
 
 // 模态框参数
-let isShow = ref(false);
 let isTree = ref(false);
 // 数据
-let username = ref("");
 let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
 let datas = ref<Array<Account>>([]);
@@ -217,12 +213,21 @@ let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
-// 设置页码
+onMounted(() => {
+  retrieve();
+});
+/**
+ * 设置页码
+ * @param p 页码
+ * @param s 分页大小
+ */
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-// 查询列表
+/**
+ * 查询列表
+ */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
@@ -233,59 +238,66 @@ const retrieve = async (): Promise<void> => {
     count()
   ]);
 };
+/**
+ * 统计
+ */
 const count = (): void => {
   instance.get(SERVER_URL.account.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
-// 删除取消
-const confirmOperate = (operate: boolean): void => {
-  isShow.value = operate;
-};
-// 删除确认
-const confirmCommit = async (): Promise<void> => {
-  await instance.patch(SERVER_URL.account.concat("/", username.value)).then(() => {
-    // 结果处理
-
-    isShow.value = false;
+/**
+ * 解锁
+ * @param username 账号
+ */
+const unlock = async (username: string) => {
+  await instance.patch(SERVER_URL.account.concat("/", username)).then(() => {
+    retrieve()
   });
-};
-
-// 分组/角色树：打开
-const treeOperate = async (operate: boolean, type: string): Promise<void> => {
+}
+/**
+ * 分组/角色树：打开/关闭
+ * @param operate 是否打开
+ * @param type 角色/分组
+ */
+const treeOperate = async (operate: boolean, type: string, username: string): Promise<void> => {
   if (operate) {
     if (type === "group") {
       await Promise.all([
         instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
           treeDatas.value = res.data;
         }),
-        relation(type)
+        relation(type, username)
       ])
     } else if (type === "role") {
       await Promise.all([
         instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
           treeDatas.value = res.data;
         }),
-        relation(type)
+        relation(type, username)
       ])
     }
   }
   isTree.value = operate;
 };
-
-const relation = (type: string): void => {
-  instance.get(SERVER_URL.account.concat('/', username.value, '/', type)).then(res =>
+/**
+ * 关联数据
+ * @param type 角色/分组
+ */
+const relation = async (type: string, username: string): Promise<void> => {
+  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res =>
     codes.value = res.data
   )
 }
-// 提交
+/**
+ * 提交
+ * @param tracked 选中的数据
+ */
 const treeCommit = async (tracked: Array<String>): Promise<void> => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }
   isTree.value = false;
 };
-onMounted(() => {
-  retrieve();
-});
+
 </script>

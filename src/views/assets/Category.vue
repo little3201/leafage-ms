@@ -125,8 +125,13 @@ let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
+onMounted(() => {
+  retrieve();
+});
 /**
  * 设置页码
+ * @param p 页码
+ * @param s 大小
  */
 const setPage = (p: number, s: number): void => {
   page.value = p;
@@ -148,7 +153,7 @@ const retrieve = async (): Promise<void> => {
   ]);
 };
 /**
- * 统计记录数
+ * 统计
  */
 const count = (): void => {
   instance.get(SERVER_URL.category.concat("/count")).then((res) => {
@@ -156,16 +161,14 @@ const count = (): void => {
   })
 }
 /**
- * 删除开关
+ * confirm 操作
+ * @param operate 是否打开
  */
-const confirmOperate = (operate: boolean, code: string): void => {
-  if (operate && code && code.length > 0) {
-    dataCode.value = code;
-  }
+const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
 /**
- * 删除确认
+ * confirm 提交
  */
 const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
@@ -179,6 +182,7 @@ const confirmCommit = async (): Promise<void> => {
 };
 /**
  * 新增/编辑：打开
+ * @param operate 是否打开
  */
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
@@ -222,7 +226,4 @@ const modelCommit = async (): Promise<void> => {
   }
 };
 
-onMounted(() => {
-  retrieve();
-});
 </script>

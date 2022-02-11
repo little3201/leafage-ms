@@ -22,6 +22,12 @@ export const SERVER_URL = {
   comment: SERVER_PRE.assets.concat('/comment'), // 评论
 }
 
+export interface Page {
+  page: number,
+  size: number,
+  total: number
+}
+
 export interface Account {
   username: string,
   nickname: string,

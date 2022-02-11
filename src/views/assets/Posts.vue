@@ -92,7 +92,13 @@
           <div class="row-span-3 col-span-12 sm:col-span-4">
             <label for="cover">Cover</label>
             <figure v-if="postsData.cover" class="w-full h-32 mt-1">
-              <img :src="postsData.cover" :alt="postsData.title" class="rounded-md w-full h-full" width="198" height="128" />
+              <img
+                :src="postsData.cover"
+                :alt="postsData.title"
+                class="rounded-md w-full h-full"
+                width="198"
+                height="128"
+              />
             </figure>
             <div v-else>
               <div
@@ -290,12 +296,22 @@ let dataCode = ref("");
 let categories = ref<Array<Category>>([]);
 let content = ref("");
 let datas = ref<Array<Posts>>([]);
-// 设置页码
+
+onMounted(() => {
+  retrieve();
+});
+/**
+ * 设置页码
+ * @param p 页码
+ * @param s 大小
+ */
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-// 查询列表
+/**
+ * 查询列表
+ */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
@@ -306,6 +322,9 @@ const retrieve = async (): Promise<void> => {
     count()
   ]);
 };
+/**
+ * 统计
+ */
 const count = (): void => {
   instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
     total.value = res.data;
@@ -324,11 +343,16 @@ const removeTag = (tag: String): void => {
   tags.value.splice(tags.value.indexOf(tag), 1)
   postsData.value = { ...postsData.value, tags: tags.value };
 };
-// 删除取消
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
 const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
-// 删除确认
+/**
+ * confirm 提交
+ */
 const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
@@ -339,14 +363,17 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
+/**
+ * 新增/编辑：打开
+ * @param operate 是否打开
+ */
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     postsData.value = {};
     content.value = "";
     tags.value = [];
     await Promise.all([
-      instance.get(SERVER_URL.category).then((res) => {
+      await instance.get(SERVER_URL.category).then((res) => {
         categories.value = res.data;
       }),
       fetch(),
@@ -355,27 +382,32 @@ const modelOperate = async (operate: boolean): Promise<void> => {
   }
   isEdit.value = operate;
 };
-
-const fetch = (): void => {
+/**
+ * 查询信息
+ */
+const fetch = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
+    await instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
       postsData.value = res.data;
       tags.value = res.data.tags;
     });
   }
 };
-
-const fetchContent = (): void => {
+/**
+ * 查询内容
+ */
+const fetchContent = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    instance
+    await instance
       .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
       .then((res) => {
         content.value = res.data.content;
       });
   }
 };
-
-// 新增/编辑：提交
+/**
+ * 新增/编辑：提交
+ */
 const modelCommit = async (): Promise<void> => {
   let data = {
     ...postsData.value,
@@ -406,8 +438,10 @@ const modelCommit = async (): Promise<void> => {
     });
   }
 };
-
-// 上传文件
+/**
+ * 上传文件
+ * @param files 文件
+ */
 const uploadImage = (files: Array<File>): void => {
   if (files[0]) {
     uploadFile(files[0]).subscribe({
@@ -420,8 +454,9 @@ const uploadImage = (files: Array<File>): void => {
     });
   }
 };
-
-// 转换md为html
+/**
+ * 转换md为html
+ */
 const rendedHtml = computed(() => {
   if (content.value) {
     return marked.parse(content.value);
@@ -429,7 +464,4 @@ const rendedHtml = computed(() => {
   return "";
 });
 
-onMounted(() => {
-  retrieve();
-});
 </script>

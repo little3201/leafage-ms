@@ -195,6 +195,11 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
+        <div class="relative shadow-sm rounded-md bg-white p-4">
+          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-6">
         <div class="bg-white p-4 shadow-sm rounded-md">
           <div class="overflow-auto">
             <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
@@ -239,11 +244,7 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-6">
-        <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
-        </div>
-      </div>
+      
     </div>
   </div>
 </template>

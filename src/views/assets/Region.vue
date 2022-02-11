@@ -30,8 +30,8 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Alias</th>
-            <th scope="col" class="px-4">Zip</th>
+            <th scope="col" class="px-4">Area Code</th>
+            <th scope="col" class="px-4">Postal Code</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -46,12 +46,15 @@
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
-              <span class="font-medium" v-text="data.name"></span>
-              <p class="text-gray-600 text-xs" v-text="data.description"></p>
+              <span v-text="data.name"></span>
+              <p class="text-xs text-gray-600" v-text="data.alias"></p>
             </td>
             <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.alias"></td>
-            <td class="px-4" v-text="data.zip"></td>
+            <td class="px-4" v-text="data.areaCode ? data.areaCode : '-'"></td>
+            <td
+              class="px-4"
+              v-text="data.postalCode ? data.postalCode.toString().padStart(6, '0') : '-'"
+            ></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -72,9 +75,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label for="name">
-              Name
-            </label>
+            <label for="name">Name</label>
             <input
               id="name"
               name="name"
@@ -87,9 +88,7 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="alias">
-              Alias
-            </label>
+            <label for="alias">Alias</label>
             <input
               id="alias"
               name="alias"
@@ -100,30 +99,53 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="superior">
-              Superior
-            </label>
+            <label for="code">Code</label>
+            <input
+              id="code"
+              name="code"
+              type="number"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Code"
+              v-model.trim="regionData.code"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="superior">Superior</label>
             <select
               id="superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
               v-model="regionData.superior"
+              @click="retrieveSuperior(regionData.code)"
             >
-            <option value="undefined">请选择</option>
-              <option v-for="region in datas" :key="region.code" :value="region.code">{{region.name}}</option>
+              <option value="undefined">请选择</option>
+              <option
+                v-for="superior in superiors"
+                :key="superior.code"
+                :value="superior.code"
+              >{{ superior.name }}</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="zip">
-              Zip
-            </label>
+            <label for="postalCode">Postal Code</label>
             <input
-              id="zip"
-              name="zip"
+              id="postalCode"
+              name="postalCode"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Zip"
-              v-model.trim="regionData.zip"
+              placeholder="Postal Code"
+              v-model.trim="regionData.postalCode"
+            />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="areaCode">Area Code</label>
+            <input
+              id="areaCode"
+              name="areaCode"
+              type="number"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Area Code"
+              v-model.trim="regionData.areaCode"
             />
           </div>
           <div class="col-span-12">
@@ -160,18 +182,27 @@ let isDel = ref(false);
 let regionData = ref<Region>({});
 let dataCode = ref(null);
 let datas = ref<Array<Region>>([]);
+let superiors = ref<Array<Region>>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
-// 设置页码
+onMounted(() => {
+  retrieve();
+});
+/**
+ * 设置页码
+ * @param p 页码
+ * @param s 大小
+ */
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
 };
-
-// 查询列表
+/**
+ * 查询列表
+ */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
     instance
@@ -182,16 +213,24 @@ const retrieve = async (): Promise<void> => {
     count()
   ]);
 };
+/**
+ * 统计
+ */
 const count = (): void => {
   instance.get(SERVER_URL.region.concat("/count")).then((res) => {
     total.value = res.data;
   })
 }
-// 删除取消
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
 const confirmOperate = (operate: boolean): void => {
   isDel.value = operate;
 };
-// 删除确认
+/**
+ * confirm 提交
+ */
 const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
@@ -202,19 +241,45 @@ const confirmCommit = async (): Promise<void> => {
     count()
   });
 };
-// 新增/编辑：打开
+/**
+ * 新增/编辑：打开
+ * @param operate 是否打开
+ */
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     regionData.value = {};
-    if (dataCode.value) {
-      await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
-        regionData.value = res.data;
-      });
-    }
+    superiors.value = []
+    await Promise.all([
+      fetch(),
+      retrieveSuperior(dataCode.value)
+    ])
   }
   isEdit.value = operate;
 };
-// 新增/编辑：提交
+/**
+ * 查询上级信息
+ * @param code 代码
+ */
+const retrieveSuperior = async (code: number) => {
+  if (code > 100) {
+    await instance.get(SERVER_URL.region.concat("/", Math.floor(code / 10000) + "/lower")).then((res) => {
+      superiors.value = res.data;
+    })
+  }
+}
+/**
+ * 获取信息
+ */
+const fetch = async () => {
+  if (dataCode.value) {
+    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
+      regionData.value = res.data;
+    });
+  }
+}
+/**
+ * 新增/编辑：提交
+ */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
     await instance
@@ -242,7 +307,4 @@ const modelCommit = async (): Promise<void> => {
   }
 };
 
-onMounted(() => {
-  retrieve();
-});
 </script>

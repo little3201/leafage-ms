@@ -87,7 +87,7 @@ const datas: Array<Authority> = [
     "superior": "",
     "name": "Resource",
     "type": "M",
-    "icon": "monitor",
+    "icon": "book",
     "path": "/resource",
     "description": "作品管理",
     "count": 1
@@ -133,7 +133,7 @@ const treeDatas = [
     "superior": "21224B8JZ",
     "expand": {
       "path": "/posts",
-      "icon": "book"
+      "icon": "clipboard"
     },
     "children": [
       {
@@ -174,7 +174,7 @@ const treeDatas = [
     "superior": "21224QI72",
     "expand": {
       "path": "/resource",
-      "icon": "monitor"
+      "icon": "book"
     },
     "children": [
       {

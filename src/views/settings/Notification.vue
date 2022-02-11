@@ -64,7 +64,7 @@
     <Preview :isShow="isShow" @closeAction="previewOperation">
       <article class="prose prose-sm sm:prose">
         <strong class="text-lg">{{ data.title }}</strong>
-        <p v-html="data.content"></p>
+        <p v-text="data.content"></p>
       </article>
     </Preview>
   </div>
@@ -90,25 +90,40 @@ let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
+onMounted(() => {
+  retrieve()
+})
+/**
+ * 查询列表
+ */
 const retrieve = async () => {
   await Promise.all([
-    instance.get(SERVER_URL.notification, { params: { isRead: isRead.value, page: page.value, size: size.value } })
+    instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value } })
       .then((res) => notifications.value = res.data),
     count()
   ]);
 }
-
+/**
+ * 统计未读数据
+ */
 const count = async () => {
-  await instance.get(SERVER_URL.notification.concat("/count"), { params: { isRead: isRead.value } })
+  await instance.get(SERVER_URL.notification.concat("/count"))
     .then((res) => total.value = res.data);
 }
-
+/**
+ * 已读/未读切换
+ * @param read 是否已读
+ */
 const switchType = async (read: boolean) => {
   isRead.value = read
-  await instance.get(SERVER_URL.notification, { params: { isRead: isRead.value, page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: isRead.value } })
     .then((res) => notifications.value = res.data);
 }
-
+/**
+ * 预览
+ * @param show 是否展示
+ * @param code 代码
+ */
 const previewOperation = (show: boolean, code: string) => {
   if (show) {
     instance.get(SERVER_URL.notification.concat("/", code)).then((res) => data.value = res.data);
@@ -116,7 +131,4 @@ const previewOperation = (show: boolean, code: string) => {
   isShow.value = show
 }
 
-onMounted(() => {
-  retrieve()
-})
 </script>

@@ -12,7 +12,7 @@ for (let i = 0; i < 309; i++) {
       name: Random.province(),
       superior: '',
       alias: '京',
-      zip: Random.zip(),
+      postalCode: Random.zip(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
@@ -22,7 +22,7 @@ for (let i = 0; i < 309; i++) {
       name: Random.city(),
       superior: Random.province(),
       alias: '',
-      zip: Random.zip(),
+      postalCode: Random.zip(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
@@ -32,7 +32,7 @@ for (let i = 0; i < 309; i++) {
       name: Random.county(),
       superior: Random.city(),
       alias: '',
-      zip: Random.zip(),
+      postalCode: Random.zip(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })

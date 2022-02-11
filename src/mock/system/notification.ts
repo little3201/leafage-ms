@@ -10,8 +10,7 @@ for (let i = 0; i < 36; i++) {
         code: Random.id(),
         title: Random.ctitle(),
         content: Random.cparagraph(),
-        modifyTime: new Date(),
-        description: Random.sentence(5)
+        modifyTime: new Date()
     })
 }
 

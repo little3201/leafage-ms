@@ -76,12 +76,14 @@ export interface Region extends AbstractVO<Number> {
   name: string,
   superior: string,
   alias: string,
-  zip: string
+  postalCode: string
 }
 
-export interface Notification extends AbstractVO<String> {
+export interface Notification {
+  code:string,
   title: string,
-  content: string
+  content: string,
+  modifyTime: Date
 }
 
 export interface TreeNode {

@@ -50,7 +50,7 @@
               class="text-xs text-gray-400"
             >You can manage verified phone number in your phone number settings.</span>
           </div>
-        </fieldset> -->
+        </fieldset>-->
         <fieldset>
           <legend class="font-medium text-gray-900 pr-4">Public profile</legend>
           <form @submit.prevent>
@@ -86,6 +86,7 @@
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
                     v-model="user.gender"
                   >
+                    <option value="undefined">请选择</option>
                     <option value="F">Female</option>
                     <option value="M">Male</option>
                   </select>
@@ -100,34 +101,31 @@
                     v-model="user.birthday"
                   />
                 </div>
+                <div>
+                  <label for="education" class="font-medium text-gray-700">Education</label>
+                  <select
+                    id="education"
+                    name="education"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.education"
+                  >
+                    <option>本科</option>
+                  </select>
+                </div>
               </div>
-              <div class="text-sm">
-                <label for="bio" class="font-medium text-gray-700">Description</label>
-                <textarea
-                  id="bio"
-                  name="bio"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.description"
-                />
-                <span
-                  class="text-xs text-gray-400"
-                >You can @mention other users and organizations to link to them.</span>
-              </div>
-              <div>
-                <button
-                  @click="onSubmit"
-                  type="submit"
-                  class="border-blue-400 text-blue-600 hover:bg-blue-600 hover:text-white block border px-2 py-1 rounded-md"
-                >Update profile</button>
-              </div>
-            </div>
-          </form>
-        </fieldset>
-        <!-- <fieldset>
-          <legend class="font-medium text-gray-900 pr-4">Public address</legend>
-          <form @submit.prevent>
-            <div class="mt-4 space-y-2 max-w-xl">
-              <div class="flex space-x-4 text-sm">
+              <!-- <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
+                  <select
+                    id="ethnicity"
+                    name="ethnicity"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.ethnicity"
+                  >
+                    <option>汉族</option>
+                    <option>柯尔克孜族</option>
+                  </select>
+                </div>
                 <div>
                   <label for="country" class="font-medium text-gray-700">Country</label>
                   <select
@@ -136,9 +134,10 @@
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
                     v-model="user.country"
                   >
-                    <option>中华人民共和国</option>
+                    <option value="86">中华人民共和国</option>
                   </select>
                 </div>
+
                 <div>
                   <label for="province" class="font-medium text-gray-700">Province</label>
                   <select
@@ -146,10 +145,17 @@
                     name="province"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
                     v-model="user.province"
+                    @change="onChange(user.province)"
                   >
-                    <option>陕西省</option>
+                    <option
+                      v-for="province in provinces"
+                      :key="province.code"
+                      :value="province.code"
+                    >{{ province.name }}</option>
                   </select>
                 </div>
+              </div>
+              <div class="flex space-x-4 text-sm">
                 <div>
                   <label for="city" class="font-medium text-gray-700">City</label>
                   <select
@@ -157,58 +163,84 @@
                     name="city"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
                     v-model="user.city"
+                    @change="onChange(user.city)"
                   >
-                    <option>西安市</option>
+                    <option
+                      v-for="city in cities"
+                      :key="city.code"
+                      :value="city.code"
+                    >{{ city.name }}</option>
                   </select>
                 </div>
                 <div>
-                  <label for="region" class="font-medium text-gray-700">Region</label>
+                  <label for="district" class="font-medium text-gray-700">District</label>
                   <select
-                    id="region"
-                    name="region"
+                    id="district"
+                    name="district"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.region"
+                    v-model="user.district"
+                    @change="onChange(user.district)"
                   >
-                    <option>主城区</option>
+                    <option
+                      v-for="district in districts"
+                      :key="district.code"
+                      :value="district.code"
+                    >{{ district.name }}</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="town" class="font-medium text-gray-700">Town</label>
+                  <select
+                    id="town"
+                    name="town"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.town"
+                    @change="onChange(user.town)"
+                  >
+                    <option
+                      v-for="town in towns"
+                      :key="town.code"
+                      :value="town.code"
+                    >{{ town.name }}</option>
                   </select>
                 </div>
               </div>
               <div class="flex space-x-4 text-sm">
                 <div>
-                  <label for="street" class="font-medium text-gray-700">Street</label>
+                  <label for="village" class="font-medium text-gray-700">Village</label>
                   <select
-                    id="street"
-                    name="street"
+                    id="village"
+                    name="village"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.street"
+                    v-model="user.village"
                   >
-                    <option>新街</option>
+                    <option>农村村</option>
                   </select>
                 </div>
                 <div class="w-full">
-                  <label for="address" class="font-medium text-gray-700">Address</label>
+                  <label for="street" class="font-medium text-gray-700">Street</label>
                   <input
-                    id="address"
-                    name="address"
+                    id="street"
+                    name="street"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.address"
+                    v-model="user.street"
                   />
                 </div>
-              </div>
+              </div> -->
               <div>
                 <span
                   class="text-xs text-gray-400"
                 >All of the fields on this page are optional and can be deleted at any time</span>
                 <button
-                  @click.stop="submitAddress"
+                  @click.stop="onSubmit"
                   type="submit"
                   class="border-blue-400 text-blue-600 hover:bg-blue-600 hover:text-white block border px-2 py-1 rounded-md"
-                >Update address</button>
+                >Update profile</button>
               </div>
             </div>
           </form>
-        </fieldset>-->
+        </fieldset>
       </div>
     </div>
   </form>
@@ -218,14 +250,25 @@
 import { ref, onMounted } from "vue";
 
 import instance from "@/api";
-import { SERVER_URL, User } from "@/api/request";
+import { SERVER_URL, User, Region } from "@/api/request";
 
 let user = ref<User>({});
 let editEmail = ref(false)
 let editPhone = ref(false)
 
 const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+const provinces = ref<Array<Region>>([])
+const cities = ref<Array<Region>>([])
+const districts = ref<Array<Region>>([])
+const towns = ref<Array<Region>>([])
 
+onMounted(() => {
+  initData()
+})
+
+const initData = async () => {
+  await Promise.all([fetch(), lower(0)])
+}
 /**
  * 查询
  */
@@ -236,7 +279,30 @@ const fetch = async (): Promise<void> => {
     })
   }
 }
-
+/**
+ * 获取下级数据
+ * @param superior 上级code
+ */
+const onChange = (superior: number) => {
+  lower(superior)
+}
+/**
+ * 获取下级数据
+ * @param superior 上级code
+ */
+const lower = async (superior: number) => {
+  await instance.get(SERVER_URL.region.concat("/", superior + "", "/lower")).then(res => {
+    if (superior == 0) {
+      provinces.value = res.data
+    } else if (superior < 100) {
+      cities.value = res.data
+    } else if (superior < 10000) {
+      districts.value = res.data
+    } else if (superior < 1000000) {
+      towns.value = res.data
+    }
+  })
+}
 const editAllow = (isEmail: boolean) => {
   if (isEmail) {
     editEmail.value = !editEmail.value
@@ -244,7 +310,9 @@ const editAllow = (isEmail: boolean) => {
     editPhone.value = !editPhone.value
   }
 }
-
+/**
+ * 表单提交
+ */
 const onSubmit = async (): Promise<void> => {
   if (username.value && username.value.length > 0) {
     // await instance
@@ -254,17 +322,6 @@ const onSubmit = async (): Promise<void> => {
     //   });
     alert("修改成功")
   }
-};
-/**
- * 表单提交
- */
-const submitAddress = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
-    alert("提交成功")
-  }
-};
+}
 
-onMounted(() => {
-  fetch()
-})
 </script>

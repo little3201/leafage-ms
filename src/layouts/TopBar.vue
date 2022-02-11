@@ -100,10 +100,12 @@
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
         </svg>
-        <span
-          class="absolute animate-ping inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
-        ></span>
-        <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
+        <figure v-if="count > 0">
+          <span
+            class="absolute animate-ping inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"
+          ></span>
+          <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600"></span>
+        </figure>
       </button>
       <div
         v-show="isNotify && notifications.length > 0"
@@ -291,6 +293,7 @@ let isLanguage = ref(false)
 let isDark = ref(false)
 
 let notifications = ref<Array<Notification>>([])
+let count = ref(0)
 
 const router = useRouter();
 const account = ref<Account>({});
@@ -299,9 +302,22 @@ const themeMode = () => {
   isDark.value = !isDark.value
 }
 
+onMounted(() => {
+  let data = sessionStorage.getItem("account");
+  if (data) {
+    account.value = JSON.parse(data)
+    retrieve();
+    socket();
+  }
+});
+
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification, { params: { page: 1, size: 12 } })
-    .then((res) => notifications.value = res.data);
+  await Promise.all([
+    await instance.get(SERVER_URL.notification, { params: { page: 0, size: 6 } })
+      .then((res) => notifications.value = res.data),
+    await instance.get(SERVER_URL.notification.concat("/count"))
+      .then((res) => count.value = res.data)
+  ])
 }
 
 /**
@@ -362,12 +378,4 @@ const socket = () => {
   };
 }
 
-onMounted(() => {
-  let data = sessionStorage.getItem("account");
-  if (data) {
-    account.value = JSON.parse(data)
-    // retrieve();
-    socket();
-  }
-});
 </script>

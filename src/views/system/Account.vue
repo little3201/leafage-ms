@@ -30,8 +30,8 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
             <th scope="col" class="px-4">Username</th>
             <th scope="col" class="px-4">Nickname</th>
-            <th scope="col" class="px-4">Account Expires At</th>
             <th scope="col" class="px-4">Account Locked State</th>
+            <th scope="col" class="px-4">Account Expires At</th>
             <th scope="col" class="px-4">Credentials Expires At</th>
             <th scope="col" class="px-4">Actions</th>
           </tr>
@@ -51,19 +51,7 @@
                 <span class="ml-2">{{ data.username }}</span>
               </div>
             </td>
-            <td class="px-4">{{ data.nickname }}</td>
-            <td class="px-4">
-              <div class="flex items-center justify-center">
-                <span
-                  class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"
-                ></span>
-                <span
-                  class="ml-2"
-                >{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
-              </div>
-            </td>
-            <td class="px-4">
+            <td class="px-4">{{ data.nickname }}</td><td class="px-4">
               <div
                 class="flex items-center justify-center"
                 :class="{ 'text-red-600': data.accountLocked, 'text-lime-600': !data.accountLocked }"
@@ -100,6 +88,17 @@
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
                 </svg>
+              </div>
+            </td>
+            <td class="px-4">
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"
+                ></span>
+                <span
+                  class="ml-2"
+                >{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
               </div>
             </td>
             <td class="px-4">

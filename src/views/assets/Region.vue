@@ -31,7 +31,7 @@
             <th scope="col" class="px-4">Name</th>
             <th scope="col" class="px-4">Code</th>
             <th scope="col" class="px-4">Alias</th>
-            <th scope="col" class="px-4">Zip</th>
+            <th scope="col" class="px-4">Postal Code</th>
             <th scope="col" class="px-4">Superior</th>
             <th scope="col" class="px-4">Description</th>
             <th scope="col" class="px-4">Modify Time</th>
@@ -45,13 +45,10 @@
             :key="index"
           >
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-            <td class="px-4">
-              <span class="font-medium" v-text="data.name"></span>
-              <p class="text-gray-600 text-xs" v-text="data.description"></p>
-            </td>
+            <td class="px-4" v-text="data.name"></td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.alias"></td>
-            <td class="px-4" v-text="data.zip"></td>
+            <td class="px-4" v-text="data.postalCode ? data.postalCode.toString().padStart(6, '0') : ''"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
@@ -72,9 +69,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label for="name">
-              Name
-            </label>
+            <label for="name">Name</label>
             <input
               id="name"
               name="name"
@@ -87,9 +82,7 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="alias">
-              Alias
-            </label>
+            <label for="alias">Alias</label>
             <input
               id="alias"
               name="alias"
@@ -100,30 +93,30 @@
             />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="superior">
-              Superior
-            </label>
+            <label for="superior">Superior</label>
             <select
               id="superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
               v-model="regionData.superior"
             >
-            <option value="undefined">请选择</option>
-              <option v-for="region in datas" :key="region.code" :value="region.code">{{region.name}}</option>
+              <option value="undefined">请选择</option>
+              <option
+                v-for="region in datas"
+                :key="region.code"
+                :value="region.code"
+              >{{ region.name }}</option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="zip">
-              Zip
-            </label>
+            <label for="postalCode">Postal Code</label>
             <input
-              id="zip"
-              name="zip"
+              id="postalCode"
+              name="postalCode"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Zip"
-              v-model.trim="regionData.zip"
+              placeholder="Postal Code"
+              v-model.trim="regionData.postalCode"
             />
           </div>
           <div class="col-span-12">

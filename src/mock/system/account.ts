@@ -17,6 +17,10 @@ for (let i = 0; i < 139; i++) {
   })
 }
 
+const groups = ["21529WXDL", "21529V1IM"]
+
+const roles = ["20C281HG2"]
+
 export default [
   {
     url: '/api/hypervisor/account/count',
@@ -30,6 +34,14 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
+      if (url.split('?').length == 1) {
+        let path = url.substring(url.lastIndexOf('/') + 1)
+        if (path === 'role') {
+          return roles
+        } else if (path === 'group') {
+          return groups
+        }
+      }
       if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (params.page + 1) * params.size)

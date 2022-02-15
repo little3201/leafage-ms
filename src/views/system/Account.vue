@@ -51,7 +51,8 @@
                 <span class="ml-2">{{ data.username }}</span>
               </div>
             </td>
-            <td class="px-4">{{ data.nickname }}</td><td class="px-4">
+            <td class="px-4">{{ data.nickname }}</td>
+            <td class="px-4">
               <div
                 class="flex items-center justify-center"
                 :class="{ 'text-red-600': data.accountLocked, 'text-lime-600': !data.accountLocked }"
@@ -192,7 +193,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
@@ -208,6 +209,10 @@ let isTree = ref(false);
 let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
 let datas = ref<Array<Account>>([]);
+let related = reactive({
+  username: '',
+  type: ''
+})
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -285,6 +290,7 @@ const treeOperate = async (operate: boolean, type: string, username: string): Pr
  * @param type 角色/分组
  */
 const relation = async (type: string, username: string): Promise<void> => {
+  related = { username: username, type: type }
   await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res =>
     codes.value = res.data
   )
@@ -295,7 +301,9 @@ const relation = async (type: string, username: string): Promise<void> => {
  */
 const treeCommit = async (tracked: Array<String>): Promise<void> => {
   if (tracked && tracked.length > 0) {
-    alert("commit " + tracked)
+    await instance.patch(SERVER_URL.account.concat('/', related.username, '/', related.type), tracked).then(res =>
+      codes.value = res.data
+    )
   }
   isTree.value = false;
 };

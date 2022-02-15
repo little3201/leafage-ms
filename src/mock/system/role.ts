@@ -26,6 +26,8 @@ const treeDatas = [
   }
 ]
 
+const authorities = ["2122466RP", "21224B8JZ", "21953KO8", "203315P3Q"]
+
 export default [
   {
     url: '/api/hypervisor/role/count',
@@ -46,8 +48,13 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) === 'role') {
-        return datas.slice(1, 6)
+      if (url.split('?').length == 1) {
+        let path = url.substring(url.lastIndexOf('/') + 1)
+        if (path === 'role') {
+          return datas.slice(1, 6)
+        } else if (path === 'authority') {
+          return authorities
+        }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (params.page + 1) * params.size)
@@ -75,7 +82,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/role/:code',
+    url: '/api/hypervisor/role',
     method: 'delete',
     response: () => {
       return {

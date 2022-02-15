@@ -18,9 +18,13 @@
 
 ### 功能依赖
 
-- [x] @tailwindcss/typography —— 排版优化
-- [x] @tailwindcss/forms —— 统一表单样式
-- [x] markdown-it/hightlight.js —— markdown解析，代码高亮
+- [x] tailwindcss(plugins: typography、forms) —— css样式
+- [x] chart.js —— 图表
+- [x] qiniu.js —— 前端实现上传文件
+- [x] feather-icons —— 图标
+- [x] mockjs —— 数据 mock
+- [x] axios —— api请求
+- [x] marked/hightlight.js —— markdown解析，代码高亮
 
 **访问地址：**<a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">后台管理系统</a>
 

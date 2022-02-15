@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, PropType } from "vue";
+import { ref, watch, PropType } from "vue";
 
 import { TreeNode } from "@/api/request";
 
@@ -108,7 +108,14 @@ const emit = defineEmits(['treeOperate'])
 
 let isOpen = ref(false);
 
-let tracked = ref<Array<String>>(props.checked);
+let tracked = ref<Array<String>>([]);
+
+watch(
+  () => [...props.checked],
+  (newValue, oldValue) => {
+    tracked.value = newValue
+  }
+)
 
 const track = (node: TreeNode) => {
   emit('treeOperate', node)

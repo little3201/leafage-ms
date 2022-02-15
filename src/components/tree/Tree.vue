@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, PropType } from 'vue'
+import { ref, watch, PropType } from 'vue'
 
 import Model from "@/components/Model.vue";
 import TreeCore from "@/components/tree/TreeCore.vue";
@@ -41,9 +41,12 @@ const props = defineProps({
 
 let checked = ref<Array<String>>([])
 
-onMounted(() => {
-  checked.value.push(props.codes)
-})
+watch(
+  () => [...props.codes],
+  (newValue, oldValue) => {
+    checked.value = newValue
+  }
+)
 
 /**
  * 选中/取消

@@ -7,8 +7,8 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.24.0",
-    "vue": "^3.2.27",
+    "axios": "^0.26.0",
+    "vue": "^3.2.31",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
@@ -26,16 +26,16 @@
     "highlight.js": "^11.4.0",
     "marked": "^4.0.12",
     "mockjs": "^1.1.0",
-    "postcss": "^8.4.5",
+    "postcss": "^8.4.6",
     "qiniu-js": "^3.4.0",
-    "tailwindcss": "^3.0.15",
-    "typescript": "^4.5.4",
-    "vite": "^2.7.12"
+    "tailwindcss": "^3.0.22",
+    "typescript": "^4.5.5",
+    "vite": "^2.8.1"
   },
   "keywords": [
     "vue3",
     "vite",
-    "typescript",
+    "leafage",
     "tailwindcss"
   ],
   "repository": {

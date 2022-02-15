@@ -15,14 +15,14 @@ const data: User = {
 
 export default [
   {
-    url: '/api/hypervisor/user/little3201',
+    url: '/api/hypervisor/user',
     method: 'get',
     response: () => {
       return data
     },
   },
   {
-    url: '/api/hypervisor/user/little3201',
+    url: '/api/hypervisor/user',
     method: 'put',
     response: () => {
       return data
@@ -41,14 +41,6 @@ export default [
     response: () => {
       return {
         msg: "ok"
-      }
-    },
-  },
-  {
-    url: '/api/hypervisor/user/little3201',
-    method: 'delete',
-    response: () => {
-      return {
       }
     },
   }

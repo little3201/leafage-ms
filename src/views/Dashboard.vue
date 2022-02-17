@@ -244,7 +244,6 @@
           </div>
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -278,7 +277,7 @@ const retrieveComments = async (): Promise<void> => {
 }
 
 const initData = async (): Promise<void> => {
-  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 31 } })
+  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } })
     .then(res => {
       datas.value = res.data;
       construceChart()
@@ -291,26 +290,32 @@ const construceChart = (): void => {
   let obj = {
     labels: new Array(),
     viewed: new Array(),
+    likes: new Array(),
+    comments: new Array(),
     overViewed: new Array(),
     overLikes: new Array(),
     overComment: new Array()
   }
   for (let i = 0; i < datas.value.length - 1; i++) {
     obj.labels.unshift(datas.value[i].date);
+    // data
     obj.viewed.unshift(datas.value[i].viewed - datas.value[i + 1].viewed);
+    obj.likes.unshift(datas.value[i].likes - datas.value[i + 1].likes);
+    obj.comments.unshift(datas.value[i].comment - datas.value[i + 1].comment);
+    // over data
     obj.overViewed.unshift(datas.value[i].overViewed)
     obj.overComment.unshift(datas.value[i].overComment);
     obj.overLikes.unshift(datas.value[i].overLikes);
   }
   let labels = obj.labels
   // 浏览量统计
-  createMiniChart(viewedChart.value, labels.slice(-7), obj.overViewed.slice(-7), "rgba(37, 99, 235, 0.8)");
+  createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
   // 评论数统计
-  createMiniChart(commentChart.value, labels.slice(-7), obj.overComment.slice(-7), "rgba(217, 119, 6, 0.8)");
+  createMiniChart(commentChart.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
   // 喜欢数统计
-  createMiniChart(likesChart.value, labels.slice(-7), obj.overLikes.slice(-7), "rgba(124, 58, 237, 0.8)");
+  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 帖子分类统计
-  createBarChart(barChart.value, labels, obj.viewed);
+  createBarChart(barChart.value, labels, obj.viewed, obj.likes, obj.comments);
 }
 
 onMounted(() => {

@@ -7,6 +7,9 @@ import {
     BarController,
     CategoryScale,
     LinearScale,
+    Filler,
+    Legend,
+    Title,
     Tooltip
 } from 'chart.js';
 
@@ -18,10 +21,13 @@ Chart.register(
     BarController,
     CategoryScale,
     LinearScale,
+    Filler,
+    Legend,
+    Title,
     Tooltip
 );
 
-export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>) => {
+export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, viewed: Array<Object>, likes: Array<Object>, comments: Array<Object>) => {
     const config: any = {
         type: "bar",
         data: {
@@ -29,22 +35,43 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, da
             datasets: [
                 {
                     label: "访问量",
-                    data: datas,
-                    backgroundColor: "rgba(37, 99, 235)",
-                    barPercentage: 0.5,
-                    barThickness: 6,
-                    maxBarThickness: 8,
-                    minBarLength: 2
+                    data: viewed,
+                    backgroundColor: "rgba(37, 99, 235, 0.8)"
+                },
+                {
+                    label: "点赞数",
+                    data: likes,
+                    backgroundColor: "rgba(124, 58, 237, 0.8)"
+                },
+                {
+                    label: "评论数",
+                    data: comments,
+                    backgroundColor: "rgba(217, 119, 6, 0.8)"
                 }
             ],
         },
         options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '最近7日统计数据'
+                }
+            }
         },
     }
     return new Chart(ctx, config);
 }
 
-export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>, color: String) => {
+const getGradient = (ctx: CanvasRenderingContext2D, chartArea: any, color: string) => {
+    var gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
+    gradient.addColorStop(0, color.replace('0.8', "0.1"))
+    gradient.addColorStop(0.5, color.replace('0.8', "0.4"))
+    gradient.addColorStop(1, color)
+    return gradient
+}
+
+export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>, color: string) => {
     const config: any = {
         type: "line",
         data: {
@@ -53,16 +80,35 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
                 {
                     label: '增长率',
                     data: datas,
-                    backgroundColor: 'transparent',
+                    backgroundColor: function (context) {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+
+                        if (!chartArea) {
+                            // This case happens on initial chart load
+                            return;
+                        }
+                        return getGradient(ctx, chartArea, color);
+                    },
                     pointBorderColor: 'transparent',
                     borderColor: color,
                     borderWidth: 2,
-                    tension: 0.4
+                    tension: 0.4,
+                    fill: true
                 },
             ],
         },
         options: {
+            responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                filler: {
+                    propagate: false,
+                },
+            },
             elements: {
                 point: {
                     radius: 0,

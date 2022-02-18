@@ -10,6 +10,7 @@ for (let i = 0; i < 19; i++) {
         code: Random.id(),
         nickname: Random.cname(),
         avatar: Random.image('32x32'),
+        posts: Random.word(),
         content: Random.cparagraph(2),
         email: Random.email(),
         replier: Random.cname(),

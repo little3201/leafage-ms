@@ -45,8 +45,8 @@ instance.interceptors.response.use(
           break
         // 404/500请求不存在
         case 404:
-        case 500:
-          response.statusText = '服务可能罢工了，刷新试试。'
+        case 502:
+          response.statusText = '网络异常，刷新试试。'
           break
         default:
           response.statusText = '请求可能跑丢了，再试一下。'

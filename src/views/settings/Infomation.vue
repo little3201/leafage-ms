@@ -191,18 +191,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive } from "vue";
 
-import { Account } from '@/api/request'
+import instance from "@/api";
+import { SERVER_URL, Account } from '@/api/request'
 
 let isEdit = ref(false)
 
-const account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
+let account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
 
-const editAllow = () => {
+const editAllow = async () => {
   isEdit.value = !isEdit.value
   if (!isEdit.value) {
-    alert('保存成功')
+    await instance.put(SERVER_URL.account.concat('/', account.username), account).then((res) => {
+      account = res.data
+      sessionStorage.setItem("account", JSON.stringify(res.data))
+    })
   }
 }
 
@@ -218,8 +222,4 @@ const onSubmit = async (): Promise<void> => {
     alert("删除成功")
   }
 };
-
-onMounted(() => {
-  // fetch()
-})
 </script>

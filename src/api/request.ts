@@ -82,7 +82,8 @@ export interface Region extends AbstractVO<Number> {
   name: string,
   superior: string,
   alias: string,
-  postalCode: string
+  postalCode: string,
+  areaCode: string
 }
 
 export interface Notification {

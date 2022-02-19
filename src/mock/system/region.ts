@@ -13,6 +13,7 @@ for (let i = 0; i < 309; i++) {
       superior: '',
       alias: '京',
       postalCode: Random.zip(),
+      areaCode: Random.integer(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
@@ -23,6 +24,7 @@ for (let i = 0; i < 309; i++) {
       superior: Random.province(),
       alias: '',
       postalCode: Random.zip(),
+      areaCode: Random.integer(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
@@ -33,6 +35,7 @@ for (let i = 0; i < 309; i++) {
       superior: Random.city(),
       alias: '',
       postalCode: Random.zip(),
+      areaCode: Random.integer(),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })

@@ -131,6 +131,7 @@ export interface Resource extends AbstractVO<String> {
 
 export interface Comment extends AbstractVO<String> {
   nickname: string,
+  posts: string,
   avatar: string,
   replier: string,
   content: string,

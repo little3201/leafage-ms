@@ -8,34 +8,34 @@ const datas: Array<Region> = [];
 for (let i = 0; i < 309; i++) {
   if (i <= 34) {
     datas.push({
-      code: Random.id(),
+      code: Random.increment(),
       name: Random.province(),
-      superior: '',
-      alias: '京',
+      superior: Random.region(), // 华南、华北
+      alias: Random.cword(),
       postalCode: Random.zip(),
-      areaCode: Random.integer(),
+      areaCode: Random.string('0123456789', 3),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
-  } else if (i > 34 && i< 144) {
+  } else if (i > 34 && i < 144) {
     datas.push({
-      code: Random.id(),
+      code: Random.increment(),
       name: Random.city(),
       superior: Random.province(),
-      alias: '',
+      alias: Random.city(),
       postalCode: Random.zip(),
-      areaCode: Random.integer(),
+      areaCode: Random.string('0123456789', 4),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
   } else {
     datas.push({
-      code: Random.id(),
+      code: Random.increment(),
       name: Random.county(),
       superior: Random.city(),
-      alias: '',
+      alias: Random.county(),
       postalCode: Random.zip(),
-      areaCode: Random.integer(),
+      areaCode: Random.string('0123456789', 5),
       description: Random.csentence(5),
       modifyTime: Random.date()
     })
@@ -56,7 +56,7 @@ export default [
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else {
         let code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]

@@ -88,7 +88,7 @@
                 <button
                   v-if="data.count > 0"
                   class="flex items-center mr-3 text-pink-600 focus:outline-none"
-                  @click="relation"
+                  @click="previewOperation(true)"
                 >
                   <svg
                     width="16"
@@ -202,6 +202,36 @@
         </div>
       </form>
     </Model>
+    <Preview :isShow="isShow" @closeAction="previewOperation">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
+        <thead>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
+            <th scope="col" class="px-4">Name</th>
+            <th scope="col" class="px-4">Code</th>
+            <th scope="col" class="px-4">Superior</th>
+            <th scope="col" class="px-4">User Count</th>
+            <th scope="col" class="px-4">Description</th>
+            <th scope="col" class="px-4">Modify Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
+            v-for="(role, index) in roles"
+            :key="index"
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
+            <td class="px-4" v-text="role.name"></td>
+            <td class="px-4" v-text="role.code"></td>
+            <td class="px-4" v-text="role.superior"></td>
+            <td class="px-4" v-text="role.count"></td>
+            <td class="px-4" v-text="role.description"></td>
+            <td class="px-4" v-text="new Date(role.modifyTime).toLocaleDateString()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </Preview>
   </div>
 </template>
 
@@ -213,18 +243,21 @@ import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
+import Preview from "@/components/Preview.vue";
 
 import instance from "@/api";
-import { SERVER_URL, Authority } from "@/api/request";
+import { SERVER_URL, Authority, Role } from "@/api/request";
 
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
+let isShow = ref(false)
 // 数据
 let authorityData = ref<Authority>({});
 let dataCode = ref("");
 let superiors = ref<Array<Authority>>([]);
 let datas = ref<Array<Authority>>([]);
+let roles = ref<Array<Role>>([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -352,11 +385,16 @@ const modelCommit = async (): Promise<void> => {
   }
 };
 /**
- * 查询关联角色信息
+ * 预览
+ * @param show 是否展示
+ * @param code 代码
  */
-const relation = async (): Promise<void> => {
-  await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then((res) => {
-    alert(res.data);
-  });
+const previewOperation = async (show: boolean) => {
+  if (show) {
+    await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then((res) => {
+      roles.value = res.data;
+    });
+  }
+  isShow.value = show
 }
 </script>

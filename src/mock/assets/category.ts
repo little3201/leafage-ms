@@ -7,7 +7,7 @@ const datas: Array<Category> = [];
 
 for (let i = 0; i < 19; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     alias: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(5),
@@ -30,7 +30,7 @@ export default [
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else if (url.substring(url.lastIndexOf('/') + 1) === "category") {
         return datas
       } else {

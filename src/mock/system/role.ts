@@ -7,7 +7,7 @@ const datas: Array<Role> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     name: Random.word(),
     superior: Random.word(),
     count: Random.integer(0, 99),
@@ -57,7 +57,7 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else {
         let code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]

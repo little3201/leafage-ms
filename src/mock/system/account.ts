@@ -1,19 +1,18 @@
 import { Random } from 'mockjs'
 
-import { Account } from '@/api/request'
+import { AccountDetail } from '@/api/request'
 import { parse } from '@/api/util';
 
-const datas: Array<Account> = [];
+const datas: Array<AccountDetail> = [];
 
 for (let i = 0; i < 139; i++) {
   datas.push({
-    username: Random.name(),
+    username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
-    accountExpiresAt: Random.datetime(),
+    accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: Random.datetime(),
-    modifyTime: Random.date()
+    credentialsExpiresAt: Random.date()
   })
 }
 
@@ -44,7 +43,7 @@ export default [
       }
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else {
         let username = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.username === username)[0]
@@ -57,6 +56,20 @@ export default [
     response: (options: any) => {
       let username = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.username === username)[0]
+    },
+  },
+  {
+    url: '/api/hypervisor/account',
+    method: 'patch',
+    response: (options: any) => {
+      let username = options.url.substring(options.url.lastIndexOf('/') + 1)
+      let data = JSON.parse(options.body)
+      if (!data) {
+        return true
+      }
+      data = datas.filter(item => item.username === username)[0]
+      data.accountLocked = false
+      return data
     },
   },
   {

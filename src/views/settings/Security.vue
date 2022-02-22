@@ -13,6 +13,8 @@
                 name="password"
                 type="text"
                 class="w-full border-gray-300 py-1 mt-1 rounded-md"
+                v-model.trim="pwd.old"
+                required
               />
             </div>
             <div class="text-sm">
@@ -22,6 +24,8 @@
                 name="npassword"
                 type="text"
                 class="w-full border-gray-300 py-1 mt-1 rounded-md"
+                v-model.trim="pwd.new"
+                required
               />
             </div>
             <div class="text-sm">
@@ -31,6 +35,8 @@
                 name="cnpassword"
                 type="text"
                 class="w-full border-gray-300 py-1 mt-1 rounded-md"
+                v-model.trim="pwd.confirm"
+                required
               />
             </div>
             <div>
@@ -158,9 +164,31 @@
 
 
 <script lang="ts" setup>
+import { reactive, ref } from 'vue'
 
-const onSubmit = () => {
-  alert("修改成功")
-  sessionStorage.clear()
+import { useRouter } from "vue-router";
+
+import instance from "@/api";
+import { SERVER_URL } from '@/api/request'
+
+const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+
+const router = useRouter();
+
+let pwd = reactive({
+  old: '',
+  new: '',
+  confirm: ''
+})
+
+const onSubmit = async () => {
+  if (!pwd.old || !pwd.new || !pwd.confirm) {
+    alert("数据校验未通过！")
+  } else {
+    await instance.patch(SERVER_URL.account.concat("/", username.value), pwd).then(() => {
+      sessionStorage.clear()
+      router.replace({ path: "/signin" });
+    })
+  }
 }
 </script>

@@ -4,12 +4,15 @@ import { User } from '@/api/request'
 
 const data: User = {
   username: Random.name(),
-  firstname: Random.cfirst(),
-  lastname: Random.clast(),
-  gender: 'F',
+  firstname: Random.first(),
+  lastname: Random.last(),
+  gender: Random.character('MF'),
   phone: Random.integer(13000000000, 18700000000),
   email: Random.email(),
   birthday: Random.date(),
+  degree: Random.character('upper'),
+  company: Random.word(),
+  position: Random.word(),
   description: Random.csentence(),
 }
 

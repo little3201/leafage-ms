@@ -7,7 +7,7 @@ const datas: Array<Notification> = [];
 
 for (let i = 0; i < 36; i++) {
     datas.push({
-        code: Random.id(),
+        code: Random.string('number', 9),
         title: Random.ctitle(),
         content: Random.cparagraph(),
         modifyTime: new Date()
@@ -32,7 +32,7 @@ export default [
                 if (!params.isRead || params.isRead === "false") {
                     return datas.slice(0, 5)
                 } else {
-                    return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+                    return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
                 }
             } else {
                 let code = url.substring(url.lastIndexOf('/') + 1)

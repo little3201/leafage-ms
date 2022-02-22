@@ -100,7 +100,7 @@ const onSubmit = async (): Promise<void> => {
             errMsg.value = res.data
             isLoad.value = false
           }
-        });
+        }).catch(() => isLoad.value = false);
     })
   }
 };

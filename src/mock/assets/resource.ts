@@ -7,7 +7,7 @@ const datas: Array<Resource> = [];
 
 for (let i = 0; i < 79; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     title: Random.ctitle(),
     cover: Random.image('176x224'),
     category: Random.word(),
@@ -34,7 +34,7 @@ export default [
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       }
       else {
         let code = url.substring(url.lastIndexOf('/') + 1)

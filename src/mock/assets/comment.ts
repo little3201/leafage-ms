@@ -7,7 +7,7 @@ const datas: Array<Comment> = [];
 
 for (let i = 0; i < 19; i++) {
     datas.push({
-        code: Random.id(),
+        code: Random.string('number', 9),
         nickname: Random.cname(),
         avatar: Random.image('32x32'),
         posts: Random.word(),
@@ -27,7 +27,7 @@ export default [
             let url = options.url
             if (url.split('?').length > 1) {
                 let params: any = parse(url)
-                return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+                return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
             } else {
                 let code = url.substring(url.lastIndexOf('/') + 1)
                 return datas.filter(item => item.code === code)[0]

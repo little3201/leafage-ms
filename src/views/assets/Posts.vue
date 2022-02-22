@@ -91,7 +91,25 @@
           </div>
           <div class="row-span-3 col-span-12 sm:col-span-4">
             <label for="cover">Cover</label>
-            <figure v-if="postsData.cover" class="w-full h-32 mt-1">
+            <figure v-if="postsData.cover" class="w-full h-32 mt-1 rounded-md relative group">
+              <div
+                class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
+              >
+                <button type="button" class="text-white focus:outline-none">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
+                  </svg>
+                </button>
+              </div>
               <img
                 :src="postsData.cover"
                 :alt="postsData.title"
@@ -190,7 +208,7 @@
               stroke-linejoin="round"
               class="ml-1 cursor-pointer opacity-30"
             >
-              <use xlink:href="/svg/feather-sprite.svg#x" />
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
             </svg>
           </span>
         </div>
@@ -204,7 +222,6 @@
             >
               <svg
                 v-if="preview"
-                xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
@@ -213,47 +230,41 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-eye-off opacity-30"
+                class="opacity-40"
               >
-                <path
-                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
-                />
-                <line x1="1" y1="1" x2="23" y2="23" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye-off'" />
               </svg>
               <svg
                 v-else
-                xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-eye opacity-30"
+                class="opacity-40"
               >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye'" />
               </svg>
             </button>
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 rounded-md mt-1 h-52 md:h-96"
+              class="grid grid-flow-row grid-rows-1 grid-cols-1 border-none mt-1 h-52 md:h-96"
               :class="{ border: preview }"
             >
               <textarea
                 id="content"
                 name="content"
                 v-if="!preview"
-                class="mt-1 w-full block rounded-md border-gray-300"
+                class="mt-1 w-full rounded-md border-gray-300"
                 v-model.trim="content"
                 required
                 placeholder="write with markdown..."
               ></textarea>
               <div
                 v-else
-                class="mt-1 p-2 prose overflow-y-auto"
-                style="width: 606px"
+                class="mt-1 p-2 prose overflow-y-auto w-full border border-gray-300 rounded-md"
                 v-html="rendedHtml"
               ></div>
             </div>
@@ -261,18 +272,22 @@
         </div>
       </form>
     </Model>
+    <Preview :isShow="view.isShow" @closeAction="previewOperation">
+      <img :src="view.url" />
+    </Preview>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
+import Preview from "@/components/Preview.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
@@ -296,6 +311,11 @@ let dataCode = ref("");
 let categories = ref<Array<Category>>([]);
 let content = ref("");
 let datas = ref<Array<Posts>>([]);
+
+let view = reactive({
+  isShow: false,
+  url: ''
+})
 
 onMounted(() => {
   retrieve();
@@ -463,5 +483,15 @@ const rendedHtml = computed(() => {
   }
   return "";
 });
-
+/**
+ * 预览
+ * @param show 是否展示
+ * @param code 代码
+ */
+const previewOperation = (show: boolean, url: string) => {
+  if (show) {
+    view.url = url
+  }
+  view.isShow = show
+}
 </script>

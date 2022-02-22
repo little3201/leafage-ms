@@ -57,7 +57,7 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else {
         let code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]

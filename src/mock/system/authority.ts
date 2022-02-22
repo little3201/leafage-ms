@@ -481,10 +481,10 @@ export default [
     response: (options: any) => {
       let url = options.url
       if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) !== "role") {
-        return datas.slice(1, 6)
+        return datas.slice(0, 6)
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (params.page + 1) * params.size)
+        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else if (url.substring(url.lastIndexOf('/') + 1) === "role") {
         return roleDatas
       } else {

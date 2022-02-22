@@ -24,7 +24,7 @@
       <Operation :needAdd="false" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="user">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="account">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
@@ -201,14 +201,14 @@ import Pagation from "@/components/Pagation.vue";
 import Tree from "@/components/tree/Tree.vue";
 
 import instance from "@/api";
-import { SERVER_URL, Account, TreeNode } from "@/api/request";
+import { SERVER_URL, AccountDetail, TreeNode } from "@/api/request";
 
 // 模态框参数
 let isTree = ref(false);
 // 数据
 let treeDatas = ref<Array<TreeNode>>([]);
 let codes = ref<Array<String>>([])
-let datas = ref<Array<Account>>([]);
+let datas = ref<Array<AccountDetail>>([]);
 let related = reactive({
   username: '',
   type: ''
@@ -256,8 +256,14 @@ const count = (): void => {
  * @param username 账号
  */
 const unlock = async (username: string) => {
-  await instance.patch(SERVER_URL.account.concat("/", username)).then(() => {
-    retrieve()
+  await instance.patch(SERVER_URL.account.concat("/", username)).then(res => {
+    if (res.data && res.data == true) {
+      datas.value.forEach((item: AccountDetail) => {
+        if (item.username === username) {
+          item.accountLocked = false
+        }
+      })
+    }
   });
 }
 /**

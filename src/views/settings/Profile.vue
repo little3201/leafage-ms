@@ -4,53 +4,56 @@
       <div class="px-6 py-4 space-y-6 divide-y">
         <fieldset class="-mb-4"></fieldset>
         <fieldset>
-          <legend class="font-medium text-gray-900 pr-4">Public email</legend>
-          <div class="mt-4 text-sm max-w-sm">
-            <label for="email" class="font-medium text-gray-700">Public email</label>
-            <div class="flex items-center space-x-4 mt-1">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                class="w-full border-gray-300 py-1 rounded-md"
-                v-model="user.email"
-                :disabled="!editEmail"
-              />
-              <button
-                type="button"
-                @click="editAllow(true)"
-                class="text-blue-600 hover:underline"
-              >{{ editEmail ? 'Save' : 'Edit' }}</button>
+          <legend class="font-medium text-gray-900 pr-4">Change nickname</legend>
+          <p class="text-sm text-gray-500">Changing your username can have unintended side effects.</p>
+          <div class="flex">
+            <div class="mt-4 text-sm">
+              <label for="password" class="font-medium text-gray-700">Nicknmae</label>
+              <div class="flex items-center space-x-4 mt-1">
+                <input
+                  id="password"
+                  name="password"
+                  type="text"
+                  class="block border-gray-300 py-1 rounded-md"
+                  v-model="account.nickname"
+                  :disabled="!isEdit"
+                />
+                <button
+                  type="button"
+                  @click="editAllow"
+                  class="text-blue-600 hover:underline"
+                >{{ isEdit ? 'Save' : 'Edit' }}</button>
+              </div>
+              <span
+                class="text-xs text-gray-400"
+              >Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</span>
             </div>
-            <span
-              class="text-xs text-gray-400"
-            >You can manage verified email addresses in your email settings.</span>
+            <div class="mr-20 ml-8 text-center relative">
+              <figure class="w-32 h-32 border rounded-full">
+                <img alt="avatar" class="w-full h-full rounded-full" :src="account.avatar" />
+              </figure>
+              <button
+                title="delete"
+                type="button"
+                class="absolute top-2.5 right-2.5 inline-flex bg-red-600 text-white rounded-full items-center"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
+                </svg>
+              </button>
+            </div>
           </div>
         </fieldset>
-        <!-- <fieldset>
-          <legend class="font-medium text-gray-900 pr-4">Phone number</legend>
-          <div class="mt-4 text-sm max-w-sm">
-            <label for="phone" class="font-medium text-gray-700">Phone number</label>
-            <div class="flex items-center space-x-4 mt-1">
-              <input
-                id="phone"
-                name="phone"
-                type="number"
-                class="w-full border-gray-300 py-1 rounded-md"
-                v-model="user.phone"
-                :disabled="!editPhone"
-              />
-              <button
-                type="button"
-                @click="editAllow(false)"
-                class="text-blue-600 hover:underline"
-              >{{ editPhone ? 'Save' : 'Edit' }}</button>
-            </div>
-            <span
-              class="text-xs text-gray-400"
-            >You can manage verified phone number in your phone number settings.</span>
-          </div>
-        </fieldset>-->
+
         <fieldset>
           <legend class="font-medium text-gray-900 pr-4">Public profile</legend>
           <form @submit.prevent>
@@ -102,132 +105,47 @@
                   />
                 </div>
                 <div>
-                  <label for="education" class="font-medium text-gray-700">Education</label>
+                  <label for="degree" class="font-medium text-gray-700">Degree</label>
                   <select
-                    id="education"
-                    name="education"
+                    id="degree"
+                    name="degree"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.education"
+                    v-model="user.degree"
                   >
-                    <option>本科</option>
-                  </select>
-                </div>
-              </div>
-              <!-- <div class="flex space-x-4 text-sm">
-                <div>
-                  <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
-                  <select
-                    id="ethnicity"
-                    name="ethnicity"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.ethnicity"
-                  >
-                    <option>汉族</option>
-                    <option>柯尔克孜族</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="country" class="font-medium text-gray-700">Country</label>
-                  <select
-                    id="country"
-                    name="country"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.country"
-                  >
-                    <option value="86">中华人民共和国</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label for="province" class="font-medium text-gray-700">Province</label>
-                  <select
-                    id="province"
-                    name="province"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.province"
-                    @change="onChange(user.province)"
-                  >
-                    <option
-                      v-for="province in provinces"
-                      :key="province.code"
-                      :value="province.code"
-                    >{{ province.name }}</option>
+                    <option value="undefined">请选择</option>
+                    <option value="A">小学</option>
+                    <option value="B">初中</option>
+                    <option value="C">高中</option>
+                    <option value="D">中专</option>
+                    <option value="E">大专</option>
+                    <option value="F">本科</option>
+                    <option value="G">硕士</option>
+                    <option value="H">博士</option>
                   </select>
                 </div>
               </div>
               <div class="flex space-x-4 text-sm">
                 <div>
-                  <label for="city" class="font-medium text-gray-700">City</label>
-                  <select
-                    id="city"
-                    name="city"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.city"
-                    @change="onChange(user.city)"
-                  >
-                    <option
-                      v-for="city in cities"
-                      :key="city.code"
-                      :value="city.code"
-                    >{{ city.name }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="district" class="font-medium text-gray-700">District</label>
-                  <select
-                    id="district"
-                    name="district"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.district"
-                    @change="onChange(user.district)"
-                  >
-                    <option
-                      v-for="district in districts"
-                      :key="district.code"
-                      :value="district.code"
-                    >{{ district.name }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="town" class="font-medium text-gray-700">Town</label>
-                  <select
-                    id="town"
-                    name="town"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.town"
-                    @change="onChange(user.town)"
-                  >
-                    <option
-                      v-for="town in towns"
-                      :key="town.code"
-                      :value="town.code"
-                    >{{ town.name }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="flex space-x-4 text-sm">
-                <div>
-                  <label for="village" class="font-medium text-gray-700">Village</label>
-                  <select
-                    id="village"
-                    name="village"
-                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.village"
-                  >
-                    <option>农村村</option>
-                  </select>
-                </div>
-                <div class="w-full">
-                  <label for="street" class="font-medium text-gray-700">Street</label>
+                  <label for="company" class="font-medium text-gray-700">Company</label>
                   <input
-                    id="street"
-                    name="street"
+                    id="company"
+                    name="company"
                     type="text"
                     class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                    v-model="user.street"
+                    v-model="user.company"
                   />
                 </div>
-              </div> -->
+                <div>
+                  <label for="position" class="font-medium text-gray-700">Position</label>
+                  <input
+                    id="position"
+                    name="position"
+                    type="text"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.position"
+                  />
+                </div>
+              </div>
               <div>
                 <span
                   class="text-xs text-gray-400"
@@ -247,74 +165,45 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
 import instance from "@/api";
-import { SERVER_URL, User, Region } from "@/api/request";
+import { SERVER_URL, User, Account } from "@/api/request";
 
-let user = ref<User>({});
-let editEmail = ref(false)
-let editPhone = ref(false)
+let user = ref<User>({})
 
-const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
-const provinces = ref<Array<Region>>([])
-const cities = ref<Array<Region>>([])
-const districts = ref<Array<Region>>([])
-const towns = ref<Array<Region>>([])
+let isEdit = ref(false)
+
+let account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
 
 onMounted(() => {
-  initData()
+  fetch()
 })
-
-const initData = async () => {
-  await Promise.all([fetch(), lower(0)])
-}
 /**
  * 查询
  */
 const fetch = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
-    await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => {
+  if (account.username && account.username.length > 0) {
+    await instance.get(SERVER_URL.user.concat("/", account.username)).then(res => {
       user.value = res.data
     })
   }
 }
-/**
- * 获取下级数据
- * @param superior 上级code
- */
-const onChange = (superior: number) => {
-  lower(superior)
-}
-/**
- * 获取下级数据
- * @param superior 上级code
- */
-const lower = async (superior: number) => {
-  await instance.get(SERVER_URL.region.concat("/", superior + "", "/lower")).then(res => {
-    if (superior == 0) {
-      provinces.value = res.data
-    } else if (superior < 100) {
-      cities.value = res.data
-    } else if (superior < 10000) {
-      districts.value = res.data
-    } else if (superior < 1000000) {
-      towns.value = res.data
-    }
-  })
-}
-const editAllow = (isEmail: boolean) => {
-  if (isEmail) {
-    editEmail.value = !editEmail.value
-  } else {
-    editPhone.value = !editPhone.value
+
+const editAllow = async () => {
+  isEdit.value = !isEdit.value
+  if (!isEdit.value) {
+    await instance.put(SERVER_URL.account.concat('/', account.username), account).then((res) => {
+      account = res.data
+      sessionStorage.setItem("account", JSON.stringify(res.data))
+    })
   }
 }
 /**
  * 表单提交
  */
 const onSubmit = async (): Promise<void> => {
-  if (username.value && username.value.length > 0) {
+  if (account.username && account.username.length > 0) {
     // await instance
     //   .put(SERVER_URL.user.concat("/", username.value), user.value)
     //   .then(res => {

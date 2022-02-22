@@ -245,15 +245,14 @@
                 id="content"
                 name="content"
                 v-if="!preview"
-                class="mt-1 w-full block rounded-md border-gray-300"
+                class="mt-1 w-full rounded-md border-gray-300"
                 v-model.trim="content"
                 required
                 placeholder="write with markdown..."
               ></textarea>
               <div
                 v-else
-                class="mt-1 p-2 prose overflow-y-auto"
-                style="width: 606px"
+                class="p-2 prose overflow-y-auto w-full"
                 v-html="rendedHtml"
               ></div>
             </div>
@@ -261,18 +260,22 @@
         </div>
       </form>
     </Model>
+    <Preview :isShow="view.isShow" @closeAction="previewOperation">
+      <img src="view.url" />
+    </Preview>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
+import Preview from "@/components/Preview.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
@@ -296,6 +299,11 @@ let dataCode = ref("");
 let categories = ref<Array<Category>>([]);
 let content = ref("");
 let datas = ref<Array<Posts>>([]);
+
+let view = reactive({
+  isShow: false,
+  url: ''
+})
 
 onMounted(() => {
   retrieve();
@@ -463,5 +471,15 @@ const rendedHtml = computed(() => {
   }
   return "";
 });
-
+/**
+ * 预览
+ * @param show 是否展示
+ * @param code 代码
+ */
+const previewOperation = (show: boolean, url: string) => {
+  if (show) {
+    view.url = url
+  }
+  view.isShow = show
+}
 </script>

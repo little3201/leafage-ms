@@ -32,13 +32,34 @@ hljs.registerLanguage('xml', xml);
 let rendererMD = new marked.Renderer()
 
 //重写a标签，在新标签打开
-rendererMD.link = function (href, title, text) {
-  return '<a href="' + href + '" title="' + title + '" target="_blank">' + text + '</a>';
+rendererMD.link = function (href: string, title: string, text: string) {
+  if (href === null) {
+    return text;
+  }
+  let out = '<a href="' + escape(href) + '"' + '" target="_blank"';
+  if (title) {
+    out += ' title="' + title + '"';
+  }
+  out += ">" + text + "</a>";
+  return out;
+}
+
+rendererMD.image = function (href, title, text) {
+  if (href === null) {
+    return text;
+  }
+  debugger
+  let out = '<img src="' + href + '" alt="' + text + '"' + '@dbclick="previewOperation(' + true + ', "' + href + '")"';
+  if (title) {
+    out += ' title="' + title + '"';
+  }
+  out += this.options.xhtml ? "/>" : ">";
+  return out;
 }
 
 marked.setOptions({
   renderer: rendererMD,
-  highlight: function(code, lang) {
+  highlight: function (code, lang) {
     const language = hljs.getLanguage(lang) ? lang : 'sh';
     return hljs.highlight(code, { language }).value;
   },

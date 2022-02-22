@@ -7,7 +7,7 @@
                 <span class="inline-block align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                 <div
-                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden sm:align-middle md:max-w-lg lg:max-w-2xl"
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden sm:align-middle max-w-5xl"
                 >
                     <button
                         type="button"

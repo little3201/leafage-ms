@@ -3,73 +3,32 @@
     <div class="px-6 py-4 space-y-6 divide-y">
       <fieldset class="-mb-4"></fieldset>
       <fieldset>
-        <legend class="font-medium text-gray-900 pr-4">Change nicknmae</legend>
-        <p class="text-sm text-gray-500">Changing your username can have unintended side effects.</p>
-        <div class="flex">
-          <div class="mt-4 text-sm">
-            <label for="password" class="font-medium text-gray-700">Nicknmae</label>
-            <div class="flex items-center space-x-4 mt-1">
-              <input
-                id="password"
-                name="password"
-                type="text"
-                class="block border-gray-300 py-1 rounded-md"
-                v-model="account.nickname"
-                :disabled="!isEdit"
-              />
-              <button
-                type="button"
-                @click="editAllow"
-                class="text-blue-600 hover:underline"
-              >{{ isEdit ? 'Save' : 'Edit' }}</button>
-            </div>
-            <span
-              class="text-xs text-gray-400"
-            >Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</span>
-          </div>
-          <div class="mr-20 ml-8 text-center relative group">
-            <figure class="w-32 h-32 border rounded-full">
-              <img alt="avatar" class="w-full h-full rounded-full" :src="account.avatar" />
-            </figure>
+        <legend class="font-medium text-gray-900 pr-4">Change usernmae</legend>
+        <div class="mt-4 text-sm">
+          <label for="username" class="font-medium text-gray-700">Username</label>
+          <div class="flex items-center space-x-4 mt-1">
+            <input
+              id="username"
+              name="username"
+              type="text"
+              class="block w-80 border-gray-300 py-1 rounded-md"
+              v-model="user.username"
+              :disabled="!editUsername"
+            />
             <button
               type="button"
-              class="absolute top-2 right-2 text-sm group-hover:inline-flex group-hover:bg-red-600 group-hover:text-white rounded-full items-center hidden"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
-              </svg>
-              <span class="sr-only">Delete</span>
-            </button>
+              @click="editAllow(1)"
+              class="text-blue-600 hover:underline"
+            >{{ editUsername ? 'Save' : 'Edit' }}</button>
           </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend class="font-medium text-gray-900 pr-4">Change usernmae</legend>
-        <p class="text-sm text-gray-500">Changing your username can have unintended side effects.</p>
-        <div class="mt-4">
-          <button
-            id="del_account"
-            name="del_account"
-            type="button"
-            class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
-          >Change usernmae</button>
-          <span class="text-xs text-gray-400 inline-flex items-center">
+          <span class="text-xs mt-1 text-gray-400 inline-flex items-center max-w-none">
             <svg
               width="14"
               height="14"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
               class="mr-1"
@@ -77,10 +36,51 @@
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
             </svg> Looking to manage account security settings? You can find them in the
             <RouterLink
-              to="/settings/secret"
+              to="/settings/security"
               class="text-blue-600 mx-1 hover:underline"
             >Account security</RouterLink>tab.
           </span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="font-medium text-gray-900 pr-4">Public email</legend>
+        <div class="mt-4 text-sm">
+          <label for="email" class="font-medium text-gray-700">Public email</label>
+          <div class="flex items-center space-x-4 mt-1">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="block w-80 border-gray-300 py-1 rounded-md"
+              v-model="user.email"
+              :disabled="!editEmail"
+            />
+            <button
+              type="button"
+              @click="editAllow(2)"
+              class="text-blue-600 hover:underline"
+            >{{ editEmail ? 'Save' : 'Edit' }}</button>
+          </div>
+          <span
+            class="text-xs text-gray-400"
+          >You can manage verified email addresses in your email settings.</span>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="font-medium text-gray-900 pr-4">Change phone number</legend>
+        <p
+          class="text-sm text-gray-500"
+        >Changing your phone number can have unintended side effects.</p>
+        <div class="mt-4">
+          <button
+            id="phone"
+            name="phone"
+            type="button"
+            class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
+          >Change phone number</button>
+          <span
+            class="text-xs text-gray-400"
+          >You can manage verified phone number in your phone number settings.</span>
         </div>
       </fieldset>
       <fieldset>
@@ -187,39 +187,74 @@
         >Are you sure you don’t want to just downgrade your account to a FREE account? We won’t charge your payment information anymore.</span>
       </fieldset>
     </div>
+    <Confirm :isShow="isShow" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
-import { Account } from '@/api/request'
+import { useRouter } from "vue-router";
 
-let isEdit = ref(false)
+import instance from "@/api";
+import { SERVER_URL, User } from '@/api/request'
 
-const account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
+import Confirm from "@/components/Confirm.vue"
 
-const editAllow = () => {
-  isEdit.value = !isEdit.value
-  if (!isEdit.value) {
-    alert('保存成功')
+let editEmail = ref(false)
+let editUsername = ref(false)
+let user = ref<User>({})
+
+let isShow = ref(false)
+
+const router = useRouter();
+
+const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+
+onMounted(() => {
+  fetch()
+})
+/**
+ * 查询
+ */
+const fetch = async (): Promise<void> => {
+  if (username.value && username.value.length > 0) {
+    await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => {
+      user.value = res.data
+    })
   }
 }
-
 /**
  * 提交
  */
 const onSubmit = async (): Promise<void> => {
-  if (account.username && account.username.length > 0) {
-    // let data = { ...account.value, modifier: username.value }
-    // await instance.delete(SERVER_URL.account, data).then((res) =>
-    //   account.value = res.data
-    // );
-    alert("删除成功")
+  if (username.value && username.value.length > 0) {
+    confirmOperate(true)
   }
 };
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
+const confirmOperate = (operate: boolean): void => {
+  isShow.value = operate;
+};
+/**
+ * confirm 提交
+ */
+const confirmCommit = async (): Promise<void> => {
+  await instance.delete(SERVER_URL.account.concat("/", username.value)).then(() => {
+    sessionStorage.clear()
+    router.replace({ path: "/signin" });
+  });
+  isShow.value = false;
+};
 
-onMounted(() => {
-  // fetch()
-})
+const editAllow = (no: number) => {
+  if (no == 1) {
+    editUsername.value = !editUsername.value
+  } else if (no == 2) {
+    editEmail.value = !editEmail.value
+  }
+}
 </script>

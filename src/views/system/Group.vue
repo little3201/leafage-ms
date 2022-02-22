@@ -63,7 +63,7 @@
                 <button
                   v-if="data.count > 0"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="relation"
+                  @click="previewOperation(true)"
                 >
                   <svg
                     width="16"
@@ -78,7 +78,7 @@
                   >
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
                   </svg>
-                  Accounts
+                  Members
                 </button>
               </Action>
             </td>
@@ -161,6 +161,92 @@
         </div>
       </form>
     </Model>
+    <Preview :isShow="isShow" @closeAction="previewOperation">
+      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group-members">
+        <thead>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
+            <th scope="col" class="px-4">Username</th>
+            <th scope="col" class="px-4">Nickname</th>
+            <th scope="col" class="px-4">Account Locked State</th>
+            <th scope="col" class="px-4">Account Expires At</th>
+            <th scope="col" class="px-4">Credentials Expires At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            v-for="(account, index) in accounts"
+            :key="index"
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
+            <td class="px-4">{{ account.username }}</td>
+            <td class="px-4">{{ account.nickname }}</td>
+            <td class="px-4">
+              <div
+                class="flex items-center justify-center"
+                :class="{ 'text-red-600': account.accountLocked, 'text-lime-600': !account.accountLocked }"
+              >
+                <svg
+                  v-if="account.accountLocked"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-lock"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-unlock text-lime-600"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+                </svg>
+              </div>
+            </td>
+            <td class="px-4">
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(account.accountExpiresAt) > new Date(), 'bg-red-500': new Date(account.accountExpiresAt) <= new Date() }"
+                ></span>
+                <span
+                  class="ml-2"
+                >{{ new Date(account.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+              </div>
+            </td>
+            <td class="px-4">
+              <div class="flex items-center justify-center">
+                <span
+                  class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(account.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(account.credentialsExpiresAt) <= new Date() }"
+                ></span>
+                <span
+                  class="ml-2"
+                >{{ new Date(account.credentialsExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </Preview>
   </div>
 </template>
 
@@ -172,6 +258,7 @@ import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
+import Preview from "@/components/Preview.vue";
 
 import instance from "@/api";
 import { SERVER_URL, Group, Account } from "@/api/request";
@@ -179,6 +266,7 @@ import { SERVER_URL, Group, Account } from "@/api/request";
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
+let isShow = ref(false)
 // 数据
 let groupData = ref({});
 let dataCode = ref("");
@@ -311,11 +399,16 @@ const modelCommit = async (): Promise<void> => {
   }
 };
 /**
- * 关联查询
+ * 预览
+ * @param show 是否展示
+ * @param code 代码
  */
-const relation = async (): Promise<void> => {
-  await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account")).then((res) => {
-    accounts.value = res.data;
-  });
+const previewOperation = async (show: boolean) => {
+  if (show) {
+    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account")).then((res) => {
+      accounts.value = res.data;
+    });
+  }
+  isShow.value = show
 }
 </script>

@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overViewed <= latest.overViewed, 'bg-red-600': over.overViewed > latest.overViewed }"
+                :class="{ 'bg-lime-500': over.overViewed <= 0, 'bg-red-600': over.overViewed > 0 }"
                 title="viewed higher than last month"
               >
                 {{ latest.overViewed }}%
@@ -58,7 +58,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overViewed > latest.overViewed"
+                    v-if="over.overViewed > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
@@ -92,7 +92,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overComment <= latest.overComment, 'bg-red-600': over.overComment > latest.overComment }"
+                :class="{ 'bg-lime-500': over.overComment <= 0, 'bg-red-600': over.overComment > 0 }"
                 title="2% Lower than last month"
               >
                 {{ latest.overComment }}%
@@ -107,7 +107,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overComment > latest.overComment"
+                    v-if="over.overComment > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
@@ -141,7 +141,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overLikes <= latest.overLikes, 'bg-red-600': over.overLikes > latest.overLikes }"
+                :class="{ 'bg-lime-500': over.overLikes <= 0, 'bg-red-600': over.overLikes > 0 }"
                 title="12% Higher than last month"
               >
                 {{ latest.overLikes }}%
@@ -156,7 +156,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overLikes > latest.overLikes"
+                    v-if="over.overLikes > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
@@ -206,7 +206,7 @@
               <thead>
                 <tr class="bg-gray-100 uppercase text-center text-sm">
                   <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                  <th scope="col" class="px-3">Name</th>
+                  <th scope="col" class="px-3">Nickname</th>
                   <th scope="col" class="px-3">Posts</th>
                   <th scope="col" class="px-3">Content</th>
                 </tr>

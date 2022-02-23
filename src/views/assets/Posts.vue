@@ -251,6 +251,7 @@
                 placeholder="write with markdown..."
               ></textarea>
               <div
+                ref="rendedHtmlRef"
                 v-else
                 class="p-2 prose overflow-y-auto w-full"
                 v-html="rendedHtml"
@@ -261,7 +262,7 @@
       </form>
     </Model>
     <Preview :isShow="view.isShow" @closeAction="previewOperation">
-      <img src="view.url" />
+      <img :src="view.url" class="rounded-md w-full h-full" width="640" height="427" />
     </Preview>
   </div>
 </template>
@@ -281,6 +282,8 @@ import instance from "@/api";
 import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
 import marked from "@/plugins/markdown";
 import { uploadFile } from "@/plugins/upload";
+
+let rendedHtmlRef = ref<HTMLElement | null>()
 
 // 分页参数
 let page = ref(0);
@@ -467,10 +470,30 @@ const uploadImage = (files: Array<File>): void => {
  */
 const rendedHtml = computed(() => {
   if (content.value) {
-    return marked.parse(content.value);
+    return marked.parse(content.value).replace(/href="/gi, 'target="_blank" href="');
   }
   return "";
 });
+
+const addImageClickListener = () => {
+  rendedHtmlRef.value && rendedHtmlRef.value.imgs();
+
+  //   const { imgs = [] } = this;
+  //   if (imgs.length > 0) {
+  //     for (let i = 0, len = imgs.length; i < len; i++) {
+  //       imgs[i].onclick = null;
+  //     }
+  //   }
+  //   setTimeout(() => {
+  //     this.imgs = this.$refs.preview.querySelectorAll('img');
+  //     for (let i = 0, len = this.imgs.length; i < len; i++) {
+  //       this.imgs[i].onclick = () => {
+  //         const src = this.imgs[i].getAttribute('src');
+  //         previewOperation(true, src);
+  //       };
+  //     }
+  //   }, 600);
+}
 /**
  * 预览
  * @param show 是否展示

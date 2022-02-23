@@ -7,7 +7,7 @@
                 <span class="inline-block align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                 <div
-                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden sm:align-middle max-w-5xl"
+                    class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden sm:align-middle md:max-w-lg lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl"
                 >
                     <button
                         type="button"
@@ -30,7 +30,7 @@
                         </svg>
                     </button>
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
+                        <div class="sm:flex sm:items-start overflow-x-auto">
                             <slot></slot>
                         </div>
                     </div>

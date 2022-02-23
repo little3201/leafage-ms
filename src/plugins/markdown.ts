@@ -29,37 +29,9 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('sh', shell)
 hljs.registerLanguage('xml', xml);
 
-let rendererMD = new marked.Renderer()
-
-//重写a标签，在新标签打开
-rendererMD.link = function (href: string, title: string, text: string) {
-  if (href === null) {
-    return text;
-  }
-  let out = '<a href="' + escape(href) + '"' + '" target="_blank"';
-  if (title) {
-    out += ' title="' + title + '"';
-  }
-  out += ">" + text + "</a>";
-  return out;
-}
-
-rendererMD.image = function (href, title, text) {
-  if (href === null) {
-    return text;
-  }
-  debugger
-  let out = '<img src="' + href + '" alt="' + text + '"' + '@dbclick="previewOperation(' + true + ', "' + href + '")"';
-  if (title) {
-    out += ' title="' + title + '"';
-  }
-  out += this.options.xhtml ? "/>" : ">";
-  return out;
-}
-
 marked.setOptions({
-  renderer: rendererMD,
-  highlight: function (code, lang) {
+  renderer: new marked.Renderer(),
+  highlight: function (code: string, lang: string) {
     const language = hljs.getLanguage(lang) ? lang : 'sh';
     return hljs.highlight(code, { language }).value;
   },
@@ -68,8 +40,7 @@ marked.setOptions({
   breaks: true,
   sanitize: false,
   smartLists: true,
-  smartypants: false,
-  xhtml: false
+  xhtml: true
 })
 
 export default marked

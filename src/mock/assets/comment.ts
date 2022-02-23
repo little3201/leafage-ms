@@ -7,7 +7,7 @@ const datas: Array<Comment> = [];
 
 for (let i = 0; i < 19; i++) {
     datas.push({
-        code: Random.id(),
+        code: Random.string('number', 9),
         nickname: Random.cname(),
         avatar: Random.image('32x32'),
         posts: Random.word(),

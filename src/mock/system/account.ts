@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
 
-import { Account, AccountDetail } from '@/api/request'
+import { AccountDetail } from '@/api/request'
 import { parse } from '@/api/util';
 
 const datas: Array<AccountDetail> = [];
@@ -10,10 +10,9 @@ for (let i = 0; i < 139; i++) {
     username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
-    accountExpiresAt: Random.datetime(),
+    accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: Random.datetime(),
-    modifyTime: Random.date()
+    credentialsExpiresAt: Random.date()
   })
 }
 

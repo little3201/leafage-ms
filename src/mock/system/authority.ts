@@ -451,7 +451,7 @@ const roleDatas: Array<Role> = [];
 
 for (let i = 0; i < 9; i++) {
   roleDatas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     name: Random.word(),
     superior: Random.word(),
     count: Random.integer(1, 99),

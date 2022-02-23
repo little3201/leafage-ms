@@ -37,8 +37,7 @@ export interface Account {
 export interface AccountDetail extends Account {
   accountExpiresAt: Date,
   accountLocked: boolean,
-  credentialsExpiresAt: Date,
-  modifyTime: Date
+  credentialsExpiresAt: Date
 }
 
 export interface User {
@@ -116,13 +115,13 @@ export interface Posts extends AbstractVO<String> {
   title: string,
   cover: string,
   category: string,
+  tags: Array<String>,
   viewed: number,
   likes: number,
   comment: number
 }
 
-export interface PostsDetails extends Posts {
-  tags: Array<String>,
+export interface PostsDetails {
   content: string
 }
 

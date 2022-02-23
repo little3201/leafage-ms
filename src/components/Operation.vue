@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import * as XLSX from 'xlsx'
+import { utils, write } from 'xlsx'
 
 import { Account } from "@/api/request";
 
@@ -106,7 +106,7 @@ onMounted(() => {
 
 const exportFile = () => {
   // 将由对象组成的数组转化成sheet
-  const sheet = XLSX.utils.json_to_sheet(props.datas)
+  const sheet = utils.json_to_sheet(props.datas)
   // 百分数和数字更改为数字类型
   Object.keys(sheet).forEach((key) => {
     if (sheet[key].v) {
@@ -125,9 +125,9 @@ const exportFile = () => {
     }
   })
   // 创建虚拟的workbook
-  const wb = XLSX.utils.book_new()
+  const wb = utils.book_new()
   // 把sheet添加到workbook中
-  XLSX.utils.book_append_sheet(wb, sheet, props.fileName)
+  utils.book_append_sheet(wb, sheet, props.fileName)
   const workbookBlob = workbook2blob(wb)
   openDownload(workbookBlob, `${props.fileName}.xlsx`)
 }
@@ -137,11 +137,11 @@ const workbook2blob = (workbook) => {
   const wopts = {
     // 要生成的文件类型
     bookType: 'xlsx',
-    // // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+    // 是否生成 Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
     bookSST: false,
     type: 'binary',
   }
-  const wbout = XLSX.write(workbook, wopts)
+  const wbout = write(workbook, wopts)
   // 将字符串转ArrayBuffer
   function s2ab(s: string) {
     const buf = new ArrayBuffer(s.length)

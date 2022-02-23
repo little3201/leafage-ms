@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'resource'" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">

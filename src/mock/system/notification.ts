@@ -7,7 +7,7 @@ const datas: Array<Notification> = [];
 
 for (let i = 0; i < 36; i++) {
     datas.push({
-        code: Random.id(),
+        code: Random.string('number', 9),
         title: Random.ctitle(),
         content: Random.cparagraph(),
         modifyTime: new Date()

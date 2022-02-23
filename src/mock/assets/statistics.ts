@@ -6,7 +6,7 @@ const datas: Array<Statistics> = [];
 
 for (let i = 0; i < 7; i++) {
     datas.push({
-        code: Random.id(),
+        code: Random.string('number', 9),
         date: Random.date(),
         viewed: Random.integer(100, 10000),
         overViewed: Random.float(1, 100, 1, 2),

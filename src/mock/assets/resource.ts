@@ -7,7 +7,7 @@ const datas: Array<Resource> = [];
 
 for (let i = 0; i < 79; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     title: Random.ctitle(),
     cover: Random.image('176x224'),
     category: Random.word(),

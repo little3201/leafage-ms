@@ -84,9 +84,7 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 grid-rows-3 gap-4">
           <div class="col-span-12 sm:col-span-7">
-            <label for="title">
-              Title
-            </label>
+            <label for="title">Title</label>
             <input
               id="title"
               name="title"
@@ -100,7 +98,25 @@
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
             <label for="cover">Cover</label>
-            <figure v-if="resourceData.cover" class="w-44 h-56">
+            <figure v-if="resourceData.cover" class="w-44 h-56 relative group">
+              <div
+                class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
+              >
+                <button type="button" class="text-white focus:outline-none">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
+                  </svg>
+                </button>
+              </div>
               <img
                 id="cover"
                 :src="resourceData.cover"
@@ -149,9 +165,7 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="category" class="inline-flex items-center">
-              Category
-            </label>
+            <label for="category" class="inline-flex items-center">Category</label>
             <select
               id="category"
               name="category"
@@ -168,9 +182,7 @@
             </select>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="type" class="inline-flex items-center">
-              Type
-            </label>
+            <label for="type" class="inline-flex items-center">Type</label>
             <select
               id="type"
               name="type"

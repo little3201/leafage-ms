@@ -1,13 +1,13 @@
 import { Random } from 'mockjs'
 
-import { Group, Account } from '@/api/request'
+import { Group, AccountDetail } from '@/api/request'
 import { parse } from '@/api/util';
 
 const datas: Array<Group> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     name: Random.word(),
     alias: Random.word(),
     superior: Random.word(),
@@ -18,17 +18,16 @@ for (let i = 0; i < 39; i++) {
   })
 }
 
-const accounts: Array<Account> = []
+const accounts: Array<AccountDetail> = []
 
 for (let i = 0; i < 5; i++) {
   accounts.push({
-    username: Random.name(),
+    username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
     accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: Random.date(),
-    modifyTime: Random.date()
+    credentialsExpiresAt: Random.date()
   })
 }
 

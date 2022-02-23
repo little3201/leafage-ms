@@ -7,7 +7,7 @@ const datas: Array<Role> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     name: Random.word(),
     superior: Random.word(),
     count: Random.integer(0, 99),

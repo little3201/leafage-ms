@@ -7,7 +7,7 @@ const datas: Array<Category> = [];
 
 for (let i = 0; i < 19; i++) {
   datas.push({
-    code: Random.id(),
+    code: Random.string('number', 9),
     alias: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(5),

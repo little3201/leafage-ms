@@ -28,28 +28,28 @@
                 class="text-xs text-gray-400"
               >Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</span>
             </div>
-            <div class="mr-20 ml-8 text-center relative">
-              <figure class="w-32 h-32 border rounded-full">
+            <div class="mr-20 ml-8 text-center">
+              <figure class="w-32 h-32 border rounded-full relative group">
+                <div
+                  class="absolute w-full h-full rounded-full bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
+                >
+                  <button title="delete" type="button" class="text-white focus:outline-none">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
+                    </svg>
+                  </button>
+                </div>
                 <img alt="avatar" class="w-full h-full rounded-full" :src="account.avatar" />
               </figure>
-              <button
-                title="delete"
-                type="button"
-                class="absolute top-2.5 right-2.5 inline-flex bg-red-600 text-white rounded-full items-center"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
-                </svg>
-              </button>
             </div>
           </div>
         </fieldset>

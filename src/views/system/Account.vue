@@ -21,7 +21,7 @@
         </svg>
         Reload Data
       </button>
-      <Operation :needAdd="false" />
+      <Operation :needAdd="false" :datas="datas" :fileName="'account'" />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="account">

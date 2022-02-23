@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import { utils, write } from 'xlsx'
+import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
 import { Account } from "@/api/request";
 
@@ -85,7 +85,7 @@ const props = defineProps({
   },
   fileName: {
     type: String,
-    default: 'export'
+    default: 'sheet1'
   }
 });
 
@@ -106,7 +106,7 @@ onMounted(() => {
 
 const exportFile = () => {
   // 将由对象组成的数组转化成sheet
-  const sheet = utils.json_to_sheet(props.datas)
+  const sheet: WorkSheet = utils.json_to_sheet(props.datas, { cellDates: true })
   // 百分数和数字更改为数字类型
   Object.keys(sheet).forEach((key) => {
     if (sheet[key].v) {
@@ -125,19 +125,18 @@ const exportFile = () => {
     }
   })
   // 创建虚拟的workbook
-  const wb = utils.book_new()
+  const wb: WorkBook = utils.book_new()
   // 把sheet添加到workbook中
   utils.book_append_sheet(wb, sheet, props.fileName)
   const workbookBlob = workbook2blob(wb)
   openDownload(workbookBlob, `${props.fileName}.xlsx`)
 }
 
-const workbook2blob = (workbook) => {
+const workbook2blob = (workbook: WorkBook) => {
   // 生成excel的配置项
   const wopts = {
     // 要生成的文件类型
     bookType: 'xlsx',
-    // 是否生成 Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
     bookSST: false,
     type: 'binary',
   }
@@ -149,24 +148,20 @@ const workbook2blob = (workbook) => {
     for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
     return buf
   }
-  const blob = new Blob([s2ab(wbout)], {
-    type: 'application/octet-stream',
-  })
-  return blob
+  return new Blob([s2ab(wbout)], { type: 'application/octet-stream' })
 }
 
-const openDownload = (blob, fileName) => {
+const openDownload = (blob: Blob | string, fileName: string) => {
   if (typeof blob === 'object' && blob instanceof Blob) {
     blob = URL.createObjectURL(blob) // 创建blob地址
   }
   const aLink = document.createElement('a')
   aLink.href = blob
-  // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，有时候 file:///模式下不会生效
   aLink.download = fileName || ''
-  let event
-  if (window.MouseEvent) event = new MouseEvent('click')
-  //   移动端
-  else {
+  let event: MouseEvent
+  if (window.MouseEvent) {
+    event = new MouseEvent('click')
+  } else {
     event = document.createEvent('MouseEvents')
     event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
   }

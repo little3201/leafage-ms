@@ -50,6 +50,7 @@ export interface User {
   birthday: Date,
   ethnicity: string,
   degree: string,
+  hobbies: string,
   company: string,
   position: string
 }

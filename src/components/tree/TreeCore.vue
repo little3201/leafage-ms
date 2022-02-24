@@ -6,6 +6,7 @@
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
+        :indeterminate="data.children.length > 0"
         v-model="checked"
         @click="track(data)"
       />

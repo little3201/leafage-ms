@@ -59,12 +59,18 @@ const track = (node: TreeNode) => {
   } else {
     checked.value.splice(checked.value.indexOf(node.code), 1)
   }
-  recurrence(node.children, isCheck)
+  let parents = recurrenceParents(node.code, props.datas)
+  if(isCheck){
+    checked.value.concat(parents)
+  }
+  recurrenceChildren(node.children, isCheck)
 }
 /**
- * 递归
+ * 递归子节点
+ * @param children 子节点 
+ * @param isCheck 是否勾选 
  */
-const recurrence = (children: Array<TreeNode>, isCheck: boolean) => {
+const recurrenceChildren = (children: Array<TreeNode>, isCheck: boolean) => {
   if (children && children.length > 0) {
     children.forEach((item: TreeNode) => {
       if (isCheck) {
@@ -74,8 +80,26 @@ const recurrence = (children: Array<TreeNode>, isCheck: boolean) => {
       } else {
         checked.value.splice(checked.value.indexOf(item.code), 1)
       }
-      recurrence(item.children, isCheck)
+      recurrenceChildren(item.children, isCheck)
     })
+  }
+}
+/**
+ * 递归父节点
+ * @param code 当前节点
+ * @param datas 所有tree数据
+ */
+const recurrenceParents = (code: string, datas: Array<TreeNode>) => {
+  for (let i = 0; i < datas.length; i++) {
+    if (datas[i].code === code) {
+      return []
+    }
+    if (datas[i].children && datas[i].children.length > 0) {
+      let codes = recurrenceParents(code, datas[i].children)
+      if (codes) {
+        return codes.concat(datas[i].code)
+      }
+    }
   }
 }
 </script>

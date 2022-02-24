@@ -151,15 +151,44 @@
                     v-model="user.degree"
                   >
                     <option value="undefined">---请选择---</option>
-                    <option value="A">小学</option>
-                    <option value="B">初中</option>
-                    <option value="C">高中</option>
-                    <option value="D">中专</option>
-                    <option value="E">大专</option>
-                    <option value="F">本科</option>
-                    <option value="G">硕士</option>
-                    <option value="H">博士</option>
+                    <option>小学</option>
+                    <option>初中</option>
+                    <option>高中</option>
+                    <option>中专</option>
+                    <option>大专</option>
+                    <option>本科</option>
+                    <option>硕士</option>
+                    <option>博士</option>
                   </select>
+                </div>
+              </div>
+              <div class="flex space-x-4 text-sm">
+                <div>
+                  <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
+                  <select
+                    id="ethnicity"
+                    name="ethnicity"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.ethnicity"
+                  >
+                    <option value="undefined">---请选择---</option>
+                    <option>汉族</option>
+                    <option>藏族</option>
+                    <option>彝族</option>
+                    <option>蒙古族</option>
+                    <option>苗族</option>
+                    <option>哈萨克族</option>
+                  </select>
+                </div>
+                <div class="w-full">
+                  <label for="hobbies" class="font-medium text-gray-700">Hobbies</label>
+                  <input
+                    id="hobbies"
+                    name="hobbies"
+                    type="text"
+                    class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                    v-model="user.hobbies"
+                  />
                 </div>
               </div>
               <div class="flex space-x-4 text-sm">

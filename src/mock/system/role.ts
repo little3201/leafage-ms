@@ -50,17 +50,17 @@ export default [
       let url = options.url
       if (url.split('?').length == 1) {
         let path = url.substring(url.lastIndexOf('/') + 1)
-        if (path === 'role') {
-          return datas.slice(1, 6)
-        } else if (path === 'authority') {
+        if (path === 'authority') {
           return authorities
+        } else if (path === 'role') {
+          return datas.slice(0, 6)
+        } else {
+          let code = path
+          return datas.filter(item => item.code === code)[0]
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
-      } else {
-        let code = url.substring(url.lastIndexOf('/') + 1)
-        return datas.filter(item => item.code === code)[0]
       }
     }
   },

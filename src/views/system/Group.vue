@@ -128,7 +128,7 @@
               v-model.lazy="groupData.superior"
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -145,7 +145,7 @@
               v-model.lazy="groupData.principal"
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="(account, index) in accounts"
                 :key="index"

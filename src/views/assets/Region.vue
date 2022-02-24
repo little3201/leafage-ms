@@ -21,7 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'region'" />
+      <Operation
+        @click.capture="dataCode = ''"
+        @modelOperate="modelOperate"
+        :datas="datas"
+        :fileName="'region'"
+      />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
@@ -116,9 +121,8 @@
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
               v-model="regionData.superior"
-              @click="retrieveSuperior(regionData.code)"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -164,7 +168,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
@@ -187,6 +191,12 @@ let superiors = ref<Array<Region>>([]);
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
+
+watch(() => regionData.code, (newValue: number, oldValue: number) => {
+  if (newValue != oldValue) {
+    setTimeout(() => retrieveSuperior(newValue), 300)
+  }
+})
 
 onMounted(() => {
   retrieve();
@@ -261,8 +271,13 @@ const modelOperate = async (operate: boolean): Promise<void> => {
  * @param code 代码
  */
 const retrieveSuperior = async (code: number) => {
-  if (code > 100) {
-    await instance.get(SERVER_URL.region.concat("/", Math.floor(code / 10000) + "/lower")).then((res) => {
+  let superior = 0
+  if (code > 1000) {
+    superior = Math.floor(code / 100)
+    if (code > 110000000) {
+      superior = Math.floor(code / 1000)
+    }
+    await instance.get(SERVER_URL.region.concat("/", superior + "/lower")).then((res) => {
       superiors.value = res.data;
     })
   }

@@ -10,6 +10,7 @@ for (let i = 0; i < 36; i++) {
         code: Random.string('number', 9),
         title: Random.ctitle(),
         content: Random.cparagraph(),
+        receiver: Random.cname(),
         modifyTime: new Date()
     })
 }

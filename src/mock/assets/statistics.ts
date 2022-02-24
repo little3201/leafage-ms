@@ -14,7 +14,6 @@ for (let i = 0; i < 7; i++) {
         overLikes: Random.float(1, 100, 1, 2),
         comment: Random.integer(100, 10000),
         overComment: Random.float(1, 100, 1, 2),
-        description: Random.csentence(5),
         modifyTime: Random.date()
     })
 }

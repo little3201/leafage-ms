@@ -447,10 +447,10 @@ const treeDatas = [
   }
 ]
 
-const roleDatas: Array<Role> = [];
+const roles: Array<Role> = [];
 
 for (let i = 0; i < 9; i++) {
-  roleDatas.push({
+  roles.push({
     code: Random.string('number', 9),
     name: Random.word(),
     superior: Random.word(),
@@ -480,16 +480,19 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) !== "role") {
-        return datas.slice(0, 6)
+      if (url.split('?').length == 1) {
+        let path = url.substring(url.lastIndexOf('/') + 1)
+        if (path === "authority") {
+          return datas.slice(0, 6)
+        } else if (path === "role") {
+          return roles
+        } else {
+          let code = url.substring(url.lastIndexOf('/') + 1)
+          return datas.filter(item => item.code === code)[0]
+        }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
-      } else if (url.substring(url.lastIndexOf('/') + 1) === "role") {
-        return roleDatas
-      } else {
-        let code = url.substring(url.lastIndexOf('/') + 1)
-        return datas.filter(item => item.code === code)[0]
       }
     },
   },

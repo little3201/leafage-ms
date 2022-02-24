@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import { utils, write } from 'xlsx'
+import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
 import { Account } from "@/api/request";
 
@@ -85,15 +85,11 @@ const props = defineProps({
   },
   fileName: {
     type: String,
-    default: 'export'
+    default: 'export_file'
   }
 });
 
 const emit = defineEmits(["modelOperate"]);
-
-const operate = () => {
-  emit("modelOperate", true);
-};
 
 const account = ref<Account>({})
 
@@ -103,73 +99,50 @@ onMounted(() => {
     account.value = JSON.parse(data);
   }
 })
-
+/**
+ * add 操作
+ */
+const operate = () => {
+  emit("modelOperate", true);
+};
+/**
+ * 数据写入excel并转换成二进制，下载文件
+ */
 const exportFile = () => {
-  // 将由对象组成的数组转化成sheet
-  const sheet = utils.json_to_sheet(props.datas)
-  // 百分数和数字更改为数字类型
-  Object.keys(sheet).forEach((key) => {
-    if (sheet[key].v) {
-      const val = sheet[key].v
-      if (!isNaN(val)) {
-        sheet[key].t = 'n'
-      }
-      if (typeof val !== 'number') {
-        if (val.lastIndexOf('%') === val.length - 1) {
-          sheet[key].t = 'n'
-          sheet[key].z = '0.00%'
-          sheet[key].v = Number(val.substring(0, val.length - 1)) / 100
-        }
-      }
-
-    }
-  })
-  // 创建虚拟的workbook
-  const wb = utils.book_new()
+  const sheet: WorkSheet = utils.json_to_sheet(props.datas, { cellDates: true })
+  const wb: WorkBook = utils.book_new()
   // 把sheet添加到workbook中
-  utils.book_append_sheet(wb, sheet, props.fileName)
-  const workbookBlob = workbook2blob(wb)
-  openDownload(workbookBlob, `${props.fileName}.xlsx`)
-}
+  utils.book_append_sheet(wb, sheet, 'sheet1')
 
-const workbook2blob = (workbook) => {
-  // 生成excel的配置项
-  const wopts = {
-    // 要生成的文件类型
-    bookType: 'xlsx',
-    // 是否生成 Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
-    bookSST: false,
-    type: 'binary',
-  }
-  const wbout = write(workbook, wopts)
-  // 将字符串转ArrayBuffer
-  function s2ab(s: string) {
-    const buf = new ArrayBuffer(s.length)
-    const view = new Uint8Array(buf)
-    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
-    return buf
-  }
-  const blob = new Blob([s2ab(wbout)], {
-    type: 'application/octet-stream',
-  })
-  return blob
-}
+  const blob: Blob = new Blob([str2buffer(write(wb, { type: 'binary' }))], { type: 'application/octet-stream' })
 
-const openDownload = (blob, fileName) => {
-  if (typeof blob === 'object' && blob instanceof Blob) {
-    blob = URL.createObjectURL(blob) // 创建blob地址
-  }
-  const aLink = document.createElement('a')
-  aLink.href = blob
-  // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，有时候 file:///模式下不会生效
-  aLink.download = fileName || ''
-  let event
-  if (window.MouseEvent) event = new MouseEvent('click')
-  //   移动端
-  else {
+  downloadFile(blob, `${props.fileName}.xlsx`)
+}
+/**
+ * 将字符串转字节流
+ * @param str 数据内容
+ */
+const str2buffer = (str: string) => {
+  const buf = new ArrayBuffer(str.length)
+  const view = new Uint8Array(buf)
+  for (let i = 0; i !== str.length; ++i) view[i] = str.charCodeAt(i) & 0xff
+  return buf
+}
+/**
+ * 模拟鼠标点击，下载文件
+ * @param blob 字节流
+ * @param fileName 输出文件名
+ */
+const downloadFile = (blob: Blob, fileName: string) => {
+  const anchor: HTMLAnchorElement = document.createElement('a')
+  anchor.href = URL.createObjectURL(blob)
+  anchor.download = fileName || ''
+  let event: MouseEvent
+  if (window.MouseEvent) {
+    event = new MouseEvent('click')
+  } else {
     event = document.createEvent('MouseEvents')
-    event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
   }
-  aLink.dispatchEvent(event)
+  anchor.dispatchEvent(event)
 }
 </script>

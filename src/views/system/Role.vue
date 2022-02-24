@@ -21,7 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'role'" />
+      <Operation
+        @click.capture="dataCode = ''"
+        @modelOperate="modelOperate"
+        :datas="datas"
+        :fileName="'role'"
+      />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
@@ -112,7 +117,7 @@
               v-model="roleData.superior"
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="superior in superiors"
                 :key="superior.code"
@@ -235,7 +240,7 @@ const modelOperate = async (operate: boolean) => {
     roleData.value = {};
     await Promise.all([
       fetch(),
-      instance.get(SERVER_URL.role).then((res) => {
+      await instance.get(SERVER_URL.role).then((res) => {
         superiors.value = res.data;
       }),
     ]);

@@ -14,7 +14,6 @@ for (let i = 0; i < 19; i++) {
         content: Random.cparagraph(2),
         email: Random.email(),
         replier: Random.cname(),
-        description: Random.csentence(5),
         modifyTime: Random.date()
     })
 }

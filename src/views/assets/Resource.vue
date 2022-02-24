@@ -21,7 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'resource'" />
+      <Operation
+        @click.capture="dataCode = ''"
+        @modelOperate="modelOperate"
+        :datas="datas"
+        :fileName="'resource'"
+      />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
@@ -102,7 +107,12 @@
               <div
                 class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
               >
-                <button type="button" class="text-white focus:outline-none">
+                <button
+                  title="remove"
+                  type="button"
+                  @click="removeCover"
+                  class="text-white focus:outline-none"
+                >
                   <svg
                     width="24"
                     height="24"
@@ -172,7 +182,7 @@
               v-model="resourceData.category"
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="category in categories"
                 :key="category.code"
@@ -189,7 +199,7 @@
               v-model="resourceData.type"
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option value="E">Epub</option>
               <option value="P">Pdf</option>
               <option value="T">Txt</option>
@@ -248,6 +258,12 @@ onMounted(() => {
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
+};
+/**
+ * 删除封面图
+ */
+const removeCover = (): void => {
+  resourceData.value.cover = '';
 };
 /**
  * 查询列表

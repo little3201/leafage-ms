@@ -64,16 +64,19 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      if (url.split('?').length == 1 && url.substring(url.lastIndexOf('/') + 1) !== "account") {
-        return datas.slice(1, 6)
+      if (url.split('?').length == 1) {
+        let path = url.substring(url.lastIndexOf('/') + 1)
+        if (path === "account") {
+          return accounts
+        } else if (path === 'group') {
+          return datas.slice(0, 6)
+        } else {
+          let code = path
+          return datas.filter(item => item.code === code)[0]
+        }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
         return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
-      } else if (url.substring(url.lastIndexOf('/') + 1) === "account") {
-        return accounts
-      } else {
-        let code = url.substring(url.lastIndexOf('/') + 1)
-        return datas.filter(item => item.code === code)[0]
       }
     }
   },

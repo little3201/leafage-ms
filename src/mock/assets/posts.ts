@@ -15,12 +15,12 @@ for (let i = 0; i < 79; i++) {
     viewed: Random.integer(1, 900),
     likes: Random.integer(100, 899),
     comment: Random.integer(1, 100),
-    description: Random.csentence(5),
     modifyTime: Random.date()
   })
 }
 
 const postsDetails: PostsDetails = {
+  catalog: Random.csentence(),
   content: Random.cparagraph()
 }
 
@@ -42,8 +42,7 @@ export default [
         return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
       } else if (url.substring(url.lastIndexOf('/') + 1) === "content") {
         return postsDetails
-      }
-      else {
+      } else {
         let code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]
       }

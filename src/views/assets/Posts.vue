@@ -21,7 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'posts'" />
+      <Operation
+        @click.capture="dataCode = ''"
+        @modelOperate="modelOperate"
+        :datas="datas"
+        :fileName="'posts'"
+      />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
@@ -95,7 +100,7 @@
               <div
                 class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
               >
-                <button type="button" class="text-white focus:outline-none">
+                <button type="button" @click="removeCover" class="text-white focus:outline-none">
                   <svg
                     width="24"
                     height="24"
@@ -118,41 +123,40 @@
                 height="128"
               />
             </figure>
-            <div v-else>
-              <div
-                class="h-36 mt-1 rounded-md border border-gray-300 flex items-center px-12 justify-center"
-              >
-                <div class="text-gray-600 text-center">
-                  <label
-                    for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+            <div
+              v-else
+              class="h-32 mt-1 rounded-md border border-gray-300 flex items-center justify-center"
+            >
+              <div class="text-gray-600 text-center">
+                <label
+                  for="file-upload"
+                  class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+                >
+                  <svg
+                    class="mx-auto h-8 w-8"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
                   >
-                    <svg
-                      class="mx-auto h-8 w-8"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 48 48"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    <input
-                      id="file-upload"
-                      name="posts_cover"
-                      type="file"
-                      class="sr-only"
-                      accept="image/png, image/jpeg, image/jpg"
-                      @change="uploadImage($event.target.files)"
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
-                  </label>
+                  </svg>
+                  <input
+                    id="file-upload"
+                    name="posts_cover"
+                    type="file"
+                    class="sr-only"
+                    accept="image/png, image/jpeg, image/jpg"
+                    @click="uploadImage($event.target.files)"
+                  />
                   <p class="text-xs text-gray-500">png, jpeg, jpg</p>
                   <p class="text-xs text-gray-500">up to 2MB</p>
-                </div>
+                </label>
               </div>
             </div>
           </div>
@@ -178,7 +182,7 @@
               required
               class="mt-1 w-full block rounded-md border-gray-300"
             >
-              <option value="undefined">请选择</option>
+              <option value="undefined">---请选择---</option>
               <option
                 v-for="category in categories"
                 :key="category.code"
@@ -274,7 +278,7 @@
       </form>
     </Model>
     <Preview :isShow="view.isShow" @closeAction="previewOperation">
-      <img :src="view.url" class="rounded-md w-full h-full" width="640" height="427" />
+      <img :src="view.url" alt="preview" class="rounded-md w-full h-full" width="640" height="427" />
     </Preview>
   </div>
 </template>
@@ -291,11 +295,12 @@ import Model from "@/components/Model.vue";
 import Preview from "@/components/Preview.vue";
 
 import instance from "@/api";
-import { SERVER_URL, Posts, PostsDetails, Category } from "@/api/request";
+import { SERVER_URL, Posts, Category } from "@/api/request";
 import marked from "@/plugins/markdown";
 import { uploadFile } from "@/plugins/upload";
 
-let rendedHtmlRef = ref<HTMLElement | null>()
+// 模板引用
+let rendedHtmlRef = ref<HTMLElement>()
 
 // 分页参数
 let page = ref(0);
@@ -309,11 +314,13 @@ let isEdit = ref(false);
 let isDel = ref(false);
 let preview = ref(false);
 // 数据
-let postsData = ref<PostsDetails>({});
+let postsData = ref<Posts>({});
+
 let dataCode = ref("");
-let categories = ref<Array<Category>>([]);
 let content = ref("");
+
 let datas = ref<Array<Posts>>([]);
+let categories = ref<Array<Category>>([]);
 
 let view = reactive({
   isShow: false,
@@ -331,6 +338,12 @@ onMounted(() => {
 const setPage = (p: number, s: number): void => {
   page.value = p;
   size.value = s;
+};
+/**
+ * 删除封面图
+ */
+const removeCover = (): void => {
+  postsData.value.cover = '';
 };
 /**
  * 查询列表

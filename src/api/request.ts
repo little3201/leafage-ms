@@ -48,22 +48,22 @@ export interface User {
   phone: string,
   email: string,
   birthday: Date,
+  ethnicity: string,
   degree: string,
   company: string,
-  position: string,
-  description: string
+  position: string
 }
 
 interface AbstractVO<T> {
   code: T,
-  description: string,
   modifyTime: Date
 }
 
 export interface Role extends AbstractVO<String> {
   name: string,
   superior: string,
-  count: number
+  count: number,
+  description: string
 }
 
 export interface Group extends AbstractVO<String> {
@@ -71,7 +71,8 @@ export interface Group extends AbstractVO<String> {
   alias: string,
   superior: string,
   principal: string,
-  count: number
+  count: number,
+  description: string
 }
 
 export interface Authority extends AbstractVO<String> {
@@ -80,7 +81,8 @@ export interface Authority extends AbstractVO<String> {
   icon: string,
   superior: string,
   path: string,
-  count: number
+  count: number,
+  description: string
 }
 
 export interface Region extends AbstractVO<Number> {
@@ -88,14 +90,14 @@ export interface Region extends AbstractVO<Number> {
   superior: string,
   alias: string,
   postalCode: number,
-  areaCode: string
+  areaCode: string,
+  description: string
 }
 
-export interface Notification {
-  code:string,
+export interface Notification extends AbstractVO<String> {
   title: string,
   content: string,
-  modifyTime: Date
+  receiver: string
 }
 
 export interface TreeNode {
@@ -108,7 +110,8 @@ export interface TreeNode {
 
 export interface Category extends AbstractVO<String> {
   alias: string,
-  count: number
+  count: number,
+  description: string
 }
 
 export interface Posts extends AbstractVO<String> {
@@ -122,6 +125,7 @@ export interface Posts extends AbstractVO<String> {
 }
 
 export interface PostsDetails {
+  catalog: string,
   content: string
 }
 
@@ -131,7 +135,8 @@ export interface Resource extends AbstractVO<String> {
   cover: string,
   category: string,
   viewed: number,
-  downloads: number
+  downloads: number,
+  description: string
 }
 
 export interface Comment extends AbstractVO<String> {

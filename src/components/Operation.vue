@@ -130,7 +130,7 @@ const str2buffer = (str: string) => {
 }
 /**
  * 模拟鼠标点击，下载文件
- * @param blob 二进制数
+ * @param blob 字节流
  * @param fileName 输出文件名
  */
 const downloadFile = (blob: Blob, fileName: string) => {

@@ -9,7 +9,7 @@ for (let i = 0; i < 79; i++) {
   datas.push({
     code: Random.string('number', 9),
     title: Random.ctitle(),
-    cover: "https://cdn.leafage.top/logo.svg",
+    cover: Random.image('198x128'),
     category: Random.word(),
     tags: Random.range(1, 8),
     viewed: Random.integer(1, 900),

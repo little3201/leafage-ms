@@ -194,7 +194,7 @@ let total = ref(0);
 
 watch(() => regionData.code, (newValue: number, oldValue: number) => {
   if (newValue != oldValue) {
-    retrieveSuperior(newValue)
+    setTimeout(() => retrieveSuperior(newValue), 300)
   }
 })
 

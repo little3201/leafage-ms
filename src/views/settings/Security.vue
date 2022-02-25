@@ -168,8 +168,7 @@ import { reactive, ref } from 'vue'
 
 import { useRouter } from "vue-router";
 
-import instance from "@/api";
-import { SERVER_URL } from '@/api/request'
+import { instance, SERVER_URL } from "@/api";
 
 const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
 

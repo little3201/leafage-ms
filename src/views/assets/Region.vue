@@ -176,8 +176,8 @@ import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 
-import instance from "@/api";
-import { SERVER_URL, Region } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Region } from "@/api/request.type";
 
 // 模态框参数
 let isEdit = ref(false);

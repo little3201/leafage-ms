@@ -6,7 +6,6 @@
         type="checkbox"
         class="rounded cursor-pointer"
         :value="data.code"
-        :indeterminate="data.children.length > 0"
         v-model="checked"
         @click="track(data)"
       />
@@ -92,7 +91,7 @@
 <script lang="ts" setup>
 import { ref, watch, PropType } from "vue";
 
-import { TreeNode } from "@/api/request";
+import type { TreeNode } from "@/api/request.type";
 
 const props = defineProps({
   data: {
@@ -113,7 +112,7 @@ let tracked = ref<Array<String>>([]);
 
 watch(
   () => [...props.checked],
-  (newValue, oldValue) => {
+  (newValue) => {
     tracked.value = newValue
   }
 )

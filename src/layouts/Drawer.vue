@@ -105,7 +105,7 @@ import { ref, PropType } from "vue";
 
 import DrawerCore from "@/layouts/DrawerCore.vue";
 
-import { Authority } from '@/api/request'
+import type { Authority } from '@/api/request.type'
 
 defineProps({
   datas: {

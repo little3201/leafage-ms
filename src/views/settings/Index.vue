@@ -127,7 +127,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { Account } from "@/api/request";
+import type { Account } from "@/api/request.type";
 
 const account: Account = ref(JSON.parse(sessionStorage.getItem("account") || ''))
 </script>

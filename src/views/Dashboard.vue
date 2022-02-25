@@ -252,8 +252,8 @@
 import { ref, computed, onMounted } from "vue";
 import { createBarChart, createMiniChart } from "@/plugins/chart";
 
-import instance from "@/api";
-import { SERVER_URL, Comment, Statistics } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Comment, Statistics } from "@/api/request.type";
 
 // data
 let comments = ref<Comment>([])

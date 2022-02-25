@@ -63,12 +63,11 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import Sign from "@/layouts/Sign.vue";
-
 import { useRoute, useRouter } from "vue-router";
 
-import instance from "@/api";
-import { SERVER_URL } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+
+import Sign from "@/layouts/Sign.vue";
 
 let formData = reactive({
   username: '',

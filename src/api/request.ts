@@ -1,160 +1,59 @@
-// 服务匹配前缀
-const SERVER_PRE = {
-  hypervisor: '/hypervisor', // 系统
-  assets: '/assets' // 资源
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import router from '../router'
+
+const controller = new AbortController()
+
+const redirectTo = (path: string) => {
+  controller.abort()
+  router.replace(path)
 }
 
-// 接口请求路径
-export const SERVER_URL = {
-  // hypervisor
-  account: SERVER_PRE.hypervisor.concat('/account'), // 账户
-  user: SERVER_PRE.hypervisor.concat('/user'), // 用户
-  role: SERVER_PRE.hypervisor.concat('/role'), // 角色
-  authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
-  group: SERVER_PRE.hypervisor.concat('/group'), // 分组
-  region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
-  notification: SERVER_PRE.hypervisor.concat('/notification'), // 消息通知
-  // assets
-  posts: SERVER_PRE.assets.concat('/posts'), // 帖子
-  category: SERVER_PRE.assets.concat('/category'), // 类别
-  resource: SERVER_PRE.assets.concat('/resource'), // 资源
-  statistics: SERVER_PRE.assets.concat('/statistics'), // 统计
-  comment: SERVER_PRE.assets.concat('/comment'), // 评论
-}
+const instance = axios.create({
+  withCredentials: true,
+  // 请求的完整路径就是baseURL中的
+  baseURL: '/api'
+})
 
-export interface Page {
-  page: number,
-  size: number,
-  total: number
-}
+// 请求拦截
+instance.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    return config
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error)
+  }
+)
 
-export interface Account {
-  username: string,
-  nickname: string,
-  avatar: string
-}
+// 响应拦截
+instance.interceptors.response.use(
+  (res: AxiosResponse) => {
+    // 用户不存在，跳转注册
+    if (res.status === 204) {
+      redirectTo('/signup')
+    }
+    return res
+  },
+  (error: AxiosError) => {
+    const { response } = error
+    if (response) {
+      // 状态码判断
+      switch (response.status) {
+        // 401: 未登录状态，403：无权限，跳转登录页
+        case 401:
+        case 403:
+          redirectTo('/signin')
+          break
+        // 404/500请求不存在
+        case 404:
+        case 502:
+          response.statusText = '网络异常，刷新试试。'
+          break
+        default:
+          response.statusText = '请求可能跑丢了，再试一下。'
+      }
+    }
+    return Promise.reject(error)
+  }
+)
 
-export interface AccountDetail extends Account {
-  accountExpiresAt: Date,
-  accountLocked: boolean,
-  credentialsExpiresAt: Date
-}
-
-export interface User {
-  username: string,
-  firstname: string,
-  lastname: string,
-  gender: string,
-  phone: string,
-  email: string,
-  birthday: Date,
-  ethnicity: string,
-  degree: string,
-  hobbies: string,
-  company: string,
-  position: string
-}
-
-interface AbstractVO<T> {
-  code: T,
-  modifyTime: Date
-}
-
-export interface Role extends AbstractVO<String> {
-  name: string,
-  superior: string,
-  count: number,
-  description: string
-}
-
-export interface Group extends AbstractVO<String> {
-  name: string,
-  alias: string,
-  superior: string,
-  principal: string,
-  count: number,
-  description: string
-}
-
-export interface Authority extends AbstractVO<String> {
-  name: string,
-  type: string,
-  icon: string,
-  superior: string,
-  path: string,
-  count: number,
-  description: string
-}
-
-export interface Region extends AbstractVO<Number> {
-  name: string,
-  superior: string,
-  alias: string,
-  postalCode: number,
-  areaCode: string,
-  description: string
-}
-
-export interface Notification extends AbstractVO<String> {
-  title: string,
-  content: string,
-  receiver: string
-}
-
-export interface TreeNode {
-  code: string,
-  name: string,
-  superior: string,
-  children: TreeNode[],
-  expand: Object
-}
-
-export interface Category extends AbstractVO<String> {
-  alias: string,
-  count: number,
-  description: string
-}
-
-export interface Posts extends AbstractVO<String> {
-  title: string,
-  cover: string,
-  category: string,
-  tags: Array<String>,
-  viewed: number,
-  likes: number,
-  comment: number
-}
-
-export interface PostsDetails {
-  catalog: string,
-  content: string
-}
-
-export interface Resource extends AbstractVO<String> {
-  title: string,
-  type: string,
-  cover: string,
-  category: string,
-  viewed: number,
-  downloads: number,
-  description: string
-}
-
-export interface Comment extends AbstractVO<String> {
-  nickname: string,
-  posts: string,
-  avatar: string,
-  replier: string,
-  content: string,
-  email: string
-}
-
-export interface Statistics extends AbstractVO<String> {
-  date: Date,
-  viewed: number,
-  overViewed: number,
-  likes: number,
-  overLikes: number,
-  comment: number,
-  overComment: number
-}
+export default instance

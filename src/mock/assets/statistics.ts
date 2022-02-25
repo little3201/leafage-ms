@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
 
-import { Statistics } from '@/api/request'
+import type { Statistics } from '@/api/request.type'
 
 const datas: Array<Statistics> = [];
 

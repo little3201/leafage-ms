@@ -200,8 +200,8 @@ import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
 import Tree from "@/components/tree/Tree.vue";
 
-import instance from "@/api";
-import { SERVER_URL, AccountDetail, TreeNode } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { AccountDetail, TreeNode } from "@/api/request.type";
 
 // 模态框参数
 let isTree = ref(false);

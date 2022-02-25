@@ -94,7 +94,7 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import { Authority } from '@/api/request'
+import type { Authority } from '@/api/request.type'
 
 defineProps({
   data: {

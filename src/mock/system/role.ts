@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import { Role } from '@/api/request'
-import { parse } from '@/api/util';
+import type { Role } from '@/api/request.type'
+import { parse } from '@/util';
 
 const datas: Array<Role> = [];
 

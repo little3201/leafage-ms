@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
 
-import { User } from '@/api/request'
+import type { User } from '@/api/request.type'
 
 const data: User = {
   username: Random.name(),

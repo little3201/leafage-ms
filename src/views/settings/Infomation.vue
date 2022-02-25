@@ -196,8 +196,8 @@ import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 
-import instance from "@/api";
-import { SERVER_URL, User } from '@/api/request'
+import { instance, SERVER_URL } from "@/api";
+import type { User } from '@/api/request.type'
 
 import Confirm from "@/components/Confirm.vue"
 

@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import { AccountDetail } from '@/api/request'
-import { parse } from '@/api/util';
+import type { AccountDetail } from '@/api/request.type'
+import { parse } from '@/util';
 
 const datas: Array<AccountDetail> = [];
 

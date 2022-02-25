@@ -234,8 +234,8 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
 
-import instance from "@/api";
-import { SERVER_URL, User, Account } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { User, Account } from "@/api/request.type";
 
 import { uploadFile } from "@/plugins/upload";
 

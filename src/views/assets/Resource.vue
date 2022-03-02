@@ -230,8 +230,8 @@ import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 
-import instance from "@/api";
-import { SERVER_URL, Resource, Category } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Resource, Category } from "@/api/request.type";
 import { uploadFile } from "@/plugins/upload";
 
 // 数据

@@ -43,7 +43,7 @@ import { PropType } from 'vue'
 
 import AsideCore from "@/layouts/AsideCore.vue";
 
-import { Authority } from '@/api/request'
+import type { Authority } from '@/api/request.type'
 
 defineProps({
   datas: {

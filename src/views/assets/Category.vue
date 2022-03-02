@@ -21,7 +21,12 @@
         </svg>
         Reload Data
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'category'" />
+      <Operation
+        @click.capture="dataCode = ''"
+        @modelOperate="modelOperate"
+        :datas="datas"
+        :fileName="'category'"
+      />
     </div>
     <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
@@ -110,8 +115,8 @@ import Pagation from "@/components/Pagation.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 
-import instance from "@/api";
-import { SERVER_URL, Category } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Category } from "@/api/request.type";
 
 // 模态框参数
 let isEdit = ref(false);

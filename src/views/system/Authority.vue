@@ -250,8 +250,8 @@ import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 import Preview from "@/components/Preview.vue";
 
-import instance from "@/api";
-import { SERVER_URL, Authority, Role } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Authority, Role } from "@/api/request.type";
 
 // 模态框参数
 let isEdit = ref(false);

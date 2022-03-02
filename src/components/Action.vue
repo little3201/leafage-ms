@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import { Account } from "@/api/request";
+import type { Account } from "@/api/request.type";
 
 defineProps({
   needEdit: {

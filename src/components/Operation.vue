@@ -72,7 +72,7 @@ import { ref, onMounted } from "vue";
 
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
-import { Account } from "@/api/request";
+import type { Account } from "@/api/request.type";
 
 const props = defineProps({
   needAdd: {

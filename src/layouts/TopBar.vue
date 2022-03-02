@@ -280,8 +280,8 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
-import instance from "@/api";
-import { SERVER_URL, Account, Notification } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Account, Notification } from "@/api/request.type";
 
 // 控制通知是否打开
 let isNotify = ref(false);

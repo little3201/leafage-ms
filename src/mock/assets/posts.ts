@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import { Posts, PostsDetails } from '@/api/request'
-import { parse } from '@/api/util';
+import type { Posts, PostsDetails } from '@/api/request.type'
+import { parse } from '@/util';
 
 const datas: Array<Posts> = [];
 

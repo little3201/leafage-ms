@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overViewed <= 0, 'bg-red-600': over.overViewed > 0 }"
+                :class="{ 'bg-lime-500': over.overViewed > 0, 'bg-red-600': over.overViewed <= 0 }"
                 title="viewed higher than last month"
               >
                 {{ latest.overViewed }}%
@@ -59,9 +59,9 @@
                 >
                   <use
                     v-if="over.overViewed > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
-                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
             </div>
@@ -92,7 +92,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overComment <= 0, 'bg-red-600': over.overComment > 0 }"
+                :class="{ 'bg-lime-500': over.overComment > 0, 'bg-red-600': over.overComment <= 0 }"
                 title="2% Lower than last month"
               >
                 {{ latest.overComment }}%
@@ -108,9 +108,9 @@
                 >
                   <use
                     v-if="over.overComment > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
-                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
             </div>
@@ -141,7 +141,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overLikes <= 0, 'bg-red-600': over.overLikes > 0 }"
+                :class="{ 'bg-lime-500': over.overLikes > 0, 'bg-red-600': over.overLikes <= 0 }"
                 title="12% Higher than last month"
               >
                 {{ latest.overLikes }}%
@@ -157,9 +157,9 @@
                 >
                   <use
                     v-if="over.overLikes > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
-                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
             </div>
@@ -252,8 +252,8 @@
 import { ref, computed, onMounted } from "vue";
 import { createBarChart, createMiniChart } from "@/plugins/chart";
 
-import instance from "@/api";
-import { SERVER_URL, Comment, Statistics } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Comment, Statistics } from "@/api/request.type";
 
 // data
 let comments = ref<Comment>([])

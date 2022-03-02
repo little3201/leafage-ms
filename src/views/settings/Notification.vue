@@ -74,8 +74,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
-import instance from "@/api";
-import { SERVER_URL, Notification } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Notification } from "@/api/request.type";
 
 import Preview from "@/components/Preview.vue"
 

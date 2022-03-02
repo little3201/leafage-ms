@@ -294,8 +294,8 @@ import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 import Preview from "@/components/Preview.vue";
 
-import instance from "@/api";
-import { SERVER_URL, Posts, Category } from "@/api/request";
+import { instance, SERVER_URL } from "@/api";
+import type { Posts, Category } from "@/api/request.type";
 import marked from "@/plugins/markdown";
 import { uploadFile } from "@/plugins/upload";
 

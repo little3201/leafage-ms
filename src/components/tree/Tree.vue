@@ -22,7 +22,7 @@ import { ref, watch, PropType } from 'vue'
 import Model from "@/components/Model.vue";
 import TreeCore from "@/components/tree/TreeCore.vue";
 
-import { TreeNode } from "@/api/request";
+import type { TreeNode } from "@/api/request.type";
 
 const props = defineProps({
   isShow: {
@@ -43,7 +43,7 @@ let checked = ref<Array<String>>([])
 
 watch(
   () => [...props.codes],
-  (newValue, oldValue) => {
+  (newValue) => {
     checked.value = newValue
   }
 )
@@ -53,29 +53,50 @@ watch(
  */
 const track = (node: TreeNode) => {
   let isCheck = false;
-  if (checked.value.indexOf(node.code) === -1) {
+  if (checked.value.indexOf(node.code) == -1) {
     checked.value.push(node.code)
     isCheck = true
   } else {
     checked.value.splice(checked.value.indexOf(node.code), 1)
   }
-  recurrence(node.children, isCheck)
+
+  recurrenceChildren(node.children, isCheck)
 }
 /**
- * 递归
+ * 递归子节点
+ * @param children 子节点 
+ * @param isCheck 是否勾选 
  */
-const recurrence = (children: Array<TreeNode>, isCheck: boolean) => {
+const recurrenceChildren = (children: Array<TreeNode>, isCheck: boolean) => {
   if (children && children.length > 0) {
     children.forEach((item: TreeNode) => {
       if (isCheck) {
-        if (checked.value.indexOf(item.code) === -1) {
+        if (checked.value.indexOf(item.code) == -1) {
           checked.value.push(item.code)
         }
       } else {
         checked.value.splice(checked.value.indexOf(item.code), 1)
       }
-      recurrence(item.children, isCheck)
+      recurrenceChildren(item.children, isCheck)
     })
+  }
+}
+/**
+ * 递归父节点
+ * @param code 当前节点
+ * @param datas 所有tree数据
+ */
+const recurrenceParents = (code: string, datas: Array<TreeNode>) => {
+  for (let i = 0; i < datas.length; i++) {
+    if (datas[i].code === code) {
+      return []
+    }
+    if (datas[i].children && datas[i].children.length > 0) {
+      let codes = recurrenceParents(code, datas[i].children)
+      if (codes) {
+        return codes.concat(datas[i].code)
+      }
+    }
   }
 }
 </script>

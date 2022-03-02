@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import { Group, AccountDetail } from '@/api/request'
-import { parse } from '@/api/util';
+import type { Group, AccountDetail } from '@/api/request.type'
+import { parse } from '@/util';
 
 const datas: Array<Group> = [];
 

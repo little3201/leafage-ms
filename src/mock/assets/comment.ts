@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import { Comment } from '@/api/request'
-import { parse } from '@/api/util';
+import type { Comment } from '@/api/request.type'
+import { parse } from '@/util';
 
 const datas: Array<Comment> = [];
 

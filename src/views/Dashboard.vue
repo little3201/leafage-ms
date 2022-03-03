@@ -43,7 +43,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overViewed > 0, 'bg-red-600': over.overViewed <= 0 }"
+                :class="{ 'bg-lime-500': latest.overViewed > 0, 'bg-red-600': latest.overViewed <= 0 }"
                 title="viewed higher than last month"
               >
                 {{ latest.overViewed }}%
@@ -58,7 +58,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overViewed > 0"
+                    v-if="latest.overViewed > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
@@ -92,7 +92,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overComment > 0, 'bg-red-600': over.overComment <= 0 }"
+                :class="{ 'bg-lime-500': latest.overComment > 0, 'bg-red-600': latest.overComment <= 0 }"
                 title="2% Lower than last month"
               >
                 {{ latest.overComment }}%
@@ -107,7 +107,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overComment > 0"
+                    v-if="latest.overComment > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
@@ -141,7 +141,7 @@
             <div class="ml-auto">
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'bg-lime-500': over.overLikes > 0, 'bg-red-600': over.overLikes <= 0 }"
+                :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }"
                 title="12% Higher than last month"
               >
                 {{ latest.overLikes }}%
@@ -156,7 +156,7 @@
                   stroke-linejoin="round"
                 >
                   <use
-                    v-if="over.overLikes > 0"
+                    v-if="latest.overLikes > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                   />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
@@ -260,7 +260,6 @@ let comments = ref<Comment>([])
 let totalPosts = ref(0)
 let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
-const over = computed(() => datas.value[1] || {});
 
 // chart
 const barChart = ref();

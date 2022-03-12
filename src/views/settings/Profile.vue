@@ -151,14 +151,14 @@
                     v-model="user.degree"
                   >
                     <option value="undefined">---请选择---</option>
-                    <option>小学</option>
-                    <option>初中</option>
-                    <option>高中</option>
-                    <option>中专</option>
-                    <option>大专</option>
-                    <option>本科</option>
-                    <option>硕士</option>
-                    <option>博士</option>
+                    <option value="01">小学</option>
+                    <option value="02">初中</option>
+                    <option value="03">高中</option>
+                    <option value="04">中专</option>
+                    <option value="05">大专</option>
+                    <option value="06">本科</option>
+                    <option value="07">硕士</option>
+                    <option value="08">博士</option>
                   </select>
                 </div>
               </div>
@@ -172,12 +172,62 @@
                     v-model="user.ethnicity"
                   >
                     <option value="undefined">---请选择---</option>
-                    <option>汉族</option>
-                    <option>藏族</option>
-                    <option>彝族</option>
-                    <option>蒙古族</option>
-                    <option>苗族</option>
-                    <option>哈萨克族</option>
+                    <option value="01">汉族</option>
+                    <option value="02">蒙古族</option>
+                    <option value="03">回族</option>
+                    <option value="04">藏族</option>
+                    <option value="05">维吾尔族</option>
+                    <option value="06">苗族</option>
+                    <option value="07">彝族</option>
+                    <option value="08">壮族</option>
+                    <option value="09">布依族</option>
+                    <option value="10">朝鲜族</option>
+                    <option value="11">满族</option>
+                    <option value="12">侗族</option>
+                    <option value="13">瑶族</option>
+                    <option value="14">白族</option>
+                    <option value="15">土家族</option>
+                    <option value="16">哈尼族</option>
+                    <option value="17">哈萨克族</option>
+                    <option value="18">傣族</option>
+                    <option value="19">黎族</option>
+                    <option value="20">傈僳族</option>
+                    <option value="21">佤族</option>
+                    <option value="22">畲族</option>
+                    <option value="23">高山族</option>
+                    <option value="24">拉祜族</option>
+                    <option value="25">水族</option>
+                    <option value="26">东乡族</option>
+                    <option value="27">纳西族</option>
+                    <option value="28">景颇族</option>
+                    <option value="29">柯尔克孜族</option>
+                    <option value="30">土族</option>
+                    <option value="31">达斡尔族</option>
+                    <option value="32">仫佬族</option>
+                    <option value="33">羌族</option>
+                    <option value="34">布朗族</option>
+                    <option value="35">撒拉族</option>
+                    <option value="36">毛难族</option>
+                    <option value="37">仡佬族</option>
+                    <option value="38">锡伯族</option>
+                    <option value="39">阿昌族</option>
+                    <option value="40">普米族</option>
+                    <option value="41">塔吉克族</option>
+                    <option value="42">怒族</option>
+                    <option value="43">乌孜别克族</option>
+                    <option value="44">俄罗斯族</option>
+                    <option value="45">鄂温克族</option>
+                    <option value="46">崩龙族</option>
+                    <option value="47">保安族</option>
+                    <option value="48">裕固族</option>
+                    <option value="49">京族</option>
+                    <option value="50">塔塔尔族</option>
+                    <option value="51">独龙族</option>
+                    <option value="52">鄂伦春族</option>
+                    <option value="53">赫哲族</option>
+                    <option value="54">门巴族</option>
+                    <option value="55">珞巴族</option>
+                    <option value="56">基诺族</option>
                   </select>
                 </div>
                 <div class="w-full">

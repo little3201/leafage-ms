@@ -66,7 +66,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="viewedChart" ref="viewedChart" aria-label="total-viewed" role="img"></canvas>
+              <canvas id="overViewed" ref="overViewedRef" aria-label="total-viewed" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
@@ -115,7 +115,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="commentChart" ref="commentChart" aria-label="total-comments" role="img"></canvas>
+              <canvas id="overComment" ref="overCommentRef" aria-label="total-comments" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
@@ -164,7 +164,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="likesChart" ref="likesChart" aria-label="total-likes" role="img"></canvas>
+              <canvas id="overLikes" ref="overLikesRef" aria-label="total-likes" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
@@ -196,7 +196,7 @@
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="barChart" ref="barChart" aria-label="viewed" role="img"></canvas>
+          <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img" height="300"></canvas>
         </div>
       </div>
       <div class="col-span-12 md:col-span-6">
@@ -249,8 +249,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart } from "@/plugins/chart";
+import { ref, reactive, computed, onMounted } from "vue";
+import { createBarChart, createMiniChart, Chart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Comment, Statistics } from "@/api/request.type";
@@ -261,11 +261,23 @@ let totalPosts = ref(0)
 let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
 
-// chart
-const barChart = ref();
-const viewedChart = ref();
-const commentChart = ref();
-const likesChart = ref();
+// ref
+const viewedRef = ref();
+const overViewedRef = ref();
+const overCommentRef = ref();
+const overLikesRef = ref();
+
+const charts = reactive({
+  viewed: undefined,
+  overViewed: undefined,
+  overComment: undefined,
+  overLikes: undefined
+})
+
+onMounted(() => {
+  initData();
+  retrieveComments();
+})
 
 const retrieveComments = async (): Promise<void> => {
   await instance
@@ -306,19 +318,15 @@ const construceChart = (): void => {
     obj.overComment.unshift(datas.value[i].overComment);
     obj.overLikes.unshift(datas.value[i].overLikes);
   }
+
   let labels = obj.labels
   // 浏览量统计
-  createMiniChart(viewedChart.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
+  charts.overViewed = createMiniChart(overViewedRef.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
   // 评论数统计
-  createMiniChart(commentChart.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
+  charts.overComment = createMiniChart(overCommentRef.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
   // 喜欢数统计
-  createMiniChart(likesChart.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
+  charts.overLikes = createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 帖子分类统计
-  createBarChart(barChart.value, labels, obj.viewed, obj.likes, obj.comments);
+  charts.viewed = createBarChart(viewedRef.value, labels, obj.viewed, obj.likes, obj.comments);
 }
-
-onMounted(() => {
-  initData();
-  retrieveComments();
-});
 </script>

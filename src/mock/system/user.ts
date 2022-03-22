@@ -10,8 +10,8 @@ const data: User = {
   phone: Random.integer(13000000000, 18700000000),
   email: Random.email(),
   birthday: Random.date(),
-  ethnicity: "汉族",
-  degree: '本科',
+  ethnicity: "01",
+  degree: '02',
   hobbies: Random.word(),
   company: Random.word(),
   position: Random.word()

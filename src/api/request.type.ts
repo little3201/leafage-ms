@@ -117,12 +117,9 @@ export declare interface Resource extends AbstractVO<String> {
 }
 
 export declare interface Comment extends AbstractVO<String> {
-  nickname: string,
-  posts: string,
-  avatar: string,
-  replier: string,
-  content: string,
-  email: string
+  country: string,
+  location: string,
+  content: string
 }
 
 export declare interface Statistics extends AbstractVO<String> {

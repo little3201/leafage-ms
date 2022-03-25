@@ -40,7 +40,7 @@
         </svg>
       </div>
     </div>
-    <div class="mr-3 sm:mr-6 mt-2">
+    <!-- <div class="mr-3 sm:mr-6 mt-2">
       <button
         title="Toggle Theme"
         @click="themeMode"
@@ -85,7 +85,7 @@
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </svg>
       </button>
-    </div>
+    </div> -->
     <div class="relative mr-auto sm:mr-6 mt-2">
       <button type="button" class="focus:outline-none" @click="operate('notify')">
         <svg

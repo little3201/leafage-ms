@@ -1,4 +1,5 @@
 import { marked } from "marked";
+import extendedTables from 'marked-extended-tables'
 
 import hljs from "highlight.js/lib/core";
 import "highlight.js/styles/ir-black.css";
@@ -41,6 +42,6 @@ marked.setOptions({
   sanitize: false,
   smartLists: true,
   xhtml: true
-})
+}).use(extendedTables())
 
 export default marked

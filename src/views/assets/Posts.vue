@@ -296,7 +296,7 @@ import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Posts, Category } from "@/api/request.type";
-import marked from "@/plugins/markdown";
+import marked from "@/plugins/md";
 import { uploadFile } from "@/plugins/upload";
 
 // 模板引用

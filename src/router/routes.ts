@@ -59,11 +59,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/assets/Category.vue')
       },
       {
-        path: 'region',
-        name: 'Region',
-        component: () => import('@/views/assets/Region.vue')
-      },
-      {
         path: '/settings',
         name: 'Settings',
         component: () => import('@/views/settings/Index.vue'),
@@ -91,6 +86,23 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Notification',
             component: () => import('@/views/settings/Notification.vue'),
             meta: { requiresAuth: true }
+          }
+        ]
+      },
+      {
+        path: '/basedata',
+        name: 'Basedata',
+        component: () => import('@/views/basedata/Index.vue'),
+        children: [
+          {
+            path: 'region',
+            name: 'Region',
+            component: () => import('@/views/basedata/Region.vue')
+          },
+          {
+            path: 'dictionary',
+            name: 'Dictionary',
+            component: () => import('@/views/basedata/Dictionary.vue')
           }
         ]
       }

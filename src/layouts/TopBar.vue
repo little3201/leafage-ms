@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center h-12 md:h-16 border-b bg-gray-100">
+  <div class="flex items-center py-2 border-b bg-gray-100">
     <div class="mr-auto hidden md:flex items-center">
       <RouterLink to="/" class>Application</RouterLink>
       <svg

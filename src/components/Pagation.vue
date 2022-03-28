@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center mt-1 mb-3">
+  <div class="flex items-center mt-1 mb-2">
     <div class="hidden md:block">
       当前展示第&nbsp;
       <span v-text="page * size + 1"></span>&nbsp;-
@@ -10,8 +10,9 @@
     <div class="inline-flex items-center space-x-2 ml-auto">
       <button
         type="button"
+        :disabled="page == 0"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
-        :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+        :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
         @click="(page = 0), give(page)"
       >
         <svg
@@ -29,8 +30,9 @@
       </button>
       <button
         type="button"
+        :disabled="page == 0"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
-        :class="{ 'text-gray-300 cursor-not-allowed': page < 1 }"
+        :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
         @click="decrease"
       >
         <svg
@@ -62,6 +64,7 @@
       <span v-if="pages > 5 && page < pages">...</span>
       <button
         type="button"
+        :disabled="page == pages - 1"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
         @click="increment"
@@ -81,6 +84,7 @@
       </button>
       <button
         type="button"
+        :disabled="page == pages - 1"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
         @click="(page = pages - 1), give(page)"
@@ -99,7 +103,7 @@
         </svg>
       </button>
     </div>
-    <select v-model.number="size" class="py-1 border border-gray-300 rounded-md">
+    <select v-model.number="size" class="ml-2 py-1 border border-gray-300 rounded-md">
       <option>10</option>
       <option>15</option>
       <option>20</option>

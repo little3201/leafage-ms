@@ -269,7 +269,7 @@
               <div
                 ref="rendedHtmlRef"
                 v-else
-                class="mt-1 p-2 prose overflow-y-auto w-full border border-gray-300 rounded-md"
+                class="mt-1 p-2 prose prose-blue overflow-y-auto w-full border border-gray-300 rounded-md"
                 v-html="rendedHtml"
               ></div>
             </div>

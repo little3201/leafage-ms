@@ -5,7 +5,7 @@
     </div>
     <div class="flex md:space-x-4">
       <div class="hidden md:block">
-        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 lg:w-72 shadow">
+        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 shadow">
           <div class="inline-flex items-center py-4">
             <figure class="rounded-full w-12 h-12 border">
               <img :alt="account.nickname" class="w-full h-full rounded-full" :src="account.avatar" />
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full overflow-y-auto" style="height: calc(100vh - 9rem)">
+      <div class="w-full pb-4 overflow-y-auto" style="height: calc(100vh - 9rem)">
         <RouterView />
       </div>
     </div>

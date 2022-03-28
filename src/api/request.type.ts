@@ -62,15 +62,6 @@ export declare interface Authority extends AbstractVO<String> {
   description: string
 }
 
-export declare interface Region extends AbstractVO<Number> {
-  name: string,
-  superior: string,
-  alias: string,
-  postalCode: number,
-  areaCode: string,
-  description: string
-}
-
 export declare interface Notification extends AbstractVO<String> {
   title: string,
   content: string,
@@ -130,4 +121,21 @@ export declare interface Statistics extends AbstractVO<String> {
   overLikes: number,
   comment: number,
   overComment: number
+}
+
+export declare interface Region extends AbstractVO<Number> {
+  name: string,
+  superior: string,
+  alias: string,
+  postalCode: number,
+  areaCode: string,
+  description: string
+}
+
+export declare interface Dictionary extends AbstractVO<String> {
+  name: string,
+  superior: string,
+  alias: string,
+  isAble: boolean,
+  description: string
 }

@@ -196,7 +196,7 @@
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img" height="300"></canvas>
+          <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img"></canvas>
         </div>
       </div>
       <div class="col-span-12 md:col-span-6">
@@ -242,7 +242,7 @@
 
 <script lang="ts" setup>
 import { ref, reactive, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart, Chart } from "@/plugins/chart";
+import { createBarChart, createMiniChart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Comment, Statistics } from "@/api/request.type";

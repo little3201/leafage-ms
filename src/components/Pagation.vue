@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center mt-1 mb-2">
+  <div class="flex items-center justify-between">
     <div class="hidden md:block">
       当前展示第&nbsp;
       <span v-text="page * size + 1"></span>&nbsp;-
@@ -7,7 +7,7 @@
       <span v-text="total"></span>
       &nbsp;条记录
     </div>
-    <div class="inline-flex items-center space-x-2 ml-auto">
+    <div class="flex items-center justify-end space-x-2">
       <button
         type="button"
         :disabled="page == 0"
@@ -102,14 +102,14 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
         </svg>
       </button>
+      <select v-model.number="size" class="ml-2 py-1 border border-gray-300 rounded-md">
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+        <option>30</option>
+        <option>50</option>
+      </select>
     </div>
-    <select v-model.number="size" class="ml-2 py-1 border border-gray-300 rounded-md">
-      <option>10</option>
-      <option>15</option>
-      <option>20</option>
-      <option>30</option>
-      <option>50</option>
-    </select>
   </div>
 </template>
 

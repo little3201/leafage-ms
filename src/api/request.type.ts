@@ -108,6 +108,7 @@ export declare interface Resource extends AbstractVO<String> {
 }
 
 export declare interface Comment extends AbstractVO<String> {
+  posts: string,
   country: string,
   location: string,
   content: string

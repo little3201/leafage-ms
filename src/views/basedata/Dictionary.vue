@@ -21,14 +21,9 @@
         </svg>
         Reload Data
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'region'"
-      />
+      <Operation :needAdd="false" :datas="datas" :fileName="'region'" />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
+    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
@@ -67,11 +62,7 @@
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              >
+              <Action :needEdit="false" :needDel="false" @click.capture="dataCode = data.code">
                 <button
                   class="flex items-center mr-3 focus:outline-none"
                   :class="{ 'text-green-600': !data.isAble, 'text-yellow-600': data.isAble }"

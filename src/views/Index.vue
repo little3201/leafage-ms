@@ -1,9 +1,11 @@
 <template>
-  <div class="px-4 py-3">
+  <div class="px-4 py-3 h-screen">
     <Drawer :datas="menus" class="md:hidden" />
-    <div class="flex flex-row">
+    <div class="flex flex-row h-full">
       <Aside :datas="menus" class="hidden md:block" />
-      <main class="px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
+      <main
+        class="px-4 rounded-3xl bg-gray-100 w-full h-full overflow-hidden"
+      >
         <TopBar />
         <RouterView />
       </main>

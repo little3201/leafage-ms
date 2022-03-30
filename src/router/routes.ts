@@ -86,6 +86,12 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Notification',
             component: () => import('@/views/settings/Notification.vue'),
             meta: { requiresAuth: true }
+          },
+          {
+            path: 'accesslog',
+            name: 'Accesslog',
+            component: () => import('@/views/settings/Accesslog.vue'),
+            meta: { requiresAuth: true }
           }
         ]
       },

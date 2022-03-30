@@ -1,7 +1,7 @@
 <template>
   <nav>
-    <div class="flex h-8">
-      <RouterLink to="/" class="flex mr-auto" exact-active-class>
+    <div class="flex justify-between mb-2">
+      <RouterLink to="/" class="inline-flex items-center" exact-active-class>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -29,10 +29,10 @@
           </g>
         </svg>
       </RouterLink>
-      <a href="javascript:;" @click.prevent="isShow = !isShow" class="outline-none">
+      <button type="button" @click="isShow = !isShow" class="outline-none">
         <svg
-          width="32"
-          height="32"
+          width="30"
+          height="30"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -43,7 +43,7 @@
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'bar-chart-2'" />
         </svg>
-      </a>
+      </button>
     </div>
     <div class="mb-4 mt-2 h-px bg-gray-200 bg-opacity-30"></div>
     <div
@@ -55,8 +55,8 @@
     >
       <div class="fixed inset-y-0 left-0 flex">
         <div class="w-64">
-          <div class="h-full flex flex-col px-4 py-3 bg-blue-800 shadow-2xl overflow-y-scroll">
-            <RouterLink to="/" class="flex mr-auto" exact-active-class>
+          <div class="h-full flex flex-col pt-5 px-4 bg-blue-800 shadow-2xl overflow-y-scroll">
+            <RouterLink to="/" class="inlien-flex items-center" exact-active-class>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -84,7 +84,7 @@
                 </g>
               </svg>
             </RouterLink>
-            <div class="my-4 h-px bg-gray-200 bg-opacity-30"></div>
+            <div class="my-3 h-px bg-gray-200 bg-opacity-30"></div>
             <ul>
               <DrawerCore
                 v-for="data in datas"

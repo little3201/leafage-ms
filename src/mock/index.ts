@@ -16,9 +16,17 @@ let menus = [
     ]
   },
   { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
-  { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "book" }, "children": [] },
+  { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "folder" }, "children": [] },
   { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
-  { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
+  // { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] },
+  {
+    "code": "21214DRMU", "name": "Basedata", "superior": "", "expand": { "path": "/basedata", "icon": "database" }, "children": [
+      { "code": "21224UJ2C", "name": "Region", "superior": "21214DRMU", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] },
+      {
+        "code": "21224PV1C", "name": "Dictionary", "superior": "21214DRMU", "expand": { "path": "/dictionary", "icon": "book" }, "children": []
+      }
+    ]
+  },
 ]
 
 import signMock from './sign'
@@ -28,7 +36,6 @@ import roleMock from './system/role';
 import userMock from './system/user';
 import groupMock from './system/group';
 import authorityMock from './system/authority';
-import regionMock from './system/region';
 import notificationMock from './system/notification';
 
 import postsMock from './assets/posts';
@@ -36,6 +43,9 @@ import categoryMock from './assets/category';
 import resourceMock from './assets/resource';
 import statisticsMock from './assets/statistics';
 import commentMock from './assets/comment';
+
+import regionMock from './basedata/region';
+import dictionaryMock from './basedata/dictionary';
 
 const mocks = [
   ...signMock,
@@ -45,14 +55,16 @@ const mocks = [
   ...userMock,
   ...groupMock,
   ...authorityMock,
-  ...regionMock,
   ...notificationMock,
 
   ...postsMock,
   ...categoryMock,
   ...resourceMock,
   ...statisticsMock,
-  ...commentMock
+  ...commentMock,
+
+  ...regionMock,
+  ...dictionaryMock
 ];
 
 export function mockXHR() {

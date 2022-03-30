@@ -54,7 +54,6 @@ export default [
     method: 'get',
     response: (options: any) => {
       let url = options.url
-      debugger
       if (url.split('?').length == 1) {
         let path = url.substring(url.lastIndexOf('/') + 1)
         if (path === 'lower') {

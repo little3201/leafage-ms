@@ -12,8 +12,10 @@ export const SERVER_URL = {
   role: SERVER_PRE.hypervisor.concat('/role'), // 角色
   authority: SERVER_PRE.hypervisor.concat('/authority'), // 权限
   group: SERVER_PRE.hypervisor.concat('/group'), // 分组
-  region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
   notification: SERVER_PRE.hypervisor.concat('/notification'), // 消息通知
+
+  region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
+  dictionary: SERVER_PRE.hypervisor.concat('/dictionary'), // 字典
   // assets
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别

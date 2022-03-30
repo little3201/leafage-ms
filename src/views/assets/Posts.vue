@@ -28,7 +28,7 @@
         :fileName="'posts'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
+    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -269,7 +269,7 @@
               <div
                 ref="rendedHtmlRef"
                 v-else
-                class="mt-1 p-2 prose overflow-y-auto w-full border border-gray-300 rounded-md"
+                class="mt-1 p-2 prose prose-blue overflow-y-auto w-full border border-gray-300 rounded-md"
                 v-html="rendedHtml"
               ></div>
             </div>

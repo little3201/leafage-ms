@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2 overflow-scroll" style="height: calc(100vh - 6rem)">
+  <div class="col-span-12 mt-2 h-full overflow-scroll">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <button
@@ -66,7 +66,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="overViewed" ref="overViewedRef" aria-label="total-viewed" role="img"></canvas>
+              <canvas id="overViewed" ref="overViewedRef" aria-label="over-viewed" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
@@ -115,7 +115,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="overComment" ref="overCommentRef" aria-label="total-comments" role="img"></canvas>
+              <canvas id="overComment" ref="overCommentRef" aria-label="over-comments" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
@@ -164,7 +164,7 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas id="overLikes" ref="overLikesRef" aria-label="total-likes" role="img"></canvas>
+              <canvas id="overLikes" ref="overLikesRef" aria-label="over-likes" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
@@ -172,7 +172,7 @@
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
-        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4">
+        <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
             <svg
               width="28"
@@ -187,6 +187,39 @@
             >
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
             </svg>
+            <div class="ml-auto">
+              <div
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }"
+                title="12% Higher than last month"
+              >
+                {{ latest.overLikes }}%
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use
+                    v-if="latest.overLikes > 0"
+                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
+                  />
+                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
+                </svg>
+              </div>
+            </div>
+            <div class="absolute inset-4 top-10 opacity-50">
+              <canvas
+                id="overDownloads"
+                ref="overDownloadsRef"
+                aria-label="over-downloads"
+                role="img"
+              ></canvas>
+            </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="totalPosts"></h2>
           <div class="text-base text-gray-600 mt-1">Total Posts</div>
@@ -195,18 +228,17 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img" height="300"></canvas>
+        <div class="relative shadow-sm rounded-md bg-white p-4 h-full">
+          <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img" height="100"></canvas>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-12 md:col-span-3">
         <div class="bg-white p-4 shadow-sm rounded-md">
           <div class="overflow-auto">
             <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
               <thead>
                 <tr class="bg-gray-100 uppercase text-center text-sm">
                   <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                  <th scope="col" class="px-3">Location</th>
                   <th scope="col" class="px-3">Content</th>
                 </tr>
               </thead>
@@ -217,19 +249,46 @@
                   :key="index"
                 >
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                  <td class="px-3">
-                    <div class="flex items-center">
-                      <figure class="w-8 h-8">
-                        <img
-                          :src="`/svg/${comment.country}.svg`"
-                          alt="avatar"
-                          class="rounded-full w-full h-full object-cover"
-                        />
-                      </figure>
-                      <span class="ml-2">{{ comment.location }}</span>
-                    </div>
+
+                  <td class="px-3 max-w-sm truncate">
+                    <a
+                      :href="'https://www.leafage.top/posts/detail/' + comment.posts"
+                      target="_blank"
+                      class="font-medium hover:underline"
+                    >{{ comment.content }}</a>
                   </td>
-                  <td class="px-3 max-w-md truncate" v-text="comment.content"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-3">
+        <div class="bg-white p-4 shadow-sm rounded-md">
+          <div class="overflow-auto">
+            <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+              <thead>
+                <tr class="bg-gray-100 uppercase text-center text-sm">
+                  <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
+                  <th scope="col" class="px-3">Title</th>
+                  <th scope="col" class="px-3">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center bg-white border-y-4 lg:border-y-6 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+                  v-for="(post, index) in posts"
+                  :key="index"
+                >
+                  <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
+                  <td class="px-3">
+                    <a
+                      :href="'https://www.leafage.top/posts/detail/' + posts.code"
+                      target="_blank"
+                      class="font-medium hover:underline"
+                    >{{ post.title }}</a>
+                  </td>
+                  <td class="px-3 py-2 sm:py-3">{{ post.viewed }}</td>
                 </tr>
               </tbody>
             </table>
@@ -242,13 +301,14 @@
 
 <script lang="ts" setup>
 import { ref, reactive, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart, Chart } from "@/plugins/chart";
+import { createBarChart, createMiniChart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Comment, Statistics } from "@/api/request.type";
+import type { Comment, Posts, Statistics } from "@/api/request.type";
 
 // data
 let comments = ref<Comment>([])
+let posts = ref<Posts>([])
 let totalPosts = ref(0)
 let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
@@ -258,19 +318,22 @@ const viewedRef = ref();
 const overViewedRef = ref();
 const overCommentRef = ref();
 const overLikesRef = ref();
+const overDownloadsRef = ref();
 
 const charts = reactive({
   viewed: undefined,
   overViewed: undefined,
   overComment: undefined,
-  overLikes: undefined
+  overLikes: undefined,
+  overDownloads: undefined
 })
 
 onMounted(() => {
   initData();
-  retrieveComments();
 })
-
+/**
+ * 查询最新10条评论
+ */
 const retrieveComments = async (): Promise<void> => {
   await instance
     .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
@@ -278,7 +341,16 @@ const retrieveComments = async (): Promise<void> => {
       comments.value = res.data
     });
 }
-
+/**
+ * 查询最新10条帖子
+ */
+const retrievePosts = async (): Promise<void> => {
+  await instance
+    .get(SERVER_URL.posts, { params: { page: 0, size: 10 } })
+    .then((res) => {
+      posts.value = res.data
+    });
+}
 const initData = async (): Promise<void> => {
   await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } })
     .then(res => {
@@ -286,7 +358,9 @@ const initData = async (): Promise<void> => {
       construceChart()
     }), instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
       totalPosts.value = res.data;
-    })])
+    }),
+  retrieveComments(),
+  retrievePosts()])
 };
 
 const construceChart = (): void => {
@@ -318,6 +392,8 @@ const construceChart = (): void => {
   charts.overComment = createMiniChart(overCommentRef.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
   // 喜欢数统计
   charts.overLikes = createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
+  // 喜欢数统计
+  charts.overDownloads = createMiniChart(overDownloadsRef.value, labels, obj.overComment, "rgba(22, 163, 74, 0.8)");
   // 帖子分类统计
   charts.viewed = createBarChart(viewedRef.value, labels, obj.viewed, obj.likes, obj.comments);
 }

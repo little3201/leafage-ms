@@ -3,7 +3,7 @@
     <div
       v-if="data.children && data.children.length > 0"
       @click.prevent="isOpen = !isOpen"
-      class="flex items-center rounded-full h-10 pl-4 cursor-pointer"
+      class="flex items-center rounded-full h-12 pl-4 cursor-pointer"
     >
       <div class="mr-3">
         <svg
@@ -55,7 +55,7 @@
       v-else
       @click="itemOperation"
       :to="superior.concat(data.expand.path)"
-      class="flex items-center h-10 rounded-full pl-4"
+      class="flex items-center h-12 rounded-full pl-4"
       exact
     >
       <div class="mr-3">
@@ -113,7 +113,7 @@ const itemOperation = () => {
 </script>
 
 <style scoped>
-.RouterLink-exact-active {
+.router-link-exact-active {
   @apply bg-gray-100 text-black;
 }
 </style>

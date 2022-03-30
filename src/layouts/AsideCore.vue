@@ -107,7 +107,7 @@ defineProps({
   },
 });
 
-const isOpen = ref(true);
+const isOpen = ref(false);
 </script>
 
 <style scoped>

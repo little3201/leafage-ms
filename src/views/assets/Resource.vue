@@ -28,7 +28,7 @@
         :fileName="'resource'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 11.5rem)">
+    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -68,7 +68,7 @@
               >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
             </td>
             <td class="px-4" v-text="data.category"></td>
-            <td class="px-4" v-text="data.description"></td>
+            <td class="px-4 max-w-sm truncate" v-text="data.description"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>

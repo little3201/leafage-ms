@@ -5,7 +5,7 @@
     </div>
     <div class="flex md:space-x-4">
       <div class="hidden md:block">
-        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 lg:w-72 shadow">
+        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-56 shadow">
           <div class="inline-flex items-center py-4">
             <figure class="rounded-full w-12 h-12 border">
               <img :alt="account.nickname" class="w-full h-full rounded-full" :src="account.avatar" />
@@ -21,8 +21,8 @@
               to="/settings/profile"
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -41,8 +41,8 @@
               exact
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -60,8 +60,8 @@
               to="/settings/security"
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -79,8 +79,8 @@
               to="billing"
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -100,8 +100,8 @@
               to="/settings/notification"
             >
               <svg
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -114,10 +114,29 @@
               </svg>
               Notification
             </RouterLink>
+            <RouterLink
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              to="/settings/accesslog"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mr-2"
+              >
+                <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
+              </svg>
+              Access Log
+            </RouterLink>
           </div>
         </div>
       </div>
-      <div class="w-full overflow-y-auto" style="height: calc(100vh - 9rem)">
+      <div class="w-full pb-4 overflow-y-auto" style="height: calc(100vh - 9rem)">
         <RouterView />
       </div>
     </div>

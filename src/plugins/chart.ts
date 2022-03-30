@@ -52,6 +52,7 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, vi
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,

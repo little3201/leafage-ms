@@ -30,7 +30,7 @@
                         </svg>
                     </button>
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start overflow-x-auto">
+                        <div class="sm:flex sm:items-center sm:justify-center overflow-x-auto">
                             <slot></slot>
                         </div>
                     </div>

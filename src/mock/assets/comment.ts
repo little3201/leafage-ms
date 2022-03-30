@@ -8,6 +8,7 @@ const datas: Array<Comment> = [];
 for (let i = 0; i < 19; i++) {
     datas.push({
         code: Random.string('number', 9),
+        posts: Random.id(),
         content: Random.cparagraph(2),
         country: "china",
         location: Random.city(),

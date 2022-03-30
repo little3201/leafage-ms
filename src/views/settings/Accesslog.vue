@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="overflow-auto" style="height: calc(100vh - 13.5rem)">
+        <div class="sm-a-h overflow-auto">
             <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="accesslog">
                 <thead>
                     <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">

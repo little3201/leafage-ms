@@ -1,7 +1,7 @@
 <template>
   <div class="divide-y">
     <fieldset class="sr-only"></fieldset>
-    <fieldset class="my-4">
+    <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">Change usernmae</legend>
       <div class="mt-4 text-sm">
         <label for="username" class="font-medium text-gray-700">Username</label>
@@ -166,7 +166,7 @@
         </div>
       </div>
     </fieldset>
-    <fieldset class="my-4">
+    <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">Delete Account</legend>
       <p
         class="text-sm text-gray-500"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between mt-1">
+  <div class="flex items-center justify-between mt-1 overflow-auto">
     <div class="hidden md:block">
       当前展示第&nbsp;
       <span v-text="page * size + 1"></span>&nbsp;-

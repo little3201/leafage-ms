@@ -28,7 +28,7 @@
         :fileName="'authority'"
       />
     </div>
-    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
+    <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">

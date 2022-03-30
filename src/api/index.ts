@@ -5,7 +5,6 @@ import router from '../router'
 const controller = new AbortController()
 
 const redirectTo = (path: string) => {
-    controller.abort()
     router.replace(path)
 }
 
@@ -18,7 +17,6 @@ const instance = axios.create({
 // 请求拦截
 instance.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-        config.signal = controller.signal
         return config
     },
     (error: AxiosError) => {
@@ -36,7 +34,6 @@ instance.interceptors.response.use(
         return res
     },
     (error: AxiosError) => {
-        controller.abort()
         const { response } = error
         if (response) {
             // 状态码判断

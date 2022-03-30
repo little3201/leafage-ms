@@ -6,7 +6,7 @@ import { mockXHR } from '@/mock/index';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {
-    mockXHR()
+    // mockXHR()
 }
 
 createApp(App).use(router).mount('#app')

@@ -36,14 +36,14 @@ interface AbstractVO<T> {
   modifyTime: Date
 }
 
-export declare interface Role extends AbstractVO<String> {
+export declare interface Role extends AbstractVO<string> {
   name: string,
   superior: string,
   count: number,
   description: string
 }
 
-export declare interface Group extends AbstractVO<String> {
+export declare interface Group extends AbstractVO<string> {
   name: string,
   alias: string,
   superior: string,
@@ -52,7 +52,7 @@ export declare interface Group extends AbstractVO<String> {
   description: string
 }
 
-export declare interface Authority extends AbstractVO<String> {
+export declare interface Authority extends AbstractVO<string> {
   name: string,
   type: string,
   icon: string,
@@ -62,7 +62,7 @@ export declare interface Authority extends AbstractVO<String> {
   description: string
 }
 
-export declare interface Notification extends AbstractVO<String> {
+export declare interface Notification extends AbstractVO<string> {
   title: string,
   content: string,
   receiver: string
@@ -76,17 +76,17 @@ export declare interface TreeNode {
   expand: Object
 }
 
-export declare interface Category extends AbstractVO<String> {
+export declare interface Category extends AbstractVO<string> {
   alias: string,
   count: number,
   description: string
 }
 
-export declare interface Posts extends AbstractVO<String> {
+export declare interface Posts extends AbstractVO<string> {
   title: string,
   cover: string,
   category: string,
-  tags: Array<String>,
+  tags: Array<string>,
   viewed: number,
   likes: number,
   comment: number
@@ -97,7 +97,7 @@ export declare interface PostsDetails {
   content: string
 }
 
-export declare interface Resource extends AbstractVO<String> {
+export declare interface Resource extends AbstractVO<string> {
   title: string,
   type: string,
   cover: string,
@@ -107,14 +107,14 @@ export declare interface Resource extends AbstractVO<String> {
   description: string
 }
 
-export declare interface Comment extends AbstractVO<String> {
+export declare interface Comment extends AbstractVO<string> {
   posts: string,
   country: string,
   location: string,
   content: string
 }
 
-export declare interface Statistics extends AbstractVO<String> {
+export declare interface Statistics extends AbstractVO<string> {
   date: Date,
   viewed: number,
   overViewed: number,
@@ -124,7 +124,7 @@ export declare interface Statistics extends AbstractVO<String> {
   overComment: number
 }
 
-export declare interface Region extends AbstractVO<Number> {
+export declare interface Region extends AbstractVO<number> {
   name: string,
   superior: string,
   alias: string,
@@ -133,10 +133,17 @@ export declare interface Region extends AbstractVO<Number> {
   description: string
 }
 
-export declare interface Dictionary extends AbstractVO<String> {
+export declare interface Dictionary extends AbstractVO<string> {
   name: string,
   superior: string,
   alias: string,
   isAble: boolean,
+  description: string
+}
+
+
+export declare interface AccessLog extends AbstractVO<string> {
+  ip: string,
+  location: string,
   description: string
 }

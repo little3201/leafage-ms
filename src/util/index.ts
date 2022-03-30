@@ -7,9 +7,9 @@ export function parse(str: string) {
     var obj = {};
     var arr1 = str.split("?");
     var arr2 = arr1[1].split("&");
-    for (var i = 0; i < arr2.length; i++) {
-        var res = arr2[i].split("=");
-        obj[res[0]] = res[1];
+    for (let item of arr2) {
+        var res = item.split("=");
+        obj[item] = res[1];
     }
     return obj;
 }

@@ -28,7 +28,7 @@
         :fileName="'role'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
+    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -171,7 +171,7 @@ let roleData = ref<Role>({});
 let dataCode = ref("");
 let superiors = ref<Array<Role>>([]);
 let authorities = ref<Array<Authority>>([]);
-let codes = ref<Array<String>>([])
+let codes = ref<Array<string>>([])
 let datas = ref<Array<Role>>([]);
 // 分页参数
 let page = ref(0);
@@ -195,21 +195,16 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
-    instance
-      .get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
-      .then((response) => {
-        datas.value = response.data;
-      }),
+    instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
+      .then(res => datas.value = res.data),
     count()
   ]);
 };
 /**
  * 统计
  */
-const count = (): void => {
-  instance.get(SERVER_URL.role.concat("/count")).then((res) => {
-    total.value = res.data;
-  })
+const count = async (): Promise<void> => {
+  await instance.get(SERVER_URL.role.concat("/count")).then(res => total.value = res.data)
 }
 /**
  * confirm 操作
@@ -240,9 +235,7 @@ const modelOperate = async (operate: boolean) => {
     roleData.value = {};
     await Promise.all([
       fetch(),
-      await instance.get(SERVER_URL.role).then((res) => {
-        superiors.value = res.data;
-      }),
+      await instance.get(SERVER_URL.role).then(res => superiors.value = res.data),
     ]);
   }
   isEdit.value = operate;
@@ -252,9 +245,7 @@ const modelOperate = async (operate: boolean) => {
  */
 const fetch = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.role.concat("/", dataCode.value)).then((res) => {
-      roleData.value = res.data;
-    });
+    await instance.get(SERVER_URL.role.concat("/", dataCode.value)).then(res => roleData.value = res.data);
   }
 };
 /**
@@ -264,12 +255,8 @@ const fetch = async (): Promise<void> => {
 const treeOperate = async (operate: boolean) => {
   if (operate) {
     await Promise.all([
-      instance.get(SERVER_URL.authority.concat("/tree")).then((res) => {
-        authorities.value = res.data;
-      }),
-      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then((res) => {
-        codes.value = res.data
-      })
+      instance.get(SERVER_URL.authority.concat("/tree")).then(res => authorities.value = res.data),
+      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then(res => codes.value = res.data)
     ])
   }
   isTree.value = operate;
@@ -278,7 +265,7 @@ const treeOperate = async (operate: boolean) => {
  * 提交
  * @param tracked  选中的数据
  */
-const treeCommit = async (tracked: Array<String>) => {
+const treeCommit = async (tracked: Array<string>) => {
   if (tracked && tracked.length > 0) {
     alert("commit " + tracked)
   }
@@ -289,9 +276,8 @@ const treeCommit = async (tracked: Array<String>) => {
  */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .put(SERVER_URL.role.concat("/", dataCode.value), roleData.value)
-      .then((res) => {
+    await instance.put(SERVER_URL.role.concat("/", dataCode.value), roleData.value)
+      .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
           (item: any) => item.code != dataCode.value
@@ -301,7 +287,7 @@ const modelCommit = async (): Promise<void> => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.role, roleData.value).then((res) => {
+    await instance.post(SERVER_URL.role, roleData.value).then(res => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();

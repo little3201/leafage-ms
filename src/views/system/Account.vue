@@ -23,7 +23,7 @@
       </button>
       <Operation :needAdd="false" :datas="datas" :fileName="'account'" />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
+    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="account">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -207,7 +207,7 @@ import type { AccountDetail, TreeNode } from "@/api/request.type";
 let isTree = ref(false);
 // 数据
 let treeDatas = ref<Array<TreeNode>>([]);
-let codes = ref<Array<String>>([])
+let codes = ref<Array<string>>([])
 let datas = ref<Array<AccountDetail>>([]);
 let related = reactive({
   username: '',
@@ -235,21 +235,16 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
-    instance
-      .get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
-      .then((res) => {
-        datas.value = res.data;
-      }),
+    instance.get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
+      .then(res => datas.value = res.data),
     count()
   ]);
 };
 /**
  * 统计
  */
-const count = (): void => {
-  instance.get(SERVER_URL.account.concat("/count")).then((res) => {
-    total.value = res.data;
-  })
+const count = async (): Promise<void> => {
+  await instance.get(SERVER_URL.account.concat("/count")).then(res => total.value = res.data)
 }
 /**
  * 解锁
@@ -257,7 +252,7 @@ const count = (): void => {
  */
 const unlock = async (username: string) => {
   await instance.patch(SERVER_URL.account.concat("/", username)).then(res => {
-    if (res.data && res.data == true) {
+    if (res.data) {
       datas.value.forEach((item: AccountDetail) => {
         if (item.username === username) {
           item.accountLocked = false
@@ -275,16 +270,12 @@ const treeOperate = async (operate: boolean, type: string, username: string): Pr
   if (operate) {
     if (type === "group") {
       await Promise.all([
-        instance.get(SERVER_URL.group.concat("/tree")).then((res) => {
-          treeDatas.value = res.data;
-        }),
+        instance.get(SERVER_URL.group.concat("/tree")).then(res => treeDatas.value = res.data),
         relation(type, username)
       ])
     } else if (type === "role") {
       await Promise.all([
-        instance.get(SERVER_URL.role.concat("/tree")).then((res) => {
-          treeDatas.value = res.data;
-        }),
+        instance.get(SERVER_URL.role.concat("/tree")).then(res => treeDatas.value = res.data),
         relation(type, username)
       ])
     }
@@ -297,19 +288,16 @@ const treeOperate = async (operate: boolean, type: string, username: string): Pr
  */
 const relation = async (type: string, username: string): Promise<void> => {
   related = { username: username, type: type }
-  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res =>
-    codes.value = res.data
-  )
+  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res => codes.value = res.data)
 }
 /**
  * 提交
  * @param tracked 选中的数据
  */
-const treeCommit = async (tracked: Array<String>): Promise<void> => {
+const treeCommit = async (tracked: Array<string>): Promise<void> => {
   if (tracked && tracked.length > 0) {
-    await instance.patch(SERVER_URL.account.concat('/', related.username, '/', related.type), tracked).then(res =>
-      codes.value = res.data
-    )
+    await instance.patch(SERVER_URL.account.concat('/', related.username, '/', related.type), tracked)
+      .then(res => codes.value = res.data)
   }
   isTree.value = false;
 };

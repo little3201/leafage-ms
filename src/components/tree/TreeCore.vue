@@ -99,7 +99,7 @@ const props = defineProps({
     default: {}
   },
   checked: {
-    type: Array as PropType<String[]>,
+    type: Array as PropType<string[]>,
     default: []
   }
 });
@@ -108,7 +108,7 @@ const emit = defineEmits(['treeOperate'])
 
 let isOpen = ref(false);
 
-let tracked = ref<Array<String>>([]);
+let tracked = ref<Array<string>>([]);
 
 watch(
   () => [...props.checked],

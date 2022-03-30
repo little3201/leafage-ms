@@ -1,64 +1,62 @@
 <template>
-  <div class="overflow-hidden">
-    <div class="px-6 py-4 bg-white sm:rounded-md">
-      <div class="flex items-center border-b">
-        <button
-          @click="switchType(false)"
-          type="button"
-          class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
-          :class="{ 'text-blue-600 border border-b-0 ': !isRead }"
+  <div>
+    <div class="flex items-center border-b">
+      <button
+        @click="switchType(false)"
+        type="button"
+        class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
+        :class="{ 'text-blue-600 border border-b-0 ': !isRead }"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="mr-2"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
-          </svg>
-          Unread
-        </button>
-        <button
-          @click="switchType(true)"
-          type="button"
-          class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
-          :class="{ 'text-blue-600 border border-b-0': isRead }"
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
+        </svg>
+        Unread
+      </button>
+      <button
+        @click="switchType(true)"
+        type="button"
+        class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
+        :class="{ 'text-blue-600 border border-b-0': isRead }"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="mr-2"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'book-open'" />
-          </svg>
-          Readed
-        </button>
-      </div>
-      <div class="py-4 divide-y">
-        <div v-for="(notification, index) in notifications" :key="index" class="p-2">
-          <div class="flex items-center">
-            <p
-              class="cursor-pointer hover:underline hover:text-blue-600"
-              @click="previewOperation(true, notification.code)"
-            >{{ notification.title }}</p>
-            <span
-              class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
-              v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"
-            ></span>
-          </div>
-          <div class="w-full text-sm text-gray-500 py-2 truncate">{{ notification.content }}</div>
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'book-open'" />
+        </svg>
+        Readed
+      </button>
+    </div>
+    <div class="py-4 divide-y">
+      <div v-for="(notification, index) in notifications" :key="index" class="p-2">
+        <div class="flex items-center">
+          <p
+            class="cursor-pointer hover:underline hover:text-blue-600"
+            @click="previewOperation(true, notification.code)"
+          >{{ notification.title }}</p>
+          <span
+            class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
+            v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"
+          ></span>
         </div>
+        <div class="w-full text-sm text-gray-500 py-2 truncate">{{ notification.content }}</div>
       </div>
     </div>
     <Preview :isShow="isShow" @closeAction="previewOperation">
@@ -99,16 +97,16 @@ onMounted(() => {
 const retrieve = async () => {
   await Promise.all([
     instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value } })
-      .then((res) => notifications.value = res.data),
+      .then(res => notifications.value = res.data),
     count()
   ]);
 }
 /**
  * 统计未读数据
  */
-const count = async () => {
+const count = async (): Promise<void> => {
   await instance.get(SERVER_URL.notification.concat("/count"))
-    .then((res) => total.value = res.data);
+    .then(res => total.value = res.data);
 }
 /**
  * 已读/未读切换
@@ -117,7 +115,7 @@ const count = async () => {
 const switchType = async (read: boolean) => {
   isRead.value = read
   await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: isRead.value } })
-    .then((res) => notifications.value = res.data);
+    .then(res => notifications.value = res.data);
 }
 /**
  * 预览
@@ -126,7 +124,7 @@ const switchType = async (read: boolean) => {
  */
 const previewOperation = (show: boolean, code: string) => {
   if (show) {
-    instance.get(SERVER_URL.notification.concat("/", code)).then((res) => data.value = res.data);
+    instance.get(SERVER_URL.notification.concat("/", code)).then(res => data.value = res.data);
   }
   isShow.value = show
 }

@@ -5,26 +5,25 @@
       @click.prevent="isOpen = !isOpen"
       class="flex items-center rounded-full h-12 pl-4 cursor-pointer"
     >
-      <div class="mr-3">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-        </svg>
-      </div>
-      <span class="flex items-center w-full">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-3"
+      >
+        <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
+      </svg>
+      <span class="inline-flex items-center w-full">
         {{ data.name }}
         <svg
           v-if="isOpen"
-          width="16"
-          height="16"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -37,8 +36,8 @@
         </svg>
         <svg
           v-else
-          width="16"
-          height="16"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -58,20 +57,19 @@
       class="flex items-center h-12 rounded-full pl-4"
       exact
     >
-      <div class="mr-3">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-        </svg>
-      </div>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-3"
+      >
+        <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
+      </svg>
       <span class="flex items-center" v-text="data.name"></span>
     </RouterLink>
     <ul v-show="isOpen" class="mx-4 bg-blue-900 bg-opacity-30 rounded-md">

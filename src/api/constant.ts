@@ -6,7 +6,6 @@ const SERVER_PRE = {
 
 // 接口请求路径
 export const SERVER_URL = {
-  // hypervisor
   account: SERVER_PRE.hypervisor.concat('/account'), // 账户
   user: SERVER_PRE.hypervisor.concat('/user'), // 用户
   role: SERVER_PRE.hypervisor.concat('/role'), // 角色
@@ -16,7 +15,8 @@ export const SERVER_URL = {
 
   region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
   dictionary: SERVER_PRE.hypervisor.concat('/dictionary'), // 字典
-  // assets
+  accesslog: SERVER_PRE.hypervisor.concat('/accesslog'), // 字典
+
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别
   resource: SERVER_PRE.assets.concat('/resource'), // 资源

@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-auto" style="height: calc(100vh - 6rem)">
+  <div class="sm-d-h overflow-auto">
     <div class="flex items-center my-2">
       <h2 class="text-lg font-medium mr-auto">Settings</h2>
     </div>
@@ -74,25 +74,6 @@
               </svg>
               Account Security
             </RouterLink>
-            <!-- <RouterLink
-              class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="billing"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
-              </svg>
-              Billing & Plans
-            </RouterLink>-->
           </div>
           <div class="py-4">
             <RouterLink
@@ -136,8 +117,8 @@
           </div>
         </div>
       </div>
-      <div class="w-full overflow-y-auto" style="height: calc(100vh - 9rem)">
-        <div class="shadow overflow-hidden bg-white sm:rounded-md">
+      <div class="w-full sm-s-h overflow-y-auto">
+        <div class="shadow overflow-hidden bg-white rounded-md">
           <div class="p-4">
             <RouterView />
           </div>

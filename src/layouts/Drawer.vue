@@ -45,7 +45,7 @@
         </svg>
       </button>
     </div>
-    <div class="mb-4 mt-2 h-px bg-gray-200 bg-opacity-30"></div>
+    <div class="mt-2 mb-4 h-px bg-gray-200 bg-opacity-30"></div>
     <div
       v-show="isShow"
       class="fixed inset-0 overflow-hidden max-w-xs z-10"

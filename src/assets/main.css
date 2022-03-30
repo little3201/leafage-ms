@@ -2,3 +2,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities  {
+    @media only screen and (max-width: 789px) {
+        .sm-a-h {
+          height: calc(100vh - 16.5rem);
+        }
+    }
+    
+    @media only screen and (min-width: 789px) {
+        .sm-a-h {
+          height: calc(100vh - 13.5rem);
+        }
+    }
+
+    @media only screen and (max-width: 789px) {
+        .sm-s-h {
+          height: calc(100vh - 12rem);
+        }
+    }
+    
+    @media only screen and (min-width: 789px) {
+        .sm-s-h {
+          height: calc(100vh - 9rem);
+        }
+    }
+
+    @media only screen and (max-width: 789px) {
+        .sm-t-h {
+          height: calc(100vh - 14rem);
+        }
+    }
+    
+    @media only screen and (min-width: 789px) {
+        .sm-t-h {
+          height: calc(100vh - 10.5rem);
+        }
+    }
+      
+    @media only screen and (max-width: 789px) {
+        .sm-d-h {
+            height: calc(100vh - 8rem);
+        }
+    }
+      
+    @media only screen and (max-width: 789px) {
+        .sm-g-h {
+            height: calc(100vh - 5rem);
+        }
+    }
+}

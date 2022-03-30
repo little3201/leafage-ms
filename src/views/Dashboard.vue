@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 overflow-auto">
+  <div class="col-span-12 sm-d-h overflow-auto">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <button

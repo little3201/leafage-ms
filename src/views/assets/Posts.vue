@@ -28,7 +28,7 @@
         :fileName="'posts'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
+    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -308,7 +308,7 @@ let size = ref(10);
 let total = ref(0);
 // 标签参数
 let tagValue = ref("");
-let tags = ref<Array<String>>([]);
+let tags = ref<Array<string>>([]);
 // 模态框参数
 let isEdit = ref(false);
 let isDel = ref(false);
@@ -350,9 +350,8 @@ const removeCover = (): void => {
  */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
-    instance
-      .get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
-      .then((res) => {
+    instance.get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
+      .then(res => {
         datas.value = res.data;
       }),
     count()
@@ -361,8 +360,8 @@ const retrieve = async (): Promise<void> => {
 /**
  * 统计
  */
-const count = (): void => {
-  instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
+const count = async (): Promise<void> => {
+  await instance.get(SERVER_URL.posts.concat("/count")).then(res => {
     total.value = res.data;
   })
 }
@@ -414,7 +413,7 @@ const modelOperate = async (operate: boolean): Promise<void> => {
     content.value = "";
     tags.value = [];
     await Promise.all([
-      await instance.get(SERVER_URL.category).then((res) => {
+      await instance.get(SERVER_URL.category).then(res => {
         categories.value = res.data;
       }),
       fetch(),
@@ -428,7 +427,7 @@ const modelOperate = async (operate: boolean): Promise<void> => {
  */
 const fetch = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then((res) => {
+    await instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then(res => {
       postsData.value = res.data;
       tags.value = res.data.tags;
     });
@@ -439,11 +438,8 @@ const fetch = async (): Promise<void> => {
  */
 const fetchContent = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
-      .then((res) => {
-        content.value = res.data.content;
-      });
+    await instance.get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
+      .then(res => content.value = res.data.content);
   }
 };
 /**
@@ -455,9 +451,8 @@ const modelCommit = async (): Promise<void> => {
     content: content.value,
   };
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .put(SERVER_URL.posts.concat("/", dataCode.value), data)
-      .then((res) => {
+    await instance.put(SERVER_URL.posts.concat("/", dataCode.value), data)
+      .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
           (item: any) => item.code != dataCode.value
@@ -467,7 +462,7 @@ const modelCommit = async (): Promise<void> => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.posts, data).then((res) => {
+    await instance.post(SERVER_URL.posts, data).then(res => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.pop();

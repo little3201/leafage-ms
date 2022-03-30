@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between mt-1">
     <div class="hidden md:block">
       当前展示第&nbsp;
       <span v-text="page * size + 1"></span>&nbsp;-
@@ -102,7 +102,7 @@
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
         </svg>
       </button>
-      <select v-model.number="size" class="ml-2 py-1 border border-gray-300 rounded-md">
+      <select v-model.number="size" class="py-1 border border-gray-300 rounded-md">
         <option>10</option>
         <option>15</option>
         <option>20</option>

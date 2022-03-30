@@ -28,7 +28,7 @@
         :fileName="'authority'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
+    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -285,23 +285,16 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
-    instance
-      .get(SERVER_URL.authority, {
-        params: { page: page.value, size: size.value },
-      })
-      .then((res) => {
-        datas.value = res.data;
-      }),
+    instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
+      .then(res => datas.value = res.data),
     count()
   ]);
 };
 /**
  * 统计
  */
-const count = (): void => {
-  instance.get(SERVER_URL.authority.concat("/count")).then((res) => {
-    total.value = res.data;
-  })
+const count = async (): Promise<void> => {
+  await instance.get(SERVER_URL.authority.concat("/count")).then(res => total.value = res.data)
 }
 /**
  * confirm 操作
@@ -332,21 +325,17 @@ const modelOperate = async (operate: boolean): Promise<void> => {
     authorityData.value = {};
     await Promise.all([
       fetch(),
-      instance.get(SERVER_URL.authority).then((res) => {
-        superiors.value = res.data;
-      }),
+      instance.get(SERVER_URL.authority).then(res => superiors.value = res.data),
     ]);
   }
   isEdit.value = operate;
 };
-/**
+/** 
  * 查详情
  */
-const fetch = (): void => {
+const fetch = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    instance.get(SERVER_URL.authority.concat("/", dataCode.value)).then((res) => {
-      authorityData.value = res.data;
-    });
+    await instance.get(SERVER_URL.authority.concat("/", dataCode.value)).then(res => authorityData.value = res.data);
   }
 };
 /**
@@ -355,9 +344,7 @@ const fetch = (): void => {
  */
 const exist = async (name: string): Promise<void> => {
   if (name && name.length > 0) {
-    await instance.get(SERVER_URL.authority.concat("/", name, "/exist")).then((res) => {
-      authorityData.value = res.data;
-    });
+    await instance.get(SERVER_URL.authority.concat("/", name, "/exist")).then(res => authorityData.value = res.data);
   }
 }
 /**
@@ -365,9 +352,8 @@ const exist = async (name: string): Promise<void> => {
  */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
-      .then((res) => {
+    await instance.put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
+      .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
           (item: any) => item.code != dataCode.value
@@ -377,7 +363,7 @@ const modelCommit = async (): Promise<void> => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.authority, authorityData.value).then((res) => {
+    await instance.post(SERVER_URL.authority, authorityData.value).then(res => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();
@@ -396,9 +382,7 @@ const modelCommit = async (): Promise<void> => {
  */
 const previewOperation = async (show: boolean) => {
   if (show) {
-    await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then((res) => {
-      roles.value = res.data;
-    });
+    await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then(res => roles.value = res.data);
   }
   isShow.value = show
 }

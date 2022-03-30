@@ -7,7 +7,7 @@ const datas: Array<Dictionary> = [];
 
 for (let i = 0; i < 309; i++) {
   datas.push({
-    code: Random.integer(10, 99),
+    code: Random.string('number', 9),
     name: Random.word(),
     superior: Random.word(), // 华南、华北
     alias: Random.cword(),

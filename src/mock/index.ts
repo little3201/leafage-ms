@@ -12,21 +12,14 @@ let menus = [
       { "code": "212240439", "name": "Authority", "superior": "21224DRMU", "expand": { "path": "/authority", "icon": "link" }, "children": [] },
       {
         "code": "203315P3Q", "name": "Account", "superior": "21224DRMU", "expand": { "path": "/account", "icon": "user" }, "children": []
-      }
+      },
+      { "code": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionary", "icon": "book" }, "children": [] }
     ]
   },
   { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
   { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "folder" }, "children": [] },
   { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
-  // { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] },
-  {
-    "code": "21214DRMU", "name": "Basedata", "superior": "", "expand": { "path": "/basedata", "icon": "database" }, "children": [
-      { "code": "21224UJ2C", "name": "Region", "superior": "21214DRMU", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] },
-      {
-        "code": "21224PV1C", "name": "Dictionary", "superior": "21214DRMU", "expand": { "path": "/dictionary", "icon": "book" }, "children": []
-      }
-    ]
-  },
+  { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
 ]
 
 import signMock from './sign'
@@ -37,34 +30,33 @@ import userMock from './system/user';
 import groupMock from './system/group';
 import authorityMock from './system/authority';
 import notificationMock from './system/notification';
+import dictionaryMock from './system/dictionary';
+import accesslogMock from './system/accesslog';
 
 import postsMock from './assets/posts';
 import categoryMock from './assets/category';
 import resourceMock from './assets/resource';
 import statisticsMock from './assets/statistics';
 import commentMock from './assets/comment';
-
-import regionMock from './basedata/region';
-import dictionaryMock from './basedata/dictionary';
+import regionMock from './assets/region';
 
 const mocks = [
   ...signMock,
-
   ...accountMock,
   ...roleMock,
   ...userMock,
   ...groupMock,
   ...authorityMock,
   ...notificationMock,
+  ...dictionaryMock,
+  ...accesslogMock,
 
   ...postsMock,
   ...categoryMock,
   ...resourceMock,
   ...statisticsMock,
   ...commentMock,
-
   ...regionMock,
-  ...dictionaryMock
 ];
 
 export function mockXHR() {

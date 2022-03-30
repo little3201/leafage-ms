@@ -34,12 +34,12 @@ const props = defineProps({
     default: [],
   },
   codes: {
-    type: Array as PropType<String[]>,
+    type: Array as PropType<string[]>,
     default: []
   }
 });
 
-let checked = ref<Array<String>>([])
+let checked = ref<Array<string>>([])
 
 watch(
   () => [...props.codes],
@@ -87,14 +87,14 @@ const recurrenceChildren = (children: Array<TreeNode>, isCheck: boolean) => {
  * @param datas 所有tree数据
  */
 const recurrenceParents = (code: string, datas: Array<TreeNode>) => {
-  for (let i = 0; i < datas.length; i++) {
-    if (datas[i].code === code) {
+  for (let item of datas) {
+    if (item.code === code) {
       return []
     }
-    if (datas[i].children && datas[i].children.length > 0) {
-      let codes = recurrenceParents(code, datas[i].children)
+    if (item.children && item.children.length > 0) {
+      let codes = recurrenceParents(code, item.children)
       if (codes) {
-        return codes.concat(datas[i].code)
+        return codes.concat(item.code)
       }
     }
   }

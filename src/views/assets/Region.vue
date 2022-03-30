@@ -28,7 +28,7 @@
         :fileName="'region'"
       />
     </div>
-    <div class="overflow-scroll" style="height: calc(100vh - 10.5rem)">
+    <div class="overflow-auto" style="height: calc(100vh - 10.5rem)">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
@@ -215,21 +215,16 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await Promise.all([
-    instance
-      .get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
-      .then((res) => {
-        datas.value = res.data;
-      }),
+    instance.get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
+      .then(res => datas.value = res.data),
     count()
   ]);
 };
 /**
  * 统计
  */
-const count = (): void => {
-  instance.get(SERVER_URL.region.concat("/count")).then((res) => {
-    total.value = res.data;
-  })
+const count = async (): Promise<void> => {
+  await instance.get(SERVER_URL.region.concat("/count")).then(res => total.value = res.data)
 }
 /**
  * confirm 操作
@@ -277,9 +272,7 @@ const retrieveSuperior = async (code: number) => {
     if (code > 110000000) {
       superior = Math.floor(code / 1000)
     }
-    await instance.get(SERVER_URL.region.concat("/", superior + "/lower")).then((res) => {
-      superiors.value = res.data;
-    })
+    await instance.get(SERVER_URL.region.concat("/", superior + "/lower")).then(res => superiors.value = res.data)
   }
 }
 /**
@@ -287,9 +280,7 @@ const retrieveSuperior = async (code: number) => {
  */
 const fetch = async () => {
   if (dataCode.value) {
-    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then((res) => {
-      regionData.value = res.data;
-    });
+    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then(res => regionData.value = res.data);
   }
 }
 /**
@@ -297,9 +288,8 @@ const fetch = async () => {
  */
 const modelCommit = async (): Promise<void> => {
   if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
-      .then((res) => {
+    await instance.put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
+      .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
           (item: any) => item.code != dataCode.value
@@ -309,7 +299,7 @@ const modelCommit = async (): Promise<void> => {
         isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.region, regionData.value).then((res) => {
+    await instance.post(SERVER_URL.region, regionData.value).then(res => {
       if (datas.value.length >= size.value) {
         // 删除第一个
         datas.value.shift();

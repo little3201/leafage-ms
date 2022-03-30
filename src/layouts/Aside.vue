@@ -1,7 +1,7 @@
 <template>
-  <aside class="sm:w-20 xl:w-64 pr-4 text-sm">
+  <aside class="sm:w-20 xl:w-64 pr-4">
     <RouterLink to="/">
-      <h1 class="inline-flex items-center mt-3 space-x-4 text-white text-2xl ml-4">
+      <h1 class="inline-flex items-center mt-2 space-x-4 text-white text-2xl ml-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -31,8 +31,8 @@
         <span class="hidden xl:block">Leafage</span>
       </h1>
     </RouterLink>
-    <div class="my-6 h-px w-full bg-gray-200 bg-opacity-30"></div>
-    <ul>
+    <div class="my-4 h-px w-full bg-gray-200 bg-opacity-30"></div>
+    <ul class="my-8">
       <AsideCore v-for="data in datas" :key="data.code" :data="data" />
     </ul>
   </aside>

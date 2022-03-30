@@ -27,7 +27,7 @@ Chart.register(
     Tooltip
 );
 
-export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, viewed: Array<Object>, likes: Array<Object>, comments: Array<Object>) => {
+export const createBarChart = (hctx: HTMLCanvasElement, labels: Array<string>, viewed: Array<Object>, likes: Array<Object>, comments: Array<Object>) => {
     const config: any = {
         type: "bar",
         data: {
@@ -61,7 +61,7 @@ export const createBarChart = (ctx: HTMLCanvasElement, labels: Array<String>, vi
             }
         },
     }
-    return new Chart(ctx, config);
+    return new Chart(hctx, config);
 }
 
 const getGradient = (ctx: CanvasRenderingContext2D, chartArea: any, color: string) => {
@@ -72,7 +72,7 @@ const getGradient = (ctx: CanvasRenderingContext2D, chartArea: any, color: strin
     return gradient
 }
 
-export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, datas: Array<Object>, color: string) => {
+export const createMiniChart = (hctx: HTMLCanvasElement, labels: Array<string>, datas: Array<Object>, color: string) => {
     const config: any = {
         type: "line",
         data: {
@@ -129,5 +129,5 @@ export const createMiniChart = (ctx: HTMLCanvasElement, labels: Array<String>, d
             }
         },
     }
-    return new Chart(ctx, config);
+    return new Chart(hctx, config);
 }

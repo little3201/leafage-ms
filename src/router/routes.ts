@@ -40,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Authority',
             component: () => import('@/views/system/Authority.vue'),
             meta: { requiresAuth: true }
+          },
+          {
+            path: 'dictionary',
+            name: 'Dictionary',
+            component: () => import('@/views/system/Dictionary.vue')
           }
         ]
       },
@@ -57,6 +62,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'category',
         name: 'Category',
         component: () => import('@/views/assets/Category.vue')
+      },
+      {
+        path: 'region',
+        name: 'Region',
+        component: () => import('@/views/assets/Region.vue')
       },
       {
         path: '/settings',
@@ -92,23 +102,6 @@ const routes: Array<RouteRecordRaw> = [
             name: 'Accesslog',
             component: () => import('@/views/settings/Accesslog.vue'),
             meta: { requiresAuth: true }
-          }
-        ]
-      },
-      {
-        path: '/basedata',
-        name: 'Basedata',
-        component: () => import('@/views/basedata/Index.vue'),
-        children: [
-          {
-            path: 'region',
-            name: 'Region',
-            component: () => import('@/views/basedata/Region.vue')
-          },
-          {
-            path: 'dictionary',
-            name: 'Dictionary',
-            component: () => import('@/views/basedata/Dictionary.vue')
           }
         ]
       }

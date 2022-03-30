@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2 h-full overflow-scroll">
+  <div class="col-span-12 overflow-auto">
     <div class="inline-flex items-center h-10">
       <h2 class="text-lg font-medium">General Report</h2>
       <button
@@ -44,7 +44,7 @@
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'bg-lime-500': latest.overViewed > 0, 'bg-red-600': latest.overViewed <= 0 }"
-                title="viewed higher than last month"
+                title="overViewed"
               >
                 {{ latest.overViewed }}%
                 <svg
@@ -93,7 +93,7 @@
               <div
                 class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'bg-lime-500': latest.overComment > 0, 'bg-red-600': latest.overComment <= 0 }"
-                title="2% Lower than last month"
+                title="overComment"
               >
                 {{ latest.overComment }}%
                 <svg
@@ -142,7 +142,7 @@
               <div
                 class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
                 :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }"
-                title="12% Higher than last month"
+                title="overLikes"
               >
                 {{ latest.overLikes }}%
                 <svg
@@ -189,11 +189,10 @@
             </svg>
             <div class="ml-auto">
               <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }"
-                title="12% Higher than last month"
+                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                title="overDownloads"
               >
-                {{ latest.overLikes }}%
+                {{ 0 }}%
                 <svg
                   width="16"
                   height="16"
@@ -204,11 +203,11 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <use
+                  <!-- <use
                     v-if="latest.overLikes > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                  />
-                  <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
+                  />-->
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
             </div>
@@ -221,8 +220,8 @@
               ></canvas>
             </div>
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="totalPosts"></h2>
-          <div class="text-base text-gray-600 mt-1">Total Posts</div>
+          <h2 class="text-3xl font-bold leading-8 mt-6">0</h2>
+          <div class="text-base text-gray-600 mt-1">Total Downloads</div>
         </div>
       </div>
     </div>
@@ -252,7 +251,7 @@
 
                   <td class="px-3 max-w-sm truncate">
                     <a
-                      :href="'https://www.leafage.top/posts/detail/' + comment.posts"
+                      :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
                       target="_blank"
                       class="font-medium hover:underline"
                     >{{ comment.content }}</a>
@@ -283,7 +282,7 @@
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
                   <td class="px-3">
                     <a
-                      :href="'https://www.leafage.top/posts/detail/' + posts.code"
+                      :href="`https://www.leafage.top/posts/detail/${post.code}`"
                       target="_blank"
                       class="font-medium hover:underline"
                     >{{ post.title }}</a>
@@ -309,7 +308,6 @@ import type { Comment, Posts, Statistics } from "@/api/request.type";
 // data
 let comments = ref<Comment>([])
 let posts = ref<Posts>([])
-let totalPosts = ref(0)
 let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
 
@@ -335,32 +333,27 @@ onMounted(() => {
  * 查询最新10条评论
  */
 const retrieveComments = async (): Promise<void> => {
-  await instance
-    .get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
-    .then((res) => {
-      comments.value = res.data
-    });
+  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+    .then(res => comments.value = res.data);
 }
 /**
  * 查询最新10条帖子
  */
 const retrievePosts = async (): Promise<void> => {
-  await instance
-    .get(SERVER_URL.posts, { params: { page: 0, size: 10 } })
-    .then((res) => {
-      posts.value = res.data
-    });
+  await instance.get(SERVER_URL.posts, { params: { page: 0, size: 10 } })
+    .then(res => posts.value = res.data);
 }
+/**
+ * 初始化请求数据
+ */
 const initData = async (): Promise<void> => {
-  await Promise.all([instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } })
-    .then(res => {
+  await Promise.all([
+    instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } }).then(res => {
       datas.value = res.data;
       construceChart()
-    }), instance.get(SERVER_URL.posts.concat("/count")).then((res) => {
-      totalPosts.value = res.data;
     }),
-  retrieveComments(),
-  retrievePosts()])
+    retrieveComments(),
+    retrievePosts()])
 };
 
 const construceChart = (): void => {
@@ -371,7 +364,8 @@ const construceChart = (): void => {
     comments: new Array(),
     overViewed: new Array(),
     overLikes: new Array(),
-    overComment: new Array()
+    overComment: new Array(),
+    overDownloads: new Array
   }
   for (let i = 0; i < datas.value.length - 1; i++) {
     obj.labels.unshift(datas.value[i].date);
@@ -383,6 +377,7 @@ const construceChart = (): void => {
     obj.overViewed.unshift(datas.value[i].overViewed)
     obj.overComment.unshift(datas.value[i].overComment);
     obj.overLikes.unshift(datas.value[i].overLikes);
+    obj.overDownloads.unshift(0)
   }
 
   let labels = obj.labels
@@ -393,7 +388,7 @@ const construceChart = (): void => {
   // 喜欢数统计
   charts.overLikes = createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 喜欢数统计
-  charts.overDownloads = createMiniChart(overDownloadsRef.value, labels, obj.overComment, "rgba(22, 163, 74, 0.8)");
+  charts.overDownloads = createMiniChart(overDownloadsRef.value, labels, obj.overDownloads, "rgba(22, 163, 74, 0.8)");
   // 帖子分类统计
   charts.viewed = createBarChart(viewedRef.value, labels, obj.viewed, obj.likes, obj.comments);
 }

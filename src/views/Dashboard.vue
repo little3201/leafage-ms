@@ -1,6 +1,6 @@
 <template>
   <div class="col-span-12 sm-d-h overflow-auto">
-    <div class="inline-flex items-center h-10">
+    <div class="inline-flex items-center my-2">
       <h2 class="text-lg font-medium">General Report</h2>
       <button
         type="button"
@@ -231,7 +231,7 @@
           <canvas id="viewed" ref="viewedRef" aria-label="viewed" role="img" height="100"></canvas>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-3">
+      <div class="col-span-12 md:col-span-6">
         <div class="bg-white p-4 shadow-sm rounded-md">
           <div class="overflow-auto">
             <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
@@ -262,38 +262,6 @@
           </div>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-3">
-        <div class="bg-white p-4 shadow-sm rounded-md">
-          <div class="overflow-auto">
-            <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
-              <thead>
-                <tr class="bg-gray-100 uppercase text-center text-sm">
-                  <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                  <th scope="col" class="px-3">Title</th>
-                  <th scope="col" class="px-3">Count</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class="text-center bg-white border-y-4 lg:border-y-6 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-                  v-for="(post, index) in posts"
-                  :key="index"
-                >
-                  <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                  <td class="px-3">
-                    <a
-                      :href="`https://www.leafage.top/posts/detail/${post.code}`"
-                      target="_blank"
-                      class="font-medium hover:underline"
-                    >{{ post.title }}</a>
-                  </td>
-                  <td class="px-3 py-2 sm:py-3">{{ post.viewed }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -303,11 +271,10 @@ import { ref, reactive, computed, onMounted } from "vue";
 import { createBarChart, createMiniChart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Comment, Posts, Statistics } from "@/api/request.type";
+import type { Comment, Statistics } from "@/api/request.type";
 
 // data
 let comments = ref<Comment>([])
-let posts = ref<Posts>([])
 let datas = ref<Statistics>([])
 const latest = computed(() => datas.value[0] || {});
 
@@ -337,13 +304,6 @@ const retrieveComments = async (): Promise<void> => {
     .then(res => comments.value = res.data);
 }
 /**
- * 查询最新10条帖子
- */
-const retrievePosts = async (): Promise<void> => {
-  await instance.get(SERVER_URL.posts, { params: { page: 0, size: 10 } })
-    .then(res => posts.value = res.data);
-}
-/**
  * 初始化请求数据
  */
 const initData = async (): Promise<void> => {
@@ -352,8 +312,7 @@ const initData = async (): Promise<void> => {
       datas.value = res.data;
       construceChart()
     }),
-    retrieveComments(),
-    retrievePosts()])
+    retrieveComments()])
 };
 
 const construceChart = (): void => {

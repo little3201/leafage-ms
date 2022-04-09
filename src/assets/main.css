@@ -6,13 +6,13 @@
 @layer utilities  {
     @media only screen and (max-width: 789px) {
         .sm-a-h {
-          height: calc(100vh - 16.5rem);
+          height: calc(100vh - 16rem);
         }
     }
     
     @media only screen and (min-width: 789px) {
         .sm-a-h {
-          height: calc(100vh - 13.5rem);
+          height: calc(100vh - 13rem);
         }
     }
 
@@ -24,7 +24,7 @@
     
     @media only screen and (min-width: 789px) {
         .sm-s-h {
-          height: calc(100vh - 9rem);
+          height: calc(100vh - 8.5rem);
         }
     }
 
@@ -45,6 +45,12 @@
             height: calc(100vh - 8rem);
         }
     }
+
+    @media only screen and (min-width: 789px) {
+      .sm-d-h {
+          height: calc(100vh - 5rem);
+      }
+  }
       
     @media only screen and (max-width: 789px) {
         .sm-g-h {

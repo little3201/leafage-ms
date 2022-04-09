@@ -62,7 +62,8 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
       </svg>
-      <span class="hidden sm:block">Add</span>&nbsp;New
+      Add&nbsp;
+      <span class="hidden sm:block">New</span>
     </button>
   </div>
 </template>

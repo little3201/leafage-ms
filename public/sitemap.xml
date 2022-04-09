@@ -12,7 +12,13 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/portfolio</loc>
+        <loc>https://console.leafage.top/resource</loc>
+        <lastmod>2021-05-26T01:26:14.500Z</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+     <url>
+        <loc>https://console.leafage.top/region</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
@@ -36,7 +42,13 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/user</loc>
+        <loc>https://console.leafage.top/system/account</loc>
+        <lastmod>2021-05-26T01:26:14.500Z</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://console.leafage.top/system/dictionary</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>

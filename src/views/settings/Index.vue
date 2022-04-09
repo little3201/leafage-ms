@@ -118,10 +118,8 @@
         </div>
       </div>
       <div class="w-full sm-s-h overflow-y-auto">
-        <div class="shadow overflow-hidden bg-white rounded-md">
-          <div class="p-4">
-            <RouterView />
-          </div>
+        <div class="shadow overflow-hidden bg-white rounded-md p-4">
+          <RouterView />
         </div>
       </div>
     </div>

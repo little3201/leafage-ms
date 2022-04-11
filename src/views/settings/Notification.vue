@@ -1,60 +1,27 @@
 <template>
   <div>
-    <div class="flex items-center border-b">
-      <button
-        @click="switchType(false)"
-        type="button"
-        class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
-        :class="{ 'text-blue-600 border border-b-0 ': !isRead }"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
-        </svg>
-        Unread
+    <div class="flex space-x-8 border-b">
+      <button @click="switchType(false)" type="button" title="unread"
+        class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none  flex flex-col justify-between  pt-3 rounded-t "
+        :class="{ 'text-blue-700 border-blue-700': !isRead }">
+        <span class="mb-3 dark:text-white ">Unread</span>
+        <div v-show="!isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
-      <button
-        @click="switchType(true)"
-        type="button"
-        class="inline-flex items-center p-2 hover:text-blue-600 hover:bg-gray-100 rounded-t-md"
-        :class="{ 'text-blue-600 border border-b-0': isRead }"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'book-open'" />
-        </svg>
-        Readed
+      <button @click="switchType(true)" type="button" title="readed"
+        class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none flex flex-col justify-between  pt-3 rounded-t "
+        :class="{ 'text-blue-700 border-blue-700': isRead }">
+        <span class="mb-3 dark:text-white ">
+          Readed</span>
+        <div v-show="isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
     </div>
     <div class="py-4 divide-y">
       <div v-for="(notification, index) in notifications" :key="index" class="p-2">
         <div class="flex items-center">
-          <p
-            class="cursor-pointer hover:underline hover:text-blue-600"
-            @click="previewOperation(true, notification.code)"
-          >{{ notification.title }}</p>
-          <span
-            class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
-            v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"
-          ></span>
+          <p class="cursor-pointer hover:underline hover:text-blue-600"
+            @click="previewOperation(true, notification.code)">{{ notification.title }}</p>
+          <span class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
+            v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"></span>
         </div>
         <div class="w-full text-sm text-gray-500 py-2 truncate">{{ notification.content }}</div>
       </div>
@@ -65,7 +32,7 @@
         <p v-text="data.content"></p>
       </article>
     </Preview>
-  </div>
+</div>
 </template>
 
 

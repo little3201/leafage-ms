@@ -9,45 +9,22 @@
           <div class="mt-4 text-sm">
             <label for="password" class="font-medium text-gray-700">Nicknmae</label>
             <div class="flex items-center space-x-4 mt-1">
-              <input
-                id="password"
-                name="password"
-                type="text"
-                class="block border-gray-300 py-1 rounded-md"
-                v-model="account.nickname"
-                :disabled="!isEdit"
-              />
-              <button
-                type="button"
-                @click="editAllow"
-                class="text-blue-600 hover:underline"
-              >{{ isEdit ? 'Save' : 'Edit' }}</button>
+              <input id="password" name="password" type="text" class="block border-gray-300 py-1 rounded-md"
+                v-model="account.nickname" :disabled="!isEdit" />
+              <button type="button" @click="editAllow" class="text-blue-600 hover:underline">{{
+                isEdit ? 'Save' : 'Edit'
+              }}</button>
             </div>
-            <span
-              class="text-xs text-gray-400"
-            >Your name may appear around GitHub where you contribute or are mentioned. You can remove it at any time.</span>
+            <span class="text-xs text-gray-400">Your name may appear around GitHub where you contribute or are
+              mentioned. You can remove it at any time.</span>
           </div>
           <div class="mr-20 ml-8 text-center">
             <figure v-if="account.avatar" class="w-32 h-32 border rounded-full relative group">
               <div
-                class="absolute w-full h-full rounded-full bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
-              >
-                <button
-                  title="remove"
-                  type="button"
-                  @click="removeAvatar"
-                  class="text-white focus:outline-none"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                class="absolute w-full h-full rounded-full bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center">
+                <button title="remove" type="button" @click="removeAvatar" class="text-white focus:outline-none">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
                   </svg>
                 </button>
@@ -56,32 +33,15 @@
             </figure>
             <div v-else class="w-32 h-32 border rounded-full flex justify-center items-center">
               <div class="text-gray-600 text-center">
-                <label
-                  for="avatar-upload"
-                  class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
-                >
-                  <svg
-                    class="mx-auto h-8 w-8"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
+                <label for="avatar-upload"
+                  class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600">
+                  <svg class="mx-auto h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                     <path
                       d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <input
-                    id="avatar-upload"
-                    name="avatar"
-                    type="file"
-                    class="sr-only"
-                    accept="image/png, image/jpeg, image/jpg"
-                    @click="uploadImage($event.target.files)"
-                  />
+                  <input id="avatar-upload" name="avatar" type="file" class="sr-only"
+                    accept="image/png, image/jpeg, image/jpg" @click="uploadImage($event.target.files)" />
                   <p class="text-xs text-gray-500">png, jpeg, jpg</p>
                   <p class="text-xs text-gray-500">up to 500KB</p>
                 </label>
@@ -98,34 +58,20 @@
             <div class="flex space-x-4 text-sm">
               <div>
                 <label for="firstname" class="font-medium text-gray-700">Firstname</label>
-                <input
-                  id="firstname"
-                  name="firstname"
-                  type="text"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.firstname"
-                />
+                <input id="firstname" name="firstname" type="text" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.firstname" />
               </div>
               <div>
                 <label for="lastname" class="font-medium text-gray-700">Lastname</label>
-                <input
-                  id="lastname"
-                  name="lastname"
-                  type="text"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.lastname"
-                />
+                <input id="lastname" name="lastname" type="text" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.lastname" />
               </div>
             </div>
             <div class="flex space-x-4 text-sm">
               <div>
                 <label for="gender" class="font-medium text-gray-700">Gender</label>
-                <select
-                  id="gender"
-                  name="gender"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.gender"
-                >
+                <select id="gender" name="gender" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.gender">
                   <option value="undefined">---请选择---</option>
                   <option value="F">Female</option>
                   <option value="M">Male</option>
@@ -133,22 +79,13 @@
               </div>
               <div>
                 <label for="birthday" class="font-medium text-gray-700">Birthday</label>
-                <input
-                  id="birthday"
-                  name="birthday"
-                  type="date"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.birthday"
-                />
+                <input id="birthday" name="birthday" type="date" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.birthday" />
               </div>
               <div>
                 <label for="degree" class="font-medium text-gray-700">Degree</label>
-                <select
-                  id="degree"
-                  name="degree"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.degree"
-                >
+                <select id="degree" name="degree" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.degree">
                   <option value="undefined">---请选择---</option>
                   <option value="01">小学</option>
                   <option value="02">初中</option>
@@ -164,12 +101,8 @@
             <div class="flex space-x-4 text-sm">
               <div>
                 <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
-                <select
-                  id="ethnicity"
-                  name="ethnicity"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.ethnicity"
-                >
+                <select id="ethnicity" name="ethnicity" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.ethnicity">
                   <option value="undefined">---请选择---</option>
                   <option value="01">汉族</option>
                   <option value="02">蒙古族</option>
@@ -231,52 +164,33 @@
               </div>
               <div class="w-full">
                 <label for="hobbies" class="font-medium text-gray-700">Hobbies</label>
-                <input
-                  id="hobbies"
-                  name="hobbies"
-                  type="text"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.hobbies"
-                />
+                <input id="hobbies" name="hobbies" type="text" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.hobbies" />
               </div>
             </div>
             <div class="flex space-x-4 text-sm">
               <div>
                 <label for="company" class="font-medium text-gray-700">Company</label>
-                <input
-                  id="company"
-                  name="company"
-                  type="text"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.company"
-                />
+                <input id="company" name="company" type="text" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.company" />
               </div>
               <div>
                 <label for="position" class="font-medium text-gray-700">Position</label>
-                <input
-                  id="position"
-                  name="position"
-                  type="text"
-                  class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.position"
-                />
+                <input id="position" name="position" type="text" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.position" />
               </div>
             </div>
             <div>
-              <span
-                class="text-xs text-gray-400"
-              >All of the fields on this page are optional and can be deleted at any time</span>
-              <button
-                @click.stop="onSubmit"
-                type="submit"
-                class="border-blue-400 text-blue-600 hover:bg-blue-600 hover:text-white block border px-2 py-1 rounded-md"
-              >Update profile</button>
+              <span class="text-xs text-gray-400">All of the fields on this page are optional and can be deleted at any
+                time</span>
+              <button @click.stop="onSubmit" type="submit"
+                class="mt-1 p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait">Update
+                profile</button>
             </div>
           </div>
         </form>
       </fieldset>
-    </div>
-  </form>
+    </div> </form>
 </template>
 
 <script lang="ts" setup>

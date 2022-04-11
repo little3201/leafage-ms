@@ -7,47 +7,26 @@
         <div class="mt-4 space-y-2 max-w-sm">
           <div class="text-sm">
             <label for="password" class="font-medium text-gray-700">Old password</label>
-            <input
-              id="password"
-              name="password"
-              type="text"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
-              v-model.trim="pwd.old"
-              required
-            />
+            <input id="password" name="password" type="text" class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              v-model.trim="pwd.old" required />
           </div>
           <div class="text-sm">
             <label for="npassword" class="font-medium text-gray-700">New password</label>
-            <input
-              id="npassword"
-              name="npassword"
-              type="text"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
-              v-model.trim="pwd.new"
-              required
-            />
+            <input id="npassword" name="npassword" type="text" class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              v-model.trim="pwd.new" required />
           </div>
           <div class="text-sm">
             <label for="cnpassword" class="font-medium text-gray-700">Confirm new password</label>
-            <input
-              id="cnpassword"
-              name="cnpassword"
-              type="text"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
-              v-model.trim="pwd.confirm"
-              required
-            />
+            <input id="cnpassword" name="cnpassword" type="text" class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              v-model.trim="pwd.confirm" required />
           </div>
           <div>
-            <p
-              class="text-xs text-gray-400"
-            >Make sure it's at least 15 characters OR at least 8 characters including a number and a lowercase letter. Learn more.</p>
+            <p class="text-xs text-gray-400">Make sure it's at least 15 characters OR at least 8 characters including a
+              number and a lowercase letter. Learn more.</p>
             <div class="flex items-center space-x-4">
-              <button
-                @click="onSubmit"
-                type="submit"
-                class="border block border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 mt-1 rounded-md"
-              >Update password</button>
+              <button @click="onSubmit" type="submit"
+                class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait p-2 rounded-md block">Update
+                password</button>
               <RouterLink to="/forgot" class="text-blue-600 hover:underline">I forgot my password</RouterLink>
             </div>
           </div>
@@ -58,30 +37,18 @@
       <legend class="font-medium text-gray-900 pr-4">Two-factor authentication</legend>
       <div class="text-center">
         <div class="flex items-center justify-center my-6">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round">
             <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
           </svg>
         </div>
 
         <h3 class="text-xl font-semibold">Two factor authentication is not enabled yet.</h3>
-        <p
-          class="text-gray-500 text-sm my-2 mx-16"
-        >Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in.</p>
-        <button
-          id="del_account"
-          name="del_account"
-          type="button"
-          class="my-4 border border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md"
-        >Enable Two factor authentication</button>
+        <p class="text-gray-500 text-sm my-2 mx-16">Two-factor authentication adds an additional layer of security to
+          your account by requiring more than just a password to sign in.</p>
+        <button id="del_account" name="del_account" type="button"
+          class="my-4 border border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md">Enable
+          Two factor authentication</button>
         <RouterLink to="/" class="text-blue-600 hover:underline">
           <p>Learn more</p>
         </RouterLink>
@@ -89,39 +56,18 @@
     </fieldset>
     <fieldset class="my-6">
       <legend class="text-base font-medium text-gray-900 pr-4">Sessions</legend>
-      <p
-        class="text-sm text-gray-500"
-      >This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.</p>
+      <p class="text-sm text-gray-500">This is a list of devices that have logged into your account. Revoke any sessions
+        that you do not recognize.</p>
       <div class="mt-4 border p-4 rounded-md divide-y">
         <div v-for="index in 4" :key="index" class="py-2">
           <div class="flex items-center">
             <span class="w-2 h-2 bg-gray-400 rounded-full" :class="{ 'bg-lime-500': index == 1 }"></span>
-            <svg
-              v-if="index == 1"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mx-2"
-            >
+            <svg v-if="index == 1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-2">
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'smartphone'" />
             </svg>
-            <svg
-              v-else
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mx-2"
-            >
+            <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="mx-2">
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'monitor'" />
             </svg>
             <div class="mr-auto text-sm text-gray-600">
@@ -140,12 +86,7 @@
       <div class="mt-4 space-y-4">
         <div class="flex items-start">
           <div class="flex items-center h-5">
-            <input
-              id="github"
-              name="github"
-              type="checkbox"
-              class="block border-gray-300 rounded cursor-pointer"
-            />
+            <input id="github" name="github" type="checkbox" class="block border-gray-300 rounded cursor-pointer" />
           </div>
           <div class="ml-3 text-sm">
             <label for="github" class="font-medium text-gray-700">Github</label>
@@ -153,8 +94,7 @@
           </div>
         </div>
       </div>
-    </fieldset>
-  </div>
+    </fieldset>  </div>
 </template>
 
 

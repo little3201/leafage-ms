@@ -11,7 +11,7 @@ for (let i = 0; i < 309; i++) {
     name: Random.word(),
     superior: Random.word(), // 华南、华北
     alias: Random.cword(),
-    isAble: Random.boolean(),
+    isEnabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()
   })

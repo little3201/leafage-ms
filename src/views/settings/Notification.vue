@@ -4,14 +4,14 @@
       <button @click="switchType(false)" type="button" title="unread"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none  flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': !isRead }">
-        <span class="mb-3 dark:text-white ">Unread</span>
+        <span class="mb-3 dark:text-white ">{{ $t('unread') }}</span>
         <div v-show="!isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
       <button @click="switchType(true)" type="button" title="readed"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': isRead }">
         <span class="mb-3 dark:text-white ">
-          Readed</span>
+          {{ $t('readed') }}</span>
         <div v-show="isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
     </div>
@@ -32,7 +32,7 @@
         <p v-text="data.content"></p>
       </article>
     </Preview>
-</div>
+  </div>
 </template>
 
 

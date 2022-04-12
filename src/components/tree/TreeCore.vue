@@ -1,89 +1,35 @@
 <template>
   <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
     <div class="flex items-center">
-      <input
-        :id="data.code"
-        type="checkbox"
-        class="rounded cursor-pointer"
-        :value="data.code"
-        v-model="checked"
-        @click="track(data)"
-      />
-      <span
-        v-if="data.children && data.children.length > 0"
-        @click="isOpen = !isOpen"
-        class="ml-4 cursor-pointer inline-flex items-center"
-      >
-        <svg
-          v-if="data.expand && data.expand.icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <input :id="data.code" type="checkbox" class="rounded cursor-pointer" :value="data.code" v-model="checked"
+        @click="track(data)" />
+      <button v-if="data.children && data.children.length > 0" @click="isOpen = !isOpen"
+        class="ml-4 inline-flex items-center focus:outline-none">
+        <svg v-if="data.expand && data.expand.icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
-        {{ data.name }}
-        <svg
-          v-if="isOpen"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="ml-8"
-        >
+        {{ $t(data.name.toLowerCase()) }}
+        <svg v-if="isOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="ml-8">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
         </svg>
-        <svg
-          v-else
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="ml-8"
-        >
+        <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="ml-8">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
-      </span>
+      </button>
       <label :for="data.code" v-else class="ml-4 flex items-center cursor-pointer">
-        <svg
-          v-if="data.expand && data.expand.icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+        <svg v-if="data.expand && data.expand.icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
-        {{ data.name }}
+        {{ $t(data.name.toLowerCase()) }}
       </label>
     </div>
     <ul v-show="isOpen" class="ml-4 my-1">
-      <TreeCore
-        v-for="child in data.children"
-        :key="child.code"
-        :data="child"
-        :checked="tracked"
-        @treeOperate="track"
-      />
+      <TreeCore v-for="child in data.children" :key="child.code" :data="child" :checked="tracked"
+        @treeOperate="track" />
     </ul>
   </li>
 </template>

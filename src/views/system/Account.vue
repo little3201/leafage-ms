@@ -1,25 +1,14 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Accounts</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('account') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
       <Operation :needAdd="false" :datas="datas" :fileName="'account'" />
     </div>
@@ -27,21 +16,19 @@
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="account">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">Nickname</th>
-            <th scope="col" class="px-4">Account Locked State</th>
-            <th scope="col" class="px-4">Account Expires At</th>
-            <th scope="col" class="px-4">Credentials Expires At</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('username') }}</th>
+            <th scope="col" class="px-4">{{ $t('nickname') }}</th>
+            <th scope="col" class="px-4">{{ $t('accountLockedState') }}</th>
+            <th scope="col" class="px-4">{{ $t('accountExpiresAt') }}</th>
+            <th scope="col" class="px-4">{{ $t('credentialsExpiresAt') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <div class="flex items-center">
@@ -53,39 +40,17 @@
             </td>
             <td class="px-4">{{ data.nickname }}</td>
             <td class="px-4">
-              <div
-                class="flex items-center justify-center"
-                :class="{ 'text-red-600': data.accountLocked, 'text-lime-600': !data.accountLocked }"
-              >
-                <svg
-                  v-if="data.accountLocked"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-lock"
-                >
+              <div class="flex items-center justify-center"
+                :class="{ 'text-red-600': data.accountLocked, 'text-lime-600': !data.accountLocked }">
+                <svg v-if="data.accountLocked" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="feather feather-lock">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-unlock text-lime-600"
-                >
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-unlock text-lime-600">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
                 </svg>
@@ -93,87 +58,45 @@
             </td>
             <td class="px-4">
               <div class="flex items-center justify-center">
-                <span
-                  class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"
-                ></span>
-                <span
-                  class="ml-2"
-                >{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+                <span class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"></span>
+                <span class="ml-2">{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
               </div>
             </td>
             <td class="px-4">
               <div class="flex items-center justify-center">
-                <span
-                  class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(data.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(data.credentialsExpiresAt) <= new Date() }"
-                ></span>
-                <span
-                  class="ml-2"
-                >{{ new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+                <span class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(data.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(data.credentialsExpiresAt) <= new Date() }"></span>
+                <span class="ml-2">{{
+                  new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
+                }}</span>
               </div>
             </td>
-            <td class="px-4">
+            <td>
               <Action :needEdit="false" :needDel="false">
-                <button
-                  type="button"
-                  title="groups"
-                  class="flex items-center mr-3 text-indigo-600 focus:outline-none"
-                  @click="treeOperate(true, 'group', data.username)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
+                <button type="button" title="groups" class="flex items-center mr-3 text-indigo-600 focus:outline-none"
+                  @click="treeOperate(true, 'group', data.username)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
                   </svg>
-                  Groups
+                  {{ $t('group') }}
                 </button>
-                <button
-                  class="flex items-center mr-3 text-pink-600 focus:outline-none"
-                  @click="treeOperate(true, 'role', data.username)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
+                <button class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                  @click="treeOperate(true, 'role', data.username)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
-                  Roles
+                  {{ $t('role') }}
                 </button>
-                <button
-                  v-if="data.accountLocked"
-                  class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="unlock(data.username)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
+                <button v-if="data.accountLocked" class="flex items-center mr-3 text-green-600 focus:outline-none"
+                  @click="unlock(data.username)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'key'" />
                   </svg>
-                  Unlock
+                  {{ $t('unlock') }}
                 </button>
               </Action>
             </td>
@@ -182,13 +105,7 @@
       </table>
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Tree
-      :isShow="isTree"
-      @cancelAction="treeOperate"
-      @commitAction="treeCommit"
-      :datas="treeDatas"
-      :codes="codes"
-    />
+    <Tree :isShow="isTree" @cancelAction="treeOperate" @commitAction="treeCommit" :datas="treeDatas" :codes="codes" />
   </div>
 </template>
 

@@ -56,7 +56,8 @@
           </div>
         </div>
       </div>
-    </div>  </nav>
+    </div>
+  </nav>
 </template>
 
 <script lang="ts" setup>

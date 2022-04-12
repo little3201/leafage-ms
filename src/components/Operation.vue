@@ -6,7 +6,7 @@
         stroke-linecap="round" stroke-linejoin="round" class="mr-2">
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
       </svg>
-      Import
+      {{ $t('import') }}
     </button>
     <button title="export" type="button" @click="exportFile"
       class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait">
@@ -14,7 +14,7 @@
         stroke-linecap="round" stroke-linejoin="round" class="mr-2">
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
       </svg>
-      Export
+      {{ $t('export') }}
     </button>
     <button v-if="needAdd" @click="operate"
       class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait">
@@ -22,9 +22,9 @@
         stroke-linecap="round" stroke-linejoin="round" class="mr-2">
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
       </svg>
-      Add&nbsp;
-      <span class="hidden sm:block">New</span>
-    </button>  </div>
+      {{ $t('add') }}
+    </button>
+  </div>
 </template>
 
 <script lang="ts" setup>

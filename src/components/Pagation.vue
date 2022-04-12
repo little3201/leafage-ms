@@ -1,12 +1,8 @@
 <template>
   <div class="flex items-center mt-1 overflow-auto">
-    <div class="hidden md:block">
-      当前展示第&nbsp;
-      <span v-text="page * size + 1"></span>&nbsp;-
-      <span v-text="(page + 1) * size"></span>&nbsp;行记录，共&nbsp;
-      <span v-text="total"></span>
-      &nbsp;条记录
-    </div>
+    <p class="hidden md:block">
+      {{$t('pagation', {page: page * size + 1, size: (page + 1) * size, total: total})}}
+    </p>
     <div class="flex flex-1 justify-end space-x-2">
       <button type="button" :disabled="page == 0"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
@@ -56,7 +52,8 @@
         <option>30</option>
         <option>50</option>
       </select>
-    </div>  </div>
+    </div>
+  </div>
 </template>
 
 

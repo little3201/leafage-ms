@@ -39,7 +39,11 @@
     "vue3",
     "vite",
     "leafage",
-    "tailwindcss"
+    "tailwindcss",
+    "xlsx",
+    "qiniu-js",
+    "marked",
+    "vue-i18n"
   ],
   "repository": {
     "type": "git",

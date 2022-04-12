@@ -1,55 +1,37 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Groups</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('group') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'group'"
-      />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'group'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Alias</th>
-            <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">Principal</th>
-            <th scope="col" class="px-4">User Count</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('name') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('alias') }}</th>
+            <th scope="col" class="px-4">{{ $t('superior') }}</th>
+            <th scope="col" class="px-4">{{ $t('principal') }}</th>
+            <th scope="col" class="px-4">{{ $t('userCount') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4" v-text="data.name"></td>
             <td class="px-4" v-text="data.code"></td>
@@ -59,31 +41,15 @@
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
-            <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              >
-                <button
-                  v-if="data.count > 0"
-                  class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="previewOperation(true)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
+            <td>
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
+                <button v-if="data.count > 0" class="flex items-center mr-3 text-green-600 focus:outline-none"
+                  @click="previewOperation(true)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
                   </svg>
-                  Members
+                  {{ $t('crew') }}
                 </button>
               </Action>
             </td>
@@ -97,71 +63,37 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
-            <label for="name">Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Name"
-              v-model.trim="groupData.name"
-              autofocus
-            />
+            <label for="name">{{ $t('name') }}</label>
+            <input id="name" name="name" type="text" class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('name')" v-model.trim="groupData.name" autofocus />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="alias">Alias</label>
-            <input
-              id="alias"
-              name="alias"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Alias"
-              v-model.trim="groupData.alias"
-              autofocus
-            />
+            <label for="alias">{{ $t('alias') }}</label>
+            <input id="alias" name="alias" type="text" class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('alias')" v-model.trim="groupData.alias" autofocus />
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="superior">Superior</label>
-            <select
-              id="superior"
-              name="superior"
-              v-model.lazy="groupData.superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-                v-text="superior.name"
-              ></option>
+            <label for="superior">{{ $t('superior') }}</label>
+            <select id="superior" name="superior" v-model.lazy="groupData.superior"
+              class="mt-1 w-full block rounded-md border-gray-300">
+              <option value="undefined">---{{ $t('select') }}---</option>
+              <option v-for="superior in superiors" :key="superior.code" :value="superior.code" v-text="superior.name">
+              </option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="principal">Principal</label>
-            <select
-              id="principal"
-              name="principal"
-              v-model.lazy="groupData.principal"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
-              <option
-                v-for="(account, index) in accounts"
-                :key="index"
-                :value="account.username"
-                v-text="account.nickname"
-              ></option>
+            <label for="principal">{{ $t('principal') }}</label>
+            <select id="principal" name="principal" v-model.lazy="groupData.principal"
+              class="mt-1 w-full block rounded-md border-gray-300">
+              <option value="undefined">---{{ $t('select') }}---</option>
+              <option v-for="(account, index) in accounts" :key="index" :value="account.username"
+                v-text="account.nickname"></option>
             </select>
           </div>
           <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              v-model.trim="groupData.description"
-            />
+            <label for="description">{{ $t('description') }}</label>
+            <textarea id="description" name="description" class="mt-1 w-full block rounded-md border-gray-300"
+              v-model.trim="groupData.description" :placeholder="$t('description')" />
           </div>
         </div>
       </form>
@@ -170,57 +102,33 @@
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group-members">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Username</th>
-            <th scope="col" class="px-4">Nickname</th>
-            <th scope="col" class="px-4">Account Locked State</th>
-            <th scope="col" class="px-4">Account Expires At</th>
-            <th scope="col" class="px-4">Credentials Expires At</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('username') }}</th>
+            <th scope="col" class="px-4">{{ $t('nickname') }}</th>
+            <th scope="col" class="px-4">{{ $t('accountLockedState') }}</th>
+            <th scope="col" class="px-4">{{ $t('accountExpiresAt') }}</th>
+            <th scope="col" class="px-4">{{ $t('credentialsExpiresAt') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(account, index) in accounts"
-            :key="index"
-          >
+            v-for="(account, index) in accounts" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">{{ account.username }}</td>
             <td class="px-4">{{ account.nickname }}</td>
             <td class="px-4">
-              <div
-                class="flex items-center justify-center"
-                :class="{ 'text-red-600': account.accountLocked, 'text-lime-600': !account.accountLocked }"
-              >
-                <svg
-                  v-if="account.accountLocked"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-lock"
-                >
+              <div class="flex items-center justify-center"
+                :class="{ 'text-red-600': account.accountLocked, 'text-lime-600': !account.accountLocked }">
+                <svg v-if="account.accountLocked" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="feather feather-lock">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
-                <svg
-                  v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-unlock text-lime-600"
-                >
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-unlock text-lime-600">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
                 </svg>
@@ -228,24 +136,20 @@
             </td>
             <td class="px-4">
               <div class="flex items-center justify-center">
-                <span
-                  class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(account.accountExpiresAt) > new Date(), 'bg-red-500': new Date(account.accountExpiresAt) <= new Date() }"
-                ></span>
-                <span
-                  class="ml-2"
-                >{{ new Date(account.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+                <span class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(account.accountExpiresAt) > new Date(), 'bg-red-500': new Date(account.accountExpiresAt) <= new Date() }"></span>
+                <span class="ml-2">{{
+                  new Date(account.accountExpiresAt).toLocaleString('zh', { hour12: false })
+                }}</span>
               </div>
             </td>
             <td class="px-4">
               <div class="flex items-center justify-center">
-                <span
-                  class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(account.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(account.credentialsExpiresAt) <= new Date() }"
-                ></span>
-                <span
-                  class="ml-2"
-                >{{ new Date(account.credentialsExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+                <span class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': new Date(account.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(account.credentialsExpiresAt) <= new Date() }"></span>
+                <span class="ml-2">{{
+                  new Date(account.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
+                }}</span>
               </div>
             </td>
           </tr>

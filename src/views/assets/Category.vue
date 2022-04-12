@@ -1,72 +1,45 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Category</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('category') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'category'"
-      />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'category'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Alias</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Posts Count</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('alias') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('postsCount') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
-              <a
-                rel="noopener"
-                href="https://www.leafage.top/posts"
-                target="_blank"
-                class="font-medium hover:underline"
-                v-text="data.alias"
-              ></a>
+              <a rel="noopener" href="https://www.leafage.top/posts" target="_blank" class="font-medium hover:underline"
+                v-text="data.alias"></a>
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
-            <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              />
+            <td>
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -78,27 +51,14 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label for="alias">Alias</label>
-            <input
-              id="alias"
-              type="text"
-              name="alias"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Alias"
-              required
-              autofocus
-              v-model.trim="categoryData.alias"
-            />
+            <label for="alias">{{ $t('alias') }}</label>
+            <input id="alias" type="text" name="alias" class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('alias')" required autofocus v-model.trim="categoryData.alias" />
           </div>
           <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              v-model.trim="categoryData.description"
-              placeholder="Description"
-            />
+            <label for="description">{{ $t('description') }}</label>
+            <textarea id="description" name="description" class="mt-1 w-full block rounded-md border-gray-300"
+              v-model.trim="categoryData.description" :placeholder=" $t('description')" />
           </div>
         </div>
       </form>

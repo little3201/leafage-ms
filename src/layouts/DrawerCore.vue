@@ -1,84 +1,34 @@
 <template>
   <li class="text-white">
-    <div
-      v-if="data.children && data.children.length > 0"
-      @click.prevent="isOpen = !isOpen"
-      class="flex items-center rounded-full h-12 pl-4 cursor-pointer"
-    >
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-3"
-      >
+    <div v-if="data.children && data.children.length > 0" @click.prevent="isOpen = !isOpen"
+      class="flex items-center rounded-full h-12 pl-4 cursor-pointer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
       <span class="inline-flex items-center w-full">
-        {{ data.name }}
-        <svg
-          v-if="isOpen"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="ml-auto mr-2"
-        >
+        {{ $t(data.name.toLowerCase()) }}
+        <svg v-if="isOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
         </svg>
-        <svg
-          v-else
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="ml-auto mr-2"
-        >
+        <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </span>
     </div>
-    <RouterLink
-      v-else
-      @click="itemOperation"
-      :to="superior.concat(data.expand.path)"
-      class="flex items-center h-12 rounded-full pl-4"
-      exact
-    >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-3"
-      >
+    <RouterLink v-else @click="itemOperation" :to="superior.concat(data.expand.path)"
+      class="flex items-center h-12 rounded-full pl-4" exact>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span class="flex items-center" v-text="data.name"></span>
+      <span class="flex items-center">{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
     <ul v-show="isOpen" class="mx-4 bg-blue-900 bg-opacity-30 rounded-md">
-      <DrawerCore
-        v-for="child in data.children"
-        :data="child"
-        :superior="data.expand.path"
-        @menuAction="itemOperation"
-      />
+      <DrawerCore v-for="child in data.children" :data="child" :superior="data.expand.path"
+        @menuAction="itemOperation" />
     </ul>
   </li>
 </template>

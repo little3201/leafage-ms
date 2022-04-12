@@ -1,83 +1,56 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Resource</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('resource') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'resource'"
-      />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'resource'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="portfolio">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Title</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Category</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Viewed</th>
-            <th scope="col" class="px-4">Downloads</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('title') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('type') }}</th>
+            <th scope="col" class="px-4">{{ $t('category') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('viewed') }}</th>
+            <th scope="col" class="px-4">{{ $t('downloads') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
-              <a
-                rel="noopener"
-                href="https://www.leafage.top/resource"
-                target="_blank"
-                class="font-medium hover:underline"
-                v-text="data.title"
-              ></a>
+              <a rel="noopener" href="https://www.leafage.top/resource" target="_blank"
+                class="font-medium hover:underline" v-text="data.title"></a>
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4">
-              <span
-                class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-100': data.type === 'E', 'bg-blue-100': data.type === 'P', 'bg-pink-100': data.type === 'T' }"
-              >{{ data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt') }}</span>
+              <span class="text-xs px-2 py-1 rounded-md"
+                :class="{ 'bg-indigo-100': data.type === 'E', 'bg-blue-100': data.type === 'P', 'bg-pink-100': data.type === 'T' }">{{
+                  data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt')
+                }}</span>
             </td>
             <td class="px-4" v-text="data.category"></td>
             <td class="px-4 max-w-sm truncate" v-text="data.description"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.downloads"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
-            <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              />
+            <td>
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate" />
             </td>
           </tr>
         </tbody>
@@ -89,85 +62,38 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 grid-rows-3 gap-4">
           <div class="col-span-12 sm:col-span-7">
-            <label for="title">Title</label>
-            <input
-              id="title"
-              name="title"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Title"
-              required
-              autofocus
-              v-model.trim="resourceData.title"
-            />
+            <label for="title">{{ $t('title') }}</label>
+            <input id="title" name="title" type="text" class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('title')" required autofocus v-model.trim="resourceData.title" />
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
-            <label for="cover">Cover</label>
+            <label for="cover">{{ $t('cover') }}</label>
             <figure v-if="resourceData.cover" class="w-44 h-56 relative group">
               <div
-                class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
-              >
-                <button
-                  title="remove"
-                  type="button"
-                  @click="removeCover"
-                  class="text-white focus:outline-none"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center">
+                <button title="remove" type="button" @click="removeCover" class="text-white focus:outline-none">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
                   </svg>
                 </button>
               </div>
-              <img
-                id="cover"
-                :src="resourceData.cover"
-                alt="portfolio content"
-                class="rounded-md w-full h-full mt-1 border"
-                height="176"
-                width="224"
-              />
+              <img id="cover" :src="resourceData.cover" alt="portfolio content"
+                class="rounded-md w-full h-full mt-1 border" height="176" width="224" />
             </figure>
             <div v-else class="mt-1">
-              <div
-                class="w-44 h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center"
-              >
+              <div class="w-44 h-56 rounded-md border border-gray-300 shadow-sm flex justify-center items-center">
                 <div class="text-gray-600">
-                  <label
-                    for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
-                  >
-                    <svg
-                      class="mx-auto h-8 w-8"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 48 48"
-                      aria-hidden="true"
-                    >
+                  <label for="file-upload"
+                    class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600">
+                    <svg class="mx-auto h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                      aria-hidden="true">
                       <path
                         d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <input
-                      id="file-upload"
-                      name="resource_cover"
-                      multiple
-                      type="file"
-                      class="sr-only"
-                      accept="image/png, image/jpeg, image/jpg, vedio/mp4"
-                      @change="uploadImage($event.target.files)"
-                    />
+                    <input id="file-upload" name="resource_cover" multiple type="file" class="sr-only"
+                      accept="image/png, image/jpeg, image/jpg, vedio/mp4" @change="uploadImage($event.target.files)" />
                   </label>
                   <p class="text-xs text-gray-500">png, jpeg, jpg, mp4</p>
                 </div>
@@ -175,31 +101,19 @@
             </div>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="category" class="inline-flex items-center">Category</label>
-            <select
-              id="category"
-              name="category"
-              v-model="resourceData.category"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
-              <option
-                v-for="category in categories"
-                :key="category.code"
-                :value="category.code"
-                v-text="category.alias"
-              ></option>
+            <label for="category" class="inline-flex items-center">{{ $t('category') }}</label>
+            <select id="category" name="category" v-model="resourceData.category"
+              class="mt-1 w-full block rounded-md border-gray-300">
+              <option value="undefined">---{{ $t('select') }}---</option>
+              <option v-for="category in categories" :key="category.code" :value="category.code"
+                v-text="category.alias"></option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-7">
-            <label for="type" class="inline-flex items-center">Type</label>
-            <select
-              id="type"
-              name="type"
-              v-model="resourceData.type"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
+            <label for="type" class="inline-flex items-center">{{ $t('type') }}</label>
+            <select id="type" name="type" v-model="resourceData.type"
+              class="mt-1 w-full block rounded-md border-gray-300">
+              <option value="undefined">---{{ $t('select') }}---</option>
               <option value="E">Epub</option>
               <option value="P">Pdf</option>
               <option value="T">Txt</option>
@@ -207,14 +121,9 @@
           </div>
         </div>
         <div class="col-span-7 row-span-2 mt-4">
-          <label for="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            class="mt-1 w-full block rounded-md border-gray-300"
-            v-model.trim="resourceData.description"
-            placeholder="Description"
-          />
+          <label for="description">{{ $t('description') }}</label>
+          <textarea id="description" name="description" class="mt-1 w-full block rounded-md border-gray-300"
+            v-model.trim="resourceData.description" :placeholder="$t('description')" />
         </div>
       </form>
     </Model>

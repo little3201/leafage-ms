@@ -51,7 +51,7 @@
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'loader'" />
         </svg>
-        <span v-else>Sign in</span>
+        <span v-else>{{$t('signin')}}</span>
       </button>
     </form>
     <div class="my-6 text-center xl:text-left">

@@ -1,114 +1,85 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Authorities</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('authority') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'authority'"
-      />
+      <Operation :needAdd="false" :datas="datas" :fileName="'authority'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">Type</th>
-            <th scope="col" class="px-4">Role Count</th>
-            <th scope="col" class="px-4">Path</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('name') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('superior') }}</th>
+            <th scope="col" class="px-4">{{ $t('type') }}</th>
+            <th scope="col" class="px-4">{{ $t('path') }}</th>
+            <th scope="col" class="px-4">{{ $t('isEnabled') }}</th>
+            <th scope="col" class="px-4">{{ $t('roleCount') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 border lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg
-                    v-if="data.icon"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mx-auto"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
-                  </svg>
-                </div>
+                <svg v-if="data.icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
+                </svg>
                 <span class="font-medium ml-2" v-text="data.name"></span>
               </div>
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.superior"></td>
             <td class="px-4">
-              <span
-                class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }"
-              >{{ data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api') }}</span>
+              <span class="text-xs px-2 py-1 rounded-md"
+                :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }">{{
+                  data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api')
+                }}</span>
+            </td>
+            <td class="px-4" v-text="data.path"></td>
+            <td class="px-4">
+              <div class="flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full"
+                  :class="{ 'bg-lime-500': data.isEnabled, 'bg-red-500': !data.isEnabled }"></span>
+                <span class="ml-2">{{ data.isEnabled ? $t('enable') : $t('disable') }}</span>
+              </div>
             </td>
             <td class="px-4" v-text="data.count"></td>
-            <td class="px-4" v-text="data.path"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
-            <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              >
-                <button
-                  v-if="data.count > 0"
-                  class="flex items-center mr-3 text-pink-600 focus:outline-none"
-                  @click="previewOperation(true)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
+            <td>
+              <Action :needEdit="false" :needDel="false">
+                <button v-if="data.count > 0" class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                  @click="previewOperation(true, data.code)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
-                  Roles
+                  {{ $t('role') }}
+                </button>
+                <button class="flex items-center mr-3 focus:outline-none"
+                  :class="{ 'text-green-600': !data.isEnabled, 'text-yellow-600': data.isEnabled }"
+                  @click="power(data.code)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
+                  </svg>
+                  {{ data.isEnabled ? 'Disable' : 'Enable' }}
                 </button>
               </Action>
             </td>
@@ -117,115 +88,24 @@
       </table>
     </div>
     <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
-            <label for="name">Name</label>
-            <input
-              id="name"
-              name="name"
-              @blur="exist(authorityData.name)"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Name"
-              v-model.trim="authorityData.name"
-              autofocus
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="type" :class="{ 'text-gray-300': authorityData.code }">Type</label>
-            <select
-              id="type"
-              name="type"
-              :disabled="authorityData.code"
-              v-model.lazy="authorityData.type"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :class="{ 'text-gray-300': authorityData.code }"
-            >
-              <option value="undefined">---请选择---</option>
-              <option value="M">Menu</option>
-              <option value="B">Button</option>
-              <option value="R">Router</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="icon">Icon</label>
-            <input
-              id="icon"
-              name="icon"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Icon"
-              v-model.trim="authorityData.icon"
-              autofocus
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="path" :class="{ 'text-gray-300': authorityData.type == 'B' }">Path</label>
-            <input
-              id="path"
-              name="path"
-              :disabled="authorityData.type == 'B'"
-              type="url"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :class="{
-                'text-gray-300 placeholder-gray-300': authorityData.type == 'B',
-              }"
-              placeholder="Path"
-              v-model.trim="authorityData.path"
-            />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="superior">Superior</label>
-            <select
-              id="superior"
-              name="superior"
-              v-model.lazy="authorityData.superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-                v-text="superior.name"
-              ></option>
-            </select>
-          </div>
-          <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              v-model.trim="authorityData.description"
-              placeholder="Description"
-            />
-          </div>
-        </div>
-      </form>
-    </Model>
+
     <Preview :isShow="isShow" @closeAction="previewOperation">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">User Count</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Modify Time</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('name') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('superior') }}</th>
+            <th scope="col" class="px-4">{{ $t('userCount') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
-            v-for="(role, index) in roles"
-            :key="index"
-          >
+            v-for="(role, index) in roles" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4" v-text="role.name"></td>
             <td class="px-4" v-text="role.code"></td>
@@ -246,21 +126,14 @@ import { onMounted, ref } from "vue";
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Pagation from "@/components/Pagation.vue";
-import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
 import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Authority, Role } from "@/api/request.type";
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
 let isShow = ref(false)
 // 数据
-let authorityData = ref<Authority>({});
-let dataCode = ref("");
-let superiors = ref<Array<Authority>>([]);
 let datas = ref<Array<Authority>>([]);
 let roles = ref<Array<Role>>([])
 // 分页参数
@@ -297,92 +170,13 @@ const count = async (): Promise<void> => {
   await instance.get(SERVER_URL.authority.concat("/count")).then(res => total.value = res.data)
 }
 /**
- * confirm 操作
- * @param operate 是否打开
- */
-const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
-};
-/**
- * confirm 提交
- */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.authority.concat("/", dataCode.value)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: any) => item.code != dataCode.value
-    );
-    isDel.value = false;
-    count()
-  });
-};
-/**
- * 新增/编辑：打开/关闭
- * @param operate 是否打开
- */
-const modelOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    authorityData.value = {};
-    await Promise.all([
-      fetch(),
-      instance.get(SERVER_URL.authority).then(res => superiors.value = res.data),
-    ]);
-  }
-  isEdit.value = operate;
-};
-/** 
- * 查详情
- */
-const fetch = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.authority.concat("/", dataCode.value)).then(res => authorityData.value = res.data);
-  }
-};
-/**
- * 检查唯一
- * @param name 名称
- */
-const exist = async (name: string): Promise<void> => {
-  if (name && name.length > 0) {
-    await instance.get(SERVER_URL.authority.concat("/", name, "/exist")).then(res => authorityData.value = res.data);
-  }
-}
-/**
- * 新增/编辑：提交
- */
-const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.authority.concat("/", dataCode.value), authorityData.value)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: any) => item.code != dataCode.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
-  } else {
-    await instance.post(SERVER_URL.authority, authorityData.value).then(res => {
-      if (datas.value.length >= size.value) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-      isEdit.value = false;
-      count()
-    });
-  }
-};
-/**
  * 预览
  * @param show 是否展示
  * @param code 代码
  */
-const previewOperation = async (show: boolean) => {
+const previewOperation = async (show: boolean, code: string) => {
   if (show) {
-    await instance.get(SERVER_URL.authority.concat("/", dataCode.value, '/role')).then(res => roles.value = res.data);
+    await instance.get(SERVER_URL.authority.concat("/", code, '/role')).then(res => roles.value = res.data);
   }
   isShow.value = show
 }

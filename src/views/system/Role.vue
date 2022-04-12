@@ -1,53 +1,35 @@
 <template>
   <div class="col-span-12 mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">Roles</h2>
-      <button
-        @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+      <h2 class="text-lg font-medium">{{ $t('role') }}</h2>
+      <button @click="retrieve"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
-      <Operation
-        @click.capture="dataCode = ''"
-        @modelOperate="modelOperate"
-        :datas="datas"
-        :fileName="'role'"
-      />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'role'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">No.</th>
-            <th scope="col" class="px-4">Name</th>
-            <th scope="col" class="px-4">Code</th>
-            <th scope="col" class="px-4">Superior</th>
-            <th scope="col" class="px-4">User Count</th>
-            <th scope="col" class="px-4">Description</th>
-            <th scope="col" class="px-4">Modify Time</th>
-            <th scope="col" class="px-4">Actions</th>
+            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+            <th scope="col" class="px-4">{{ $t('name') }}</th>
+            <th scope="col" class="px-4">{{ $t('code') }}</th>
+            <th scope="col" class="px-4">{{ $t('superior') }}</th>
+            <th scope="col" class="px-4">{{ $t('userCount') }}</th>
+            <th scope="col" class="px-4">{{ $t('description') }}</th>
+            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th scope="col" class="px-4">{{ $t('actions') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas"
-            :key="index"
-          >
+            v-for="(data, index) in datas" :key="index">
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4" v-text="data.name"></td>
             <td class="px-4" v-text="data.code"></td>
@@ -55,34 +37,17 @@
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
-            <td class="px-4">
-              <Action
-                @click.capture="dataCode = data.code"
-                @delAction="confirmOperate"
-                @editAction="modelOperate"
-              >
-                <button
-                  type="button"
-                  title="Authority"
-                  class="flex items-center mr-3 text-purple-600 focus:outline-none"
-                  @click.prevent="treeOperate(true)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-power mr-1"
-                  >
+            <td>
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
+                <button type="button" title="Authority"
+                  class="flex items-center mr-3 text-purple-600 focus:outline-none" @click.prevent="treeOperate(true)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-power mr-1">
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
                     <line x1="12" y1="2" x2="12" y2="12" />
                   </svg>
-                  Auz
+                  {{ $t('grant') }}
                 </button>
               </Action>
             </td>
@@ -96,56 +61,30 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 md:col-span-6">
-            <label for="name">Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              aria-label="name"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Name"
-              v-model.trim="roleData.name"
-              autofocus
-            />
+            <label for="name">{{ $t('name') }}</label>
+            <input id="name" name="name" type="text" aria-label="name"
+              class="mt-1 w-full block rounded-md border-gray-300" :placeholder="$t('name')"
+              v-model.trim="roleData.name" autofocus />
           </div>
           <div class="col-span-12 md:col-span-6">
-            <label for="superior">Superior</label>
-            <select
-              id="superior"
-              name="superior"
-              aria-label="superior"
-              v-model="roleData.superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            >
-              <option value="undefined">---请选择---</option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-                v-text="superior.name"
-              ></option>
+            <label for="superior">{{ $t('superior') }}</label>
+            <select id="superior" name="superior" aria-label="superior" v-model="roleData.superior"
+              class="mt-1 w-full block rounded-md border-gray-300">
+              <option value="undefined">---{{$t('select')}}---</option>
+              <option v-for="superior in superiors" :key="superior.code" :value="superior.code" v-text="superior.name">
+              </option>
             </select>
           </div>
           <div class="col-span-12">
-            <label for="description">Description</label>
-            <textarea
-              id="description"
-              aria-label="description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              v-model.trim="roleData.description"
-            />
+            <label for="description">{{ $t('description') }}</label>
+            <textarea id="description" aria-label="description" name="description"
+              class="mt-1 w-full block rounded-md border-gray-300" v-model.trim="roleData.description"
+              :placeholder="$t('description')" />
           </div>
         </div>
       </form>
     </Model>
-    <Tree
-      :isShow="isTree"
-      @cancelAction="treeOperate"
-      @commitAction="treeCommit"
-      :codes="codes"
-      :datas="authorities"
-    />
+    <Tree :isShow="isTree" @cancelAction="treeOperate" @commitAction="treeCommit" :codes="codes" :datas="authorities" />
   </div>
 </template>
 

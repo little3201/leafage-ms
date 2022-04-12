@@ -4,7 +4,7 @@
     <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">Change usernmae</legend>
       <div class="mt-4 text-sm">
-        <label for="username" class="font-medium text-gray-700">Username</label>
+        <label for="username" class="font-medium text-gray-700">{{ $t('username') }}</label>
         <div class="flex items-center space-x-4 mt-1">
           <input id="username" name="username" type="text" class="block w-80 border-gray-300 py-1 rounded-md"
             v-model="user.username" :disabled="!editUsername" />
@@ -56,7 +56,7 @@
             <input id="comments" name="comments" type="checkbox" class="border-gray-300 rounded cursor-pointer" />
           </div>
           <div class="ml-3 text-sm">
-            <label for="comments" class="font-medium text-gray-700">Comments</label>
+            <label for="comments" class="font-medium text-gray-700">{{ $t('comments') }}</label>
             <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
           </div>
         </div>
@@ -107,7 +107,8 @@
       <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your account to a FREE account?
         We won’t charge your payment information anymore.</span>
     </fieldset>
-    <Confirm :isShow="isShow" @cancelAction="confirmOperate" @commitAction="confirmCommit" />  </div>
+    <Confirm :isShow="isShow" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
+  </div>
 </template>
 
 <script lang="ts" setup>

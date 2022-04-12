@@ -59,6 +59,7 @@ export declare interface Authority extends AbstractVO<string> {
   superior: string,
   path: string,
   count: number,
+  isEnabled: boolean,
   description: string
 }
 
@@ -137,7 +138,7 @@ export declare interface Dictionary extends AbstractVO<string> {
   name: string,
   superior: string,
   alias: string,
-  isAble: boolean,
+  isEnabled: boolean,
   description: string
 }
 

@@ -1,17 +1,17 @@
 <template>
   <div class="flex items-center py-2 border-b">
     <div class="hidden md:inline-flex md:flex-grow items-center">
-      <RouterLink to="/" class>Application</RouterLink>
+      <RouterLink to="/" class>{{ $t('application') }}</RouterLink>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="opacity-60">
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
-      <RouterLink :to="$route.path" class="text-blue-600 font-medium" v-text="$route.name"></RouterLink>
+      <RouterLink :to="$route.path" class="text-blue-600 font-medium">{{ $t($route.name.toLowerCase()) }}</RouterLink>
     </div>
     <div class="flex flex-1 items-center justify-between md:justify-end md:space-x-8">
       <div class="hidden sm:block relative w-56 rounded-full bg-gray-300">
         <input type="text" name="search" class="w-56 py-1.5 border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
-          placeholder="Search..." />
+          :placeholder="$t('search')" />
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round" class="absolute inset-y-0 right-0 my-auto mr-3 opacity-60">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'search'" />
@@ -30,8 +30,8 @@
           </figure>
         </button>
         <div v-show="isNotify && notifications.length > 0"
-          class="origin-top-left p-2 absolute w-64 md:w-80 left-0 md:left-auto md:right-0 mt-4 rounded-md shadow-lg bg-white z-10">
-          <span class="mt-4 mb-2 px-2">Notifications</span>
+          class="origin-top-left p-2 absolute top-6 left-0 md:right-0 w-64 md:w-80 md:left-auto  mt-4 rounded-md shadow-lg bg-white z-10">
+          <span class="my-4 px-2 text-lg">{{ $t('notification') }}</span>
           <div class="divide-y">
             <div v-for="(notification, index) in notifications" :key="index" class="overflow-hidden">
               <div class="hover:bg-gray-100 rounded-md p-2">
@@ -54,16 +54,19 @@
           </svg>
         </button>
         <div v-show="isLanguage"
-          class="origin-top-left text-sm p-2 divide-y absolute right-0 my-4 rounded-md shadow-lg bg-white z-10">
-          <button type="button" class="flex items-center w-full bg-white hover:text-blue-600 px-2 py-1">
+          class="origin-top-left text-sm p-2 divide-y absolute top-6 right-0 my-4 rounded-md shadow-lg bg-white z-10">
+          <button @click="switchLanguage('en-US')" type="button" class="flex items-center w-full px-2 py-1"
+            :class="{ 'text-blue-600': locale == 'en-US' }">
             <figure class="h-8 w-8 inline-flex items-center">
               <img src="/svg/america.svg" class="h-6 w-6" width="24" height="24" />
             </figure>English
           </button>
-          <button type="button" class="flex items-center w-full bg-white hover:text-blue-600 px-2 py-1">
+          <button @click="switchLanguage('zh-CN')" type="button"
+            class="flex items-center w-full hover:text-blue-600 px-2 py-1"
+            :class="{ 'text-blue-600': locale == 'zh-CN' }">
             <figure class="h-8 w-8 inline-flex items-center">
               <img src="/svg/china.svg" class="h-6 w-6" width="24" height="24" />
-            </figure>Chinese
+            </figure>中文
           </button>
         </div>
       </div>
@@ -73,7 +76,9 @@
           <img v-if="account.avatar" :alt="account.nickname" :src="account.avatar" class="rounded-full" />
           <span v-else v-text="account.nickname.substr(0, 1)"></span>
         </button>
-        <RouterLink v-else to="/signin" class="bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-full">Sign In
+        <RouterLink v-else to="/signin"
+          class="bg-blue-600  text-sm text-white hover:bg-blue-700 px-3 py-1.5 rounded-full">
+          {{ $t('signin') }}
         </RouterLink>
         <div v-show="isAccount"
           class="origin-top-right p-2 absolute w-36 right-0 mt-3 rounded-md shadow-md bg-white divide-y z-10"
@@ -89,7 +94,7 @@
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
               </svg>
-              Profile
+              {{ $t('profile') }}
             </RouterLink>
             <RouterLink @click="operate('')" to="/settings"
               class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1">
@@ -97,7 +102,7 @@
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
               </svg>
-              Settings
+              {{ $t('settings') }}
             </RouterLink>
             <button type="button"
               class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1">
@@ -105,7 +110,7 @@
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
               </svg>
-              Help
+              {{ $t('help') }}
             </button>
           </div>
           <div class="text-sm pt-1">
@@ -115,18 +120,19 @@
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
               </svg>
-              Logout
+              {{ $t('signout') }}
             </button>
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from 'vue-i18n'
 
 import { instance, SERVER_URL } from "@/api";
 import type { Account, Notification } from "@/api/request.type";
@@ -141,6 +147,7 @@ let isLanguage = ref(false)
 let notifications = ref<Array<Notification>>([])
 let count = ref(0)
 
+const { locale } = useI18n()
 const router = useRouter();
 const account = ref<Account>({});
 
@@ -196,9 +203,16 @@ const operate = (operation: string) => {
       isLanguage.value = false;
       isAccount.value = false;
   }
-
 }
-
+/**
+ * 切换语言
+ * @param language 语言编码
+ */
+const switchLanguage = (language: string) => {
+  localStorage.setItem('language', language)
+  locale.value = language
+  isLanguage.value = false
+}
 /**
  * 请求链接webSocket
  */

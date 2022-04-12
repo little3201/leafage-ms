@@ -1,66 +1,33 @@
 <template>
   <div class="col-span-12 sm-d-h overflow-auto">
-    <div class="inline-flex items-center my-2">
-      <h2 class="text-lg font-medium">General Report</h2>
-      <button
-        type="button"
-        @click="initData"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
+    <div class="inline-flex items-center my-3">
+      <h2 class="text-lg font-medium">{{ $t('statitics') }}</h2>
+      <button type="button" @click="initData"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
-        Reload Data
+        {{ $t('reload') }}
       </button>
     </div>
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-blue-600"
-            >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye'" />
             </svg>
+            <span class="text-base text-gray-600 ml-2">{{ $t('viewed') }}</span>
             <div class="ml-auto">
-              <div
-                class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
+              <div class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'bg-lime-500': latest.overViewed > 0, 'bg-red-600': latest.overViewed <= 0 }"
-                title="overViewed"
-              >
+                title="overViewed">
                 {{ latest.overViewed }}%
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <use
-                    v-if="latest.overViewed > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                  />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <use v-if="latest.overViewed > 0" :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
@@ -70,46 +37,25 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.viewed"></h2>
-          <div class="text-base text-gray-600 mt-1">Total Viewed</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-yellow-600"
-            >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="text-yellow-600">
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'message-square'" />
             </svg>
+
+            <span class="text-base text-gray-600 ml-2">{{ $t('comments') }}</span>
             <div class="ml-auto">
-              <div
-                class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
+              <div class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
                 :class="{ 'bg-lime-500': latest.overComment > 0, 'bg-red-600': latest.overComment <= 0 }"
-                title="overComment"
-              >
+                title="overComment">
                 {{ latest.overComment }}%
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <use
-                    v-if="latest.overComment > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                  />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <use v-if="latest.overComment > 0" :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
@@ -119,46 +65,24 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
-          <div class="text-base text-gray-600 mt-1">Total Comments</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-purple-600"
-            >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'heart'" />
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="text-purple-600">
+              <use :xlink:href="'/svg/feather-sprite.svg#' + 'thumbs-up'" />
             </svg>
+
+            <span class="text-base text-gray-600 ml-2">{{ $t('likes') }}</span>
             <div class="ml-auto">
-              <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-                :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }"
-                title="overLikes"
-              >
+              <div class="flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
+                :class="{ 'bg-lime-500': latest.overLikes > 0, 'bg-red-600': latest.overLikes <= 0 }" title="overLikes">
                 {{ latest.overLikes }}%
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <use
-                    v-if="latest.overLikes > 0"
-                    :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                  />
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <use v-if="latest.overLikes > 0" :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
@@ -168,41 +92,23 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.likes"></h2>
-          <div class="text-base text-gray-600 mt-1">Total Likes</div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-green-600"
-            >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'book'" />
             </svg>
+
+            <span class="text-base text-gray-600 ml-2">{{ $t('downloads') }}</span>
             <div class="ml-auto">
-              <div
-                class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
-                title="overDownloads"
-              >
+              <div class="flex items-center rounded-full px-2 py-1 text-xs text-white bg-red-600 cursor-pointer"
+                title="overDownloads">
                 {{ 0 }}%
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <!-- <use
                     v-if="latest.overLikes > 0"
                     :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'"
@@ -212,16 +118,10 @@
               </div>
             </div>
             <div class="absolute inset-4 top-10 opacity-50">
-              <canvas
-                id="overDownloads"
-                ref="overDownloadsRef"
-                aria-label="over-downloads"
-                role="img"
-              ></canvas>
+              <canvas id="overDownloads" ref="overDownloadsRef" aria-label="over-downloads" role="img"></canvas>
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6">0</h2>
-          <div class="text-base text-gray-600 mt-1">Total Downloads</div>
         </div>
       </div>
     </div>
@@ -236,25 +136,20 @@
           <div class="overflow-auto">
             <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
               <thead>
-                <tr class="bg-gray-100 uppercase text-center text-sm">
-                  <th scope="col" class="px-3 py-2 sm:py-3 text-left">No.</th>
-                  <th scope="col" class="px-3">Content</th>
+                <tr class="bg-gray-100 uppercase text-sm">
+                  <th scope="col" class="px-3 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
+                  <th scope="col" class="px-3">{{ $t('content') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
                   class="text-center bg-white border-y-4 lg:border-y-6 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-                  v-for="(comment, index) in comments"
-                  :key="index"
-                >
+                  v-for="(comment, index) in comments" :key="index">
                   <td class="px-3 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
 
                   <td class="px-3 max-w-sm truncate">
-                    <a
-                      :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
-                      target="_blank"
-                      class="font-medium hover:underline"
-                    >{{ comment.content }}</a>
+                    <a :href="`https://www.leafage.top/posts/detail/${comment.posts}`" target="_blank"
+                      class="font-medium hover:underline">{{ comment.content }}</a>
                   </td>
                 </tr>
               </tbody>

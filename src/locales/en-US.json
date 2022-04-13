@@ -27,7 +27,7 @@
 
     "username": "Username",
     "nickname": "Nickname",
-    "accountLockedState": "Account Locked State",
+    "accountLockedState": "Account State",
     "accountExpiresAt": "Account Expires At",
     "credentialsExpiresAt": "Credentials Expires At",
     
@@ -55,7 +55,7 @@
     "comments": "Comments",
     "downloads": "Downloads",
 
-    "isEnabled": "Is Enabled",
+    "enabled": "Is Enabled",
     "enable": "Enable",
     "disable": "Disable",
 

@@ -74,7 +74,7 @@
             </td>
             <td>
               <Action :needEdit="false" :needDel="false">
-                <button type="button" title="groups" class="flex items-center mr-3 text-indigo-600 focus:outline-none"
+                <button type="button" title="groups" class="flex items-center mr-3 text-cyan-600 focus:outline-none"
                   @click="treeOperate(true, 'group', data.username)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -82,7 +82,7 @@
                   </svg>
                   {{ $t('group') }}
                 </button>
-                <button class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                <button class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="treeOperate(true, 'role', data.username)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -218,5 +218,4 @@ const treeCommit = async (tracked: Array<string>): Promise<void> => {
   }
   isTree.value = false;
 };
-
 </script>

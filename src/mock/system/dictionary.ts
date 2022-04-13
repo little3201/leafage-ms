@@ -11,7 +11,7 @@ for (let i = 0; i < 309; i++) {
     name: Random.word(),
     superior: Random.word(), // 华南、华北
     alias: Random.cword(),
-    isEnabled: Random.boolean(),
+    enabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()
   })
@@ -70,7 +70,7 @@ export default [
         return true
       }
       data = datas.filter(item => item.code === code)[0]
-      data.isAble = !data.isAble
+      data.enabled = !data.enabled
       return data
     },
   },

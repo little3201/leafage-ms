@@ -14,7 +14,8 @@ for (let i = 0; i < 39; i++) {
     principal: Random.cname(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: Random.date()
+    modifyTime: Random.date(),
+    enabled: Random.boolean()
   })
 }
 
@@ -96,6 +97,20 @@ export default [
       data = { ...data, code: Random.id() }
       return data
     }
+  },
+  {
+    url: '/api/hypervisor/group',
+    method: 'patch',
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      let data = JSON.parse(options.body)
+      if (!data) {
+        return true
+      }
+      data = datas.filter(item => item.code === code)[0]
+      data.enabled = !data.enabled
+      return data
+    },
   },
   {
     url: '/api/hypervisor/group/:code',

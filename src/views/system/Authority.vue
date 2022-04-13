@@ -22,7 +22,6 @@
             <th scope="col" class="px-4">{{ $t('superior') }}</th>
             <th scope="col" class="px-4">{{ $t('type') }}</th>
             <th scope="col" class="px-4">{{ $t('path') }}</th>
-            <th scope="col" class="px-4">{{ $t('isEnabled') }}</th>
             <th scope="col" class="px-4">{{ $t('roleCount') }}</th>
             <th scope="col" class="px-4">{{ $t('description') }}</th>
             <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
@@ -52,34 +51,18 @@
                 }}</span>
             </td>
             <td class="px-4" v-text="data.path"></td>
-            <td class="px-4">
-              <div class="flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': data.isEnabled, 'bg-red-500': !data.isEnabled }"></span>
-                <span class="ml-2">{{ data.isEnabled ? $t('enable') : $t('disable') }}</span>
-              </div>
-            </td>
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action :needEdit="false" :needDel="false">
-                <button v-if="data.count > 0" class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                <button v-if="data.count > 0" class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="previewOperation(true, data.code)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
                   {{ $t('role') }}
-                </button>
-                <button class="flex items-center mr-3 focus:outline-none"
-                  :class="{ 'text-green-600': !data.isEnabled, 'text-yellow-600': data.isEnabled }"
-                  @click="power(data.code)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
-                  </svg>
-                  {{ data.isEnabled ? 'Disable' : 'Enable' }}
                 </button>
               </Action>
             </td>

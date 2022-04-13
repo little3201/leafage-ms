@@ -12,7 +12,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "pocket",
     path: "/role",
-    isEnabled: true,
+    enabled: true,
     description: "角色",
     count: 1
   },
@@ -24,7 +24,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "link",
     path: "/authority",
-    isEnabled: true,
+    enabled: true,
     description: "权限",
     count: 1
   },
@@ -36,7 +36,7 @@ const datas: Array<Authority> = [
     type: "B",
     icon: "plus-circle",
     path: "/",
-    isEnabled: true,
+    enabled: false,
     description: "新增",
     count: 0
   },
@@ -47,7 +47,7 @@ const datas: Array<Authority> = [
     name: "Account",
     type: "M",
     icon: "user",
-    isEnabled: true,
+    enabled: true,
     path: "/account",
     description: "账号",
     count: 1
@@ -59,7 +59,7 @@ const datas: Array<Authority> = [
     name: "System",
     type: "M",
     icon: "layers",
-    isEnabled: true,
+    enabled: true,
     path: "/system",
     description: "系统管理",
     count: 1
@@ -72,7 +72,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "home",
     path: "/",
-    isEnabled: true,
+    enabled: true,
     description: "控制台",
     count: 1
   },
@@ -84,7 +84,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "book",
     path: "/posts",
-    isEnabled: true,
+    enabled: true,
     description: "帖子管理",
     count: 1
   },
@@ -96,7 +96,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "book",
     path: "/resource",
-    isEnabled: true,
+    enabled: true,
     description: "作品管理",
     count: 1
   },
@@ -108,7 +108,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "tag",
     path: "/category",
-    isEnabled: true,
+    enabled: true,
     description: "类目管理",
     count: 1
   },
@@ -120,7 +120,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "users",
     path: "/group",
-    isEnabled: true,
+    enabled: true,
     description: "分组",
     count: 1
   }
@@ -486,7 +486,8 @@ for (let i = 0; i < 9; i++) {
     superior: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(),
-    modifyTime: Random.date()
+    modifyTime: Random.date(),
+    enabled: Random.boolean()
   })
 }
 
@@ -542,6 +543,20 @@ export default [
       data = { ...data, code: Random.id() }
       return data
     }
+  },
+  {
+    url: '/api/hypervisor/authority',
+    method: 'patch',
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      let data = JSON.parse(options.body)
+      if (!data) {
+        return true
+      }
+      data = datas.filter(item => item.code === code)[0]
+      data.enabled = !data.enabled
+      return data
+    },
   },
   {
     url: '/api/hypervisor/authority',

@@ -55,7 +55,7 @@
     "comments": "评论数",
     "downloads": "下载量",
 
-    "isEnabled": "是否启用",
+    "enabled": "是否启用",
     "enable": "启用",
     "disable": "禁用",
 

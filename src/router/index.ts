@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
   progress.start()
   const account = sessionStorage.getItem("account")
   let isAuthenticated = account && Object.keys(account).length > 0;
-  if (to.meta.requiresAuth && to.name !== 'SignIn' && !isAuthenticated) next({ name: 'SignIn' })
+  if (to.meta.requiresAuth && to.path !== 'signin' && !isAuthenticated) next({ path: 'signin' })
   else next()
 })
 

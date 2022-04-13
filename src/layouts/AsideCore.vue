@@ -3,7 +3,7 @@
     'hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full':
       !data.children || data.children.length == 0,
   }">
-    <div v-if="data.children && data.children.length > 0" :title="data.name" @click.prevent="isOpen = !isOpen"
+    <button type="button" v-if="data.children && data.children.length > 0" :title="data.name" @click="isOpen = !isOpen"
       class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 cursor-pointer">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="mr-3">
@@ -21,7 +21,7 @@
         </svg>
       </span>
       <span v-else class="hidden xl:inline-flex items-center">{{ $t(data.name.toLowerCase()) }}</span>
-    </div>
+    </button>
     <RouterLink v-else :title="data.name" :to="superior.concat(data.expand.path)"
       class="flex items-center h-12 rounded-l-full pl-4 -mr-4" exact>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

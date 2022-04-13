@@ -39,8 +39,8 @@
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
-                <button type="button" title="Authority"
-                  class="flex items-center mr-3 text-purple-600 focus:outline-none" @click.prevent="treeOperate(true)">
+                <button type="button" title="Authority" class="flex items-center mr-3 text-sky-600 focus:outline-none"
+                  @click.prevent="treeOperate(true)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-power mr-1">
@@ -70,7 +70,7 @@
             <label for="superior">{{ $t('superior') }}</label>
             <select id="superior" name="superior" aria-label="superior" v-model="roleData.superior"
               class="mt-1 w-full block rounded-md border-gray-300">
-              <option value="undefined">---{{$t('select')}}---</option>
+              <option value="undefined">---{{ $t('select') }}---</option>
               <option v-for="superior in superiors" :key="superior.code" :value="superior.code" v-text="superior.name">
               </option>
             </select>
@@ -237,6 +237,5 @@ const modelCommit = async (): Promise<void> => {
       count()
     });
   }
-};
-
+}
 </script>

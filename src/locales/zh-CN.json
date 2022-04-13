@@ -1,7 +1,7 @@
 {
     "application": "系统应用",
     "reload": "重载数据",
-    "pagation": "当前展示第 {page} - {size } 行记录，共 {total} 条记录",
+    "pagation": "第 {page} - {size } 行记录，共 {total} 条记录",
     "deletion": "是否确认删除？",
     "note": "将要删除本条信息，一旦删除将不可恢复。",
 

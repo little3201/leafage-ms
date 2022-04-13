@@ -77,7 +77,7 @@
           <span v-else v-text="account.nickname.substr(0, 1)"></span>
         </button>
         <RouterLink v-else to="/signin"
-          class="bg-blue-600  text-sm text-white hover:bg-blue-700 px-3 py-1.5 rounded-full">
+          class="bg-blue-600 whitespace-nowrap text-sm text-white hover:bg-blue-700 px-3 py-1.5 rounded-full">
           {{ $t('signin') }}
         </RouterLink>
         <div v-show="isAccount"

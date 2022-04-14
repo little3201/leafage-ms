@@ -18,8 +18,8 @@ for (let i = 0; i < 7; i++) {
         overViewed: Random.float(1, 100, 1, 2),
         likes: Random.integer(100, 10000),
         overLikes: Random.float(1, 100, 1, 2),
-        comment: Random.integer(100, 10000),
-        overComment: Random.float(1, 100, 1, 2),
+        comments: Random.integer(100, 10000),
+        overComments: Random.float(1, 100, 1, 2),
         modifyTime: Random.date()
     })
 }

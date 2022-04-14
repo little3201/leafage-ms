@@ -94,7 +94,7 @@ export declare interface Posts extends AbstractVO<string> {
   tags: Array<string>,
   viewed: number,
   likes: number,
-  comment: number
+  comments: number
 }
 
 export declare interface PostsDetails {
@@ -125,8 +125,8 @@ export declare interface Statistics extends AbstractVO<string> {
   overViewed: number,
   likes: number,
   overLikes: number,
-  comment: number,
-  overComment: number
+  comments: number,
+  overComments: number
 }
 
 export declare interface Region extends AbstractVO<number> {

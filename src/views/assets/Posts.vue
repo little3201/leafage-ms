@@ -40,7 +40,7 @@
             <td class="px-4" v-text="data.category"></td>
             <td class="px-4" v-text="data.viewed"></td>
             <td class="px-4" v-text="data.likes"></td>
-            <td class="px-4" v-text="data.comment"></td>
+            <td class="px-4" v-text="data.comments"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate" />

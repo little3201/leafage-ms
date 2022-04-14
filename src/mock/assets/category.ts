@@ -32,8 +32,6 @@ export default [
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
-      } else if (url.substring(url.lastIndexOf('/') + 1) === "category") {
-        return datas
       } else {
         let code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]

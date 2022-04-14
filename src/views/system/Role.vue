@@ -167,7 +167,8 @@ const modelOperate = async (operate: boolean) => {
     roleData.value = {};
     await Promise.all([
       fetch(),
-      await instance.get(SERVER_URL.role).then(res => superiors.value = res.data),
+      await instance.get(SERVER_URL.role, { params: { page: 0, size: 99 } })
+        .then(res => superiors.value = res.data.content),
     ]);
   }
   isEdit.value = operate;

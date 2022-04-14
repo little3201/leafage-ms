@@ -179,10 +179,10 @@ const removeCover = (): void => {
  */
 const retrieve = async (): Promise<void> => {
   await instance.get(SERVER_URL.resource, { params: { page: page.value, size: size.value } })
-      .then(res => {
-        datas.value = res.data.content
-        total.value = res.data.totalElements
-      })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
 /**
  * confirm 操作
@@ -210,7 +210,8 @@ const confirmCommit = async (): Promise<void> => {
 const modelOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     resourceData.value = {};
-    await Promise.all([instance.get(SERVER_URL.category).then(res => categories.value = res.data),
+    await Promise.all([instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } })
+      .then(res => categories.value = res.data.content),
     fetch()]);
   }
   isEdit.value = operate;

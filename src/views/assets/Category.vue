@@ -106,9 +106,7 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.category, {
-    params: { page: page.value, size: size.value },
-  })
+  await instance.get(SERVER_URL.category, { params: { page: page.value, size: size.value } })
     .then(res => {
       datas.value = res.data.content
       total.value = res.data.totalElements

@@ -101,7 +101,7 @@
             <label for="category">{{ $t('category') }}</label>
             <select id="category" name="category" v-model.lazy="postsData.category" required
               class="mt-1 w-full block rounded-md border-gray-300">
-              <option value="undefined">---{{$t('select')}}---</option>
+              <option value="undefined">---{{ $t('select') }}---</option>
               <option v-for="category in categories" :key="category.code" :value="category.code"
                 v-text="category.alias"></option>
             </select>
@@ -136,7 +136,7 @@
               <textarea id="content" name="content" v-if="!preview" class="mt-1 w-full rounded-md border-gray-300"
                 v-model.trim="content" required placeholder="markdown..."></textarea>
               <div ref="rendedHtmlRef" v-else
-                class="mt-1 p-2 prose prose-blue overflow-y-auto w-full border border-gray-300 rounded-md"
+                class="mt-1 p-2 prose prose-base prose-blue max-w-none overflow-y-auto w-full border border-gray-300 rounded-md"
                 v-html="rendedHtml"></div>
             </div>
           </div>
@@ -216,10 +216,10 @@ const removeCover = (): void => {
  */
 const retrieve = async (): Promise<void> => {
   await instance.get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
-      .then(res => {
-        datas.value = res.data.content
-        total.value = res.data.totalElements
-      })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
 /**
  * 添加tag
@@ -268,8 +268,8 @@ const modelOperate = async (operate: boolean): Promise<void> => {
     content.value = "";
     tags.value = [];
     await Promise.all([
-      await instance.get(SERVER_URL.category).then(res => {
-        categories.value = res.data;
+      await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
+        categories.value = res.data.content;
       }),
       fetch(),
       fetchContent(),

@@ -43,7 +43,7 @@
       <p class="text-sm text-gray-500">Changing your phone number can have unintended side effects.</p>
       <div class="mt-4">
         <button id="phone" name="phone" type="button"
-          class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait p-2 rounded-md block">Change
+          class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block">Change
           phone number</button>
         <span class="text-xs text-gray-400">You can manage verified phone number in your phone number settings.</span>
       </div>
@@ -102,7 +102,7 @@
       <legend class="font-medium text-gray-900 pr-4">Delete Account</legend>
       <p class="text-sm text-gray-500">Once you delete your account, there is no going back. Please be certain.</p>
       <button @click="onSubmit" type="submit"
-        class="text-red-600 border block mt-4 border-red-400 hover:bg-red-600 hover:text-white p-2 rounded-md">Delete
+        class="text-red-600 border block mt-4 border-red-400 hover:bg-red-600 hover:text-white px-2 py-1 rounded-md">Delete
         Account</button>
       <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your account to a FREE account?
         We won’t charge your payment information anymore.</span>

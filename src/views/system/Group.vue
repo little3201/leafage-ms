@@ -204,10 +204,10 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await instance.get(SERVER_URL.group, { params: { page: page.value, size: size.value } })
-      .then(res => {
-        datas.value = res.data.content
-        total.value = res.data.totalElements
-      })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
 /**
  * confirm 操作
@@ -232,7 +232,7 @@ const confirmCommit = async (): Promise<void> => {
  * 查询关联账号
  */
 const retrieveAccounts = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
+  if (groupData.value.count > 0 && dataCode.value && dataCode.value.length > 0) {
     await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account"))
       .then(res => accounts.value = res.data)
   }
@@ -246,7 +246,8 @@ const modelOperate = async (operate: boolean): Promise<void> => {
     groupData.value = {};
     await Promise.all([
       fetch(),
-      instance.get(SERVER_URL.group).then(res => superiors.value = res.data),
+      instance.get(SERVER_URL.group, { params: { page: 0, size: 99 } })
+      .then(res => superiors.value = res.data.content),
       retrieveAccounts()
     ]);
   }

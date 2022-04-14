@@ -146,7 +146,6 @@ export declare interface Dictionary extends AbstractVO<string> {
   description: string
 }
 
-
 export declare interface AccessLog extends AbstractVO<string> {
   ip: string,
   location: string,

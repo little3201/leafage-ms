@@ -3,7 +3,7 @@ import { Random } from 'mockjs'
 import type { Pagation, AccessLog } from '@/api/request.type'
 import { parse } from '@/util';
 
-const pagation: Pagation<AccountDetail> = {
+const pagation: Pagation<AccessLog> = {
     page: 0,
     size: 10,
     totalElements: 0,
@@ -23,7 +23,7 @@ for (let i = 0; i < 36; i++) {
 
 export default [
     {
-        url: '/api/hypervisor/accesslog',
+        url: '/api/hypervisor/access-log',
         method: 'get',
         response: (options: any) => {
             let url = options.url

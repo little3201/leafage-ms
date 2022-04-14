@@ -72,7 +72,7 @@
                 <label for="gender" class="font-medium text-gray-700">Gender</label>
                 <select id="gender" name="gender" class="border-gray-300 py-1 mt-1 rounded-md w-full"
                   v-model="user.gender">
-                  <option value="undefined">---{{$t('select')}}---</option>
+                  <option value="undefined">---{{ $t('select') }}---</option>
                   <option value="F">Female</option>
                   <option value="M">Male</option>
                 </select>
@@ -86,7 +86,7 @@
                 <label for="degree" class="font-medium text-gray-700">Degree</label>
                 <select id="degree" name="degree" class="border-gray-300 py-1 mt-1 rounded-md w-full"
                   v-model="user.degree">
-                  <option value="undefined">---{{$t('select')}}---</option>
+                  <option value="undefined">---{{ $t('select') }}---</option>
                   <option value="01">小学</option>
                   <option value="02">初中</option>
                   <option value="03">高中</option>
@@ -103,7 +103,7 @@
                 <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
                 <select id="ethnicity" name="ethnicity" class="border-gray-300 py-1 mt-1 rounded-md w-full"
                   v-model="user.ethnicity">
-                  <option value="undefined">---{{$t('select')}}---</option>
+                  <option value="undefined">---{{ $t('select') }}---</option>
                   <option value="01">汉族</option>
                   <option value="02">蒙古族</option>
                   <option value="03">回族</option>
@@ -184,13 +184,14 @@
               <span class="text-xs text-gray-400">All of the fields on this page are optional and can be deleted at any
                 time</span>
               <button @click.stop="onSubmit" type="submit"
-                class="mt-1 p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait">Update
+                class="mt-1 px-2 py-1 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait">Update
                 profile</button>
             </div>
           </div>
         </form>
       </fieldset>
-    </div> </form>
+    </div>
+  </form>
 </template>
 
 <script lang="ts" setup>

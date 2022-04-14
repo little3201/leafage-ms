@@ -182,4 +182,11 @@ const modelCommit = async (): Promise<void> => {
     });
   }
 };
+/**
+ * 启用/禁用
+ * @param code 代码
+ */
+const power = (code: string) => {
+
+}
 </script>

@@ -169,7 +169,6 @@ const confirmCommit = async (): Promise<void> => {
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
-    count()
   });
 };
 /**
@@ -233,7 +232,6 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
-      count()
     });
   }
 };

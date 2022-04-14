@@ -27,7 +27,7 @@
       </div>
     </div>
     <Preview :isShow="isShow" @closeAction="previewOperation">
-      <article class="prose prose-sm sm:prose">
+      <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
         <p v-text="data.content"></p>
       </article>

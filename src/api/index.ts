@@ -2,8 +2,6 @@ import { SERVER_URL } from './constant'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import router from '../router'
 
-const controller = new AbortController()
-
 const redirectTo = (path: string) => {
     router.replace(path)
 }
@@ -27,10 +25,6 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
     (res: AxiosResponse) => {
-        // 用户不存在，跳转注册
-        if (res.status === 204) {
-            redirectTo('/signup')
-        }
         return res
     },
     (error: AxiosError) => {

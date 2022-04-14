@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Posts, PostsDetails } from '@/api/request.type'
+import type { Pagation, Posts, PostsDetails } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Posts> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Posts> = [];
 
 for (let i = 0; i < 79; i++) {
@@ -26,20 +32,15 @@ const postsDetails: PostsDetails = {
 
 export default [
   {
-    url: '/api/assets/posts/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
-  {
     url: '/api/assets/posts',
     method: 'get',
     response: (options: any) => {
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       } else if (url.substring(url.lastIndexOf('/') + 1) === "content") {
         return postsDetails
       } else {

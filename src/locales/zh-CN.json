@@ -1,9 +1,11 @@
 {
     "application": "系统应用",
     "reload": "重载数据",
-    "pagation": "当前展示第 {page} - {size } 行记录，共 {total} 条记录",
+    "Page": "第 {page} - {size } 行记录，共 {total} 条记录",
     "deletion": "是否确认删除？",
     "note": "将要删除本条信息，一旦删除将不可恢复。",
+    "viewMore": "查看更多",
+    "unreadTotal": "未读消息",
 
     "search": "搜索...",
     "select": "请选择",
@@ -55,7 +57,7 @@
     "comments": "评论数",
     "downloads": "下载量",
 
-    "isEnabled": "是否启用",
+    "enabled": "是否启用",
     "enable": "启用",
     "disable": "禁用",
 

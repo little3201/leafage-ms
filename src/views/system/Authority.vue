@@ -22,7 +22,6 @@
             <th scope="col" class="px-4">{{ $t('superior') }}</th>
             <th scope="col" class="px-4">{{ $t('type') }}</th>
             <th scope="col" class="px-4">{{ $t('path') }}</th>
-            <th scope="col" class="px-4">{{ $t('isEnabled') }}</th>
             <th scope="col" class="px-4">{{ $t('roleCount') }}</th>
             <th scope="col" class="px-4">{{ $t('description') }}</th>
             <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
@@ -52,19 +51,12 @@
                 }}</span>
             </td>
             <td class="px-4" v-text="data.path"></td>
-            <td class="px-4">
-              <div class="flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': data.isEnabled, 'bg-red-500': !data.isEnabled }"></span>
-                <span class="ml-2">{{ data.isEnabled ? $t('enable') : $t('disable') }}</span>
-              </div>
-            </td>
             <td class="px-4" v-text="data.count"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action :needEdit="false" :needDel="false">
-                <button v-if="data.count > 0" class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                <button v-if="data.count > 0" class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="previewOperation(true, data.code)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -72,22 +64,13 @@
                   </svg>
                   {{ $t('role') }}
                 </button>
-                <button class="flex items-center mr-3 focus:outline-none"
-                  :class="{ 'text-green-600': !data.isEnabled, 'text-yellow-600': data.isEnabled }"
-                  @click="power(data.code)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
-                  </svg>
-                  {{ data.isEnabled ? 'Disable' : 'Enable' }}
-                </button>
               </Action>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
 
     <Preview :isShow="isShow" @closeAction="previewOperation">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
@@ -125,7 +108,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
@@ -157,18 +140,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
+      .then(res => {
+        datas.value = res.data.content
+        total.value = res.data.totalElements
+      })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.authority.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * 预览
  * @param show 是否展示

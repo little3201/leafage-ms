@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { AccountDetail } from '@/api/request.type'
+import type { Pagation, AccountDetail } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<AccountDetail> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<AccountDetail> = [];
 
 for (let i = 0; i < 139; i++) {
@@ -10,6 +16,7 @@ for (let i = 0; i < 139; i++) {
     username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
+    enabled: Random.boolean(),
     accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
     credentialsExpiresAt: Random.date()
@@ -21,13 +28,6 @@ const groups = ["21529WXDL", "21529V1IM"]
 const roles = ["20C281HG2"]
 
 export default [
-  {
-    url: '/api/hypervisor/account/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
   {
     url: '/api/hypervisor/account',
     method: 'get',
@@ -43,7 +43,9 @@ export default [
       }
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation;
       } else {
         let username = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.username === username)[0]

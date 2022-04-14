@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Authority, Role } from '@/api/request.type'
+import type { Pagation, Authority, Role } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Authority> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Authority> = [
   {
     code: "21224PV6C",
@@ -12,7 +18,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "pocket",
     path: "/role",
-    isEnabled: true,
+    enabled: true,
     description: "角色",
     count: 1
   },
@@ -24,7 +30,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "link",
     path: "/authority",
-    isEnabled: true,
+    enabled: true,
     description: "权限",
     count: 1
   },
@@ -36,7 +42,7 @@ const datas: Array<Authority> = [
     type: "B",
     icon: "plus-circle",
     path: "/",
-    isEnabled: true,
+    enabled: false,
     description: "新增",
     count: 0
   },
@@ -47,7 +53,7 @@ const datas: Array<Authority> = [
     name: "Account",
     type: "M",
     icon: "user",
-    isEnabled: true,
+    enabled: true,
     path: "/account",
     description: "账号",
     count: 1
@@ -59,7 +65,7 @@ const datas: Array<Authority> = [
     name: "System",
     type: "M",
     icon: "layers",
-    isEnabled: true,
+    enabled: true,
     path: "/system",
     description: "系统管理",
     count: 1
@@ -72,7 +78,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "home",
     path: "/",
-    isEnabled: true,
+    enabled: true,
     description: "控制台",
     count: 1
   },
@@ -84,7 +90,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "book",
     path: "/posts",
-    isEnabled: true,
+    enabled: true,
     description: "帖子管理",
     count: 1
   },
@@ -96,7 +102,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "book",
     path: "/resource",
-    isEnabled: true,
+    enabled: true,
     description: "作品管理",
     count: 1
   },
@@ -108,7 +114,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "tag",
     path: "/category",
-    isEnabled: true,
+    enabled: true,
     description: "类目管理",
     count: 1
   },
@@ -120,7 +126,7 @@ const datas: Array<Authority> = [
     type: "M",
     icon: "users",
     path: "/group",
-    isEnabled: true,
+    enabled: true,
     description: "分组",
     count: 1
   }
@@ -486,18 +492,12 @@ for (let i = 0; i < 9; i++) {
     superior: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(),
-    modifyTime: Random.date()
+    modifyTime: Random.date(),
+    enabled: Random.boolean()
   })
 }
 
 export default [
-  {
-    url: '/api/hypervisor/authority/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
   {
     url: '/api/hypervisor/authority/tree',
     method: 'get',
@@ -522,7 +522,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
     },
   },
@@ -542,6 +544,20 @@ export default [
       data = { ...data, code: Random.id() }
       return data
     }
+  },
+  {
+    url: '/api/hypervisor/authority',
+    method: 'patch',
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      let data = JSON.parse(options.body)
+      if (!data) {
+        return true
+      }
+      data = datas.filter(item => item.code === code)[0]
+      data.enabled = !data.enabled
+      return data
+    },
   },
   {
     url: '/api/hypervisor/authority',

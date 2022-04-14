@@ -25,7 +25,7 @@
               number and a lowercase letter. Learn more.</p>
             <div class="flex items-center space-x-4">
               <button @click="onSubmit" type="submit"
-                class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait p-2 rounded-md block">Update
+                class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block">Update
                 password</button>
               <RouterLink to="/forgot" class="text-blue-600 hover:underline">I forgot my password</RouterLink>
             </div>

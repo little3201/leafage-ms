@@ -15,7 +15,7 @@ export const SERVER_URL = {
 
   region: SERVER_PRE.hypervisor.concat('/region'), // 行政区划
   dictionary: SERVER_PRE.hypervisor.concat('/dictionary'), // 字典
-  accesslog: SERVER_PRE.hypervisor.concat('/accesslog'), // 字典
+  accesslog: SERVER_PRE.hypervisor.concat('/access-log'), // 字典
 
   posts: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/category'), // 类别

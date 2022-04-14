@@ -39,8 +39,8 @@
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
-                <button type="button" title="Authority"
-                  class="flex items-center mr-3 text-purple-600 focus:outline-none" @click.prevent="treeOperate(true)">
+                <button type="button" title="Authority" class="flex items-center mr-3 text-sky-600 focus:outline-none"
+                  @click.prevent="treeOperate(true)">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                     class="feather feather-power mr-1">
@@ -55,7 +55,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
@@ -70,7 +70,7 @@
             <label for="superior">{{ $t('superior') }}</label>
             <select id="superior" name="superior" aria-label="superior" v-model="roleData.superior"
               class="mt-1 w-full block rounded-md border-gray-300">
-              <option value="undefined">---{{$t('select')}}---</option>
+              <option value="undefined">---{{ $t('select') }}---</option>
               <option v-for="superior in superiors" :key="superior.code" :value="superior.code" v-text="superior.name">
               </option>
             </select>
@@ -93,7 +93,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 import Tree from "@/components/tree/Tree.vue";
@@ -133,17 +133,11 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
-};
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.role.concat("/count")).then(res => total.value = res.data)
+  await instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 }
 /**
  * confirm 操作
@@ -162,7 +156,6 @@ const confirmCommit = async (): Promise<void> => {
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
-    count()
   });
 };
 /**
@@ -174,7 +167,8 @@ const modelOperate = async (operate: boolean) => {
     roleData.value = {};
     await Promise.all([
       fetch(),
-      await instance.get(SERVER_URL.role).then(res => superiors.value = res.data),
+      await instance.get(SERVER_URL.role, { params: { page: 0, size: 99 } })
+        .then(res => superiors.value = res.data.content),
     ]);
   }
   isEdit.value = operate;
@@ -234,9 +228,7 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
-      count()
     });
   }
-};
-
+}
 </script>

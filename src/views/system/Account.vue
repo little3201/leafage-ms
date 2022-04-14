@@ -74,7 +74,7 @@
             </td>
             <td>
               <Action :needEdit="false" :needDel="false">
-                <button type="button" title="groups" class="flex items-center mr-3 text-indigo-600 focus:outline-none"
+                <button type="button" title="groups" class="flex items-center mr-3 text-cyan-600 focus:outline-none"
                   @click="treeOperate(true, 'group', data.username)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -82,7 +82,7 @@
                   </svg>
                   {{ $t('group') }}
                 </button>
-                <button class="flex items-center mr-3 text-pink-600 focus:outline-none"
+                <button class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="treeOperate(true, 'role', data.username)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -104,7 +104,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Tree :isShow="isTree" @cancelAction="treeOperate" @commitAction="treeCommit" :datas="treeDatas" :codes="codes" />
   </div>
 </template>
@@ -114,7 +114,7 @@ import { onMounted, ref, reactive } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Tree from "@/components/tree/Tree.vue";
 
 import { instance, SERVER_URL } from "@/api";
@@ -151,18 +151,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.account.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * 解锁
  * @param username 账号
@@ -218,5 +212,4 @@ const treeCommit = async (tracked: Array<string>): Promise<void> => {
   }
   isTree.value = false;
 };
-
 </script>

@@ -43,7 +43,7 @@
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
-                <button v-if="data.count > 0" class="flex items-center mr-3 text-green-600 focus:outline-none"
+                <button v-if="data.count > 0" class="flex items-center mr-3 text-amber-600 focus:outline-none"
                   @click="previewOperation(true)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
@@ -57,7 +57,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
@@ -164,7 +164,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 import Preview from "@/components/Preview.vue";
@@ -203,18 +203,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.group, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.group, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.group.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * confirm 操作
  * @param operate 是否打开
@@ -232,14 +226,13 @@ const confirmCommit = async (): Promise<void> => {
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
-    count()
   });
 };
 /**
  * 查询关联账号
  */
 const retrieveAccounts = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
+  if (groupData.value.count > 0 && dataCode.value && dataCode.value.length > 0) {
     await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account"))
       .then(res => accounts.value = res.data)
   }
@@ -253,7 +246,8 @@ const modelOperate = async (operate: boolean): Promise<void> => {
     groupData.value = {};
     await Promise.all([
       fetch(),
-      instance.get(SERVER_URL.group).then(res => superiors.value = res.data),
+      instance.get(SERVER_URL.group, { params: { page: 0, size: 99 } })
+      .then(res => superiors.value = res.data.content),
       retrieveAccounts()
     ]);
   }
@@ -291,7 +285,6 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
-      count()
     });
   }
 };

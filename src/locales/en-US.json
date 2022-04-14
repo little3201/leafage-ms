@@ -1,9 +1,11 @@
 {
     "application": "Application",
     "reload": "Reload Data",
-    "pagation": "The records in rows {page} - {size } are currently diplayed，of {total} total.",
+    "Page": "The records in rows {page} - {size } ，of {total} total.",
     "deletion": "Do you want to confirm the deletion?",
     "note": "This information will be deleted and will not be recovered once deleted.",
+    "viewMore": "View More",
+    "unreadTotal": "unread total",
     
     "search": "Search...",
     "select": "Plesse Select",
@@ -27,7 +29,7 @@
 
     "username": "Username",
     "nickname": "Nickname",
-    "accountLockedState": "Account Locked State",
+    "accountLockedState": "Account State",
     "accountExpiresAt": "Account Expires At",
     "credentialsExpiresAt": "Credentials Expires At",
     
@@ -55,7 +57,7 @@
     "comments": "Comments",
     "downloads": "Downloads",
 
-    "isEnabled": "Is Enabled",
+    "enabled": "Is Enabled",
     "enable": "Enable",
     "disable": "Disable",
 

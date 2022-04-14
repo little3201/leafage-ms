@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Dictionary } from '@/api/request.type'
+import type { Pagation, Dictionary } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Dictionary> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Dictionary> = [];
 
 for (let i = 0; i < 309; i++) {
@@ -11,19 +17,12 @@ for (let i = 0; i < 309; i++) {
     name: Random.word(),
     superior: Random.word(), // 华南、华北
     alias: Random.cword(),
-    isEnabled: Random.boolean(),
+    enabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()
   })
 }
 export default [
-  {
-    url: '/api/hypervisor/dictionary/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
   {
     url: '/api/hypervisor/dictionary',
     method: 'get',
@@ -39,7 +38,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
     }
   },
@@ -70,7 +71,7 @@ export default [
         return true
       }
       data = datas.filter(item => item.code === code)[0]
-      data.isAble = !data.isAble
+      data.enabled = !data.enabled
       return data
     },
   },

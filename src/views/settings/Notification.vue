@@ -27,7 +27,7 @@
       </div>
     </div>
     <Preview :isShow="isShow" @closeAction="previewOperation">
-      <article class="prose prose-sm sm:prose">
+      <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
         <p v-text="data.content"></p>
       </article>
@@ -61,19 +61,12 @@ onMounted(() => {
 /**
  * 查询列表
  */
-const retrieve = async () => {
-  await Promise.all([
-    instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value } })
-      .then(res => notifications.value = res.data),
-    count()
-  ]);
-}
-/**
- * 统计未读数据
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.notification.concat("/count"))
-    .then(res => total.value = res.data);
+const retrieve = async (isRead: boolean) => {
+  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: isRead } })
+    .then(res => {
+      notifications.value = res.data.content
+      total.value = res.data.totalElements
+    })
 }
 /**
  * 已读/未读切换
@@ -81,8 +74,7 @@ const count = async (): Promise<void> => {
  */
 const switchType = async (read: boolean) => {
   isRead.value = read
-  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: isRead.value } })
-    .then(res => notifications.value = res.data);
+  retrieve(read)
 }
 /**
  * 预览

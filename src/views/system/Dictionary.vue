@@ -10,7 +10,7 @@
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation :needAdd="false" :datas="datas" :fileName="'dictionary'" />
+      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'dictionary'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="dictionary">
@@ -20,7 +20,6 @@
             <th scope="col" class="px-4">{{ $t('name') }}</th>
             <th scope="col" class="px-4">{{ $t('code') }}</th>
             <th scope="col" class="px-4">{{ $t('superior') }}</th>
-            <th scope="col" class="px-4">{{ $t('isEnabled') }}</th>
             <th scope="col" class="px-4">{{ $t('description') }}</th>
             <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
             <th scope="col" class="px-4">{{ $t('actions') }}</th>
@@ -37,25 +36,17 @@
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.superior"></td>
-            <td class="px-4">
-              <div class="flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': data.isEnabled, 'bg-red-500': !data.isEnabled }"></span>
-                <span class="ml-2">{{ data.isEnabled ? $t('enable') : $t('disable') }}</span>
-              </div>
-            </td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
-              <Action :needEdit="false" :needDel="false" @click.capture="dataCode = data.code">
+              <Action @click.capture="dataCode = data.code" @editAction="modelOperate" :needDel="false">
                 <button class="flex items-center mr-3 focus:outline-none"
-                  :class="{ 'text-green-600': !data.isEnabled, 'text-red-600': data.isEnabled }"
-                  @click="power(data.code)">
+                  :class="{ 'text-green-600': !data.enabled, 'text-red-600': data.enabled }" @click="power(data.code)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
                   </svg>
-                  {{ data.isEnabled ? $t('disable') : $t('enable') }}
+                  {{ data.enabled ? $t('disable') : $t('enable') }}
                 </button>
               </Action>
             </td>
@@ -63,7 +54,37 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
+      <form @submit.prevent>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12 sm:col-span-6">
+            <label for="name">{{ $t('name') }}</label>
+            <input id="name" name="name" type="text" class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Name" v-model.trim="dictData.name" required autofocus />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="alias">{{ $t('alias') }}</label>
+            <input id="alias" name="alias" type="text" class="mt-1 w-full block rounded-md border-gray-300"
+              placeholder="Alias" v-model.trim="dictData.alias" />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="superior">{{ $t('superior') }}</label>
+            <select id="superior" name="superior" class="mt-1 w-full block rounded-md border-gray-300"
+              v-model="dictData.superior">
+              <option value="undefined">---请选择---</option>
+              <option v-for="superior in superiors" :key="superior.code" :value="superior.name">{{ superior.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-span-12">
+            <label for="description">{{ $t('description') }}</label>
+            <textarea id="description" name="description" class="mt-1 w-full block rounded-md border-gray-300"
+              v-model.trim="dictData.description" />
+          </div>
+        </div>
+      </form>
+    </Model>
   </div>
 </template>
 
@@ -72,13 +93,19 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
+import Model from "@/components/Model.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Dictionary } from "@/api/request.type";
 
+// 模态框参数
+let isEdit = ref(false);
 // 数据
+let dictData = ref<Dictionary>({})
+let dataCode = ref("");
 let datas = ref<Array<Dictionary>>([]);
+let superiors = ref<Dictionary>([]);
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -100,31 +127,66 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.dictionary, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.dictionary, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
 /**
- * 统计
+ * 新增/编辑：打开
+ * @param operate 是否打开
  */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.dictionary.concat("/count")).then(res => total.value = res.data)
-}
+const modelOperate = async (operate: boolean): Promise<void> => {
+  if (operate) {
+    dictData.value = {};
+    await Promise.all([
+      fetch(),
+      instance.get(SERVER_URL.dictionary.concat('/superior')).then(res => superiors.value = res.data)
+    ]);
+  }
+  isEdit.value = operate;
+};
 /**
- * 启用
+ * 查询详情
+ */
+const fetch = async (): Promise<void> => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance.get(SERVER_URL.dictionary.concat("/", dataCode.value)).then(res => dictData.value = res.data);
+  }
+};
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (): Promise<void> => {
+  if (dataCode.value && dataCode.value.length > 0) {
+    await instance.put(SERVER_URL.dictionary.concat("/", dataCode.value), dictData.value)
+      .then(res => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: any) => item.code != dataCode.value
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+        isEdit.value = false;
+      });
+  } else {
+    await instance.post(SERVER_URL.dictionary, dictData.value).then(res => {
+      if (datas.value.length >= size.value) {
+        // 删除第一个
+        datas.value.shift();
+      }
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+      isEdit.value = false;
+    });
+  }
+};
+/**
+ * 启用/禁用
  * @param code 代码
  */
-const power = async (code: string) => {
-  await instance.patch(SERVER_URL.dictionary.concat("/", code)).then(res => {
-    if (res.data && res.data == true) {
-      datas.value.forEach((item: Dictionary) => {
-        if (item.code === code) {
-          item.isEnabled = !item.isEnabled
-        }
-      })
-    }
-  });
+const power = (code: string) => {
+
 }
 </script>

@@ -23,14 +23,14 @@
                 </tbody>
             </table>
         </div>
-        <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+        <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     </div>
 </template>
 
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import Pagation from "@/components/Pagation.vue"
+import Page from "@/components/Page.vue"
 
 import { instance, SERVER_URL } from "@/api";
 import type { AccessLog } from "@/api/request.type";
@@ -58,16 +58,10 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async () => {
-    await Promise.all([
-        instance.get(SERVER_URL.accesslog, { params: { page: page.value, size: size.value } })
-            .then(res => accesslogs.value = res.data),
-        count()
-    ]);
-}
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-    await instance.get(SERVER_URL.accesslog.concat("/count")).then(res => total.value = res.data);
+    await instance.get(SERVER_URL.accesslog, { params: { page: page.value, size: size.value } })
+        .then(res => {
+            accesslogs.value = res.data.content
+            total.value = res.data.totalElements
+        })
 }
 </script>

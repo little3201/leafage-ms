@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center mt-1 overflow-auto">
     <p class="hidden md:block">
-      {{$t('pagation', {page: page * size + 1, size: (page + 1) * size, total: total})}}
+      {{$t('Page', {page: page * size + 1, size: (page + 1) * size, total: total})}}
     </p>
     <div class="flex flex-1 justify-end space-x-2">
       <button type="button" :disabled="page == 0"

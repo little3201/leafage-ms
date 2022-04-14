@@ -1,7 +1,8 @@
-export declare interface Page {
+export declare interface Pagation<T> {
   page: number,
   size: number,
-  total: number
+  totalElements: number,
+  content: Array<T>
 }
 
 export declare interface Account {
@@ -11,6 +12,7 @@ export declare interface Account {
 }
 
 export declare interface AccountDetail extends Account {
+  enabled: boolean,
   accountExpiresAt: Date,
   accountLocked: boolean,
   credentialsExpiresAt: Date
@@ -40,7 +42,8 @@ export declare interface Role extends AbstractVO<string> {
   name: string,
   superior: string,
   count: number,
-  description: string
+  description: string,
+  enabled: boolean
 }
 
 export declare interface Group extends AbstractVO<string> {
@@ -49,7 +52,8 @@ export declare interface Group extends AbstractVO<string> {
   superior: string,
   principal: string,
   count: number,
-  description: string
+  description: string,
+  enabled: boolean
 }
 
 export declare interface Authority extends AbstractVO<string> {
@@ -59,8 +63,8 @@ export declare interface Authority extends AbstractVO<string> {
   superior: string,
   path: string,
   count: number,
-  isEnabled: boolean,
-  description: string
+  description: string,
+  enabled: boolean
 }
 
 export declare interface Notification extends AbstractVO<string> {
@@ -138,10 +142,9 @@ export declare interface Dictionary extends AbstractVO<string> {
   name: string,
   superior: string,
   alias: string,
-  isEnabled: boolean,
+  enabled: boolean,
   description: string
 }
-
 
 export declare interface AccessLog extends AbstractVO<string> {
   ip: string,

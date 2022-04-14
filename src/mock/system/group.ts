@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Group, AccountDetail } from '@/api/request.type'
+import type { Pagation, Group, AccountDetail } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Group> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Group> = [];
 
 for (let i = 0; i < 39; i++) {
@@ -14,7 +20,8 @@ for (let i = 0; i < 39; i++) {
     principal: Random.cname(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: Random.date()
+    modifyTime: Random.date(),
+    enabled: Random.boolean()
   })
 }
 
@@ -25,6 +32,7 @@ for (let i = 0; i < 5; i++) {
     username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
+    enabled: Random.boolean(),
     accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
     credentialsExpiresAt: Random.date()
@@ -45,13 +53,6 @@ const treeDatas = [
 ];
 
 export default [
-  {
-    url: '/api/hypervisor/group/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
   {
     url: '/api/hypervisor/group/tree',
     method: 'get',
@@ -76,7 +77,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
     }
   },
@@ -96,6 +99,20 @@ export default [
       data = { ...data, code: Random.id() }
       return data
     }
+  },
+  {
+    url: '/api/hypervisor/group',
+    method: 'patch',
+    response: (options: any) => {
+      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      let data = JSON.parse(options.body)
+      if (!data) {
+        return true
+      }
+      data = datas.filter(item => item.code === code)[0]
+      data.enabled = !data.enabled
+      return data
+    },
   },
   {
     url: '/api/hypervisor/group/:code',

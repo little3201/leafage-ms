@@ -3,8 +3,8 @@
     <div class="flex items-center">
       <input :id="data.code" type="checkbox" class="rounded cursor-pointer" :value="data.code" v-model="checked"
         @click="track(data)" />
-      <button v-if="data.children && data.children.length > 0" @click="isOpen = !isOpen"
-        class="ml-4 inline-flex items-center focus:outline-none">
+      <button type="button" :title="data.name" v-if="data.children && data.children.length > 0"
+        @click="isOpen = !isOpen" class="ml-4 inline-flex items-center focus:outline-none">
         <svg v-if="data.expand && data.expand.icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />

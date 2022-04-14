@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Region } from '@/api/request.type'
+import type { Pagation, Region } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Region> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Region> = [];
 
 for (let i = 0; i < 309; i++) {
@@ -71,7 +77,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        return pagation;
       }
     }
   },

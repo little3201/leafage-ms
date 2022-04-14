@@ -50,12 +50,12 @@
             <span class="text-base text-gray-600 ml-2">{{ $t('comments') }}</span>
             <div class="ml-auto">
               <div class="flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-                :class="{ 'bg-lime-500': latest.overComment > 0, 'bg-red-600': latest.overComment <= 0 }"
+                :class="{ 'bg-lime-500': latest.overComments > 0, 'bg-red-600': latest.overComments <= 0 }"
                 title="overComment">
-                {{ latest.overComment }}%
+                {{ latest.overComments }}%
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
-                  <use v-if="latest.overComment > 0" :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
+                  <use v-if="latest.overComments > 0" :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-up'" />
                   <use v-else :xlink:href="'/svg/feather-sprite.svg#' + 'arrow-down'" />
                 </svg>
               </div>
@@ -64,7 +64,7 @@
               <canvas id="overComment" ref="overCommentRef" aria-label="over-comments" role="img"></canvas>
             </div>
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comment"></h2>
+          <h2 class="text-3xl font-bold leading-8 mt-6" v-text="latest.comments"></h2>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">

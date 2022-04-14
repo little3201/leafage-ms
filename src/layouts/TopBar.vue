@@ -31,7 +31,8 @@
         </button>
         <div v-show="isNotify && notifications.length > 0"
           class="origin-top-left p-2 absolute top-6 left-0 md:right-0 w-64 md:w-80 md:left-auto  mt-4 rounded-md shadow-lg bg-white z-10">
-          <span class="my-4 px-2 text-lg">{{ $t('notification') }}</span>
+          <span class="my-4 px-2 text-lg">{{ $t('notification') }}: <span class="text-sm text-gray-400">{{ count }}
+              {{ $t('unreadTotal') }}</span></span>
           <div class="divide-y">
             <div v-for="(notification, index) in notifications" :key="index" class="overflow-hidden">
               <div class="hover:bg-gray-100 rounded-md p-2">
@@ -42,6 +43,10 @@
                   <div class="w-full text-xs truncate text-gray-600">{{ notification.content }}</div>
                 </RouterLink>
               </div>
+            </div>
+            <div class="py-2 text-center">
+              <RouterLink to="/settings/notification" @click="operate('')" class="text-gray-400">{{ $t('viewMore') }}
+              </RouterLink>
             </div>
           </div>
         </div>
@@ -161,12 +166,11 @@ onMounted(() => {
 });
 
 const retrieve = async () => {
-  await Promise.all([
-    await instance.get(SERVER_URL.notification, { params: { page: 0, size: 6 } })
-      .then(res => notifications.value = res.data),
-    await instance.get(SERVER_URL.notification.concat("/count"))
-      .then(res => count.value = res.data)
-  ])
+  await instance.get(SERVER_URL.notification, { params: { page: 0, size: 6, read: false } })
+    .then(res => {
+      notifications.value = res.data.content
+      count.value = res.data.totalElements
+    })
 }
 
 /**

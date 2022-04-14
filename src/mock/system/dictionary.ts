@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Dictionary } from '@/api/request.type'
+import type { Pagation, Dictionary } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Dictionary> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Dictionary> = [];
 
 for (let i = 0; i < 309; i++) {
@@ -18,13 +24,6 @@ for (let i = 0; i < 309; i++) {
 }
 export default [
   {
-    url: '/api/hypervisor/dictionary/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
-  {
     url: '/api/hypervisor/dictionary',
     method: 'get',
     response: (options: any) => {
@@ -39,7 +38,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
     }
   },

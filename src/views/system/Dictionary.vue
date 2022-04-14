@@ -40,22 +40,21 @@
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
               <Action @click.capture="dataCode = data.code" @editAction="modelOperate" :needDel="false">
-                <!-- <button class="flex items-center mr-3 focus:outline-none"
-                  :class="{ 'text-green-600': !data.enabled, 'text-red-600': data.enabled }"
-                  @click="power(data.code)">
+                <button class="flex items-center mr-3 focus:outline-none"
+                  :class="{ 'text-green-600': !data.enabled, 'text-red-600': data.enabled }" @click="power(data.code)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round" class="mr-1">
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
                   </svg>
                   {{ data.enabled ? $t('disable') : $t('enable') }}
-                </button> -->
+                </button>
               </Action>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
@@ -94,7 +93,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Model from "@/components/Model.vue";
 
 import { instance, SERVER_URL } from "@/api";
@@ -128,18 +127,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.dictionary, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.dictionary, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.dictionary.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * 新增/编辑：打开
  * @param operate 是否打开
@@ -186,7 +179,6 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
-      count()
     });
   }
 };

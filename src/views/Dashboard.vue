@@ -192,22 +192,16 @@ onMounted(() => {
   initData();
 })
 /**
- * 查询最新10条评论
- */
-const retrieveComments = async (): Promise<void> => {
-  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
-    .then(res => comments.value = res.data);
-}
-/**
  * 初始化请求数据
  */
 const initData = async (): Promise<void> => {
   await Promise.all([
     instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } }).then(res => {
-      datas.value = res.data;
+      datas.value = res.data.content;
       construceChart()
     }),
-    retrieveComments()])
+    instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+      .then(res => comments.value = res.data.content)])
 };
 
 const construceChart = (): void => {

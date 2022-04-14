@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Role } from '@/api/request.type'
+import type { Pagation, Role } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Role> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Role> = [];
 
 for (let i = 0; i < 39; i++) {
@@ -31,13 +37,6 @@ const authorities = ["2122466RP", "21224B8JZ", "21953KO8", "203315P3Q"]
 
 export default [
   {
-    url: '/api/hypervisor/role/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
-  {
     url: '/api/hypervisor/role/tree',
     method: 'get',
     response: () => {
@@ -61,7 +60,9 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
     }
   },

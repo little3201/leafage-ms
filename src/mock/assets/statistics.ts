@@ -1,7 +1,13 @@
 import { Random } from 'mockjs'
 
-import type { Statistics } from '@/api/request.type'
+import type { Pagation, Statistics } from '@/api/request.type'
 
+const pagation: Pagation<Statistics> = {
+    page: 0,
+    size: 10,
+    totalElements: 0,
+    content: []
+}
 const datas: Array<Statistics> = [];
 
 for (let i = 0; i < 7; i++) {
@@ -23,7 +29,9 @@ export default [
         url: '/api/assets/statistics',
         method: 'get',
         response: () => {
-            return datas
+            pagation.totalElements = datas.length
+            pagation.content = datas
+            return pagation
         },
     },
 ]

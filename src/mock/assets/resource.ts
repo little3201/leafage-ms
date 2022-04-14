@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Resource } from '@/api/request.type'
+import type { Pagation, Resource } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Resource> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Resource> = [];
 
 for (let i = 0; i < 79; i++) {
@@ -21,20 +27,15 @@ for (let i = 0; i < 79; i++) {
 
 export default [
   {
-    url: '/api/assets/resource/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
-  {
     url: '/api/assets/resource',
     method: 'get',
     response: (options: any) => {
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       }
       else {
         let code = url.substring(url.lastIndexOf('/') + 1)

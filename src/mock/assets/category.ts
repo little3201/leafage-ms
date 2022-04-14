@@ -1,8 +1,14 @@
 import { Random } from 'mockjs'
 
-import type { Category } from '@/api/request.type'
+import type { Pagation, Category } from '@/api/request.type'
 import { parse } from '@/util';
 
+const pagation: Pagation<Category> = {
+  page: 0,
+  size: 10,
+  totalElements: 0,
+  content: []
+}
 const datas: Array<Category> = [];
 
 for (let i = 0; i < 19; i++) {
@@ -17,20 +23,15 @@ for (let i = 0; i < 19; i++) {
 
 export default [
   {
-    url: '/api/assets/category/count',
-    method: 'get',
-    response: () => {
-      return datas.length
-    },
-  },
-  {
     url: '/api/assets/category',
     method: 'get',
     response: (options: any) => {
       let url = options.url
       if (url.split('?').length > 1) {
         let params: any = parse(url)
-        return datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.totalElements = datas.length
+        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        return pagation
       } else if (url.substring(url.lastIndexOf('/') + 1) === "category") {
         return datas
       } else {

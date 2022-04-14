@@ -49,7 +49,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
@@ -73,7 +73,7 @@
             <label for="superior">{{ $t('superior') }}</label>
             <select id="superior" name="superior" class="mt-1 w-full block rounded-md border-gray-300"
               v-model="regionData.superior">
-              <option value="undefined">---{{$t('select')}}---</option>
+              <option value="undefined">---{{ $t('select') }}---</option>
               <option v-for="superior in superiors" :key="superior.code" :value="superior.code">{{ superior.name }}
               </option>
             </select>
@@ -104,7 +104,7 @@ import { onMounted, ref, watch } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 
@@ -146,18 +146,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.region.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * confirm 操作
  * @param operate 是否打开

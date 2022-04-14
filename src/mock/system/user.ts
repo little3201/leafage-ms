@@ -7,7 +7,7 @@ const data: User = {
   firstname: Random.first(),
   lastname: Random.last(),
   gender: Random.character('MF'),
-  phone: Random.integer(13000000000, 18700000000),
+  phone: Random.integer(13000000000, 19900000000),
   email: Random.email(),
   birthday: Random.date(),
   ethnicity: "01",

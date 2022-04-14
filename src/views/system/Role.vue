@@ -55,7 +55,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
     <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
       <form @submit.prevent>
@@ -93,7 +93,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
 import Model from "@/components/Model.vue";
 import Tree from "@/components/tree/Tree.vue";
@@ -133,17 +133,11 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
-};
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.role.concat("/count")).then(res => total.value = res.data)
+  await instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 }
 /**
  * confirm 操作
@@ -162,7 +156,6 @@ const confirmCommit = async (): Promise<void> => {
       (item: any) => item.code != dataCode.value
     );
     isDel.value = false;
-    count()
   });
 };
 /**
@@ -234,7 +227,6 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
       isEdit.value = false;
-      count()
     });
   }
 }

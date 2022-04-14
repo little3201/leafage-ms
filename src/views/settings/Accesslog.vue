@@ -23,14 +23,14 @@
                 </tbody>
             </table>
         </div>
-        <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+        <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     </div>
 </template>
 
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import Pagation from "@/components/Pagation.vue"
+import Page from "@/components/Page.vue"
 
 import { instance, SERVER_URL } from "@/api";
 import type { AccessLog } from "@/api/request.type";

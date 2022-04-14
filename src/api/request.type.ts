@@ -1,7 +1,8 @@
-export declare interface Page {
+export declare interface Pagation<T> {
   page: number,
   size: number,
-  total: number
+  totalElements: number,
+  content: Array<T>
 }
 
 export declare interface Account {

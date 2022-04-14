@@ -70,7 +70,7 @@
         </tbody>
       </table>
     </div>
-    <Pagation @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
 
     <Preview :isShow="isShow" @closeAction="previewOperation">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
@@ -108,7 +108,7 @@ import { onMounted, ref } from "vue";
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
-import Pagation from "@/components/Pagation.vue";
+import Page from "@/components/Page.vue";
 import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
@@ -140,18 +140,12 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await Promise.all([
-    instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
-      .then(res => datas.value = res.data),
-    count()
-  ]);
+  await instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
+      .then(res => {
+        datas.value = res.data.content
+        total.value = res.data.totalElements
+      })
 };
-/**
- * 统计
- */
-const count = async (): Promise<void> => {
-  await instance.get(SERVER_URL.authority.concat("/count")).then(res => total.value = res.data)
-}
 /**
  * 预览
  * @param show 是否展示

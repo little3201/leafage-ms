@@ -212,7 +212,7 @@ const construceChart = (): void => {
     comments: new Array(),
     overViewed: new Array(),
     overLikes: new Array(),
-    overComment: new Array(),
+    overComments: new Array(),
     overDownloads: new Array
   }
   for (let i = 0; i < datas.value.length - 1; i++) {
@@ -220,10 +220,10 @@ const construceChart = (): void => {
     // data
     obj.viewed.unshift(datas.value[i].viewed - datas.value[i + 1].viewed);
     obj.likes.unshift(datas.value[i].likes - datas.value[i + 1].likes);
-    obj.comments.unshift(datas.value[i].comment - datas.value[i + 1].comment);
+    obj.comments.unshift(datas.value[i].comments - datas.value[i + 1].comments);
     // over data
     obj.overViewed.unshift(datas.value[i].overViewed)
-    obj.overComment.unshift(datas.value[i].overComment);
+    obj.overComments.unshift(datas.value[i].overComments);
     obj.overLikes.unshift(datas.value[i].overLikes);
     obj.overDownloads.unshift(0)
   }
@@ -232,7 +232,7 @@ const construceChart = (): void => {
   // 浏览量统计
   charts.overViewed = createMiniChart(overViewedRef.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
   // 评论数统计
-  charts.overComment = createMiniChart(overCommentRef.value, labels, obj.overComment, "rgba(217, 119, 6, 0.8)");
+  charts.overComment = createMiniChart(overCommentRef.value, labels, obj.overComments, "rgba(217, 119, 6, 0.8)");
   // 喜欢数统计
   charts.overLikes = createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
   // 喜欢数统计

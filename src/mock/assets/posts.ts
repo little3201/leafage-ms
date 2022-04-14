@@ -20,7 +20,7 @@ for (let i = 0; i < 79; i++) {
     tags: Random.range(1, 8),
     viewed: Random.integer(1, 900),
     likes: Random.integer(100, 899),
-    comment: Random.integer(1, 100),
+    comments: Random.integer(1, 100),
     modifyTime: Random.date()
   })
 }

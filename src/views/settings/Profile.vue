@@ -87,25 +87,20 @@
                 <select id="degree" name="degree" class="border-gray-300 py-1 mt-1 rounded-md w-full"
                   v-model="user.degree">
                   <option value="undefined">---{{ $t('select') }}---</option>
-                  <option value="01">小学</option>
-                  <option value="02">初中</option>
-                  <option value="03">高中</option>
-                  <option value="04">中专</option>
-                  <option value="05">大专</option>
-                  <option value="06">本科</option>
-                  <option value="07">硕士</option>
-                  <option value="08">博士</option>
+                  <option v-for="degree in degrees" :key="degree.code" :value="degree.code">
+                    {{ degree.name }}</option>
                 </select>
               </div>
             </div>
             <div class="flex space-x-4 text-sm">
               <div>
-                <label for="ethnicity" class="font-medium text-gray-700">Ethnicity</label>
-                <select id="ethnicity" name="ethnicity" class="border-gray-300 py-1 mt-1 rounded-md w-full"
-                  v-model="user.ethnicity">
+                <label for="nationality" class="font-medium text-gray-700">Nationality</label>
+                <select id="nationality" name="nationality" class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  v-model="user.nationality">
                   <option value="undefined">---{{ $t('select') }}---</option>
-                  <option value="01">汉族</option>
-                  <option value="02">蒙古族</option>
+                  <option v-for="nationality in nationalities" :key="nationality.code" :value="nationality.code">
+                    {{ nationality.name }}</option>
+                  <!-- <option value="02">蒙古族</option>
                   <option value="03">回族</option>
                   <option value="04">藏族</option>
                   <option value="05">维吾尔族</option>
@@ -159,7 +154,7 @@
                   <option value="53">赫哲族</option>
                   <option value="54">门巴族</option>
                   <option value="55">珞巴族</option>
-                  <option value="56">基诺族</option>
+                  <option value="56">基诺族</option> -->
                 </select>
               </div>
               <div class="w-full">
@@ -180,6 +175,14 @@
                   v-model="user.position" />
               </div>
             </div>
+            <div class="flex space-x-4 text-sm">
+              <div class="w-full">
+                <label for="description">{{ $t('description') }}</label>
+                <textarea id="description" aria-label="description" name="description"
+                  class="mt-1 w-full rounded-md border-gray-300" v-model.trim="user.description"
+                  :placeholder="$t('description')" />
+              </div>
+            </div>
             <div>
               <span class="text-xs text-gray-400">All of the fields on this page are optional and can be deleted at any
                 time</span>
@@ -198,18 +201,22 @@
 import { ref, reactive, onMounted } from "vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { User, Account } from "@/api/request.type";
+import type { User, Account, Dictionary } from "@/api/request.type";
 
 import { uploadFile } from "@/plugins/upload";
 
-let user = ref<User>({})
-
 let isEdit = ref(false)
+
+let user = ref<User>({})
+let nationalities = ref<Array<Dictionary>>([])
+let degrees = ref<Array<Dictionary>>([])
 
 let account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
 
 onMounted(() => {
   fetch()
+  retrieveDict("Degree").then(res => degrees.value = res.data)
+  retrieveDict("Nationality").then(res => nationalities.value = res.data)
 })
 /**
  * 查询
@@ -219,7 +226,9 @@ const fetch = async (): Promise<void> => {
     await instance.get(SERVER_URL.user.concat("/", account.username)).then(res => user.value = res.data)
   }
 }
-
+/**
+ * 编辑
+ */
 const editAllow = async () => {
   isEdit.value = !isEdit.value
   if (!isEdit.value) {
@@ -256,5 +265,12 @@ const uploadImage = (files: Array<File>): void => {
       },
     });
   }
-};
+}
+/**
+ * 查询字典数据
+ * @param item 字典项
+ */
+const retrieveDict = async (item: string) => {
+  return await instance.get(SERVER_URL.dictionary.concat("/", item, "/lower"))
+}
 </script>

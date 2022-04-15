@@ -26,11 +26,12 @@ export declare interface User {
   phone: string,
   email: string,
   birthday: Date,
-  ethnicity: string,
+  nationality: string,
   degree: string,
   hobbies: string,
   company: string,
-  position: string
+  position: string,
+  description: string
 }
 
 interface AbstractVO<T> {

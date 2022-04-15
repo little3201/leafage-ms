@@ -32,7 +32,7 @@
             <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
             <td class="px-4">
               <a rel="noopener" href="https://www.leafage.top/posts" target="_blank" class="font-medium hover:underline"
-                v-text="data.alias"></a>
+                v-text="data.name"></a>
             </td>
             <td class="px-4" v-text="data.code"></td>
             <td class="px-4" v-text="data.description"></td>
@@ -51,9 +51,9 @@
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <label for="alias">{{ $t('alias') }}</label>
-            <input id="alias" type="text" name="alias" class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('alias')" required autofocus v-model.trim="categoryData.alias" />
+            <label for="name">{{ $t('name') }}</label>
+            <input id="name" type="text" name="name" class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('name')" required autofocus v-model.trim="categoryData.name" />
           </div>
           <div class="col-span-12">
             <label for="description">{{ $t('description') }}</label>

@@ -103,7 +103,7 @@
               class="mt-1 w-full block rounded-md border-gray-300">
               <option value="undefined">---{{ $t('select') }}---</option>
               <option v-for="category in categories" :key="category.code" :value="category.code"
-                v-text="category.alias"></option>
+                v-text="category.name"></option>
             </select>
           </div>
         </div>

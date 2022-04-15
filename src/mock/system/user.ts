@@ -10,11 +10,12 @@ const data: User = {
   phone: Random.integer(13000000000, 19900000000),
   email: Random.email(),
   birthday: Random.date(),
-  ethnicity: "01",
+  nationality: "",
   degree: '02',
   hobbies: Random.word(),
   company: Random.word(),
-  position: Random.word()
+  position: Random.word(),
+  description: Random.csentence(),
 }
 
 export default [

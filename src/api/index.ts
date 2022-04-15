@@ -2,6 +2,8 @@ import { SERVER_URL } from './constant'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import router from '../router'
 
+const controller = new AbortController()
+
 const redirectTo = (path: string) => {
     router.replace(path)
 }
@@ -15,6 +17,7 @@ const instance = axios.create({
 // 请求拦截
 instance.interceptors.request.use(
     (config: AxiosRequestConfig) => {
+        config.signal = controller.signal
         return config
     },
     (error: AxiosError) => {

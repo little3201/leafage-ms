@@ -28,7 +28,7 @@
           'bg-white rounded-full border shadow-sm': index == page + 1,
           hidden: pages > 5 && (index > page + 3 || index < page - 1),
         }"></button>
-      <span v-if="pages > 5 && page < pages">...</span>
+      <span v-if="pages > 5 && page < pages - 1">...</span>
       <button type="button" :disabled="page == pages - 1"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }" @click="increment">

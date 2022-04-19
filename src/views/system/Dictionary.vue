@@ -73,7 +73,7 @@
             <select id="superior" name="superior" class="mt-1 w-full block rounded-md border-gray-300"
               v-model="dictData.superior">
               <option value="undefined">---请选择---</option>
-              <option v-for="superior in superiors" :key="superior.code" :value="superior.name">{{ superior.name }}
+              <option v-for="superior in superiors" :key="superior.code" :value="superior.alias">{{ superior.name }}
               </option>
             </select>
           </div>

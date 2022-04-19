@@ -17,7 +17,7 @@
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
-            <th scope="col" class="px-4">{{ $t('alias') }}</th>
+            <th scope="col" class="px-4">{{ $t('name') }}</th>
             <th scope="col" class="px-4">{{ $t('code') }}</th>
             <th scope="col" class="px-4">{{ $t('description') }}</th>
             <th scope="col" class="px-4">{{ $t('postsCount') }}</th>

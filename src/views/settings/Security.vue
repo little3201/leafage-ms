@@ -47,7 +47,7 @@
         <p class="text-gray-500 text-sm my-2 mx-16">Two-factor authentication adds an additional layer of security to
           your account by requiring more than just a password to sign in.</p>
         <button id="del_account" name="del_account" type="button"
-          class="my-4 border border-gray-300 text-gray-600 hover:bg-blue-600 hover:text-white px-2 py-1 rounded-md">Enable
+          class="my-4 border border-gray-300 text-gray-600 hover:border-blue-600 hover:text-blue-600 px-2 py-1 rounded-md">Enable
           Two factor authentication</button>
         <RouterLink to="/" class="text-blue-600 hover:underline">
           <p>Learn more</p>

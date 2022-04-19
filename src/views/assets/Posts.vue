@@ -235,7 +235,7 @@ const addTag = (): void => {
  * 删除tag
  * @param tag tag名称
  */
-const removeTag = (tag: String): void => {
+const removeTag = (tag: string): void => {
   tags.value.splice(tags.value.indexOf(tag), 1)
   postsData.value = { ...postsData.value, tags: tags.value };
 };

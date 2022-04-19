@@ -31,7 +31,9 @@
 - [x] xlsx.js —— excel解析
 - [x] vue-i18n —— 国际化支持
 
-**访问地址：** <a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">后台管理系统</a>
+**访问地址：**<a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">RBAC管理系统</a>
+
+**体验地址：**<a href="https://preview.leafage.top">立即体验</a>
 
 ## 更新
 

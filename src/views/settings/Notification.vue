@@ -56,13 +56,13 @@ let size = ref(10);
 let total = ref(0);
 
 onMounted(() => {
-  retrieve()
+  retrieve(isRead.value)
 })
 /**
  * 查询列表
  */
-const retrieve = async (isRead: boolean) => {
-  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: isRead } })
+const retrieve = async (read: boolean) => {
+  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: read } })
     .then(res => {
       notifications.value = res.data.content
       total.value = res.data.totalElements

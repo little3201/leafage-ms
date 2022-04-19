@@ -40,7 +40,7 @@ const account = ref<Account>({})
 
 onMounted(() => {
   let data = sessionStorage.getItem("account")
-  if (data) {
+  if (data && data !== "undefined") {
     account.value = JSON.parse(data);
   }
 });

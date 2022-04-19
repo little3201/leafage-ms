@@ -63,14 +63,14 @@
           <button @click="switchLanguage('en-US')" type="button" class="flex items-center w-full px-2 py-1"
             :class="{ 'text-blue-600': locale == 'en-US' }">
             <figure class="h-8 w-8 inline-flex items-center">
-              <img src="/svg/america.svg" class="h-6 w-6" width="24" height="24" />
+              <img src="/svg/america.svg" alt="en-US" class="h-6 w-6" width="24" height="24" />
             </figure>English
           </button>
           <button @click="switchLanguage('zh-CN')" type="button"
             class="flex items-center w-full hover:text-blue-600 px-2 py-1"
             :class="{ 'text-blue-600': locale == 'zh-CN' }">
             <figure class="h-8 w-8 inline-flex items-center">
-              <img src="/svg/china.svg" class="h-6 w-6" width="24" height="24" />
+              <img src="/svg/china.svg" alt="zh-CN" class="h-6 w-6" width="24" height="24" />
             </figure>中文
           </button>
         </div>
@@ -158,7 +158,7 @@ const account = ref<Account>({});
 
 onMounted(() => {
   let data = sessionStorage.getItem("account");
-  if (data) {
+  if (data && data !== "undefined") {
     account.value = JSON.parse(data)
     retrieve();
     socket();

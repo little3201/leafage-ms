@@ -18,7 +18,9 @@
         <a class="text-blue-600 ml-1" href="#">Privacy Policy</a>.
       </div>
       <button type="submit" @click="onSubmit"
-        class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait">{{ $t('signup') }}</button>
+        class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait">{{
+          $t('signup')
+        }}</button>
     </form>
     <div class="my-6 text-center xl:text-left">
       Already have an account?
@@ -29,21 +31,21 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Sign from "@/layouts/Sign.vue";
+import Sign from "@/layouts/Sign.vue"
+import { useRouter } from "vue-router"
 
 import { instance } from "@/api";
+
+const router = useRouter();
 
 let formData = ref({});
 const confirmPassword = ref("");
 
 const onSubmit = async (): Promise<void> => {
   await instance.get("/check").then(() => {
-    // await instance
-    //   .post("/register", new URLSearchParams(formData.value))
-    //   .then(() => {
-    //     router.replace("/");
-    //   });
-    alert("注册功能在加速开发中...")
+    instance
+      .post("/register", new URLSearchParams(formData.value))
+      .then(() => router.replace("/"));
   })
 };
 </script>

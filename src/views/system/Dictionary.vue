@@ -187,6 +187,6 @@ const modelCommit = async (): Promise<void> => {
  * @param code 代码
  */
 const power = (code: string) => {
-
+  alert("enable: " + code + " develogping...")
 }
 </script>

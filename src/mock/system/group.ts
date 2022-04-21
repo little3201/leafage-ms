@@ -15,7 +15,7 @@ for (let i = 0; i < 39; i++) {
   datas.push({
     code: Random.string('number', 9),
     name: Random.word(),
-    alias: Random.word(),
+    alias: Random.cword(),
     superior: Random.word(),
     principal: Random.cname(),
     count: Random.integer(0, 99),

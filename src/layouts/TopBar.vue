@@ -2,11 +2,15 @@
   <div class="flex items-center py-2 border-b">
     <div class="hidden md:inline-flex md:flex-grow items-center">
       <RouterLink to="/" class>{{ $t('application') }}</RouterLink>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="opacity-60">
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-      </svg>
-      <RouterLink :to="$route.path" class="text-blue-600 font-medium">{{ $t($route.name.toLowerCase()) }}</RouterLink>
+      <span class="inline-flex items-center" v-for="(route, index in $route.path.substr(1).split('/')" :key="index">
+        <svg v-if="route" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="opacity-60">
+          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+        </svg>
+        <RouterLink :to="$route.path" :class="{ 'text-blue-600': route === $route.name.toLowerCase() }">
+          {{ route ? $t(route) : "" }}
+        </RouterLink>
+      </span>
     </div>
     <div class="flex flex-1 items-center justify-between md:justify-end md:space-x-8">
       <div class="hidden sm:block relative w-56 rounded-full bg-gray-300">

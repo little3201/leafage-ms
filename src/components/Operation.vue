@@ -49,7 +49,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(["modelOperate"]);
+const emit = defineEmits(["modalOperate"]);
 
 const account = ref<Account>({})
 
@@ -63,7 +63,7 @@ onMounted(() => {
  * add 操作
  */
 const operate = () => {
-  emit("modelOperate", true);
+  emit("modalOperate", true);
 };
 /**
  * 数据写入excel并转换成二进制，下载文件

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('region') }}</h2>
       <button @click="retrieve"
@@ -10,7 +10,7 @@
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'region'" />
+      <Operation @click.capture="dataCode = ''" @modalOperate="modalOperate" :datas="datas" :fileName="'region'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="region">
@@ -43,7 +43,7 @@
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
-              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modalOperate" />
             </td>
           </tr>
         </tbody>
@@ -51,7 +51,7 @@
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
+    <Modal :isShow="isEdit" @cancelAction="modalOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
@@ -95,7 +95,7 @@
           </div>
         </div>
       </form>
-    </Model>
+    </Modal>
   </div>
 </template>
 
@@ -106,7 +106,7 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
+import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Region } from "@/api/request.type";
@@ -175,7 +175,7 @@ const confirmCommit = async (): Promise<void> => {
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modelOperate = async (operate: boolean): Promise<void> => {
+const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     regionData.value = {};
     superiors.value = []

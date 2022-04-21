@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('authority') }}</h2>
       <button @click="retrieve"
@@ -12,6 +12,7 @@
       </button>
       <Operation :needAdd="false" :datas="datas" :fileName="'authority'" />
     </div>
+
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
         <thead>
@@ -72,7 +73,7 @@
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
 
-    <Preview :isShow="isShow" @closeAction="previewOperation">
+    <Modal :isShow="isShow" @closeAction="previewOperation" :needFooter="false">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -99,7 +100,7 @@
           </tr>
         </tbody>
       </table>
-    </Preview>
+    </Modal>
   </div>
 </template>
 
@@ -109,7 +110,7 @@ import { onMounted, ref } from "vue";
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
-import Preview from "@/components/Preview.vue";
+import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Authority, Role } from "@/api/request.type";
@@ -141,10 +142,10 @@ const setPage = (p: number, s: number): void => {
  */
 const retrieve = async (): Promise<void> => {
   await instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
-      .then(res => {
-        datas.value = res.data.content
-        total.value = res.data.totalElements
-      })
+    .then(res => {
+      datas.value = res.data.content
+      total.value = res.data.totalElements
+    })
 };
 /**
  * 预览

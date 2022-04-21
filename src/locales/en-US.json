@@ -17,7 +17,8 @@
     "signout": "Sign Out",
     
     "accesslog": "Access Log",
-    "accountSecurity": "Account Security",
+    "information": "Account Settings",
+    "security": "Account Security",
 
     "no": "NO.",
     "name": "Name",

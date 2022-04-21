@@ -25,12 +25,12 @@
               {{ $t('profile') }}
             </RouterLink>
             <RouterLink class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="/settings" exact>
+              to="/settings/information" exact>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
               </svg>
-              {{ $t('account') }}
+              {{ $t('information') }}
             </RouterLink>
             <RouterLink class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/security">
@@ -38,7 +38,7 @@
                 stroke-linecap="round" stroke-linejoin="round" class="mr-2">
                 <use :xlink:href="'/svg/feather-sprite.svg#' + 'shield'" />
               </svg>
-              {{ $t('accountSecurity') }}
+              {{ $t('security') }}
             </RouterLink>
           </div>
           <div class="py-4">

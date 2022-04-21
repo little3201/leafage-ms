@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('dictionary') }}</h2>
       <button @click="retrieve"
@@ -10,8 +10,9 @@
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'dictionary'" />
+      <Operation @click.capture="dataCode = ''" @modalOperate="modalOperate" :datas="datas" :fileName="'dictionary'" />
     </div>
+
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="dictionary">
         <thead>
@@ -19,7 +20,6 @@
             <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
             <th scope="col" class="px-4">{{ $t('name') }}</th>
             <th scope="col" class="px-4">{{ $t('code') }}</th>
-            <th scope="col" class="px-4">{{ $t('superior') }}</th>
             <th scope="col" class="px-4">{{ $t('description') }}</th>
             <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
             <th scope="col" class="px-4">{{ $t('actions') }}</th>
@@ -35,11 +35,10 @@
               <p class="text-xs text-gray-600" v-text="data.alias"></p>
             </td>
             <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.superior"></td>
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
-              <Action @click.capture="dataCode = data.code" @editAction="modelOperate" :needDel="false">
+              <Action @click.capture="dataCode = data.code" @editAction="modalOperate" :needDel="false">
                 <button class="flex items-center mr-3 focus:outline-none"
                   :class="{ 'text-green-600': !data.enabled, 'text-red-600': data.enabled }" @click="power(data.code)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -55,7 +54,7 @@
       </table>
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
+    <Modal :isShow="isEdit" @cancelAction="modalOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
@@ -84,7 +83,7 @@
           </div>
         </div>
       </form>
-    </Model>
+    </Modal>
   </div>
 </template>
 
@@ -94,7 +93,7 @@ import { onMounted, ref } from "vue";
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
-import Model from "@/components/Model.vue";
+import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Dictionary } from "@/api/request.type";
@@ -103,9 +102,9 @@ import type { Dictionary } from "@/api/request.type";
 let isEdit = ref(false);
 // 数据
 let dictData = ref<Dictionary>({})
-let dataCode = ref("");
-let datas = ref<Array<Dictionary>>([]);
-let superiors = ref<Dictionary>([]);
+let dataCode = ref("")
+let datas = ref<Array<Dictionary>>([])
+let superiors = ref<Dictionary>([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
@@ -132,17 +131,23 @@ const retrieve = async (): Promise<void> => {
       datas.value = res.data.content
       total.value = res.data.totalElements
     })
+}
+/**
+ * 查询列表
+ */
+const retrieveSuperior = async (): Promise<void> => {
+  await instance.get(SERVER_URL.dictionary.concat('/superior')).then(res => superiors.value = res.data)
 };
 /**
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modelOperate = async (operate: boolean): Promise<void> => {
+const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     dictData.value = {};
     await Promise.all([
       fetch(),
-      instance.get(SERVER_URL.dictionary.concat('/superior')).then(res => superiors.value = res.data)
+      retrieveSuperior()
     ]);
   }
   isEdit.value = operate;

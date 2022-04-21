@@ -1,69 +1,47 @@
 <template>
-  <li class="py-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
-    <div class="flex items-center">
-      <input :id="data.code" type="checkbox" class="rounded cursor-pointer" :value="data.code" v-model="checked"
-        @click="track(data)" />
+  <div class="my-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
+    <div class="flex flex-1 items-center">
+      <slot />
       <button type="button" :title="data.name" v-if="data.children && data.children.length > 0"
-        @click="isOpen = !isOpen" class="ml-4 inline-flex items-center focus:outline-none">
+        @click="$emit('openOperate')" class="flex flex-1 items-center focus:outline-none w-full">
         <svg v-if="data.expand && data.expand.icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
-        {{ $t(data.name.toLowerCase()) }}
-        <svg v-if="isOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-8">
+        <span class="py-1  mr-10">{{ data.name }}</span>
+        <svg v-if="isExpand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
         </svg>
         <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-8">
+          stroke-linecap="round" stroke-linejoin="round">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </button>
-      <label :for="data.code" v-else class="ml-4 flex items-center cursor-pointer">
+      <label :for="data.code" v-else class="flex flex-1 items-center cursor-pointer">
         <svg v-if="data.expand && data.expand.icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
-        {{ $t(data.name.toLowerCase()) }}
+        <span class="py-1 ">{{ data.name }}</span>
       </label>
     </div>
-    <ul v-show="isOpen" class="ml-4 my-1">
-      <TreeCore v-for="child in data.children" :key="child.code" :data="child" :checked="tracked"
-        @treeOperate="track" />
-    </ul>
-  </li>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, PropType } from "vue";
+import { PropType } from "vue";
 
 import type { TreeNode } from "@/api/request.type";
 
-const props = defineProps({
+defineProps({
   data: {
     type: Object as PropType<TreeNode>,
     default: {}
   },
-  checked: {
-    type: Array as PropType<string[]>,
-    default: []
+  isExpand: {
+    type: Boolean,
+    default: false
   }
-});
-
-const emit = defineEmits(['treeOperate'])
-
-let isOpen = ref(false);
-
-let tracked = ref<Array<string>>([]);
-
-watch(
-  () => [...props.checked],
-  (newValue) => {
-    tracked.value = newValue
-  }
-)
-
-const track = (node: TreeNode) => {
-  emit('treeOperate', node)
-}
+})
 </script>

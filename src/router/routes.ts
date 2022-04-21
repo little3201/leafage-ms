@@ -1,32 +1,39 @@
 import { RouteRecordRaw } from 'vue-router';
 import Index from '@/views/Index.vue'
 
+import NotFound from '@/views/NotFound.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Application',
     component: Index,
     children: [
+      // 为这2个 URL 匹配
+      // - /
+      // - /dashboard
       {
-        path: '',
+        path: 'dashboard',
         name: 'Dashboard',
+        alias: '',
         component: () => import('@/views/Dashboard.vue')
       },
       {
         path: 'system',
         name: 'System',
         component: () => import('@/views/system/Index.vue'),
+        redirect: '/system/account',
         children: [
-          {
-            path: 'group',
-            name: 'Group',
-            component: () => import('@/views/system/Group.vue'),
-            meta: { requiresAuth: true }
-          },
           {
             path: 'account',
             name: 'Account',
             component: () => import('@/views/system/Account.vue'),
+            meta: { requiresAuth: true }
+          },
+          {
+            path: 'group',
+            name: 'Group',
+            component: () => import('@/views/system/Group.vue'),
             meta: { requiresAuth: true }
           },
           {
@@ -74,9 +81,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/settings/Index.vue'),
         children: [
           {
-            path: '',
-            name: 'Infomation',
-            component: () => import('@/views/settings/Infomation.vue'),
+            path: 'information',
+            name: 'Information',
+            alias: '',
+            component: () => import('@/views/settings/Information.vue'),
             meta: { requiresAuth: true }
           },
           {
@@ -116,7 +124,8 @@ const routes: Array<RouteRecordRaw> = [
     path: '/signup',
     name: 'Signup',
     component: () => import('/src/views/sign/SignUp.vue'),
-  }
+  },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ];
 
 export default routes;

@@ -17,7 +17,8 @@
     "signout": "退出登录",
 
     "accesslog": "操作日志",
-    "accountSecurity": "账号安全",
+    "information": "账号设置",
+    "security": "账号安全",
 
     "no": "序号",
     "name": "名称",

@@ -1,47 +1,46 @@
 <template>
   <div class="flex items-center mt-1 overflow-auto">
     <p class="hidden md:block">
-      {{$t('Page', {page: page * size + 1, size: (page + 1) * size, total: total})}}
+      {{ $t('Page', { page: page * size + 1, size: (page + 1) * size, total: total }) }}
     </p>
     <div class="flex flex-1 justify-end space-x-2">
       <button type="button" :disabled="page == 0"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }" @click="(page = 0), give(page)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          stroke-linecap="round" stroke-linejoin="round">
+          stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-left'" />
         </svg>
       </button>
       <button type="button" :disabled="page == 0"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }" @click="decrease">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          stroke-linecap="round" stroke-linejoin="round">
+          stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
         </svg>
       </button>
       <span v-if="pages > 5 && page > 2" class>...</span>
       <button v-for="index in (pages <= 5 ? pages : (page < (pages - 5) ? page + 5 : pages))" :key="index" type="button"
-        @click.prevent="give(index - 1)" v-text="index"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        @click.prevent="give(index - 1)" class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{
           'bg-white rounded-full border shadow-sm': index == page + 1,
           hidden: pages > 5 && (index > page + 3 || index < page - 1),
-        }"></button>
+        }">{{ index }}</button>
       <span v-if="pages > 5 && page < pages - 1">...</span>
       <button type="button" :disabled="page == pages - 1"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }" @click="increment">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          stroke-linecap="round" stroke-linejoin="round">
+          stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
         </svg>
       </button>
       <button type="button" :disabled="page == pages - 1"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full inline-flex items-center justify-center"
+        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }" @click="(page = pages - 1), give(page)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          stroke-linecap="round" stroke-linejoin="round">
+          stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
         </svg>
       </button>

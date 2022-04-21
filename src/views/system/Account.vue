@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('account') }}</h2>
       <button @click="retrieve"
@@ -105,7 +105,9 @@
       </table>
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Tree :isShow="isTree" @cancelAction="treeOperate" @commitAction="treeCommit" :datas="treeDatas" :codes="codes" />
+    <Modal :isShow="isTree" :needFooter="true" @cancelAction="treeOperate" @commitAction="treeCommit">
+      <TreeItem v-for="data in treeDatas" :key="data.code" :data="data" :ticked="ticked" />
+    </Modal>
   </div>
 </template>
 
@@ -115,7 +117,9 @@ import { onMounted, ref, reactive } from "vue";
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
-import Tree from "@/components/tree/Tree.vue";
+
+import Modal from "@/components/Modal.vue";
+import TreeItem from "@/components/tree/TreeItem.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { AccountDetail, TreeNode } from "@/api/request.type";
@@ -124,7 +128,7 @@ import type { AccountDetail, TreeNode } from "@/api/request.type";
 let isTree = ref(false);
 // 数据
 let treeDatas = ref<Array<TreeNode>>([]);
-let codes = ref<Array<string>>([])
+let ticked = ref<Array<string>>([])
 let datas = ref<Array<AccountDetail>>([]);
 let related = reactive({
   username: '',
@@ -199,7 +203,7 @@ const treeOperate = async (operate: boolean, type: string, username: string): Pr
  */
 const relation = async (type: string, username: string): Promise<void> => {
   related = { username: username, type: type }
-  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res => codes.value = res.data)
+  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res => ticked.value = res.data)
 }
 /**
  * 提交

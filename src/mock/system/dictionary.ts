@@ -11,12 +11,12 @@ const pagation: Pagation<Dictionary> = {
 }
 const datas: Array<Dictionary> = [];
 
-for (let i = 0; i < 309; i++) {
+for (let i = 0; i < 30090; i++) {
   datas.push({
     code: Random.string('number', 9),
-    name: Random.word(),
+    name: Random.cword(),
     superior: Random.word(), // 华南、华北
-    alias: Random.cword(),
+    alias: Random.word(),
     enabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()
@@ -32,6 +32,8 @@ export default [
         let path = url.substring(url.lastIndexOf('/') + 1)
         if (path === 'lower') {
           return datas.slice(0, 34)
+        } else if (path === 'superior') {
+          return datas.slice(0, 12)
         } else {
           let code = path
           return datas.filter(item => item.code == code)[0]

@@ -1,39 +1,34 @@
 <template>
-  <li class="relative text-white" :class="{
-    'hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full':
-      !data.children || data.children.length == 0,
-  }">
-    <button type="button" v-if="data.children && data.children.length > 0" :title="data.name" @click="isOpen = !isOpen"
-      class="flex items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 cursor-pointer">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  <div class="relative text-white">
+    <RouterLink :to="data.expand.path" v-if="data.children && data.children.length > 0" :title="data.name"
+      @click="isExpand = !isExpand"
+      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 w-full" exacts>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span v-if="data.children && data.children.length > 0" class="hidden xl:inline-flex items-center w-full">
-        {{ $t(data.name.toLowerCase()) }}
-        <svg v-if="isOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
-        </svg>
-        <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-        </svg>
-      </span>
-      <span v-else class="hidden xl:inline-flex items-center">{{ $t(data.name.toLowerCase()) }}</span>
-    </button>
+      <span>{{ $t(data.name.toLowerCase()) }}</span>
+      <svg v-if="isExpand" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
+      </svg>
+      <svg v-else width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+      </svg>
+    </RouterLink>
     <RouterLink v-else :title="data.name" :to="superior.concat(data.expand.path)"
-      class="flex items-center h-12 rounded-l-full pl-4 -mr-4" exact>
+      class="flex flex-1 items-center h-12 rounded-l-full pl-4 -mr-4" exact>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
       <span class="hidden xl:block w-full">{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
-    <ul v-show="isOpen" class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md">
+    <div v-show="isExpand" class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md">
       <AsideCore v-for="child in data.children" :data="child" :superior="data.expand.path" />
-    </ul>
-  </li>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -52,10 +47,14 @@ defineProps({
   },
 });
 
-const isOpen = ref(true);
+const isExpand = ref(true);
 </script>
 
 <style scoped>
+.router-link-active {
+  @apply bg-blue-100 bg-opacity-10
+}
+
 .router-link-exact-active {
   @apply bg-gray-100 text-black;
 }

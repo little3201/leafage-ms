@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('group') }}</h2>
       <button @click="retrieve"
@@ -10,8 +10,9 @@
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'group'" />
+      <Operation @click.capture="dataCode = ''" @modalOperate="modalOperate" :datas="datas" :fileName="'group'" />
     </div>
+
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group">
         <thead>
@@ -42,7 +43,7 @@
             <td class="px-4" v-text="data.description"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
-              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate">
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modalOperate">
                 <button v-if="data.count > 0" class="flex items-center mr-3 text-amber-600 focus:outline-none"
                   @click="previewOperation(true)">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -59,7 +60,7 @@
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
+    <Modal :isShow="isEdit" @cancelAction="modalOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
@@ -97,8 +98,8 @@
           </div>
         </div>
       </form>
-    </Model>
-    <Preview :isShow="isShow" @closeAction="previewOperation">
+    </Modal>
+    <Modal :isShow="isShow" @closeAction="previewOperation" :needFooter="false">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="group-members">
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -155,7 +156,7 @@
           </tr>
         </tbody>
       </table>
-    </Preview>
+    </Modal>
   </div>
 </template>
 
@@ -166,29 +167,28 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
-import Preview from "@/components/Preview.vue";
+import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Group, Account } from "@/api/request.type";
+import { Group, Account } from "@/api/request.type";
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
+let isEdit = ref(false)
+let isDel = ref(false)
 let isShow = ref(false)
 // 数据
-let groupData = ref({});
-let dataCode = ref("");
-let accounts = ref<Account>([]);
-let superiors = ref<Group>([]);
-let datas = ref<Array<Group>>([]);
+let groupData = ref({})
+let dataCode = ref("")
+let accounts = ref<Account>([])
+let superiors = ref<Group>([])
+let datas = ref<Array<Group>>([])
 // 分页参数
 let page = ref(0);
 let size = ref(10);
 let total = ref(0);
 
 onMounted(() => {
-  retrieve();
+  retrieve()
 });
 /**
  * 设置页码
@@ -208,7 +208,7 @@ const retrieve = async (): Promise<void> => {
       datas.value = res.data.content
       total.value = res.data.totalElements
     })
-};
+}
 /**
  * confirm 操作
  * @param operate 是否打开
@@ -241,13 +241,13 @@ const retrieveAccounts = async (): Promise<void> => {
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modelOperate = async (operate: boolean): Promise<void> => {
+const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     groupData.value = {};
     await Promise.all([
       fetch(),
       instance.get(SERVER_URL.group, { params: { page: 0, size: 99 } })
-      .then(res => superiors.value = res.data.content),
+        .then(res => superiors.value = res.data.content),
       retrieveAccounts()
     ]);
   }

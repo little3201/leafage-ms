@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-12 mt-2">
+  <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">{{ $t('posts') }}</h2>
       <button @click="retrieve"
@@ -10,7 +10,7 @@
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation @click.capture="dataCode = ''" @modelOperate="modelOperate" :datas="datas" :fileName="'posts'" />
+      <Operation @click.capture="dataCode = ''" @modalOperate="modalOperate" :datas="datas" :fileName="'posts'" />
     </div>
     <div class="sm-t-h overflow-auto">
       <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="posts">
@@ -43,7 +43,7 @@
             <td class="px-4" v-text="data.comments"></td>
             <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
             <td>
-              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modelOperate" />
+              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modalOperate" />
             </td>
           </tr>
         </tbody>
@@ -51,7 +51,7 @@
     </div>
     <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
     <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Model :isShow="isEdit" @cancelAction="modelOperate" @commitAction="modelCommit">
+    <Modal :isShow="isEdit" @cancelAction="modalOperate" @commitAction="modelCommit">
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 md:col-span-8">
@@ -102,13 +102,13 @@
             <select id="category" name="category" v-model.lazy="postsData.category" required
               class="mt-1 w-full block rounded-md border-gray-300">
               <option value="undefined">---{{ $t('select') }}---</option>
-              <option v-for="category in categories" :key="category.code" :value="category.code"
-                v-text="category.name"></option>
+              <option v-for="category in categories" :key="category.code" :value="category.code" v-text="category.name">
+              </option>
             </select>
           </div>
         </div>
 
-        <div class="overflow-auto text-sm -mt-2">
+        <div class="overflow-auto text-sm md:-mt-2">
           <span v-for="(tag, index) in postsData.tags" :key="index"
             class="mr-1 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center">
             {{ tag }}
@@ -142,7 +142,7 @@
           </div>
         </div>
       </form>
-    </Model>
+    </Modal>
     <Preview :isShow="view.isShow" @closeAction="previewOperation">
       <img :src="view.url" alt="preview" class="rounded-md w-full h-full" width="640" height="427" />
     </Preview>
@@ -157,7 +157,7 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
-import Model from "@/components/Model.vue";
+import Modal from "@/components/Modal.vue";
 import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
@@ -262,7 +262,7 @@ const confirmCommit = async (): Promise<void> => {
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modelOperate = async (operate: boolean): Promise<void> => {
+const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     postsData.value = {};
     content.value = "";

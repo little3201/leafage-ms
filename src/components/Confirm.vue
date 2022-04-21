@@ -1,8 +1,8 @@
 <template>
-  <Model :isShow="isShow" :isConfirm="true" @cancelAction="$emit('cancelAction', false)"
+  <Modal :isShow="isShow" :isConfirm="true" @cancelAction="$emit('cancelAction', false)"
     @commitAction="$emit('commitAction')">
     <div
-      class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+      class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
       <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
         stroke="currentColor" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -15,11 +15,11 @@
         <p class="text-sm text-gray-500">{{ $t('note') }}</p>
       </div>
     </div>
-  </Model>
+  </Modal>
 </template>
 
 <script lang="ts" setup>
-import Model from "@/components/Model.vue";
+import Modal from "@/components/Modal.vue";
 
 defineProps({
   isShow: {

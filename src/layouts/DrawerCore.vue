@@ -1,36 +1,34 @@
 <template>
-  <li class="text-white">
-    <button type="button" v-if="data.children && data.children.length > 0" @click="isOpen = !isOpen"
-      class="flex items-center rounded-full h-12 pl-4 cursor-pointer">
+  <div class="text-white">
+    <RouterLink :to="data.expand.path" v-if="data.children && data.children.length > 0" @click="isExpand = !isExpand"
+      class="flex flex-1 items-center rounded-full h-12 pl-4 w-full">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span class="inline-flex items-center w-full">
-        {{ $t(data.name.toLowerCase()) }}
-        <svg v-if="isOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
-        </svg>
-        <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-        </svg>
-      </span>
-    </button>
+      <span> {{ $t(data.name.toLowerCase()) }}</span>
+      <svg v-if="isExpand" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
+      </svg>
+      <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+      </svg>
+    </RouterLink>
     <RouterLink v-else @click="itemOperation" :to="superior.concat(data.expand.path)"
-      class="flex items-center h-12 rounded-full pl-4" exact>
+      class="flex flex-1 items-center h-12 rounded-full pl-4" exact>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="mr-3">
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span class="flex items-center">{{ $t(data.name.toLowerCase()) }}</span>
+      <span>{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
-    <ul v-show="isOpen" class="mx-4 bg-blue-900 bg-opacity-30 rounded-md">
+    <div v-show="isExpand" class="mx-4 bg-blue-900 bg-opacity-30 rounded-md">
       <DrawerCore v-for="child in data.children" :data="child" :superior="data.expand.path"
         @menuAction="itemOperation" />
-    </ul>
-  </li>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -51,7 +49,7 @@ defineProps({
 
 const emit = defineEmits(["menuAction"]);
 
-const isOpen = ref(true);
+const isExpand = ref(true);
 /**
  * 操作
  */

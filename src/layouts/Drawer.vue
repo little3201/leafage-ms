@@ -50,9 +50,9 @@
               </svg>
             </RouterLink>
             <div class="my-3 h-px bg-gray-200 bg-opacity-30"></div>
-            <ul>
+            <div>
               <DrawerCore v-for="data in datas" :key="data.code" :data="data" @menuAction="menuOperate" />
-            </ul>
+            </div>
           </div>
         </div>
       </div>

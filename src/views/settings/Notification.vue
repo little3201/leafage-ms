@@ -1,22 +1,22 @@
 <template>
   <div>
-    <div class="flex space-x-8 border-b">
+    <div class="flex space-x-8 border-b text-lg">
       <button @click="switchType(false)" type="button" title="unread"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none  flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': !isRead }">
-        <span class="mb-3 dark:text-white ">{{ $t('unread') }}</span>
+        <span class="mb-3">{{ $t('unread') }}</span>
         <div v-show="!isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
       <button @click="switchType(true)" type="button" title="readed"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': isRead }">
-        <span class="mb-3 dark:text-white ">
+        <span class="mb-3">
           {{ $t('readed') }}</span>
         <div v-show="isRead" class="w-full h-1 bg-blue-600 rounded-t-md"></div>
       </button>
     </div>
     <div class="py-4 divide-y">
-      <div v-for="(notification, index) in notifications" :key="index" class="p-2">
+      <div v-for="(notification, index) in notifications" :key="index" class="py-2">
         <div class="flex items-center">
           <p class="cursor-pointer hover:underline hover:text-blue-600"
             @click="previewOperation(true, notification.code)">{{ notification.title }}</p>

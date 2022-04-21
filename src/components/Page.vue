@@ -22,8 +22,7 @@
       </button>
       <span v-if="pages > 5 && page > 2" class>...</span>
       <button v-for="index in (pages <= 5 ? pages : (page < (pages - 5) ? page + 5 : pages))" :key="index" type="button"
-        @click.prevent="give(index - 1)" class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
-        :class="{
+        @click="give(index - 1)" class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full" :class="{
           'bg-white rounded-full border shadow-sm': index == page + 1,
           hidden: pages > 5 && (index > page + 3 || index < page - 1),
         }">{{ index }}</button>
@@ -74,9 +73,27 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["setPage", "retrieve"]);
+
 const page = ref(props.page);
 const size = ref(props.size);
 
+/**
+ * 计算总页数
+ * 通过 ~~number 来取整
+ */
+const pages = computed(() => {
+  let pg = 1
+  if (props.total) {
+    if (props.total % size.value > 0) {
+      pg = ~~(props.total / size.value) + 1;
+    } else {
+      pg = ~~(props.total / size.value);
+    }
+  }
+  give(page.value)
+  return pg
+});
 /**
  * 监听size, 调用查询方法
  */
@@ -86,31 +103,17 @@ watch(size, (curSize, prevSize) => {
   }
 });
 
-const emit = defineEmits(["setPage", "retrieve"]);
 /**
  * 设置分页
  */
 const give = (p: number) => {
+  if (p > pages.value) {
+    p = pages.value - 1
+  }
   page.value = p;
   emit("setPage", page.value, size.value);
   emit("retrieve");
 }
-
-/**
- * 计算总页数
- */
-const pages = computed(() => {
-  if (props.total) {
-    if (props.total % size.value > 0) {
-      // 通过 ~~number 来取整
-      return ~~(props.total / size.value) + 1;
-    } else {
-      return ~~(props.total / size.value);
-    }
-  } else {
-    return 1;
-  }
-});
 
 /**
  * 页码递增

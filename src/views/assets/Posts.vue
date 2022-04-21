@@ -143,9 +143,9 @@
         </div>
       </form>
     </Modal>
-    <Preview :isShow="view.isShow" @closeAction="previewOperation">
+    <Modal :isShow="view.isShow" @closeAction="previewOperation" :needFooter="false">
       <img :src="view.url" alt="preview" class="rounded-md w-full h-full" width="640" height="427" />
-    </Preview>
+    </Modal>
   </div>
 </template>
 
@@ -158,7 +158,6 @@ import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
 import Confirm from "@/components/Confirm.vue";
 import Modal from "@/components/Modal.vue";
-import Preview from "@/components/Preview.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Posts, Category } from "@/api/request.type";

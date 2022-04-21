@@ -15,7 +15,7 @@
         </button>
         <!-- content -->
         <div class="p-4 ">
-          <div class="flex overflow-x-auto">
+          <div class="flex flex-col overflow-x-auto">
             <slot></slot>
           </div>
         </div>

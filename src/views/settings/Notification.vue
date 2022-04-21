@@ -26,12 +26,12 @@
         <div class="w-full text-sm text-gray-500 py-2 truncate">{{ notification.content }}</div>
       </div>
     </div>
-    <Preview :isShow="isShow" @closeAction="previewOperation">
+    <Modal :isShow="isShow" @closeAction="previewOperation" :needFooter="false">
       <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
         <p v-text="data.content"></p>
       </article>
-    </Preview>
+    </Modal>
   </div>
 </template>
 
@@ -42,7 +42,7 @@ import { ref, onMounted } from 'vue'
 import { instance, SERVER_URL } from "@/api";
 import type { Notification } from "@/api/request.type";
 
-import Preview from "@/components/Preview.vue"
+import Modal from "@/components/Modal.vue"
 
 let notifications = ref<Array<Notification>>([])
 

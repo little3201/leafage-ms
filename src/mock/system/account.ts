@@ -17,9 +17,9 @@ for (let i = 0; i < 139; i++) {
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
     enabled: Random.boolean(),
-    accountExpiresAt: Random.date(),
+    accountExpiresAt: new Date(Random.date()),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: Random.date()
+    credentialsExpiresAt: new Date(Random.date())
   })
 }
 
@@ -32,9 +32,9 @@ export default [
     url: '/api/hypervisor/account',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length == 1) {
-        let path = url.substring(url.lastIndexOf('/') + 1)
+        const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === 'role') {
           return roles
         } else if (path === 'group') {
@@ -42,12 +42,12 @@ export default [
         }
       }
       if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation;
       } else {
-        let username = url.substring(url.lastIndexOf('/') + 1)
+        const username = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.username === username)[0]
       }
     },
@@ -56,7 +56,7 @@ export default [
     url: '/api/hypervisor/account',
     method: 'put',
     response: (options: any) => {
-      let username = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const username = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.username === username)[0]
     },
   },
@@ -64,7 +64,7 @@ export default [
     url: '/api/hypervisor/account',
     method: 'patch',
     response: (options: any) => {
-      let username = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const username = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true

@@ -9,13 +9,13 @@ const data: User = {
   gender: Random.character('MF'),
   phone: Random.integer(13000000000, 19900000000),
   email: Random.email(),
-  birthday: Random.date(),
+  birthday: new Date(Random.date()),
   nationality: "",
   degree: '02',
   hobbies: Random.word(),
   company: Random.word(),
   position: Random.word(),
-  description: Random.csentence(),
+  description: Random.csentence()
 }
 
 export default [

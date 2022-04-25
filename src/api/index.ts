@@ -2,7 +2,7 @@ import { SERVER_URL } from './constant'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { useRouter } from 'vue-router'
 
-let pendingPool = new Map()
+const pendingPool = new Map()
 
 const instance = axios.create({
     withCredentials: true,
@@ -13,7 +13,7 @@ const instance = axios.create({
 // 请求拦截
 instance.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-        let controller = new AbortController()
+        const controller = new AbortController()
         config.signal = controller.signal
         pendingPool.set(config.url, controller)
         return config
@@ -43,8 +43,7 @@ instance.interceptors.response.use(
                 // 401: 未登录状态，403：无权限，跳转登录页
                 case 401:
                 case 403:
-                    const router = useRouter()
-                    router.push('/signin')
+                    useRouter().push('/signin')
                     break
                 // 404/500请求不存在
                 case 404:

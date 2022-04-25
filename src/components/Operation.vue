@@ -1,25 +1,65 @@
 <template>
-  <div v-if="account && Object.keys(account).length > 0" class="inline-flex items-center space-x-4 sm:ml-auto text-sm">
-    <button title="import" type="button"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-        stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+  <div
+    v-if="account && Object.keys(account).length > 0"
+    class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
+  >
+    <button
+      title="import"
+      type="button"
+      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-2"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
       </svg>
       {{ $t('import') }}
     </button>
-    <button title="export" type="button" @click="exportFile"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-        stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+    <button
+      title="export"
+      type="button"
+      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+      @click="exportFile"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-2"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
       </svg>
       {{ $t('export') }}
     </button>
-    <button v-if="needAdd" @click="operate"
-      class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-        stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+    <button
+      v-if="needAdd"
+      class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
+      @click="operate"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-2"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
       </svg>
       {{ $t('add') }}
@@ -41,7 +81,9 @@ const props = defineProps({
   },
   datas: {
     type: Array,
-    default: []
+    default: () => {
+      return []
+    }
   },
   fileName: {
     type: String,
@@ -51,7 +93,11 @@ const props = defineProps({
 
 const emit = defineEmits(["modalOperate"]);
 
-const account = ref<Account>({})
+const account = ref<Account>({
+  username: '',
+  nickname: '',
+  avatar: ''
+})
 
 onMounted(() => {
   let data = sessionStorage.getItem("account")

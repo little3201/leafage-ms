@@ -1,32 +1,88 @@
 <template>
   <div class="relative text-white">
-    <RouterLink :to="data.expand.path" v-if="data.children && data.children.length > 0" :title="data.name"
+    <RouterLink
+      v-if="data.children && data.children.length > 0"
+      :to="data.expand.path"
+      :title="data.name"
+      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 w-full"
+      exacts
       @click="isExpand = !isExpand"
-      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 w-full" exacts>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-3"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
       <span>{{ $t(data.name.toLowerCase()) }}</span>
-      <svg v-if="isExpand" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+      <svg
+        v-if="isExpand"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="ml-auto mr-2"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
       </svg>
-      <svg v-else width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="ml-auto mr-2">
+      <svg
+        v-else
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="ml-auto mr-2"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
     </RouterLink>
-    <RouterLink v-else :title="data.name" :to="superior.concat(data.expand.path)"
-      class="flex flex-1 items-center h-12 rounded-l-full pl-4 -mr-4" exact>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+    <RouterLink
+      v-else
+      :title="data.name"
+      :to="superior.concat(data.expand.path)"
+      class="flex flex-1 items-center h-12 rounded-l-full pl-4 -mr-4"
+      exact
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="mr-3"
+      >
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
       <span class="hidden xl:block w-full">{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
-    <div v-show="isExpand" class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md">
-      <AsideCore v-for="child in data.children" :data="child" :superior="data.expand.path" />
+    <div
+      v-show="isExpand"
+      class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md"
+    >
+      <AsideCore
+        v-for="child in data.children"
+        :key="child.code"
+        :data="child"
+        :superior="data.expand.path"
+      />
     </div>
   </div>
 </template>
@@ -34,12 +90,14 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import type { Authority } from '@/api/request.type'
+import type { TreeNode } from '@/api/request.type'
 
 defineProps({
   data: {
-    type: Object as PropType<Authority>,
-    default: {},
+    type: Object as PropType<TreeNode>,
+    default: () => {
+      return []
+    },
   },
   superior: {
     type: String,

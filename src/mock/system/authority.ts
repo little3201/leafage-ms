@@ -12,7 +12,7 @@ const pagation: Pagation<Authority> = {
 const datas: Array<Authority> = [
   {
     code: "21224PV6C",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "System",
     name: "Role",
     type: "M",
@@ -24,7 +24,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "212240439",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "System",
     name: "Authority",
     type: "M",
@@ -36,7 +36,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "2133U754",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "Authority",
     name: "Add",
     type: "B",
@@ -48,7 +48,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "203315P3Q",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "System",
     name: "Account",
     type: "M",
@@ -60,7 +60,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224DRMU",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "",
     name: "System",
     type: "M",
@@ -72,7 +72,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "2122466RP",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: '',
     name: "Dashboard",
     type: "M",
@@ -84,7 +84,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224B8JZ",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "",
     name: "Posts",
     type: "M",
@@ -96,7 +96,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224QI72",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "",
     name: "Resource",
     type: "M",
@@ -108,7 +108,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224HMLG",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "",
     name: "Category",
     type: "M",
@@ -120,7 +120,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224UJ5C",
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     superior: "System",
     name: "Group",
     type: "M",
@@ -492,7 +492,7 @@ for (let i = 0; i < 9; i++) {
     superior: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(),
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     enabled: Random.boolean()
   })
 }
@@ -509,19 +509,19 @@ export default [
     url: '/api/hypervisor/authority',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length == 1) {
-        let path = url.substring(url.lastIndexOf('/') + 1)
+        const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === "authority") {
           return datas.slice(0, 6)
         } else if (path === "role") {
           return roles
         } else {
-          let code = url.substring(url.lastIndexOf('/') + 1)
+          const code = url.substring(url.lastIndexOf('/') + 1)
           return datas.filter(item => item.code === code)[0]
         }
       } else if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
@@ -532,7 +532,7 @@ export default [
     url: '/api/hypervisor/authority',
     method: 'put',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.code === code)[0]
     }
   },
@@ -549,7 +549,7 @@ export default [
     url: '/api/hypervisor/authority',
     method: 'patch',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true

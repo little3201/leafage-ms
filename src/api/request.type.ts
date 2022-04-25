@@ -23,7 +23,7 @@ export declare interface User {
   firstname: string,
   lastname: string,
   gender: string,
-  phone: string,
+  phone: number,
   email: string,
   birthday: Date,
   nationality: string,
@@ -79,11 +79,11 @@ export declare interface TreeNode {
   name: string,
   superior: string,
   children: TreeNode[],
-  expand: Object
+  expand: unknown
 }
 
 export declare interface Category extends AbstractVO<string> {
-  alias: string,
+  name: string,
   count: number,
   description: string
 }
@@ -135,7 +135,7 @@ export declare interface Region extends AbstractVO<number> {
   superior: string,
   alias: string,
   postalCode: number,
-  areaCode: string,
+  areaCode: number,
   description: string
 }
 

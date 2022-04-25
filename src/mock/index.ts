@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 
-let account = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.svg" }
-let menus = [
+const account = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.svg" }
+const menus = [
   { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
   {
     "code": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": "layers" }, "children": [

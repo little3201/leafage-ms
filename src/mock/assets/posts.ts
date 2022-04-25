@@ -17,11 +17,11 @@ for (let i = 0; i < 79; i++) {
     title: Random.ctitle(),
     cover: Random.image('198x128'),
     category: Random.word(),
-    tags: Random.range(1, 8),
+    tags: ['Test', '测试'],
     viewed: Random.integer(1, 900),
     likes: Random.integer(100, 899),
     comments: Random.integer(1, 100),
-    modifyTime: Random.date()
+    modifyTime: new Date(Random.date())
   })
 }
 
@@ -35,16 +35,16 @@ export default [
     url: '/api/assets/posts',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
       } else if (url.substring(url.lastIndexOf('/') + 1) === "content") {
         return postsDetails
       } else {
-        let code = url.substring(url.lastIndexOf('/') + 1)
+        const code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]
       }
     }
@@ -53,7 +53,7 @@ export default [
     url: '/api/assets/posts',
     method: 'put',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.code === code)[0]
     }
   },

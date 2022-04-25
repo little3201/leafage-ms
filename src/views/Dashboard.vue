@@ -377,7 +377,7 @@ const construceChart = (): void => {
     overDownloads: Array<number>()
   }
   for (let i = 0; i < datas.value.length - 1; i++) {
-    obj.labels.unshift(datas.value[i].date.toLocaleDateString());
+    obj.labels.unshift(new Date(datas.value[i].date).toLocaleDateString());
     // data
     obj.viewed.unshift(datas.value[i].viewed - datas.value[i + 1].viewed);
     obj.likes.unshift(datas.value[i].likes - datas.value[i + 1].likes);

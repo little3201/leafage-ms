@@ -13,6 +13,10 @@ import {
     Tooltip
 } from 'chart.js';
 
+import {
+    ChartConfiguration
+} from 'chart.js/types/index.esm'
+
 Chart.register(
     BarElement,
     LineElement,
@@ -27,8 +31,9 @@ Chart.register(
     Tooltip
 );
 
-export const createBarChart = (hctx: HTMLCanvasElement, labels: Array<string>, viewed: Array<Object>, likes: Array<Object>, comments: Array<Object>) => {
-    const config: any = {
+const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed: Array<number>,
+    likes: Array<number>, comments: Array<number>) => {
+    const config: ChartConfiguration = {
         type: "bar",
         data: {
             labels: labels,
@@ -61,19 +66,19 @@ export const createBarChart = (hctx: HTMLCanvasElement, labels: Array<string>, v
             }
         },
     }
-    return new Chart(hctx, config);
+    return new Chart(canvas, config);
 }
 
 const getGradient = (ctx: CanvasRenderingContext2D, chartArea: any, color: string) => {
-    var gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
+    const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
     gradient.addColorStop(0, color.replace('0.8', "0.1"))
     gradient.addColorStop(0.5, color.replace('0.8', "0.4"))
     gradient.addColorStop(1, color)
     return gradient
 }
 
-export const createMiniChart = (hctx: HTMLCanvasElement, labels: Array<string>, datas: Array<Object>, color: string) => {
-    const config: any = {
+const createMiniChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, color: string) => {
+    const config: ChartConfiguration = {
         type: "line",
         data: {
             labels: labels,
@@ -81,7 +86,7 @@ export const createMiniChart = (hctx: HTMLCanvasElement, labels: Array<string>, 
                 {
                     label: '增长率',
                     data: datas,
-                    backgroundColor: function (context) {
+                    backgroundColor: (context: any) => {
                         const chart = context.chart;
                         const { ctx, chartArea } = chart;
 
@@ -129,5 +134,7 @@ export const createMiniChart = (hctx: HTMLCanvasElement, labels: Array<string>, 
             }
         },
     }
-    return new Chart(hctx, config);
+    return new Chart(canvas, config);
 }
+
+export {createMiniChart, createBarChart}

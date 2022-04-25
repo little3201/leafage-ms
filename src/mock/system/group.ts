@@ -20,7 +20,7 @@ for (let i = 0; i < 39; i++) {
     principal: Random.cname(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     enabled: Random.boolean()
   })
 }
@@ -33,9 +33,9 @@ for (let i = 0; i < 5; i++) {
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
     enabled: Random.boolean(),
-    accountExpiresAt: Random.date(),
+    accountExpiresAt: new Date(Random.date()),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: Random.date()
+    credentialsExpiresAt: new Date(Random.date())
   })
 }
 
@@ -64,19 +64,19 @@ export default [
     url: '/api/hypervisor/group',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length == 1) {
-        let path = url.substring(url.lastIndexOf('/') + 1)
+        const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === "account") {
           return accounts
         } else if (path === 'group') {
           return datas.slice(0, 6)
         } else {
-          let code = path
+          const code = path
           return datas.filter(item => item.code === code)[0]
         }
       } else if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
@@ -87,7 +87,7 @@ export default [
     url: '/api/hypervisor/group',
     method: 'put',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.code === code)[0]
     }
   },
@@ -104,7 +104,7 @@ export default [
     url: '/api/hypervisor/group',
     method: 'patch',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true

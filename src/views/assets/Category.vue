@@ -1,64 +1,172 @@
 <template>
   <div class="mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">{{ $t('category') }}</h2>
-      <button @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+      <h2 class="text-lg font-medium">
+        {{ $t('category') }}
+      </h2>
+      <button
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+        @click="retrieve"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="mr-2"
+        >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation @click.capture="dataCode = ''" @modalOperate="modalOperate" :datas="datas" :fileName="'category'" />
+      <Operation
+        :datas="datas"
+        :file-name="'category'"
+        @click.capture="dataCode = ''"
+        @modal-operate="modalOperate"
+      />
     </div>
     <div class="sm-t-h overflow-auto">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="category">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="category"
+      >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
-            <th scope="col" class="px-4">{{ $t('name') }}</th>
-            <th scope="col" class="px-4">{{ $t('code') }}</th>
-            <th scope="col" class="px-4">{{ $t('description') }}</th>
-            <th scope="col" class="px-4">{{ $t('postsCount') }}</th>
-            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
-            <th scope="col" class="px-4">{{ $t('actions') }}</th>
+            <th
+              scope="col"
+              class="px-4 py-2 sm:py-3 text-left"
+            >
+              {{ $t('no') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('name') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('code') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('description') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('postsCount') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('modifyTime') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('actions') }}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr
+            v-for="(data, index) in datas"
+            :key="index"
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas" :key="index">
-            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-            <td class="px-4">
-              <a rel="noopener" href="https://www.leafage.top/posts" target="_blank" class="font-medium hover:underline"
-                v-text="data.name"></a>
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">
+              {{ index + 1 }}
             </td>
-            <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.description"></td>
-            <td class="px-4" v-text="data.count"></td>
-            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td class="px-4">
+              <a
+                rel="noopener"
+                href="https://www.leafage.top/posts"
+                target="_blank"
+                class="font-medium hover:underline"
+                v-text="data.name"
+              />
+            </td>
+            <td
+              class="px-4"
+              v-text="data.code"
+            />
+            <td
+              class="px-4"
+              v-text="data.description"
+            />
+            <td
+              class="px-4"
+              v-text="data.count"
+            />
+            <td
+              class="px-4"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            />
             <td>
-              <Action @click.capture="dataCode = data.code" @delAction="confirmOperate" @editAction="modalOperate" />
+              <Action
+                @click.capture="dataCode = data.code"
+                @del-action="confirmOperate"
+                @edit-action="modalOperate"
+              />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
-    <Confirm :isShow="isDel" @cancelAction="confirmOperate" @commitAction="confirmCommit" />
-    <Modal :isShow="isEdit" @cancelAction="modalOperate" @commitAction="modelCommit">
+    <Page
+      :total="total"
+      :page="page"
+      :size="size"
+      @retrieve="retrieve"
+      @set-page="setPage"
+    />
+    <Confirm
+      :is-show="isDel"
+      @cancel-action="confirmOperate"
+      @commit-action="confirmCommit"
+    />
+    <Modal
+      :is-show="isEdit"
+      @cancel-action="modalOperate"
+      @commit-action="modelCommit"
+    >
       <form @submit.prevent>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="name">{{ $t('name') }}</label>
-            <input id="name" type="text" name="name" class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')" required autofocus v-model.trim="categoryData.name" />
+            <input
+              id="name"
+              v-model.trim="categoryData.name"
+              type="text"
+              name="name"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('name')"
+              required
+              autofocus
+            >
           </div>
           <div class="col-span-12">
             <label for="description">{{ $t('description') }}</label>
-            <textarea id="description" name="description" class="mt-1 w-full block rounded-md border-gray-300"
-              v-model.trim="categoryData.description" :placeholder="$t('description')" />
+            <textarea
+              id="description"
+              v-model.trim="categoryData.description"
+              name="description"
+              class="mt-1 w-full block rounded-md border-gray-300"
+              :placeholder="$t('description')"
+            />
           </div>
         </div>
       </form>
@@ -82,7 +190,13 @@ import type { Category } from "@/api/request.type";
 let isEdit = ref(false);
 let isDel = ref(false);
 // 数据
-let categoryData = ref<Category>({});
+let categoryData = ref<Category>({
+  code: '',
+  name: '',
+  count: 0,
+  description: '',
+  modifyTime: new Date()
+});
 let dataCode = ref("");
 let datas = ref<Array<Category>>([]);
 // 分页参数
@@ -126,7 +240,7 @@ const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: any) => item.code != dataCode.value
+      (item: Category) => item.code != dataCode.value
     );
     isDel.value = false;
   });
@@ -137,7 +251,13 @@ const confirmCommit = async (): Promise<void> => {
  */
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
-    categoryData.value = {};
+    categoryData.value = {
+      code: '',
+      name: '',
+      count: 0,
+      description: '',
+      modifyTime: new Date()
+    };
     if (dataCode.value && dataCode.value.length > 0) {
       await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))
         .then(res => categoryData.value = res.data);
@@ -155,7 +275,7 @@ const modelCommit = async (): Promise<void> => {
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: any) => item.code != dataCode.value
+          (item: Category) => item.code != dataCode.value
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);

@@ -17,7 +17,7 @@ for (let i = 0; i < 36; i++) {
         ip: Random.ip(),
         location: Random.county(true),
         description: Random.csentence(),
-        modifyTime: new Date()
+        modifyTime: new Date(Random.date())
     })
 }
 
@@ -26,14 +26,14 @@ export default [
         url: '/api/hypervisor/access-log',
         method: 'get',
         response: (options: any) => {
-            let url = options.url
+            const url = options.url
             if (url.split('?').length > 1) {
-                let params: any = parse(url)
+                const params: any = parse(url)
                 pagation.totalElements = datas.length
                 pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
                 return pagation
             } else {
-                let code = url.substring(url.lastIndexOf('/') + 1)
+                const code = url.substring(url.lastIndexOf('/') + 1)
                 return datas.filter(item => item.code === code)[0]
             }
         }

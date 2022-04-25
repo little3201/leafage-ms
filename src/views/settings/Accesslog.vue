@@ -1,30 +1,77 @@
 <template>
-    <div>
-        <div class="sm-a-h overflow-auto">
-            <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="accesslog">
-                <thead>
-                    <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-                        <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
-                        <th scope="col" class="px-4">{{ $t('ip') }}</th>
-                        <th scope="col" class="px-4">{{ $t('location') }}</th>
-                        <th scope="col" class="px-4">{{ $t('description') }}</th>
-                        <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-                        v-for="(data, index) in accesslogs" :key="index">
-                        <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-                        <td class="px-4">{{ data.ip }}</td>
-                        <td class="px-4">{{ data.location }}</td>
-                        <td class="px-4">{{ data.description }}</td>
-                        <td class="px-4">{{ new Date(data.modifyTime).toLocaleString() }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+  <div>
+    <div class="sm-a-h overflow-auto">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="accesslog"
+      >
+        <thead>
+          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <th
+              scope="col"
+              class="px-4 py-2 sm:py-3 text-left"
+            >
+              {{ $t('no') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('ip') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('location') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('description') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('modifyTime') }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(data, index) in accesslogs"
+            :key="index"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">
+              {{ index + 1 }}
+            </td>
+            <td class="px-4">
+              {{ data.ip }}
+            </td>
+            <td class="px-4">
+              {{ data.location }}
+            </td>
+            <td class="px-4">
+              {{ data.description }}
+            </td>
+            <td class="px-4">
+              {{ new Date(data.modifyTime).toLocaleString() }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <Page
+      :total="total"
+      :page="page"
+      :size="size"
+      @retrieve="retrieve"
+      @set-page="setPage"
+    />
+  </div>
 </template>
 
 

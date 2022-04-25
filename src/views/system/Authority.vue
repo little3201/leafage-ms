@@ -1,66 +1,187 @@
 <template>
   <div class="mt-2">
     <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">{{ $t('authority') }}</h2>
-      <button @click="retrieve"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+      <h2 class="text-lg font-medium">
+        {{ $t('authority') }}
+      </h2>
+      <button
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+        @click="retrieve"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="mr-2"
+        >
           <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
         </svg>
         {{ $t('reload') }}
       </button>
-      <Operation :needAdd="false" :datas="datas" :fileName="'authority'" />
+      <Operation
+        :need-add="false"
+        :datas="datas"
+        :file-name="'authority'"
+      />
     </div>
 
     <div class="sm-t-h overflow-auto">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="authority">
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="authority"
+      >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
-            <th scope="col" class="px-4">{{ $t('name') }}</th>
-            <th scope="col" class="px-4">{{ $t('code') }}</th>
-            <th scope="col" class="px-4">{{ $t('superior') }}</th>
-            <th scope="col" class="px-4">{{ $t('type') }}</th>
-            <th scope="col" class="px-4">{{ $t('path') }}</th>
-            <th scope="col" class="px-4">{{ $t('roleCount') }}</th>
-            <th scope="col" class="px-4">{{ $t('description') }}</th>
-            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
-            <th scope="col" class="px-4">{{ $t('actions') }}</th>
+            <th
+              scope="col"
+              class="px-4 py-2 sm:py-3 text-left"
+            >
+              {{ $t('no') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('name') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('code') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('superior') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('type') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('path') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('roleCount') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('description') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('modifyTime') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('actions') }}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr
+            v-for="(data, index) in datas"
+            :key="index"
             class="text-center bg-white border-y-4 border lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-            v-for="(data, index) in datas" :key="index">
-            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">
+              {{ index + 1 }}
+            </td>
             <td class="px-4">
               <div class="flex items-center">
-                <svg v-if="data.icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg
+                  v-if="data.icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
                   <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
                 </svg>
-                <span class="font-medium ml-2" v-text="data.name"></span>
+                <span
+                  class="font-medium ml-2"
+                  v-text="data.name"
+                />
               </div>
             </td>
-            <td class="px-4" v-text="data.code"></td>
-            <td class="px-4" v-text="data.superior"></td>
+            <td
+              class="px-4"
+              v-text="data.code"
+            />
+            <td
+              class="px-4"
+              v-text="data.superior"
+            />
             <td class="px-4">
-              <span class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }">{{
-                  data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api')
-                }}</span>
+              <span
+                class="text-xs px-2 py-1 rounded-md"
+                :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }"
+              >{{
+                data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api')
+              }}</span>
             </td>
-            <td class="px-4" v-text="data.path"></td>
-            <td class="px-4" v-text="data.count"></td>
-            <td class="px-4" v-text="data.description"></td>
-            <td class="px-4" v-text="new Date(data.modifyTime).toLocaleDateString()"></td>
+            <td
+              class="px-4"
+              v-text="data.path"
+            />
+            <td
+              class="px-4"
+              v-text="data.count"
+            />
+            <td
+              class="px-4"
+              v-text="data.description"
+            />
+            <td
+              class="px-4"
+              v-text="new Date(data.modifyTime).toLocaleDateString()"
+            />
             <td>
-              <Action :needEdit="false" :needDel="false">
-                <button v-if="data.count > 0" class="flex items-center mr-3 text-purple-600 focus:outline-none"
-                  @click="previewOperation(true, data.code)">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+              <Action
+                :need-edit="false"
+                :need-del="false"
+              >
+                <button
+                  v-if="data.count > 0"
+                  class="flex items-center mr-3 text-purple-600 focus:outline-none"
+                  @click="previewOperation(true, data.code)"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="mr-1"
+                  >
                     <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
                   </svg>
                   {{ $t('role') }}
@@ -71,32 +192,102 @@
         </tbody>
       </table>
     </div>
-    <Page @retrieve="retrieve" :total="total" :page="page" :size="size" @setPage="setPage" />
+    <Page
+      :total="total"
+      :page="page"
+      :size="size"
+      @retrieve="retrieve"
+      @set-page="setPage"
+    />
 
-    <Modal :isShow="isShow" @closeAction="previewOperation" :needFooter="false">
-      <table class="w-full overflow-ellipsis whitespace-nowrap" aria-label="role">
+    <Modal
+      :is-show="isShow"
+      :need-footer="false"
+      @close-action="previewOperation"
+    >
+      <table
+        class="w-full overflow-ellipsis whitespace-nowrap"
+        aria-label="role"
+      >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
-            <th scope="col" class="px-4 py-2 sm:py-3 text-left">{{ $t('no') }}</th>
-            <th scope="col" class="px-4">{{ $t('name') }}</th>
-            <th scope="col" class="px-4">{{ $t('code') }}</th>
-            <th scope="col" class="px-4">{{ $t('superior') }}</th>
-            <th scope="col" class="px-4">{{ $t('userCount') }}</th>
-            <th scope="col" class="px-4">{{ $t('description') }}</th>
-            <th scope="col" class="px-4">{{ $t('modifyTime') }}</th>
+            <th
+              scope="col"
+              class="px-4 py-2 sm:py-3 text-left"
+            >
+              {{ $t('no') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('name') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('code') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('superior') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('userCount') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('description') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('modifyTime') }}
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr
+            v-for="(role, index) in roles"
+            :key="index"
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
-            v-for="(role, index) in roles" :key="index">
-            <td class="px-4 py-2 sm:py-3 text-left">{{ index + 1 }}</td>
-            <td class="px-4" v-text="role.name"></td>
-            <td class="px-4" v-text="role.code"></td>
-            <td class="px-4" v-text="role.superior"></td>
-            <td class="px-4" v-text="role.count"></td>
-            <td class="px-4" v-text="role.description"></td>
-            <td class="px-4" v-text="new Date(role.modifyTime).toLocaleDateString()"></td>
+          >
+            <td class="px-4 py-2 sm:py-3 text-left">
+              {{ index + 1 }}
+            </td>
+            <td
+              class="px-4"
+              v-text="role.name"
+            />
+            <td
+              class="px-4"
+              v-text="role.code"
+            />
+            <td
+              class="px-4"
+              v-text="role.superior"
+            />
+            <td
+              class="px-4"
+              v-text="role.count"
+            />
+            <td
+              class="px-4"
+              v-text="role.description"
+            />
+            <td
+              class="px-4"
+              v-text="new Date(role.modifyTime).toLocaleDateString()"
+            />
           </tr>
         </tbody>
       </table>

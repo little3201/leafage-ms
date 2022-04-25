@@ -19,7 +19,7 @@ for (let i = 0; i < 30090; i++) {
     alias: Random.word(),
     enabled: Random.boolean(),
     description: Random.csentence(5),
-    modifyTime: Random.date()
+    modifyTime: new Date(Random.date())
   })
 }
 export default [
@@ -27,19 +27,19 @@ export default [
     url: '/api/hypervisor/dictionary',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length == 1) {
-        let path = url.substring(url.lastIndexOf('/') + 1)
+        const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === 'lower') {
           return datas.slice(0, 34)
         } else if (path === 'superior') {
           return datas.slice(0, 12)
         } else {
-          let code = path
+          const code = path
           return datas.filter(item => item.code == code)[0]
         }
       } else if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
@@ -50,7 +50,7 @@ export default [
     url: '/api/hypervisor/dictionary',
     method: 'put',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.code === code)[0]
     }
   },
@@ -67,7 +67,7 @@ export default [
     url: '/api/hypervisor/dictionary',
     method: 'patch',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true

@@ -18,7 +18,7 @@ for (let i = 0; i < 39; i++) {
     superior: Random.word(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: Random.date(),
+    modifyTime: new Date(Random.date()),
     enabled: Random.boolean()
   })
 }
@@ -47,19 +47,19 @@ export default [
     url: '/api/hypervisor/role',
     method: 'get',
     response: (options: any) => {
-      let url = options.url
+      const url = options.url
       if (url.split('?').length == 1) {
-        let path = url.substring(url.lastIndexOf('/') + 1)
+        const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === 'authority') {
           return authorities
         } else if (path === 'role') {
           return datas.slice(0, 6)
         } else {
-          let code = path
+          const code = path
           return datas.filter(item => item.code === code)[0]
         }
       } else if (url.split('?').length > 1) {
-        let params: any = parse(url)
+        const params: any = parse(url)
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
         return pagation
@@ -70,7 +70,7 @@ export default [
     url: '/api/hypervisor/role',
     method: 'put',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       return datas.filter(item => item.code === code)[0]
     }
   },
@@ -87,7 +87,7 @@ export default [
     url: '/api/hypervisor/role',
     method: 'patch',
     response: (options: any) => {
-      let code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true

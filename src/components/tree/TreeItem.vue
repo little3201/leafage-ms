@@ -1,12 +1,30 @@
 <template>
   <div class="text-base">
-    <TreeCore :data="data" @openOperate="openOperate" :isExpand="isExpand">
-      <input :id="data.code" type="checkbox" class="rounded cursor-pointer mr-4" :value="data.code"
-        v-model="innerTicked" @click="track(data)" />
+    <TreeCore
+      :data="data"
+      :is-expand="isExpand"
+      @open-operate="openOperate"
+    >
+      <input
+        :id="data.code"
+        v-model="innerTicked"
+        type="checkbox"
+        class="rounded cursor-pointer mr-4"
+        :value="data.code"
+        @click="track(data)"
+      >
     </TreeCore>
-    <div v-show="isExpand" class="ml-4">
-      <TreeItem v-for="child in data.children" :key="child.code" :data="child" :ticked="innerTicked"
-        @treeOperate="track" />
+    <div
+      v-show="isExpand"
+      class="ml-4"
+    >
+      <TreeItem
+        v-for="child in data.children"
+        :key="child.code"
+        :data="child"
+        :ticked="innerTicked"
+        @tree-operate="track"
+      />
     </div>
   </div>
 </template>
@@ -20,11 +38,15 @@ import TreeCore from "./TreeCore.vue";
 const props = defineProps({
   data: {
     type: Object as PropType<TreeNode>,
-    default: {}
+    default: () => {
+      return {}
+    }
   },
   ticked: {
     type: Array as PropType<string[]>,
-    default: []
+    default: () => {
+      return []
+    }
   }
 });
 
@@ -48,7 +70,7 @@ watch(
   }
 )
 
-const setTicked = (keys, state) => {
+const setTicked = (keys: Array<string>, state: boolean) => {
   let target = innerTicked.value
   const shouldEmit = props.ticked !== void 0
 
@@ -70,7 +92,7 @@ const setTicked = (keys, state) => {
 }
 
 const track = (node: TreeNode) => {
-  emit('treeOperate', node)
+  emit('update:ticked', node)
 }
 
 const openOperate = () => {

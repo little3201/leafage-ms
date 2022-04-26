@@ -54,6 +54,12 @@
               scope="col"
               class="px-4"
             >
+              {{ $t('alias') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
               {{ $t('code') }}
             </th>
             <th
@@ -85,13 +91,14 @@
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
             </td>
-            <td class="px-4">
-              <span v-text="data.name" />
-              <p
-                class="text-xs text-gray-600"
-                v-text="data.alias"
-              />
-            </td>
+            <td
+              class="px-4"
+              v-text="data.name"
+            />
+            <td
+              class="px-4"
+              v-text="data.alias"
+            />
             <td
               class="px-4"
               v-text="data.code"

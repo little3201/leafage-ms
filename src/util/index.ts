@@ -4,12 +4,12 @@
  * @returns  json对象
  */
 export function parse(str: string) {
-    const obj = {};
+    const paramMap = new Map();
     const arr1 = str.split("?");
     const arr2 = arr1[1].split("&");
     for (const item of arr2) {
-        const res = item.split("=");
-        obj[res[0]] = res[1];
+        const res: Array<string> = item.split("=");
+        paramMap.set(res[0] , res[1]);
     }
-    return obj;
+    return paramMap;
 }

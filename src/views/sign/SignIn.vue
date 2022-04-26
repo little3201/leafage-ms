@@ -141,7 +141,7 @@ const storage = async (username: string): Promise<void> => {
         })
     ]).then(() => {
       // 登录完成后，调整原请求页
-      router.replace({ path: route.query.redierct || "/" });
+      router.replace({ path: route.query.redierct?.toString() || "/" });
     })
   }
 

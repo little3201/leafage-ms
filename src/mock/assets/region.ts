@@ -77,7 +77,7 @@ export default [
         }
       } else if (url.split('?').length > 1) {
         const params: any = parse(url)
-        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
         pagation.totalElements = datas.length
         return pagation;
       }
@@ -96,7 +96,7 @@ export default [
     method: 'post',
     response: (options: any) => {
       let data: Region = JSON.parse(options.body)
-      data = { ...data, code: Random.id() }
+      data = { ...data, code: parseInt(Random.id()) }
       return data
     }
   },

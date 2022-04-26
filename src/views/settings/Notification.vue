@@ -78,7 +78,13 @@ let notifications = ref<Array<Notification>>([])
 
 let isRead = ref(false)
 let isShow = ref(false)
-let data = ref<Notification>({})
+let data = ref<Notification>({
+  code: '',
+  title: '',
+  content: '',
+  receiver: '',
+  modifyTime: new Date()
+})
 
 // 分页参数
 let page = ref(0);

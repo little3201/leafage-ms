@@ -67,7 +67,11 @@ defineProps({
 
 defineEmits(['editAction', 'delAction']);
 
-const account = ref<Account>({});
+const account = ref<Account>({
+  username: '',
+  nickname: '',
+  avatar: ''
+});
 
 onMounted(() => {
   let data = sessionStorage.getItem('account');

@@ -116,6 +116,9 @@ const itemOperation = () => {
 </script>
 
 <style scoped>
+.router-link-active {
+  @apply bg-blue-100 bg-opacity-10
+}
 .router-link-exact-active {
   @apply bg-gray-100 text-black;
 }

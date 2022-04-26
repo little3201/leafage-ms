@@ -6,8 +6,8 @@
         v-if="data.children && data.children.length > 0"
         type="button"
         :title="data.name"
-        class="flex flex-1 items-center focus:outline-none w-full"
-        @click="$emit('openOperate')"
+        class="flex flex-1 items-center focus:outline-none w-20"
+        @click="$emit('open-operate')"
       >
         <svg
           v-if="data.expand && data.expand.icon"
@@ -23,7 +23,7 @@
         >
           <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
         </svg>
-        <span class="py-1  mr-10">{{ data.name }}</span>
+        <span class="py-1  mr-auto">{{ data.name }}</span>
         <svg
           v-if="isExpand"
           width="16"
@@ -94,5 +94,5 @@ defineProps({
   }
 })
 
-defineEmits(['openOperate'])
+defineEmits(['open-operate'])
 </script>

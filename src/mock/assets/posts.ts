@@ -39,7 +39,7 @@ export default [
       if (url.split('?').length > 1) {
         const params: any = parse(url)
         pagation.totalElements = datas.length
-        pagation.content = datas.slice(params.page * params.size, (parseInt(params.page) + 1) * params.size)
+        pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
         return pagation
       } else if (url.substring(url.lastIndexOf('/') + 1) === "content") {
         return postsDetails

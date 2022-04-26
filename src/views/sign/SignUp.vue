@@ -36,7 +36,7 @@
       </div>
       <div class="flex items-center text-gray-700">
         <input
-          v-model="formData.agree"
+          v-model="agree"
           type="checkbox"
           class="rounded border-gray-300 shadow-sm mr-2"
         >
@@ -77,8 +77,12 @@ import { instance } from "@/api";
 
 const router = useRouter();
 
-let formData = ref({});
+let formData = ref({
+  email: '',
+  password: ''
+});
 const confirmPassword = ref("");
+const agree = ref(false)
 
 const onSubmit = async (): Promise<void> => {
   await instance.get("/check").then(() => {

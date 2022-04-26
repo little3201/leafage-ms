@@ -20,13 +20,13 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import type { Authority } from "@/api/request.type";
+import type { TreeNode } from "@/api/request.type";
 
 import Drawer from "@/layouts/Drawer.vue";
 import Aside from "@/layouts/Aside.vue";
 import TopBar from "@/layouts/TopBar.vue";
 
-const menus = ref<Array<Authority>>([]);
+const menus = ref<Array<TreeNode>>([]);
 
 onMounted(() => {
   if (sessionStorage.getItem("menus") != null) {

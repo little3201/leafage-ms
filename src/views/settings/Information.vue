@@ -1,6 +1,8 @@
 <template>
   <div class="divide-y">
-    <fieldset class="sr-only" />
+    <fieldset>
+      <legend class="sr-only" />
+    </fieldset>
     <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">
         Change usernmae
@@ -252,7 +254,21 @@ import Confirm from "@/components/Confirm.vue"
 
 let editEmail = ref(false)
 let editUsername = ref(false)
-let user = ref<User>({})
+let user = ref<User>({
+  username: '',
+  firstname: '',
+  lastname: '',
+  gender: '',
+  phone: 0,
+  email: '',
+  birthday: new Date(),
+  nationality: '',
+  degree: '',
+  hobbies: '',
+  company: '',
+  position: '',
+  description: ''
+})
 
 let isShow = ref(false)
 

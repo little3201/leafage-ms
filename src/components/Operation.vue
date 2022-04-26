@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="account && Object.keys(account).length > 0"
+    v-if="account.username && account.username.length > 0"
     class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
   >
     <button

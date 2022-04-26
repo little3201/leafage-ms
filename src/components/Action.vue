@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="account && Object.keys(account).length > 0"
+    v-if="account.username && account.username.length > 0"
     class="flex justify-center items-center text-sm"
   >
     <slot />

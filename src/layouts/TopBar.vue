@@ -182,7 +182,7 @@
       </div>
       <div class="relative">
         <button
-          v-if="account && Object.keys(account).length > 0"
+          v-if="account.username && account.username.length > 0"
           type="button"
           class="rounded-full w-8 h-8 text-center inline-flex items-center bg-white shadow focus:outline-none"
           @click="operate('account')"

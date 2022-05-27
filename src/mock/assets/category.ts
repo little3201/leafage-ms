@@ -26,6 +26,7 @@ export default [
     url: '/api/assets/category',
     method: 'get',
     response: (options: any) => {
+      debugger
       const url = options.url
       if (url.split('?').length > 1) {
         const params: any = parse(url)

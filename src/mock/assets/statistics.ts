@@ -1,6 +1,13 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Statistics } from '@/api/request.type'
+import type { Pagation, Statistics, StatisticsTotal } from '@/api/request.type'
+
+const total: StatisticsTotal = {
+    viewed: Random.integer(1, 999999),
+    likes: Random.integer(1, 999999),
+    comments: Random.integer(1, 999999),
+    downloads: Random.integer(1, 999999)
+}
 
 const pagation: Pagation<Statistics> = {
     page: 0,
@@ -28,10 +35,15 @@ export default [
     {
         url: '/api/assets/statistics',
         method: 'get',
-        response: () => {
-            pagation.totalElements = datas.length
-            pagation.content = datas
-            return pagation
+        response: (options: any) => {
+            const url = options.url
+            if (url.split('?').length == 1) {
+                return total
+            } else {
+                pagation.totalElements = datas.length
+                pagation.content = datas
+                return pagation
+            }
         },
     },
 ]

@@ -7,7 +7,7 @@
       <button
         type="button"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="initData"
+        @click="refresh"
       >
         <svg
           width="18"
@@ -82,7 +82,7 @@
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
-            v-text="latest.viewed"
+            v-text="total.viewed"
           />
         </div>
       </div>
@@ -143,7 +143,7 @@
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
-            v-text="latest.comments"
+            v-text="total.comments"
           />
         </div>
       </div>
@@ -204,7 +204,7 @@
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
-            v-text="latest.likes"
+            v-text="total.likes"
           />
         </div>
       </div>
@@ -263,12 +263,12 @@
             </div>
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6">
-            0
+            {{ total.downloads }}
           </h2>
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-12 gap-4 my-4">
+    <div class="grid grid-rows-1 grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4 h-full">
           <canvas
@@ -276,54 +276,44 @@
             ref="viewedRef"
             aria-label="viewed"
             role="img"
-            height="100"
           />
         </div>
       </div>
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-12 md:col-span-3">
+        <div class="relative shadow-sm rounded-md bg-white p-4 h-full">
+          <canvas
+            id="categories"
+            ref="categoriesRef"
+            aria-label="categories"
+            role="img"
+          />
+        </div>
+      </div>
+      <div class="col-span-12 md:col-span-3">
         <div class="bg-white p-4 shadow-sm rounded-md">
-          <div class="overflow-auto">
-            <table
-              class="w-full overflow-ellipsis whitespace-nowrap"
-              aria-label="category"
+          <p class="text-center text-xl font-semibold my-2">
+            相关评论
+          </p>
+          <ul class="overflow-auto divide-y">
+            <li
+              v-for="(comment, index) in comments"
+              :key="index"
+              class="py-2 hover:bg-gray-100 rounded-md"
             >
-              <thead>
-                <tr class="bg-gray-100 uppercase text-sm">
-                  <th
-                    scope="col"
-                    class="px-3 py-2 sm:py-3 text-left"
-                  >
-                    {{ $t('no') }}
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-3"
-                  >
-                    {{ $t('content') }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(comment, index) in comments"
-                  :key="index"
-                  class="text-center bg-white border-y-4 lg:border-y-6 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
-                >
-                  <td class="px-3 py-2 sm:py-3 text-left">
-                    {{ index + 1 }}
-                  </td>
-
-                  <td class="px-3 max-w-sm truncate">
-                    <a
-                      :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
-                      target="_blank"
-                      class="font-medium hover:underline"
-                    >{{ comment.content }}</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+              <a
+                :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
+                target="_blank"
+              >
+                <div class="flex justify-between text-xs text-gray-400 mb-2 px-2">
+                  <span>{{ comment.location }}</span>
+                  <span>{{ new Date(comment.modifyTime).toLocaleDateString() }}</span>
+                </div>
+                <p class="text-sm px-2">
+                  {{ comment.content }}
+                </p>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -331,16 +321,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue";
-import { createBarChart, createMiniChart } from "@/plugins/chart";
+import { ref, computed, onMounted } from "vue";
+import { createBarChart, createMiniChart, createPieChart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Comment, Statistics } from "@/api/request.type";
+import { Category, Comment, Statistics, StatisticsTotal } from "@/api/request.type";
 
 // data
 let comments = ref<Array<Comment>>([])
+let categories = ref<Array<Category>>([])
 let datas = ref<Array<Statistics>>([])
-const latest = computed(() => datas.value[0] || {});
+let total = ref<StatisticsTotal>({
+  viewed: 0,
+  likes: 0,
+  comments: 0,
+  downloads: 0
+})
+let latest = computed(() => datas.value[0] || {});
 
 // ref
 const viewedRef = ref();
@@ -348,8 +345,10 @@ const overViewedRef = ref();
 const overCommentRef = ref();
 const overLikesRef = ref();
 const overDownloadsRef = ref();
+const categoriesRef = ref()
 
 onMounted(() => {
+  retrieveCategories()
   initData();
 })
 /**
@@ -361,10 +360,40 @@ const initData = async (): Promise<void> => {
       datas.value = res.data.content;
       construceChart()
     }),
-    instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
-      .then(res => comments.value = res.data.content)])
+    retrieveComments(),
+    fetchTotal()])
 };
-
+/**
+ * 刷新数据
+ */
+const refresh = () => {
+  retrieveComments()
+  fetchTotal()
+}
+/**
+ * 查询评论信息
+ */
+const retrieveComments = async () => {
+  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+    .then(res => comments.value = res.data.content)
+}
+/**
+ * 总量统计
+ */
+const fetchTotal = async () => {
+  await instance.get(SERVER_URL.statistics.concat("/total"))
+    .then(res => total.value = res.data)
+}
+/**
+ * 查询分类
+ */
+const retrieveCategories = async () => {
+  await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } })
+    .then(res => categories.value = res.data.content)
+}
+/**
+ * 构造图表
+ */
 const construceChart = (): void => {
   let obj = {
     labels: Array<string>(),
@@ -392,13 +421,29 @@ const construceChart = (): void => {
   let labels = obj.labels
   // 浏览量统计
   createMiniChart(overViewedRef.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
+
   // 评论数统计
   createMiniChart(overCommentRef.value, labels, obj.overComments, "rgba(217, 119, 6, 0.8)");
+
   // 喜欢数统计
   createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
-  // 喜欢数统计
+
+  // 下载数统计
   createMiniChart(overDownloadsRef.value, labels, obj.overDownloads, "rgba(22, 163, 74, 0.8)");
-  // 帖子分类统计
+
+  // 每日访问量统计
   createBarChart(viewedRef.value, labels, obj.viewed, obj.likes, obj.comments);
+
+  let pieLabels: Array<string> = []
+  let pieDatas: Array<number> = []
+  for (let i = 0; i < categories.value.length - 1; i++) {
+    pieLabels.push(categories.value[i].name)
+    pieDatas.push(categories.value[i].count)
+  }
+  let pieColors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#059669', '#0d9488',
+    '#0891b2', '#0284c7', '#2563eb', '#4f46e5', '#7c3aed', '#9333ea', '#c026d3', '#db2777', '#e11d48']
+  // 分类统计
+  createPieChart(categoriesRef.value, pieLabels, pieDatas, pieColors);
 }
+
 </script>

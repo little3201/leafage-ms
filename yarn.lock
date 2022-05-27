@@ -884,10 +884,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^3.7.1":
-  version: 3.7.1
-  resolution: "chart.js@npm:3.7.1"
-  checksum: f9d118d3b7dd3c36b6da7a8d71ac9e5d9673b81095cc66c3f61ff91674e20020c6700f8c9c6f93713fa8474eb471ded106114346ccc6afa88b4a7d0eb73dcea4
+"chart.js@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "chart.js@npm:3.8.0"
+  checksum: 0360212bf5d534effc8475a1aa705ba7257a315af368b5e8eecf476f0bd57a6bb80ad740e870d552f2d11e134dd1497ccef02950d7e626c21a400ff00ecf59af
   languageName: node
   linkType: hard
 
@@ -2045,7 +2045,7 @@ __metadata:
     "@vitejs/plugin-vue": ^2.3.1
     autoprefixer: ^10.4.4
     axios: ^0.26.1
-    chart.js: ^3.7.1
+    chart.js: ^3.8.0
     crypto-js: ^4.1.1
     eslint: ^8.14.0
     eslint-plugin-vue: ^8.7.1
@@ -2057,7 +2057,7 @@ __metadata:
     postcss: ^8.4.12
     prettier: ^2.6.2
     qiniu-js: ^3.4.0
-    tailwindcss: ^3.0.23
+    tailwindcss: ^3.0.24
     typescript: ^4.6.3
     vite: ^2.9.5
     vue: ^3.2.33
@@ -2964,7 +2964,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.0.23":
+"tailwindcss@npm:^3.0.24":
   version: 3.0.24
   resolution: "tailwindcss@npm:3.0.24"
   dependencies:

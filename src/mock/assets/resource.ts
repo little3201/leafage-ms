@@ -36,8 +36,7 @@ export default [
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
         return pagation
-      }
-      else {
+      } else {
         const code = url.substring(url.lastIndexOf('/') + 1)
         return datas.filter(item => item.code === code)[0]
       }

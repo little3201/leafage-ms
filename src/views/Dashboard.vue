@@ -350,7 +350,6 @@ const overDownloadsRef = ref();
 const categoriesRef = ref()
 
 onMounted(() => {
-  retrieveCategories()
   initData();
 })
 /**
@@ -358,13 +357,17 @@ onMounted(() => {
  */
 const initData = async (): Promise<void> => {
   await Promise.all([
-    instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } }).then(res => {
-      datas.value = res.data.content;
-      construceChart()
-    }),
+    retrieveCategories(),
+    retreiveStatistics(),
     retrieveComments(),
-    fetchTotal()])
+    fetchTotal()]).then(() => construceChart())
 };
+
+const retreiveStatistics = async () => {
+  await instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } }).then(res => {
+    datas.value = res.data.content;
+  })
+}
 /**
  * 刷新数据
  */

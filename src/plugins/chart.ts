@@ -1,10 +1,13 @@
 import {
     Chart,
+    ArcElement,
     BarElement,
     LineElement,
     PointElement,
-    LineController,
     BarController,
+    DoughnutController,
+    LineController,
+    PieController,
     CategoryScale,
     LinearScale,
     Filler,
@@ -14,15 +17,21 @@ import {
 } from 'chart.js';
 
 import {
-    ChartConfiguration
+    ChartConfiguration,
+    ChartArea,
+    ScriptableContext,
+    ChartType
 } from 'chart.js/types/index.esm'
 
 Chart.register(
+    ArcElement,
     BarElement,
     LineElement,
     PointElement,
-    LineController,
     BarController,
+    DoughnutController,
+    LineController,
+    PieController,
     CategoryScale,
     LinearScale,
     Filler,
@@ -60,6 +69,11 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
             maintainAspectRatio: false,
             plugins: {
                 title: {
+                    color: 'black',
+                    font: {
+                        size: 20,
+                        weight: '600'
+                    },
                     display: true,
                     text: '最近7日统计数据'
                 }
@@ -69,7 +83,7 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
     return new Chart(canvas, config);
 }
 
-const getGradient = (ctx: CanvasRenderingContext2D, chartArea: any, color: string) => {
+const getGradient = (ctx: CanvasRenderingContext2D, chartArea: ChartArea, color: string) => {
     const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
     gradient.addColorStop(0, color.replace('0.8', "0.1"))
     gradient.addColorStop(0.5, color.replace('0.8', "0.4"))
@@ -86,12 +100,11 @@ const createMiniChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
                 {
                     label: '增长率',
                     data: datas,
-                    backgroundColor: (context: any) => {
+                    backgroundColor: (context: ScriptableContext<ChartType>) => {
                         const chart = context.chart;
                         const { ctx, chartArea } = chart;
 
                         if (!chartArea) {
-                            // This case happens on initial chart load
                             return;
                         }
                         return getGradient(ctx, chartArea, color);
@@ -137,4 +150,39 @@ const createMiniChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
     return new Chart(canvas, config);
 }
 
-export {createMiniChart, createBarChart}
+const createPieChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, colors: Array<string>) => {
+    const config: ChartConfiguration = {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: '分类',
+                    data: datas,
+                    backgroundColor: colors
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    color: 'black',
+                    font: {
+                        size: 20,
+                        weight: '600'
+                    },
+                    display: true,
+                    text: '帖子分类'
+                }
+            }
+        },
+    }
+    return new Chart(canvas, config);
+}
+
+export { createMiniChart, createBarChart, createPieChart }

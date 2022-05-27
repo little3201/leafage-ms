@@ -11,7 +11,7 @@ const pagation: Pagation<Category> = {
 }
 const datas: Array<Category> = [];
 
-for (let i = 0; i < 19; i++) {
+for (let i = 0; i < 12; i++) {
   datas.push({
     code: Random.string('number', 9),
     name: Random.word(),

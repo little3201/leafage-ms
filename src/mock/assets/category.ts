@@ -11,7 +11,7 @@ const pagation: Pagation<Category> = {
 }
 const datas: Array<Category> = [];
 
-for (let i = 0; i < 19; i++) {
+for (let i = 0; i < 12; i++) {
   datas.push({
     code: Random.string('number', 9),
     name: Random.word(),
@@ -26,7 +26,6 @@ export default [
     url: '/api/assets/category',
     method: 'get',
     response: (options: any) => {
-      debugger
       const url = options.url
       if (url.split('?').length > 1) {
         const params: any = parse(url)

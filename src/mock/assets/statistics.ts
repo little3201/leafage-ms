@@ -27,6 +27,8 @@ for (let i = 0; i < 7; i++) {
         overLikes: Random.float(1, 100, 1, 2),
         comments: Random.integer(100, 10000),
         overComments: Random.float(1, 100, 1, 2),
+        downloads: Random.integer(100, 9999),
+        overDownloads: Random.float(1, 100, 1, 2),
         modifyTime: new Date(Random.date())
     })
 }

@@ -127,7 +127,9 @@ export declare interface Statistics extends AbstractVO<string> {
   likes: number,
   overLikes: number,
   comments: number,
-  overComments: number
+  overComments: number,
+  downloads: number,
+  overDownloads: number
 }
 
 export declare interface StatisticsTotal {

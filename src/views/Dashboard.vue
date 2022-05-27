@@ -270,22 +270,24 @@
     </div>
     <div class="grid grid-rows-1 grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="relative shadow-sm rounded-md bg-white p-4 h-full">
+        <div class="relative shadow-sm rounded-md bg-white p-4">
           <canvas
             id="viewed"
             ref="viewedRef"
             aria-label="viewed"
             role="img"
+            height="500"
           />
         </div>
       </div>
       <div class="col-span-12 md:col-span-3">
-        <div class="relative shadow-sm rounded-md bg-white p-4 h-full">
+        <div class="relative shadow-sm rounded-md bg-white p-4">
           <canvas
             id="categories"
             ref="categoriesRef"
             aria-label="categories"
             role="img"
+            height="500"
           />
         </div>
       </div>
@@ -356,7 +358,7 @@ onMounted(() => {
  */
 const initData = async (): Promise<void> => {
   await Promise.all([
-    instance.get(SERVER_URL.statistics, { params: { page: 0, size: 8 } }).then(res => {
+    instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } }).then(res => {
       datas.value = res.data.content;
       construceChart()
     }),
@@ -374,7 +376,7 @@ const refresh = () => {
  * 查询评论信息
  */
 const retrieveComments = async () => {
-  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
+  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 9 } })
     .then(res => comments.value = res.data.content)
 }
 /**
@@ -397,53 +399,58 @@ const retrieveCategories = async () => {
 const construceChart = (): void => {
   let obj = {
     labels: Array<string>(),
+    pieLabels: Array<string>(),
+
+    pieDatas: Array<number>(),
+
     viewed: Array<number>(),
     likes: Array<number>(),
     comments: Array<number>(),
+    downloads: Array<number>(),
+
     overViewed: Array<number>(),
     overLikes: Array<number>(),
     overComments: Array<number>(),
     overDownloads: Array<number>()
   }
-  for (let i = 0; i < datas.value.length - 1; i++) {
-    obj.labels.unshift(new Date(datas.value[i].date).toLocaleDateString());
-    // data
-    obj.viewed.unshift(datas.value[i].viewed - datas.value[i + 1].viewed);
-    obj.likes.unshift(datas.value[i].likes - datas.value[i + 1].likes);
-    obj.comments.unshift(datas.value[i].comments - datas.value[i + 1].comments);
-    // over data
-    obj.overViewed.unshift(datas.value[i].overViewed)
-    obj.overComments.unshift(datas.value[i].overComments);
-    obj.overLikes.unshift(datas.value[i].overLikes);
-    obj.overDownloads.unshift(0)
-  }
 
-  let labels = obj.labels
+  datas.value.forEach(item => {
+    obj.labels.unshift(new Date(item.date).toLocaleDateString());
+    // data
+    obj.viewed.unshift(item.viewed);
+    obj.likes.unshift(item.likes);
+    obj.comments.unshift(item.comments);
+    obj.downloads.unshift(item.downloads)
+    // over data
+    obj.overViewed.unshift(item.overViewed)
+    obj.overComments.unshift(item.overComments);
+    obj.overLikes.unshift(item.overLikes);
+    obj.overDownloads.unshift(item.overDownloads)
+  })
+
   // 浏览量统计
-  createMiniChart(overViewedRef.value, labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
+  createMiniChart(overViewedRef.value, obj.labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
 
   // 评论数统计
-  createMiniChart(overCommentRef.value, labels, obj.overComments, "rgba(217, 119, 6, 0.8)");
+  createMiniChart(overCommentRef.value, obj.labels, obj.overComments, "rgba(217, 119, 6, 0.8)");
 
   // 喜欢数统计
-  createMiniChart(overLikesRef.value, labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
+  createMiniChart(overLikesRef.value, obj.labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
 
   // 下载数统计
-  createMiniChart(overDownloadsRef.value, labels, obj.overDownloads, "rgba(22, 163, 74, 0.8)");
+  createMiniChart(overDownloadsRef.value, obj.labels, obj.overDownloads, "rgba(22, 163, 74, 0.8)");
 
   // 每日访问量统计
-  createBarChart(viewedRef.value, labels, obj.viewed, obj.likes, obj.comments);
+  createBarChart(viewedRef.value, obj.labels, obj.viewed, obj.likes, obj.comments);
 
-  let pieLabels: Array<string> = []
-  let pieDatas: Array<number> = []
-  for (let i = 0; i < categories.value.length - 1; i++) {
-    pieLabels.push(categories.value[i].name)
-    pieDatas.push(categories.value[i].count)
-  }
+  categories.value.forEach(item => {
+    obj.pieLabels.push(item.name)
+    obj.pieDatas.push(item.count)
+  })
   let pieColors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#059669', '#0d9488',
     '#0891b2', '#0284c7', '#2563eb', '#4f46e5', '#7c3aed', '#9333ea', '#c026d3', '#db2777', '#e11d48']
   // 分类统计
-  createPieChart(categoriesRef.value, pieLabels, pieDatas, pieColors);
+  createPieChart(categoriesRef.value, obj.pieLabels, obj.pieDatas, pieColors);
 }
 
 </script>

@@ -7,8 +7,8 @@
       @click="isExpand = !isExpand"
     >
       <svg
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -30,7 +30,7 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="ml-auto mr-2"
+        class="ml-auto mr-4"
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
       </svg>
@@ -44,7 +44,7 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="ml-auto mr-2"
+        class="ml-auto mr-4"
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>

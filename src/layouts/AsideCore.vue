@@ -4,7 +4,7 @@
       v-if="data.children && data.children.length > 0"
       :to="data.expand.path"
       :title="data.name"
-      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 w-full"
+      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4"
       exacts
       @click="isExpand = !isExpand"
     >
@@ -21,7 +21,7 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span>{{ $t(data.name.toLowerCase()) }}</span>
+      <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>
       <svg
         v-if="isExpand"
         width="22"
@@ -32,7 +32,7 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="ml-auto mr-2"
+        class="hidden xl:block ml-auto mr-2"
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
       </svg>
@@ -46,7 +46,7 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="ml-auto mr-2"
+        class="hidden xl:block ml-auto mr-2"
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
       </svg>
@@ -59,8 +59,8 @@
       exact
     >
       <svg
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -71,7 +71,7 @@
       >
         <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
       </svg>
-      <span class="hidden xl:block w-full">{{ $t(data.name.toLowerCase()) }}</span>
+      <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
     <div
       v-show="isExpand"

@@ -17,7 +17,7 @@ for (let i = 0; i < 19; i++) {
         posts: Random.id(),
         content: Random.cparagraph(2),
         country: "china",
-        location: Random.city(),
+        location: Random.city(true),
         modifyTime: new Date(Random.date())
     })
 }

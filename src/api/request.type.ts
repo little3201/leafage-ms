@@ -79,7 +79,7 @@ export declare interface TreeNode {
   name: string,
   superior: string,
   children: TreeNode[],
-  expand: unknown
+  expand: object
 }
 
 export declare interface Category extends AbstractVO<string> {

@@ -1,8 +1,8 @@
 import { SERVER_URL } from './constant'
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
-import { useRouter } from 'vue-router'
+import router from '../router'
 
-const pendingPool = new Map()
+const pendingPool = new Map<string, AbortController>()
 
 const instance = axios.create({
     withCredentials: true,
@@ -15,7 +15,9 @@ instance.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         const controller = new AbortController()
         config.signal = controller.signal
-        pendingPool.set(config.url, controller)
+        if (config.url) {
+            pendingPool.set(config.url, controller)
+        }
         return config
     },
     (error: AxiosError) => {
@@ -27,15 +29,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (res: AxiosResponse) => {
         const { config } = res
-        pendingPool.delete(config.url)
+        if (config.url) {
+            pendingPool.delete(config.url)
+        }
         return res
     },
     (error: AxiosError) => {
         const { config } = error
-        if (!axios.isCancel(error)) {
+        if (!axios.isCancel(error) && config.url) {
             pendingPool.delete(config.url)
         }
-
         const { response } = error
         if (response) {
             // 状态码判断
@@ -43,7 +46,8 @@ instance.interceptors.response.use(
                 // 401: 未登录状态，403：无权限，跳转登录页
                 case 401:
                 case 403:
-                    useRouter().push('/signin')
+                    router.replace('/signin')
+                    // window.location.href="http://localhost:8760"
                     break
                 // 404/500请求不存在
                 case 404:
@@ -62,6 +66,9 @@ instance.interceptors.response.use(
                 error.message = '连接服务器失败！'
             }
         }
+
+        // 取消后续请求
+        pendingPool.clear()
         return Promise.reject(error)
     }
 )

@@ -48,7 +48,7 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
             labels: labels,
             datasets: [
                 {
-                    label: "访问量",
+                    label: "浏览量",
                     data: viewed,
                     backgroundColor: "rgba(37, 99, 235, 0.8)"
                 },
@@ -150,6 +150,63 @@ const createMiniChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
     return new Chart(canvas, config);
 }
 
+const createLineChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, color: string) => {
+    const config: ChartConfiguration = {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: '访问量',
+                    data: datas,
+                    backgroundColor: (context: ScriptableContext<ChartType>) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+
+                        if (!chartArea) {
+                            return;
+                        }
+                        return getGradient(ctx, chartArea, color);
+                    },
+                    pointBorderColor: 'transparent',
+                    borderColor: color,
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    color: 'black',
+                    font: {
+                        size: 20,
+                        weight: '600'
+                    },
+                    display: true,
+                    text: '本月每日访问量'
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0,
+                    hoverRadius: 2
+                }
+            },
+            interaction: {
+                intersect: false,
+            }
+        },
+    }
+    return new Chart(canvas, config);
+}
+
 const createPieChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, colors: Array<string>) => {
     const config: ChartConfiguration = {
         type: "pie",
@@ -185,4 +242,4 @@ const createPieChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas:
     return new Chart(canvas, config);
 }
 
-export { createMiniChart, createBarChart, createPieChart }
+export { createMiniChart, createBarChart, createLineChart, createPieChart }

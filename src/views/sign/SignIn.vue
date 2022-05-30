@@ -107,9 +107,9 @@ const router = useRouter();
 const onSubmit = async (): Promise<void> => {
   errMsg.value = ''
   if (!formData.username) {
-    errMsg.value = "username must not blank."
+    errMsg.value = "username must not be blank."
   } else if (!formData.password) {
-    errMsg.value = "password must not blank."
+    errMsg.value = "password must not be blank."
   } else {
     isLoad.value = true
     await instance.get("/check").then(() => {

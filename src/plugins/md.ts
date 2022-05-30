@@ -34,13 +34,12 @@ hljs.registerLanguage('xml', xml);
 marked.setOptions({
   renderer: new marked.Renderer(),
   highlight: function (code: string, lang: string) {
-    const language = hljs.getLanguage(lang) ? lang : 'bash';
+    const language = hljs.getLanguage(lang) ? lang : 'sh';
     return hljs.highlight(code, { language }).value;
   },
   pedantic: false,
   gfm: true,
   breaks: true,
-  sanitize: false,
   smartLists: true,
   xhtml: true
 })

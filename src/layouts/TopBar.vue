@@ -28,7 +28,7 @@
         </svg>
         <RouterLink
           :to="$route.path"
-          :class="{ 'text-blue-600': route === $route.name.toString().toLowerCase() }"
+          :class="{ 'text-blue-600': $route.name && route === $route.name.toString().toLowerCase() }"
         >
           {{ route ? $t(route) : "" }}
         </RouterLink>

@@ -140,7 +140,7 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-100': data.type === 'M', 'bg-blue-100': data.type === 'B', 'bg-pink-100': data.type === 'A' }"
+                :class="data.type === 'M' ? 'bg-indigo-100' : (data.type === 'B' ? 'bg-blue-100' : 'bg-pink-100')"
               >{{
                 data.type === 'M' ? 'menu' : (data.type === 'B' ? 'button' : 'api')
               }}</span>

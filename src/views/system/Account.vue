@@ -107,7 +107,7 @@
             <td class="px-4">
               <div
                 class="flex items-center justify-center"
-                :class="{ 'text-red-600': data.accountLocked, 'text-lime-600': !data.accountLocked }"
+                :class="data.accountLocked ? 'text-red-600': 'text-lime-600'"
               >
                 <svg
                   v-if="data.accountLocked"
@@ -161,7 +161,7 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(data.accountExpiresAt) > new Date(), 'bg-red-500': new Date(data.accountExpiresAt) <= new Date() }"
+                  :class="new Date(data.accountExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
               </div>
@@ -170,7 +170,7 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(data.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(data.credentialsExpiresAt) <= new Date() }"
+                  :class="new Date(data.credentialsExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{
                   new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
@@ -282,12 +282,12 @@ import Modal from "@/components/Modal.vue";
 import TreeItem from "@/components/tree/TreeItem.vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { AccountDetail, TreeNode } from "@/api/request.type";
+import type { AccountDetail, NodeData } from "@/api/request.type";
 
 // 模态框参数
 let isTree = ref(false);
 // 数据
-let treeDatas = ref<Array<TreeNode>>([]);
+let treeDatas = ref<Array<NodeData>>([]);
 let ticked = ref<Array<string>>([])
 let datas = ref<Array<AccountDetail>>([]);
 let related = reactive({

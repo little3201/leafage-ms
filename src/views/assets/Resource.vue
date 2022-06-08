@@ -124,7 +124,7 @@
             <td class="px-4">
               <span
                 class="text-xs px-2 py-1 rounded-md"
-                :class="{ 'bg-indigo-100': data.type === 'E', 'bg-blue-100': data.type === 'P', 'bg-pink-100': data.type === 'T' }"
+                :class="data.type === 'E' ? 'bg-indigo-100' : (data.type === 'P' ? 'bg-blue-100' : 'bg-pink-100')"
               >{{
                 data.type === 'E' ? 'epub' : (data.type === 'P' ? 'pdf' : 'txt')
               }}</span>

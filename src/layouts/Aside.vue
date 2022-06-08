@@ -47,11 +47,11 @@ import { PropType } from 'vue'
 
 import AsideCore from "@/layouts/AsideCore.vue";
 
-import type { TreeNode } from '@/api/request.type'
+import type { NodeData } from '@/api/request.type'
 
 defineProps({
   datas: {
-    type: Array as PropType<TreeNode[]>,
+    type: Array as PropType<NodeData[]>,
     default: () => {
       return []
     }

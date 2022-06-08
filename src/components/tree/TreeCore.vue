@@ -6,7 +6,7 @@
         v-if="data.children && data.children.length > 0"
         type="button"
         :title="data.name"
-        class="flex flex-1 items-center focus:outline-none w-20"
+        class="flex flex-1 items-center focus:outline-none"
         @click="$emit('open-operate')"
       >
         <svg
@@ -25,7 +25,6 @@
         </svg>
         <span class="py-1  mr-auto">{{ data.name }}</span>
         <svg
-          v-if="isExpand"
           width="16"
           height="16"
           viewBox="0 0 24 24"
@@ -34,21 +33,16 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          class="ml-4"
         >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
-        </svg>
-        <svg
-          v-else
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
+          <use
+            v-if="isExpand"
+            :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'"
+          />
+          <use
+            v-else
+            :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'"
+          />
         </svg>
       </button>
       <label
@@ -79,12 +73,12 @@
 <script lang="ts" setup>
 import { PropType } from "vue";
 
-import type { TreeNode } from "@/api/request.type";
+import type { NodeData } from "@/api/request.type";
 
 defineProps({
   data: {
-    type: Object as PropType<TreeNode>,
-    default:  () => {
+    type: Object as PropType<NodeData>,
+    default: () => {
       return {}
     }
   },

@@ -90,11 +90,11 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import type { TreeNode } from '@/api/request.type'
+import type { NodeData } from '@/api/request.type'
 
 defineProps({
   data: {
-    type: Object as PropType<TreeNode>,
+    type: Object as PropType<NodeData>,
     default: () => {
       return []
     },

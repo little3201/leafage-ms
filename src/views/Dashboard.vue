@@ -338,7 +338,7 @@ let overViewed = computed(() => {
 
   if (cur && yst) {
     if (yst.viewed == 0) {
-      return cur.viewed;
+      return cur.viewed * 100;
     } else {
       return ((cur.viewed - yst.viewed) / yst.viewed).toFixed(2)
     }
@@ -351,7 +351,7 @@ let overLikes = computed(() => {
 
   if (cur && yst) {
     if (yst.likes == 0) {
-      return cur.likes;
+      return cur.likes * 100;
     } else {
       return ((cur.likes - yst.likes) / yst.likes).toFixed(2)
     }
@@ -364,7 +364,7 @@ let overComments = computed(() => {
 
   if (cur && yst) {
     if (yst.comments == 0) {
-      return cur.comments;
+      return cur.comments * 100;
     } else {
       return ((cur.comments - yst.comments) / yst.comments).toFixed(2)
     }
@@ -377,7 +377,7 @@ let overDownloads = computed(() => {
 
   if (cur && yst) {
     if (yst.downloads == 0) {
-      return cur.downloads;
+      return cur.downloads * 100;
     } else {
       return ((cur.downloads - yst.downloads) / yst.downloads).toFixed(2)
     }

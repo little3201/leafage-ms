@@ -8,10 +8,10 @@
       <input
         :id="data.code"
         v-model="isChecked"
-        :indeterminate="isIndeterminate"
         type="checkbox"
+        :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
-        @click="track(data.code, isChecked)"
+        @change="track(data)"
       >
     </TreeCore>
     <div
@@ -23,7 +23,6 @@
         :key="child.code"
         :data="child"
         :ticked="innerTicked"
-        @tree-operate="track"
       />
     </div>
   </div>
@@ -32,12 +31,12 @@
 <script lang="ts" setup>
 import { ref, watch, PropType } from "vue";
 
-import type { TreeNode } from "@/api/request.type"
+import type { NodeData } from "@/api/request.type"
 import TreeCore from "./TreeCore.vue";
 
 const props = defineProps({
   data: {
-    type: Object as PropType<TreeNode>,
+    type: Object as PropType<NodeData>,
     default: () => {
       return {}
     }
@@ -60,17 +59,19 @@ let innerTicked = ref<Array<string>>([]);
 
 watch(
   () => [...props.ticked],
-  (newValue) => {
-    innerTicked.value = newValue
+  (newTicked) => {
+    innerTicked.value = newTicked
 
     let curdata = props.data
-    if(innerTicked.value.includes(curdata.code)){
+    if (innerTicked.value.includes(curdata.code)) {
       isChecked.value = true
+    } else {
+      isChecked.value = false
     }
   }
 )
 
-const track = (key: string, state: boolean) => {
+const track = (item: NodeData) => {
   let target = innerTicked.value
   const shouldEmit = props.ticked !== void 0
 
@@ -78,15 +79,17 @@ const track = (key: string, state: boolean) => {
     target = target.slice()
   }
 
-  if (state) {
-    target.push(key)
+  if (isChecked.value) {
+    target.push(item.code)
   } else {
-    target = target.filter(k => key !== k)
+    target = target.filter(k => item.code !== k)
   }
 
   if (shouldEmit === true) {
     emit('update:ticked', target)
   }
+
+  console.log("ticked: ", target)
 }
 
 const openOperate = () => {

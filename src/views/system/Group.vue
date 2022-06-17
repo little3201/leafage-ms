@@ -334,7 +334,7 @@
             <td class="px-4">
               <div
                 class="flex items-center justify-center"
-                :class="{ 'text-red-600': account.accountLocked, 'text-lime-600': !account.accountLocked }"
+                :class="account.accountLocked ? 'text-red-600' : 'text-lime-600'"
               >
                 <svg
                   v-if="account.accountLocked"
@@ -388,7 +388,7 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(account.accountExpiresAt) > new Date(), 'bg-red-500': new Date(account.accountExpiresAt) <= new Date() }"
+                  :class="new Date(account.accountExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{
                   new Date(account.accountExpiresAt).toLocaleString('zh', { hour12: false })
@@ -399,7 +399,7 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="{ 'bg-lime-500': new Date(account.credentialsExpiresAt) > new Date(), 'bg-red-500': new Date(account.credentialsExpiresAt) <= new Date() }"
+                  :class="new Date(account.credentialsExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{
                   new Date(account.credentialsExpiresAt).toLocaleString('zh', { hour12: false })

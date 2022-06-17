@@ -74,11 +74,11 @@ export declare interface Notification extends AbstractVO<string> {
   receiver: string
 }
 
-export declare interface TreeNode {
+export declare interface NodeData {
   code: string,
   name: string,
   superior: string,
-  children: TreeNode[],
+  children: NodeData[],
   expand: unknown
 }
 

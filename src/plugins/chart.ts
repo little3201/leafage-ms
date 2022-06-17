@@ -75,7 +75,7 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
                         weight: '600'
                     },
                     display: true,
-                    text: '最近7日统计数据'
+                    text: '7日帖子访问统计数据'
                 }
             }
         },

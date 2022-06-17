@@ -254,7 +254,7 @@ import Modal from "@/components/Modal.vue"
 import TreeItem from "@/components/tree/TreeItem.vue"
 
 import { instance, SERVER_URL } from "@/api"
-import type { Role, TreeNode } from "@/api/request.type"
+import type { Role, NodeData } from "@/api/request.type"
 
 // 模态框参数
 let isEdit = ref(false)
@@ -272,7 +272,7 @@ let roleData = ref<Role>({
 })
 let dataCode = ref("")
 let superiors = ref<Array<Role>>([])
-let treeDatas = ref<Array<TreeNode>>([])
+let treeDatas = ref<Array<NodeData>>([])
 let ticked = ref<Array<string>>([])
 let datas = ref<Array<Role>>([])
 
@@ -368,11 +368,10 @@ const treeOperate = async (operate: boolean) => {
 };
 /**
  * 提交
- * @param tracked  选中的数据
  */
-const treeCommit = async (tracked: Array<string>) => {
-  if (tracked && tracked.length > 0) {
-    alert("commit " + tracked)
+const treeCommit = async () => {
+  if (ticked.value && ticked.value.length > 0) {
+    alert("commit " + ticked.value)
   }
   isTree.value = false;
 };

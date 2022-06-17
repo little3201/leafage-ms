@@ -119,7 +119,7 @@
               >
                 <button
                   class="flex items-center mr-3 focus:outline-none"
-                  :class="{ 'text-green-600': !data.enabled, 'text-red-600': data.enabled }"
+                  :class="data.enabled ? 'text-red-600' : 'text-green-600'"
                   @click="power(data.code)"
                 >
                   <svg

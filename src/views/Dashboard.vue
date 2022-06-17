@@ -340,7 +340,7 @@ let overViewed = computed(() => {
     if (yst.viewed == 0) {
       return cur.viewed * 100;
     } else {
-      return ((cur.viewed - yst.viewed) / yst.viewed).toFixed(2)
+      return Math.floor((cur.viewed - yst.viewed) / yst.viewed * 100) / 100
     }
   }
   return 0
@@ -353,7 +353,7 @@ let overLikes = computed(() => {
     if (yst.likes == 0) {
       return cur.likes * 100;
     } else {
-      return ((cur.likes - yst.likes) / yst.likes).toFixed(2)
+      return Math.floor((cur.likes - yst.likes) / yst.likes * 100) / 100
     }
   }
   return 0
@@ -366,7 +366,7 @@ let overComments = computed(() => {
     if (yst.comments == 0) {
       return cur.comments * 100;
     } else {
-      return ((cur.comments - yst.comments) / yst.comments).toFixed(2)
+      return Math.floor((cur.comments - yst.comments) / yst.comments * 100) / 100
     }
   }
   return 0
@@ -379,7 +379,7 @@ let overDownloads = computed(() => {
     if (yst.downloads == 0) {
       return cur.downloads * 100;
     } else {
-      return ((cur.downloads - yst.downloads) / yst.downloads).toFixed(2)
+      return Math.floor((cur.downloads - yst.downloads) / yst.downloads * 100) / 100
     }
   }
   return 0
@@ -477,6 +477,19 @@ const construceChart = (): void => {
     obj.overLikes.unshift(item.overLikes);
     obj.overDownloads.unshift(item.overDownloads)
   })
+
+  // 替换最新统计
+  obj.overViewed.pop();
+  obj.overViewed.push(overViewed.value)
+
+  obj.overLikes.pop();
+  obj.overLikes.push(overLikes.value)
+
+  obj.overComments.pop();
+  obj.overComments.push(overComments.value)
+
+  obj.overDownloads.pop();
+  obj.overDownloads.push(overDownloads.value)
 
   // 浏览量统计
   createMiniChart(overViewedRef.value, obj.labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");

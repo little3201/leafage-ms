@@ -79,7 +79,7 @@ export declare interface NodeData {
   name: string,
   superior: string,
   children: NodeData[],
-  expand: unknown
+  expand: any | unknown
 }
 
 export declare interface Category extends AbstractVO<string> {

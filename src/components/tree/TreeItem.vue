@@ -11,7 +11,7 @@
         type="checkbox"
         :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
-        @change="tick(data)"
+        @change="track(data)"
       >
     </TreeCore>
     <div
@@ -71,11 +71,7 @@ watch(
   }
 )
 
-const tick = (item: NodeData) => {
-  track(item, isChecked.value)
-}
-
-const track = (item: NodeData, state: boolean) => {
+const track = (item: NodeData) => {
   let target = innerTicked.value
   const shouldEmit = props.ticked !== void 0
 
@@ -83,7 +79,7 @@ const track = (item: NodeData, state: boolean) => {
     target = target.slice()
   }
 
-  if (state) {
+  if (isChecked.value) {
     target.push(item.code)
   } else {
     target = target.filter(k => item.code !== k)

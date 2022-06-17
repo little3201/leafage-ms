@@ -45,10 +45,10 @@
             <span class="text-base text-gray-600 ml-2">{{ $t('viewed') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-              :class="latest.overViewed > 0 ? 'bg-lime-500' : 'bg-red-600'"
+              :class="overViewed > 0 ? 'bg-lime-500' : 'bg-red-600'"
               title="overViewed"
             >
-              {{ latest.overViewed }}%
+              {{ overViewed }}%
               <svg
                 width="16"
                 height="16"
@@ -60,7 +60,7 @@
                 stroke-linejoin="round"
               >
                 <use
-                  v-if="latest.overViewed > 0"
+                  v-if="overViewed > 0"
                   :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                 />
                 <use
@@ -104,10 +104,10 @@
             <span class="text-base text-gray-600 ml-2">{{ $t('comments') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-              :class="latest.overComments > 0 ? 'bg-lime-500' : 'bg-red-600'"
+              :class="overComments > 0 ? 'bg-lime-500' : 'bg-red-600'"
               title="overComment"
             >
-              {{ latest.overComments }}%
+              {{ overComments }}%
               <svg
                 width="16"
                 height="16"
@@ -119,7 +119,7 @@
                 stroke-linejoin="round"
               >
                 <use
-                  v-if="latest.overComments > 0"
+                  v-if="overComments > 0"
                   :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                 />
                 <use
@@ -163,10 +163,10 @@
             <span class="text-base text-gray-600 ml-2">{{ $t('likes') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-              :class="latest.overLikes > 0 ? 'bg-lime-500' : 'bg-red-600'"
+              :class="overLikes > 0 ? 'bg-lime-500' : 'bg-red-600'"
               title="overLikes"
             >
-              {{ latest.likes }}%
+              {{ overLikes }}%
               <svg
                 width="16"
                 height="16"
@@ -178,7 +178,7 @@
                 stroke-linejoin="round"
               >
                 <use
-                  v-if="latest.overLikes > 0"
+                  v-if="overLikes > 0"
                   :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                 />
                 <use
@@ -223,9 +223,9 @@
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white"
               title="overDownloads"
-              :class="latest.overDownloads > 0 ? 'bg-lime-500' : 'bg-red-600'"
+              :class="overDownloads > 0 ? 'bg-lime-500' : 'bg-red-600'"
             >
-              {{ total.downloads }}%
+              {{ overDownloads }}%
               <svg
                 width="16"
                 height="16"
@@ -237,7 +237,7 @@
                 stroke-linejoin="round"
               >
                 <use
-                  v-if="latest.overLikes"
+                  v-if="overDownloads > 0"
                   :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
                 />
                 <use
@@ -332,7 +332,58 @@ let total = ref<StatisticsTotal>({
   comments: 0,
   downloads: 0
 })
-let latest = computed(() => datas.value[0] || {});
+let overViewed = computed(() => {
+  let cur = datas.value[0];
+  let yst = datas.value[1];
+
+  if (cur && yst) {
+    if (yst.viewed == 0) {
+      return cur.viewed;
+    } else {
+      return ((cur.viewed - yst.viewed) / yst.viewed).toFixed(2)
+    }
+  }
+  return 0
+});
+let overLikes = computed(() => {
+  let cur = datas.value[0];
+  let yst = datas.value[1];
+
+  if (cur && yst) {
+    if (yst.likes == 0) {
+      return cur.likes;
+    } else {
+      return ((cur.likes - yst.likes) / yst.likes).toFixed(2)
+    }
+  }
+  return 0
+});
+let overComments = computed(() => {
+  let cur = datas.value[0];
+  let yst = datas.value[1];
+
+  if (cur && yst) {
+    if (yst.comments == 0) {
+      return cur.comments;
+    } else {
+      return ((cur.comments - yst.comments) / yst.comments).toFixed(2)
+    }
+  }
+  return 0
+});
+let overDownloads = computed(() => {
+  let cur = datas.value[0];
+  let yst = datas.value[1];
+
+  if (cur && yst) {
+    if (yst.downloads == 0) {
+      return cur.downloads;
+    } else {
+      return ((cur.downloads - yst.downloads) / yst.downloads).toFixed(2)
+    }
+  }
+  return 0
+});
 
 // ref
 const viewedRef = ref();

@@ -20,6 +20,7 @@
             type="text"
             class="block w-80 border-gray-300 py-1 rounded-md"
             :disabled="!editUsername"
+            aria-label="username"
           >
           <button
             type="button"
@@ -71,6 +72,7 @@
             type="email"
             class="block w-80 border-gray-300 py-1 rounded-md"
             :disabled="!editEmail"
+            aria-label="email"
           >
           <button
             type="button"
@@ -118,6 +120,7 @@
               name="comments"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="comments"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -137,6 +140,7 @@
               name="candidates"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="candidates"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -156,6 +160,7 @@
               name="offers"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="offers"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -181,9 +186,10 @@
         <div class="flex items-center">
           <input
             id="push-everything"
-            name="push-notifications"
+            name="push-everything"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-everything"
           >
           <label
             for="push-everything"
@@ -193,9 +199,10 @@
         <div class="flex items-center">
           <input
             id="push-email"
-            name="push-notifications"
+            name="push-email"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-email"
           >
           <label
             for="push-email"
@@ -208,6 +215,7 @@
             name="push-notifications"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-notifications"
           >
           <label
             for="push-nothing"

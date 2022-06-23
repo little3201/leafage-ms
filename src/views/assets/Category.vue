@@ -156,6 +156,7 @@
               :placeholder="$t('name')"
               required
               autofocus
+              aria-label="name"
             >
           </div>
           <div class="col-span-12">

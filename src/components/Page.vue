@@ -109,6 +109,7 @@
       <select
         v-model.number="size"
         class="py-1 border border-gray-300 rounded-md"
+        aria-label="page size"
       >
         <option>10</option>
         <option>15</option>

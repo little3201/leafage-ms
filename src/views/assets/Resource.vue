@@ -190,6 +190,7 @@
               :placeholder="$t('title')"
               required
               autofocus
+              aria-label="title"
             >
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
@@ -255,12 +256,13 @@
                       />
                     </svg>
                     <input
-                      id="file-upload"
-                      name="resource_cover"
+                      id="cover-upload"
+                      name="cover-upload"
                       multiple
                       type="file"
                       class="sr-only"
                       accept="image/png, image/jpeg, image/jpg, vedio/mp4"
+                      aria-label="cover-upload"
                       @change="uploadImage($event)"
                     >
                   </label>
@@ -281,8 +283,9 @@
               v-model="resourceData.category"
               name="category"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="resource category"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option
@@ -303,8 +306,9 @@
               v-model="resourceData.type"
               name="type"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="type"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option value="E">

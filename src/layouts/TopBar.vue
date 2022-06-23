@@ -41,6 +41,7 @@
           name="search"
           class="w-56 py-1.5 border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           :placeholder="$t('search')"
+          aria-label="search"
         >
         <svg
           width="20"

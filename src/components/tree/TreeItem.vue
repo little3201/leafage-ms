@@ -11,6 +11,7 @@
         type="checkbox"
         :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
+        aria-label="checked"
         @change="track(data)"
       >
     </TreeCore>

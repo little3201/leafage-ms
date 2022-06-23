@@ -176,6 +176,7 @@
               maxlength="50"
               required
               autofocus
+              aria-label="title"
             >
           </div>
           <div class="row-span-3 col-span-12 sm:col-span-4">
@@ -238,11 +239,12 @@
                     />
                   </svg>
                   <input
-                    id="file-upload"
-                    name="posts_cover"
+                    id="cover-upload"
+                    name="cover-upload"
                     type="file"
                     class="sr-only"
                     accept="image/png, image/jpeg, image/jpg"
+                    aria-label="cover-upload"
                     @change="uploadImage($event)"
                   >
                   <p class="text-xs text-gray-500">png, jpeg, jpg</p>
@@ -260,6 +262,7 @@
               type="text"
               name="tags"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="tag"
               :placeholder="$t('tags')"
               @keydown.enter="addTag"
             >
@@ -272,8 +275,9 @@
               name="category"
               required
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="posts category"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option

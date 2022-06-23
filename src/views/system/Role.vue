@@ -198,10 +198,10 @@
               id="superior"
               v-model="roleData.superior"
               name="superior"
-              aria-label="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="role superior"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option

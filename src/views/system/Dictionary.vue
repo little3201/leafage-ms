@@ -168,6 +168,7 @@
               placeholder="Name"
               required
               autofocus
+              aria-label="name"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -179,6 +180,7 @@
               type="text"
               class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Alias"
+              aria-label="alias"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -188,8 +190,9 @@
               v-model="dictData.superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="dictionary superior"
             >
-              <option value="undefined">
+              <option selected>
                 ---请选择---
               </option>
               <option

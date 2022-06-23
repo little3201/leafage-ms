@@ -19,34 +19,37 @@
               type="text"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
+              aria-label="password"
             >
           </div>
           <div class="text-sm">
             <label
-              for="npassword"
+              for="newpassword"
               class="font-medium text-gray-700"
             >New password</label>
             <input
-              id="npassword"
+              id="newpassword"
               v-model.trim="pwd.new"
-              name="npassword"
+              name="newpassword"
               type="text"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
+              aria-label="new password"
             >
           </div>
           <div class="text-sm">
             <label
-              for="cnpassword"
+              for="confirmnewpassword"
               class="font-medium text-gray-700"
             >Confirm new password</label>
             <input
-              id="cnpassword"
+              id="confirmnewpassword"
               v-model.trim="pwd.confirm"
-              name="cnpassword"
+              name="confirmnewpassword"
               type="text"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
+              aria-label="confirm new password"
             >
           </div>
           <div>
@@ -195,6 +198,7 @@
               name="github"
               type="checkbox"
               class="block border-gray-300 rounded cursor-pointer"
+              aria-label="github"
             >
           </div>
           <div class="ml-3 text-sm">

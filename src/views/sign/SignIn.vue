@@ -14,6 +14,7 @@
           required
           autofocus
           autocomplete="off"
+          aria-label="username"
         >
         <input
           v-model="formData.password"
@@ -23,6 +24,7 @@
           placeholder="Password"
           required
           autocomplete="off"
+          aria-label="password"
         >
         <p
           v-show="errMsg.length > 0"
@@ -37,6 +39,7 @@
             id="remember-me"
             type="checkbox"
             class="rounded border-gray-300 shadow-sm mr-2"
+            aria-label="remember me"
           >
           <label
             class="cursor-pointer"

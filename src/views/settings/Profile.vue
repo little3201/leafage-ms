@@ -14,17 +14,18 @@
         <div class="flex">
           <div class="mt-4 text-sm">
             <label
-              for="password"
+              for="nickname"
               class="font-medium text-gray-700"
             >Nicknmae</label>
             <div class="flex items-center space-x-4 mt-1">
               <input
-                id="password"
+                id="nickname"
                 v-model="account.nickname"
-                name="password"
+                name="nickname"
                 type="text"
                 class="block border-gray-300 py-1 rounded-md"
                 :disabled="!isEdit"
+                aria-label="nickname"
               >
               <button
                 type="button"
@@ -102,6 +103,7 @@
                     type="file"
                     class="sr-only"
                     accept="image/png, image/jpeg, image/jpg"
+                    aria-label="avatar"
                     @click="uploadImage($event)"
                   >
                   <p class="text-xs text-gray-500">png, jpeg, jpg</p>
@@ -131,6 +133,7 @@
                   name="firstname"
                   type="text"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="firstname"
                 >
               </div>
               <div>
@@ -144,6 +147,7 @@
                   name="lastname"
                   type="text"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="lastname"
                 >
               </div>
             </div>
@@ -158,8 +162,9 @@
                   v-model="user.gender"
                   name="gender"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="gender"
                 >
-                  <option value="undefined">
+                  <option selected>
                     ---{{ $t('select') }}---
                   </option>
                   <option value="F">
@@ -181,6 +186,7 @@
                   name="birthday"
                   type="date"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="birthday"
                 >
               </div>
               <div>
@@ -193,8 +199,9 @@
                   v-model="user.degree"
                   name="degree"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="degree"
                 >
-                  <option value="undefined">
+                  <option selected>
                     ---{{ $t('select') }}---
                   </option>
                   <option
@@ -218,8 +225,9 @@
                   v-model="user.nationality"
                   name="nationality"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="nationality"
                 >
-                  <option value="undefined">
+                  <option selected>
                     ---{{ $t('select') }}---
                   </option>
                   <option
@@ -242,6 +250,7 @@
                   name="hobbies"
                   type="text"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="hobbies"
                 >
               </div>
             </div>
@@ -257,6 +266,7 @@
                   name="company"
                   type="text"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="company"
                 >
               </div>
               <div>
@@ -270,6 +280,7 @@
                   name="position"
                   type="text"
                   class="border-gray-300 py-1 mt-1 rounded-md w-full"
+                  aria-label="position"
                 >
               </div>
             </div>

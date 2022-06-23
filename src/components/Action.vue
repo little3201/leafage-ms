@@ -6,6 +6,8 @@
     <slot />
     <button
       v-if="needEdit"
+      name="edit"
+      aria-label="edit"
       type="button"
       class="flex items-center mr-3 focus:outline-none"
       @click="$emit('editAction', true)"
@@ -28,6 +30,8 @@
     <button
       v-if="needDel"
       type="button"
+      name="del"
+      aria-label="del"
       class="flex items-center text-red-600 focus:outline-none"
       @click="$emit('delAction', true)"
     >

@@ -5,6 +5,9 @@
         {{ $t('posts') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -107,8 +110,8 @@
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"
                 class="font-medium hover:underline"
-                v-text="data.title"
-              />
+              >{{ data.title }}
+              </a>
             </td>
             <td
               class="px-4"
@@ -176,6 +179,7 @@
               maxlength="50"
               required
               autofocus
+              aria-label="title"
             >
           </div>
           <div class="row-span-3 col-span-12 sm:col-span-4">
@@ -189,6 +193,8 @@
               >
                 <button
                   type="button"
+                  name="remove-cover"
+                  aria-label="remove-cover"
                   class="text-white focus:outline-none"
                   @click="removeCover"
                 >
@@ -238,11 +244,12 @@
                     />
                   </svg>
                   <input
-                    id="file-upload"
-                    name="posts_cover"
+                    id="cover-upload"
+                    name="cover-upload"
                     type="file"
                     class="sr-only"
                     accept="image/png, image/jpeg, image/jpg"
+                    aria-label="cover-upload"
                     @change="uploadImage($event)"
                   >
                   <p class="text-xs text-gray-500">png, jpeg, jpg</p>
@@ -260,6 +267,7 @@
               type="text"
               name="tags"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="tag"
               :placeholder="$t('tags')"
               @keydown.enter="addTag"
             >
@@ -272,8 +280,9 @@
               name="category"
               required
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="posts category"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option
@@ -314,6 +323,8 @@
             <label for="content">{{ $t('content') }}</label>
             <button
               type="button"
+              name="preview"
+              aria-label="preview"
               class="top-3 right-1 absolute focus:outline-none"
               @click="preview = !preview"
             >

@@ -16,6 +16,7 @@
           required
           autofocus
           autocomplete="off"
+          aria-label="email"
         >
         <input
           v-model.trim="formData.password"
@@ -24,6 +25,7 @@
           placeholder="Password"
           required
           autocomplete="off"
+          aria-label="password"
         >
         <input
           v-model.trim="confirmPassword"
@@ -32,6 +34,7 @@
           placeholder="Confirm Password"
           required
           autocomplete="off"
+          aria-label="confirm password"
         >
       </div>
       <div class="flex items-center text-gray-700">
@@ -39,6 +42,7 @@
           v-model="agree"
           type="checkbox"
           class="rounded border-gray-300 shadow-sm mr-2"
+          aria-label="agree"
         >
         <label class="cursor-pointer">I agree to the Leafage</label>
         <a
@@ -48,6 +52,8 @@
       </div>
       <button
         type="submit"
+        name="submit"
+        aria-label="submit"
         class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
         @click="onSubmit"
       >

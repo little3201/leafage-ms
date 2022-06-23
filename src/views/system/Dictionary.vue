@@ -5,6 +5,9 @@
         {{ $t('dictionary') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -118,6 +121,9 @@
                 @edit-action="modalOperate"
               >
                 <button
+                  type="button"
+                  name="enable"
+                  aria-label="enable"
                   class="flex items-center mr-3 focus:outline-none"
                   :class="data.enabled ? 'text-red-600' : 'text-green-600'"
                   @click="power(data.code)"
@@ -168,6 +174,7 @@
               placeholder="Name"
               required
               autofocus
+              aria-label="name"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -179,6 +186,7 @@
               type="text"
               class="mt-1 w-full block rounded-md border-gray-300"
               placeholder="Alias"
+              aria-label="alias"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -188,9 +196,10 @@
               v-model="dictData.superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="dictionary superior"
             >
-              <option value="undefined">
-                ---请选择---
+              <option selected>
+                ---{{ $t('select') }}---
               </option>
               <option
                 v-for="superior in superiors"

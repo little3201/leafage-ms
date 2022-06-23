@@ -14,6 +14,7 @@
           required
           autofocus
           autocomplete="off"
+          aria-label="username"
         >
         <input
           v-model="formData.password"
@@ -23,6 +24,7 @@
           placeholder="Password"
           required
           autocomplete="off"
+          aria-label="password"
         >
         <p
           v-show="errMsg.length > 0"
@@ -37,6 +39,7 @@
             id="remember-me"
             type="checkbox"
             class="rounded border-gray-300 shadow-sm mr-2"
+            aria-label="remember me"
           >
           <label
             class="cursor-pointer"
@@ -50,6 +53,8 @@
       </div>
       <button
         type="submit"
+        name="submit"
+        aria-label="submit"
         :disabled="isLoad"
         class="w-full inline-flex items-center justify-center mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
         @click="onSubmit"

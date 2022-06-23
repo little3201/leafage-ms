@@ -4,7 +4,6 @@
       <div class="xl:grid grid-cols-2 gap-4">
         <div class="hidden xl:flex flex-col h-screen my-auto md:ml-36 relative">
           <RouterLink
-            title="leafage"
             to="/"
             class="flex items-center z-0 absolute top-24"
           >
@@ -38,9 +37,11 @@
           </RouterLink>
           <figure class="my-auto">
             <img
+              alt="leafage"
               src="/svg/illustration.svg"
               class="w-full h-full"
-              alt="leafage"
+              width="660"
+              height="460"
             >
           </figure>
           <div class="z-0 absolute bottom-24">
@@ -66,13 +67,13 @@
 
 <style scoped>
 @media (min-width: 1280px) {
-    .login:before {
-        content: "";
-        margin-left: -48%;
-        min-width: 768px;
-        @apply absolute w-full h-full bg-no-repeat bg-right;
-        background-image: url(/svg/background.svg);
-        background-size: auto 100%;
-    }
+  .login:before {
+    content: "";
+    margin-left: -48%;
+    min-width: 768px;
+    @apply absolute w-full h-full bg-no-repeat bg-right;
+    background-image: url(/svg/background.svg);
+    background-size: auto 100%;
+  }
 }
 </style>

@@ -5,6 +5,9 @@
         {{ $t('authority') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -168,6 +171,9 @@
               >
                 <button
                   v-if="data.count > 0"
+                  type="button"
+                  name="role"
+                  aria-label="role"
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="previewOperation(true, data.code)"
                 >

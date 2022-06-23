@@ -5,6 +5,9 @@
         {{ $t('resource') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -114,8 +117,8 @@
                 href="https://www.leafage.top/resource"
                 target="_blank"
                 class="font-medium hover:underline"
-                v-text="data.title"
-              />
+              >{{ data.title }}
+              </a>
             </td>
             <td
               class="px-4"
@@ -190,6 +193,7 @@
               :placeholder="$t('title')"
               required
               autofocus
+              aria-label="title"
             >
           </div>
           <div class="col-span-12 sm:col-span-5 row-span-3 mb-1">
@@ -202,7 +206,8 @@
                 class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
               >
                 <button
-                  title="remove"
+                  name="remove-cover"
+                  aria-label="remove-cover"
                   type="button"
                   class="text-white focus:outline-none"
                   @click="removeCover"
@@ -255,12 +260,13 @@
                       />
                     </svg>
                     <input
-                      id="file-upload"
-                      name="resource_cover"
+                      id="cover-upload"
+                      name="cover-upload"
                       multiple
                       type="file"
                       class="sr-only"
                       accept="image/png, image/jpeg, image/jpg, vedio/mp4"
+                      aria-label="cover-upload"
                       @change="uploadImage($event)"
                     >
                   </label>
@@ -281,8 +287,9 @@
               v-model="resourceData.category"
               name="category"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="resource category"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option
@@ -303,8 +310,9 @@
               v-model="resourceData.type"
               name="type"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="type"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option value="E">

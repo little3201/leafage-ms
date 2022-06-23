@@ -5,6 +5,9 @@
         {{ $t('role') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -129,7 +132,8 @@
               >
                 <button
                   type="button"
-                  title="Authority"
+                  name="grant"
+                  aria-label="grant"
                   class="flex items-center mr-3 text-sky-600 focus:outline-none"
                   @click.prevent="treeOperate(true)"
                 >
@@ -198,10 +202,10 @@
               id="superior"
               v-model="roleData.superior"
               name="superior"
-              aria-label="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="role superior"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option

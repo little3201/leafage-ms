@@ -5,6 +5,9 @@
         {{ $t('account') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -96,6 +99,8 @@
                     :src="data.avatar"
                     alt="avatar"
                     class="rounded-full w-8 h-8 my-auto"
+                    width="32"
+                    height="32"
                   >
                 </figure>
                 <span class="ml-2">{{ data.username }}</span>
@@ -184,7 +189,8 @@
               >
                 <button
                   type="button"
-                  title="groups"
+                  name="group"
+                  aria-label="group"
                   class="flex items-center mr-3 text-cyan-600 focus:outline-none"
                   @click="treeOperate(true, 'group', data.username)"
                 >
@@ -204,6 +210,9 @@
                   {{ $t('group') }}
                 </button>
                 <button
+                  type="button"
+                  name="role"
+                  aria-label="role"
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="treeOperate(true, 'role', data.username)"
                 >
@@ -224,6 +233,9 @@
                 </button>
                 <button
                   v-if="data.accountLocked"
+                  type="button"
+                  name="unlock"
+                  aria-label="unlock"
                   class="flex items-center mr-3 text-green-600 focus:outline-none"
                   @click="unlock(data.username)"
                 >

@@ -12,6 +12,8 @@
         <button
           v-if="!needFooter"
           type="button"
+          name="close"
+          aria-label="close"
           class="inline-flex items-center justify-center rounded-bl-full bg-gray-400 opacity-70 absolute top-0 right-0 w-12 h-12"
           @click="closeOperation"
         >
@@ -43,6 +45,8 @@
         >
           <button
             type="button"
+            name="confirm"
+            aria-label="confirm"
             class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait"
             :class="
               isConfirm
@@ -55,6 +59,8 @@
           </button>
           <button
             type="button"
+            name="cancle"
+            aria-label="cancle"
             class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
             @click="cancelOperation"
           >

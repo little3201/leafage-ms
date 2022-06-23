@@ -3,7 +3,6 @@
     <div class="hidden md:inline-flex md:flex-grow items-center">
       <RouterLink
         to="/"
-        class
       >
         {{ $t('application') }}
       </RouterLink>
@@ -41,6 +40,7 @@
           name="search"
           class="w-56 py-1.5 border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
           :placeholder="$t('search')"
+          aria-label="search"
         >
         <svg
           width="20"
@@ -60,6 +60,8 @@
       <div class="relative inline-flex items-center">
         <button
           type="button"
+          name="notify"
+          aria-label="notify"
           class="focus:outline-none"
           @click="operate('notify')"
         >
@@ -126,6 +128,8 @@
       <div class="relative inline-flex items-center">
         <button
           type="button"
+          name="language"
+          aria-label="language"
           class="focus:outline-none"
           @click="operate('language')"
         >
@@ -149,6 +153,8 @@
           <button
             type="button"
             class="flex items-center w-full px-2 py-1"
+            name="en-US"
+            aria-label="en-US"
             :class="{ 'text-blue-600': locale == 'en-US' }"
             @click="switchLanguage('en-US')"
           >
@@ -166,6 +172,8 @@
             type="button"
             class="flex items-center w-full hover:text-blue-600 px-2 py-1"
             :class="{ 'text-blue-600': locale == 'zh-CN' }"
+            name="zh-CN"
+            aria-label="zh-CN"
             @click="switchLanguage('zh-CN')"
           >
             <figure class="h-8 w-8 inline-flex items-center">
@@ -184,6 +192,8 @@
         <button
           v-if="account.username && account.username.length > 0"
           type="button"
+          name="account"
+          aria-label="account"
           class="rounded-full w-8 h-8 text-center inline-flex items-center bg-white shadow focus:outline-none"
           @click="operate('account')"
         >
@@ -192,6 +202,8 @@
             :alt="account.nickname"
             :src="account.avatar"
             class="rounded-full"
+            width="32"
+            height="32"
           >
           <span
             v-else
@@ -263,6 +275,8 @@
             </RouterLink>
             <button
               type="button"
+              name="help"
+              aria-label="help"
               class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
             >
               <svg
@@ -284,6 +298,8 @@
           <div class="text-sm pt-1">
             <button
               type="button"
+              name="sign-out"
+              aria-label="sign-out"
               class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
               @click.prevent="signout"
             >

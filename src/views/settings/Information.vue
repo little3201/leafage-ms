@@ -20,9 +20,12 @@
             type="text"
             class="block w-80 border-gray-300 py-1 rounded-md"
             :disabled="!editUsername"
+            aria-label="username"
           >
           <button
             type="button"
+            name="usernmae"
+            aria-label="username"
             class="text-blue-600 hover:underline"
             @click="editAllow(1)"
           >
@@ -71,9 +74,12 @@
             type="email"
             class="block w-80 border-gray-300 py-1 rounded-md"
             :disabled="!editEmail"
+            aria-label="email"
           >
           <button
             type="button"
+            name="email"
+            aria-label="email"
             class="text-blue-600 hover:underline"
             @click="editAllow(2)"
           >
@@ -95,7 +101,7 @@
       </p>
       <div class="mt-4">
         <button
-          id="phone"
+          aria-label="phone"
           name="phone"
           type="button"
           class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
@@ -118,6 +124,7 @@
               name="comments"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="comments"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -137,6 +144,7 @@
               name="candidates"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="candidates"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -156,6 +164,7 @@
               name="offers"
               type="checkbox"
               class="border-gray-300 rounded cursor-pointer"
+              aria-label="offers"
             >
           </div>
           <div class="ml-3 text-sm">
@@ -181,9 +190,10 @@
         <div class="flex items-center">
           <input
             id="push-everything"
-            name="push-notifications"
+            name="push-everything"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-everything"
           >
           <label
             for="push-everything"
@@ -193,9 +203,10 @@
         <div class="flex items-center">
           <input
             id="push-email"
-            name="push-notifications"
+            name="push-email"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-email"
           >
           <label
             for="push-email"
@@ -208,6 +219,7 @@
             name="push-notifications"
             type="radio"
             class="border-gray-300 cursor-pointer"
+            aria-label="push-notifications"
           >
           <label
             for="push-nothing"
@@ -225,6 +237,8 @@
       </p>
       <button
         type="submit"
+        name="submit"
+        aria-label="submit"
         class="text-red-600 border block mt-4 border-red-400 hover:bg-red-600 hover:text-white px-2 py-1 rounded-md"
         @click="onSubmit"
       >

@@ -5,6 +5,9 @@
         {{ $t('group') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -149,6 +152,9 @@
               >
                 <button
                   v-if="data.count > 0"
+                  type="button"
+                  name="crew"
+                  aria-label="crew"
                   class="flex items-center mr-3 text-amber-600 focus:outline-none"
                   @click="previewOperation(true)"
                 >
@@ -202,6 +208,7 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('name')"
               autofocus
+              aria-label="name"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -214,6 +221,7 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('alias')"
               autofocus
+              aria-label="alias"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -223,8 +231,9 @@
               v-model.lazy="groupData.superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="group superior"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option
@@ -242,8 +251,9 @@
               v-model.lazy="groupData.principal"
               name="principal"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="principal"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option

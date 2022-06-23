@@ -5,6 +5,9 @@
         {{ $t('region') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -181,6 +184,7 @@
               :placeholder="$t('name')"
               required
               autofocus
+              aria-label="name"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -192,6 +196,7 @@
               type="text"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('alias')"
+              aria-label="alias"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -203,6 +208,7 @@
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('code')"
+              aria-label="code"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
@@ -212,8 +218,9 @@
               v-model="regionData.superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
+              aria-label="region superior"
             >
-              <option value="undefined">
+              <option selected>
                 ---{{ $t('select') }}---
               </option>
               <option
@@ -226,25 +233,27 @@
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="postalCode">{{ $t('postalCode') }}</label>
+            <label for="postal-code">{{ $t('postalCode') }}</label>
             <input
-              id="postalCode"
+              id="postal-code"
               v-model.trim="regionData.postalCode"
-              name="postalCode"
+              name="postal-code"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('postalCode')"
+              aria-label="postal-code"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="areaCode">{{ $t('areaCode') }}</label>
+            <label for="area-code">{{ $t('areaCode') }}</label>
             <input
-              id="areaCode"
+              id="area-code"
               v-model.trim="regionData.areaCode"
-              name="areaCode"
+              name="area-code"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('areaCode')"
+              aria-label="area-code"
             >
           </div>
           <div class="col-span-12">

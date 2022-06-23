@@ -5,6 +5,8 @@
   >
     <button
       title="import"
+      name="import"
+      aria-label="import"
       type="button"
       class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
     >
@@ -25,6 +27,8 @@
     </button>
     <button
       title="export"
+      name="export"
+      aria-label="export"
       type="button"
       class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
       @click="exportFile"
@@ -46,6 +50,8 @@
     </button>
     <button
       v-if="needAdd"
+      name="add"
+      aria-label="add"
       class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
       @click="operate"
     >

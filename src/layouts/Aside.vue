@@ -1,6 +1,8 @@
 <template>
   <aside class="sm:w-20 xl:w-64 pr-4">
-    <RouterLink to="/">
+    <RouterLink
+      to="/"
+    >
       <h1 class="inline-flex items-center mt-2 space-x-4 text-white text-2xl ml-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"

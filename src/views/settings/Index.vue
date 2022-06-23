@@ -14,6 +14,8 @@
                 :alt="account.nickname"
                 class="w-full h-full rounded-full"
                 :src="account.avatar"
+                width="46"
+                height="46"
               >
             </figure>
             <div class="ml-4 mr-auto">

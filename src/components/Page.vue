@@ -6,6 +6,8 @@
     <div class="flex flex-1 justify-end space-x-2">
       <button
         type="button"
+        name="fist-page"
+        aria-label="first-page"
         :disabled="page == 0"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
@@ -27,6 +29,8 @@
       </button>
       <button
         type="button"
+        name="page-decrease"
+        aria-label="page-decrease"
         :disabled="page == 0"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
@@ -54,6 +58,8 @@
         v-for="index in (pages <= 5 ? pages : (page < (pages - 5) ? page + 5 : pages))"
         :key="index"
         type="button"
+        :name="`page-${index}`"
+        :aria-label="`page-${index}`"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{
           'bg-white rounded-full border shadow-sm': index == page + 1,
@@ -66,6 +72,8 @@
       <span v-if="pages > 5 && page < pages - 1">...</span>
       <button
         type="button"
+        name="page-increment"
+        aria-label="page-increment"
         :disabled="page == pages - 1"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
@@ -88,6 +96,8 @@
       <button
         type="button"
         :disabled="page == pages - 1"
+        name="last-page"
+        aria-label="last-page"
         class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
         @click="(page = pages - 1), give(page)"

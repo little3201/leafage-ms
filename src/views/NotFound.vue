@@ -5,6 +5,8 @@
         alt="notfound"
         class="h-48 lg:h-auto"
         src="/svg/error.svg"
+        width="860"
+        height="730"
       >
     </div>
     <div class="text-white mt-10 lg:mt-0">

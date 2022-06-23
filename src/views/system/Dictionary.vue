@@ -5,6 +5,9 @@
         {{ $t('dictionary') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -118,6 +121,9 @@
                 @edit-action="modalOperate"
               >
                 <button
+                  type="button"
+                  name="enable"
+                  aria-label="enable"
                   class="flex items-center mr-3 focus:outline-none"
                   :class="data.enabled ? 'text-red-600' : 'text-green-600'"
                   @click="power(data.code)"
@@ -193,7 +199,7 @@
               aria-label="dictionary superior"
             >
               <option selected>
-                ---请选择---
+                ---{{ $t('select') }}---
               </option>
               <option
                 v-for="superior in superiors"

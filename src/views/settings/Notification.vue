@@ -3,7 +3,8 @@
     <div class="flex space-x-8 border-b text-lg">
       <button
         type="button"
-        title="unread"
+        name="unread"
+        aria-label="unread"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none  flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': !isRead }"
         @click="switchType(false)"
@@ -16,7 +17,8 @@
       </button>
       <button
         type="button"
-        title="readed"
+        name="read"
+        aria-label="read"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none flex flex-col justify-between  pt-3 rounded-t "
         :class="{ 'text-blue-700 border-blue-700': isRead }"
         @click="switchType(true)"

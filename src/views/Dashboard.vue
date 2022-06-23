@@ -6,6 +6,8 @@
       </h2>
       <button
         type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="refresh"
       >
@@ -299,8 +301,8 @@
                 :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
                 target="_blank"
               >
-                <div class="flex justify-between text-xs text-gray-400 mb-2">
-                  <span>{{ comment.location }}</span>
+                <div class="flex justify-between text-xs text-gray-500 mb-2">
+                  <span>{{ comment.location ? comment.location : '未知' }}</span>
                   <span>{{ new Date(comment.modifyTime).toLocaleDateString() }}</span>
                 </div>
                 <p class="text-sm hover:underline">

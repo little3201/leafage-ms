@@ -40,6 +40,8 @@
       <button
         type="button"
         class="outline-none"
+        name="open"
+        aria-label="open"
         @click="isShow = !isShow"
       >
         <svg

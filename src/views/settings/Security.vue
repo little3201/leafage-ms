@@ -59,6 +59,8 @@
             </p>
             <div class="flex items-center space-x-4">
               <button
+                name="submit"
+                aria-label="submit"
                 type="submit"
                 class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
                 @click="onSubmit"
@@ -105,8 +107,8 @@
           your account by requiring more than just a password to sign in.
         </p>
         <button
-          id="del_account"
-          name="del_account"
+          name="enable"
+          aria-label="enable"
           type="button"
           class="my-4 border border-gray-300 text-gray-600 hover:border-blue-600 hover:text-blue-600 px-2 py-1 rounded-md"
         >
@@ -177,6 +179,8 @@
             </div>
             <button
               type="button"
+              name="see-more"
+              aria-label="see-more"
               class="text-gray-600 text-sm border py-1 px-2 rounded-md"
             >
               See more

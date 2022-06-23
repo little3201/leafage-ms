@@ -5,6 +5,9 @@
         {{ $t('posts') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -107,8 +110,8 @@
                 :href="'https://www.leafage.top/posts/detail/' + data.code"
                 target="_blank"
                 class="font-medium hover:underline"
-                v-text="data.title"
-              />
+              >{{ data.title }}
+              </a>
             </td>
             <td
               class="px-4"
@@ -190,6 +193,8 @@
               >
                 <button
                   type="button"
+                  name="remove-cover"
+                  aria-label="remove-cover"
                   class="text-white focus:outline-none"
                   @click="removeCover"
                 >
@@ -318,6 +323,8 @@
             <label for="content">{{ $t('content') }}</label>
             <button
               type="button"
+              name="preview"
+              aria-label="preview"
               class="top-3 right-1 absolute focus:outline-none"
               @click="preview = !preview"
             >

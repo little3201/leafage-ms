@@ -5,6 +5,9 @@
         {{ $t('category') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -96,8 +99,8 @@
                 href="https://www.leafage.top/posts"
                 target="_blank"
                 class="font-medium hover:underline"
-                v-text="data.name"
-              />
+              >{{ data.name }}
+              </a>
             </td>
             <td
               class="px-4"

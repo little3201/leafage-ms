@@ -5,6 +5,8 @@
       <button
         v-if="data.children && data.children.length > 0"
         type="button"
+        :name="data.name"
+        :aria-label="data.name"
         :title="data.name"
         class="flex flex-1 items-center focus:outline-none"
         @click="$emit('open-operate')"

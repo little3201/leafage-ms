@@ -5,6 +5,9 @@
         {{ $t('region') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >

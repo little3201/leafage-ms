@@ -53,6 +53,8 @@
       </div>
       <button
         type="submit"
+        name="submit"
+        aria-label="submit"
         :disabled="isLoad"
         class="w-full inline-flex items-center justify-center mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
         @click="onSubmit"

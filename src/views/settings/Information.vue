@@ -24,6 +24,8 @@
           >
           <button
             type="button"
+            name="usernmae"
+            aria-label="username"
             class="text-blue-600 hover:underline"
             @click="editAllow(1)"
           >
@@ -76,6 +78,8 @@
           >
           <button
             type="button"
+            name="email"
+            aria-label="email"
             class="text-blue-600 hover:underline"
             @click="editAllow(2)"
           >
@@ -97,7 +101,7 @@
       </p>
       <div class="mt-4">
         <button
-          id="phone"
+          aria-label="phone"
           name="phone"
           type="button"
           class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
@@ -233,6 +237,8 @@
       </p>
       <button
         type="submit"
+        name="submit"
+        aria-label="submit"
         class="text-red-600 border block mt-4 border-red-400 hover:bg-red-600 hover:text-white px-2 py-1 rounded-md"
         @click="onSubmit"
       >

@@ -29,6 +29,8 @@
               >
               <button
                 type="button"
+                name="nickname"
+                aria-label="nickname"
                 class="text-blue-600 hover:underline"
                 @click="editAllow"
               >
@@ -49,7 +51,8 @@
                 class="absolute w-full h-full rounded-full bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
               >
                 <button
-                  title="remove"
+                  name="remove-avatar"
+                  aria-label="remove-avatar"
                   type="button"
                   class="text-white focus:outline-none"
                   @click="removeAvatar"
@@ -72,6 +75,8 @@
                 alt="avatar"
                 class="w-full h-full rounded-full"
                 :src="account.avatar"
+                width="126"
+                height="126"
               >
             </figure>
             <div
@@ -301,6 +306,8 @@
               <span class="text-xs text-gray-400">All of the fields on this page are optional and can be deleted at any
                 time</span>
               <button
+                name="submit"
+                aria-label="submit"
                 type="submit"
                 class="mt-1 px-2 py-1 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
                 @click.stop="onSubmit"

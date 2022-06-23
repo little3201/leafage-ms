@@ -5,6 +5,9 @@
         {{ $t('resource') }}
       </h2>
       <button
+        type="button"
+        name="reload"
+        aria-label="reload"
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
@@ -114,8 +117,8 @@
                 href="https://www.leafage.top/resource"
                 target="_blank"
                 class="font-medium hover:underline"
-                v-text="data.title"
-              />
+              >{{ data.title }}
+              </a>
             </td>
             <td
               class="px-4"
@@ -203,7 +206,8 @@
                 class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
               >
                 <button
-                  title="remove"
+                  name="remove-cover"
+                  aria-label="remove-cover"
                   type="button"
                   class="text-white focus:outline-none"
                   @click="removeCover"

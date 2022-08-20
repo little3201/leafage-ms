@@ -37,14 +37,14 @@ const authorities = ["2122466RP", "21224B8JZ", "21953KO8", "203315P3Q"]
 
 export default [
   {
-    url: '/api/hypervisor/role/tree',
+    url: '/api/hypervisor/roles/tree',
     method: 'get',
     response: () => {
       return treeDatas
     }
   },
   {
-    url: '/api/hypervisor/role',
+    url: '/api/hypervisor/roles',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -67,7 +67,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/role',
+    url: '/api/hypervisor/roles',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -75,7 +75,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/role',
+    url: '/api/hypervisor/roles',
     method: 'post',
     response: (options: any) => {
       let data: Role = JSON.parse(options.body)
@@ -84,7 +84,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/role',
+    url: '/api/hypervisor/roles',
     method: 'patch',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -98,7 +98,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/role',
+    url: '/api/hypervisor/roles',
     method: 'delete',
     response: () => {
       return {

@@ -23,7 +23,7 @@ for (let i = 0; i < 12; i++) {
 
 export default [
   {
-    url: '/api/assets/category',
+    url: '/api/assets/categories',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -39,7 +39,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/category',
+    url: '/api/assets/categories',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -47,7 +47,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/category',
+    url: '/api/assets/categories',
     method: 'post',
     response: (options: any) => {
       let data: Category = JSON.parse(options.body)
@@ -56,7 +56,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/category/:code',
+    url: '/api/assets/categories/:code',
     method: 'delete',
     response: () => {
       return {

@@ -23,7 +23,7 @@ for (let i = 0; i < 36; i++) {
 
 export default [
     {
-        url: '/api/hypervisor/access-log',
+        url: '/api/hypervisor/access-logs',
         method: 'get',
         response: (options: any) => {
             const url = options.url

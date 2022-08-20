@@ -54,14 +54,14 @@ const treeDatas = [
 
 export default [
   {
-    url: '/api/hypervisor/group/tree',
+    url: '/api/hypervisor/groups/tree',
     method: 'get',
     response: () => {
       return treeDatas;
     }
   },
   {
-    url: '/api/hypervisor/group',
+    url: '/api/hypervisor/groups',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -84,7 +84,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/group',
+    url: '/api/hypervisor/groups',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -92,7 +92,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/group',
+    url: '/api/hypervisor/groups',
     method: 'post',
     response: (options: any) => {
       let data: Group = JSON.parse(options.body)
@@ -101,7 +101,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/group',
+    url: '/api/hypervisor/groups',
     method: 'patch',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -115,7 +115,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/group/:code',
+    url: '/api/hypervisor/groups/:code',
     method: 'delete',
     response: () => {
       return {}

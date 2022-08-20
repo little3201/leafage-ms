@@ -23,7 +23,7 @@ for (let i = 0; i < 36; i++) {
 
 export default [
     {
-        url: '/api/hypervisor/notification',
+        url: '/api/hypervisor/notifications',
         method: 'get',
         response: (options: any) => {
             const url = options.url

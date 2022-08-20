@@ -27,7 +27,7 @@ for (let i = 0; i < 79; i++) {
 
 export default [
   {
-    url: '/api/assets/resource',
+    url: '/api/assets/resources',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -43,7 +43,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/resource',
+    url: '/api/assets/resources',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -51,7 +51,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/resource',
+    url: '/api/assets/resources',
     method: 'post',
     response: (options: any) => {
       let data: Resource = JSON.parse(options.body)
@@ -60,7 +60,7 @@ export default [
     }
   },
   {
-    url: '/api/assets/resource',
+    url: '/api/assets/resources',
     method: 'delete',
     response: () => {
       return {

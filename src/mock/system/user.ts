@@ -20,28 +20,28 @@ const data: User = {
 
 export default [
   {
-    url: '/api/hypervisor/user',
+    url: '/api/hypervisor/users',
     method: 'get',
     response: () => {
       return data
     },
   },
   {
-    url: '/api/hypervisor/user',
+    url: '/api/hypervisor/users',
     method: 'put',
     response: () => {
       return data
     },
   },
   {
-    url: '/api/hypervisor/user',
+    url: '/api/hypervisor/users',
     method: 'post',
     response: () => {
       return data
     },
   },
   {
-    url: '/api/hypervisor/user',
+    url: '/api/hypervisor/users',
     method: 'patch',
     response: () => {
       return {

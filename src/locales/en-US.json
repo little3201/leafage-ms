@@ -81,10 +81,10 @@
 	"role": "Roles",
 	"authority":"Authorities",
 	"account": "Accounts",
-	"dictionary": "Dictionarys",
+	"dictionary": "Dictionaries",
 	"posts": "Posts",
 	"resource": "Resources",
-	"category": "Categroys",
+	"category": "Categroies",
 	"region": "Regions",
     "statitics": "Statitics",
     "notification": "Notifications"

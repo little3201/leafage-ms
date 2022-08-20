@@ -56,7 +56,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/region',
+    url: '/api/hypervisor/regions',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -84,7 +84,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/region',
+    url: '/api/hypervisor/regions',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -92,7 +92,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/region',
+    url: '/api/hypervisor/regions',
     method: 'post',
     response: (options: any) => {
       let data: Region = JSON.parse(options.body)
@@ -101,7 +101,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/region',
+    url: '/api/hypervisor/regions',
     method: 'delete',
     response: () => {
       return {

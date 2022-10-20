@@ -24,7 +24,7 @@ for (let i = 0; i < 30090; i++) {
 }
 export default [
   {
-    url: '/api/hypervisor/dictionary',
+    url: '/api/hypervisor/dictionaries',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -47,7 +47,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/dictionary',
+    url: '/api/hypervisor/dictionaries',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -55,7 +55,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/dictionary',
+    url: '/api/hypervisor/dictionaries',
     method: 'post',
     response: (options: any) => {
       let data: Dictionary = JSON.parse(options.body)
@@ -64,7 +64,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/dictionary',
+    url: '/api/hypervisor/dictionaries',
     method: 'patch',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -78,7 +78,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/dictionary',
+    url: '/api/hypervisor/dictionaries',
     method: 'delete',
     response: () => {
       return {

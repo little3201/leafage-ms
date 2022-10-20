@@ -499,14 +499,14 @@ for (let i = 0; i < 9; i++) {
 
 export default [
   {
-    url: '/api/hypervisor/authority/tree',
+    url: '/api/hypervisor/authorities/tree',
     method: 'get',
     response: () => {
       return treeDatas;
     },
   },
   {
-    url: '/api/hypervisor/authority',
+    url: '/api/hypervisor/authorities',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -529,7 +529,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/authority',
+    url: '/api/hypervisor/authorities',
     method: 'put',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -537,7 +537,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/authority',
+    url: '/api/hypervisor/authorities',
     method: 'post',
     response: (options: any) => {
       let data: Authority = JSON.parse(options.body)
@@ -546,7 +546,7 @@ export default [
     }
   },
   {
-    url: '/api/hypervisor/authority',
+    url: '/api/hypervisor/authorities',
     method: 'patch',
     response: (options: any) => {
       const code = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -560,7 +560,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/authority',
+    url: '/api/hypervisor/authorities',
     method: 'delete',
     response: () => {
       return {}

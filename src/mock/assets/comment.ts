@@ -24,7 +24,7 @@ for (let i = 0; i < 19; i++) {
 
 export default [
     {
-        url: '/api/assets/comment',
+        url: '/api/assets/comments',
         method: 'get',
         response: (options: any) => {
             const url = options.url

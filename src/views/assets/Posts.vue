@@ -326,7 +326,7 @@
               name="preview"
               aria-label="preview"
               class="top-3 right-1 absolute focus:outline-none"
-              @click="preview = !preview"
+              @click="previewHtml"
             >
               <svg
                 v-if="preview"
@@ -399,7 +399,8 @@
 
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import "highlight.js/styles/atom-one-dark.css"
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
@@ -409,11 +410,12 @@ import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Posts, Category } from "@/api/request.type";
-import marked from "@/plugins/md";
+import markdownToHtml from '@/plugins/markdownToHtml'
 import { uploadFile } from "@/plugins/upload";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()
+const rendedHtml = ref("")
 
 // 分页参数
 let page = ref(0);
@@ -617,17 +619,19 @@ const uploadImage = (event: any): void => {
   }
 
 };
+
+
 /**
  * 转换md为html
  */
-const rendedHtml = computed(() => {
-  if (content.value) {
-    addImgClickEvent()
-    // a标签添加 target="_blank"
-    return marked.parse(content.value).replace(/href="/gi, 'target="_blank" href="');
+const previewHtml = async () => {
+  preview.value = !preview.value
+  addImgClickEvent()
+  if(content.value){
+    rendedHtml.value = await markdownToHtml(content.value)
   }
-  return "";
-});
+}
+
 /**
  * 给img添加双击事件
  */

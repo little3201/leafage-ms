@@ -8,7 +8,7 @@ import i18n from './locales';
 
 // dev mock server
 if (process.env.NODE_ENV != 'production') {
-    // mockXHR()
+    mockXHR()
 }
 
 createApp(App).use(router).use(i18n).mount('#app')

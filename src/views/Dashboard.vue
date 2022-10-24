@@ -494,16 +494,16 @@ const construceChart = (): void => {
   obj.overDownloads.push(overDownloads.value)
 
   // 浏览量统计
-  createMiniChart(overViewedRef.value, obj.labels, obj.overViewed, "rgba(37, 99, 235, 0.8)");
+  createMiniChart(overViewedRef.value, obj.labels, obj.overViewed, "#2563ebcc");
 
   // 评论数统计
-  createMiniChart(overCommentRef.value, obj.labels, obj.overComments, "rgba(217, 119, 6, 0.8)");
+  createMiniChart(overCommentRef.value, obj.labels, obj.overComments, "#ca8a04cc");
 
   // 喜欢数统计
-  createMiniChart(overLikesRef.value, obj.labels, obj.overLikes, "rgba(124, 58, 237, 0.8)");
+  createMiniChart(overLikesRef.value, obj.labels, obj.overLikes, "#9333eacc");
 
   // 下载数统计
-  createMiniChart(overDownloadsRef.value, obj.labels, obj.overDownloads, "rgba(22, 163, 74, 0.8)");
+  createMiniChart(overDownloadsRef.value, obj.labels, obj.overDownloads, "#16a34acc");
 
   // 每日访问量统计
   createBarChart(viewedRef.value, obj.labels, obj.viewed, obj.likes, obj.comments);

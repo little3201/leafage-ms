@@ -11,8 +11,8 @@
         type="checkbox"
         :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
-        aria-label="checked"
-        @change="track(data)"
+        :aria-label="data.code"
+        @change="onTicked(data.code, isChecked)"
       >
     </TreeCore>
     <div
@@ -22,8 +22,8 @@
       <TreeItem
         v-for="child in data.children"
         :key="child.code"
+        v-model:ticked="innerTicked"
         :data="child"
-        :ticked="innerTicked"
       />
     </div>
   </div>
@@ -52,27 +52,24 @@ const props = defineProps({
 
 const emit = defineEmits(['update:ticked'])
 
-let isExpand = ref(false);
-let isChecked = ref(false)
-let isIndeterminate = ref(false)
-
 let innerTicked = ref<Array<string>>([]);
 
-watch(
-  () => [...props.ticked],
-  (newTicked) => {
-    innerTicked.value = newTicked
+let isChecked = ref(innerTicked.value.includes(props.data.code) || false)
+let isIndeterminate = ref(false)
+let isExpand = ref(false);
 
-    let curdata = props.data
-    if (innerTicked.value.includes(curdata.code)) {
-      isChecked.value = true
-    } else {
-      isChecked.value = false
-    }
+watch(
+  () => props.ticked,
+  (val) => {
+    innerTicked.value = val
   }
 )
 
-const track = (item: NodeData) => {
+const onTicked = (code: string, state: boolean) => {
+  setTicked([code], state)
+}
+
+const setTicked = (keys: Array<string>, state: boolean) => {
   let target = innerTicked.value
   const shouldEmit = props.ticked !== void 0
 
@@ -80,17 +77,15 @@ const track = (item: NodeData) => {
     target = target.slice()
   }
 
-  if (isChecked.value) {
-    target.push(item.code)
+  if (state) {
+    target = target.concat(keys).filter((key, index, self) => self.indexOf(key) === index)
   } else {
-    target = target.filter(k => item.code !== k)
+    target = target.filter(k => keys.includes(k) === false)
   }
 
   if (shouldEmit === true) {
     emit('update:ticked', target)
   }
-
-  console.log("ticked: ", target)
 }
 
 const openOperate = () => {

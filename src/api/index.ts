@@ -36,7 +36,7 @@ instance.interceptors.response.use(
     },
     (error: AxiosError) => {
         const { config } = error
-        if (!axios.isCancel(error) && config.url) {
+        if (!axios.isCancel(error) && config && config.url) {
             pendingPool.delete(config.url)
         }
         const { response } = error
@@ -60,10 +60,6 @@ instance.interceptors.response.use(
         } else {
             if (axios.isCancel(error)) {
                 throw new axios.Cancel(error.message)
-            } else if (error.stack && error.stack.includes('timeout')) {
-                error.message = '请求超时！'
-            } else {
-                error.message = '连接服务器失败！'
             }
         }
 

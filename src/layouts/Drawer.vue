@@ -4,7 +4,6 @@
       <RouterLink
         to="/"
         class="inline-flex items-center"
-        exact-active-class
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

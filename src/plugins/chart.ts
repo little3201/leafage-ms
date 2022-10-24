@@ -50,17 +50,17 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
                 {
                     label: "浏览量",
                     data: viewed,
-                    backgroundColor: "rgba(37, 99, 235, 0.8)"
-                },
-                {
-                    label: "点赞数",
-                    data: likes,
-                    backgroundColor: "rgba(124, 58, 237, 0.8)"
+                    backgroundColor: "#2563eb"
                 },
                 {
                     label: "评论数",
                     data: comments,
-                    backgroundColor: "rgba(217, 119, 6, 0.8)"
+                    backgroundColor: "#ca8a04"
+                },
+                {
+                    label: "点赞数",
+                    data: likes,
+                    backgroundColor: "#9333ea"
                 }
             ],
         },
@@ -85,8 +85,8 @@ const createBarChart = (canvas: HTMLCanvasElement, labels: Array<string>, viewed
 
 const getGradient = (ctx: CanvasRenderingContext2D, chartArea: ChartArea, color: string) => {
     const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
-    gradient.addColorStop(0, color.replace('0.8', "0.1"))
-    gradient.addColorStop(0.5, color.replace('0.8', "0.4"))
+    gradient.addColorStop(0, color.replace('cc', "1a"))
+    gradient.addColorStop(0.5, color.replace('cc', "66"))
     gradient.addColorStop(1, color)
     return gradient
 }

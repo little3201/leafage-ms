@@ -239,8 +239,8 @@
       <TreeItem
         v-for="treeData in treeDatas"
         :key="treeData.code"
+        v-model:ticked="ticked"
         :data="treeData"
-        :ticked="ticked"
       />
     </Modal>
   </div>

@@ -1,7 +1,7 @@
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
 import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -23,8 +23,8 @@ import yaml from 'highlight.js/lib/languages/yaml';
 export default async function markdownToHtml(markdown: string) {
   const result = await unified()
     .use(remarkParse)
-    .use(remarkRehype)
     .use(remarkGfm)
+    .use(remarkRehype)
     .use(rehypeExternalLinks, { target: '_blank', rel: ['nofollow'] })
     .use(rehypeHighlight, { languages: { bash, dockerfile, javascript, handlebars, java, json, nginx, shell, sql, typescript, xml, yaml } })
     .use(rehypeSanitize, {

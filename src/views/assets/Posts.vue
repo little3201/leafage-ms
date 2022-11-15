@@ -400,7 +400,6 @@
 
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
-import "highlight.js/styles/atom-one-dark.css"
 
 import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
@@ -664,3 +663,5 @@ const previewOperation = (show: boolean, url: string) => {
   view.isShow = show
 }
 </script>
+
+<style src="highlight.js/styles/atom-one-dark.css"></style>

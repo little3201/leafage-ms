@@ -2332,6 +2332,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-absolute-url@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "is-absolute-url@npm:4.0.1"
+  checksum: de172a718439982a54477fdae55f21be69ec0e6a4b205db5484975d2f4ee749851fd46c28f3790dfc51a274c2ed1d0f8457b6d1fff02ab829069fd9cc761e48c
+  languageName: node
+  linkType: hard
+
 "is-binary-path@npm:~2.1.0":
   version: 2.1.0
   resolution: "is-binary-path@npm:2.1.0"
@@ -2481,11 +2488,12 @@ __metadata:
     postcss: ^8.4.18
     prettier: ^2.7.1
     qiniu-js: ^3.4.1
+    rehype-external-links: ^2.0.1
     rehype-highlight: ^6.0.0
     rehype-sanitize: ^5.0.1
     rehype-stringify: ^9.0.3
-    remark: ^14.0.2
     remark-gfm: ^3.0.1
+    remark-parse: ^10.0.1
     remark-rehype: ^10.1.0
     tailwindcss: ^3.1.8
     typescript: ^4.8.4
@@ -3768,6 +3776,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rehype-external-links@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "rehype-external-links@npm:2.0.1"
+  dependencies:
+    "@types/hast": ^2.0.0
+    extend: ^3.0.0
+    is-absolute-url: ^4.0.0
+    space-separated-tokens: ^2.0.0
+    unified: ^10.0.0
+    unist-util-visit: ^4.0.0
+  checksum: 56d3a49d1f7bff62bebfb2fdd2c15f8d39a26323090fb8935c202e3c2e3cce217a7d5c4c4b684b09e5a4c896c5b586931c71ec9eaabe1120693b44e3cf0704ce
+  languageName: node
+  linkType: hard
+
 "rehype-highlight@npm:^6.0.0":
   version: 6.0.0
   resolution: "rehype-highlight@npm:6.0.0"
@@ -3815,7 +3837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-parse@npm:^10.0.0":
+"remark-parse@npm:^10.0.1":
   version: 10.0.1
   resolution: "remark-parse@npm:10.0.1"
   dependencies:
@@ -3835,29 +3857,6 @@ __metadata:
     mdast-util-to-hast: ^12.1.0
     unified: ^10.0.0
   checksum: b9ac8acff3383b204dfdc2599d0bdf86e6ca7e837033209584af2e6aaa6a9013e519a379afa3201299798cab7298c8f4b388de118c312c67234c133318aec084
-  languageName: node
-  linkType: hard
-
-"remark-stringify@npm:^10.0.0":
-  version: 10.0.2
-  resolution: "remark-stringify@npm:10.0.2"
-  dependencies:
-    "@types/mdast": ^3.0.0
-    mdast-util-to-markdown: ^1.0.0
-    unified: ^10.0.0
-  checksum: 25424201e698353f6c0afc9ec29a8cac1dac8c06750d92214e3216bd76ac37902a0ba3702ac2a11c1040938a667b3bc22d6949af1d35e8fc81a3572643cdc263
-  languageName: node
-  linkType: hard
-
-"remark@npm:^14.0.2":
-  version: 14.0.2
-  resolution: "remark@npm:14.0.2"
-  dependencies:
-    "@types/mdast": ^3.0.0
-    remark-parse: ^10.0.0
-    remark-stringify: ^10.0.0
-    unified: ^10.0.0
-  checksum: a534b6c6bb8a0db7e22580c73d820af9c2468af24d434eb0d54c9b50577d609ec5383a90e81c921f334c1426494c5cf7460ae68b5027123f159bbf1ca8a5a85f
   languageName: node
   linkType: hard
 

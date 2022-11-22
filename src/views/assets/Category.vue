@@ -199,7 +199,7 @@ let categoryData = ref<Category>({
   name: '',
   count: 0,
   description: '',
-  modifyTime: new Date()
+  modifyTime: ''
 });
 let dataCode = ref("");
 let datas = ref<Array<Category>>([]);
@@ -260,7 +260,7 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       name: '',
       count: 0,
       description: '',
-      modifyTime: new Date()
+      modifyTime: ''
     };
     if (dataCode.value && dataCode.value.length > 0) {
       await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))

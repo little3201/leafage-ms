@@ -296,7 +296,7 @@ let regionData = ref<Region>({
   postalCode: 0,
   areaCode: 0,
   description: '',
-  modifyTime: new Date()
+  modifyTime: ''
 });
 let dataCode = ref();
 let datas = ref<Array<Region>>([]);
@@ -367,7 +367,7 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       postalCode: 0,
       areaCode: 0,
       description: '',
-      modifyTime: new Date()
+      modifyTime: ''
     };
     superiors.value = []
     await Promise.all([

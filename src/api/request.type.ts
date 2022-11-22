@@ -36,7 +36,7 @@ export declare interface User {
 
 interface AbstractVO<T> {
   code: T,
-  modifyTime: Date
+  modifyTime: string
 }
 
 export declare interface Role extends AbstractVO<string> {
@@ -88,26 +88,30 @@ export declare interface Category extends AbstractVO<string> {
   description: string
 }
 
-export declare interface Posts extends AbstractVO<string> {
+export declare interface Post extends AbstractVO<string> {
   title: string,
   cover: string,
-  category: string,
+  category: Category,
   tags: Array<string>,
   viewed: number,
   likes: number,
   comments: number
 }
 
-export declare interface PostsDetails {
+export declare interface Content {
   catalog: string,
   content: string
+}
+
+export declare interface PostsContent extends Post {
+  content: Content
 }
 
 export declare interface Resource extends AbstractVO<string> {
   title: string,
   type: string,
   cover: string,
-  category: string,
+  category: Category,
   viewed: number,
   downloads: number,
   description: string

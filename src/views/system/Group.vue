@@ -449,7 +449,7 @@ let groupData = ref<Group>({
   count: 0,
   description: '',
   enabled: true,
-  modifyTime: new Date()
+  modifyTime: ''
 })
 let dataCode = ref("")
 let accounts = ref<Array<AccountDetail>>([])
@@ -525,7 +525,7 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       count: 0,
       description: '',
       enabled: true,
-      modifyTime: new Date()
+      modifyTime: ''
     };
     await Promise.all([
       fetch(),

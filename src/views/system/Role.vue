@@ -272,7 +272,7 @@ let roleData = ref<Role>({
   count: 0,
   description: '',
   enabled: true,
-  modifyTime: new Date()
+  modifyTime: ''
 })
 let dataCode = ref("")
 let superiors = ref<Array<Role>>([])
@@ -339,7 +339,7 @@ const modalOperate = async (operate: boolean) => {
       count: 0,
       description: '',
       enabled: true,
-      modifyTime: new Date()
+      modifyTime: ''
     };
     await Promise.all([
       fetch(),

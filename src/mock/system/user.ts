@@ -9,7 +9,7 @@ const data: User = {
   gender: Random.character('MF'),
   phone: Random.integer(13000000000, 19900000000),
   email: Random.email(),
-  birthday: new Date(Random.date()),
+  birthday: Random.date(),
   nationality: "",
   degree: '02',
   hobbies: Random.word(),

@@ -17,7 +17,7 @@ for (let i = 0; i < 12; i++) {
     name: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(5),
-    modifyTime: new Date(Random.date())
+    modifyTime: Random.date()
   })
 }
 

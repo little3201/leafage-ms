@@ -21,7 +21,7 @@ for (let i = 0; i < 309; i++) {
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 3)),
       description: Random.csentence(5),
-      modifyTime: new Date(Random.date())
+      modifyTime: Random.date()
     })
   } else if (i >= 34 && i < 144) {
     datas.push({
@@ -32,7 +32,7 @@ for (let i = 0; i < 309; i++) {
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 4)),
       description: Random.csentence(5),
-      modifyTime: new Date(Random.date())
+      modifyTime: Random.date()
     })
   } else {
     datas.push({
@@ -43,7 +43,7 @@ for (let i = 0; i < 309; i++) {
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 5)),
       description: Random.csentence(5),
-      modifyTime: new Date(Random.date())
+      modifyTime: Random.date()
     })
   }
 }

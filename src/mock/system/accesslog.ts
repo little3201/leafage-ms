@@ -17,7 +17,7 @@ for (let i = 0; i < 36; i++) {
         ip: Random.ip(),
         location: Random.county(true),
         description: Random.csentence(),
-        modifyTime: new Date(Random.date())
+        modifyTime: Random.date()
     })
 }
 

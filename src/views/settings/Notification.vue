@@ -85,7 +85,7 @@ let data = ref<Notification>({
   title: '',
   content: '',
   receiver: '',
-  modifyTime: new Date()
+  modifyTime: ''
 })
 
 // 分页参数

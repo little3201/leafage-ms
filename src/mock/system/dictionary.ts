@@ -19,7 +19,7 @@ for (let i = 0; i < 30090; i++) {
     alias: Random.word(),
     enabled: Random.boolean(),
     description: Random.csentence(5),
-    modifyTime: new Date(Random.date())
+    modifyTime: Random.date()
   })
 }
 export default [

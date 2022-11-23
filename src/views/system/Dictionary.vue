@@ -297,7 +297,7 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       alias: '',
       enabled: true,
       description: '',
-      modifyTime: new Date()
+      modifyTime: ''
     };
     await Promise.all([
       fetch(),

@@ -107,7 +107,7 @@
             </td>
             <td class="px-4 text-center max-w-xs truncate">
               <a
-                :href="'https://www.leafage.top/posts/detail/' + data.code"
+                :href="'https://www.leafage.top/posts/' + data.code"
                 target="_blank"
                 class="font-medium hover:underline"
               >{{ data.title }}

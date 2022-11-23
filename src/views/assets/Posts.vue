@@ -119,7 +119,7 @@
             />
             <td
               class="px-4"
-              v-text="data.category"
+              v-text="data.category.name"
             />
             <td
               class="px-4"
@@ -276,7 +276,7 @@
             <label for="category">{{ $t('category') }}</label>
             <select
               id="category"
-              v-model.lazy="postsData.category"
+              v-model.lazy="postsData.category.code"
               name="category"
               required
               class="mt-1 w-full block rounded-md border-gray-300"
@@ -408,7 +408,7 @@ import Confirm from "@/components/Confirm.vue";
 import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Posts, Category } from "@/api/request.type";
+import type { Post, Content, PostsContent, Category } from "@/api/request.type";
 import markdownToHtml from '@/plugins/markdownToHtml'
 import { uploadFile } from "@/plugins/upload";
 
@@ -428,22 +428,32 @@ let isEdit = ref(false);
 let isDel = ref(false);
 let preview = ref(false);
 // 数据
-let postsData = ref<Posts>({
+let postsData = ref<PostsContent>({
   code: '',
   title: '',
   cover: '',
-  category: '',
-  tags: [''],
+  category: {
+    code: '',
+    name: '',
+    count: 0,
+    description: '',
+    modifyTime: ''
+  },
+  tags: [],
   viewed: 0,
   likes: 0,
   comments: 0,
-  modifyTime: new Date()
+  content: {
+    catalog: '',
+    content: ''
+  },
+  modifyTime: ''
 });
 
 let dataCode = ref("");
 let content = ref("");
 
-let datas = ref<Array<Posts>>([]);
+let datas = ref<Array<Post>>([]);
 let categories = ref<Array<Category>>([]);
 
 let view = reactive({
@@ -511,7 +521,7 @@ const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Posts) => item.code != dataCode.value
+      (item: Post) => item.code != dataCode.value
     );
     isDel.value = false;
   });
@@ -526,12 +536,22 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       code: '',
       title: '',
       cover: '',
-      category: '',
-      tags: [''],
+      category: {
+        code: '',
+        name: '',
+        count: 0,
+        description: '',
+        modifyTime: ''
+      },
+      tags: [],
       viewed: 0,
       likes: 0,
       comments: 0,
-      modifyTime: new Date()
+      content: {
+        catalog: '',
+        content: ''
+      },
+      modifyTime: ''
     };
     content.value = "";
     tags.value = [];
@@ -578,7 +598,7 @@ const modelCommit = async (): Promise<void> => {
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Posts) => item.code != dataCode.value
+          (item: Post) => item.code != dataCode.value
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
@@ -626,7 +646,7 @@ const uploadImage = (event: any): void => {
 const previewHtml = async () => {
   preview.value = !preview.value
   addImgClickEvent()
-  if(content.value){
+  if (content.value) {
     rendedHtml.value = await markdownToHtml(content.value)
   }
 }
@@ -664,4 +684,6 @@ const previewOperation = (show: boolean, url: string) => {
 }
 </script>
 
-<style src="highlight.js/styles/atom-one-dark.css"></style>
+<style src="highlight.js/styles/atom-one-dark.css">
+
+</style>

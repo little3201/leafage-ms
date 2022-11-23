@@ -134,7 +134,7 @@
             </td>
             <td
               class="px-4"
-              v-text="data.category"
+              v-text="data.category.name"
             />
             <td
               class="px-4 max-w-sm truncate"
@@ -284,7 +284,7 @@
             >{{ $t('category') }}</label>
             <select
               id="category"
-              v-model="resourceData.category"
+              v-model="resourceData.category.code"
               name="category"
               class="mt-1 w-full block rounded-md border-gray-300"
               aria-label="resource category"
@@ -361,11 +361,17 @@ let resourceData = ref<Resource>({
   title: '',
   type: '',
   cover: '',
-  category: '',
+  category: {
+    code: '',
+    name: '',
+    count: 0,
+    description: '',
+    modifyTime: ''
+  },
   viewed: 0,
   downloads: 0,
   description: '',
-  modifyTime: new Date()
+  modifyTime: ''
 });
 let dataCode = ref("");
 let datas = ref<Array<Resource>>([]);
@@ -436,11 +442,17 @@ const modalOperate = async (operate: boolean): Promise<void> => {
       title: '',
       type: '',
       cover: '',
-      category: '',
+      category: {
+        code: '',
+        name: '',
+        count: 0,
+        description: '',
+        modifyTime: ''
+      },
       viewed: 0,
       downloads: 0,
       description: '',
-      modifyTime: new Date()
+      modifyTime: ''
     };
     await Promise.all([instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } })
       .then(res => categories.value = res.data.content),

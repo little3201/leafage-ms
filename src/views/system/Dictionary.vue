@@ -246,7 +246,7 @@ let dictData = ref<Dictionary>({
   alias: '',
   enabled: true,
   description: '',
-  modifyTime: new Date()
+  modifyTime: ''
 })
 let dataCode = ref("")
 let datas = ref<Array<Dictionary>>([])

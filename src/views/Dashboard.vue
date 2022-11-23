@@ -298,7 +298,7 @@
               class="py-2"
             >
               <a
-                :href="`https://www.leafage.top/posts/detail/${comment.posts}`"
+                :href="`https://www.leafage.top/posts/${comment.posts}`"
                 target="_blank"
               >
                 <div class="flex justify-between text-xs text-gray-500 mb-2">

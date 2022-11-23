@@ -20,7 +20,7 @@ for (let i = 0; i < 39; i++) {
     principal: Random.cname(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     enabled: Random.boolean()
   })
 }
@@ -33,9 +33,9 @@ for (let i = 0; i < 5; i++) {
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
     enabled: Random.boolean(),
-    accountExpiresAt: new Date(Random.date()),
+    accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: new Date(Random.date())
+    credentialsExpiresAt: Random.date()
   })
 }
 

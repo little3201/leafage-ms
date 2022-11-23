@@ -1,33 +1,56 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Posts, PostsDetails } from '@/api/request.type'
+import type { Pagation, Post, PostsContent } from '@/api/request.type'
 import { parse } from '@/mock/utils';
 
-const pagation: Pagation<Posts> = {
+const pagation: Pagation<Post> = {
   page: 0,
   size: 10,
   totalElements: 0,
   content: []
 }
-const datas: Array<Posts> = [];
+const datas: Array<Post> = [];
 
 for (let i = 0; i < 79; i++) {
   datas.push({
     code: Random.string('number', 9),
     title: Random.ctitle(),
     cover: Random.image('198x128'),
-    category: Random.word(),
+    category: {
+      code: Random.string('number', 9),
+      name: Random.word(),
+      count: Random.integer(1, 900),
+      description: Random.csentence(),
+      modifyTime: Random.datetime()
+    },
     tags: ['Test', '测试'],
     viewed: Random.integer(1, 900),
     likes: Random.integer(100, 899),
     comments: Random.integer(1, 100),
-    modifyTime: new Date(Random.date())
+    modifyTime: Random.date()
   })
 }
 
-const postsDetails: PostsDetails = {
-  catalog: Random.csentence(),
-  content: Random.cparagraph()
+const postsDetails: PostsContent = {
+  code: Random.string('number', 9),
+  title: Random.ctitle(),
+  cover: Random.image('198x128'),
+  category: {
+    code: Random.string('number', 9),
+    name: Random.word(),
+    count: Random.integer(1, 900),
+    description: Random.csentence(),
+    modifyTime: Random.datetime()
+  },
+  tags: ['Test', '测试'],
+  viewed: Random.integer(1, 900),
+  likes: Random.integer(100, 899),
+  comments: Random.integer(1, 100),
+  modifyTime: Random.date(),
+  content: {
+    content: Random.cparagraph(),
+    catalog: Random.csentence(),
+  }
 }
 
 export default [
@@ -61,7 +84,7 @@ export default [
     url: '/api/assets/posts',
     method: 'post',
     response: (options: any) => {
-      let data: Posts = JSON.parse(options.body)
+      let data: Post = JSON.parse(options.body)
       data = { ...data, code: Random.id() }
       return data
     }

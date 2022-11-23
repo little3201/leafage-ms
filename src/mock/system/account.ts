@@ -17,9 +17,9 @@ for (let i = 0; i < 139; i++) {
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
     enabled: Random.boolean(),
-    accountExpiresAt: new Date(Random.date()),
+    accountExpiresAt: Random.date(),
     accountLocked: Random.boolean(),
-    credentialsExpiresAt: new Date(Random.date())
+    credentialsExpiresAt: Random.date()
   })
 }
 

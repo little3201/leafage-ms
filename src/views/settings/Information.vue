@@ -275,7 +275,7 @@ let user = ref<User>({
   gender: '',
   phone: 0,
   email: '',
-  birthday: new Date(),
+  birthday: '',
   nationality: '',
   degree: '',
   hobbies: '',

@@ -22,7 +22,7 @@ const datas: Array<Statistics> = [];
 for (let i = 0; i < 7; i++) {
     datas.push({
         code: Random.string('number', 9),
-        date: new Date(Random.date()),
+        date: Random.date(),
         viewed: Random.integer(100, 10000),
         overViewed: Random.float(1, 100, 1, 2),
         likes: Random.integer(100, 10000),
@@ -31,14 +31,14 @@ for (let i = 0; i < 7; i++) {
         overComments: Random.float(1, 100, 1, 2),
         downloads: Random.integer(100, 9999),
         overDownloads: Random.float(1, 100, 1, 2),
-        modifyTime: new Date(Random.date())
+        modifyTime: Random.date()
     })
 }
 
 for (let i = 0; i < 30; i++) {
     timeSharingDatas.push({
         code: Random.string('number', 9),
-        date: new Date(Random.date()),
+        date: Random.date(),
         viewed: Random.integer(100, 10000),
         overViewed: Random.float(1, 100, 1, 2),
         likes: Random.integer(100, 10000),
@@ -47,7 +47,7 @@ for (let i = 0; i < 30; i++) {
         overComments: Random.float(1, 100, 1, 2),
         downloads: Random.integer(100, 9999),
         overDownloads: Random.float(1, 100, 1, 2),
-        modifyTime: new Date(Random.date())
+        modifyTime: Random.date()
     })
 }
 

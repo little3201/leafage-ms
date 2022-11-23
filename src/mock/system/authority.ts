@@ -12,7 +12,7 @@ const pagation: Pagation<Authority> = {
 const datas: Array<Authority> = [
   {
     code: "21224PV6C",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "System",
     name: "Role",
     type: "M",
@@ -24,7 +24,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "212240439",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "System",
     name: "Authority",
     type: "M",
@@ -36,7 +36,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "2133U754",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "Authority",
     name: "Add",
     type: "B",
@@ -48,7 +48,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "203315P3Q",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "System",
     name: "Account",
     type: "M",
@@ -60,7 +60,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224DRMU",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "",
     name: "System",
     type: "M",
@@ -72,7 +72,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "2122466RP",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: '',
     name: "Dashboard",
     type: "M",
@@ -84,7 +84,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224B8JZ",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "",
     name: "Posts",
     type: "M",
@@ -96,7 +96,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224QI72",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "",
     name: "Resource",
     type: "M",
@@ -108,7 +108,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224HMLG",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "",
     name: "Category",
     type: "M",
@@ -120,7 +120,7 @@ const datas: Array<Authority> = [
   },
   {
     code: "21224UJ5C",
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     superior: "System",
     name: "Group",
     type: "M",
@@ -492,7 +492,7 @@ for (let i = 0; i < 9; i++) {
     superior: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(),
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     enabled: Random.boolean()
   })
 }

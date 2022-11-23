@@ -17,7 +17,7 @@ for (let i = 0; i < 36; i++) {
         title: Random.ctitle(),
         content: Random.cparagraph(),
         receiver: Random.cname(),
-        modifyTime: new Date(Random.date())
+        modifyTime: Random.date()
     })
 }
 

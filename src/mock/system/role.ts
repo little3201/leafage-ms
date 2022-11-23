@@ -18,7 +18,7 @@ for (let i = 0; i < 39; i++) {
     superior: Random.word(),
     count: Random.integer(0, 99),
     description: Random.csentence(5),
-    modifyTime: new Date(Random.date()),
+    modifyTime: Random.date(),
     enabled: Random.boolean()
   })
 }

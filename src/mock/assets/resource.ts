@@ -16,12 +16,18 @@ for (let i = 0; i < 79; i++) {
     code: Random.string('number', 9),
     title: Random.ctitle(),
     cover: Random.image('176x224'),
-    category: Random.word(),
+    category: {
+      code: Random.string('number', 9),
+      name: Random.word(),
+      count: Random.integer(1, 900),
+      description: Random.csentence(),
+      modifyTime: Random.datetime()
+    },
     type: 'E',
     viewed: Random.integer(1, 900),
     downloads: Random.integer(1, 100),
     description: Random.csentence(5),
-    modifyTime: new Date(Random.date())
+    modifyTime: Random.date()
   })
 }
 

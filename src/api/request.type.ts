@@ -13,9 +13,9 @@ export declare interface Account {
 
 export declare interface AccountDetail extends Account {
   enabled: boolean,
-  accountExpiresAt: Date,
+  accountExpiresAt: string,
   accountLocked: boolean,
-  credentialsExpiresAt: Date
+  credentialsExpiresAt: string
 }
 
 export declare interface User {
@@ -25,7 +25,7 @@ export declare interface User {
   gender: string,
   phone: number,
   email: string,
-  birthday: Date,
+  birthday: string,
   nationality: string,
   degree: string,
   hobbies: string,
@@ -125,7 +125,7 @@ export declare interface Comment extends AbstractVO<string> {
 }
 
 export declare interface Statistics extends AbstractVO<string> {
-  date: Date,
+  date: string,
   viewed: number,
   overViewed: number,
   likes: number,

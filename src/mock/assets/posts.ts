@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Post, PostsContent } from '@/api/request.type'
+import type { Pagation, Post, PostContent } from '@/api/request.type'
 import { parse } from '@/mock/utils';
 
 const pagation: Pagation<Post> = {
@@ -31,7 +31,7 @@ for (let i = 0; i < 79; i++) {
   })
 }
 
-const postsDetails: PostsContent = {
+const postsContent: PostContent = {
   code: Random.string('number', 9),
   title: Random.ctitle(),
   cover: Random.image('198x128'),
@@ -64,11 +64,8 @@ export default [
         pagation.totalElements = datas.length
         pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
         return pagation
-      } else if (url.substring(url.lastIndexOf('/') + 1) === "content") {
-        return postsDetails
       } else {
-        const code = url.substring(url.lastIndexOf('/') + 1)
-        return datas.filter(item => item.code === code)[0]
+        return postsContent
       }
     }
   },

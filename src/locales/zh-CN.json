@@ -87,5 +87,7 @@
 	"category": "类目管理",
 	"region": "行政区划",
     "statitics": "数据统计",
-    "notification": "消息通知"
+    "notification": "消息通知",
+
+    "status": "状态"
 }

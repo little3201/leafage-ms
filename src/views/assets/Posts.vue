@@ -408,7 +408,7 @@ import Confirm from "@/components/Confirm.vue";
 import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { Post, Content, PostsContent, Category } from "@/api/request.type";
+import type { Post, PostContent, Category } from "@/api/request.type";
 import markdownToHtml from '@/plugins/markdownToHtml'
 import { uploadFile } from "@/plugins/upload";
 
@@ -428,7 +428,7 @@ let isEdit = ref(false);
 let isDel = ref(false);
 let preview = ref(false);
 // 数据
-let postsData = ref<PostsContent>({
+let postsData = ref<PostContent>({
   code: '',
   title: '',
   cover: '',
@@ -560,7 +560,6 @@ const modalOperate = async (operate: boolean): Promise<void> => {
         categories.value = res.data.content;
       }),
       fetch(),
-      fetchContent(),
     ]);
   }
   isEdit.value = operate;
@@ -573,16 +572,8 @@ const fetch = async (): Promise<void> => {
     await instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then(res => {
       postsData.value = res.data;
       tags.value = res.data.tags;
+      content.value = res.data.content.content
     });
-  }
-};
-/**
- * 查询内容
- */
-const fetchContent = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.posts.concat("/", dataCode.value, "/content"))
-      .then(res => content.value = res.data.content);
   }
 };
 /**

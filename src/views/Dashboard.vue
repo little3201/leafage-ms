@@ -275,7 +275,7 @@
           />
         </div>
       </div>
-      <div class="col-span-12 md:col-span-3">
+      <div class="col-span-12 md:col-span-6">
         <div class="relative shadow-sm rounded-md bg-white p-4">
           <canvas
             id="categories"
@@ -284,33 +284,6 @@
             role="img"
             height="500"
           />
-        </div>
-      </div>
-      <div class="col-span-12 md:col-span-3">
-        <div class="bg-white p-4 shadow-sm rounded-md">
-          <p class="text-center text-xl font-semibold my-2">
-            相关评论
-          </p>
-          <ul class="overflow-auto divide-y">
-            <li
-              v-for="(comment, index) in comments"
-              :key="index"
-              class="py-2"
-            >
-              <a
-                :href="`https://www.leafage.top/posts/${comment.posts}`"
-                target="_blank"
-              >
-                <div class="flex justify-between text-xs text-gray-500 mb-2">
-                  <span>{{ comment.location ? comment.location : '未知' }}</span>
-                  <span>{{ new Date(comment.modifyTime).toLocaleDateString() }}</span>
-                </div>
-                <p class="text-sm hover:underline">
-                  {{ comment.content }}
-                </p>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -322,10 +295,9 @@ import { ref, computed, onMounted } from "vue";
 import { createBarChart, createMiniChart, createPieChart } from "@/plugins/chart";
 
 import { instance, SERVER_URL } from "@/api";
-import { Category, Comment, Statistics, StatisticsTotal } from "@/api/request.type";
+import { Category, Statistics, StatisticsTotal } from "@/api/request.type";
 
 // data
-let comments = ref<Array<Comment>>([])
 let categories = ref<Array<Category>>([])
 let datas = ref<Array<Statistics>>([])
 let total = ref<StatisticsTotal>({
@@ -405,7 +377,6 @@ const initData = async (): Promise<void> => {
   await Promise.all([
     retrieveCategories(),
     retreiveStatistics(),
-    retrieveComments(),
     fetchTotal()]).then(() => construceChart())
 };
 /**
@@ -419,15 +390,8 @@ const retreiveStatistics = async () => {
 /**
  * 刷新数据
  */
-const refresh = async () => {
-  await Promise.all([retrieveComments(), fetchTotal()])
-}
-/**
- * 查询评论信息
- */
-const retrieveComments = async () => {
-  await instance.get(SERVER_URL.comment, { params: { page: 0, size: 10 } })
-    .then(res => comments.value = res.data.content)
+const refresh = () => {
+  fetchTotal()
 }
 /**
  * 总量统计

@@ -7,21 +7,18 @@ import {
     BarController,
     DoughnutController,
     LineController,
-    PieController,
     CategoryScale,
     LinearScale,
     Filler,
     Legend,
     Title,
-    Tooltip
-} from 'chart.js';
+    Tooltip,
 
-import {
     ChartConfiguration,
     ChartArea,
     ScriptableContext,
     ChartType
-} from 'chart.js/types/index.esm'
+} from 'chart.js';
 
 Chart.register(
     ArcElement,
@@ -31,7 +28,6 @@ Chart.register(
     BarController,
     DoughnutController,
     LineController,
-    PieController,
     CategoryScale,
     LinearScale,
     Filler,
@@ -138,10 +134,10 @@ const createMiniChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
                 intersect: false,
             },
             scales: {
-                xAxis: {
+                x: {
                     display: false
                 },
-                yAxis: {
+                y: {
                     display: false
                 }
             }
@@ -209,7 +205,7 @@ const createLineChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
 
 const createPieChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, colors: Array<string>) => {
     const config: ChartConfiguration = {
-        type: "pie",
+        type: "doughnut",
         data: {
             labels: labels,
             datasets: [

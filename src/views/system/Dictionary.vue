@@ -75,6 +75,12 @@
               scope="col"
               class="px-4"
             >
+              {{ $t('status') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
               {{ $t('modifyTime') }}
             </th>
             <th
@@ -112,6 +118,13 @@
             />
             <td
               class="px-4"
+            >
+              <Toogle
+                :checked="data.enabled"
+              />
+            </td>
+            <td
+              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
@@ -119,31 +132,7 @@
                 :need-del="false"
                 @click.capture="dataCode = data.code"
                 @edit-action="modalOperate"
-              >
-                <button
-                  type="button"
-                  name="enable"
-                  aria-label="enable"
-                  class="flex items-center mr-3 focus:outline-none"
-                  :class="data.enabled ? 'text-red-600' : 'text-green-600'"
-                  @click="power(data.code)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'power'" />
-                  </svg>
-                  {{ data.enabled ? $t('disable') : $t('enable') }}
-                </button>
-              </Action>
+              />
             </td>
           </tr>
         </tbody>
@@ -232,6 +221,7 @@ import Operation from "@/components/Operation.vue";
 import Action from "@/components/Action.vue";
 import Page from "@/components/Page.vue";
 import Modal from "@/components/Modal.vue";
+import Toogle from '@/components/Toogle.vue'
 
 import { instance, SERVER_URL } from "@/api";
 import type { Dictionary } from "@/api/request.type";

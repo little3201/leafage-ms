@@ -88,14 +88,17 @@ export declare interface Category extends AbstractVO<string> {
   description: string
 }
 
+export declare interface Statistics {
+  viewed: number,
+  likes: number,
+  comments: number
+}
+
 export declare interface Post extends AbstractVO<string> {
   title: string,
   cover: string,
   category: Category,
   tags: Array<string>,
-  viewed: number,
-  likes: number,
-  comments: number
 }
 
 export declare interface Content {
@@ -103,7 +106,7 @@ export declare interface Content {
   content: string
 }
 
-export declare interface PostsContent extends Post {
+export declare interface PostContent extends Post {
   content: Content
 }
 

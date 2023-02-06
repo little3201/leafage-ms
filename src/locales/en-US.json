@@ -87,5 +87,7 @@
 	"category": "Categroies",
 	"region": "Regions",
     "statitics": "Statitics",
-    "notification": "Notifications"
+    "notification": "Notifications",
+
+    "status": "Status"
 }

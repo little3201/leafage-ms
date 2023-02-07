@@ -68,24 +68,6 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('viewed') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('likes') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('comments') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('modifyTime') }}
             </th>
             <th
@@ -120,18 +102,6 @@
             <td
               class="px-4"
               v-text="data.category.name"
-            />
-            <td
-              class="px-4"
-              v-text="data.viewed"
-            />
-            <td
-              class="px-4"
-              v-text="data.likes"
-            />
-            <td
-              class="px-4"
-              v-text="data.comments"
             />
             <td
               class="px-4"
@@ -440,9 +410,6 @@ let postsData = ref<PostContent>({
     modifyTime: ''
   },
   tags: [],
-  viewed: 0,
-  likes: 0,
-  comments: 0,
   content: {
     catalog: '',
     content: ''
@@ -544,9 +511,6 @@ const modalOperate = async (operate: boolean): Promise<void> => {
         modifyTime: ''
       },
       tags: [],
-      viewed: 0,
-      likes: 0,
-      comments: 0,
       content: {
         catalog: '',
         content: ''

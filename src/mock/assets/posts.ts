@@ -24,9 +24,6 @@ for (let i = 0; i < 79; i++) {
       modifyTime: Random.datetime()
     },
     tags: ['Test', '测试'],
-    viewed: Random.integer(1, 900),
-    likes: Random.integer(100, 899),
-    comments: Random.integer(1, 100),
     modifyTime: Random.date()
   })
 }
@@ -43,9 +40,6 @@ const postsContent: PostContent = {
     modifyTime: Random.datetime()
   },
   tags: ['Test', '测试'],
-  viewed: Random.integer(1, 900),
-  likes: Random.integer(100, 899),
-  comments: Random.integer(1, 100),
   modifyTime: Random.date(),
   content: {
     content: Random.cparagraph(),

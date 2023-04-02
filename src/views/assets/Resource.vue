@@ -353,7 +353,7 @@ import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Resource, Category } from "@/api/request.type";
-import { uploadFile } from "@/plugins/upload";
+import { uploadFile } from "@/composables/upload";
 
 // 数据
 let resourceData = ref<Resource>({

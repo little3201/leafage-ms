@@ -379,8 +379,8 @@ import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Post, PostContent, Category } from "@/api/request.type";
-import markdownToHtml from '@/plugins/markdownToHtml'
-import { uploadFile } from "@/plugins/upload";
+import markdownToHtml from '@/composables/markdownToHtml'
+import { uploadFile } from "@/composables/upload";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()

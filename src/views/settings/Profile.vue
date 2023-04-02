@@ -329,7 +329,7 @@ import { ref, reactive, onMounted } from "vue";
 import { instance, SERVER_URL } from "@/api";
 import type { User, Account, Dictionary } from "@/api/request.type";
 
-import { uploadFile } from "@/plugins/upload";
+import { uploadFile } from "@/composables/upload";
 
 let isEdit = ref(false)
 

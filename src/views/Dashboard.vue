@@ -292,7 +292,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart, createPieChart } from "@/plugins/chart";
+import { createBarChart, createMiniChart, createPieChart } from "@/composables/chart";
 
 import { instance, SERVER_URL } from "@/api";
 import { Category, Statistics, StatisticsTotal } from "@/api/request.type";

@@ -207,7 +207,7 @@
           >
           <span
             v-else
-            v-text="account.nickname.substr(0, 1)"
+            v-text="account.nickname.substring(0, 1)"
           />
         </button>
         <RouterLink

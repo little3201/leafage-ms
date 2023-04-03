@@ -335,23 +335,17 @@ let isEdit = ref(false)
 
 let user = ref<User>({
   username: '',
-  firstname: '',
-  lastname: '',
-  gender: '',
-  phone: 0,
-  email: '',
-  birthday: '',
-  nationality: '',
-  degree: '',
-  hobbies: '',
-  company: '',
-  position: '',
-  description: ''
+  nickname: '',
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: new Date().toDateString(),
+  accountLocked: true,
+  credentialsExpiresAt: new Date().toDateString()
 })
 let nationalities = ref<Array<Dictionary>>([])
 let degrees = ref<Array<Dictionary>>([])
 
-let account: Account = reactive(JSON.parse(sessionStorage.getItem("account") || ''))
+let account: User = reactive(JSON.parse(sessionStorage.getItem("user") || ''))
 
 onMounted(() => {
   fetch()
@@ -372,9 +366,9 @@ const fetch = async (): Promise<void> => {
 const editAllow = async () => {
   isEdit.value = !isEdit.value
   if (!isEdit.value) {
-    await instance.put(SERVER_URL.account.concat('/', account.username), account).then(res => {
+    await instance.put(SERVER_URL.user.concat('/', account.username), account).then(res => {
       account = res.data
-      sessionStorage.setItem("account", JSON.stringify(res.data))
+      sessionStorage.setItem("user", JSON.stringify(res.data))
     })
   }
 }

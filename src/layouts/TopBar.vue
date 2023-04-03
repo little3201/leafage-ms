@@ -11,20 +11,11 @@
         :key="index"
         class="inline-flex items-center"
       >
-        <svg
+        <ChevronRightIcon
           v-if="route"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="opacity-60"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-        </svg>
+          class="w-4 h-4 opacity-70"
+          aria-hidden="true"
+        />
         <RouterLink
           :to="$route.path"
           :class="{ 'text-blue-600': $route.name && route === $route.name.toString().toLowerCase() }"
@@ -42,19 +33,10 @@
           :placeholder="$t('search')"
           aria-label="search"
         >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="absolute inset-y-0 right-0 my-auto mr-3 opacity-60"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'search'" />
-        </svg>
+        <MagnifyingGlassIcon
+          class="absolute inset-y-0 right-0 my-auto mr-3 opacity-60 w-5 h-5"
+          aria-hidden="true"
+        />
       </div>
 
       <div class="relative inline-flex items-center">
@@ -65,18 +47,10 @@
           class="focus:outline-none"
           @click="operate('notify')"
         >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
-          </svg>
+          <BellIcon
+            class="w-6 h-6"
+            aria-hidden="true"
+          />
           <figure v-if="count > 0">
             <span class="absolute animate-ping inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600" />
             <span class="absolute inset-y-0 right-px -mt-px rounded-full h-2 w-2 bg-red-600" />
@@ -133,18 +107,10 @@
           class="focus:outline-none"
           @click="operate('language')"
         >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'globe'" />
-          </svg>
+          <LanguageIcon
+            class="w-5 h-5"
+            aria-hidden="true"
+          />
         </button>
         <div
           v-show="isLanguage"
@@ -192,10 +158,10 @@
         <button
           v-if="account.username && account.username.length > 0"
           type="button"
-          name="account"
-          aria-label="account"
+          name="username"
+          aria-label="username"
           class="rounded-full w-8 h-8 text-center inline-flex items-center bg-white shadow focus:outline-none"
-          @click="operate('account')"
+          @click="operate('user')"
         >
           <img
             v-if="account.avatar"
@@ -238,19 +204,10 @@
               class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
               @click="operate('')"
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
-              </svg>
+              <IdentificationIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('profile') }}
             </RouterLink>
             <RouterLink
@@ -258,19 +215,10 @@
               class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
               @click="operate('')"
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
-              </svg>
+              <CogIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('settings') }}
             </RouterLink>
             <button
@@ -279,19 +227,10 @@
               aria-label="help"
               class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
-              </svg>
+              <QuestionMarkCircleIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('help') }}
             </button>
           </div>
@@ -303,19 +242,10 @@
               class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
               @click.prevent="signout"
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'toggle-right'" />
-              </svg>
+              <ArrowRightCircleIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('signout') }}
             </button>
           </div>
@@ -331,7 +261,8 @@ import { useRouter } from "vue-router";
 import { useI18n } from 'vue-i18n'
 
 import { instance, SERVER_URL } from "@/api";
-import type { Account, Notification } from "@/api/request.type";
+import type { User, Notification } from "@/api/request.type";
+import { ArrowRightCircleIcon, BellIcon, ChevronRightIcon, CogIcon, IdentificationIcon, LanguageIcon, MagnifyingGlassIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 
 // 控制通知是否打开
 let isNotify = ref(false);
@@ -345,14 +276,18 @@ let count = ref(0)
 
 const { locale } = useI18n()
 const router = useRouter();
-const account = ref<Account>({
+const account = ref<User>({
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: new Date().toDateString(),
+  accountLocked: true,
+  credentialsExpiresAt: new Date().toDateString()
 });
 
 onMounted(() => {
-  let data = sessionStorage.getItem("account");
+  let data = sessionStorage.getItem("user");
   if (data && data !== "undefined") {
     account.value = JSON.parse(data)
     retrieve();
@@ -392,7 +327,7 @@ const operate = (operation: string) => {
       isLanguage.value = !isLanguage.value;
       isAccount.value = false;
       break;
-    case "account":
+    case "user":
       isNotify.value = false;
       isLanguage.value = false;
       isAccount.value = !isAccount.value;

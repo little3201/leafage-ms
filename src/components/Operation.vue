@@ -10,19 +10,10 @@
       type="button"
       class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
-      </svg>
+      <DocumentPlusIcon
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+      />
       {{ $t('import') }}
     </button>
     <button
@@ -33,19 +24,10 @@
       class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
       @click="exportFile"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
-      </svg>
+      <DocumentTextIcon
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+      />
       {{ $t('export') }}
     </button>
     <button
@@ -55,19 +37,10 @@
       class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
       @click="operate"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
-      </svg>
+      <PlusCircleIcon
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+      />
       {{ $t('add') }}
     </button>
   </div>
@@ -79,6 +52,9 @@ import { ref, onMounted } from "vue";
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
 import type { Account } from "@/api/request.type";
+
+import { DocumentPlusIcon, DocumentTextIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
+
 
 const props = defineProps({
   needAdd: {
@@ -106,7 +82,7 @@ const account = ref<Account>({
 })
 
 onMounted(() => {
-  let data = sessionStorage.getItem("account")
+  let data = sessionStorage.getItem("user")
   if (data && data !== "undefined") {
     account.value = JSON.parse(data);
   }

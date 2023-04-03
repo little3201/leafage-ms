@@ -11,61 +11,35 @@
         class="flex flex-1 items-center focus:outline-none"
         @click="$emit('open-operate')"
       >
-        <svg
+        <component
+          :is="data.expand.icon"
           v-if="data.expand && data.expand.icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-        </svg>
+          class="w-4 h-4 mr-2"
+          aria-hidden="true"
+        />
         <span class="py-1  mr-auto">{{ data.name }}</span>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="ml-4"
-        >
-          <use
-            v-if="isExpand"
-            :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'"
-          />
-          <use
-            v-else
-            :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'"
-          />
-        </svg>
+        <ChevronDownIcon
+          v-if="isExpand"
+          class="w-5 h-5 ml-4"
+          aria-hidden="true"
+        />
+        <ChevronRightIcon
+          v-else
+          class="w-5 h-5 ml-4"
+          aria-hidden="true"
+        />
       </button>
       <label
         v-else
         :for="data.code"
         class="flex flex-1 items-center cursor-pointer"
       >
-        <svg
+        <component
+          :is="data.expand.icon"
           v-if="data.expand && data.expand.icon"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-        </svg>
+          class="w-4 h-4 mr-2"
+          aria-hidden="true"
+        />
         <span class="py-1 ">{{ data.name }}</span>
       </label>
     </div>
@@ -76,6 +50,7 @@
 import { PropType } from "vue";
 
 import type { NodeData } from "@/api/request.type";
+import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
   data: {

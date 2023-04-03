@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Group, AccountDetail } from '@/api/request.type'
+import type { Pagation, Group, User } from '@/api/request.type'
 import { parse } from '@/mock/utils';
 
 const pagation: Pagation<Group> = {
@@ -25,10 +25,10 @@ for (let i = 0; i < 39; i++) {
   })
 }
 
-const accounts: Array<AccountDetail> = []
+const members: Array<User> = []
 
 for (let i = 0; i < 5; i++) {
-  accounts.push({
+  members.push({
     username: Random.last(),
     nickname: Random.cname(),
     avatar: Random.image('32x32'),
@@ -67,8 +67,8 @@ export default [
       const url = options.url
       if (url.split('?').length == 1) {
         const path = url.substring(url.lastIndexOf('/') + 1)
-        if (path === "account") {
-          return accounts
+        if (path === "user") {
+          return members
         } else if (path === 'group') {
           return datas.slice(0, 6)
         } else {

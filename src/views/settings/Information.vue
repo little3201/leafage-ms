@@ -288,7 +288,7 @@ let isShow = ref(false)
 
 const router = useRouter();
 
-const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 onMounted(() => {
   fetch()

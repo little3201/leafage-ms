@@ -137,8 +137,8 @@ const onSubmit = async (): Promise<void> => {
 const storage = async (username: string): Promise<void> => {
   if (username && username.length > 0) {
     await Promise.all([
-      instance.get(SERVER_URL.account.concat("/", username)).then(res => sessionStorage.setItem("account", JSON.stringify(res.data))),
-      instance.get(SERVER_URL.account.concat("/", username, "/authority"))
+      instance.get(SERVER_URL.user.concat("/", username)).then(res => sessionStorage.setItem("user", JSON.stringify(res.data))),
+      instance.get(SERVER_URL.user.concat("/", username, "/components"))
         .then(res => {
           if (res.data && res.data.length > 0) {
             sessionStorage.setItem("menus", JSON.stringify(res.data))

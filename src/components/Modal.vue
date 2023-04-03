@@ -18,19 +18,10 @@
           @click="closeOperation"
         >
           <span class="sr-only">Close</span>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="-mt-2 -mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
-          </svg>
+          <XMarkIcon
+            class="w-6 h-6 -mt-2 -mr-2"
+            aria-hidden="true"
+          />
         </button>
         <!-- content -->
         <div class="p-4 ">
@@ -75,6 +66,7 @@
 </template>
 
 <script lang="ts" setup>
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 defineProps({
   isShow: {
     type: Boolean,

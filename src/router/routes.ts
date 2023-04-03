@@ -22,12 +22,12 @@ const routes: Array<RouteRecordRaw> = [
         path: 'system',
         name: 'System',
         component: () => import('@/views/system/Index.vue'),
-        redirect: '/system/account',
+        redirect: '/system/user',
         children: [
           {
-            path: 'account',
-            name: 'Account',
-            component: () => import('@/views/system/Account.vue'),
+            path: 'user',
+            name: 'User',
+            component: () => import('@/views/system/User.vue'),
             meta: { requiresAuth: true }
           },
           {
@@ -43,9 +43,9 @@ const routes: Array<RouteRecordRaw> = [
             meta: { requiresAuth: true }
           },
           {
-            path: 'authority',
-            name: 'Authority',
-            component: () => import('@/views/system/Authority.vue'),
+            path: 'component',
+            name: 'Component',
+            component: () => import('@/views/system/Component.vue'),
             meta: { requiresAuth: true }
           },
           {

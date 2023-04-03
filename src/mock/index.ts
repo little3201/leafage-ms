@@ -9,9 +9,9 @@ const menus = [
       {
         "code": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/role", "icon": "pocket" }, "children": []
       },
-      { "code": "212240439", "name": "Authority", "superior": "21224DRMU", "expand": { "path": "/authority", "icon": "link" }, "children": [] },
+      { "code": "212240439", "name": "Component", "superior": "21224DRMU", "expand": { "path": "/component", "icon": "link" }, "children": [] },
       {
-        "code": "203315P3Q", "name": "Account", "superior": "21224DRMU", "expand": { "path": "/account", "icon": "user" }, "children": []
+        "code": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/user", "icon": "user" }, "children": []
       },
       { "code": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionary", "icon": "book" }, "children": [] }
     ]
@@ -24,11 +24,10 @@ const menus = [
 
 import signMock from './sign'
 
-import accountMock from './system/account';
 import roleMock from './system/role';
 import userMock from './system/user';
 import groupMock from './system/group';
-import authorityMock from './system/authority';
+import authorityMock from './system/component';
 import notificationMock from './system/notification';
 import dictionaryMock from './system/dictionary';
 import accesslogMock from './system/accesslog';
@@ -42,7 +41,6 @@ import regionMock from './assets/region';
 
 const mocks = [
   ...signMock,
-  ...accountMock,
   ...roleMock,
   ...userMock,
   ...groupMock,
@@ -64,6 +62,6 @@ export function mockXHR() {
   for (i of mocks) {
     Mock.mock(new RegExp(i.url), i.method || 'get', i.response);
   }
-  sessionStorage.setItem("account", JSON.stringify(account));
+  sessionStorage.setItem("user", JSON.stringify(account));
   sessionStorage.setItem("menus", JSON.stringify(menus))
 }

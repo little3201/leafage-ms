@@ -11,19 +11,10 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
+        <ArrowPathIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
         {{ $t('reload') }}
       </button>
       <Operation
@@ -137,26 +128,10 @@
                   class="flex items-center mr-3 text-sky-600 focus:outline-none"
                   @click.prevent="treeOperate(true)"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-power mr-1"
-                  >
-                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-                    <line
-                      x1="12"
-                      y1="2"
-                      x2="12"
-                      y2="12"
-                    />
-                  </svg>
+                  <KeyIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
                   {{ $t('grant') }}
                 </button>
               </Action>
@@ -259,6 +234,7 @@ import TreeItem from "@/components/tree/TreeItem.vue"
 
 import { instance, SERVER_URL } from "@/api"
 import type { Role, NodeData } from "@/api/request.type"
+import { ArrowPathIcon, KeyIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isEdit = ref(false)
@@ -365,7 +341,7 @@ const treeOperate = async (operate: boolean) => {
   if (operate) {
     await Promise.all([
       instance.get(SERVER_URL.authority.concat("/tree")).then(res => treeDatas.value = res.data),
-      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then(res => ticked.value = res.data)
+      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/components")).then(res => ticked.value = res.data)
     ])
   }
   isTree.value = operate;

@@ -11,31 +11,22 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
+        <ArrowPathIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
         {{ $t('reload') }}
       </button>
       <Operation
         :need-add="false"
         :datas="datas"
-        :file-name="'account'"
+        :file-name="'user'"
       />
     </div>
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="account"
+        aria-label="user"
       >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -114,52 +105,16 @@
                 class="flex items-center justify-center"
                 :class="data.accountLocked ? 'text-red-600': 'text-lime-600'"
               >
-                <svg
+                <LockClosedIcon
                   v-if="data.accountLocked"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-lock"
-                >
-                  <rect
-                    x="3"
-                    y="11"
-                    width="18"
-                    height="11"
-                    rx="2"
-                    ry="2"
-                  />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                />
+                <LockOpenIcon
                   v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-unlock text-lime-600"
-                >
-                  <rect
-                    x="3"
-                    y="11"
-                    width="18"
-                    height="11"
-                    rx="2"
-                    ry="2"
-                  />
-                  <path d="M7 11V7a5 5 0 0 1 9.9-1" />
-                </svg>
+                  class="w-5 h-5 text-lime-600"
+                  aria-hidden="true"
+                />
               </div>
             </td>
             <td class="px-4">
@@ -194,19 +149,10 @@
                   class="flex items-center mr-3 text-cyan-600 focus:outline-none"
                   @click="treeOperate(true, 'group', data.username)"
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'users'" />
-                  </svg>
+                  <UsersIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
                   {{ $t('group') }}
                 </button>
                 <button
@@ -216,19 +162,10 @@
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="treeOperate(true, 'role', data.username)"
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
-                  </svg>
+                  <LinkIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
                   {{ $t('role') }}
                 </button>
                 <button
@@ -294,14 +231,15 @@ import Modal from "@/components/Modal.vue";
 import TreeItem from "@/components/tree/TreeItem.vue";
 
 import { instance, SERVER_URL } from "@/api";
-import type { AccountDetail, NodeData } from "@/api/request.type";
+import type { User, NodeData } from "@/api/request.type";
+import { ArrowPathIcon, LinkIcon, LockClosedIcon, LockOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isTree = ref(false);
 // 数据
 let treeDatas = ref<Array<NodeData>>([]);
 let ticked = ref<Array<string>>([])
-let datas = ref<Array<AccountDetail>>([]);
+let datas = ref<Array<User>>([]);
 let related = reactive({
   username: '',
   type: ''
@@ -327,7 +265,7 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.account, { params: { page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.user, { params: { page: page.value, size: size.value } })
     .then(res => {
       datas.value = res.data.content
       total.value = res.data.totalElements
@@ -338,9 +276,9 @@ const retrieve = async (): Promise<void> => {
  * @param username 账号
  */
 const unlock = async (username: string) => {
-  await instance.patch(SERVER_URL.account.concat("/", username)).then(res => {
+  await instance.patch(SERVER_URL.user.concat("/", username)).then(res => {
     if (res.data) {
-      datas.value.forEach((item: AccountDetail) => {
+      datas.value.forEach((item: User) => {
         if (item.username === username) {
           item.accountLocked = false
         }
@@ -375,7 +313,7 @@ const treeOperate = async (operate: boolean, type: string, username: string): Pr
  */
 const relation = async (type: string, username: string): Promise<void> => {
   related = { username: username, type: type }
-  await instance.get(SERVER_URL.account.concat('/', username, '/', type)).then(res => ticked.value = res.data)
+  await instance.get(SERVER_URL.user.concat('/', username, '/', type)).then(res => ticked.value = res.data)
 }
 /**
  * 提交
@@ -383,7 +321,7 @@ const relation = async (type: string, username: string): Promise<void> => {
  */
 const treeCommit = async (tracked: Array<string>): Promise<void> => {
   if (tracked && tracked.length > 0) {
-    await instance.patch(SERVER_URL.account.concat('/', related.username, '/', related.type), tracked)
+    await instance.patch(SERVER_URL.user.concat('/', related.username, '/', related.type), tracked)
       .then(res => ticked.value = res.data)
   }
   isTree.value = false;

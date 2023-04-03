@@ -11,19 +11,10 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="refresh"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
+        <ArrowPathIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
         {{ $t('reload') }}
       </button>
     </div>
@@ -31,19 +22,10 @@
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-blue-600"
-            >
-              <use :href="'/svg/feather-sprite.svg#' + 'eye'" />
-            </svg>
+            <EyeIcon
+              class="w-7 h-7 mr-2 text-blue-600"
+              aria-hidden="true"
+            />
             <span class="text-base text-gray-600 ml-2">{{ $t('viewed') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
@@ -51,34 +33,25 @@
               title="overViewed"
             >
               {{ overViewed }}%
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use
-                  v-if="overViewed > 0"
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                />
-                <use
-                  v-else
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                />
-              </svg>
-            </div>
-            <div class="absolute inset-4 top-10 opacity-50">
-              <canvas
-                id="overViewed"
-                ref="overViewedRef"
-                aria-label="over-viewed"
-                role="img"
+              <ArrowUpIcon
+                v-if="overViewed > 0"
+                class="w-4 h-4"
+                aria-hidden="true"
+              />
+              <ArrowDownIcon
+                v-else
+                class="w-4 h-4"
+                aria-hidden="true"
               />
             </div>
+            <LineChart
+              :labels="viewed.labels"
+              :label="viewed.label"
+              :title="viewed.title"
+              :data="viewed.data"
+              :color="viewed.color"
+              :options="viewed.options"
+            />
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
@@ -89,20 +62,10 @@
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-yellow-600"
-            >
-              <use :href="'/svg/feather-sprite.svg#' + 'message-square'" />
-            </svg>
-
+            <ChatBubbleLeftEllipsisIcon
+              class="w-7 h-7 mr-2 text-yellow-600"
+              aria-hidden="true"
+            />
             <span class="text-base text-gray-600 ml-2">{{ $t('comments') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
@@ -110,34 +73,25 @@
               title="overComment"
             >
               {{ overComments }}%
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use
-                  v-if="overComments > 0"
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                />
-                <use
-                  v-else
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                />
-              </svg>
-            </div>
-            <div class="absolute inset-4 top-10 opacity-50">
-              <canvas
-                id="overComment"
-                ref="overCommentRef"
-                aria-label="over-comments"
-                role="img"
+              <ArrowUpIcon
+                v-if="overViewed > 0"
+                class="w-4 h-4"
+                aria-hidden="true"
+              />
+              <ArrowDownIcon
+                v-else
+                class="w-4 h-4"
+                aria-hidden="true"
               />
             </div>
+            <LineChart
+              :labels="comments.labels"
+              :label="comments.label"
+              :title="comments.title"
+              :data="comments.data"
+              :color="comments.color"
+              :options="comments.options"
+            />
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
@@ -148,20 +102,10 @@
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-purple-600"
-            >
-              <use :href="'/svg/feather-sprite.svg#' + 'thumbs-up'" />
-            </svg>
-
+            <HandThumbUpIcon
+              class="w-7 h-7 mr-2 text-purple-600"
+              aria-hidden="true"
+            />
             <span class="text-base text-gray-600 ml-2">{{ $t('likes') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
@@ -169,34 +113,25 @@
               title="overLikes"
             >
               {{ overLikes }}%
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use
-                  v-if="overLikes > 0"
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                />
-                <use
-                  v-else
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                />
-              </svg>
-            </div>
-            <div class="absolute inset-4 top-10 opacity-50">
-              <canvas
-                id="overLikes"
-                ref="overLikesRef"
-                aria-label="over-likes"
-                role="img"
+              <ArrowUpIcon
+                v-if="overViewed > 0"
+                class="w-4 h-4"
+                aria-hidden="true"
+              />
+              <ArrowDownIcon
+                v-else
+                class="w-4 h-4"
+                aria-hidden="true"
               />
             </div>
+            <LineChart
+              :labels="likes.labels"
+              :label="likes.label"
+              :title="likes.title"
+              :data="likes.data"
+              :color="likes.color"
+              :options="likes.options"
+            />
           </div>
           <h2
             class="text-3xl font-bold leading-8 mt-6"
@@ -207,20 +142,10 @@
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-green-600"
-            >
-              <use :href="'/svg/feather-sprite.svg#' + 'download-cloud'" />
-            </svg>
-
+            <CloudArrowDownIcon
+              class="w-7 h-7 mr-2 text-green-600"
+              aria-hidden="true"
+            />
             <span class="text-base text-gray-600 ml-2">{{ $t('downloads') }}</span>
             <div
               class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white"
@@ -228,34 +153,25 @@
               :class="overDownloads > 0 ? 'bg-lime-500' : 'bg-red-600'"
             >
               {{ overDownloads }}%
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <use
-                  v-if="overDownloads > 0"
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-up'"
-                />
-                <use
-                  v-else
-                  :href="'/svg/feather-sprite.svg#' + 'arrow-down'"
-                />
-              </svg>
-            </div>
-            <div class="absolute inset-4 top-10 opacity-50">
-              <canvas
-                id="overDownloads"
-                ref="overDownloadsRef"
-                aria-label="over-downloads"
-                role="img"
+              <ArrowUpIcon
+                v-if="overViewed > 0"
+                class="w-4 h-4"
+                aria-hidden="true"
+              />
+              <ArrowDownIcon
+                v-else
+                class="w-4 h-4"
+                aria-hidden="true"
               />
             </div>
+            <LineChart
+              :labels="downloads.labels"
+              :label="downloads.label"
+              :title="downloads.title"
+              :data="downloads.data"
+              :color="downloads.color"
+              :options="downloads.options"
+            />
           </div>
           <h2 class="text-3xl font-bold leading-8 mt-6">
             {{ total.downloads }}
@@ -265,37 +181,28 @@
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas
-            id="viewed"
-            ref="viewedRef"
-            aria-label="viewed"
-            role="img"
-            height="500"
-          />
-        </div>
-      </div>
-      <div class="col-span-12 md:col-span-6">
-        <div class="relative shadow-sm rounded-md bg-white p-4">
-          <canvas
-            id="categories"
-            ref="categoriesRef"
-            aria-label="categories"
-            role="img"
-            height="500"
-          />
-        </div>
+        <PieChart
+          :labels="categoryChart.labels"
+          :label="categoryChart.label"
+          :title="categoryChart.title"
+          :data="categoryChart.data"
+          :options="categoryChart.options"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
-import { createBarChart, createMiniChart, createPieChart } from "@/composables/chart";
+import { ref, reactive, computed, onMounted } from "vue";
 
 import { instance, SERVER_URL } from "@/api";
 import { Category, Statistics, StatisticsTotal } from "@/api/request.type";
+
+import LineChart from "@/components/charts/LineChart.vue";
+import PieChart from "@/components/charts/PieChart.vue";
+
+import { ArrowPathIcon, EyeIcon, ChatBubbleLeftEllipsisIcon, ArrowUpIcon, ArrowDownIcon, HandThumbUpIcon, CloudArrowDownIcon } from '@heroicons/vue/24/outline'
 
 // data
 let categories = ref<Array<Category>>([])
@@ -358,14 +265,76 @@ let overDownloads = computed(() => {
   }
   return 0
 });
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    filler: {
+      propagate: false,
+    },
+  },
+  elements: {
+    point: {
+      radius: 0,
+      hoverRadius: 2
+    }
+  },
+  interaction: {
+    intersect: false,
+  },
+  scales: {
+    x: {
+      display: false
+    },
+    y: {
+      display: false
+    }
+  }
+}
+const viewed = reactive({
+  labels: new Array<string>(),
+  label: '访问量',
+  title: '访问量统计',
+  data: new Array<number>(),
+  color: '#2563ebcc',
+  options: options
+})
+const likes = reactive({
+  labels: new Array<string>(),
+  label: '点赞数',
+  title: '点赞数统计',
+  data: new Array<number>(),
+  color: '#9333eacc',
+  options: options
+})
+const comments = reactive({
+  labels: new Array<string>(),
+  label: '评论数',
+  title: '评论数统计',
+  data: new Array<number>(),
+  color: '#ca8a04cc',
+  options: options
+})
 
-// ref
-const viewedRef = ref();
-const overViewedRef = ref();
-const overCommentRef = ref();
-const overLikesRef = ref();
-const overDownloadsRef = ref();
-const categoriesRef = ref()
+const downloads = reactive({
+  labels: new Array<string>(),
+  label: '下载量',
+  title: '下载量统计',
+  data: new Array<number>(),
+  color: '#16a34acc',
+  options: options
+})
+
+const categoryChart = reactive({
+  labels: new Array<string>(),
+  label: '帖子数',
+  title: '帖子分类统计',
+  data: new Array<number>(),
+  options: {}
+})
 
 onMounted(() => {
   initData();
@@ -377,7 +346,7 @@ const initData = async (): Promise<void> => {
   await Promise.all([
     retrieveCategories(),
     retreiveStatistics(),
-    fetchTotal()]).then(() => construceChart())
+    fetchTotal()])
 };
 /**
  * 查询周统计
@@ -385,6 +354,22 @@ const initData = async (): Promise<void> => {
 const retreiveStatistics = async () => {
   await instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } }).then(res => {
     datas.value = res.data.content;
+    // chart data
+    let labels = new Array<string>()
+    datas.value.forEach(item => {
+      let now = new Date(item.date)
+      labels.unshift(now.getMonth() + 1 + '-' + now.getDate());
+      // data
+      viewed.data.unshift(item.viewed);
+      likes.data.unshift(item.likes);
+      comments.data.unshift(item.comments);
+      downloads.data.unshift(item.downloads)
+    })
+
+    viewed.labels = labels
+    likes.labels = labels
+    comments.labels = labels
+    downloads.labels = labels
   })
 }
 /**
@@ -405,81 +390,14 @@ const fetchTotal = async () => {
  */
 const retrieveCategories = async () => {
   await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } })
-    .then(res => categories.value = res.data.content)
-}
-/**
- * 构造图表
- */
-const construceChart = (): void => {
-  let obj = {
-    labels: Array<string>(),
-    pieLabels: Array<string>(),
-    timeSharingLabels: Array<string>(),
-
-    pieDatas: Array<number>(),
-    timeSharingDatas: Array<number>(),
-    viewed: Array<number>(),
-    likes: Array<number>(),
-    comments: Array<number>(),
-    downloads: Array<number>(),
-
-    overViewed: Array<number>(),
-    overLikes: Array<number>(),
-    overComments: Array<number>(),
-    overDownloads: Array<number>()
-  }
-
-  datas.value.forEach(item => {
-    let now = new Date(item.date)
-    obj.labels.unshift(now.getMonth() + 1 + '-' + now.getDate());
-    // data
-    obj.viewed.unshift(item.viewed);
-    obj.likes.unshift(item.likes);
-    obj.comments.unshift(item.comments);
-    obj.downloads.unshift(item.downloads)
-    // over data
-    obj.overViewed.unshift(item.overViewed)
-    obj.overComments.unshift(item.overComments);
-    obj.overLikes.unshift(item.overLikes);
-    obj.overDownloads.unshift(item.overDownloads)
+    .then(res => {
+      categories.value = res.data.content
+      // chart data
+      categories.value.forEach(item => {
+    categoryChart.labels.push(item.name)
+    categoryChart.data.push(item.count)
   })
-
-  // 替换最新统计
-  obj.overViewed.pop();
-  obj.overViewed.push(overViewed.value)
-
-  obj.overLikes.pop();
-  obj.overLikes.push(overLikes.value)
-
-  obj.overComments.pop();
-  obj.overComments.push(overComments.value)
-
-  obj.overDownloads.pop();
-  obj.overDownloads.push(overDownloads.value)
-
-  // 浏览量统计
-  createMiniChart(overViewedRef.value, obj.labels, obj.overViewed, "#2563ebcc");
-
-  // 评论数统计
-  createMiniChart(overCommentRef.value, obj.labels, obj.overComments, "#ca8a04cc");
-
-  // 喜欢数统计
-  createMiniChart(overLikesRef.value, obj.labels, obj.overLikes, "#9333eacc");
-
-  // 下载数统计
-  createMiniChart(overDownloadsRef.value, obj.labels, obj.overDownloads, "#16a34acc");
-
-  // 每日访问量统计
-  createBarChart(viewedRef.value, obj.labels, obj.viewed, obj.likes, obj.comments);
-
-  categories.value.forEach(item => {
-    obj.pieLabels.push(item.name)
-    obj.pieDatas.push(item.count)
-  })
-  let pieColors = ['#dc2626', '#ea580c', '#d97706', '#ca8a04', '#65a30d', '#16a34a', '#059669', '#0d9488',
-    '#0891b2', '#0284c7', '#2563eb', '#4f46e5', '#7c3aed', '#9333ea', '#c026d3', '#db2777', '#e11d48']
-  // 分类统计
-  createPieChart(categoriesRef.value, obj.pieLabels, obj.pieDatas, pieColors);
+    })
 }
 
 </script>

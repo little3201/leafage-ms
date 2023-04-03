@@ -7,48 +7,22 @@
       exacts
       @click="isExpand = !isExpand"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-3"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-      </svg>
+      <component
+        :is="data.expand.icon"
+        class="w-5 h-5 mr-3"
+        aria-hidden="true"
+      />
       <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>
-      <svg
+      <ChevronDownIcon
         v-if="isExpand"
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="hidden xl:block ml-auto mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-down'" />
-      </svg>
-      <svg
+        class="w-5 h-5 ml-auto mr-4"
+        aria-hidden="true"
+      />
+      <ChevronRightIcon
         v-else
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="hidden xl:block ml-auto mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-      </svg>
+        class="w-5 h-5 ml-auto mr-4"
+        aria-hidden="true"
+      />
     </RouterLink>
     <RouterLink
       v-else
@@ -56,19 +30,11 @@
       class="flex flex-1 items-center h-12 rounded-l-full pl-4 -mr-4"
       exact
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-3"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + data.expand.icon" />
-      </svg>
+      <component
+        :is="data.expand.icon"
+        class="w-5 h-5 mr-3"
+        aria-hidden="true"
+      />
       <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>
     </RouterLink>
     <div
@@ -89,6 +55,7 @@
 import { ref, PropType } from "vue";
 
 import type { NodeData } from '@/api/request.type'
+import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
   data: {

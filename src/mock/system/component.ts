@@ -29,7 +29,7 @@ const datas: Array<Authority> = [
     name: "Authority",
     type: "M",
     icon: "link",
-    path: "/authority",
+    path: "/component",
     enabled: true,
     description: "权限",
     count: 1
@@ -50,12 +50,12 @@ const datas: Array<Authority> = [
     code: "203315P3Q",
     modifyTime: Random.date(),
     superior: "System",
-    name: "Account",
+    name: "User",
     type: "M",
     icon: "user",
     enabled: true,
-    path: "/account",
-    description: "账号",
+    path: "/user",
+    description: "用户",
     count: 1
   },
   {
@@ -287,11 +287,11 @@ const treeDatas = [
     "children": [
       {
         code: "203315P3Q",
-        name: "Account",
+        name: "User",
         superior: "System",
         "expand": {
           icon: "user",
-          path: "/account"
+          path: "/user"
         },
         "children": [
           {
@@ -367,7 +367,7 @@ const treeDatas = [
           },
           {
             code: "2194AK7P",
-            name: "Account",
+            name: "User",
             superior: "Group",
             "expand": {
               icon: "user",
@@ -434,7 +434,7 @@ const treeDatas = [
         superior: "System",
         "expand": {
           icon: "link",
-          path: "/authority"
+          path: "/component"
         },
         "children": [
           {

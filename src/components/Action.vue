@@ -12,19 +12,10 @@
       class="flex items-center mr-3 focus:outline-none"
       @click="$emit('editAction', true)"
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-1"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'edit-3'" />
-      </svg>
+      <PencilSquareIcon
+        class="w-4 h-4 mr-1"
+        aria-hidden="true"
+      />
       {{ $t('edit') }}
     </button>
     <button
@@ -35,19 +26,10 @@
       class="flex items-center text-red-600 focus:outline-none"
       @click="$emit('delAction', true)"
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-1"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
-      </svg>
+      <TrashIcon
+        class="w-4 h-4 mr-1"
+        aria-hidden="true"
+      />
       {{ $t('delete') }}
     </button>
   </div>
@@ -57,6 +39,7 @@
 import { ref, onMounted } from 'vue';
 
 import type { Account } from '@/api/request.type';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
   needEdit: {

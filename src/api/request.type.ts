@@ -5,33 +5,14 @@ export declare interface Pagation<T> {
   content: Array<T>
 }
 
-export declare interface Account {
+export declare interface User {
   username: string,
   nickname: string,
-  avatar: string
-}
-
-export declare interface AccountDetail extends Account {
+  avatar: string,
   enabled: boolean,
   accountExpiresAt: string,
   accountLocked: boolean,
   credentialsExpiresAt: string
-}
-
-export declare interface User {
-  username: string,
-  firstname: string,
-  lastname: string,
-  gender: string,
-  phone: number,
-  email: string,
-  birthday: string,
-  nationality: string,
-  degree: string,
-  hobbies: string,
-  company: string,
-  position: string,
-  description: string
 }
 
 interface AbstractVO<T> {

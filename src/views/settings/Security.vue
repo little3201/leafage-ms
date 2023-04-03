@@ -228,7 +228,7 @@ import { useRouter } from "vue-router";
 
 import { instance, SERVER_URL } from "@/api";
 
-const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 const router = useRouter();
 

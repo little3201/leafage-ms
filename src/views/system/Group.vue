@@ -11,19 +11,10 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
+        <ArrowPathIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
         {{ $t('reload') }}
       </button>
       <Operation
@@ -153,25 +144,16 @@
                 <button
                   v-if="data.count > 0"
                   type="button"
-                  name="crew"
-                  aria-label="crew"
+                  name="members"
+                  aria-label="members"
                   class="flex items-center mr-3 text-amber-600 focus:outline-none"
                   @click="previewOperation(true)"
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'user'" />
-                  </svg>
-                  {{ $t('crew') }}
+                  <UsersIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
+                  {{ $t('members') }}
                 </button>
               </Action>
             </td>
@@ -434,6 +416,7 @@ import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import { Group, AccountDetail } from "@/api/request.type";
+import { ArrowPathIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isEdit = ref(false)
@@ -506,7 +489,7 @@ const confirmCommit = async (): Promise<void> => {
  */
 const retrieveAccounts = async (): Promise<void> => {
   if (groupData.value.count > 0 && dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account"))
+    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/members"))
       .then(res => accounts.value = res.data)
   }
 }
@@ -578,7 +561,7 @@ const modelCommit = async (): Promise<void> => {
  */
 const previewOperation = async (show: boolean) => {
   if (show) {
-    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/account")).then(res => accounts.value = res.data);
+    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/user")).then(res => accounts.value = res.data);
   }
   isShow.value = show
 }

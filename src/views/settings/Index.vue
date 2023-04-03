@@ -31,19 +31,10 @@
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/profile"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'archive'" />
-              </svg>
+              <IdentificationIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('profile') }}
             </RouterLink>
             <RouterLink
@@ -51,38 +42,20 @@
               to="/settings/information"
               exact
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'settings'" />
-              </svg>
+              <CogIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('information') }}
             </RouterLink>
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/security"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'shield'" />
-              </svg>
+              <ShieldCheckIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('security') }}
             </RouterLink>
           </div>
@@ -91,38 +64,20 @@
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/notification"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'bell'" />
-              </svg>
+              <BellAlertIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('notification') }}
             </RouterLink>
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/accesslog"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="mr-2"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
-              </svg>
+              <DocumentTextIcon
+                class="w-4 h-4 mr-2"
+                aria-hidden="true"
+              />
               {{ $t('accesslog') }}
             </RouterLink>
           </div>
@@ -140,9 +95,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import type { Account } from "@/api/request.type";
+import type { User } from "@/api/request.type";
+import { BellAlertIcon, CogIcon, DocumentTextIcon, IdentificationIcon, ShieldCheckIcon } from '@heroicons/vue/24/outline'
 
-const account: Account = ref(JSON.parse(sessionStorage.getItem("account") || ''))
+
+const account: User = ref(JSON.parse(sessionStorage.getItem("user") || ''))
 </script>
 
 <style scoped>

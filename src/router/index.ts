@@ -12,7 +12,7 @@ const router = createRouter({
 /* 路由之前 */
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next) => {
   progress.start()
-  const account = sessionStorage.getItem("account")
+  const account = sessionStorage.getItem("user")
   const isAuthenticated = account && Object.keys(account).length > 0;
   if (to.meta.requiresAuth && to.path !== '/signin' && !isAuthenticated) {
     next({ path: '/signin', query: { redierct: to.fullPath } })

@@ -11,19 +11,10 @@
         class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
         @click="retrieve"
       >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
+        <ArrowPathIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
         {{ $t('reload') }}
       </button>
       <Operation
@@ -298,34 +289,16 @@
               class="top-3 right-1 absolute focus:outline-none"
               @click="previewHtml"
             >
-              <svg
+              <EyeSlashIcon
                 v-if="preview"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="opacity-40"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye-off'" />
-              </svg>
-              <svg
+                class="w-4 h-4 opacity-40"
+                aria-hidden="true"
+              />
+              <EyeIcon
                 v-else
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="opacity-40"
-              >
-                <use :xlink:href="'/svg/feather-sprite.svg#' + 'eye'" />
-              </svg>
+                class="w-4 h-4 opacity-40"
+                aria-hidden="true"
+              />
             </button>
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 border-none mt-1 h-52 md:h-96"
@@ -381,6 +354,7 @@ import { instance, SERVER_URL } from "@/api";
 import type { Post, PostContent, Category } from "@/api/request.type";
 import markdownToHtml from '@/composables/markdownToHtml'
 import { uploadFile } from "@/composables/upload";
+import { ArrowPathIcon, EyeSlashIcon, EyeIcon } from "@heroicons/vue/24/outline";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()

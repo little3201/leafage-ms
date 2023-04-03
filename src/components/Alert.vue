@@ -4,19 +4,10 @@
     class="flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700 dark:bg-blue-200 dark:text-blue-800"
     role="alert"
   >
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="mr-1"
-    >
-      <use :xlink:href="'/svg/feather-sprite.svg#' + 'info'" />
-    </svg>
+    <InformationCircleIcon
+      class="w-5 h-5 mr-1"
+      aria-hidden="true"
+    />
     <div>
       <span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
     </div>
@@ -24,6 +15,7 @@
 </template>
 
 <script lang="ts" setup>
+import { InformationCircleIcon } from '@heroicons/vue/24/outline'
 defineProps({
     isShow: {
         type: Boolean,

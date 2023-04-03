@@ -3,15 +3,33 @@
     <canvas
       id="lineChartRef"
       ref="lineChartRef"
-      aria-label="over-viewed"
+      aria-label="line-chart"
       role="img"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import Chart from '@/composables/chart'
-import { ChartConfiguration, ChartArea, ChartType, ScriptableContext } from 'chart.js'
+import { ChartConfiguration, ChartOptions, ChartArea, ChartType, ScriptableContext } from 'chart.js'
+
+interface Props {
+    labels: Array<string>,
+    label: string,
+    title: string,
+    data: Array<number>,
+    color: string,
+    options: ChartOptions
+}
+
+const props = defineProps<Props>()
+
+onMounted(() => {
+    createLineChart(props.labels, props.label, props.title, props.data, props.color, props.options)
+})
+
+const lineChartRef = ref()
 
 const getGradient = (ctx: CanvasRenderingContext2D, chartArea: ChartArea, color: string) => {
     const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top)
@@ -21,15 +39,44 @@ const getGradient = (ctx: CanvasRenderingContext2D, chartArea: ChartArea, color:
     return gradient
 }
 
-const createLineChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas: Array<number>, color: string) => {
+const createLineChart = (labels: Array<string>, label: string, title: string, data: Array<number>, color: string, options: ChartOptions) => {
+    if (!options || Object.keys(options).length == 0) {
+        options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    color: 'black',
+                    font: {
+                        size: 20,
+                        weight: '600'
+                    },
+                    display: true,
+                    text: title
+                }
+            },
+            elements: {
+                point: {
+                    radius: 0,
+                    hoverRadius: 2
+                }
+            },
+            interaction: {
+                intersect: false,
+            }
+        }
+    }
     const config: ChartConfiguration = {
         type: "line",
         data: {
             labels: labels,
             datasets: [
                 {
-                    label: '访问量',
-                    data: datas,
+                    label: label,
+                    data: data,
                     backgroundColor: (context: ScriptableContext<ChartType>) => {
                         const chart = context.chart;
                         const { ctx, chartArea } = chart;
@@ -47,34 +94,8 @@ const createLineChart = (canvas: HTMLCanvasElement, labels: Array<string>, datas
                 }
             ],
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    color: 'black',
-                    font: {
-                        size: 20,
-                        weight: '600'
-                    },
-                    display: true,
-                    text: '本月每日访问量'
-                }
-            },
-            elements: {
-                point: {
-                    radius: 0,
-                    hoverRadius: 2
-                }
-            },
-            interaction: {
-                intersect: false,
-            }
-        },
+        options: options
     }
-    return new Chart(canvas, config);
+    return new Chart(lineChartRef.value, config);
 }
 </script>

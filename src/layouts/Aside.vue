@@ -1,5 +1,5 @@
 <template>
-  <aside class="sm:w-20 xl:w-64 pr-4">
+  <aside class="pr-4">
     <RouterLink
       to="/"
     >
@@ -34,7 +34,7 @@
       </h1>
     </RouterLink>
     <div class="my-4 h-px w-full bg-gray-200 bg-opacity-30" />
-    <div class="my-8">
+    <div class="sm:w-20 xl:w-52 my-8">
       <AsideCore
         v-for="data in datas"
         :key="data.code"

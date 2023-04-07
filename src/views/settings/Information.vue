@@ -59,61 +59,6 @@
     </fieldset>
     <fieldset class="my-6">
       <legend class="font-medium text-gray-900 pr-4">
-        Public email
-      </legend>
-      <div class="mt-4 text-sm">
-        <label
-          for="email"
-          class="font-medium text-gray-700"
-        >Public email</label>
-        <div class="flex items-center space-x-4 mt-1">
-          <input
-            id="email"
-            v-model="user.email"
-            name="email"
-            type="email"
-            class="block w-80 border-gray-300 py-1 rounded-md"
-            :disabled="!editEmail"
-            aria-label="email"
-          >
-          <button
-            type="button"
-            name="email"
-            aria-label="email"
-            class="text-blue-600 hover:underline"
-            @click="editAllow(2)"
-          >
-            {{
-              editEmail ? 'Save' :
-              'Edit'
-            }}
-          </button>
-        </div>
-        <span class="text-xs text-gray-400">You can manage verified email addresses in your email settings.</span>
-      </div>
-    </fieldset>
-    <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
-        Change phone number
-      </legend>
-      <p class="text-sm text-gray-500">
-        Changing your phone number can have unintended side effects.
-      </p>
-      <div class="mt-4">
-        <button
-          aria-label="phone"
-          name="phone"
-          type="button"
-          class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
-        >
-          Change
-          phone number
-        </button>
-        <span class="text-xs text-gray-400">You can manage verified phone number in your phone number settings.</span>
-      </div>
-    </fieldset>
-    <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
         By Email
       </legend>
       <div class="mt-4 space-y-4">
@@ -268,20 +213,15 @@ import Confirm from "@/components/Confirm.vue"
 
 let editEmail = ref(false)
 let editUsername = ref(false)
+
 let user = ref<User>({
   username: '',
-  firstname: '',
-  lastname: '',
-  gender: '',
-  phone: 0,
-  email: '',
-  birthday: '',
-  nationality: '',
-  degree: '',
-  hobbies: '',
-  company: '',
-  position: '',
-  description: ''
+  nickname: '',
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 })
 
 let isShow = ref(false)
@@ -320,7 +260,7 @@ const confirmOperate = (operate: boolean): void => {
  * confirm 提交
  */
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.account.concat("/", username.value)).then(() => {
+  await instance.delete(SERVER_URL.user.concat("/", username.value)).then(() => {
     sessionStorage.clear()
     router.replace({ path: "/signin" });
   });

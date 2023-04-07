@@ -104,19 +104,11 @@
             </td>
             <td class="px-4">
               <div class="flex items-center">
-                <svg
+                <component
+                  :is="data.icon"
                   v-if="data.icon"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <use :xlink:href="'/svg/feather-sprite.svg#' + data.icon" />
-                </svg>
+                  aria-hidden="true"
+                />
                 <span
                   class="font-medium ml-2"
                   v-text="data.name"
@@ -168,19 +160,10 @@
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
                   @click="previewOperation(true, data.code)"
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'pocket'" />
-                  </svg>
+                  <LinkIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
                   {{ $t('role') }}
                 </button>
               </Action>
@@ -302,7 +285,7 @@ import Modal from "@/components/Modal.vue";
 
 import { instance, SERVER_URL } from "@/api";
 import type { Authority, Role } from "@/api/request.type";
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, LinkIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isShow = ref(false)

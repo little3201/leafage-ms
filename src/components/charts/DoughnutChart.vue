@@ -1,12 +1,10 @@
 <template>
-  <div class="relative shadow-sm rounded-md bg-white p-4">
-    <canvas
-      id="pieChartRef"
-      ref="pieChartRef"
-      aria-label="pie-chart"
-      role="img"
-    />
-  </div>
+  <canvas
+    id="pieChartRef"
+    ref="pieChartRef"
+    aria-label="pie-chart"
+    role="img"
+  />
 </template>
 
 <script setup lang="ts">

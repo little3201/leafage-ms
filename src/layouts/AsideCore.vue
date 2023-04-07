@@ -9,18 +9,18 @@
     >
       <component
         :is="data.expand.icon"
-        class="w-5 h-5 mr-3"
+        class="w-6 h-6 mr-3"
         aria-hidden="true"
       />
       <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>
       <ChevronDownIcon
         v-if="isExpand"
-        class="w-5 h-5 ml-auto mr-4"
+        class="w-6 h-6 ml-auto mr-4"
         aria-hidden="true"
       />
       <ChevronRightIcon
         v-else
-        class="w-5 h-5 ml-auto mr-4"
+        class="w-6 h-6 ml-auto mr-4"
         aria-hidden="true"
       />
     </RouterLink>
@@ -32,7 +32,7 @@
     >
       <component
         :is="data.expand.icon"
-        class="w-5 h-5 mr-3"
+        class="w-6 h-6 mr-3"
         aria-hidden="true"
       />
       <span class="hidden xl:block">{{ $t(data.name.toLowerCase()) }}</span>

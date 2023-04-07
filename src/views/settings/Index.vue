@@ -62,7 +62,7 @@
           <div class="py-4">
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="/settings/notification"
+              to="/settings/messages"
             >
               <BellAlertIcon
                 class="w-4 h-4 mr-2"

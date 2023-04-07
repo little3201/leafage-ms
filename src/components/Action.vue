@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="account.username && account.username.length > 0"
+    v-if="user.username && user.username.length > 0"
     class="flex justify-center items-center text-sm"
   >
     <slot />
@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 
-import type { Account } from '@/api/request.type';
+import type { User } from '@/api/request.type';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
@@ -54,16 +54,20 @@ defineProps({
 
 defineEmits(['editAction', 'delAction']);
 
-const account = ref<Account>({
+const user = ref<User>({
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 });
 
 onMounted(() => {
-  let data = sessionStorage.getItem('account');
+  let data = sessionStorage.getItem('user');
   if (data && data !== 'undefined') {
-    account.value = JSON.parse(data);
+    user.value = JSON.parse(data);
   }
 });
 </script>

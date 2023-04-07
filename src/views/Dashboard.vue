@@ -23,10 +23,10 @@
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <EyeIcon
-              class="w-7 h-7 mr-2 text-blue-600"
+              class="w-7 h-7 mr-1 text-blue-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('viewed') }}</span>
+            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('viewed') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -44,24 +44,26 @@
               />
             </div>
           </div>
-          <LineChart
-            :labels="viewed.labels"
-            :label="viewed.label"
-            :title="viewed.title"
-            :data="viewed.data"
-            :color="viewed.color"
-            :options="viewed.options"
-          />
+          <div class="absolute inset-4 top-10 opacity-50">
+            <LineChart
+              :labels="viewed.labels"
+              :label="viewed.label"
+              :title="viewed.title"
+              :data="viewed.data"
+              :color="viewed.color"
+              :options="viewed.options"
+            />
+          </div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <ChatBubbleLeftEllipsisIcon
-              class="w-7 h-7 mr-2 text-yellow-600"
+              class="w-7 h-7 mr-1 text-yellow-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('comments') }}</span>
+            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('comments') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -79,24 +81,26 @@
               />
             </div>
           </div>
-          <LineChart
-            :labels="comments.labels"
-            :label="comments.label"
-            :title="comments.title"
-            :data="comments.data"
-            :color="comments.color"
-            :options="comments.options"
-          />
+          <div class="absolute inset-4 top-10 opacity-50">
+            <LineChart
+              :labels="comments.labels"
+              :label="comments.label"
+              :title="comments.title"
+              :data="comments.data"
+              :color="comments.color"
+              :options="comments.options"
+            />
+          </div>
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <HandThumbUpIcon
-              class="w-7 h-7 mr-2 text-purple-600"
+              class="w-7 h-7 mr-1 text-purple-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('likes') }}</span>
+            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('likes') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -115,23 +119,25 @@
             </div>
           </div>
         </div>
-        <LineChart
-          :labels="likes.labels"
-          :label="likes.label"
-          :title="likes.title"
-          :data="likes.data"
-          :color="likes.color"
-          :options="likes.options"
-        />
+        <div class="absolute inset-4 top-10 opacity-50">
+          <LineChart
+            :labels="likes.labels"
+            :label="likes.label"
+            :title="likes.title"
+            :data="likes.data"
+            :color="likes.color"
+            :options="likes.options"
+          />
+        </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
           <div class="flex items-center">
             <CloudArrowDownIcon
-              class="w-7 h-7 mr-2 text-green-600"
+              class="w-7 h-7 mr-1 text-green-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('downloads') }}</span>
+            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('downloads') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -148,26 +154,30 @@
               </h2>
             </div>
           </div>
-          <LineChart
-            :labels="downloads.labels"
-            :label="downloads.label"
-            :title="downloads.title"
-            :data="downloads.data"
-            :color="downloads.color"
-            :options="downloads.options"
-          />
+          <div class="absolute inset-4 top-10 opacity-50">
+            <LineChart
+              :labels="downloads.labels"
+              :label="downloads.label"
+              :title="downloads.title"
+              :data="downloads.data"
+              :color="downloads.color"
+              :options="downloads.options"
+            />
+          </div>
         </div>
       </div>
     </div>
     <div class="grid grid-cols-12 gap-4 my-4">
       <div class="col-span-12 md:col-span-6">
-        <PieChart
-          :labels="categoryChart.labels"
-          :label="categoryChart.label"
-          :title="categoryChart.title"
-          :data="categoryChart.data"
-          :options="categoryChart.options"
-        />
+        <div class="relative shadow-sm rounded-md bg-white p-4">
+          <DoughnutChart
+            :labels="categoryChart.labels"
+            :label="categoryChart.label"
+            :title="categoryChart.title"
+            :data="categoryChart.data"
+            :options="categoryChart.options"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -180,7 +190,7 @@ import { instance, SERVER_URL } from "@/api";
 import { Category, Statistics } from "@/api/request.type";
 
 import LineChart from "@/components/charts/LineChart.vue";
-import PieChart from "@/components/charts/PieChart.vue";
+import DoughnutChart from "@/components/charts/DoughnutChart.vue";
 
 import { ArrowPathIcon, EyeIcon, ChatBubbleLeftEllipsisIcon, HandThumbUpIcon, CloudArrowDownIcon, PlusIcon } from '@heroicons/vue/24/outline'
 
@@ -228,6 +238,7 @@ const options = {
     }
   }
 }
+
 const viewed = reactive({
   labels: new Array<string>(),
   label: '访问量',
@@ -236,6 +247,7 @@ const viewed = reactive({
   color: '#2563ebcc',
   options: options
 })
+
 const likes = reactive({
   labels: new Array<string>(),
   label: '点赞数',
@@ -244,6 +256,7 @@ const likes = reactive({
   color: '#9333eacc',
   options: options
 })
+
 const comments = reactive({
   labels: new Array<string>(),
   label: '评论数',

@@ -85,18 +85,10 @@
       </legend>
       <div class="text-center">
         <div class="flex items-center justify-center my-6">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'lock'" />
-          </svg>
+          <LockClosedIcon
+            class="w-7 h-7"
+            aria-hidden="true"
+          />
         </div>
 
         <h3 class="text-xl font-semibold">
@@ -142,34 +134,16 @@
               class="w-2 h-2 bg-gray-400 rounded-full"
               :class="{ 'bg-lime-500': index == 1 }"
             />
-            <svg
+            <DevicePhoneMobileIcon
               v-if="index == 1"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mx-2"
-            >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'smartphone'" />
-            </svg>
-            <svg
+              class="w-6 h-6 mx-2"
+              aria-hidden="true"
+            />
+            <ComputerDesktopIcon
               v-else
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="mx-2"
-            >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'monitor'" />
-            </svg>
+              class="w-6 h-6 mx-2"
+              aria-hidden="true"
+            />
             <div class="mr-auto text-sm text-gray-600">
               <span>陕西西安</span>
               <span class="mx-2">111.12.12.12</span>
@@ -227,6 +201,8 @@ import { reactive, ref } from 'vue'
 import { useRouter } from "vue-router";
 
 import { instance, SERVER_URL } from "@/api";
+import { ComputerDesktopIcon, DevicePhoneMobileIcon, LockClosedIcon } from '@heroicons/vue/24/outline'
+
 
 const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
@@ -242,7 +218,7 @@ const onSubmit = async () => {
   if (!pwd.old || !pwd.new || !pwd.confirm) {
     alert("数据校验未通过！")
   } else {
-    await instance.patch(SERVER_URL.account.concat("/", username.value), pwd).then(() => {
+    await instance.patch(SERVER_URL.user.concat("/", username.value), pwd).then(() => {
       sessionStorage.clear()
       router.replace({ path: "/signin" });
     })

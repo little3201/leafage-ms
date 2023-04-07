@@ -107,8 +107,9 @@
               >
                 <LockClosedIcon
                   v-if="data.accountLocked"
-                  class="w-5 h-5"
+                  class="w-5 h-5 cursor-pointer"
                   aria-hidden="true"
+                  @click="unlock(data.username)"
                 />
                 <LockOpenIcon
                   v-else
@@ -167,29 +168,6 @@
                     aria-hidden="true"
                   />
                   {{ $t('role') }}
-                </button>
-                <button
-                  v-if="data.accountLocked"
-                  type="button"
-                  name="unlock"
-                  aria-label="unlock"
-                  class="flex items-center mr-3 text-green-600 focus:outline-none"
-                  @click="unlock(data.username)"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="mr-1"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'key'" />
-                  </svg>
-                  {{ $t('unlock') }}
                 </button>
               </Action>
             </td>

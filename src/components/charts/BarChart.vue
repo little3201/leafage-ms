@@ -1,12 +1,10 @@
 <template>
-  <div class="absolute inset-4 top-10 opacity-50">
-    <canvas
-      id="barChartRef"
-      ref="barChartRef"
-      aria-label="bar-chart"
-      role="img"
-    />
-  </div>
+  <canvas
+    id="barChartRef"
+    ref="barChartRef"
+    aria-label="bar-chart"
+    role="img"
+  />
 </template>
 
 <script setup lang="ts">

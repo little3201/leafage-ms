@@ -95,9 +95,9 @@ const routes: Array<RouteRecordRaw> = [
             meta: { requiresAuth: true }
           },
           {
-            path: 'notification',
-            name: 'Notification',
-            component: () => import('@/views/settings/Notification.vue'),
+            path: 'messages',
+            name: 'Messages',
+            component: () => import('@/views/settings/Messages.vue'),
             meta: { requiresAuth: true }
           },
           {

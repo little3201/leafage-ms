@@ -61,11 +61,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/assets/Posts.vue')
       },
       {
-        path: 'resource',
-        name: 'Resource',
-        component: () => import('@/views/assets/Resource.vue')
-      },
-      {
         path: 'category',
         name: 'Category',
         component: () => import('@/views/assets/Category.vue')

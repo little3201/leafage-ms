@@ -26,156 +26,136 @@
               class="w-7 h-7 mr-2 text-blue-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2">{{ $t('viewed') }}</span>
-            <div
-              class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-              :class="overViewed > 0 ? 'bg-lime-500' : 'bg-red-600'"
-              title="overViewed"
-            >
-              {{ overViewed }}%
-              <ArrowUpIcon
-                v-if="overViewed > 0"
-                class="w-4 h-4"
-                aria-hidden="true"
-              />
-              <ArrowDownIcon
-                v-else
-                class="w-4 h-4"
-                aria-hidden="true"
+            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('viewed') }}</span>
+            <div class="flex flex-row-reverse">
+              <div
+                class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
+                title="viewed"
+              >
+                <PlusIcon
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                />
+                {{ overData.viewed }}
+              </div>
+              <h2
+                class="text-2xl font-bold leading-8 mr-2"
+                v-text="total.viewed"
               />
             </div>
-            <LineChart
-              :labels="viewed.labels"
-              :label="viewed.label"
-              :title="viewed.title"
-              :data="viewed.data"
-              :color="viewed.color"
-              :options="viewed.options"
-            />
           </div>
-          <h2
-            class="text-3xl font-bold leading-8 mt-6"
-            v-text="total.viewed"
+          <LineChart
+            :labels="viewed.labels"
+            :label="viewed.label"
+            :title="viewed.title"
+            :data="viewed.data"
+            :color="viewed.color"
+            :options="viewed.options"
           />
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
-          <div class="flex">
+          <div class="flex items-center">
             <ChatBubbleLeftEllipsisIcon
               class="w-7 h-7 mr-2 text-yellow-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2">{{ $t('comments') }}</span>
-            <div
-              class="ml-auto flex items-center rounded-full px-2 py-1 text-sm text-white cursor-pointer"
-              :class="overComments > 0 ? 'bg-lime-500' : 'bg-red-600'"
-              title="overComment"
-            >
-              {{ overComments }}%
-              <ArrowUpIcon
-                v-if="overViewed > 0"
-                class="w-4 h-4"
-                aria-hidden="true"
-              />
-              <ArrowDownIcon
-                v-else
-                class="w-4 h-4"
-                aria-hidden="true"
+            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('comments') }}</span>
+            <div class="flex flex-row-reverse">
+              <div
+                class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
+                title="viewed"
+              >
+                <PlusIcon
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                />
+                {{ overData.comments }}
+              </div>
+              <h2
+                class="text-2xl font-bold leading-8 mr-2"
+                v-text="total.comments"
               />
             </div>
-            <LineChart
-              :labels="comments.labels"
-              :label="comments.label"
-              :title="comments.title"
-              :data="comments.data"
-              :color="comments.color"
-              :options="comments.options"
-            />
           </div>
-          <h2
-            class="text-3xl font-bold leading-8 mt-6"
-            v-text="total.comments"
+          <LineChart
+            :labels="comments.labels"
+            :label="comments.label"
+            :title="comments.title"
+            :data="comments.data"
+            :color="comments.color"
+            :options="comments.options"
           />
         </div>
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
-          <div class="flex">
+          <div class="flex items-center">
             <HandThumbUpIcon
               class="w-7 h-7 mr-2 text-purple-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2">{{ $t('likes') }}</span>
-            <div
-              class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white cursor-pointer"
-              :class="overLikes > 0 ? 'bg-lime-500' : 'bg-red-600'"
-              title="overLikes"
-            >
-              {{ overLikes }}%
-              <ArrowUpIcon
-                v-if="overViewed > 0"
-                class="w-4 h-4"
-                aria-hidden="true"
-              />
-              <ArrowDownIcon
-                v-else
-                class="w-4 h-4"
-                aria-hidden="true"
+            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('likes') }}</span>
+            <div class="flex flex-row-reverse">
+              <div
+                class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
+                title="viewed"
+              >
+                <PlusIcon
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                />
+                {{ overData.likes }}
+              </div>
+              <h2
+                class="text-2xl font-bold leading-8 mr-2"
+                v-text="total.likes"
               />
             </div>
-            <LineChart
-              :labels="likes.labels"
-              :label="likes.label"
-              :title="likes.title"
-              :data="likes.data"
-              :color="likes.color"
-              :options="likes.options"
-            />
           </div>
-          <h2
-            class="text-3xl font-bold leading-8 mt-6"
-            v-text="total.likes"
-          />
         </div>
+        <LineChart
+          :labels="likes.labels"
+          :label="likes.label"
+          :title="likes.title"
+          :data="likes.data"
+          :color="likes.color"
+          :options="likes.options"
+        />
       </div>
       <div class="col-span-12 sm:col-span-6 xl:col-span-3 -y">
         <div class="shadow-sm hover:shadow-md rounded-md bg-white p-4 relative">
-          <div class="flex">
+          <div class="flex items-center">
             <CloudArrowDownIcon
               class="w-7 h-7 mr-2 text-green-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-2">{{ $t('downloads') }}</span>
-            <div
-              class="ml-auto flex items-center rounded-full px-2 py-1 text-xs text-white"
-              title="overDownloads"
-              :class="overDownloads > 0 ? 'bg-lime-500' : 'bg-red-600'"
-            >
-              {{ overDownloads }}%
-              <ArrowUpIcon
-                v-if="overViewed > 0"
-                class="w-4 h-4"
-                aria-hidden="true"
-              />
-              <ArrowDownIcon
-                v-else
-                class="w-4 h-4"
-                aria-hidden="true"
-              />
+            <span class="text-base text-gray-600 ml-2 mr-auto">{{ $t('downloads') }}</span>
+            <div class="flex flex-row-reverse">
+              <div
+                class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
+                title="viewed"
+              >
+                <PlusIcon
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                />
+                {{ overData.downloads }}
+              </div>
+              <h2 class="text-2xl font-bold leading-8 mr-2">
+                {{ total.downloads }}
+              </h2>
             </div>
-            <LineChart
-              :labels="downloads.labels"
-              :label="downloads.label"
-              :title="downloads.title"
-              :data="downloads.data"
-              :color="downloads.color"
-              :options="downloads.options"
-            />
           </div>
-          <h2 class="text-3xl font-bold leading-8 mt-6">
-            {{ total.downloads }}
-          </h2>
+          <LineChart
+            :labels="downloads.labels"
+            :label="downloads.label"
+            :title="downloads.title"
+            :data="downloads.data"
+            :color="downloads.color"
+            :options="downloads.options"
+          />
         </div>
       </div>
     </div>
@@ -194,77 +174,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
 import { instance, SERVER_URL } from "@/api";
-import { Category, Statistics, StatisticsTotal } from "@/api/request.type";
+import { Category, Statistics } from "@/api/request.type";
 
 import LineChart from "@/components/charts/LineChart.vue";
 import PieChart from "@/components/charts/PieChart.vue";
 
-import { ArrowPathIcon, EyeIcon, ChatBubbleLeftEllipsisIcon, ArrowUpIcon, ArrowDownIcon, HandThumbUpIcon, CloudArrowDownIcon } from '@heroicons/vue/24/outline'
+import { ArrowPathIcon, EyeIcon, ChatBubbleLeftEllipsisIcon, HandThumbUpIcon, CloudArrowDownIcon, PlusIcon } from '@heroicons/vue/24/outline'
 
 // data
-let categories = ref<Array<Category>>([])
-let datas = ref<Array<Statistics>>([])
-let total = ref<StatisticsTotal>({
+let total = ref<Statistics>({
   viewed: 0,
   likes: 0,
   comments: 0,
   downloads: 0
 })
-let overViewed = computed(() => {
-  let cur = datas.value[0];
-  let yst = datas.value[1];
 
-  if (cur && yst) {
-    if (yst.viewed == 0) {
-      return cur.viewed * 100;
-    } else {
-      return Math.floor((cur.viewed - yst.viewed) / yst.viewed * 10000) / 100
-    }
-  }
-  return 0
-});
-let overLikes = computed(() => {
-  let cur = datas.value[0];
-  let yst = datas.value[1];
+let overData = ref<Statistics>({
+  viewed: 1212,
+  likes: 2320,
+  comments: 293,
+  downloads: 2323
+})
 
-  if (cur && yst) {
-    if (yst.likes == 0) {
-      return cur.likes * 100;
-    } else {
-      return Math.floor((cur.likes - yst.likes) / yst.likes * 10000) / 100
-    }
-  }
-  return 0
-});
-let overComments = computed(() => {
-  let cur = datas.value[0];
-  let yst = datas.value[1];
-
-  if (cur && yst) {
-    if (yst.comments == 0) {
-      return cur.comments * 100;
-    } else {
-      return Math.floor((cur.comments - yst.comments) / yst.comments * 10000) / 100
-    }
-  }
-  return 0
-});
-let overDownloads = computed(() => {
-  let cur = datas.value[0];
-  let yst = datas.value[1];
-
-  if (cur && yst) {
-    if (yst.downloads == 0) {
-      return cur.downloads * 100;
-    } else {
-      return Math.floor((cur.downloads - yst.downloads) / yst.downloads * 10000) / 100
-    }
-  }
-  return 0
-});
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -353,23 +287,34 @@ const initData = async (): Promise<void> => {
  */
 const retreiveStatistics = async () => {
   await instance.get(SERVER_URL.statistics, { params: { page: 0, size: 7 } }).then(res => {
-    datas.value = res.data.content;
+    let datas: Array<Statistics> = res.data.content;
     // chart data
     let labels = new Array<string>()
-    datas.value.forEach(item => {
-      let now = new Date(item.date)
-      labels.unshift(now.getMonth() + 1 + '-' + now.getDate());
+    let viewedData = new Array<number>()
+    let commentsData = new Array<number>()
+    let likesData = new Array<number>()
+    let downloadsData = new Array<number>()
+
+
+    datas.forEach(item => {
       // data
-      viewed.data.unshift(item.viewed);
-      likes.data.unshift(item.likes);
-      comments.data.unshift(item.comments);
-      downloads.data.unshift(item.downloads)
+      viewedData.push(item.viewed);
+      likesData.push(item.likes);
+      commentsData.push(item.comments);
+      downloadsData.push(item.downloads)
     })
 
     viewed.labels = labels
+    viewed.data = viewedData
+
     likes.labels = labels
+    likes.data = likesData
+
     comments.labels = labels
+    comments.data = commentsData
+
     downloads.labels = labels
+    downloads.data = downloadsData
   })
 }
 /**
@@ -391,12 +336,17 @@ const fetchTotal = async () => {
 const retrieveCategories = async () => {
   await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } })
     .then(res => {
-      categories.value = res.data.content
+      let categories: Array<Category> = res.data.content
+      let labels = Array<string>()
+      let datas = Array<number>()
       // chart data
-      categories.value.forEach(item => {
-    categoryChart.labels.push(item.name)
-    categoryChart.data.push(item.count)
-  })
+      categories.forEach(item => {
+        labels.push(item.name)
+        datas.push(item.count)
+      })
+
+      categoryChart.labels = labels
+      categoryChart.data = datas
     })
 }
 

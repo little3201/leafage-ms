@@ -108,19 +108,7 @@ export declare interface Comment extends AbstractVO<string> {
   content: string
 }
 
-export declare interface Statistics extends AbstractVO<string> {
-  date: string,
-  viewed: number,
-  overViewed: number,
-  likes: number,
-  overLikes: number,
-  comments: number,
-  overComments: number,
-  downloads: number,
-  overDownloads: number
-}
-
-export declare interface StatisticsTotal {
+export declare interface Statistics {
   viewed: number,
   likes: number,
   comments: number,

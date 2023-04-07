@@ -48,7 +48,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
+              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -109,7 +109,7 @@
             />
             <td
               class="px-4"
-              v-text="data.code"
+              v-text="data.id"
             />
             <td
               class="px-4"
@@ -137,7 +137,7 @@
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
+                @click.capture="dataCode = data.id"
                 @del-action="confirmOperate"
                 @edit-action="modalOperate"
               >
@@ -161,7 +161,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       :size="size"
@@ -220,8 +220,8 @@
               </option>
               <option
                 v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
+                :key="superior.id"
+                :value="superior.id"
                 v-text="superior.name"
               />
             </select>
@@ -239,10 +239,10 @@
                 ---{{ $t('select') }}---
               </option>
               <option
-                v-for="(account, index) in accounts"
+                v-for="(user, index) in accounts"
                 :key="index"
-                :value="account.username"
-                v-text="account.nickname"
+                :value="user.username"
+                v-text="user.nickname"
               />
             </select>
           </div>
@@ -310,7 +310,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="(account, index) in accounts"
+            v-for="(user, index) in accounts"
             :key="index"
             class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
           >
@@ -318,18 +318,18 @@
               {{ index + 1 }}
             </td>
             <td class="px-4">
-              {{ account.username }}
+              {{ user.username }}
             </td>
             <td class="px-4">
-              {{ account.nickname }}
+              {{ user.nickname }}
             </td>
             <td class="px-4">
               <div
                 class="flex items-center justify-center"
-                :class="account.accountLocked ? 'text-red-600' : 'text-lime-600'"
+                :class="user.accountLocked ? 'text-red-600' : 'text-lime-600'"
               >
                 <svg
-                  v-if="account.accountLocked"
+                  v-if="user.accountLocked"
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
                   height="18"
@@ -380,10 +380,10 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="new Date(account.accountExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
+                  :class="new Date(user.accountExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{
-                  new Date(account.accountExpiresAt).toLocaleString('zh', { hour12: false })
+                  new Date(user.accountExpiresAt).toLocaleString('zh', { hour12: false })
                 }}</span>
               </div>
             </td>
@@ -391,10 +391,10 @@
               <div class="flex items-center justify-center">
                 <span
                   class="w-2 h-2 rounded-full"
-                  :class="new Date(account.credentialsExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
+                  :class="new Date(user.credentialsExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
                 />
                 <span class="ml-2">{{
-                  new Date(account.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
+                  new Date(user.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
                 }}</span>
               </div>
             </td>
@@ -408,14 +408,14 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Confirm from "~/components/Confirm.vue";
+import Modal from "~/components/Modal.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import { Group, AccountDetail } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import { Group, AccountDetail } from "~/api/request.type";
 import { ArrowPathIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
@@ -424,7 +424,7 @@ let isDel = ref(false)
 let isShow = ref(false)
 // 数据
 let groupData = ref<Group>({
-  code: '',
+  id: 0,
   name: '',
   alias: '',
   superior: '',
@@ -479,7 +479,7 @@ const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.group.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Group) => item.code != dataCode.value
+      (item: Group) => item.id != dataCode.value
     );
     isDel.value = false;
   });
@@ -500,7 +500,7 @@ const retrieveAccounts = async (): Promise<void> => {
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     groupData.value = {
-      code: '',
+      id: 0,
       name: '',
       alias: '',
       superior: '',
@@ -536,7 +536,7 @@ const modelCommit = async (): Promise<void> => {
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Group) => item.code != dataCode.value
+          (item: Group) => item.id != dataCode.value
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
@@ -557,11 +557,11 @@ const modelCommit = async (): Promise<void> => {
 /**
  * 预览
  * @param show 是否展示
- * @param code 代码
+ * @param id 主键
  */
 const previewOperation = async (show: boolean) => {
   if (show) {
-    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/user")).then(res => accounts.value = res.data);
+    await instance.get(SERVER_URL.group.concat("/", dataCode.value, "/users")).then(res => accounts.value = res.data);
   }
   isShow.value = show
 }

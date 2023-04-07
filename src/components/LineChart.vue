@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Chart from '@/composables/chart'
+import Chart from '~/composables/chart'
 import { ChartConfiguration, ChartOptions, ChartArea, ChartType, ScriptableContext } from 'chart.js'
 
 interface Props {

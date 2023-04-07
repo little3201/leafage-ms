@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 
-import type { User } from '@/api/request.type';
+import type { User } from '~/api/request.type';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({

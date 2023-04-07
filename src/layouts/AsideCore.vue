@@ -27,7 +27,7 @@
     <RouterLink
       v-else
       :to="superior.concat(data.expand.path)"
-      class="flex flex-1 items-center h-12 rounded-l-full pl-4 -mr-4"
+      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 -mr-4"
       exact
     >
       <component
@@ -43,7 +43,7 @@
     >
       <AsideCore
         v-for="child in data.children"
-        :key="child.code"
+        :key="child.id"
         :data="child"
         :superior="data.expand.path"
       />
@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import type { NodeData } from '@/api/request.type'
+import type { NodeData } from '~/api/request.type'
 import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 defineProps({

@@ -6,13 +6,13 @@
       @open-operate="openOperate"
     >
       <input
-        :id="data.code"
+        :id="data.id"
         v-model="isChecked"
         type="checkbox"
         :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
-        :aria-label="data.code"
-        @change="onTicked(data.code, isChecked)"
+        :aria-label="data.id"
+        @change="onTicked(data.id, isChecked)"
       >
     </TreeCore>
     <div
@@ -21,7 +21,7 @@
     >
       <TreeItem
         v-for="child in data.children"
-        :key="child.code"
+        :key="child.id"
         v-model:ticked="innerTicked"
         :data="child"
       />
@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { ref, watch, PropType } from "vue";
 
-import type { NodeData } from "@/api/request.type"
+import type { NodeData } from "~/api/request.type"
 import TreeCore from "./TreeCore.vue";
 
 const props = defineProps({
@@ -54,7 +54,7 @@ const emit = defineEmits(['update:ticked'])
 
 let innerTicked = ref<Array<string>>([]);
 
-let isChecked = ref(innerTicked.value.includes(props.data.code) || false)
+let isChecked = ref(innerTicked.value.includes(props.data.id) || false)
 let isIndeterminate = ref(false)
 let isExpand = ref(false);
 
@@ -65,8 +65,8 @@ watch(
   }
 )
 
-const onTicked = (code: string, state: boolean) => {
-  setTicked([code], state)
+const onTicked = (id: string, state: boolean) => {
+  setTicked([id], state)
 }
 
 const setTicked = (keys: Array<string>, state: boolean) => {

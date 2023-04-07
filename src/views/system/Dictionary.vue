@@ -54,7 +54,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
+              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -101,7 +101,7 @@
             />
             <td
               class="px-4"
-              v-text="data.code"
+              v-text="data.id"
             />
             <td
               class="px-4"
@@ -121,7 +121,7 @@
             <td>
               <Action
                 :need-del="false"
-                @click.capture="dataCode = data.code"
+                @click.capture="dataCode = data.id"
                 @edit-action="modalOperate"
               />
             </td>
@@ -129,7 +129,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       :size="size"
@@ -183,7 +183,7 @@
               </option>
               <option
                 v-for="superior in superiors"
-                :key="superior.code"
+                :key="superior.id"
                 :value="superior.alias"
               >
                 {{ superior.name }}
@@ -208,21 +208,21 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Modal from "@/components/Modal.vue";
-import Toogle from '@/components/Toogle.vue'
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Modal from "~/components/Modal.vue";
+import Toogle from '~/components/Toogle.vue'
 
-import { instance, SERVER_URL } from "@/api";
-import type { Dictionary } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Dictionary } from "~/api/request.type";
 import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isEdit = ref(false);
 // 数据
 let dictData = ref<Dictionary>({
-  code: '',
+  id: 0,
   name: '',
   superior: '',
   alias: '',
@@ -273,7 +273,7 @@ const retrieveSuperior = async (): Promise<void> => {
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
     dictData.value = {
-      code: '',
+      id: 0,
       name: '',
       superior: '',
       alias: '',
@@ -305,7 +305,7 @@ const modelCommit = async (): Promise<void> => {
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Dictionary) => item.code != dataCode.value
+          (item: Dictionary) => item.id != dataCode.value
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
@@ -325,9 +325,9 @@ const modelCommit = async (): Promise<void> => {
 };
 /**
  * 启用/禁用
- * @param code 代码
+ * @param id 主键
  */
-const power = (code: string) => {
-  alert("enable: " + code + " develogping...")
+const power = (id: string) => {
+  alert("enable: " + id + " develogping...")
 }
 </script>

@@ -1,30 +1,29 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Comment } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, AccessLog } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
-const pagation: Pagation<Comment> = {
+const pagation: Pagation<AccessLog> = {
     page: 0,
     size: 10,
     totalElements: 0,
     content: []
 }
-const datas: Array<Comment> = [];
+const datas: Array<AccessLog> = [];
 
-for (let i = 0; i < 19; i++) {
+for (let i = 0; i < 36; i++) {
     datas.push({
-        code: Random.string('number', 9),
-        posts: Random.id(),
-        content: Random.cparagraph(2),
-        country: "china",
-        location: Random.city(true),
+        id: Random.integer(),
+        ip: Random.ip(),
+        location: Random.county(true),
+        context: Random.csentence(),
         modifyTime: Random.date()
     })
 }
 
 export default [
     {
-        url: '/api/assets/comments',
+        url: '/api/hypervisor/access-logs',
         method: 'get',
         response: (options: any) => {
             const url = options.url
@@ -34,8 +33,8 @@ export default [
                 pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
                 return pagation
             } else {
-                const code = url.substring(url.lastIndexOf('/') + 1)
-                return datas.filter(item => item.code === code)[0]
+                const id = url.substring(url.lastIndexOf('/') + 1)
+                return datas.filter(item => item.id === id)[0]
             }
         }
     }

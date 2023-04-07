@@ -2,7 +2,7 @@
   <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">
-        {{ $t('account') }}
+        {{ $t('user') }}
       </h2>
       <button
         type="button"
@@ -175,7 +175,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       :size="size"
@@ -190,7 +190,7 @@
     >
       <TreeItem
         v-for="data in treeDatas"
-        :key="data.code"
+        :key="data.id"
         :data="data"
         :ticked="ticked"
       />
@@ -201,15 +201,15 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
 
-import Modal from "@/components/Modal.vue";
-import TreeItem from "@/components/tree/TreeItem.vue";
+import Modal from "~/components/Modal.vue";
+import TreeItem from "~/components/tree/TreeItem.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { User, NodeData } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { User, NodeData } from "~/api/request.type";
 import { ArrowPathIcon, LinkIcon, LockClosedIcon, LockOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数

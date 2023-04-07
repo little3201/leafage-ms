@@ -20,7 +20,6 @@
       <Operation
         :datas="datas"
         :file-name="'posts'"
-        @click.capture="dataCode = ''"
         @modal-operate="modalOperate"
       />
     </div>
@@ -42,12 +41,6 @@
               class="px-4"
             >
               {{ $t('title') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('code') }}
             </th>
             <th
               scope="col"
@@ -80,19 +73,16 @@
             </td>
             <td class="px-4 text-center max-w-xs truncate">
               <a
-                :href="'https://www.leafage.top/posts/' + data.code"
+                :href="'https://www.leafage.top/posts/' + data.id"
                 target="_blank"
                 class="font-medium hover:underline"
-              >{{ data.title }}
+              >{{
+                data.title }}
               </a>
             </td>
             <td
               class="px-4"
-              v-text="data.code"
-            />
-            <td
-              class="px-4"
-              v-text="data.category.name"
+              v-text="data.category"
             />
             <td
               class="px-4"
@@ -100,7 +90,7 @@
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
+                @click.capture="formData = data"
                 @del-action="confirmOperate"
                 @edit-action="modalOperate"
               />
@@ -109,20 +99,20 @@
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
-      :size="size"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
     <Confirm
-      :is-show="isDel"
+      :is-show="model.isDel"
       @cancel-action="confirmOperate"
       @commit-action="confirmCommit"
     />
     <Modal
-      :is-show="isEdit"
+      :is-show="model.isEdit"
       @cancel-action="modalOperate"
       @commit-action="modelCommit"
     >
@@ -132,7 +122,7 @@
             <label for="title">{{ $t('title') }}</label>
             <input
               id="title"
-              v-model.trim="postsData.title"
+              v-model.trim="formData.title"
               type="text"
               name="title"
               class="mt-1 w-full block rounded-md border-gray-300"
@@ -146,7 +136,7 @@
           <div class="row-span-3 col-span-12 sm:col-span-4">
             <label for="cover">{{ $t('cover') }}</label>
             <figure
-              v-if="postsData.cover"
+              v-if="formData.cover"
               class="w-full h-32 mt-1 rounded-md relative group"
             >
               <div
@@ -174,8 +164,8 @@
                 </button>
               </div>
               <img
-                :src="postsData.cover"
-                :alt="postsData.title"
+                :src="formData.cover"
+                :alt="formData.title"
                 class="rounded-md w-full h-full"
                 width="198"
                 height="128"
@@ -224,20 +214,20 @@
             <label for="tags">{{ $t('tags') }}</label>
             <input
               id="tags"
-              v-model.trim="tagValue"
+              v-model.trim="tag"
               type="text"
               name="tags"
               class="mt-1 w-full block rounded-md border-gray-300"
               aria-label="tag"
               :placeholder="$t('tags')"
-              @keydown.enter="addTag"
+              @keydown.enter="addTag(tag)"
             >
           </div>
           <div class="col-span-12 md:col-span-4">
             <label for="category">{{ $t('category') }}</label>
             <select
               id="category"
-              v-model.lazy="postsData.category.code"
+              v-model.lazy="formData.category"
               name="category"
               required
               class="mt-1 w-full block rounded-md border-gray-300"
@@ -248,9 +238,9 @@
               </option>
               <option
                 v-for="category in categories"
-                :key="category.code"
-                :value="category.code"
-                v-text="category.name"
+                :key="category.id"
+                :value="category.id"
+                v-text="category.categoryName"
               />
             </select>
           </div>
@@ -258,11 +248,11 @@
 
         <div class="overflow-auto text-sm md:-mt-2">
           <span
-            v-for="(tag, index) in postsData.tags"
+            v-for="(t, index) in formData.tags"
             :key="index"
             class="mr-1 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
           >
-            {{ tag }}
+            {{ t }}
             <svg
               width="14"
               height="14"
@@ -273,7 +263,7 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               class="ml-1 cursor-pointer opacity-30"
-              @click="removeTag(tag)"
+              @click="removeTag(t)"
             >
               <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
             </svg>
@@ -290,7 +280,7 @@
               @click="previewHtml"
             >
               <EyeSlashIcon
-                v-if="preview"
+                v-if="model.preview"
                 class="w-4 h-4 opacity-40"
                 aria-hidden="true"
               />
@@ -302,12 +292,12 @@
             </button>
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 border-none mt-1 h-52 md:h-96"
-              :class="{ border: preview }"
+              :class="{ border: model.preview }"
             >
               <textarea
-                v-if="!preview"
+                v-if="!model.preview"
                 id="content"
-                v-model.trim="content"
+                v-model.trim="formData.context"
                 name="content"
                 class="mt-1 w-full rounded-md border-gray-300"
                 required
@@ -344,55 +334,49 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Confirm from "~/components/Confirm.vue";
+import Modal from "~/components/Modal.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Post, PostContent, Category } from "@/api/request.type";
-import markdownToHtml from '@/composables/markdownToHtml'
-import { uploadFile } from "@/composables/upload";
+import { instance, SERVER_URL } from "~/api";
+import type { Post, Category } from "~/api/request.type";
+import markdownToHtml from '~/composables/markdownToHtml'
+import { uploadFile } from "~/composables/upload";
 import { ArrowPathIcon, EyeSlashIcon, EyeIcon } from "@heroicons/vue/24/outline";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()
 const rendedHtml = ref("")
 
-// 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
-// 标签参数
-let tagValue = ref("");
-let tags = ref<Array<string>>([]);
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
-let preview = ref(false);
+let model = reactive({
+  isEdit: false,
+  isDel: false,
+  preview: false
+})
+
+// 分页参数
+let pagation = reactive({
+  page: 0,
+  size: 0,
+  total: 0
+})
+
+// 标签参数
+let tag = ref("");
+
 // 数据
-let postsData = ref<PostContent>({
-  code: '',
+let formData: Post = reactive({
+  id: 0,
   title: '',
   cover: '',
-  category: {
-    code: '',
-    name: '',
-    count: 0,
-    description: '',
-    modifyTime: ''
-  },
+  category: '',
   tags: [],
-  content: {
-    catalog: '',
-    content: ''
-  },
+  context: '',
   modifyTime: ''
 });
-
-let dataCode = ref("");
-let content = ref("");
 
 let datas = ref<Array<Post>>([]);
 let categories = ref<Array<Category>>([]);
@@ -411,60 +395,55 @@ onMounted(() => {
  * @param s 大小
  */
 const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+  pagation.page = p;
+  pagation.size = s;
 };
 /**
  * 删除封面图
  */
 const removeCover = (): void => {
-  postsData.value.cover = '';
+  formData.cover = '';
 };
 /**
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.posts, { params: { page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.posts, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 };
 /**
  * 添加tag
  */
-const addTag = (): void => {
-  if (tagValue.value && tagValue.value.length > 0) {
-    tags.value.push(tagValue.value);
-    postsData.value = { ...postsData.value, tags: tags.value };
-  }
-  tagValue.value = "";
+const addTag = (tag: string): void => {
+  formData.tags.push(tag)
 };
 /**
  * 删除tag
  * @param tag tag名称
  */
 const removeTag = (tag: string): void => {
-  tags.value.splice(tags.value.indexOf(tag), 1)
-  postsData.value = { ...postsData.value, tags: tags.value };
+  formData.tags.filter(item => item !== tag)
 };
 /**
  * confirm 操作
  * @param operate 是否打开
  */
 const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+  model.isDel = operate;
 };
 /**
  * confirm 提交
  */
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.posts.concat("/", dataCode.value)).then(() => {
+  await instance.delete(SERVER_URL.posts.concat(`/${formData.id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Post) => item.code != dataCode.value
+      (item: Post) => item.id != formData.id
     );
-    isDel.value = false;
+    model.isDel = false;
   });
 };
 /**
@@ -473,44 +452,34 @@ const confirmCommit = async (): Promise<void> => {
  */
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
-    postsData.value = {
-      code: '',
-      title: '',
-      cover: '',
-      category: {
-        code: '',
-        name: '',
-        count: 0,
-        description: '',
+    if (formData && formData.id && formData.id != 0) {
+      await Promise.all([
+        await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
+          categories.value = res.data.content;
+        }),
+        fetch(),
+      ]);
+    } else {
+      formData = {
+        id: 0,
+        title: '',
+        cover: '',
+        category: '',
+        tags: [],
+        context: '',
         modifyTime: ''
-      },
-      tags: [],
-      content: {
-        catalog: '',
-        content: ''
-      },
-      modifyTime: ''
-    };
-    content.value = "";
-    tags.value = [];
-    await Promise.all([
-      await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
-        categories.value = res.data.content;
-      }),
-      fetch(),
-    ]);
+      }
+    }
   }
-  isEdit.value = operate;
+  model.isEdit = operate;
 };
 /**
  * 查询信息
  */
 const fetch = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.posts.concat("/", dataCode.value)).then(res => {
-      postsData.value = res.data;
-      tags.value = res.data.tags;
-      content.value = res.data.content.content
+  if (formData && formData.id && formData.id != 0) {
+    await instance.get(SERVER_URL.posts.concat(`/${formData.id}`)).then(res => {
+      formData = res.data;
     });
   }
 };
@@ -518,50 +487,40 @@ const fetch = async (): Promise<void> => {
  * 新增/编辑：提交
  */
 const modelCommit = async (): Promise<void> => {
-  let data = {
-    ...postsData.value,
-    content: content.value,
-  };
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.posts.concat("/", dataCode.value), data)
+  if (formData && formData.id && formData.id != 0) {
+    await instance.put(SERVER_URL.posts.concat(`/${formData.id}`), formData)
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Post) => item.code != dataCode.value
+          (item: Post) => item.id != formData.id
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
-        isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.posts, data).then(res => {
-      if (datas.value.length >= size.value) {
+    await instance.post(SERVER_URL.posts, formData).then(res => {
+      if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.pop();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
-      isEdit.value = false;
     });
+    model.isEdit = false;
   }
 };
 /**
  * 上传文件
  * @param files 文件
  */
-const uploadImage = (event: any): void => {
-  if (event && event.target && event.target.files) {
-
-    let files: Array<File> = event.target.files
-
-    if (files[0]) {
+const uploadImage = (event: Event): void => {
+  if (event && event.target) {
+    let files = (event.target as HTMLInputElement).files
+    if (files && files[0]) {
       uploadFile(files[0]).subscribe({
         complete: (e: any) => {
-          postsData.value = {
-            ...postsData.value,
-            cover: "https://cdn.leafage.top/" + e.key,
-          };
-        },
+            formData.cover = "https://cdn.leafage.top/" + e.key
+        }
       });
     }
   }
@@ -573,10 +532,10 @@ const uploadImage = (event: any): void => {
  * 转换md为html
  */
 const previewHtml = async () => {
-  preview.value = !preview.value
+  model.preview = !model.preview
   addImgClickEvent()
-  if (content.value) {
-    rendedHtml.value = await markdownToHtml(content.value)
+  if (formData.context) {
+    rendedHtml.value = await markdownToHtml(formData.context)
   }
 }
 
@@ -603,7 +562,7 @@ const addImgClickEvent = () => {
 /**
  * img预览
  * @param show 是否展示
- * @param code 代码
+ * @param id 主键
  */
 const previewOperation = (show: boolean, url: string) => {
   if (show) {
@@ -613,6 +572,4 @@ const previewOperation = (show: boolean, url: string) => {
 }
 </script>
 
-<style src="highlight.js/styles/atom-one-dark.css">
-
-</style>
+<style src="highlight.js/styles/atom-one-dark.css"></style>

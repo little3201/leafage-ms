@@ -1,7 +1,7 @@
 {
     "application": "Application",
     "reload": "Reload Data",
-    "Page": "The records in rows {page} - {size} ，of {total} total.",
+    "pagation": "The records in rows {page} - {size} ，of {total} total.",
     "deletion": "Do you want to confirm the deletion?",
     "note": "This information will be deleted and will not be recovered once deleted.",
     "viewMore": "View More",
@@ -16,22 +16,22 @@
     "signup": "Sign Up",
     "signout": "Sign Out",
     
-    "accesslog": "Access Log",
-    "information": "Account Settings",
+    "accesslogs": "Access Logs",
+    "account": "Account Settings",
     "security": "Account Security",
 
     "no": "NO.",
     "name": "Name",
     "alias": "Alias",
-    "code": "Code",
+    "id": "ID",
     "superior": "Superior",
     "description": "Description",
     "modifyTime": "Modify Time",
 
     "username": "Username",
     "nickname": "Nickname",
-    "accountLockedState": "Account State",
-    "accountExpiresAt": "Account Expires At",
+    "accountLockedState": "User State",
+    "accountExpiresAt": "User Expires At",
     "credentialsExpiresAt": "Credentials Expires At",
     
     "type": "Type",
@@ -50,7 +50,7 @@
     "readed": "Readed",
 
     "title": "Title",
-    "content": "Content",
+    "context": "Context",
     "cover": "Cover",
     "tags": "Tags",
     "viewed": "Viewed",
@@ -77,17 +77,15 @@
 	
 	"dashboard": "Dashboard",
 	"system": "System",
-	"group": "Groups",
-	"role": "Roles",
-	"component":"Components",
-	"user": "Users",
-	"dictionary": "Dictionaries",
+	"groups": "Groups",
+	"roles": "Roles",
+	"components":"Components",
+	"users": "Users",
+	"dictionaries": "Dictionaries",
 	"posts": "Posts",
-	"resource": "Resources",
-	"category": "Categroies",
-	"region": "Regions",
+	"categories": "Categroies",
+	"regions": "Regions",
     "statitics": "Statitics",
-    "notification": "Notifications",
-
+    "messages": "Notifications",
     "status": "Status"
 }

@@ -11,18 +11,18 @@
           <div class="inline-flex items-center py-4">
             <figure class="rounded-full w-12 h-12 border">
               <img
-                :alt="account.nickname"
+                :alt="user.nickname"
                 class="w-full h-full rounded-full"
-                :src="account.avatar"
+                :src="user.avatar"
                 width="46"
                 height="46"
               >
             </figure>
             <div class="ml-4 mr-auto">
-              <strong v-text="account.nickname" />
+              <strong v-text="user.nickname" />
               <p
                 class="text-gray-400 text-sm"
-                v-text="account.username"
+                v-text="user.username"
               />
             </div>
           </div>
@@ -39,14 +39,14 @@
             </RouterLink>
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="/settings/information"
+              to="/settings/account"
               exact
             >
               <CogIcon
                 class="w-4 h-4 mr-2"
                 aria-hidden="true"
               />
-              {{ $t('information') }}
+              {{ $t('account') }}
             </RouterLink>
             <RouterLink
               class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
@@ -68,17 +68,17 @@
                 class="w-4 h-4 mr-2"
                 aria-hidden="true"
               />
-              {{ $t('notification') }}
+              {{ $t('messages') }}
             </RouterLink>
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
-              to="/settings/accesslog"
+              to="/settings/accesslogs"
             >
               <DocumentTextIcon
                 class="w-4 h-4 mr-2"
                 aria-hidden="true"
               />
-              {{ $t('accesslog') }}
+              {{ $t('accesslogs') }}
             </RouterLink>
           </div>
         </div>
@@ -95,11 +95,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import type { User } from "@/api/request.type";
+import type { User } from "~/api/request.type";
 import { BellAlertIcon, CogIcon, DocumentTextIcon, IdentificationIcon, ShieldCheckIcon } from '@heroicons/vue/24/outline'
 
 
-const account: User = ref(JSON.parse(sessionStorage.getItem("user") || ''))
+const user: User = ref(JSON.parse(sessionStorage.getItem("user") || ''))
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="account.username && account.username.length > 0"
+    v-if="user.username && user.username.length > 0"
     class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
   >
     <button
@@ -51,7 +51,7 @@ import { ref, onMounted } from "vue";
 
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
-import type { Account } from "@/api/request.type";
+import type { User } from "~/api/request.type";
 
 import { DocumentPlusIcon, DocumentTextIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
 
@@ -75,7 +75,7 @@ const props = defineProps({
 
 const emit = defineEmits(["modalOperate"]);
 
-const account = ref<Account>({
+const user = ref<User>({
   username: '',
   nickname: '',
   avatar: ''
@@ -84,7 +84,7 @@ const account = ref<Account>({
 onMounted(() => {
   let data = sessionStorage.getItem("user")
   if (data && data !== "undefined") {
-    account.value = JSON.parse(data);
+    user.value = JSON.parse(data);
   }
 })
 /**

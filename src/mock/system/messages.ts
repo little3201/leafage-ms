@@ -1,21 +1,21 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Notification } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, Message } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
-const pagation: Pagation<Notification> = {
+const pagation: Pagation<Message> = {
     page: 0,
     size: 10,
     totalElements: 0,
     content: []
 }
-const datas: Array<Notification> = [];
+const datas: Array<Message> = [];
 
 for (let i = 0; i < 36; i++) {
     datas.push({
-        code: Random.string('number', 9),
+        id: Random.integer(),
         title: Random.ctitle(),
-        content: Random.cparagraph(),
+        context: Random.cparagraph(),
         receiver: Random.cname(),
         modifyTime: Random.date()
     })
@@ -23,7 +23,7 @@ for (let i = 0; i < 36; i++) {
 
 export default [
     {
-        url: '/api/hypervisor/notifications',
+        url: '/api/hypervisor/messages',
         method: 'get',
         response: (options: any) => {
             const url = options.url
@@ -39,8 +39,8 @@ export default [
                     return pagation
                 }
             } else {
-                const code = url.substring(url.lastIndexOf('/') + 1)
-                return datas.filter(item => item.code === code)[0]
+                const id = url.substring(url.lastIndexOf('/') + 1)
+                return datas.filter(item => item.id === id)[0]
             }
         }
     }

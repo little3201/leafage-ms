@@ -73,7 +73,7 @@
             <div>
               <DrawerCore
                 v-for="data in datas"
-                :key="data.code"
+                :key="data.id"
                 :data="data"
                 @menu-action="menuOperate"
               />
@@ -88,9 +88,9 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import DrawerCore from "@/layouts/DrawerCore.vue";
+import DrawerCore from "~/layouts/DrawerCore.vue";
 
-import type { NodeData } from '@/api/request.type'
+import type { NodeData } from '~/api/request.type'
 
 defineProps({
   datas: {

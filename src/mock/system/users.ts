@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, User } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, User } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
 const pagation: Pagation<User> = {
   page: 0,

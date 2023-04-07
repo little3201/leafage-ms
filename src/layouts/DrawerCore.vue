@@ -43,7 +43,7 @@
     >
       <DrawerCore
         v-for="child in data.children"
-        :key="child.code"
+        :key="child.id"
         :data="child"
         :superior="data.expand.path"
         @menu-action="itemOperation"
@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import type { NodeData } from '@/api/request.type'
+import type { NodeData } from '~/api/request.type'
 import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 defineProps({

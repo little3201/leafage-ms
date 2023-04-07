@@ -82,7 +82,7 @@
         class="text-blue-600"
         to="/signup"
       >
-        Create account
+        Create user
       </RouterLink>
     </div>
   </Sign>
@@ -92,9 +92,9 @@
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { instance, SERVER_URL } from "@/api";
+import { instance, SERVER_URL } from "~/api";
 
-import Sign from "@/layouts/Sign.vue";
+import Sign from "~/layouts/Sign.vue";
 
 let formData = reactive({
   username: '',

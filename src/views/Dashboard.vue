@@ -44,7 +44,7 @@
               />
             </div>
           </div>
-          <div class="absolute inset-4 top-10 opacity-50">
+          <div class="absolute inset-4 top-10 opacity-50 h-12">
             <LineChart
               :labels="viewed.labels"
               :label="viewed.label"
@@ -81,7 +81,7 @@
               />
             </div>
           </div>
-          <div class="absolute inset-4 top-10 opacity-50">
+          <div class="absolute inset-4 top-10 opacity-50 h-12">
             <LineChart
               :labels="comments.labels"
               :label="comments.label"
@@ -119,7 +119,7 @@
             </div>
           </div>
         </div>
-        <div class="absolute inset-4 top-10 opacity-50">
+        <div class="absolute inset-4 top-10 opacity-50 h-12">
           <LineChart
             :labels="likes.labels"
             :label="likes.label"
@@ -154,7 +154,7 @@
               </h2>
             </div>
           </div>
-          <div class="absolute inset-4 top-10 opacity-50">
+          <div class="absolute inset-4 top-10 opacity-50 h-12">
             <LineChart
               :labels="downloads.labels"
               :label="downloads.label"
@@ -186,11 +186,11 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
 
-import { instance, SERVER_URL } from "@/api";
-import { Category, Statistics } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import { Category, Statistics } from "~/api/request.type";
 
-import LineChart from "@/components/charts/LineChart.vue";
-import DoughnutChart from "@/components/charts/DoughnutChart.vue";
+import LineChart from "~/components/LineChart.vue";
+import DoughnutChart from "~/components/DoughnutChart.vue";
 
 import { ArrowPathIcon, EyeIcon, ChatBubbleLeftEllipsisIcon, HandThumbUpIcon, CloudArrowDownIcon, PlusIcon } from '@heroicons/vue/24/outline'
 
@@ -354,7 +354,7 @@ const retrieveCategories = async () => {
       let datas = Array<number>()
       // chart data
       categories.forEach(item => {
-        labels.push(item.name)
+        labels.push(item.categoryName)
         datas.push(item.count)
       })
 

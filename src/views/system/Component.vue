@@ -2,7 +2,7 @@
   <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">
-        {{ $t('authority') }}
+        {{ $t('components') }}
       </h2>
       <button
         type="button"
@@ -20,14 +20,14 @@
       <Operation
         :need-add="false"
         :datas="datas"
-        :file-name="'authority'"
+        :file-name="'components'"
       />
     </div>
 
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="authority"
+        aria-label="components"
       >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -47,7 +47,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
+              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -117,7 +117,7 @@
             </td>
             <td
               class="px-4"
-              v-text="data.code"
+              v-text="data.id"
             />
             <td
               class="px-4"
@@ -158,7 +158,7 @@
                   name="role"
                   aria-label="role"
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
-                  @click="previewOperation(true, data.code)"
+                  @click="previewOperation(true, data.id)"
                 >
                   <LinkIcon
                     class="w-4 h-4 mr-1"
@@ -172,7 +172,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       :size="size"
@@ -207,7 +207,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
+              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -250,7 +250,7 @@
             />
             <td
               class="px-4"
-              v-text="role.code"
+              v-text="role.id"
             />
             <td
               class="px-4"
@@ -278,19 +278,19 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Modal from "~/components/Modal.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Authority, Role } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Component, Role } from "~/api/request.type";
 import { ArrowPathIcon, LinkIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let isShow = ref(false)
 // 数据
-let datas = ref<Array<Authority>>([]);
+let datas = ref<Array<Component>>([]);
 let roles = ref<Array<Role>>([])
 // 分页参数
 let page = ref(0);
@@ -313,7 +313,7 @@ const setPage = (p: number, s: number): void => {
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.authority, { params: { page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.components, { params: { page: page.value, size: size.value } })
     .then(res => {
       datas.value = res.data.content
       total.value = res.data.totalElements
@@ -322,11 +322,11 @@ const retrieve = async (): Promise<void> => {
 /**
  * 预览
  * @param show 是否展示
- * @param code 代码
+ * @param id 主键
  */
-const previewOperation = async (show: boolean, code: string) => {
+const previewOperation = async (show: boolean, id: string) => {
   if (show) {
-    await instance.get(SERVER_URL.authority.concat("/", code, '/role')).then(res => roles.value = res.data);
+    await instance.get(SERVER_URL.components.concat("/", id, '/roles')).then(res => roles.value = res.data);
   }
   isShow.value = show
 }

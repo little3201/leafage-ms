@@ -57,39 +57,39 @@
           </figure>
         </button>
         <div
-          v-show="isNotify && notifications.length > 0"
+          v-show="isNotify && messages.length > 0"
           class="origin-top-left p-2 absolute top-6 left-0 md:right-0 w-64 md:w-80 md:left-auto  mt-4 rounded-md shadow-lg bg-white z-10"
         >
-          <span class="my-4 px-2 text-lg">{{ $t('notification') }}: <span class="text-sm text-gray-400">{{ count }}
+          <span class="my-4 px-2 text-lg">{{ $t('messages') }}: <span class="text-sm text-gray-400">{{ count }}
             {{ $t('unreadTotal') }}</span></span>
           <div class="divide-y">
             <div
-              v-for="(notification, index) in notifications"
+              v-for="(messages, index) in messages"
               :key="index"
               class="overflow-hidden"
             >
               <div class="hover:bg-gray-100 rounded-md p-2">
                 <RouterLink
-                  to="/settings/notification"
+                  to="/settings/messages"
                   @click="operate('')"
                 >
                   <p
                     class="text-sm truncate"
-                    v-text="notification.title"
+                    v-text="messages.title"
                   />
                   <p
                     class="text-xs text-gray-500 my-1 whitespace-no-wrap"
-                    v-text="new Date(notification.modifyTime).toLocaleString()"
+                    v-text="new Date(messages.modifyTime).toLocaleString()"
                   />
                   <div class="w-full text-xs truncate text-gray-600">
-                    {{ notification.content }}
+                    {{ messages.content }}
                   </div>
                 </RouterLink>
               </div>
             </div>
             <div class="py-2 text-center">
               <RouterLink
-                to="/settings/notification"
+                to="/settings/messages"
                 class="text-gray-400"
                 @click="operate('')"
               >
@@ -156,7 +156,7 @@
       </div>
       <div class="relative">
         <button
-          v-if="account.username && account.username.length > 0"
+          v-if="user.username && user.username.length > 0"
           type="button"
           name="username"
           aria-label="username"
@@ -164,16 +164,16 @@
           @click="operate('user')"
         >
           <img
-            v-if="account.avatar"
-            :alt="account.nickname"
-            :src="account.avatar"
+            v-if="user.avatar"
+            :alt="user.nickname"
+            :src="user.avatar"
             class="rounded-full"
             width="32"
             height="32"
           >
           <span
             v-else
-            v-text="account.nickname.substring(0, 1)"
+            v-text="user.nickname.substring(0, 1)"
           />
         </button>
         <RouterLink
@@ -187,15 +187,15 @@
           v-show="isAccount"
           class="origin-top-right p-2 absolute w-36 right-0 mt-3 rounded-md shadow-md bg-white divide-y z-10"
           aria-orientation="vertical"
-          aria-labelledby="account-down"
+          aria-labelledby="user-down"
           tabindex="-1"
         >
           <div class="px-2 py-1">
             <h3 class="font-blod">
-              {{ account.nickname }}
+              {{ user.nickname }}
             </h3>
             <h4 class="text-gray-400 text-sm">
-              {{ account.username }}
+              {{ user.username }}
             </h4>
           </div>
           <div class="text-sm py-1">
@@ -260,8 +260,8 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from 'vue-i18n'
 
-import { instance, SERVER_URL } from "@/api";
-import type { User, Notification } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { User, Message } from "~/api/request.type";
 import { ArrowRightCircleIcon, BellIcon, ChevronRightIcon, CogIcon, IdentificationIcon, LanguageIcon, MagnifyingGlassIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 
 // 控制通知是否打开
@@ -271,12 +271,12 @@ let isAccount = ref(false);
 // 语言设置是否打开
 let isLanguage = ref(false)
 
-let notifications = ref<Array<Notification>>([])
+let messages = ref<Array<Message>>([])
 let count = ref(0)
 
 const { locale } = useI18n()
 const router = useRouter();
-const account = ref<User>({
+const user = ref<User>({
   username: '',
   nickname: '',
   avatar: '',
@@ -289,16 +289,16 @@ const account = ref<User>({
 onMounted(() => {
   let data = sessionStorage.getItem("user");
   if (data && data !== "undefined") {
-    account.value = JSON.parse(data)
+    user.value = JSON.parse(data)
     retrieve();
     socket();
   }
 });
 
 const retrieve = async () => {
-  await instance.get(SERVER_URL.notification, { params: { page: 0, size: 6, read: false } })
+  await instance.get(SERVER_URL.messages, { params: { page: 0, size: 6, read: false } })
     .then(res => {
-      notifications.value = res.data.content
+      messages.value = res.data.content
       count.value = res.data.totalElements
     })
 }

@@ -3,7 +3,7 @@
     <div class="sm-a-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
-        aria-label="accesslog"
+        aria-label="access-logs"
       >
         <thead>
           <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
@@ -29,7 +29,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('description') }}
+              {{ $t('context') }}
             </th>
             <th
               scope="col"
@@ -55,7 +55,7 @@
               {{ data.location }}
             </td>
             <td class="px-4">
-              {{ data.description }}
+              {{ data.context }}
             </td>
             <td class="px-4">
               {{ new Date(data.modifyTime).toLocaleString() }}
@@ -64,7 +64,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       :size="size"
@@ -77,10 +77,10 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import Page from "@/components/Page.vue"
+import Pagation from "~/components/Pagation.vue.js"
 
-import { instance, SERVER_URL } from "@/api";
-import type { AccessLog } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { AccessLog } from "~/api/request.type";
 
 let accesslogs = ref<Array<AccessLog>>([])
 

@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import Modal from "@/components/Modal.vue";
+import Modal from "~/components/Modal.vue";
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 defineProps({

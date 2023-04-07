@@ -2,7 +2,7 @@
   <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">
-        {{ $t('category') }}
+        {{ $t('categories') }}
       </h2>
       <button
         type="button"
@@ -20,7 +20,6 @@
       <Operation
         :datas="datas"
         :file-name="'category'"
-        @click.capture="dataCode = ''"
         @modal-operate="modalOperate"
       />
     </div>
@@ -42,12 +41,6 @@
               class="px-4"
             >
               {{ $t('name') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('code') }}
             </th>
             <th
               scope="col"
@@ -90,13 +83,9 @@
                 href="https://www.leafage.top/posts"
                 target="_blank"
                 class="font-medium hover:underline"
-              >{{ data.name }}
+              >{{ data.categoryName }}
               </a>
             </td>
-            <td
-              class="px-4"
-              v-text="data.code"
-            />
             <td
               class="px-4"
               v-text="data.description"
@@ -111,7 +100,7 @@
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
+                @click.capture="formData = data"
                 @del-action="confirmOperate"
                 @edit-action="modalOperate"
               />
@@ -120,20 +109,20 @@
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
-      :size="size"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
     <Confirm
-      :is-show="isDel"
+      :is-show="model.isDel"
       @cancel-action="confirmOperate"
       @commit-action="confirmCommit"
     />
     <Modal
-      :is-show="isEdit"
+      :is-show="model.isEdit"
       @cancel-action="modalOperate"
       @commit-action="modelCommit"
     >
@@ -143,7 +132,7 @@
             <label for="name">{{ $t('name') }}</label>
             <input
               id="name"
-              v-model.trim="categoryData.name"
+              v-model.trim="formData.categoryName"
               type="text"
               name="name"
               class="mt-1 w-full block rounded-md border-gray-300"
@@ -157,7 +146,7 @@
             <label for="description">{{ $t('description') }}</label>
             <textarea
               id="description"
-              v-model.trim="categoryData.description"
+              v-model.trim="formData.description"
               name="description"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('description')"
@@ -170,35 +159,41 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Confirm from "~/components/Confirm.vue";
+import Modal from "~/components/Modal.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Category } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Category } from "~/api/request.type";
 import { ArrowPathIcon } from '@heroicons/vue/24/outline'
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
-// 数据
-let categoryData = ref<Category>({
-  code: '',
-  name: '',
+let model = reactive({
+  isEdit: false,
+  isDel: false
+})
+
+// 分页参数
+let pagation = reactive({
+  page: 0,
+  size: 0,
+  total: 0
+})
+
+// form 数据
+let formData: Category = reactive({
+  id: 0,
+  categoryName: '',
   count: 0,
   description: '',
   modifyTime: ''
 });
-let dataCode = ref("");
+
 let datas = ref<Array<Category>>([]);
-// 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
 
 onMounted(() => {
   retrieve();
@@ -209,17 +204,17 @@ onMounted(() => {
  * @param s 大小
  */
 const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+  pagation.page = p;
+  pagation.size = s;
 };
 /**
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.category, { params: { page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.category, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 };
 /**
@@ -227,18 +222,18 @@ const retrieve = async (): Promise<void> => {
  * @param operate 是否打开
  */
 const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+  model.isDel = operate;
 };
 /**
  * confirm 提交
  */
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
+  await instance.delete(SERVER_URL.category.concat(`/${formData.id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Category) => item.code != dataCode.value
+      (item: Category) => item.id != formData.id
     );
-    isDel.value = false;
+    model.isDel = false;
   });
 };
 /**
@@ -247,45 +242,46 @@ const confirmCommit = async (): Promise<void> => {
  */
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
-    categoryData.value = {
-      code: '',
-      name: '',
-      count: 0,
-      description: '',
-      modifyTime: ''
-    };
-    if (dataCode.value && dataCode.value.length > 0) {
-      await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))
-        .then(res => categoryData.value = res.data);
+    if (formData && formData.id && formData.id != 0) {
+      await instance.get(SERVER_URL.category.concat(`/${formData.id}`))
+        .then(res => formData = res.data);
+    } else {
+      formData = {
+        id: 0,
+        categoryName: '',
+        count: 0,
+        description: '',
+        modifyTime: ''
+      }
     }
   }
-  isEdit.value = operate;
+  model.isEdit = operate;
 };
 /**
  * 新增/编辑：提交
  */
 const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
+  if (formData && formData.id && formData.id != 0) {
     await instance
-      .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)
+      .put(SERVER_URL.category.concat(`/${formData.id}`))
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Category) => item.code != dataCode.value
+          (item: Category) => item.id != formData.id
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
-        isEdit.value = false;
+        model.isEdit = false;
       });
   } else {
-    await instance.post(SERVER_URL.category, categoryData.value).then(res => {
-      if (datas.value.length >= size.value) {
+    await instance.post(SERVER_URL.category, formData).then(res => {
+      if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.shift();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
-      isEdit.value = false;
+      model.isEdit = false;
     });
   }
 };

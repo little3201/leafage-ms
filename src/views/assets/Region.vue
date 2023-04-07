@@ -2,7 +2,7 @@
   <div class="mt-2">
     <div class="flex justify-between items-center">
       <h2 class="text-lg font-medium">
-        {{ $t('region') }}
+        {{ $t('regions') }}
       </h2>
       <button
         type="button"
@@ -20,7 +20,6 @@
       <Operation
         :datas="datas"
         :file-name="'region'"
-        @click.capture="dataCode = ''"
         @modal-operate="modalOperate"
       />
     </div>
@@ -47,18 +46,6 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('alias') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('code') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('areaCode') }}
             </th>
             <th
@@ -72,12 +59,6 @@
               class="px-4"
             >
               {{ $t('superior') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('description') }}
             </th>
             <th
               scope="col"
@@ -104,15 +85,7 @@
             </td>
             <td
               class="px-4"
-              v-text="data.name"
-            />
-            <td
-              class="px-4"
-              v-text="data.alias"
-            />
-            <td
-              class="px-4"
-              v-text="data.code"
+              v-text="data.regionName"
             />
             <td
               class="px-4"
@@ -128,15 +101,11 @@
             />
             <td
               class="px-4"
-              v-text="data.description"
-            />
-            <td
-              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
+                @click.capture="formData = data"
                 @del-action="confirmOperate"
                 @edit-action="modalOperate"
               />
@@ -145,20 +114,20 @@
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
-      :size="size"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
     <Confirm
-      :is-show="isDel"
+      :is-show="model.isDel"
       @cancel-action="confirmOperate"
       @commit-action="confirmCommit"
     />
     <Modal
-      :is-show="isEdit"
+      :is-show="model.isEdit"
       @cancel-action="modalOperate"
       @commit-action="modelCommit"
     >
@@ -168,7 +137,7 @@
             <label for="name">{{ $t('name') }}</label>
             <input
               id="name"
-              v-model.trim="regionData.name"
+              v-model.trim="formData.regionName"
               name="name"
               type="text"
               class="mt-1 w-full block rounded-md border-gray-300"
@@ -179,34 +148,10 @@
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="alias">{{ $t('alias') }}</label>
-            <input
-              id="alias"
-              v-model.trim="regionData.alias"
-              name="alias"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('alias')"
-              aria-label="alias"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="code">{{ $t('code') }}</label>
-            <input
-              id="code"
-              v-model.trim="regionData.code"
-              name="code"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('code')"
-              aria-label="code"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
             <label for="superior">{{ $t('superior') }}</label>
             <select
               id="superior"
-              v-model="regionData.superior"
+              v-model="formData.superior"
               name="superior"
               class="mt-1 w-full block rounded-md border-gray-300"
               aria-label="region superior"
@@ -216,46 +161,36 @@
               </option>
               <option
                 v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
+                :key="superior.id"
+                :value="superior.id"
               >
-                {{ superior.name }}
+                {{ superior.regionName }}
               </option>
             </select>
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="postal-code">{{ $t('postalCode') }}</label>
+            <label for="postal-id">{{ $t('postalCode') }}</label>
             <input
-              id="postal-code"
-              v-model.trim="regionData.postalCode"
-              name="postal-code"
+              id="postal-id"
+              v-model.trim="formData.postalCode"
+              name="postal-id"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('postalCode')"
-              aria-label="postal-code"
+              aria-label="postal-id"
             >
           </div>
           <div class="col-span-12 sm:col-span-6">
-            <label for="area-code">{{ $t('areaCode') }}</label>
+            <label for="area-id">{{ $t('areaCode') }}</label>
             <input
-              id="area-code"
-              v-model.trim="regionData.areaCode"
-              name="area-code"
+              id="area-id"
+              v-model.trim="formData.areaCode"
+              name="area-id"
               type="number"
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('areaCode')"
-              aria-label="area-code"
+              aria-label="area-id"
             >
-          </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="regionData.description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('description')"
-            />
           </div>
         </div>
       </form>
@@ -264,41 +199,45 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue.js";
+import Confirm from "~/components/Confirm.vue";
+import Modal from "~/components/Modal.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Region } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Region } from "~/api/request.type";
 import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
-// 数据
-let regionData = ref<Region>({
-  code: 0,
-  name: '',
+let model = reactive({
+  isEdit: false,
+  isDel: false
+})
+
+// 分页参数
+let pagation = reactive({
+  page: 0,
+  size: 0,
+  total: 0
+})
+
+// form 数据
+let formData: Region = reactive({
+  id: 0,
+  regionName: '',
   superior: '',
-  alias: '',
   postalCode: 0,
   areaCode: 0,
-  description: '',
   modifyTime: ''
 });
-let dataCode = ref();
+
 let datas = ref<Array<Region>>([]);
 let superiors = ref<Array<Region>>([]);
-// 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
 
-watch(() => regionData.value.code, (newValue: number, oldValue: number) => {
+watch(() => formData.id, (newValue: number, oldValue: number) => {
   if (newValue != oldValue) {
     setTimeout(() => retrieveSuperior(newValue), 300)
   }
@@ -313,17 +252,17 @@ onMounted(() => {
  * @param s 大小
  */
 const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+  pagation.page = p;
+  pagation.size = s;
 };
 /**
  * 查询列表
  */
 const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
+  await instance.get(SERVER_URL.region, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 };
 /**
@@ -331,18 +270,18 @@ const retrieve = async (): Promise<void> => {
  * @param operate 是否打开
  */
 const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+  model.isDel = operate;
 };
 /**
  * confirm 提交
  */
 const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
+  await instance.delete(SERVER_URL.region.concat(`/${formData.id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Region) => item.code != dataCode.value
+      (item: Region) => item.id != formData.id
     );
-    isDel.value = false;
+    model.isDel = false;
   });
 };
 /**
@@ -351,34 +290,35 @@ const confirmCommit = async (): Promise<void> => {
  */
 const modalOperate = async (operate: boolean): Promise<void> => {
   if (operate) {
-    regionData.value = {
-      code: 0,
-      name: '',
-      superior: '',
-      alias: '',
-      postalCode: 0,
-      areaCode: 0,
-      description: '',
-      modifyTime: ''
-    };
-    superiors.value = []
-    await Promise.all([
-      fetch(),
-      retrieveSuperior(dataCode.value)
-    ])
+    if (formData && formData.id && formData.id != 0) {
+      await Promise.all([
+        fetch(),
+        retrieveSuperior(formData.id)
+      ])
+    } else {
+      formData = {
+        id: 0,
+        regionName: '',
+        superior: '',
+        postalCode: 0,
+        areaCode: 0,
+        modifyTime: ''
+      };
+    }
+
   }
-  isEdit.value = operate;
+  model.isEdit = operate;
 };
 /**
  * 查询上级信息
- * @param code 代码
+ * @param id 主键
  */
-const retrieveSuperior = async (code: number) => {
+const retrieveSuperior = async (id: number) => {
   let superior = 0
-  if (code > 1000) {
-    superior = Math.floor(code / 100)
-    if (code > 110000000) {
-      superior = Math.floor(code / 1000)
+  if (id > 1000) {
+    superior = Math.floor(id / 100)
+    if (id > 110000000) {
+      superior = Math.floor(id / 1000)
     }
     await instance.get(SERVER_URL.region.concat("/", superior + "/lower")).then(res => superiors.value = res.data)
   }
@@ -387,36 +327,35 @@ const retrieveSuperior = async (code: number) => {
  * 获取信息
  */
 const fetch = async () => {
-  if (dataCode.value) {
-    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then(res => regionData.value = res.data);
+  if (formData.id) {
+    await instance.get(SERVER_URL.region.concat(`/${formData.id}`)).then(res => formData = res.data);
   }
 }
 /**
  * 新增/编辑：提交
  */
 const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
+  if (formData.id && formData.id != 0) {
+    await instance.put(SERVER_URL.region.concat(`/${formData.id}`), formData)
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Region) => item.code != dataCode.value
+          (item: Region) => item.id != formData.id
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);
-        isEdit.value = false;
       });
   } else {
-    await instance.post(SERVER_URL.region, regionData.value).then(res => {
-      if (datas.value.length >= size.value) {
+    await instance.post(SERVER_URL.region, formData).then(res => {
+      if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.shift();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
-      isEdit.value = false;
     });
   }
+  model.isEdit = false
 };
 
 </script>

@@ -11,41 +11,40 @@ const user = {
   credentialsExpiresAt: ''
 }
 const menus = [
-  { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": HomeIcon }, "children": [] },
+  { "id": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": HomeIcon }, "children": [] },
   {
-    "code": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": Square3Stack3DIcon }, "children": [
-      { "code": "21224UJ5C", "name": "Group", "superior": "21224DRMU", "expand": { "path": "/group", "icon": UsersIcon }, "children": [] },
+    "id": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": Square3Stack3DIcon }, "children": [
+      { "id": "21224UJ5C", "name": "Group", "superior": "21224DRMU", "expand": { "path": "/groups", "icon": UsersIcon }, "children": [] },
       {
-        "code": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/role", "icon": LinkIcon }, "children": []
+        "id": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/roles", "icon": LinkIcon }, "children": []
       },
-      { "code": "212240439", "name": "Component", "superior": "21224DRMU", "expand": { "path": "/component", "icon": ShieldCheckIcon }, "children": [] },
+      { "id": "212240439", "name": "Component", "superior": "21224DRMU", "expand": { "path": "/component", "icon": ShieldCheckIcon }, "children": [] },
       {
-        "code": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/user", "icon": UsersIcon }, "children": []
+        "id": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/users", "icon": UsersIcon }, "children": []
       },
-      { "code": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionary", "icon": BookOpenIcon }, "children": [] }
+      { "id": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionaries", "icon": BookOpenIcon }, "children": [] }
     ]
   },
-  { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": ClipboardIcon }, "children": [] },
-  { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": TagIcon }, "children": [] },
-  { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": MapPinIcon }, "children": [] }
+  { "id": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": ClipboardIcon }, "children": [] },
+  { "id": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/categories", "icon": TagIcon }, "children": [] },
+  { "id": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/regions", "icon": MapPinIcon }, "children": [] }
 ]
 
 import signMock from './sign'
 
-import roleMock from './system/role';
-import userMock from './system/user';
-import groupMock from './system/group';
-import authorityMock from './system/component';
-import notificationMock from './system/notification';
-import dictionaryMock from './system/dictionary';
-import accesslogMock from './system/accesslog';
+import roleMock from './system/roles';
+import userMock from './system/users';
+import groupMock from './system/groups';
+import authorityMock from './system/components';
+import notificationMock from './system/messages';
+import dictionaryMock from './system/dictionaries';
+import accesslogMock from './system/accesslogs';
 
 import postsMock from './assets/posts';
-import categoryMock from './assets/category';
-import resourceMock from './assets/resource';
+import categoryMock from './assets/categories';
 import statisticsMock from './assets/statistics';
-import commentMock from './assets/comment';
-import regionMock from './assets/region';
+import commentMock from './assets/comments';
+import regionMock from './assets/regions';
 
 const mocks = [
   ...signMock,
@@ -59,7 +58,6 @@ const mocks = [
 
   ...postsMock,
   ...categoryMock,
-  ...resourceMock,
   ...statisticsMock,
   ...commentMock,
   ...regionMock,

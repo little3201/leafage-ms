@@ -20,7 +20,7 @@
             <div class="flex items-center space-x-4 mt-1">
               <input
                 id="nickname"
-                v-model="account.nickname"
+                v-model="user.nickname"
                 name="nickname"
                 type="text"
                 class="block border-gray-300 py-1 rounded-md"
@@ -44,7 +44,7 @@
           </div>
           <div class="mr-20 ml-8 text-center">
             <figure
-              v-if="account.avatar"
+              v-if="user.avatar"
               class="w-32 h-32 border rounded-full relative group"
             >
               <div
@@ -74,7 +74,7 @@
               <img
                 alt="avatar"
                 class="w-full h-full rounded-full"
-                :src="account.avatar"
+                :src="user.avatar"
                 width="126"
                 height="126"
               >
@@ -126,26 +126,17 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { User, Dictionary } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { User, Dictionary } from "~/api/request.type";
 
-import { uploadFile } from "@/composables/upload";
+import { uploadFile } from "~/composables/upload";
 
 let isEdit = ref(false)
 
-let user = ref<User>({
-  username: '',
-  nickname: '',
-  avatar: '',
-  enabled: true,
-  accountExpiresAt: new Date().toDateString(),
-  accountLocked: true,
-  credentialsExpiresAt: new Date().toDateString()
-})
 let nationalities = ref<Array<Dictionary>>([])
 let degrees = ref<Array<Dictionary>>([])
 
-let account: User = reactive(JSON.parse(sessionStorage.getItem("user") || ''))
+let user: User = reactive(JSON.parse(sessionStorage.getItem("user") || ''))
 
 onMounted(() => {
   fetch()
@@ -156,8 +147,8 @@ onMounted(() => {
  * 查询
  */
 const fetch = async (): Promise<void> => {
-  if (account.username && account.username.length > 0) {
-    await instance.get(SERVER_URL.user.concat("/", account.username)).then(res => user.value = res.data)
+  if (user.username && user.username.length > 0) {
+    await instance.get(SERVER_URL.user.concat("/", user.username)).then(res => user = res.data)
   }
 }
 /**
@@ -166,8 +157,8 @@ const fetch = async (): Promise<void> => {
 const editAllow = async () => {
   isEdit.value = !isEdit.value
   if (!isEdit.value) {
-    await instance.put(SERVER_URL.user.concat('/', account.username), account).then(res => {
-      account = res.data
+    await instance.put(SERVER_URL.user.concat('/', user.username), user).then(res => {
+      user = res.data
       sessionStorage.setItem("user", JSON.stringify(res.data))
     })
   }
@@ -176,19 +167,19 @@ const editAllow = async () => {
  * 删除头像
  */
 const removeAvatar = () => {
-  account.avatar = ''
+  user.avatar = ''
 }
 /**
  * 上传文件
- * @param files 文件
+ * @param event Event
  */
-const uploadImage = (event: any): void => {
-  if (event && event.target && event.target.files) {
-    let files: Array<File> = event.target.files
-    if (files[0]) {
+const uploadImage = (event: Event): void => {
+  if (event && event.target) {
+    let files = (event.target as HTMLInputElement).files
+    if (files && files[0]) {
       uploadFile(files[0]).subscribe({
         complete: (e: any) => {
-          account.avatar = "https://cdn.leafage.top/" + e.key
+          user.avatar = "https://cdn.leafage.top/" + e.key
         },
       });
     }

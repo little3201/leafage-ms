@@ -37,7 +37,7 @@
     <div class="sm:w-20 xl:w-52 my-8">
       <AsideCore
         v-for="data in datas"
-        :key="data.code"
+        :key="data.id"
         :data="data"
       />
     </div>
@@ -47,9 +47,9 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 
-import AsideCore from "@/layouts/AsideCore.vue";
+import AsideCore from "~/layouts/AsideCore.vue";
 
-import type { NodeData } from '@/api/request.type'
+import type { NodeData } from '~/api/request.type'
 
 defineProps({
   datas: {

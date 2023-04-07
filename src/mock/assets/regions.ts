@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Region } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, Region } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
 const pagation: Pagation<Region> = {
   page: 0,
@@ -14,42 +14,36 @@ const datas: Array<Region> = [];
 for (let i = 0; i < 309; i++) {
   if (i < 34) {
     datas.push({
-      code: Random.integer(10, 99),
-      name: Random.province(),
-      superior: Random.region(), // 华南、华北
-      alias: Random.cword(),
+      id: Random.integer(10, 99),
+      regionName: Random.province(),
+      superior: Random.region(),
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 3)),
-      description: Random.csentence(5),
       modifyTime: Random.date()
     })
   } else if (i >= 34 && i < 144) {
     datas.push({
-      code: Random.integer(1000, 9999),
-      name: Random.city(),
+      id: Random.integer(1000, 9999),
+      regionName: Random.city(),
       superior: Random.province(),
-      alias: Random.city(),
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 4)),
-      description: Random.csentence(5),
       modifyTime: Random.date()
     })
   } else {
     datas.push({
-      code: Random.integer(100000, 999999),
-      name: Random.county(),
+      id: Random.integer(100000, 999999),
+      regionName: Random.county(),
       superior: Random.city(),
-      alias: Random.county(),
       postalCode: parseInt(Random.zip()),
       areaCode: parseInt(Random.string('0123456789', 5)),
-      description: Random.csentence(5),
       modifyTime: Random.date()
     })
   }
 }
 export default [
   {
-    url: '/api/hypervisor/region/count',
+    url: '/api/hypervisor/regions/count',
     method: 'get',
     response: () => {
       return datas.length
@@ -72,8 +66,8 @@ export default [
             return datas.slice(145, 309)
           }
         } else {
-          const code = path
-          return datas.filter(item => item.code == code)[0]
+          const id = path
+          return datas.filter(item => item.id == id)[0]
         }
       } else if (url.split('?').length > 1) {
         const params: any = parse(url)
@@ -87,8 +81,8 @@ export default [
     url: '/api/hypervisor/regions',
     method: 'put',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
-      return datas.filter(item => item.code === code)[0]
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.id === id)[0]
     }
   },
   {
@@ -96,7 +90,7 @@ export default [
     method: 'post',
     response: (options: any) => {
       let data: Region = JSON.parse(options.body)
-      data = { ...data, code: parseInt(Random.id()) }
+      data = { ...data, id: Random.integer() }
       return data
     }
   },

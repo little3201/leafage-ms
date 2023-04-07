@@ -48,7 +48,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
+              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -97,7 +97,7 @@
             />
             <td
               class="px-4"
-              v-text="data.code"
+              v-text="data.id"
             />
             <td
               class="px-4"
@@ -117,7 +117,7 @@
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
+                @click.capture="dataCode = data.id"
                 @del-action="confirmOperate"
                 @edit-action="modalOperate"
               >
@@ -140,7 +140,7 @@
         </tbody>
       </table>
     </div>
-    <Page
+    <Pagation
       :total="total"
       :page="page"
       @retrieve="retrieve"
@@ -185,8 +185,8 @@
               </option>
               <option
                 v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
+                :key="superior.id"
+                :value="superior.id"
                 v-text="superior.name"
               />
             </select>
@@ -213,7 +213,7 @@
     >
       <TreeItem
         v-for="treeData in treeDatas"
-        :key="treeData.code"
+        :key="treeData.id"
         v-model:ticked="ticked"
         :data="treeData"
       />
@@ -224,16 +224,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue"
 
-import Operation from "@/components/Operation.vue"
-import Action from "@/components/Action.vue"
-import Page from "@/components/Page.vue"
-import Confirm from "@/components/Confirm.vue"
-import Modal from "@/components/Modal.vue"
+import Operation from "~/components/Operation.vue"
+import Action from "~/components/Action.vue"
+import Pagation from "~/components/Pagation.vue.js"
+import Confirm from "~/components/Confirm.vue"
+import Modal from "~/components/Modal.vue"
 
-import TreeItem from "@/components/tree/TreeItem.vue"
+import TreeItem from "~/components/tree/TreeItem.vue"
 
-import { instance, SERVER_URL } from "@/api"
-import type { Role, NodeData } from "@/api/request.type"
+import { instance, SERVER_URL } from "~/api"
+import type { Role, NodeData } from "~/api/request.type"
 import { ArrowPathIcon, KeyIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
@@ -242,7 +242,7 @@ let isDel = ref(false)
 let isTree = ref(false)
 // 数据
 let roleData = ref<Role>({
-  code: '',
+  id: 0,
   name: '',
   superior: '',
   count: 0,
@@ -297,7 +297,7 @@ const confirmCommit = async (): Promise<void> => {
   await instance.delete(SERVER_URL.role.concat("/", dataCode.value)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Role) => item.code != dataCode.value
+      (item: Role) => item.id != dataCode.value
     );
     isDel.value = false;
   });
@@ -309,7 +309,7 @@ const confirmCommit = async (): Promise<void> => {
 const modalOperate = async (operate: boolean) => {
   if (operate) {
     roleData.value = {
-      code: '',
+      id: 0,
       name: '',
       superior: '',
       count: 0,
@@ -340,7 +340,7 @@ const fetch = async (): Promise<void> => {
 const treeOperate = async (operate: boolean) => {
   if (operate) {
     await Promise.all([
-      instance.get(SERVER_URL.authority.concat("/tree")).then(res => treeDatas.value = res.data),
+      instance.get(SERVER_URL.components.concat("/tree")).then(res => treeDatas.value = res.data),
       instance.get(SERVER_URL.role.concat("/", dataCode.value, "/components")).then(res => ticked.value = res.data)
     ])
   }
@@ -364,7 +364,7 @@ const modelCommit = async (): Promise<void> => {
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
-          (item: Role) => item.code != dataCode.value
+          (item: Role) => item.id != dataCode.value
         );
         // 将结果添加到第一个
         datas.value.unshift(res.data);

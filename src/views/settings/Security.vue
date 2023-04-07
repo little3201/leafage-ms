@@ -96,7 +96,7 @@
         </h3>
         <p class="text-gray-500 text-sm my-2 mx-16">
           Two-factor authentication adds an additional layer of security to
-          your account by requiring more than just a password to sign in.
+          your user by requiring more than just a password to sign in.
         </p>
         <button
           name="enable"
@@ -120,7 +120,7 @@
         Sessions
       </legend>
       <p class="text-sm text-gray-500">
-        This is a list of devices that have logged into your account. Revoke any sessions
+        This is a list of devices that have logged into your user. Revoke any sessions
         that you do not recognize.
       </p>
       <div class="mt-4 border p-4 rounded-md divide-y">
@@ -200,7 +200,7 @@ import { reactive, ref } from 'vue'
 
 import { useRouter } from "vue-router";
 
-import { instance, SERVER_URL } from "@/api";
+import { instance, SERVER_URL } from "~/api";
 import { ComputerDesktopIcon, DevicePhoneMobileIcon, LockClosedIcon } from '@heroicons/vue/24/outline'
 
 

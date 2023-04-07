@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Group, User } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, Group, User } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
 const pagation: Pagation<Group> = {
   page: 0,
@@ -13,13 +13,10 @@ const datas: Array<Group> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    code: Random.string('number', 9),
-    name: Random.word(),
-    alias: Random.cword(),
-    superior: Random.word(),
+    id: Random.integer(),
+    groupName: Random.word(),
     principal: Random.cname(),
     count: Random.integer(0, 99),
-    description: Random.csentence(5),
     modifyTime: Random.date(),
     enabled: Random.boolean()
   })
@@ -39,25 +36,12 @@ for (let i = 0; i < 5; i++) {
   })
 }
 
-const treeDatas = [
-  { "code": "21529ZEE7", "name": "normal", "superior": null, "expand": null, "children": [] },
-  {
-    "code": "21169GZC", "name": "vip", "superior": null, "expand": null, "children": [
-      {
-        "code": "21529WXDL", "name": "gold vip", "superior": "21169GZC", "expand": null, "children": [
-          { "code": "21529V1IM", "name": "diamond vip", "superior": "21529WXDL", "expand": null, "children": [] }
-        ]
-      }
-    ]
-  }
-];
-
 export default [
   {
     url: '/api/hypervisor/groups/tree',
     method: 'get',
     response: () => {
-      return treeDatas;
+      return [];
     }
   },
   {
@@ -72,8 +56,8 @@ export default [
         } else if (path === 'group') {
           return datas.slice(0, 6)
         } else {
-          const code = path
-          return datas.filter(item => item.code === code)[0]
+          const id = path
+          return datas.filter(item => item.id === id)[0]
         }
       } else if (url.split('?').length > 1) {
         const params: any = parse(url)
@@ -87,8 +71,8 @@ export default [
     url: '/api/hypervisor/groups',
     method: 'put',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
-      return datas.filter(item => item.code === code)[0]
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.id === id)[0]
     }
   },
   {
@@ -96,7 +80,7 @@ export default [
     method: 'post',
     response: (options: any) => {
       let data: Group = JSON.parse(options.body)
-      data = { ...data, code: Random.id() }
+      data = { ...data, id: Random.integer() }
       return data
     }
   },
@@ -104,18 +88,18 @@ export default [
     url: '/api/hypervisor/groups',
     method: 'patch',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true
       }
-      data = datas.filter(item => item.code === code)[0]
+      data = datas.filter(item => item.id === id)[0]
       data.enabled = !data.enabled
       return data
     },
   },
   {
-    url: '/api/hypervisor/groups/:code',
+    url: '/api/hypervisor/groups/:id',
     method: 'delete',
     response: () => {
       return {}

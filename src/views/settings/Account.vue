@@ -48,11 +48,11 @@
             class="mr-1"
           >
             <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
-          </svg> Looking to manage account security settings? You can find them in the
+          </svg> Looking to manage user security settings? You can find them in the
           <RouterLink
             to="/settings/security"
             class="text-blue-600 mx-1 hover:underline"
-          >Account security</RouterLink>
+          >User security</RouterLink>
           tab.
         </span>
       </div>
@@ -161,24 +161,24 @@
         <div class="flex items-center">
           <input
             id="push-nothing"
-            name="push-notifications"
+            name="push-messages"
             type="radio"
             class="border-gray-300 cursor-pointer"
-            aria-label="push-notifications"
+            aria-label="push-messages"
           >
           <label
             for="push-nothing"
             class="ml-3 block text-sm font-medium text-gray-700"
-          >No push notifications</label>
+          >No push messages</label>
         </div>
       </div>
     </fieldset>
     <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">
-        Delete Account
+        Delete User
       </legend>
       <p class="text-sm text-gray-500">
-        Once you delete your account, there is no going back. Please be certain.
+        Once you delete your user, there is no going back. Please be certain.
       </p>
       <button
         type="submit"
@@ -188,9 +188,9 @@
         @click="onSubmit"
       >
         Delete
-        Account
+        User
       </button>
-      <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your account to a FREE account?
+      <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your user to a FREE user?
         We won’t charge your payment information anymore.</span>
     </fieldset>
     <Confirm
@@ -206,10 +206,10 @@ import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 
-import { instance, SERVER_URL } from "@/api";
-import type { User } from '@/api/request.type'
+import { instance, SERVER_URL } from "~/api";
+import type { User } from '~/api/request.type'
 
-import Confirm from "@/components/Confirm.vue"
+import Confirm from "~/components/Confirm.vue"
 
 let editEmail = ref(false)
 let editUsername = ref(false)

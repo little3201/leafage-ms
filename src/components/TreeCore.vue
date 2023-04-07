@@ -31,7 +31,7 @@
       </button>
       <label
         v-else
-        :for="data.code"
+        :for="data.name"
         class="flex flex-1 items-center cursor-pointer"
       >
         <component
@@ -49,7 +49,7 @@
 <script lang="ts" setup>
 import { PropType } from "vue";
 
-import type { NodeData } from "@/api/request.type";
+import type { NodeData } from "~/api/request.type";
 import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 
 defineProps({

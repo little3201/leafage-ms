@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/main.css'
 import router from './router'
-import { mockXHR } from '@/mock/index';
+import { mockXHR } from '~/mock/index';
 
 import i18n from './locales';
 

@@ -30,7 +30,7 @@
 
     "username": "Username",
     "nickname": "Nickname",
-    "accountLockedState": "User State",
+    "accountLocked": "Account Locked",
     "accountExpiresAt": "User Expires At",
     "credentialsExpiresAt": "Credentials Expires At",
     

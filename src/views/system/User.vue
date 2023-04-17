@@ -35,12 +35,6 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('accountLockedState') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('accountExpiresAt') }}
             </th>
             <th
@@ -48,6 +42,12 @@
               class="px-4"
             >
               {{ $t('credentialsExpiresAt') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('accountLocked') }}
             </th>
             <th
               scope="col"
@@ -83,24 +83,7 @@
             <td class="px-4">
               {{ data.nickname }}
             </td>
-            <td class="px-4">
-              <div
-                class="flex items-center justify-center"
-                :class="data.accountLocked ? 'text-red-600': 'text-lime-600'"
-              >
-                <LockClosedIcon
-                  v-if="data.accountLocked"
-                  class="w-5 h-5 cursor-pointer"
-                  aria-hidden="true"
-                  @click="unlock(data.username)"
-                />
-                <LockOpenIcon
-                  v-else
-                  class="w-5 h-5 text-lime-600"
-                  aria-hidden="true"
-                />
-              </div>
-            </td>
+            
             <td class="px-4">
               <div class="flex items-center justify-center">
                 <span
@@ -119,6 +102,24 @@
                 <span class="ml-2">{{
                   new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
                 }}</span>
+              </div>
+            </td>
+            <td class="px-4">
+              <div
+                class="flex items-center justify-center"
+                :class="data.accountLocked ? 'text-red-600': 'text-lime-600'"
+              >
+                <LockClosedIcon
+                  v-if="data.accountLocked"
+                  class="w-5 h-5 cursor-pointer"
+                  aria-hidden="true"
+                  @click="unlock(data.username)"
+                />
+                <LockOpenIcon
+                  v-else
+                  class="w-5 h-5 text-lime-600"
+                  aria-hidden="true"
+                />
               </div>
             </td>
             <td>

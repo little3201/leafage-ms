@@ -231,7 +231,7 @@
                 scope="col"
                 class="px-4"
               >
-                {{ $t('accountLockedState') }}
+                {{ $t('accountLocked') }}
               </th>
               <th
                 scope="col"

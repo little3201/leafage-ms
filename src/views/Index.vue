@@ -1,15 +1,16 @@
 <template>
   <div class="px-4 py-3 h-screen">
-    <div class="md:hidden">
-      <p>为更好的体验，请使用大屏幕终端浏览！</p>
-      <img src="">
+    <div class="md:hidden h-1/2 flex items-end justify-center">
+      <p class="text-2xl text-white">
+        为更好的体验，请使用大屏幕终端浏览！
+      </p>
     </div>
-    <div class="md:flex flex-row sm-g-h md:h-full">
+    <div class="hidden md:flex flex-row sm-g-h h-full">
       <Aside
         :datas="menus"
         class="hidden md:block"
       />
-      <main class="px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
+      <main class="hidden md:block px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
         <TopBar />
         <RouterView />
       </main>

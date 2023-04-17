@@ -1,10 +1,10 @@
 <template>
   <div class="px-4 py-3 h-screen">
-    <Nav
-      :datas="menus"
-      class="md:hidden"
-    />
-    <div class="flex flex-row sm-g-h md:h-full">
+    <div class="md:hidden">
+      <p>为更好的体验，请使用大屏幕终端浏览！</p>
+      <img src="">
+    </div>
+    <div class="md:flex flex-row sm-g-h md:h-full">
       <Aside
         :datas="menus"
         class="hidden md:block"
@@ -22,9 +22,8 @@ import { ref, onMounted } from "vue";
 
 import type { NodeData } from "~/api/request.type";
 
-import Nav from "~/layouts/Nav.vue";
-import Aside from "~/layouts/Aside.vue";
-import TopBar from "~/layouts/TopBar.vue";
+import Aside from "~/components/Aside.vue";
+import TopBar from "~/components/TopBar.vue";
 
 const menus = ref<Array<NodeData>>([]);
 

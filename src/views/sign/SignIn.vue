@@ -86,7 +86,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import { instance, SERVER_URL } from "~/api";
 
-import Sign from "~/layouts/Sign.vue";
+import Sign from "~/components/Sign.vue";
 
 let formData = reactive({
   username: '',

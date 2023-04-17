@@ -76,7 +76,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Sign from "~/layouts/Sign.vue"
+import Sign from "~/components/Sign.vue"
 import { useRouter } from "vue-router"
 
 import { instance } from "~/api";

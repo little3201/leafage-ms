@@ -129,70 +129,70 @@
         </button>
       </template>
     </Confirm>
-    <Modal
+    <Drawer
       :visible="operation.modal"
+      :title="'编辑行政区划'"
+      @close-action="onClose"
     >
       <template #content>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 sm:col-span-6">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="formData.regionName"
-              name="name"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')"
-              required
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.regionName"
+            name="name"
+            type="text"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+            required
                 
-              aria-label="name"
+            aria-label="name"
+          >
+        </div>
+        <div class="w-full">
+          <label for="superior">{{ $t('superior') }}</label>
+          <select
+            id="superior"
+            v-model="formData.superior"
+            name="superior"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="region superior"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="superior in superiors"
+              :key="superior.id"
+              :value="superior.id"
             >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="superior">{{ $t('superior') }}</label>
-            <select
-              id="superior"
-              v-model="formData.superior"
-              name="superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="region superior"
-            >
-              <option selected>
-                ---{{ $t('select') }}---
-              </option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.id"
-                :value="superior.id"
-              >
-                {{ superior.regionName }}
-              </option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="postal-id">{{ $t('postalCode') }}</label>
-            <input
-              id="postal-id"
-              v-model.trim="formData.postalCode"
-              name="postal-id"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('postalCode')"
-              aria-label="postal-id"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="area-id">{{ $t('areaCode') }}</label>
-            <input
-              id="area-id"
-              v-model.trim="formData.areaCode"
-              name="area-id"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('areaCode')"
-              aria-label="area-id"
-            >
-          </div>
+              {{ superior.regionName }}
+            </option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="postal-id">{{ $t('postalCode') }}</label>
+          <input
+            id="postal-id"
+            v-model.trim="formData.postalCode"
+            name="postal-id"
+            type="number"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('postalCode')"
+            aria-label="postal-id"
+          >
+        </div>
+        <div class="w-full">
+          <label for="area-id">{{ $t('areaCode') }}</label>
+          <input
+            id="area-id"
+            v-model.trim="formData.areaCode"
+            name="area-id"
+            type="number"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('areaCode')"
+            aria-label="area-id"
+          >
         </div>
       </template>
       <template #footer>
@@ -217,7 +217,7 @@
           }}
         </button>
       </template>
-    </Modal>
+    </Drawer>
   </div>
 </template>
 
@@ -228,7 +228,7 @@ import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
-import Modal from "~/components/Modal.vue";
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
 import type { Region } from "~/api/request.type";

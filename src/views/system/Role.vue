@@ -108,26 +108,24 @@
         </button>
       </template>
     </Confirm>
-    <Modal
+    <Drawer
       :visible="operation.modal"
+      :title="'编辑角色'"
+      @close-action="onClose"
     >
       <template #content>
-        <form @submit.prevent>
-          <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-12 md:col-span-6">
-              <label for="name">{{ $t('name') }}</label>
-              <input
-                id="name"
-                v-model.trim="formData.roleName"
-                name="name"
-                type="text"
-                aria-label="name"
-                class="mt-1 w-full block rounded-md border-gray-300"
-                :placeholder="$t('name')"
-              >
-            </div>
-          </div>
-        </form>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.roleName"
+            name="name"
+            type="text"
+            aria-label="name"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+          >
+        </div>
       </template>
       <template #footer>
         <button
@@ -151,7 +149,7 @@
           }}
         </button>
       </template>
-    </Modal>
+    </Drawer>
   </div>
 </template>
 
@@ -162,7 +160,7 @@ import Operation from "~/components/Operation.vue"
 import Action from "~/components/Action.vue"
 import Pagation from "~/components/Pagation.vue"
 import Confirm from "~/components/Confirm.vue"
-import Modal from "~/components/Modal.vue"
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api"
 import type { Role } from "~/api/request.type"
@@ -248,7 +246,7 @@ const showModal = (id: number) => {
  */
 const fetch = async (id: number) => {
   if (id && id != 0) {
-    await instance.get(SERVER_URL.role.concat(`/${id}`)).then(res => formData.value = res.data);
+    await instance.get(SERVER_URL.role.concat(`/${id}`)).then(res => formData.value = { ...res.data });
   }
 };
 const create = async () => {

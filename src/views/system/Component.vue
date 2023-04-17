@@ -154,6 +154,7 @@
 
     <Modal
       :visible="visible"
+      :show-close="true"
       @close-action="onClose"
     >
       <template #content>
@@ -180,12 +181,6 @@
                 class="px-4"
               >
                 {{ $t('userCount') }}
-              </th>
-              <th
-                scope="col"
-                class="px-4"
-              >
-                {{ $t('description') }}
               </th>
               <th
                 scope="col"

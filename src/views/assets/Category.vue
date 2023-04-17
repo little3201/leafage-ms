@@ -3,6 +3,7 @@
     <Operation
       :datas="datas"
       :file-name="'category'"
+      :items="items"
       @hand-reload="retrieve"
       @hand-add="showModal"
     />
@@ -122,58 +123,60 @@
         </button>
       </template>
     </Confirm>
-    <Modal :visible="operation.modal">
+    <Drawer
+      :visible="operation.modal"
+      :title="'编辑类目'"
+      @close-action="onClose"
+    >
       <template #content>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="formData.categoryName"
-              type="text"
-              name="name"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')"
-              required
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.categoryName"
+            type="text"
+            name="name"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+            required
               
-              aria-label="name"
-            >
-          </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="formData.description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('description')"
-            />
-          </div>
+            aria-label="name"
+          >
+        </div>
+        <div class="w-full">
+          <label for="description">{{ $t('description') }}</label>
+          <textarea
+            id="description"
+            v-model.trim="formData.description"
+            name="description"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('description')"
+          />
         </div>
       </template>
       <template #footer>
         <button
-          type="submit"
-          name="commit"
-          aria-label="commit"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="modelCommit(formData.id)"
-        >
-          {{ $t('commit') }}
-        </button>
-        <button
           type="button"
           name="cancle"
           aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
           @click="onClose"
         >
           {{
             $t('cancle')
           }}
         </button>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
       </template>
-    </Modal>
+    </Drawer>
   </div>
 </template>
 
@@ -184,10 +187,10 @@ import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
-import Modal from "~/components/Modal.vue";
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import type { Category } from "~/api/request.type";
+import type { Category, Item } from "~/api/request.type";
 
 // 模态框参数
 let operation = reactive({
@@ -214,6 +217,12 @@ const initData: Category = {
 let formData = ref<Category>(initData);
 
 let datas = ref<Array<Category>>([]);
+const items: Item[] = [
+  {
+    key: 'categoryName',
+    label: '名称'
+  }
+]
 
 onMounted(() => {
   retrieve();

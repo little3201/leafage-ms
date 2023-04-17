@@ -3,9 +3,56 @@
     v-if="user.username && user.username.length > 0"
     class="flex justify-between items-center"
   >
-    <h2 class="text-lg font-medium">
-      {{ $t($route && $route.name ? $route.name.toString().toLowerCase() : '') }}
-    </h2>
+    <form>
+      <div class="flex items-center relative">
+        <button
+          class="flex-shrink-0 inline-flex items-center py-2 px-3 text-sm text-center text-gray-900 border border-gray-300 rounded-l-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600"
+          type="button"
+          @click="onShow"
+        >
+          All categories 
+          <ChevronDownIcon
+            class="w-4 h-4 ml-2"
+            aria-hidden="true"
+          />
+        </button>
+        <ul
+          v-show="visible"
+          class="absolute top-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700 py-2 text-sm text-gray-700 dark:text-gray-200"
+        >
+          <li
+            v-for="(item, index) in items"
+            :key="index"
+          >
+            <button
+              type="button"
+              class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              {{ item.label }}
+            </button>
+          </li>
+        </ul>
+        <div class="relative w-full inline-flex items-center">
+          <input
+            id="search-dropdown"
+            type="search"
+            class="p-2 w-72 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border focus:ring-0 border-gray-300 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Search Mockups..."
+            required
+          >
+          <button
+            type="submit"
+            class="absolute top-px bottom-px right-0 p-2 my-auto text-white bg-blue-600 hover:bg-blue-700 rounded-r-lg focus:outline-none inline-flex items-center"
+          >
+            <MagnifyingGlassIcon
+              class="w-5 h-5"
+              aria-hidden="true"
+            />
+            <span class="sr-only">Search</span>
+          </button>
+        </div>
+      </div>
+    </form>
     <button
       type="button"
       name="reload"
@@ -67,12 +114,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, PropType } from "vue";
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
-import type { User } from "~/api/request.type";
+import type { User, Item } from "~/api/request.type";
 
-import { ArrowPathIcon, DocumentPlusIcon, DocumentTextIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
+import { ArrowPathIcon, ChevronDownIcon, DocumentPlusIcon, DocumentTextIcon, MagnifyingGlassIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   needAdd: {
@@ -88,10 +135,18 @@ const props = defineProps({
   fileName: {
     type: String,
     default: 'export_file'
+  },
+  items: {
+    type: Array as PropType<Item[]>,
+    default: () => {
+      return []
+    }
   }
 });
 
 const emit = defineEmits(["handReload", "handAdd"]);
+
+const visible = ref(false)
 
 const user = ref<User>({
   username: '',
@@ -121,6 +176,9 @@ const onReload = () => {
 const onAdd = () => {
   emit("handAdd");
 };
+const onShow = () => {
+  visible.value = !visible.value
+}
 /**
  * 数据写入excel并转换成二进制，下载文件
  */

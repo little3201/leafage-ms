@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 py-3 h-screen">
-    <Drawer
+    <Nav
       :datas="menus"
       class="md:hidden"
     />
@@ -22,7 +22,7 @@ import { ref, onMounted } from "vue";
 
 import type { NodeData } from "~/api/request.type";
 
-import Drawer from "~/layouts/Drawer.vue";
+import Nav from "~/layouts/Nav.vue";
 import Aside from "~/layouts/Aside.vue";
 import TopBar from "~/layouts/TopBar.vue";
 

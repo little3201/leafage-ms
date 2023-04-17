@@ -95,55 +95,55 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Modal :visible="visible">
+    <Drawer
+      :visible="visible"
+      :title="'编辑字典'"
+      @close-action="onClose"
+    >
       <template #content>
-        <form @submit.prevent>
-          <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-12 sm:col-span-6">
-              <label for="name">{{ $t('name') }}</label>
-              <input
-                id="name"
-                v-model.trim="formData.dictionaryName"
-                name="name"
-                type="text"
-                class="mt-1 w-full block rounded-md border-gray-300"
-                placeholder="Name"
-                required
-                aria-label="name"
-              >
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label for="superior">{{ $t('superior') }}</label>
-              <select
-                id="superior"
-                v-model="formData.superior"
-                name="superior"
-                class="mt-1 w-full block rounded-md border-gray-300"
-                aria-label="dictionary superior"
-              >
-                <option selected>
-                  ---{{ $t('select') }}---
-                </option>
-                <option
-                  v-for="superior in superiors"
-                  :key="superior.id"
-                  :value="superior.id"
-                >
-                  {{ superior.dictionaryName }}
-                </option>
-              </select>
-            </div>
-            <div class="col-span-12">
-              <label for="description">{{ $t('description') }}</label>
-              <textarea
-                id="description"
-                v-model.trim="formData.description"
-                name="description"
-                class="mt-1 w-full block rounded-md border-gray-300"
-              />
-            </div>
-          </div>
-        </form>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.dictionaryName"
+            name="name"
+            type="text"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            placeholder="Name"
+            required
+            aria-label="name"
+          >
+        </div>
+        <div class="w-full">
+          <label for="superior">{{ $t('superior') }}</label>
+          <select
+            id="superior"
+            v-model="formData.superior"
+            name="superior"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="dictionary superior"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="superior in superiors"
+              :key="superior.id"
+              :value="superior.id"
+            >
+              {{ superior.dictionaryName }}
+            </option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="description">{{ $t('description') }}</label>
+          <textarea
+            id="description"
+            v-model.trim="formData.description"
+            name="description"
+            class="mt-1 w-full block rounded-md border-gray-300"
+          />
+        </div>
       </template>
       <template #footer>
         <button
@@ -167,7 +167,7 @@
           }}
         </button>
       </template>
-    </Modal>
+    </Drawer>
   </div>
 </template>
 
@@ -177,7 +177,7 @@ import { onMounted, ref, reactive } from "vue";
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
-import Modal from "~/components/Modal.vue";
+import Drawer from "~/components/Drawer.vue";
 import Toogle from '~/components/Toogle.vue'
 
 import { instance, SERVER_URL } from "~/api";
@@ -238,7 +238,7 @@ const retrieveSuperior = async () => {
  */
 const fetch = async (id: number) => {
   if (id && id != 0) {
-    await instance.get(SERVER_URL.dictionary.concat(`/${id}`)).then(res => formData.value = res.data);
+    await instance.get(SERVER_URL.dictionary.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
 };
 /**

@@ -41,7 +41,7 @@
       v-show="isExpand"
       class="xl:ml-4 bg-blue-900 bg-opacity-30 rounded-md"
     >
-      <AsideCore
+      <MenuItem
         v-for="child in data.children"
         :key="child.id"
         :data="child"
@@ -50,49 +50,49 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { ref, PropType } from "vue";
-
-import type { NodeData } from '~/api/request.type'
-import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
-
-defineProps({
-  data: {
-    type: Object as PropType<NodeData>,
-    default: () => {
-      return []
+  
+  <script lang="ts" setup>
+  import { ref, PropType } from "vue";
+  
+  import type { NodeData } from '~/api/request.type'
+  import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+  
+  defineProps({
+    data: {
+      type: Object as PropType<NodeData>,
+      default: () => {
+        return []
+      },
     },
-  },
-  superior: {
-    type: String,
-    default: "",
-  },
-});
-
-const isExpand = ref(true);
-</script>
-
-<style scoped>
-.router-link-active {
-  @apply bg-blue-100 bg-opacity-10
-}
-
-.router-link-exact-active {
-  @apply bg-gray-100 text-black;
-}
-
-.router-link-exact-active:before {
-  content: "";
-  @apply absolute top-0 right-0 w-7 h-7 -mt-7 -mr-4 rotate-90;
-  background-size: 100%;
-  background-image: url("/svg/radius.svg");
-}
-
-.router-link-exact-active:after {
-  content: "";
-  @apply absolute top-0 right-0 w-7 h-7 mt-12 -mr-4;
-  background-size: 100%;
-  background-image: url("/svg/radius.svg");
-}
-</style>
+    superior: {
+      type: String,
+      default: "",
+    },
+  });
+  
+  const isExpand = ref(true);
+  </script>
+  
+  <style scoped>
+  .router-link-active {
+    @apply bg-blue-100 bg-opacity-10
+  }
+  
+  .router-link-exact-active {
+    @apply bg-gray-100 text-black;
+  }
+  
+  .router-link-exact-active:before {
+    content: "";
+    @apply absolute top-0 right-0 w-7 h-7 -mt-7 -mr-4 rotate-90;
+    background-size: 100%;
+    background-image: url("/svg/radius.svg");
+  }
+  
+  .router-link-exact-active:after {
+    content: "";
+    @apply absolute top-0 right-0 w-7 h-7 mt-12 -mr-4;
+    background-size: 100%;
+    background-image: url("/svg/radius.svg");
+  }
+  </style>

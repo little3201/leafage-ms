@@ -41,7 +41,7 @@
       v-show="isExpand"
       class="mx-4 bg-blue-900 bg-opacity-30 rounded-md"
     >
-      <DrawerCore
+      <NavItem
         v-for="child in data.children"
         :key="child.id"
         :data="child"

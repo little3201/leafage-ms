@@ -135,44 +135,44 @@
         </button>
       </template>
     </Confirm>
-    <Modal :visible="operation.modal">
+    <Drawer
+      :visible="operation.modal"
+      :title="'编辑分组'"
+      @close-action="onClose"
+    >
       <template #content>
-        <form @submit.prevent>
-          <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-12 sm:col-span-6">
-              <label for="name">{{ $t('name') }}</label>
-              <input
-                id="name"
-                v-model.trim="formData.groupName"
-                name="name"
-                type="text"
-                class="mt-1 w-full block rounded-md border-gray-300"
-                :placeholder="$t('name')"
-                aria-label="name"
-              >
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label for="principal">{{ $t('principal') }}</label>
-              <select
-                id="principal"
-                v-model.lazy="formData.principal"
-                name="principal"
-                class="mt-1 w-full block rounded-md border-gray-300"
-                aria-label="principal"
-              >
-                <option selected>
-                  ---{{ $t('select') }}---
-                </option>
-                <option
-                  v-for="(user, index) in members"
-                  :key="index"
-                  :value="user.username"
-                  v-text="user.nickname"
-                />
-              </select>
-            </div>
-          </div>
-        </form>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.groupName"
+            name="name"
+            type="text"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+            aria-label="name"
+          >
+        </div>
+        <div class="w-full">
+          <label for="principal">{{ $t('principal') }}</label>
+          <select
+            id="principal"
+            v-model.lazy="formData.principal"
+            name="principal"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="principal"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="(user, index) in members"
+              :key="index"
+              :value="user.username"
+              v-text="user.nickname"
+            />
+          </select>
+        </div>
       </template>
       <template #footer>
         <button
@@ -196,7 +196,7 @@
           }}
         </button>
       </template>
-    </Modal>
+    </Drawer>
     <Modal
       :visible="operation.members"
       :show-close="true"
@@ -317,6 +317,7 @@ import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
 import Modal from "~/components/Modal.vue";
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
 import { Group, User } from "~/api/request.type";
@@ -439,7 +440,7 @@ const showModal = (id: number) => {
  */
 const fetch = async (id: number) => {
   if (id && id != 0) {
-    await instance.get(SERVER_URL.group.concat(`/${id}`)).then(res => formData.value = res.data);
+    await instance.get(SERVER_URL.group.concat(`/${id}`)).then(res => formData.value = { ...res.data });
   }
 };
 /**

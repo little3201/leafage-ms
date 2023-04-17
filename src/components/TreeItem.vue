@@ -1,39 +1,66 @@
 <template>
-  <div class="text-base">
-    <TreeCore
-      :data="data"
-      :is-expand="isExpand"
-      @open-operate="openOperate"
-    >
-      <input
-        :id="data.name"
-        v-model="isChecked"
-        type="checkbox"
-        :indeterminate="isIndeterminate"
-        class="rounded cursor-pointer mr-4"
+  <div class="my-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
+    <div class="flex flex-1 items-center">
+      <button
+        v-if="data.children && data.children.length > 0"
+        type="button"
+        :name="data.name"
         :aria-label="data.name"
-        @change="onTicked(data.id, isChecked)"
+        :title="data.name"
+        class="flex flex-1 items-center focus:outline-none"
+        @click="openOperate"
       >
-    </TreeCore>
-    <div
-      v-show="isExpand"
-      class="ml-4"
-    >
-      <TreeItem
-        v-for="child in data.children"
-        :key="child.id"
-        v-model:ticked="innerTicked"
-        :data="child"
-      />
+        <component
+          :is="data.expand.icon"
+          v-if="data.expand && data.expand.icon"
+          class="w-4 h-4 mr-2"
+          aria-hidden="true"
+        />
+        <span class="py-1  mr-auto">{{ data.name }}</span>
+        <ChevronDownIcon
+          v-if="isExpand"
+          class="w-5 h-5 ml-4"
+          aria-hidden="true"
+        />
+        <ChevronRightIcon
+          v-else
+          class="w-5 h-5 ml-4"
+          aria-hidden="true"
+        />
+      </button>
+      <label
+        v-else
+        :for="data.name"
+        class="flex flex-1 items-center cursor-pointer"
+      >
+        <component
+          :is="data.expand.icon"
+          v-if="data.expand && data.expand.icon"
+          class="w-4 h-4 mr-2"
+          aria-hidden="true"
+        />
+        <span class="py-1 ">{{ data.name }}</span>
+      </label>
     </div>
+  </div>
+  <div
+    v-show="isExpand"
+    class="ml-4"
+  >
+    <TreeItem
+      v-for="child in data.children"
+      :key="child.id"
+      v-model:ticked="innerTicked"
+      :data="child"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch, PropType } from "vue";
 
+import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
 import type { NodeData } from "~/api/request.type"
-import TreeCore from "./TreeCore.vue";
 
 const props = defineProps({
   data: {
@@ -54,8 +81,6 @@ const emit = defineEmits(['update:ticked'])
 
 let innerTicked = ref<Array<number>>([]);
 
-let isChecked = ref(innerTicked.value.includes(props.data.id) || false)
-let isIndeterminate = ref(false)
 let isExpand = ref(false);
 
 watch(
@@ -87,7 +112,6 @@ const setTicked = (keys: Array<number>, state: boolean) => {
     emit('update:ticked', target)
   }
 }
-
 const openOperate = () => {
   isExpand.value = !isExpand.value
 }

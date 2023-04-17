@@ -152,7 +152,7 @@ export default [
         const path = url.substring(url.lastIndexOf('/') + 1)
         if (path === "components") {
           return datas.slice(0, 6)
-        } else if (path === "role") {
+        } else if (path === "roles") {
           return roles
         } else {
           const id = url.substring(url.lastIndexOf('/') + 1)

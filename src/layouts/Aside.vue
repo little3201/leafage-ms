@@ -10,7 +10,7 @@
     </RouterLink>
     <div class="my-4 h-px w-full bg-gray-200 bg-opacity-30" />
     <div class="sm:w-20 xl:w-52 my-8">
-      <AsideCore
+      <MenuItem
         v-for="data in datas"
         :key="data.id"
         :data="data"
@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 
-import AsideCore from "~/layouts/AsideCore.vue";
+import MenuItem from "~/components/MenuItem.vue";
 
 import type { NodeData } from '~/api/request.type'
 

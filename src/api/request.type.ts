@@ -5,6 +5,11 @@ export declare interface Pagation<T> {
   content: Array<T>
 }
 
+export declare interface Item {
+  key: string,
+  label: string
+}
+
 export declare interface User {
   username: string,
   nickname: string,

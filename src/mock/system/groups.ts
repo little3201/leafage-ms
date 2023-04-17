@@ -51,7 +51,7 @@ export default [
       const url = options.url
       if (url.split('?').length == 1) {
         const path = url.substring(url.lastIndexOf('/') + 1)
-        if (path === "user") {
+        if (path === "members") {
           return members
         } else if (path === 'group') {
           return datas.slice(0, 6)

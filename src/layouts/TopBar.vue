@@ -1,9 +1,7 @@
 <template>
   <div class="flex items-center py-2 border-b">
     <div class="hidden md:inline-flex md:flex-grow items-center">
-      <RouterLink
-        to="/"
-      >
+      <RouterLink to="/">
         {{ $t('application') }}
       </RouterLink>
       <span

@@ -34,7 +34,7 @@
           <div class="h-14 bg-transparent" />
           <div class="h-full flex flex-col pt-5 px-4 bg-blue-800 shadow-2xl overflow-y-scroll">
             <div>
-              <DrawerCore
+              <NavItem
                 v-for="data in datas"
                 :key="data.id"
                 :data="data"
@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { ref, PropType } from "vue";
 
-import DrawerCore from "~/layouts/DrawerCore.vue";
+import NavItem from "~/layouts/NavItem.vue";
 
 import type { NodeData } from '~/api/request.type'
 import { Bars3BottomRightIcon } from "@heroicons/vue/24/outline";

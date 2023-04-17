@@ -3,6 +3,7 @@
     <Operation
       :datas="datas"
       :file-name="'posts'"
+      :items="items"
       @hand-reload="retrieve"
       @hand-add="showModal"
     />
@@ -129,127 +130,117 @@
         </button>
       </template>
     </Confirm>
-    <Modal
+    <Drawer
       :visible="operation.modal"
+      :title="'编辑帖子'"
+      @close-action="onClose"
     >
       <template #content>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 md:col-span-8">
-            <label for="title">{{ $t('title') }}</label>
-            <input
-              id="title"
-              v-model.trim="formData.title"
-              type="text"
-              name="title"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('title')"
-              maxlength="50"
-              required
-              aria-label="title"
-            >
-          </div>
-          <div class="row-span-3 col-span-12 sm:col-span-4">
-            <label for="cover">{{ $t('cover') }}</label>
-            <figure
-              v-if="formData.cover"
-              class="w-full h-32 mt-1 rounded-md relative group"
-            >
-              <div
-                class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
-              >
-                <button
-                  type="button"
-                  name="remove-cover"
-                  aria-label="remove-cover"
-                  class="text-white focus:outline-none"
-                  @click="removeCover"
-                >
-                  <TrashIcon
-                    class="w-6 h-6"
-                    aria-hidden="true"
-                  />
-                </button>
-              </div>
-              <img
-                :src="formData.cover"
-                :alt="formData.title"
-                class="rounded-md w-full h-full"
-                width="198"
-                height="128"
-              >
-            </figure>
+        <div class="w-full">
+          <label for="title">{{ $t('title') }}</label>
+          <input
+            id="title"
+            v-model.trim="formData.title"
+            type="text"
+            name="title"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('title')"
+            maxlength="50"
+            required
+            aria-label="title"
+          >
+        </div>
+        <div class="w-full">
+          <label for="cover">{{ $t('cover') }}</label>
+          <figure
+            v-if="formData.cover"
+            class="w-full h-32 mt-1 rounded-md relative group"
+          >
             <div
-              v-else
-              class="h-32 mt-1 rounded-md border border-gray-300 flex items-center justify-center"
+              class="absolute w-full h-full rounded-md bg-black bg-opacity-50 hidden group-hover:flex items-center justify-center"
             >
-              <div class="text-gray-600 text-center">
-                <label
-                  for="file-upload"
-                  class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+              <button
+                type="button"
+                name="remove-cover"
+                aria-label="remove-cover"
+                class="text-white focus:outline-none"
+                @click="removeCover"
+              >
+                <TrashIcon
+                  class="w-6 h-6"
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+            <img
+              :src="formData.cover"
+              :alt="formData.title"
+              class="rounded-md w-full h-full"
+              width="198"
+              height="128"
+            >
+          </figure>
+          <div
+            v-else
+            class="h-32 mt-1 rounded-md border border-gray-300 flex items-center justify-center"
+          >
+            <div class="text-gray-600 text-center">
+              <label
+                for="file-upload"
+                class="cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+              >
+                <PhotoIcon
+                  class="w-8 h-8 mx-auto"
+                  aria-hidden="true"
+                />
+                <input
+                  id="cover-upload"
+                  name="cover-upload"
+                  type="file"
+                  class="sr-only"
+                  accept="image/png, image/jpeg, image/jpg"
+                  aria-label="cover-upload"
+                  @change="uploadImage($event)"
                 >
-                  <svg
-                    class="mx-auto h-8 w-8"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  <input
-                    id="cover-upload"
-                    name="cover-upload"
-                    type="file"
-                    class="sr-only"
-                    accept="image/png, image/jpeg, image/jpg"
-                    aria-label="cover-upload"
-                    @change="uploadImage($event)"
-                  >
-                  <p class="text-xs text-gray-500">png, jpeg, jpg</p>
-                  <p class="text-xs text-gray-500">up to 2MB</p>
-                </label>
-              </div>
+                <p class="text-xs text-gray-500">png, jpeg, jpg</p>
+                <p class="text-xs text-gray-500">up to 2MB</p>
+              </label>
             </div>
           </div>
-          <div class="col-span-12 md:col-span-4">
-            <label for="tags">{{ $t('tags') }}</label>
-            <input
-              id="tags"
-              v-model.trim="tag"
-              type="text"
-              name="tags"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="tag"
-              :placeholder="$t('tags')"
-              @keydown.enter="addTag(tag)"
-            >
-          </div>
-          <div class="col-span-12 md:col-span-4">
-            <label for="category">{{ $t('category') }}</label>
-            <select
-              id="category"
-              v-model.lazy="formData.category"
-              name="category"
-              required
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="posts category"
-            >
-              <option selected>
-                ---{{ $t('select') }}---
-              </option>
-              <option
-                v-for="category in categories"
-                :key="category.id"
-                :value="category.id"
-                v-text="category.categoryName"
-              />
-            </select>
-          </div>
+        </div>
+        <div class="w-full">
+          <label for="category">{{ $t('category') }}</label>
+          <select
+            id="category"
+            v-model.lazy="formData.category"
+            name="category"
+            required
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="posts category"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+              v-text="category.categoryName"
+            />
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="tags">{{ $t('tags') }}</label>
+          <input
+            id="tags"
+            v-model.trim="tag"
+            type="text"
+            name="tags"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="tag"
+            :placeholder="$t('tags')"
+            @keydown.enter="addTag(tag)"
+          >
         </div>
         <div class="overflow-auto text-sm md:-mt-2">
           <span
@@ -265,47 +256,46 @@
             />
           </span>
         </div>
-        <div class="grid grid-cols-12 mt-2">
-          <div class="col-span-12 relative">
+        
+        <div class="w-full relative">
+          <button
+            type="button"
+            name="preview"
+            aria-label="preview"
+            class="absolute top-2 right-1 focus:outline-none"
+            @click="previewHtml"
+          >
+            <EyeSlashIcon
+              v-if="operation.preview"
+              class="w-4 h-4 opacity-40"
+              aria-hidden="true"
+            />
+            <EyeIcon
+              v-else
+              class="w-4 h-4 opacity-40"
+              aria-hidden="true"
+            />
+          </button>
+          <div
+            class="w-full border-none mt-1 h-64"
+            :class="{ border: operation.preview }"
+          >
             <label for="context">{{ $t('context') }}</label>
-            <button
-              type="button"
-              name="preview"
-              aria-label="preview"
-              class="top-3 right-1 absolute focus:outline-none"
-              @click="previewHtml"
-            >
-              <EyeSlashIcon
-                v-if="operation.preview"
-                class="w-4 h-4 opacity-40"
-                aria-hidden="true"
-              />
-              <EyeIcon
-                v-else
-                class="w-4 h-4 opacity-40"
-                aria-hidden="true"
-              />
-            </button>
+            <textarea
+              v-if="!operation.preview"
+              id="context"
+              v-model.trim="formData.context"
+              name="context"
+              class="mt-1 w-full h-full rounded-md border-gray-300"
+              required
+              placeholder="markdown..."
+            />
             <div
-              class="grid grid-flow-row grid-rows-1 grid-cols-1 border-none mt-1 h-52 md:h-96"
-              :class="{ border: operation.preview }"
-            >
-              <textarea
-                v-if="!operation.preview"
-                id="context"
-                v-model.trim="formData.context"
-                name="context"
-                class="mt-1 w-full rounded-md border-gray-300"
-                required
-                placeholder="markdown..."
-              />
-              <div
-                v-else
-                ref="rendedHtmlRef"
-                class="mt-1 p-2 prose prose-base prose-blue max-w-none overflow-y-auto w-full border border-gray-300 rounded-md"
-                v-html="rendedHtml"
-              />
-            </div>
+              v-else
+              ref="rendedHtmlRef"
+              class="mt-1 p-2 prose prose-base prose-blue overflow-y-auto w-full h-full border border-gray-300 rounded-md"
+              v-html="rendedHtml"
+            />
           </div>
         </div>
       </template>
@@ -331,20 +321,7 @@
           }}
         </button>
       </template>
-    </Modal>
-    <Modal
-      :visible="view.isShow"
-      :is-show-close="true"
-      @close-action="previewOperation"
-    >
-      <img
-        :src="view.url"
-        alt="preview"
-        class="rounded-md w-full h-full"
-        width="640"
-        height="427"
-      >
-    </Modal>
+    </Drawer>
   </div>
 </template>
 
@@ -356,13 +333,13 @@ import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
-import Modal from "~/components/Modal.vue";
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import type { Post, Category } from "~/api/request.type";
+import type { Post, Category, Item } from "~/api/request.type";
 import markdownToHtml from '~/composables/markdownToHtml'
 import { uploadFile } from "~/composables/upload";
-import { EyeSlashIcon, EyeIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { EyeSlashIcon, EyeIcon, TrashIcon, XMarkIcon, PhotoIcon } from "@heroicons/vue/24/outline";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()
@@ -397,13 +374,18 @@ const initData: Post = {
 // 数据
 let formData = ref<Post>(initData);
 
+const items: Item[] = [
+  {
+    key: 'title',
+    label: '标题'
+  },
+  {
+    key: 'categoryId',
+    label: '分类'
+  }
+]
 let datas = ref<Array<Post>>([]);
 let categories = ref<Array<Category>>([]);
-
-let view = reactive({
-  isShow: false,
-  url: ''
-})
 
 onMounted(() => {
   retrieve();
@@ -446,11 +428,9 @@ const retrieveCategory = async () => {
 /**
  * 查询信息
  */
-const fetch = async () => {
-  if (formData && formData.value.id && formData.value.id != 0) {
-    await instance.get(SERVER_URL.posts.concat(`/${formData.value.id}`)).then(res => {
-      formData.value = res.data;
-    });
+const fetch = async (id: number) => {
+  if (id && id != 0) {
+    await instance.get(SERVER_URL.posts.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
 };
 /**
@@ -492,7 +472,7 @@ const addTag = (tag: string) => {
  * @param tag tag名称
  */
 const removeTag = (tag: string) => {
-  formData.value.tags.filter(item => item !== tag)
+  formData.value.tags = formData.value.tags.filter(item => item !== tag)
 };
 /**
  * confirm 操作
@@ -523,13 +503,11 @@ const onClose = () => {
  */
 const showModal = (id: number) => {
   if (id && id != 0) {
-    Promise.all([
-      retrieveCategory(),
-      fetch(),
-    ]);
+    fetch(id)
   } else {
     formData.value = initData
   }
+  retrieveCategory()
   operation.modal = true;
 };
 /**
@@ -565,42 +543,9 @@ const uploadImage = (event: Event) => {
  */
 const previewHtml = async () => {
   operation.preview = !operation.preview
-  addImgClickEvent()
   if (formData.value.context) {
     rendedHtml.value = await markdownToHtml(formData.value.context)
   }
-}
-
-/**
- * 给img添加双击事件
- */
-const addImgClickEvent = () => {
-  if (rendedHtmlRef.value) {
-    let imgs = rendedHtmlRef.value.querySelectorAll('img')
-    if (imgs.length > 0) {
-      setTimeout(() => {
-        for (let i = 0, len = imgs.length; i < len; i++) {
-          imgs[i].onclick = () => {
-            const src = imgs[i].getAttribute('src');
-            if (src) {
-              previewOperation(true, src);
-            }
-          };
-        }
-      }, 600)
-    }
-  }
-}
-/**
- * img预览
- * @param show 是否展示
- * @param id 主键
- */
-const previewOperation = (show: boolean, url: string) => {
-  if (show) {
-    view.url = url
-  }
-  view.isShow = show
 }
 </script>
 

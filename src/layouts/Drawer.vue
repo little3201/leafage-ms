@@ -43,19 +43,10 @@
         aria-label="open"
         @click="isShow = !isShow"
       >
-        <svg
-          width="30"
-          height="30"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="text-white transform -rotate-90"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'bar-chart-2'" />
-        </svg>
+        <Bars3BottomRightIcon
+          class="w-7 h-7 text-white"
+          aria-hidden="true"
+        />
       </button>
     </div>
     <div class="mt-2 mb-4 h-px bg-gray-200 bg-opacity-30" />
@@ -91,6 +82,7 @@ import { ref, PropType } from "vue";
 import DrawerCore from "~/layouts/DrawerCore.vue";
 
 import type { NodeData } from '~/api/request.type'
+import { Bars3BottomRightIcon } from "@heroicons/vue/24/outline";
 
 defineProps({
   datas: {

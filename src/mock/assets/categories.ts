@@ -13,7 +13,7 @@ const datas: Array<Category> = [];
 
 for (let i = 0; i < 12; i++) {
   datas.push({
-    id: Random.integer(),
+    id: Random.increment(),
     categoryName: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(5),

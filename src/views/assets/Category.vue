@@ -1,28 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('categories') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <ArrowPathIcon
-          class="w-5 h-5 mr-2"
-          aria-hidden="true"
-        />
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'category'"
-        @modal-operate="modalOperate"
-      />
-    </div>
+    <Operation
+      :datas="datas"
+      :file-name="'category'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -83,8 +66,8 @@
                 href="https://www.leafage.top/posts"
                 target="_blank"
                 class="font-medium hover:underline"
-              >{{ data.categoryName }}
-              </a>
+                v-text="data.categoryName"
+              />
             </td>
             <td
               class="px-4"
@@ -100,9 +83,8 @@
             />
             <td>
               <Action
-                @click.capture="formData = data"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
+                @edit-action="showModal(data.id)"
               />
             </td>
           </tr>
@@ -116,17 +98,32 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm
-      :is-show="model.isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="model.isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
-    >
-      <form @submit.prevent>
+    <Confirm :visible="operation.confirm">
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Modal :visible="operation.modal">
+      <template #content>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
             <label for="name">{{ $t('name') }}</label>
@@ -138,7 +135,7 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('name')"
               required
-              autofocus
+              
               aria-label="name"
             >
           </div>
@@ -153,7 +150,29 @@
             />
           </div>
         </div>
-      </form>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
@@ -163,35 +182,36 @@ import { ref, reactive, onMounted } from "vue";
 
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
-import Pagation from "~/components/Pagation.vue.js";
+import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
 import Modal from "~/components/Modal.vue";
 
 import { instance, SERVER_URL } from "~/api";
 import type { Category } from "~/api/request.type";
-import { ArrowPathIcon } from '@heroicons/vue/24/outline'
 
 // 模态框参数
-let model = reactive({
-  isEdit: false,
-  isDel: false
+let operation = reactive({
+  modal: false,
+  confirm: false
 })
 
 // 分页参数
 let pagation = reactive({
   page: 0,
-  size: 0,
+  size: 10,
   total: 0
 })
 
-// form 数据
-let formData: Category = reactive({
+// 初始化
+const initData: Category = {
   id: 0,
   categoryName: '',
   count: 0,
   description: '',
   modifyTime: ''
-});
+}
+// form 数据
+let formData = ref<Category>(initData);
 
 let datas = ref<Array<Category>>([]);
 
@@ -200,17 +220,17 @@ onMounted(() => {
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  pagation.page = p;
-  pagation.size = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
+const retrieve = async () => {
   await instance.get(SERVER_URL.category, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
@@ -218,72 +238,87 @@ const retrieve = async (): Promise<void> => {
     })
 };
 /**
- * confirm 操作
- * @param operate 是否打开
+ * 查询
+ * @param id 主键
  */
-const confirmOperate = (operate: boolean): void => {
-  model.isDel = operate;
+const fetch = async (id: number) => {
+  await instance.get(SERVER_URL.category.concat(`/${id}`))
+    .then(res => formData.value = { ...res.data });
+}
+/**
+ * 添加
+ */
+const create = async () => {
+  await instance.post(SERVER_URL.category, formData.value).then(res => {
+    if (datas.value.length >= pagation.size) {
+      // 删除第一个
+      datas.value.shift();
+    }
+    // 将结果添加到第一个
+    datas.value.unshift(res.data);
+  });
+}
+/**
+ * 编辑
+ * @param id 主键
+ */
+const modify = async (id: number) => {
+  await instance
+    .put(SERVER_URL.category.concat(`/${id}`), formData.value)
+    .then(res => {
+      // 将datas中修改项的历史数据删除
+      datas.value = datas.value.filter(
+        (item: Category) => item.id != formData.value.id
+      );
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+}
+/**
+ * confirm 操作
+ */
+const confirmOperate = () => {
+  operation.confirm = true;
 };
 /**
  * confirm 提交
  */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.category.concat(`/${formData.id}`)).then(() => {
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.category.concat(`/${id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Category) => item.id != formData.id
+      (item: Category) => item.id != id
     );
-    model.isDel = false;
+    operation.confirm = false;
   });
 };
+
+const onClose = () => {
+  operation.modal = false
+}
+
 /**
  * 新增/编辑：打开
- * @param operate 是否打开
+ * @param id 主键
  */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    if (formData && formData.id && formData.id != 0) {
-      await instance.get(SERVER_URL.category.concat(`/${formData.id}`))
-        .then(res => formData = res.data);
-    } else {
-      formData = {
-        id: 0,
-        categoryName: '',
-        count: 0,
-        description: '',
-        modifyTime: ''
-      }
-    }
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    fetch(id);
+  } else {
+    formData.value = initData
   }
-  model.isEdit = operate;
+  operation.modal = true;
 };
 /**
  * 新增/编辑：提交
  */
-const modelCommit = async (): Promise<void> => {
-  if (formData && formData.id && formData.id != 0) {
-    await instance
-      .put(SERVER_URL.category.concat(`/${formData.id}`))
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Category) => item.id != formData.id
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        model.isEdit = false;
-      });
+const modelCommit = (id: number) => {
+  if (id && id != 0) {
+    modify(id)
   } else {
-    await instance.post(SERVER_URL.category, formData).then(res => {
-      if (datas.value.length >= pagation.size) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-      model.isEdit = false;
-    });
+    create()
   }
+  onClose();
 };
 
 </script>

@@ -14,7 +14,7 @@
           class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Email"
           required
-          autofocus
+          
           autocomplete="off"
           aria-label="email"
         >
@@ -90,7 +90,7 @@ let formData = ref({
 const confirmPassword = ref("");
 const agree = ref(false)
 
-const onSubmit = async (): Promise<void> => {
+const onSubmit = async () => {
   await instance.get("/check").then(() => {
     instance
       .post("/register", new URLSearchParams(formData.value))

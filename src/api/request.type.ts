@@ -102,7 +102,6 @@ export declare interface Region extends Abstract {
 export declare interface Dictionary extends Abstract {
   dictionaryName: string,
   superior: string,
-  alias: string,
   enabled: boolean,
   description: string
 }

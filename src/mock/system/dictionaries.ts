@@ -13,10 +13,9 @@ const datas: Array<Dictionary> = [];
 
 for (let i = 0; i < 30090; i++) {
   datas.push({
-    id: Random.integer(),
+    id: Random.increment(),
     dictionaryName: Random.cword(),
     superior: Random.word(), // 华南、华北
-    alias: Random.word(),
     enabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()

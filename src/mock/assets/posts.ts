@@ -13,7 +13,7 @@ const datas: Array<Post> = [];
 
 for (let i = 0; i < 79; i++) {
   datas.push({
-    id: Random.integer(),
+    id: Random.increment(),
     title: Random.ctitle(),
     cover: Random.image('198x128'),
     category: Random.word(),

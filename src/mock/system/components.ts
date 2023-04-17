@@ -9,6 +9,7 @@ const pagation: Pagation<Component> = {
   totalElements: 0,
   content: []
 }
+
 const datas: Array<Component> = [
   {
     id: 1,
@@ -126,7 +127,7 @@ const roles: Array<Role> = [];
 
 for (let i = 0; i < 9; i++) {
   roles.push({
-    id: Random.integer(),
+    id: Random.increment(),
     roleName: Random.word(),
     count: Random.integer(1, 99),
     modifyTime: Random.date(),

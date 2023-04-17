@@ -1,28 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('regions') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <ArrowPathIcon
-          class="w-5 h-5 mr-2"
-          aria-hidden="true"
-        />
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'region'"
-        @modal-operate="modalOperate"
-      />
-    </div>
+    <Operation
+      :datas="datas"
+      :file-name="'region'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -105,9 +88,8 @@
             />
             <td>
               <Action
-                @click.capture="formData = data"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
+                @edit-action="showModal(formData.id)"
               />
             </td>
           </tr>
@@ -122,16 +104,35 @@
       @set-page="setPage"
     />
     <Confirm
-      :is-show="model.isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="model.isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
+      :visible="operation.confirm"
     >
-      <form @submit.prevent>
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Modal
+      :visible="operation.modal"
+    >
+      <template #content>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 sm:col-span-6">
             <label for="name">{{ $t('name') }}</label>
@@ -143,7 +144,7 @@
               class="mt-1 w-full block rounded-md border-gray-300"
               :placeholder="$t('name')"
               required
-              autofocus
+                
               aria-label="name"
             >
           </div>
@@ -193,7 +194,29 @@
             >
           </div>
         </div>
-      </form>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
@@ -203,41 +226,41 @@ import { onMounted, ref, reactive, watch } from "vue";
 
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
-import Pagation from "~/components/Pagation.vue.js";
+import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
 import Modal from "~/components/Modal.vue";
 
 import { instance, SERVER_URL } from "~/api";
 import type { Region } from "~/api/request.type";
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
-let model = reactive({
-  isEdit: false,
-  isDel: false
+let operation = reactive({
+  modal: false,
+  confirm: false
 })
 
 // 分页参数
 let pagation = reactive({
   page: 0,
-  size: 0,
+  size: 10,
   total: 0
 })
 
-// form 数据
-let formData: Region = reactive({
+const initData: Region = {
   id: 0,
   regionName: '',
   superior: '',
   postalCode: 0,
   areaCode: 0,
   modifyTime: ''
-});
+}
+// form 数据
+let formData = ref<Region>(initData);
 
 let datas = ref<Array<Region>>([]);
 let superiors = ref<Array<Region>>([]);
 
-watch(() => formData.id, (newValue: number, oldValue: number) => {
+watch(() => formData.value.id, (newValue: number, oldValue: number) => {
   if (newValue != oldValue) {
     setTimeout(() => retrieveSuperior(newValue), 300)
   }
@@ -248,17 +271,17 @@ onMounted(() => {
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  pagation.page = p;
-  pagation.size = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
+const retrieve = async () => {
   await instance.get(SERVER_URL.region, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
@@ -266,54 +289,10 @@ const retrieve = async (): Promise<void> => {
     })
 };
 /**
- * confirm 操作
- * @param operate 是否打开
- */
-const confirmOperate = (operate: boolean): void => {
-  model.isDel = operate;
-};
-/**
- * confirm 提交
- */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.region.concat(`/${formData.id}`)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Region) => item.id != formData.id
-    );
-    model.isDel = false;
-  });
-};
-/**
- * 新增/编辑：打开
- * @param operate 是否打开
- */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    if (formData && formData.id && formData.id != 0) {
-      await Promise.all([
-        fetch(),
-        retrieveSuperior(formData.id)
-      ])
-    } else {
-      formData = {
-        id: 0,
-        regionName: '',
-        superior: '',
-        postalCode: 0,
-        areaCode: 0,
-        modifyTime: ''
-      };
-    }
-
-  }
-  model.isEdit = operate;
-};
-/**
  * 查询上级信息
  * @param id 主键
  */
-const retrieveSuperior = async (id: number) => {
+ const retrieveSuperior = async (id: number) => {
   let superior = 0
   if (id > 1000) {
     superior = Math.floor(id / 100)
@@ -325,28 +304,18 @@ const retrieveSuperior = async (id: number) => {
 }
 /**
  * 获取信息
+ * @param id 主键
  */
-const fetch = async () => {
-  if (formData.id) {
-    await instance.get(SERVER_URL.region.concat(`/${formData.id}`)).then(res => formData = res.data);
+const fetch = async (id: number) => {
+  if (formData.value.id) {
+    await instance.get(SERVER_URL.region.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
 }
 /**
- * 新增/编辑：提交
+ * 添加
  */
-const modelCommit = async (): Promise<void> => {
-  if (formData.id && formData.id != 0) {
-    await instance.put(SERVER_URL.region.concat(`/${formData.id}`), formData)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Region) => item.id != formData.id
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-      });
-  } else {
-    await instance.post(SERVER_URL.region, formData).then(res => {
+const create = async () => {
+  await instance.post(SERVER_URL.region, formData.value).then(res => {
       if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.shift();
@@ -354,8 +323,69 @@ const modelCommit = async (): Promise<void> => {
       // 将结果添加到第一个
       datas.value.unshift(res.data);
     });
+}
+/**
+ * 编辑
+ * @param id 主键
+ */
+const modify = async (id: number) => {
+  await instance.put(SERVER_URL.region.concat(`/${id}`), formData.value)
+      .then(res => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: Region) => item.id != id
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+}
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
+const confirmOperate = (operate: boolean) => {
+  operation.confirm = operate;
+};
+/**
+ * confirm 提交
+ */
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.region.concat(`/${id}`)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: Region) => item.id != id
+    );
+    operation.confirm = false;
+  });
+};
+const onClose = () => {
+  operation.modal = false
+}
+/**
+ * 新增/编辑：打开
+ * @param id 主键
+ */
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    Promise.all([
+      fetch(id),
+      retrieveSuperior(id)
+    ])
+  } else {
+    formData.value = initData;
   }
-  model.isEdit = false
+  operation.modal = true;
+};
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (id: number) => {
+  if (id && id != 0) {
+    modify(id)
+  } else {
+    create()
+  }
+  operation.modal = false
 };
 
 </script>

@@ -13,7 +13,7 @@ const datas: Array<AccessLog> = [];
 
 for (let i = 0; i < 36; i++) {
     datas.push({
-        id: Random.integer(),
+        id: Random.increment(),
         ip: Random.ip(),
         location: Random.county(true),
         context: Random.csentence(),

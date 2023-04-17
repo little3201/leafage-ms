@@ -13,7 +13,7 @@ const datas: Array<Message> = [];
 
 for (let i = 0; i < 36; i++) {
     datas.push({
-        id: Random.integer(),
+        id: Random.increment(),
         title: Random.ctitle(),
         context: Random.cparagraph(),
         receiver: Random.cname(),

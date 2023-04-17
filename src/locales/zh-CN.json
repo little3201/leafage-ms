@@ -53,6 +53,7 @@
     "cover": "封面",
     "tags": "标签",
     "context": "内容",
+    "category": "分类",
     "viewed": "浏览量",
     "likes": "点赞数",
     "comments": "评论数",

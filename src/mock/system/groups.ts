@@ -13,7 +13,7 @@ const datas: Array<Group> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    id: Random.integer(),
+    id: Random.increment(),
     groupName: Random.word(),
     principal: Random.cname(),
     count: Random.integer(0, 99),

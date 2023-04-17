@@ -1,30 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('dictionary') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <ArrowPathIcon
-          class="w-5 h-5 mr-2"
-          aria-hidden="true"
-        />
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'dictionary'"
-        @click.capture="dataCode = ''"
-        @modal-operate="modalOperate"
-      />
-    </div>
-
+    <Operation
+      :datas="datas"
+      :file-name="'dictionary'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -43,18 +24,6 @@
               class="px-4"
             >
               {{ $t('name') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('alias') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('id') }}
             </th>
             <th
               scope="col"
@@ -93,25 +62,16 @@
             </td>
             <td
               class="px-4"
-              v-text="data.name"
-            />
-            <td
-              class="px-4"
-              v-text="data.alias"
-            />
-            <td
-              class="px-4"
-              v-text="data.id"
+              v-text="data.dictionaryName"
             />
             <td
               class="px-4"
               v-text="data.description"
             />
-            <td
-              class="px-4"
-            >
+            <td class="px-4">
               <Toogle
                 :checked="data.enabled"
+                @click="enable"
               />
             </td>
             <td
@@ -121,8 +81,7 @@
             <td>
               <Action
                 :need-del="false"
-                @click.capture="dataCode = data.id"
-                @edit-action="modalOperate"
+                @edit-action="showModal(data.id)"
               />
             </td>
           </tr>
@@ -130,204 +89,223 @@
       </table>
     </div>
     <Pagation
-      :total="total"
-      :page="page"
-      :size="size"
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Modal
-      :is-show="isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
-    >
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 sm:col-span-6">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="dictData.name"
-              name="name"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Name"
-              required
-              autofocus
-              aria-label="name"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="alias">{{ $t('alias') }}</label>
-            <input
-              id="alias"
-              v-model.trim="dictData.alias"
-              name="alias"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              placeholder="Alias"
-              aria-label="alias"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="superior">{{ $t('superior') }}</label>
-            <select
-              id="superior"
-              v-model="dictData.superior"
-              name="superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="dictionary superior"
-            >
-              <option selected>
-                ---{{ $t('select') }}---
-              </option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.id"
-                :value="superior.alias"
+    <Modal :visible="visible">
+      <template #content>
+        <form @submit.prevent>
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 sm:col-span-6">
+              <label for="name">{{ $t('name') }}</label>
+              <input
+                id="name"
+                v-model.trim="formData.dictionaryName"
+                name="name"
+                type="text"
+                class="mt-1 w-full block rounded-md border-gray-300"
+                placeholder="Name"
+                required
+                aria-label="name"
               >
-                {{ superior.name }}
-              </option>
-            </select>
+            </div>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="superior">{{ $t('superior') }}</label>
+              <select
+                id="superior"
+                v-model="formData.superior"
+                name="superior"
+                class="mt-1 w-full block rounded-md border-gray-300"
+                aria-label="dictionary superior"
+              >
+                <option selected>
+                  ---{{ $t('select') }}---
+                </option>
+                <option
+                  v-for="superior in superiors"
+                  :key="superior.id"
+                  :value="superior.id"
+                >
+                  {{ superior.dictionaryName }}
+                </option>
+              </select>
+            </div>
+            <div class="col-span-12">
+              <label for="description">{{ $t('description') }}</label>
+              <textarea
+                id="description"
+                v-model.trim="formData.description"
+                name="description"
+                class="mt-1 w-full block rounded-md border-gray-300"
+              />
+            </div>
           </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="dictData.description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
     </Modal>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
-import Pagation from "~/components/Pagation.vue.js";
+import Pagation from "~/components/Pagation.vue";
 import Modal from "~/components/Modal.vue";
 import Toogle from '~/components/Toogle.vue'
 
 import { instance, SERVER_URL } from "~/api";
 import type { Dictionary } from "~/api/request.type";
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
-let isEdit = ref(false);
-// 数据
-let dictData = ref<Dictionary>({
+let visible = ref(false);
+const initData: Dictionary = {
   id: 0,
-  name: '',
+  dictionaryName: '',
   superior: '',
-  alias: '',
   enabled: true,
   description: '',
   modifyTime: ''
-})
-let dataCode = ref("")
+}
+// 数据
+let formData = ref<Dictionary>(initData)
 let datas = ref<Array<Dictionary>>([])
 let superiors = ref<Array<Dictionary>>([])
 // 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
+let pagation = reactive({
+  page: 0,
+  size: 10,
+  total: 0
+})
 
 onMounted(() => {
   retrieve();
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.dictionary, { params: { page: page.value, size: size.value } })
+const retrieve = async () => {
+  await instance.get(SERVER_URL.dictionary, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 }
 /**
  * 查询列表
  */
-const retrieveSuperior = async (): Promise<void> => {
+const retrieveSuperior = async () => {
   await instance.get(SERVER_URL.dictionary.concat('/superior')).then(res => superiors.value = res.data)
 };
+
+/**
+ * 查询详情
+ */
+const fetch = async (id: number) => {
+  if (id && id != 0) {
+    await instance.get(SERVER_URL.dictionary.concat(`/${id}`)).then(res => formData.value = res.data);
+  }
+};
+/**
+ * 添加
+ */
+const create = async () => {
+  await instance.post(SERVER_URL.dictionary, formData.value).then(res => {
+    if (datas.value.length >= pagation.size) {
+      // 删除第一个
+      datas.value.shift();
+    }
+    // 将结果添加到第一个
+    datas.value.unshift(res.data);
+  });
+}
+/**
+ * 编辑
+ * 
+ * @param id 主键
+ */
+const modify = async (id: number) => {
+  await instance.put(SERVER_URL.dictionary.concat(`/${id}`), formData.value)
+    .then(res => {
+      // 将datas中修改项的历史数据删除
+      datas.value = datas.value.filter(
+        (item: Dictionary) => item.id != id
+      );
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+}
 /**
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    dictData.value = {
-      id: 0,
-      name: '',
-      superior: '',
-      alias: '',
-      enabled: true,
-      description: '',
-      modifyTime: ''
-    };
-    await Promise.all([
-      fetch(),
-      retrieveSuperior()
-    ]);
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    fetch(id)
+  } else {
+    formData.value = initData;
   }
-  isEdit.value = operate;
-};
-/**
- * 查询详情
- */
-const fetch = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.dictionary.concat("/", dataCode.value)).then(res => dictData.value = res.data);
-  }
+  retrieveSuperior()
+  visible.value = true;
 };
 /**
  * 新增/编辑：提交
  */
-const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.dictionary.concat("/", dataCode.value), dictData.value)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Dictionary) => item.id != dataCode.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
+const modelCommit = (id: number) => {
+  if (id && id != 0) {
+    modify(id)
   } else {
-    await instance.post(SERVER_URL.dictionary, dictData.value).then(res => {
-      if (datas.value.length >= size.value) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-      isEdit.value = false;
-    });
+    create()
   }
+  visible.value = false;
 };
+const onClose = () => {
+  visible.value = false
+}
 /**
  * 启用/禁用
  * @param id 主键
  */
-const power = (id: string) => {
-  alert("enable: " + id + " develogping...")
+const enable = (id: number) => {
+  datas.value.forEach(item => {
+    if(id == item.id){
+      item.enabled = true
+    }
+  })
 }
 </script>

@@ -53,6 +53,7 @@
     "context": "Context",
     "cover": "Cover",
     "tags": "Tags",
+    "category": "Category",
     "viewed": "Viewed",
     "likes": "Likes",
     "comments": "Comments",

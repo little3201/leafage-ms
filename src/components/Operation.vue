@@ -1,60 +1,78 @@
 <template>
   <div
     v-if="user.username && user.username.length > 0"
-    class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
+    class="flex justify-between items-center"
   >
+    <h2 class="text-lg font-medium">
+      {{ $t($route && $route.name ? $route.name.toString().toLowerCase() : '') }}
+    </h2>
     <button
-      title="import"
-      name="import"
-      aria-label="import"
       type="button"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+      name="reload"
+      aria-label="reload"
+      class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+      @click="onReload"
     >
-      <DocumentPlusIcon
+      <ArrowPathIcon
         class="w-5 h-5 mr-2"
         aria-hidden="true"
       />
-      {{ $t('import') }}
+      {{ $t('reload') }}
     </button>
-    <button
-      title="export"
-      name="export"
-      aria-label="export"
-      type="button"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
-      @click="exportFile"
+    <div
+      class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
     >
-      <DocumentTextIcon
-        class="w-5 h-5 mr-2"
-        aria-hidden="true"
-      />
-      {{ $t('export') }}
-    </button>
-    <button
-      v-if="needAdd"
-      name="add"
-      aria-label="add"
-      class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
-      @click="operate"
-    >
-      <PlusCircleIcon
-        class="w-5 h-5 mr-2"
-        aria-hidden="true"
-      />
-      {{ $t('add') }}
-    </button>
+      <button
+        title="import"
+        name="import"
+        aria-label="import"
+        type="button"
+        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+      >
+        <DocumentPlusIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('import') }}
+      </button>
+      <button
+        title="export"
+        name="export"
+        aria-label="export"
+        type="button"
+        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+        @click="onExport"
+      >
+        <DocumentTextIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('export') }}
+      </button>
+      <button
+        v-if="needAdd"
+        name="add"
+        aria-label="add"
+        class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
+        @click="onAdd"
+      >
+        <PlusCircleIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('add') }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
 import type { User } from "~/api/request.type";
 
-import { DocumentPlusIcon, DocumentTextIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
-
+import { ArrowPathIcon, DocumentPlusIcon, DocumentTextIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   needAdd: {
@@ -73,12 +91,16 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(["modalOperate"]);
+const emit = defineEmits(["handReload", "handAdd"]);
 
 const user = ref<User>({
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 })
 
 onMounted(() => {
@@ -90,13 +112,19 @@ onMounted(() => {
 /**
  * add 操作
  */
-const operate = () => {
-  emit("modalOperate", true);
+const onReload = () => {
+  emit("handReload");
+};
+/**
+ * add 操作
+ */
+const onAdd = () => {
+  emit("handAdd");
 };
 /**
  * 数据写入excel并转换成二进制，下载文件
  */
-const exportFile = () => {
+const onExport = () => {
   const sheet: WorkSheet = utils.json_to_sheet(props.datas, { cellDates: true })
   const wb: WorkBook = utils.book_new()
   // 把sheet添加到workbook中

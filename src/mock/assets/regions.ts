@@ -14,7 +14,7 @@ const datas: Array<Region> = [];
 for (let i = 0; i < 309; i++) {
   if (i < 34) {
     datas.push({
-      id: Random.integer(10, 99),
+      id: Random.increment(),
       regionName: Random.province(),
       superior: Random.region(),
       postalCode: parseInt(Random.zip()),

@@ -13,7 +13,7 @@ const datas: Array<Role> = [];
 
 for (let i = 0; i < 39; i++) {
   datas.push({
-    id: Random.integer(),
+    id: Random.increment(),
     roleName: Random.word(),
     count: Random.integer(0, 99),
     modifyTime: Random.date(),

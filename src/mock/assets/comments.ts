@@ -13,7 +13,7 @@ const datas: Array<Comment> = [];
 
 for (let i = 0; i < 19; i++) {
     datas.push({
-        id: Random.integer(),
+        id: Random.increment(),
         postId: Random.integer(),
         context: Random.cparagraph(2),
         country: "china",

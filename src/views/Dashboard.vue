@@ -289,7 +289,7 @@ onMounted(() => {
 /**
  * 初始化请求数据
  */
-const initData = async (): Promise<void> => {
+const initData = async () => {
   await Promise.all([
     retrieveCategories(),
     retreiveStatistics(),

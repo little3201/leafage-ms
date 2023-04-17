@@ -77,7 +77,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import Pagation from "~/components/Pagation.vue.js"
+import Pagation from "~/components/Pagation.vue"
 
 import { instance, SERVER_URL } from "~/api";
 import type { AccessLog } from "~/api/request.type";
@@ -97,7 +97,7 @@ onMounted(() => {
  * @param p 页码
  * @param s 大小
  */
-const setPage = (p: number, s: number): void => {
+const setPage = (p: number, s: number) => {
     page.value = p;
     size.value = s;
 }

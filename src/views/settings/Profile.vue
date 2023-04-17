@@ -57,18 +57,10 @@
                   class="text-white focus:outline-none"
                   @click="removeAvatar"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
-                  </svg>
+                  <TrashIcon
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
               <img
@@ -124,6 +116,7 @@
 </template>
 
 <script lang="ts" setup>
+import { TrashIcon } from "@heroicons/vue/24/outline";
 import { ref, reactive, onMounted } from "vue";
 
 import { instance, SERVER_URL } from "~/api";
@@ -146,7 +139,7 @@ onMounted(() => {
 /**
  * 查询
  */
-const fetch = async (): Promise<void> => {
+const fetch = async () => {
   if (user.username && user.username.length > 0) {
     await instance.get(SERVER_URL.user.concat("/", user.username)).then(res => user = res.data)
   }
@@ -173,7 +166,7 @@ const removeAvatar = () => {
  * 上传文件
  * @param event Event
  */
-const uploadImage = (event: Event): void => {
+const uploadImage = (event: Event) => {
   if (event && event.target) {
     let files = (event.target as HTMLInputElement).files
     if (files && files[0]) {

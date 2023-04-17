@@ -14,20 +14,20 @@ const menus = [
   { "id": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": HomeIcon }, "children": [] },
   {
     "id": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": Square3Stack3DIcon }, "children": [
-      { "id": "21224UJ5C", "name": "Group", "superior": "21224DRMU", "expand": { "path": "/groups", "icon": UsersIcon }, "children": [] },
+      { "id": "21224UJ5C", "name": "Groups", "superior": "21224DRMU", "expand": { "path": "/groups", "icon": UsersIcon }, "children": [] },
       {
-        "id": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/roles", "icon": LinkIcon }, "children": []
+        "id": "21224PV6C", "name": "Roles", "superior": "21224DRMU", "expand": { "path": "/roles", "icon": LinkIcon }, "children": []
       },
-      { "id": "212240439", "name": "Component", "superior": "21224DRMU", "expand": { "path": "/component", "icon": ShieldCheckIcon }, "children": [] },
+      { "id": "212240439", "name": "Components", "superior": "21224DRMU", "expand": { "path": "/components", "icon": ShieldCheckIcon }, "children": [] },
       {
-        "id": "203315P3Q", "name": "User", "superior": "21224DRMU", "expand": { "path": "/users", "icon": UsersIcon }, "children": []
+        "id": "203315P3Q", "name": "Users", "superior": "21224DRMU", "expand": { "path": "/users", "icon": UsersIcon }, "children": []
       },
-      { "id": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionaries", "icon": BookOpenIcon }, "children": [] }
+      { "id": "21224PV1C", "name": "Dictionaries", "superior": "21224DRMU", "expand": { "path": "/dictionaries", "icon": BookOpenIcon }, "children": [] }
     ]
   },
   { "id": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": ClipboardIcon }, "children": [] },
-  { "id": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/categories", "icon": TagIcon }, "children": [] },
-  { "id": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/regions", "icon": MapPinIcon }, "children": [] }
+  { "id": "21224HMLG", "name": "Categories", "superior": "", "expand": { "path": "/categories", "icon": TagIcon }, "children": [] },
+  { "id": "21229HMLG", "name": "Regions", "superior": "", "expand": { "path": "/regions", "icon": MapPinIcon }, "children": [] }
 ]
 
 import signMock from './sign'

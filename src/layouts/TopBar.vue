@@ -64,7 +64,7 @@
             {{ $t('unreadTotal') }}</span></span>
           <div class="divide-y">
             <div
-              v-for="(messages, index) in messages"
+              v-for="(message, index) in messages"
               :key="index"
               class="overflow-hidden"
             >
@@ -75,14 +75,14 @@
                 >
                   <p
                     class="text-sm truncate"
-                    v-text="messages.title"
+                    v-text="message.title"
                   />
                   <p
                     class="text-xs text-gray-500 my-1 whitespace-no-wrap"
-                    v-text="new Date(messages.modifyTime).toLocaleString()"
+                    v-text="new Date(message.modifyTime).toLocaleString()"
                   />
                   <div class="w-full text-xs truncate text-gray-600">
-                    {{ messages.content }}
+                    {{ message.context }}
                   </div>
                 </RouterLink>
               </div>
@@ -291,7 +291,6 @@ onMounted(() => {
   if (data && data !== "undefined") {
     user.value = JSON.parse(data)
     retrieve();
-    socket();
   }
 });
 
@@ -347,22 +346,4 @@ const switchLanguage = (language: string) => {
   locale.value = language
   isLanguage.value = false
 }
-/**
- * 请求链接webSocket
- */
-const socket = () => {
-  var ws = new WebSocket("wss://console.leafage.top/api/socket");
-  ws.onopen = (event) => {
-    console.log("Connection open ...", event);
-  };
-
-  ws.onmessage = (msg) => {
-    ws.send(msg.data);
-  };
-
-  ws.onclose = (event) => {
-    console.log("Connect closed.", event);
-  };
-}
-
 </script>

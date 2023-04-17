@@ -4,7 +4,7 @@
       :datas="menus"
       class="md:hidden"
     />
-    <div class="flex flex-row sm-g-h md:h-full overflow-auto">
+    <div class="flex flex-row sm-g-h md:h-full">
       <Aside
         :datas="menus"
         class="hidden md:block"
@@ -32,11 +32,7 @@ onMounted(() => {
   if (sessionStorage.getItem("menus") != null) {
     menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
   } else {
-    menus.value = [{ "id": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
-    { "id": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
-    { "id": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "book" }, "children": [] },
-    { "id": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/categories", "icon": "tag" }, "children": [] }
-    ]
+    menus.value = []
   }
 
 });

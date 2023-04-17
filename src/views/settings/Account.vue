@@ -36,19 +36,11 @@
           </button>
         </div>
         <span class="text-xs mt-1 text-gray-400 inline-flex items-center max-w-none">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-1"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
-          </svg> Looking to manage user security settings? You can find them in the
+          <QuestionMarkCircleIcon
+            class="w-4 h-4 ml-1"
+            aria-hidden="true"
+          />
+          Looking to manage user security settings? You can find them in the
           <RouterLink
             to="/settings/security"
             class="text-blue-600 mx-1 hover:underline"
@@ -202,6 +194,7 @@
 </template>
 
 <script lang="ts" setup>
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
 import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
@@ -236,7 +229,7 @@ onMounted(() => {
 /**
  * 查询
  */
-const fetch = async (): Promise<void> => {
+const fetch = async () => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => user.value = res.data)
   }
@@ -244,7 +237,7 @@ const fetch = async (): Promise<void> => {
 /**
  * 提交
  */
-const onSubmit = async (): Promise<void> => {
+const onSubmit = async () => {
   if (username.value && username.value.length > 0) {
     confirmOperate(true)
   }
@@ -253,13 +246,13 @@ const onSubmit = async (): Promise<void> => {
  * confirm 操作
  * @param operate 是否打开
  */
-const confirmOperate = (operate: boolean): void => {
+const confirmOperate = (operate: boolean) => {
   isShow.value = operate;
 };
 /**
  * confirm 提交
  */
-const confirmCommit = async (): Promise<void> => {
+const confirmCommit = async () => {
   await instance.delete(SERVER_URL.user.concat("/", username.value)).then(() => {
     sessionStorage.clear()
     router.replace({ path: "/signin" });

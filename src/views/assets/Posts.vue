@@ -1,28 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('posts') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <ArrowPathIcon
-          class="w-5 h-5 mr-2"
-          aria-hidden="true"
-        />
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'posts'"
-        @modal-operate="modalOperate"
-      />
-    </div>
+    <Operation
+      :datas="datas"
+      :file-name="'posts'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -47,6 +30,12 @@
               class="px-4"
             >
               {{ $t('category') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
+              {{ $t('tags') }}
             </th>
             <th
               scope="col"
@@ -84,15 +73,23 @@
               class="px-4"
               v-text="data.category"
             />
+            <td class="px-4">
+              <span
+                v-for="(t, idx) in data.tags"
+                :key="idx"
+                class="mr-1 text-sm border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+              >
+                {{ t }}
+              </span>
+            </td>
             <td
               class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
               <Action
-                @click.capture="formData = data"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
+                @edit-action="showModal(data.id)"
               />
             </td>
           </tr>
@@ -107,16 +104,35 @@
       @set-page="setPage"
     />
     <Confirm
-      :is-show="model.isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="model.isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
+      :visible="operation.confirm"
     >
-      <form @submit.prevent>
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Modal
+      :visible="operation.modal"
+    >
+      <template #content>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12 md:col-span-8">
             <label for="title">{{ $t('title') }}</label>
@@ -129,7 +145,6 @@
               :placeholder="$t('title')"
               maxlength="50"
               required
-              autofocus
               aria-label="title"
             >
           </div>
@@ -149,18 +164,10 @@
                   class="text-white focus:outline-none"
                   @click="removeCover"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
-                  </svg>
+                  <TrashIcon
+                    class="w-6 h-6"
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
               <img
@@ -209,7 +216,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-span-12 md:col-span-4">
             <label for="tags">{{ $t('tags') }}</label>
             <input
@@ -245,7 +251,6 @@
             </select>
           </div>
         </div>
-
         <div class="overflow-auto text-sm md:-mt-2">
           <span
             v-for="(t, index) in formData.tags"
@@ -253,25 +258,16 @@
             class="mr-1 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
           >
             {{ t }}
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="ml-1 cursor-pointer opacity-30"
+            <XMarkIcon
+              class="w-4 h-4 ml-1 cursor-pointer opacity-30"
+              aria-hidden="true"
               @click="removeTag(t)"
-            >
-              <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
-            </svg>
+            />
           </span>
         </div>
         <div class="grid grid-cols-12 mt-2">
           <div class="col-span-12 relative">
-            <label for="content">{{ $t('content') }}</label>
+            <label for="context">{{ $t('context') }}</label>
             <button
               type="button"
               name="preview"
@@ -280,7 +276,7 @@
               @click="previewHtml"
             >
               <EyeSlashIcon
-                v-if="model.preview"
+                v-if="operation.preview"
                 class="w-4 h-4 opacity-40"
                 aria-hidden="true"
               />
@@ -292,13 +288,13 @@
             </button>
             <div
               class="grid grid-flow-row grid-rows-1 grid-cols-1 border-none mt-1 h-52 md:h-96"
-              :class="{ border: model.preview }"
+              :class="{ border: operation.preview }"
             >
               <textarea
-                v-if="!model.preview"
-                id="content"
+                v-if="!operation.preview"
+                id="context"
                 v-model.trim="formData.context"
-                name="content"
+                name="context"
                 class="mt-1 w-full rounded-md border-gray-300"
                 required
                 placeholder="markdown..."
@@ -312,11 +308,33 @@
             </div>
           </div>
         </div>
-      </form>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
     </Modal>
     <Modal
-      :is-show="view.isShow"
-      :need-footer="false"
+      :visible="view.isShow"
+      :is-show-close="true"
       @close-action="previewOperation"
     >
       <img
@@ -336,7 +354,7 @@ import { ref, reactive, onMounted } from "vue";
 
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
-import Pagation from "~/components/Pagation.vue.js";
+import Pagation from "~/components/Pagation.vue";
 import Confirm from "~/components/Confirm.vue";
 import Modal from "~/components/Modal.vue";
 
@@ -344,31 +362,30 @@ import { instance, SERVER_URL } from "~/api";
 import type { Post, Category } from "~/api/request.type";
 import markdownToHtml from '~/composables/markdownToHtml'
 import { uploadFile } from "~/composables/upload";
-import { ArrowPathIcon, EyeSlashIcon, EyeIcon } from "@heroicons/vue/24/outline";
+import { EyeSlashIcon, EyeIcon, TrashIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 // 模板引用
 let rendedHtmlRef = ref<HTMLElement>()
 const rendedHtml = ref("")
 
 // 模态框参数
-let model = reactive({
-  isEdit: false,
-  isDel: false,
+let operation = reactive({
+  modal: false,
+  confirm: false,
   preview: false
 })
 
 // 分页参数
 let pagation = reactive({
   page: 0,
-  size: 0,
+  size: 10,
   total: 0
 })
 
 // 标签参数
 let tag = ref("");
 
-// 数据
-let formData: Post = reactive({
+const initData: Post = {
   id: 0,
   title: '',
   cover: '',
@@ -376,7 +393,9 @@ let formData: Post = reactive({
   tags: [],
   context: '',
   modifyTime: ''
-});
+}
+// 数据
+let formData = ref<Post>(initData);
 
 let datas = ref<Array<Post>>([]);
 let categories = ref<Array<Category>>([]);
@@ -391,151 +410,164 @@ onMounted(() => {
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  pagation.page = p;
-  pagation.size = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 删除封面图
  */
-const removeCover = (): void => {
-  formData.cover = '';
+const removeCover = () => {
+  formData.value.cover = '';
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
+const retrieve = async () => {
   await instance.get(SERVER_URL.posts, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
       pagation.total = res.data.totalElements
     })
 };
+
 /**
- * 添加tag
+ * 查询分类
  */
-const addTag = (tag: string): void => {
-  formData.tags.push(tag)
-};
-/**
- * 删除tag
- * @param tag tag名称
- */
-const removeTag = (tag: string): void => {
-  formData.tags.filter(item => item !== tag)
-};
-/**
- * confirm 操作
- * @param operate 是否打开
- */
-const confirmOperate = (operate: boolean): void => {
-  model.isDel = operate;
-};
-/**
- * confirm 提交
- */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.posts.concat(`/${formData.id}`)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Post) => item.id != formData.id
-    );
-    model.isDel = false;
-  });
-};
-/**
- * 新增/编辑：打开
- * @param operate 是否打开
- */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    if (formData && formData.id && formData.id != 0) {
-      await Promise.all([
-        await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
-          categories.value = res.data.content;
-        }),
-        fetch(),
-      ]);
-    } else {
-      formData = {
-        id: 0,
-        title: '',
-        cover: '',
-        category: '',
-        tags: [],
-        context: '',
-        modifyTime: ''
-      }
-    }
-  }
-  model.isEdit = operate;
-};
+const retrieveCategory = async () => {
+  await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
+    categories.value = res.data.content;
+  })
+}
+
 /**
  * 查询信息
  */
-const fetch = async (): Promise<void> => {
-  if (formData && formData.id && formData.id != 0) {
-    await instance.get(SERVER_URL.posts.concat(`/${formData.id}`)).then(res => {
-      formData = res.data;
+const fetch = async () => {
+  if (formData && formData.value.id && formData.value.id != 0) {
+    await instance.get(SERVER_URL.posts.concat(`/${formData.value.id}`)).then(res => {
+      formData.value = res.data;
     });
   }
 };
 /**
- * 新增/编辑：提交
+ * 添加
  */
-const modelCommit = async (): Promise<void> => {
-  if (formData && formData.id && formData.id != 0) {
-    await instance.put(SERVER_URL.posts.concat(`/${formData.id}`), formData)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Post) => item.id != formData.id
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-      });
-  } else {
-    await instance.post(SERVER_URL.posts, formData).then(res => {
+const create = async () => {
+  await instance.post(SERVER_URL.posts, formData).then(res => {
       if (datas.value.length >= pagation.size) {
-        // 删除第一个
+        // 删除最后一个
         datas.value.pop();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
     });
-    model.isEdit = false;
+}
+/**
+ * 编辑
+ * @param id 主键
+ */
+ const modify = async (id: number) => {
+  await instance.put(SERVER_URL.posts.concat(`/${id}`), formData.value)
+      .then(res => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: Post) => item.id != formData.value.id
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+}
+/**
+ * 添加tag
+ */
+const addTag = (tag: string) => {
+  formData.value.tags.push(tag)
+};
+/**
+ * 删除tag
+ * @param tag tag名称
+ */
+const removeTag = (tag: string) => {
+  formData.value.tags.filter(item => item !== tag)
+};
+/**
+ * confirm 操作
+ */
+const confirmOperate = () => {
+  operation.confirm = true;
+};
+/**
+ * confirm 提交
+ */
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.posts.concat(`/${id}`)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: Post) => item.id != formData.value.id
+    );
+    operation.confirm = false;
+  });
+};
+
+const onClose = () => {
+  operation.modal = false
+}
+
+/**
+ * 新增/编辑：打开
+ * @param id 主键
+ */
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    Promise.all([
+      retrieveCategory(),
+      fetch(),
+    ]);
+  } else {
+    formData.value = initData
   }
+  operation.modal = true;
+};
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (id: number) => {
+  if (id && id != 0) {
+    modify(id)
+  } else {
+    create()
+  }
+  operation.modal = false
 };
 /**
  * 上传文件
  * @param files 文件
  */
-const uploadImage = (event: Event): void => {
+const uploadImage = (event: Event) => {
   if (event && event.target) {
     let files = (event.target as HTMLInputElement).files
     if (files && files[0]) {
       uploadFile(files[0]).subscribe({
         complete: (e: any) => {
-            formData.cover = "https://cdn.leafage.top/" + e.key
+          formData.value.cover = "https://cdn.leafage.top/" + e.key
         }
       });
     }
   }
 
 };
-
-
 /**
  * 转换md为html
  */
 const previewHtml = async () => {
-  model.preview = !model.preview
+  operation.preview = !operation.preview
   addImgClickEvent()
-  if (formData.context) {
-    rendedHtml.value = await markdownToHtml(formData.context)
+  if (formData.value.context) {
+    rendedHtml.value = await markdownToHtml(formData.value.context)
   }
 }
 

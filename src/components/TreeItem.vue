@@ -6,12 +6,12 @@
       @open-operate="openOperate"
     >
       <input
-        :id="data.id"
+        :id="data.name"
         v-model="isChecked"
         type="checkbox"
         :indeterminate="isIndeterminate"
         class="rounded cursor-pointer mr-4"
-        :aria-label="data.id"
+        :aria-label="data.name"
         @change="onTicked(data.id, isChecked)"
       >
     </TreeCore>
@@ -43,7 +43,7 @@ const props = defineProps({
     }
   },
   ticked: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<number[]>,
     default: () => {
       return []
     }
@@ -52,7 +52,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:ticked'])
 
-let innerTicked = ref<Array<string>>([]);
+let innerTicked = ref<Array<number>>([]);
 
 let isChecked = ref(innerTicked.value.includes(props.data.id) || false)
 let isIndeterminate = ref(false)
@@ -65,11 +65,11 @@ watch(
   }
 )
 
-const onTicked = (id: string, state: boolean) => {
+const onTicked = (id: number, state: boolean) => {
   setTicked([id], state)
 }
 
-const setTicked = (keys: Array<string>, state: boolean) => {
+const setTicked = (keys: Array<number>, state: boolean) => {
   let target = innerTicked.value
   const shouldEmit = props.ticked !== void 0
 

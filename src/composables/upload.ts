@@ -1,4 +1,4 @@
-import {region, upload} from 'qiniu-js';
+import { region, upload } from 'qiniu-js';
 import CryptoJS from 'crypto-js'
 
 // 请求接口上传图片
@@ -17,7 +17,7 @@ export const uploadFile = (file: File) => {
     return upload(file, key, uptoken, putExtra, config);
 }
 
-const getToken = (access_key: string, secret_key: string, bucketname: string):string => {
+const getToken = (access_key: string, secret_key: string, bucketname: string): string => {
     // 构造策略
     const putPolicy = {
         "scope": bucketname,
@@ -30,7 +30,7 @@ const getToken = (access_key: string, secret_key: string, bucketname: string):st
     return access_key + ':' + encodedSign + ':' + encoded;
 }
 
-const utf16to8 = (str: string):string => {
+const utf16to8 = (str: string): string => {
     let out = "", i: number, c: number
     const len: number = str.length;
     for (i = 0; i < len; i++) {

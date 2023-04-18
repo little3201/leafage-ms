@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center mt-1 overflow-auto">
     <p class="hidden md:block">
-      {{ $t('Page', { page: page * size + 1, size: (page + 1) * size, total: total }) }}
+      {{ $t('pagation', { page: page * size + 1, size: (page + 1) * size, total: total }) }}
     </p>
     <div class="flex flex-1 justify-end space-x-2">
       <button
@@ -13,19 +13,10 @@
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
         @click="(page = 0), give(page)"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mx-auto"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-left'" />
-        </svg>
+        <ChevronDoubleLeftIcon
+          class="w-5 h-5 mx-auto"
+          aria-hidden="true"
+        />
       </button>
       <button
         type="button"
@@ -36,19 +27,10 @@
         :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
         @click="decrease"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mx-auto"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
-        </svg>
+        <ChevronLeftIcon
+          class="w-5 h-5 mx-auto"
+          aria-hidden="true"
+        />
       </button>
       <span
         v-if="pages > 5 && page > 2"
@@ -79,19 +61,10 @@
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
         @click="increment"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mx-auto"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-right'" />
-        </svg>
+        <ChevronRightIcon
+          class="w-5 h-5 mx-auto"
+          aria-hidden="true"
+        />
       </button>
       <button
         type="button"
@@ -102,19 +75,10 @@
         :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
         @click="(page = pages - 1), give(page)"
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mx-auto"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevrons-right'" />
-        </svg>
+        <ChevronDoubleRightIcon
+          class="w-5 h-5 mx-auto"
+          aria-hidden="true"
+        />
       </button>
       <select
         v-model.number="size"
@@ -134,6 +98,8 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
+
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   total: {

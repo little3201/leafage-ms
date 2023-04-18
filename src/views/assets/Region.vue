@@ -1,38 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('region') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'region'"
-        @click.capture="dataCode = ''"
-        @modal-operate="modalOperate"
-      />
-    </div>
+    <Operation
+      :datas="datas"
+      :file-name="'region'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -56,18 +29,6 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('alias') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('code') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('areaCode') }}
             </th>
             <th
@@ -81,12 +42,6 @@
               class="px-4"
             >
               {{ $t('superior') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('description') }}
             </th>
             <th
               scope="col"
@@ -113,15 +68,7 @@
             </td>
             <td
               class="px-4"
-              v-text="data.name"
-            />
-            <td
-              class="px-4"
-              v-text="data.alias"
-            />
-            <td
-              class="px-4"
-              v-text="data.code"
+              v-text="data.regionName"
             />
             <td
               class="px-4"
@@ -137,176 +84,183 @@
             />
             <td
               class="px-4"
-              v-text="data.description"
-            />
-            <td
-              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
+                @edit-action="showModal(formData.id)"
               />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
-      :size="size"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
     <Confirm
-      :is-show="isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
+      :visible="operation.confirm"
     >
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 sm:col-span-6">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="regionData.name"
-              name="name"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')"
-              required
-              autofocus
-              aria-label="name"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="alias">{{ $t('alias') }}</label>
-            <input
-              id="alias"
-              v-model.trim="regionData.alias"
-              name="alias"
-              type="text"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('alias')"
-              aria-label="alias"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="code">{{ $t('code') }}</label>
-            <input
-              id="code"
-              v-model.trim="regionData.code"
-              name="code"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('code')"
-              aria-label="code"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="superior">{{ $t('superior') }}</label>
-            <select
-              id="superior"
-              v-model="regionData.superior"
-              name="superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="region superior"
-            >
-              <option selected>
-                ---{{ $t('select') }}---
-              </option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-              >
-                {{ superior.name }}
-              </option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="postal-code">{{ $t('postalCode') }}</label>
-            <input
-              id="postal-code"
-              v-model.trim="regionData.postalCode"
-              name="postal-code"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('postalCode')"
-              aria-label="postal-code"
-            >
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="area-code">{{ $t('areaCode') }}</label>
-            <input
-              id="area-code"
-              v-model.trim="regionData.areaCode"
-              name="area-code"
-              type="number"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('areaCode')"
-              aria-label="area-code"
-            >
-          </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="regionData.description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('description')"
-            />
-          </div>
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Drawer
+      :visible="operation.modal"
+      :title="'编辑行政区划'"
+      @close-action="onClose"
+    >
+      <template #content>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.regionName"
+            name="name"
+            type="text"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+            required
+                
+            aria-label="name"
+          >
         </div>
-      </form>
-    </Modal>
+        <div class="w-full">
+          <label for="superior">{{ $t('superior') }}</label>
+          <select
+            id="superior"
+            v-model="formData.superior"
+            name="superior"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="region superior"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="superior in superiors"
+              :key="superior.id"
+              :value="superior.id"
+            >
+              {{ superior.regionName }}
+            </option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="postal-id">{{ $t('postalCode') }}</label>
+          <input
+            id="postal-id"
+            v-model.trim="formData.postalCode"
+            name="postal-id"
+            type="number"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('postalCode')"
+            aria-label="postal-id"
+          >
+        </div>
+        <div class="w-full">
+          <label for="area-id">{{ $t('areaCode') }}</label>
+          <input
+            id="area-id"
+            v-model.trim="formData.areaCode"
+            name="area-id"
+            type="number"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('areaCode')"
+            aria-label="area-id"
+          >
+        </div>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Drawer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, reactive, watch } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue";
+import Confirm from "~/components/Confirm.vue";
+import Drawer from "~/components/Drawer.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Region } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Region } from "~/api/request.type";
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
-// 数据
-let regionData = ref<Region>({
-  code: 0,
-  name: '',
+let operation = reactive({
+  modal: false,
+  confirm: false
+})
+
+// 分页参数
+let pagation = reactive({
+  page: 0,
+  size: 10,
+  total: 0
+})
+
+const initData: Region = {
+  id: 0,
+  regionName: '',
   superior: '',
-  alias: '',
   postalCode: 0,
   areaCode: 0,
-  description: '',
   modifyTime: ''
-});
-let dataCode = ref();
+}
+// form 数据
+let formData = ref<Region>(initData);
+
 let datas = ref<Array<Region>>([]);
 let superiors = ref<Array<Region>>([]);
-// 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
 
-watch(() => regionData.value.code, (newValue: number, oldValue: number) => {
+watch(() => formData.value.id, (newValue: number, oldValue: number) => {
   if (newValue != oldValue) {
     setTimeout(() => retrieveSuperior(newValue), 300)
   }
@@ -317,114 +271,121 @@ onMounted(() => {
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.region, { params: { page: page.value, size: size.value } })
+const retrieve = async () => {
+  await instance.get(SERVER_URL.region, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 };
 /**
- * confirm 操作
- * @param operate 是否打开
- */
-const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
-};
-/**
- * confirm 提交
- */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.region.concat("/", dataCode.value)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Region) => item.code != dataCode.value
-    );
-    isDel.value = false;
-  });
-};
-/**
- * 新增/编辑：打开
- * @param operate 是否打开
- */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    regionData.value = {
-      code: 0,
-      name: '',
-      superior: '',
-      alias: '',
-      postalCode: 0,
-      areaCode: 0,
-      description: '',
-      modifyTime: ''
-    };
-    superiors.value = []
-    await Promise.all([
-      fetch(),
-      retrieveSuperior(dataCode.value)
-    ])
-  }
-  isEdit.value = operate;
-};
-/**
  * 查询上级信息
- * @param code 代码
+ * @param id 主键
  */
-const retrieveSuperior = async (code: number) => {
+ const retrieveSuperior = async (id: number) => {
   let superior = 0
-  if (code > 1000) {
-    superior = Math.floor(code / 100)
-    if (code > 110000000) {
-      superior = Math.floor(code / 1000)
+  if (id > 1000) {
+    superior = Math.floor(id / 100)
+    if (id > 110000000) {
+      superior = Math.floor(id / 1000)
     }
     await instance.get(SERVER_URL.region.concat("/", superior + "/lower")).then(res => superiors.value = res.data)
   }
 }
 /**
  * 获取信息
+ * @param id 主键
  */
-const fetch = async () => {
-  if (dataCode.value) {
-    await instance.get(SERVER_URL.region.concat("/", dataCode.value)).then(res => regionData.value = res.data);
+const fetch = async (id: number) => {
+  if (formData.value.id) {
+    await instance.get(SERVER_URL.region.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
 }
 /**
- * 新增/编辑：提交
+ * 添加
  */
-const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.region.concat("/", dataCode.value), regionData.value)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Region) => item.code != dataCode.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
-  } else {
-    await instance.post(SERVER_URL.region, regionData.value).then(res => {
-      if (datas.value.length >= size.value) {
+const create = async () => {
+  await instance.post(SERVER_URL.region, formData.value).then(res => {
+      if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.shift();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
-      isEdit.value = false;
     });
+}
+/**
+ * 编辑
+ * @param id 主键
+ */
+const modify = async (id: number) => {
+  await instance.put(SERVER_URL.region.concat(`/${id}`), formData.value)
+      .then(res => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: Region) => item.id != id
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+}
+/**
+ * confirm 操作
+ * @param operate 是否打开
+ */
+const confirmOperate = (operate: boolean) => {
+  operation.confirm = operate;
+};
+/**
+ * confirm 提交
+ */
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.region.concat(`/${id}`)).then(() => {
+    // 将datas中修改项的历史数据删除
+    datas.value = datas.value.filter(
+      (item: Region) => item.id != id
+    );
+    operation.confirm = false;
+  });
+};
+const onClose = () => {
+  operation.modal = false
+}
+/**
+ * 新增/编辑：打开
+ * @param id 主键
+ */
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    Promise.all([
+      fetch(id),
+      retrieveSuperior(id)
+    ])
+  } else {
+    formData.value = initData;
   }
+  operation.modal = true;
+};
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (id: number) => {
+  if (id && id != 0) {
+    modify(id)
+  } else {
+    create()
+  }
+  operation.modal = false
 };
 
 </script>

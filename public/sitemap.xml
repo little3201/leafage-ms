@@ -6,7 +6,7 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/category</loc>
+        <loc>https://console.leafage.top/categories</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
@@ -18,37 +18,37 @@
         <priority>1.0</priority>
     </url>
      <url>
-        <loc>https://console.leafage.top/region</loc>
+        <loc>https://console.leafage.top/regions</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/group</loc>
+        <loc>https://console.leafage.top/system/groups</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/role</loc>
+        <loc>https://console.leafage.top/system/roles</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/authority</loc>
+        <loc>https://console.leafage.top/system/component</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/account</loc>
+        <loc>https://console.leafage.top/system/users</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://console.leafage.top/system/dictionary</loc>
+        <loc>https://console.leafage.top/system/dictionaries</loc>
         <lastmod>2021-05-26T01:26:14.500Z</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>

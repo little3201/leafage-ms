@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="account.username && account.username.length > 0"
+    v-if="user.username && user.username.length > 0"
     class="flex justify-center items-center text-sm"
   >
     <slot />
@@ -12,19 +12,10 @@
       class="flex items-center mr-3 focus:outline-none"
       @click="$emit('editAction', true)"
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-1"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'edit-3'" />
-      </svg>
+      <PencilSquareIcon
+        class="w-4 h-4 mr-1"
+        aria-hidden="true"
+      />
       {{ $t('edit') }}
     </button>
     <button
@@ -35,19 +26,10 @@
       class="flex items-center text-red-600 focus:outline-none"
       @click="$emit('delAction', true)"
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-1"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'trash-2'" />
-      </svg>
+      <TrashIcon
+        class="w-4 h-4 mr-1"
+        aria-hidden="true"
+      />
       {{ $t('delete') }}
     </button>
   </div>
@@ -56,7 +38,8 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 
-import type { Account } from '@/api/request.type';
+import type { User } from '~/api/request.type';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
   needEdit: {
@@ -71,16 +54,20 @@ defineProps({
 
 defineEmits(['editAction', 'delAction']);
 
-const account = ref<Account>({
+const user = ref<User>({
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 });
 
 onMounted(() => {
-  let data = sessionStorage.getItem('account');
+  let data = sessionStorage.getItem('user');
   if (data && data !== 'undefined') {
-    account.value = JSON.parse(data);
+    user.value = JSON.parse(data);
   }
 });
 </script>

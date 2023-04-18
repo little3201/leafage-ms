@@ -1,39 +1,11 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('role') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'role'"
-        @click.capture="dataCode = ''"
-        @modal-operate="modalOperate"
-      />
-    </div>
-
+    <Operation
+      :datas="datas"
+      :file-name="'role'"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -57,25 +29,7 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('code') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('superior') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('userCount') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('description') }}
             </th>
             <th
               scope="col"
@@ -102,15 +56,7 @@
             </td>
             <td
               class="px-4"
-              v-text="data.name"
-            />
-            <td
-              class="px-4"
-              v-text="data.code"
-            />
-            <td
-              class="px-4"
-              v-text="data.superior"
+              v-text="data.roleName"
             />
             <td
               class="px-4"
@@ -118,292 +64,225 @@
             />
             <td
               class="px-4"
-              v-text="data.description"
-            />
-            <td
-              class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
-              >
-                <button
-                  type="button"
-                  name="grant"
-                  aria-label="grant"
-                  class="flex items-center mr-3 text-sky-600 focus:outline-none"
-                  @click.prevent="treeOperate(true)"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-power mr-1"
-                  >
-                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-                    <line
-                      x1="12"
-                      y1="2"
-                      x2="12"
-                      y2="12"
-                    />
-                  </svg>
-                  {{ $t('grant') }}
-                </button>
-              </Action>
+                @edit-action="showModal(data.id)"
+              />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
       @retrieve="retrieve"
       @set-page="setPage"
     />
     <Confirm
-      :is-show="isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
+      :visible="operation.confirm"
     >
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12 md:col-span-6">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="roleData.name"
-              name="name"
-              type="text"
-              aria-label="name"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')"
-              autofocus
-            >
-          </div>
-          <div class="col-span-12 md:col-span-6">
-            <label for="superior">{{ $t('superior') }}</label>
-            <select
-              id="superior"
-              v-model="roleData.superior"
-              name="superior"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              aria-label="role superior"
-            >
-              <option selected>
-                ---{{ $t('select') }}---
-              </option>
-              <option
-                v-for="superior in superiors"
-                :key="superior.code"
-                :value="superior.code"
-                v-text="superior.name"
-              />
-            </select>
-          </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="roleData.description"
-              aria-label="description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('description')"
-            />
-          </div>
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Drawer
+      :visible="operation.modal"
+      :title="'编辑角色'"
+      @close-action="onClose"
+    >
+      <template #content>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.roleName"
+            name="name"
+            type="text"
+            aria-label="name"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+          >
         </div>
-      </form>
-    </Modal>
-    <Modal
-      :is-show="isTree"
-      :need-footer="true"
-      @cancel-action="treeOperate"
-      @commit-action="treeCommit"
-    >
-      <TreeItem
-        v-for="treeData in treeDatas"
-        :key="treeData.code"
-        v-model:ticked="ticked"
-        :data="treeData"
-      />
-    </Modal>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Drawer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue"
+import { onMounted, ref, reactive } from "vue"
 
-import Operation from "@/components/Operation.vue"
-import Action from "@/components/Action.vue"
-import Page from "@/components/Page.vue"
-import Confirm from "@/components/Confirm.vue"
-import Modal from "@/components/Modal.vue"
+import Operation from "~/components/Operation.vue"
+import Action from "~/components/Action.vue"
+import Pagation from "~/components/Pagation.vue"
+import Confirm from "~/components/Confirm.vue"
+import Drawer from "~/components/Drawer.vue";
 
-import TreeItem from "@/components/tree/TreeItem.vue"
-
-import { instance, SERVER_URL } from "@/api"
-import type { Role, NodeData } from "@/api/request.type"
+import { instance, SERVER_URL } from "~/api"
+import type { Role } from "~/api/request.type"
 
 // 模态框参数
-let isEdit = ref(false)
-let isDel = ref(false)
-let isTree = ref(false)
-// 数据
-let roleData = ref<Role>({
-  code: '',
-  name: '',
-  superior: '',
-  count: 0,
-  description: '',
-  enabled: true,
-  modifyTime: ''
+let operation = reactive({
+  modal: false,
+  confirm: false
 })
-let dataCode = ref("")
-let superiors = ref<Array<Role>>([])
-let treeDatas = ref<Array<NodeData>>([])
-let ticked = ref<Array<string>>([])
-let datas = ref<Array<Role>>([])
 
 // 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
+let pagation = reactive({
+  page: 0,
+  size: 10,
+  total: 0
+})
+const initData: Role = {
+  id: 0,
+  roleName: '',
+  count: 0,
+  enabled: true,
+  modifyTime: ''
+}
+// 数据
+let formData = ref<Role>(initData)
+let datas = ref<Array<Role>>([])
 
 onMounted(() => {
   retrieve()
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 分页大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.role, { params: { page: page.value, size: size.value } })
+const retrieve = async () => {
+  await instance.get(SERVER_URL.role, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 }
 /**
  * confirm 操作
  * @param operate 是否打开
  */
-const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+const confirmOperate = () => {
+  operation.confirm = true;
 }
 /**
  * confirm 提交
  */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.role.concat("/", dataCode.value)).then(() => {
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.role.concat(`/${id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Role) => item.code != dataCode.value
+      (item: Role) => item.id != id
     );
-    isDel.value = false;
+    operation.confirm = false;
   });
 };
 /**
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const modalOperate = async (operate: boolean) => {
-  if (operate) {
-    roleData.value = {
-      code: '',
-      name: '',
-      superior: '',
-      count: 0,
-      description: '',
-      enabled: true,
-      modifyTime: ''
-    };
-    await Promise.all([
-      fetch(),
-      await instance.get(SERVER_URL.role, { params: { page: 0, size: 99 } })
-        .then(res => superiors.value = res.data.content),
-    ]);
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    fetch(id)
+  } else {
+    formData.value = initData;
   }
-  isEdit.value = operate;
+  operation.modal = true;
 };
 /**
  * 查详情
  */
-const fetch = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.get(SERVER_URL.role.concat("/", dataCode.value)).then(res => roleData.value = res.data);
+const fetch = async (id: number) => {
+  if (id && id != 0) {
+    await instance.get(SERVER_URL.role.concat(`/${id}`)).then(res => formData.value = { ...res.data });
   }
 };
-/**
- * 授权：打开
- * @param operate 是否打开
- */
-const treeOperate = async (operate: boolean) => {
-  if (operate) {
-    await Promise.all([
-      instance.get(SERVER_URL.authority.concat("/tree")).then(res => treeDatas.value = res.data),
-      instance.get(SERVER_URL.role.concat("/", dataCode.value, "/authority")).then(res => ticked.value = res.data)
-    ])
-  }
-  isTree.value = operate;
-};
-/**
- * 提交
- */
-const treeCommit = async () => {
-  if (ticked.value && ticked.value.length > 0) {
-    alert("commit " + ticked.value)
-  }
-  isTree.value = false;
-};
-/**
- * 新增/编辑：提交
- */
-const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance.put(SERVER_URL.role.concat("/", dataCode.value), roleData.value)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Role) => item.code != dataCode.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
-  } else {
-    await instance.post(SERVER_URL.role, roleData.value).then(res => {
-      if (datas.value.length >= size.value) {
+const create = async () => {
+  await instance.post(SERVER_URL.role, formData.value).then(res => {
+      if (datas.value.length >= pagation.size) {
         // 删除第一个
         datas.value.shift();
       }
       // 将结果添加到第一个
       datas.value.unshift(res.data);
-      isEdit.value = false;
     });
+}
+const modify = async (id: number) => {
+  await instance.put(SERVER_URL.role.concat(`/${id}`), formData.value)
+      .then(res => {
+        // 将datas中修改项的历史数据删除
+        datas.value = datas.value.filter(
+          (item: Role) => item.id != id
+        );
+        // 将结果添加到第一个
+        datas.value.unshift(res.data);
+      });
+}
+/**
+ * 新增/编辑：提交
+ */
+const modelCommit = async (id: number) => {
+  if (id && id != 0) {
+    modify(id)
+  } else {
+    create()
   }
+  operation.modal = false
+}
+
+const onClose = () => {
+  operation.modal = false
 }
 </script>

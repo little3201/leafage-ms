@@ -1,38 +1,12 @@
 <template>
   <div class="mt-2">
-    <div class="flex justify-between items-center">
-      <h2 class="text-lg font-medium">
-        {{ $t('category') }}
-      </h2>
-      <button
-        type="button"
-        name="reload"
-        aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
-        @click="retrieve"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mr-2"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'rotate-cw'" />
-        </svg>
-        {{ $t('reload') }}
-      </button>
-      <Operation
-        :datas="datas"
-        :file-name="'category'"
-        @click.capture="dataCode = ''"
-        @modal-operate="modalOperate"
-      />
-    </div>
+    <Operation
+      :datas="datas"
+      :file-name="'category'"
+      :items="items"
+      @hand-reload="retrieve"
+      @hand-add="showModal"
+    />
     <div class="sm-t-h overflow-auto">
       <table
         class="w-full overflow-ellipsis whitespace-nowrap"
@@ -51,12 +25,6 @@
               class="px-4"
             >
               {{ $t('name') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
-              {{ $t('code') }}
             </th>
             <th
               scope="col"
@@ -99,13 +67,9 @@
                 href="https://www.leafage.top/posts"
                 target="_blank"
                 class="font-medium hover:underline"
-              >{{ data.name }}
-              </a>
+                v-text="data.categoryName"
+              />
             </td>
-            <td
-              class="px-4"
-              v-text="data.code"
-            />
             <td
               class="px-4"
               v-text="data.description"
@@ -120,182 +84,250 @@
             />
             <td>
               <Action
-                @click.capture="dataCode = data.code"
                 @del-action="confirmOperate"
-                @edit-action="modalOperate"
+                @edit-action="showModal(data.id)"
               />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <Page
-      :total="total"
-      :page="page"
-      :size="size"
+    <Pagation
+      :total="pagation.total"
+      :page="pagation.page"
+      :size="pagation.size"
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm
-      :is-show="isDel"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
-    />
-    <Modal
-      :is-show="isEdit"
-      @cancel-action="modalOperate"
-      @commit-action="modelCommit"
+    <Confirm :visible="operation.confirm">
+      <template #footer>
+        <button
+          type="submit"
+          name="confirm"
+          aria-label="confirm"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="confirmCommit(formData.id)"
+        >
+          {{ $t('confirm') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Confirm>
+    <Drawer
+      :visible="operation.modal"
+      :title="'编辑类目'"
+      @close-action="onClose"
     >
-      <form @submit.prevent>
-        <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-12">
-            <label for="name">{{ $t('name') }}</label>
-            <input
-              id="name"
-              v-model.trim="categoryData.name"
-              type="text"
-              name="name"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('name')"
-              required
-              autofocus
-              aria-label="name"
-            >
-          </div>
-          <div class="col-span-12">
-            <label for="description">{{ $t('description') }}</label>
-            <textarea
-              id="description"
-              v-model.trim="categoryData.description"
-              name="description"
-              class="mt-1 w-full block rounded-md border-gray-300"
-              :placeholder="$t('description')"
-            />
-          </div>
+      <template #content>
+        <div class="w-full">
+          <label for="name">{{ $t('name') }}</label>
+          <input
+            id="name"
+            v-model.trim="formData.categoryName"
+            type="text"
+            name="name"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('name')"
+            required
+              
+            aria-label="name"
+          >
         </div>
-      </form>
-    </Modal>
+        <div class="w-full">
+          <label for="description">{{ $t('description') }}</label>
+          <textarea
+            id="description"
+            v-model.trim="formData.description"
+            name="description"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            :placeholder="$t('description')"
+          />
+        </div>
+      </template>
+      <template #footer>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+      </template>
+    </Drawer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
-import Operation from "@/components/Operation.vue";
-import Action from "@/components/Action.vue";
-import Page from "@/components/Page.vue";
-import Confirm from "@/components/Confirm.vue";
-import Modal from "@/components/Modal.vue";
+import Operation from "~/components/Operation.vue";
+import Action from "~/components/Action.vue";
+import Pagation from "~/components/Pagation.vue";
+import Confirm from "~/components/Confirm.vue";
+import Drawer from "~/components/Drawer.vue";
 
-import { instance, SERVER_URL } from "@/api";
-import type { Category } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Category, Item } from "~/api/request.type";
 
 // 模态框参数
-let isEdit = ref(false);
-let isDel = ref(false);
-// 数据
-let categoryData = ref<Category>({
-  code: '',
-  name: '',
+let operation = reactive({
+  modal: false,
+  confirm: false
+})
+
+// 分页参数
+let pagation = reactive({
+  page: 0,
+  size: 10,
+  total: 0
+})
+
+// 初始化
+const initData: Category = {
+  id: 0,
+  categoryName: '',
   count: 0,
   description: '',
   modifyTime: ''
-});
-let dataCode = ref("");
+}
+// form 数据
+let formData = ref<Category>(initData);
+
 let datas = ref<Array<Category>>([]);
-// 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
+const items: Item[] = [
+  {
+    key: 'categoryName',
+    label: '名称'
+  }
+]
 
 onMounted(() => {
   retrieve();
 });
 /**
  * 设置页码
- * @param p 页码
- * @param s 大小
+ * @param page 页码
+ * @param size 大小
  */
-const setPage = (p: number, s: number): void => {
-  page.value = p;
-  size.value = s;
+const setPage = (page: number, size: number) => {
+  pagation.page = page;
+  pagation.size = size;
 };
 /**
  * 查询列表
  */
-const retrieve = async (): Promise<void> => {
-  await instance.get(SERVER_URL.category, { params: { page: page.value, size: size.value } })
+const retrieve = async () => {
+  await instance.get(SERVER_URL.category, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
-      total.value = res.data.totalElements
+      pagation.total = res.data.totalElements
     })
 };
 /**
- * confirm 操作
- * @param operate 是否打开
+ * 查询
+ * @param id 主键
  */
-const confirmOperate = (operate: boolean): void => {
-  isDel.value = operate;
+const fetch = async (id: number) => {
+  await instance.get(SERVER_URL.category.concat(`/${id}`))
+    .then(res => formData.value = { ...res.data });
+}
+/**
+ * 添加
+ */
+const create = async () => {
+  await instance.post(SERVER_URL.category, formData.value).then(res => {
+    if (datas.value.length >= pagation.size) {
+      // 删除第一个
+      datas.value.shift();
+    }
+    // 将结果添加到第一个
+    datas.value.unshift(res.data);
+  });
+}
+/**
+ * 编辑
+ * @param id 主键
+ */
+const modify = async (id: number) => {
+  await instance
+    .put(SERVER_URL.category.concat(`/${id}`), formData.value)
+    .then(res => {
+      // 将datas中修改项的历史数据删除
+      datas.value = datas.value.filter(
+        (item: Category) => item.id != formData.value.id
+      );
+      // 将结果添加到第一个
+      datas.value.unshift(res.data);
+    });
+}
+/**
+ * confirm 操作
+ */
+const confirmOperate = () => {
+  operation.confirm = true;
 };
 /**
  * confirm 提交
  */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.category.concat("/", dataCode.value)).then(() => {
+const confirmCommit = async (id: number) => {
+  await instance.delete(SERVER_URL.category.concat(`/${id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
-      (item: Category) => item.code != dataCode.value
+      (item: Category) => item.id != id
     );
-    isDel.value = false;
+    operation.confirm = false;
   });
 };
+
+const onClose = () => {
+  operation.modal = false
+}
+
 /**
  * 新增/编辑：打开
- * @param operate 是否打开
+ * @param id 主键
  */
-const modalOperate = async (operate: boolean): Promise<void> => {
-  if (operate) {
-    categoryData.value = {
-      code: '',
-      name: '',
-      count: 0,
-      description: '',
-      modifyTime: ''
-    };
-    if (dataCode.value && dataCode.value.length > 0) {
-      await instance.get(SERVER_URL.category.concat("/").concat(dataCode.value))
-        .then(res => categoryData.value = res.data);
-    }
+const showModal = (id: number) => {
+  if (id && id != 0) {
+    fetch(id);
+  } else {
+    formData.value = initData
   }
-  isEdit.value = operate;
+  operation.modal = true;
 };
 /**
  * 新增/编辑：提交
  */
-const modelCommit = async (): Promise<void> => {
-  if (dataCode.value && dataCode.value.length > 0) {
-    await instance
-      .put(SERVER_URL.category.concat("/", dataCode.value), categoryData.value)
-      .then(res => {
-        // 将datas中修改项的历史数据删除
-        datas.value = datas.value.filter(
-          (item: Category) => item.code != dataCode.value
-        );
-        // 将结果添加到第一个
-        datas.value.unshift(res.data);
-        isEdit.value = false;
-      });
+const modelCommit = (id: number) => {
+  if (id && id != 0) {
+    modify(id)
   } else {
-    await instance.post(SERVER_URL.category, categoryData.value).then(res => {
-      if (datas.value.length >= size.value) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-      isEdit.value = false;
-    });
+    create()
   }
+  onClose();
 };
 
 </script>

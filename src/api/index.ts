@@ -1,5 +1,5 @@
 import { SERVER_URL } from './constant'
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import axios, { InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import router from '../router'
 
 const pendingPool = new Map<string, AbortController>()
@@ -12,7 +12,7 @@ const instance = axios.create({
 
 // 请求拦截
 instance.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig) => {
         const controller = new AbortController()
         config.signal = controller.signal
         if (config.url) {

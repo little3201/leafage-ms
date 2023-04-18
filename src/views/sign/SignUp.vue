@@ -14,7 +14,7 @@
           class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Email"
           required
-          autofocus
+          
           autocomplete="off"
           aria-label="email"
         >
@@ -63,7 +63,7 @@
       </button>
     </form>
     <div class="my-6 text-center xl:text-left">
-      Already have an account?
+      Already have an user?
       <RouterLink
         class="text-blue-600"
         to="/signin"
@@ -76,10 +76,10 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import Sign from "@/layouts/Sign.vue"
+import Sign from "~/components/Sign.vue"
 import { useRouter } from "vue-router"
 
-import { instance } from "@/api";
+import { instance } from "~/api";
 
 const router = useRouter();
 
@@ -90,7 +90,7 @@ let formData = ref({
 const confirmPassword = ref("");
 const agree = ref(false)
 
-const onSubmit = async (): Promise<void> => {
+const onSubmit = async () => {
   await instance.get("/check").then(() => {
     instance
       .post("/register", new URLSearchParams(formData.value))

@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div
-      v-show="isShow"
+      v-if="visible"
       class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60 max-h-screen overflow-auto"
       role="dialog"
       aria-modal="true"
@@ -10,64 +10,28 @@
         class=" bg-white rounded-lg text-left overflow-x-hidden overflow-y-auto max-h-screen md:max-w-lg lg:max-w-2xl my-6"
       >
         <button
-          v-if="!needFooter"
+          v-if="showClose"
           type="button"
           name="close"
           aria-label="close"
           class="inline-flex items-center justify-center rounded-bl-full bg-gray-400 opacity-70 absolute top-0 right-0 w-12 h-12"
-          @click="closeOperation"
+          @click="onClose"
         >
           <span class="sr-only">Close</span>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="-mt-2 -mr-2"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'x'" />
-          </svg>
+          <XMarkIcon
+            class="w-6 h-6 -mt-2 -mr-2"
+            aria-hidden="true"
+          />
         </button>
         <!-- content -->
         <div class="p-4 ">
           <div class="flex flex-col overflow-x-auto">
-            <slot />
+            <slot name="content" />
           </div>
         </div>
         <!-- footer -->
-        <div
-          v-if="needFooter"
-          class="bg-gray-50 py-3 px-4 sm:flex sm:flex-row-reverse text-sm"
-        >
-          <button
-            type="button"
-            name="confirm"
-            aria-label="confirm"
-            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait"
-            :class="
-              isConfirm
-                ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500'
-                : 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
-            "
-            @click="commitOperation"
-          >
-            {{ isConfirm ? $t('confirm') : $t('commit') }}
-          </button>
-          <button
-            type="button"
-            name="cancle"
-            aria-label="cancle"
-            class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-            @click="cancelOperation"
-          >
-            {{
-              $t('cancle')
-            }}
-          </button>
+        <div class="bg-gray-50 py-3 px-4 sm:flex sm:flex-row-reverse text-sm">
+          <slot name="footer" />
         </div>
       </div>
     </div>
@@ -75,32 +39,21 @@
 </template>
 
 <script lang="ts" setup>
+import { XMarkIcon } from '@heroicons/vue/24/outline'
 defineProps({
-  isShow: {
+  visible: {
     type: Boolean,
     default: false,
   },
-  isConfirm: {
+  showClose: {
     type: Boolean,
-    default: false,
-  },
-  needFooter: {
-    type: Boolean,
-    default: true,
+    default: false
   }
 });
 
-const emit = defineEmits(["cancelAction", "commitAction", "closeAction"]);
+const emit = defineEmits(["closeAction"]);
 
-const cancelOperation = () => {
-  emit("cancelAction", false);
-};
-
-const commitOperation = () => {
-  emit("commitAction");
-};
-
-const closeOperation = () => {
+const onClose = () => {
   emit("closeAction", false);
 };
 </script>

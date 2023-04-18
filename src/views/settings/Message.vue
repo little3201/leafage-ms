@@ -33,24 +33,24 @@
     </div>
     <div class="py-4 divide-y">
       <div
-        v-for="(notification, index) in notifications"
+        v-for="(message, index) in messages"
         :key="index"
         class="py-2"
       >
         <div class="flex items-center">
           <p
             class="cursor-pointer hover:underline hover:text-blue-600"
-            @click="previewOperation(true, notification.code)"
+            @click="previewOperation(true, message.id)"
           >
-            {{ notification.title }}
+            {{ message.title }}
           </p>
           <span
             class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
-            v-text="new Date(notification.modifyTime).toLocaleString('zh', { hour12: false })"
+            v-text="new Date(message.modifyTime).toLocaleString('zh', { hour12: false })"
           />
         </div>
         <div class="w-full text-sm text-gray-500 py-2 truncate">
-          {{ notification.content }}
+          {{ message.context }}
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
     >
       <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
-        <p v-text="data.content" />
+        <p v-text="data.context" />
       </article>
     </Modal>
   </div>
@@ -71,19 +71,19 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
-import { instance, SERVER_URL } from "@/api";
-import type { Notification } from "@/api/request.type";
+import { instance, SERVER_URL } from "~/api";
+import type { Message } from "~/api/request.type";
 
-import Modal from "@/components/Modal.vue"
+import Modal from "~/components/Modal.vue"
 
-let notifications = ref<Array<Notification>>([])
+let messages = ref<Array<Message>>([])
 
 let isRead = ref(false)
 let isShow = ref(false)
-let data = ref<Notification>({
-  code: '',
+let data = ref<Message>({
+  id: 0,
   title: '',
-  content: '',
+  context: '',
   receiver: '',
   modifyTime: ''
 })
@@ -100,9 +100,9 @@ onMounted(() => {
  * 查询列表
  */
 const retrieve = async (read: boolean) => {
-  await instance.get(SERVER_URL.notification, { params: { page: page.value, size: size.value, read: read } })
+  await instance.get(SERVER_URL.messages, { params: { page: page.value, size: size.value, read: read } })
     .then(res => {
-      notifications.value = res.data.content
+      messages.value = res.data.content
       total.value = res.data.totalElements
     })
 }
@@ -117,11 +117,11 @@ const switchType = async (read: boolean) => {
 /**
  * 预览
  * @param show 是否展示
- * @param code 代码
+ * @param id 主键
  */
-const previewOperation = (show: boolean, code: string) => {
+const previewOperation = (show: boolean, id: number) => {
   if (show) {
-    instance.get(SERVER_URL.notification.concat("/", code)).then(res => data.value = res.data);
+    instance.get(SERVER_URL.messages.concat(`/${id}`)).then(res => data.value = res.data);
   }
   isShow.value = show
 }

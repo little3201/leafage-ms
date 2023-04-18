@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Category } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, Category } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
 const pagation: Pagation<Category> = {
   page: 0,
@@ -13,8 +13,8 @@ const datas: Array<Category> = [];
 
 for (let i = 0; i < 12; i++) {
   datas.push({
-    code: Random.string('number', 9),
-    name: Random.word(),
+    id: Random.increment(),
+    categoryName: Random.word(),
     count: Random.integer(1, 99),
     description: Random.csentence(5),
     modifyTime: Random.date()
@@ -33,8 +33,8 @@ export default [
         pagation.content = datas.slice(params.get("page") * params.get("size"), (parseInt(params.get("page")) + 1) * params.get("size"))
         return pagation
       } else {
-        const code = url.substring(url.lastIndexOf('/') + 1)
-        return datas.filter(item => item.code === code)[0]
+        const id = url.substring(url.lastIndexOf('/') + 1)
+        return datas.filter(item => item.id === id)[0]
       }
     }
   },
@@ -42,8 +42,8 @@ export default [
     url: '/api/assets/categories',
     method: 'put',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
-      return datas.filter(item => item.code === code)[0]
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.id === id)[0]
     }
   },
   {
@@ -51,12 +51,12 @@ export default [
     method: 'post',
     response: (options: any) => {
       let data: Category = JSON.parse(options.body)
-      data = { ...data, code: Random.id() }
+      data = { ...data, id: Random.integer() }
       return data
     }
   },
   {
-    url: '/api/assets/categories/:code',
+    url: '/api/assets/categories/:id',
     method: 'delete',
     response: () => {
       return {

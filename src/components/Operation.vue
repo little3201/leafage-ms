@@ -1,84 +1,125 @@
 <template>
   <div
-    v-if="account.username && account.username.length > 0"
-    class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
+    v-if="user.username && user.username.length > 0"
+    class="flex justify-between items-center"
   >
+    <form>
+      <div class="flex items-center relative">
+        <button
+          class="flex-shrink-0 inline-flex items-center py-2 px-3 text-sm text-center text-gray-900 border border-gray-300 rounded-l-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600"
+          type="button"
+          @click="onShow"
+        >
+          All categories 
+          <ChevronDownIcon
+            class="w-4 h-4 ml-2"
+            aria-hidden="true"
+          />
+        </button>
+        <ul
+          v-show="visible"
+          class="absolute top-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700 py-2 text-sm text-gray-700 dark:text-gray-200"
+        >
+          <li
+            v-for="(item, index) in items"
+            :key="index"
+          >
+            <button
+              type="button"
+              class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              {{ item.label }}
+            </button>
+          </li>
+        </ul>
+        <div class="relative w-full inline-flex items-center">
+          <input
+            id="search-dropdown"
+            type="search"
+            class="p-2 w-72 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border focus:ring-0 border-gray-300 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Search Mockups..."
+            required
+          >
+          <button
+            type="submit"
+            class="absolute top-px bottom-px right-0 p-2 my-auto text-white bg-blue-600 hover:bg-blue-700 rounded-r-lg focus:outline-none inline-flex items-center"
+          >
+            <MagnifyingGlassIcon
+              class="w-5 h-5"
+              aria-hidden="true"
+            />
+            <span class="sr-only">Search</span>
+          </button>
+        </div>
+      </div>
+    </form>
     <button
-      title="import"
-      name="import"
-      aria-label="import"
       type="button"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+      name="reload"
+      aria-label="reload"
+      class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+      @click="onReload"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
-      >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-plus'" />
-      </svg>
-      {{ $t('import') }}
+      <ArrowPathIcon
+        class="w-5 h-5 mr-2"
+        aria-hidden="true"
+      />
+      {{ $t('reload') }}
     </button>
-    <button
-      title="export"
-      name="export"
-      aria-label="export"
-      type="button"
-      class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
-      @click="exportFile"
+    <div
+      class="inline-flex items-center space-x-4 sm:ml-auto text-sm"
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
+      <button
+        title="import"
+        name="import"
+        aria-label="import"
+        type="button"
+        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
       >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'file-text'" />
-      </svg>
-      {{ $t('export') }}
-    </button>
-    <button
-      v-if="needAdd"
-      name="add"
-      aria-label="add"
-      class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
-      @click="operate"
-    >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="mr-2"
+        <DocumentPlusIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('import') }}
+      </button>
+      <button
+        title="export"
+        name="export"
+        aria-label="export"
+        type="button"
+        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+        @click="onExport"
       >
-        <use :xlink:href="'/svg/feather-sprite.svg#' + 'plus-circle'" />
-      </svg>
-      {{ $t('add') }}
-    </button>
+        <DocumentTextIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('export') }}
+      </button>
+      <button
+        v-if="needAdd"
+        name="add"
+        aria-label="add"
+        class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
+        @click="onAdd"
+      >
+        <PlusCircleIcon
+          class="w-5 h-5 mr-2"
+          aria-hidden="true"
+        />
+        {{ $t('add') }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-
+import { ref, onMounted, PropType } from "vue";
 import { utils, write, WorkBook, WorkSheet } from 'xlsx'
 
-import type { Account } from "@/api/request.type";
+import type { User, Item } from "~/api/request.type";
+
+import { ArrowPathIcon, ChevronDownIcon, DocumentPlusIcon, DocumentTextIcon, MagnifyingGlassIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   needAdd: {
@@ -94,33 +135,54 @@ const props = defineProps({
   fileName: {
     type: String,
     default: 'export_file'
+  },
+  items: {
+    type: Array as PropType<Item[]>,
+    default: () => {
+      return []
+    }
   }
 });
 
-const emit = defineEmits(["modalOperate"]);
+const emit = defineEmits(["handReload", "handAdd"]);
 
-const account = ref<Account>({
+const visible = ref(false)
+
+const user = ref<User>({
   username: '',
   nickname: '',
-  avatar: ''
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 })
 
 onMounted(() => {
-  let data = sessionStorage.getItem("account")
+  let data = sessionStorage.getItem("user")
   if (data && data !== "undefined") {
-    account.value = JSON.parse(data);
+    user.value = JSON.parse(data);
   }
 })
 /**
  * add 操作
  */
-const operate = () => {
-  emit("modalOperate", true);
+const onReload = () => {
+  emit("handReload");
 };
+/**
+ * add 操作
+ */
+const onAdd = () => {
+  emit("handAdd");
+};
+const onShow = () => {
+  visible.value = !visible.value
+}
 /**
  * 数据写入excel并转换成二进制，下载文件
  */
-const exportFile = () => {
+const onExport = () => {
   const sheet: WorkSheet = utils.json_to_sheet(props.datas, { cellDates: true })
   const wb: WorkBook = utils.book_new()
   // 把sheet添加到workbook中

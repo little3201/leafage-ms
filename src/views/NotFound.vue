@@ -23,20 +23,16 @@
         to="/"
         class="text-white hover:underline inline-flex items-end"
       >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'chevron-left'" />
-        </svg>
+        <ChevronDoubleLeftIcon
+          class="w-7 h-7"
+          aria-hidden="true"
+        />
         <span class=" text-xl">Back to Home</span>
       </RouterLink>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ChevronDoubleLeftIcon } from '@heroicons/vue/24/outline'
+</script>

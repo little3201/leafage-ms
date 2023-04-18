@@ -1,10 +1,4 @@
-<template>
-  <aside class="sm:w-20 xl:w-64 pr-4">
-    <RouterLink
-      to="/"
-    >
-      <h1 class="inline-flex items-center mt-2 space-x-4 text-white text-2xl ml-6">
-        <svg
+<svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -30,33 +24,3 @@
             </g>
           </g>
         </svg>
-        <span class="hidden xl:block">Leafage</span>
-      </h1>
-    </RouterLink>
-    <div class="my-4 h-px w-full bg-gray-200 bg-opacity-30" />
-    <div class="my-8">
-      <AsideCore
-        v-for="data in datas"
-        :key="data.code"
-        :data="data"
-      />
-    </div>
-  </aside>
-</template>
-
-<script lang="ts" setup>
-import { PropType } from 'vue'
-
-import AsideCore from "@/layouts/AsideCore.vue";
-
-import type { NodeData } from '@/api/request.type'
-
-defineProps({
-  datas: {
-    type: Array as PropType<NodeData[]>,
-    default: () => {
-      return []
-    }
-  }
-});
-</script>

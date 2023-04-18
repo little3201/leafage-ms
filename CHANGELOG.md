@@ -18,7 +18,7 @@
   1. 添加国际化支持（中文、English）;
 
 2022-04-11:
-  1. 修改 notification tab 的样式;
+  1. 修改 messages tab 的样式;
   2. 优化 Topbar 的布局设置；
   3. 重构小屏下整体包裹框的样式配置；
 
@@ -29,7 +29,7 @@
   4. 完成图片、头像的更新功能；
 
 2022-02-22:
-  1. 完成 Group 关联的 members 展示、Authority 关联的 Roles 展示;
+  1. 完成 Group 关联的 members 展示、Component 关联的 Roles 展示;
   2. 调整 Profile、Information 的结构；
   3. 优化部分接口的 Mock 处理；
 
@@ -49,7 +49,7 @@
   1. 移除 vite-mock-plugin 依赖，mock代码重写，解决了mock遗留的问题；
 
 2022-01-19:
-  1. 移除 Notification 模块，添加到 Settings 模块下；
+  1. 移除 Message 模块，添加到 Settings 模块下；
   2. 重构整个 Settings 下的所有页面；
   3. 更新项目依赖到最新版；
   4. 修复了登录等表单提交两次的问题；
@@ -76,7 +76,7 @@
 2021-10-14:
   1. table样式优化；
   2. topbar 样式优化；
-  3. 添加 notification 及子页面；
+  3. 添加 messages 及子页面；
 
 2021-10-08:
   1. Dashboard 页添加最新评论列表；

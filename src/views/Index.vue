@@ -1,15 +1,16 @@
 <template>
   <div class="px-4 py-3 h-screen">
-    <Drawer
-      :datas="menus"
-      class="md:hidden"
-    />
-    <div class="flex flex-row sm-g-h md:h-full overflow-auto">
+    <div class="md:hidden h-1/2 flex items-end justify-center">
+      <p class="text-2xl text-white">
+        为更好的体验，请使用大屏幕终端浏览！
+      </p>
+    </div>
+    <div class="hidden md:flex flex-row sm-g-h h-full">
       <Aside
         :datas="menus"
         class="hidden md:block"
       />
-      <main class="px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
+      <main class="hidden md:block px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
         <TopBar />
         <RouterView />
       </main>
@@ -20,11 +21,10 @@
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
 
-import type { NodeData } from "@/api/request.type";
+import type { NodeData } from "~/api/request.type";
 
-import Drawer from "@/layouts/Drawer.vue";
-import Aside from "@/layouts/Aside.vue";
-import TopBar from "@/layouts/TopBar.vue";
+import Aside from "~/components/Aside.vue";
+import TopBar from "~/components/TopBar.vue";
 
 const menus = ref<Array<NodeData>>([]);
 
@@ -32,11 +32,7 @@ onMounted(() => {
   if (sessionStorage.getItem("menus") != null) {
     menus.value = JSON.parse(sessionStorage.getItem("menus") || '')
   } else {
-    menus.value = [{ "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
-    { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
-    { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "book" }, "children": [] },
-    { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] }
-    ]
+    menus.value = []
   }
 
 });

@@ -6,12 +6,11 @@ const SERVER_PRE = {
 
 // 接口请求路径
 export const SERVER_URL = {
-  account: SERVER_PRE.hypervisor.concat('/accounts'), // 账户
   user: SERVER_PRE.hypervisor.concat('/users'), // 用户
   role: SERVER_PRE.hypervisor.concat('/roles'), // 角色
-  authority: SERVER_PRE.hypervisor.concat('/authorities'), // 权限
+  components: SERVER_PRE.hypervisor.concat('/components'), // 权限
   group: SERVER_PRE.hypervisor.concat('/groups'), // 分组
-  notification: SERVER_PRE.hypervisor.concat('/notifications'), // 消息通知
+  messages: SERVER_PRE.hypervisor.concat('/messages'), // 消息通知
 
   region: SERVER_PRE.hypervisor.concat('/regions'), // 行政区划
   dictionary: SERVER_PRE.hypervisor.concat('/dictionaries'), // 字典

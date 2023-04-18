@@ -12,7 +12,7 @@
           class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Username/Email"
           required
-          autofocus
+          
           autocomplete="off"
           aria-label="username"
         >
@@ -59,20 +59,11 @@
         class="w-full inline-flex items-center justify-center mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
         @click="onSubmit"
       >
-        <svg
+        <ArrowPathIcon
           v-if="isLoad"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="animate-spin"
-        >
-          <use :xlink:href="'/svg/feather-sprite.svg#' + 'loader'" />
-        </svg>
+          class="w-6 h-6 animate-spin"
+          aria-hidden="true"
+        />
         <span v-else>{{ $t('signin') }}</span>
       </button>
     </form>
@@ -82,19 +73,20 @@
         class="text-blue-600"
         to="/signup"
       >
-        Create account
+        Create user
       </RouterLink>
     </div>
   </Sign>
 </template>
 
 <script lang="ts" setup>
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { instance, SERVER_URL } from "@/api";
+import { instance, SERVER_URL } from "~/api";
 
-import Sign from "@/layouts/Sign.vue";
+import Sign from "~/components/Sign.vue";
 
 let formData = reactive({
   username: '',
@@ -109,7 +101,7 @@ const router = useRouter();
 /**
  * 表单提交
  */
-const onSubmit = async (): Promise<void> => {
+const onSubmit = async () => {
   errMsg.value = ''
   if (!formData.username) {
     errMsg.value = "username must not be blank."
@@ -134,11 +126,11 @@ const onSubmit = async (): Promise<void> => {
 /**
  * 数据存储
  */
-const storage = async (username: string): Promise<void> => {
+const storage = async (username: string) => {
   if (username && username.length > 0) {
     await Promise.all([
-      instance.get(SERVER_URL.account.concat("/", username)).then(res => sessionStorage.setItem("account", JSON.stringify(res.data))),
-      instance.get(SERVER_URL.account.concat("/", username, "/authority"))
+      instance.get(SERVER_URL.user.concat("/", username)).then(res => sessionStorage.setItem("user", JSON.stringify(res.data))),
+      instance.get(SERVER_URL.user.concat("/", username, "/components"))
         .then(res => {
           if (res.data && res.data.length > 0) {
             sessionStorage.setItem("menus", JSON.stringify(res.data))

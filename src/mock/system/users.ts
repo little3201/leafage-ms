@@ -1,15 +1,15 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, AccountDetail } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, User } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
-const pagation: Pagation<AccountDetail> = {
+const pagation: Pagation<User> = {
   page: 0,
   size: 10,
   totalElements: 0,
   content: []
 }
-const datas: Array<AccountDetail> = [];
+const datas: Array<User> = [];
 
 for (let i = 0; i < 139; i++) {
   datas.push({
@@ -29,7 +29,7 @@ const roles = ["20C281HG2"]
 
 export default [
   {
-    url: '/api/hypervisor/accounts',
+    url: '/api/hypervisor/users',
     method: 'get',
     response: (options: any) => {
       const url = options.url
@@ -53,7 +53,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/accounts',
+    url: '/api/hypervisor/users',
     method: 'put',
     response: (options: any) => {
       const username = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -61,7 +61,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/accounts',
+    url: '/api/hypervisor/users',
     method: 'patch',
     response: (options: any) => {
       const username = options.url.substring(options.url.lastIndexOf('/') + 1)
@@ -75,7 +75,7 @@ export default [
     },
   },
   {
-    url: '/api/hypervisor/accounts',
+    url: '/api/hypervisor/users',
     method: 'delete',
     response: () => {
       return {

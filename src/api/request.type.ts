@@ -5,85 +5,65 @@ export declare interface Pagation<T> {
   content: Array<T>
 }
 
-export declare interface Account {
-  username: string,
-  nickname: string,
-  avatar: string
+export declare interface Item {
+  key: string,
+  label: string
 }
 
-export declare interface AccountDetail extends Account {
+export declare interface User {
+  username: string,
+  nickname: string,
+  avatar: string,
   enabled: boolean,
   accountExpiresAt: string,
   accountLocked: boolean,
   credentialsExpiresAt: string
 }
 
-export declare interface User {
-  username: string,
-  firstname: string,
-  lastname: string,
-  gender: string,
-  phone: number,
-  email: string,
-  birthday: string,
-  nationality: string,
-  degree: string,
-  hobbies: string,
-  company: string,
-  position: string,
-  description: string
-}
-
-interface AbstractVO<T> {
-  code: T,
+interface Abstract {
+  id: number,
   modifyTime: string
 }
 
-export declare interface Role extends AbstractVO<string> {
-  name: string,
-  superior: string,
+export declare interface Role extends Abstract {
+  roleName: string,
   count: number,
-  description: string,
   enabled: boolean
 }
 
-export declare interface Group extends AbstractVO<string> {
-  name: string,
-  alias: string,
-  superior: string,
+export declare interface Group extends Abstract {
+  groupName: string,
   principal: string,
   count: number,
-  description: string,
   enabled: boolean
 }
 
-export declare interface Authority extends AbstractVO<string> {
-  name: string,
+export declare interface Component extends Abstract {
+  componentName: string,
   type: string,
   icon: string,
   superior: string,
   path: string,
   count: number,
-  description: string,
   enabled: boolean
 }
 
-export declare interface Notification extends AbstractVO<string> {
+export declare interface Message extends Abstract {
   title: string,
-  content: string,
+  context: string,
   receiver: string
 }
 
 export declare interface NodeData {
-  code: string,
+  id: number,
   name: string,
-  superior: string,
-  children: NodeData[],
+  superiorId: number,
+  children: Array<NodeData>,
   expand: any | unknown
 }
 
-export declare interface Category extends AbstractVO<string> {
-  name: string,
+export declare interface Category extends Abstract {
+  categoryName: string,
   count: number,
   description: string
 }
@@ -91,80 +71,48 @@ export declare interface Category extends AbstractVO<string> {
 export declare interface Statistics {
   viewed: number,
   likes: number,
-  comments: number
+  comments: number,
+  downloads: number
 }
 
-export declare interface Post extends AbstractVO<string> {
+export declare interface Post extends Abstract {
   title: string,
   cover: string,
-  category: Category,
+  category: string,
   tags: Array<string>,
+  context: string
 }
 
-export declare interface Content {
-  catalog: string,
-  content: string
-}
-
-export declare interface PostContent extends Post {
-  content: Content
-}
-
-export declare interface Resource extends AbstractVO<string> {
-  title: string,
-  type: string,
-  cover: string,
-  category: Category,
-  viewed: number,
-  downloads: number,
-  description: string
-}
-
-export declare interface Comment extends AbstractVO<string> {
-  posts: string,
+export declare interface Comment extends Abstract {
+  postId: number,
   country: string,
   location: string,
-  content: string
+  context: string
 }
 
-export declare interface Statistics extends AbstractVO<string> {
-  date: string,
-  viewed: number,
-  overViewed: number,
-  likes: number,
-  overLikes: number,
-  comments: number,
-  overComments: number,
-  downloads: number,
-  overDownloads: number
-}
-
-export declare interface StatisticsTotal {
+export declare interface Statistics {
   viewed: number,
   likes: number,
   comments: number,
   downloads: number
 }
 
-export declare interface Region extends AbstractVO<number> {
-  name: string,
+export declare interface Region extends Abstract {
+  regionName: string,
   superior: string,
-  alias: string,
   postalCode: number,
-  areaCode: number,
-  description: string
+  areaCode: number
 }
 
-export declare interface Dictionary extends AbstractVO<string> {
-  name: string,
+export declare interface Dictionary extends Abstract {
+  dictionaryName: string,
   superior: string,
-  alias: string,
   enabled: boolean,
   description: string
 }
 
-export declare interface AccessLog extends AbstractVO<string> {
+export declare interface AccessLog extends Abstract {
   ip: string,
   location: string,
-  description: string
+  context: string
 }

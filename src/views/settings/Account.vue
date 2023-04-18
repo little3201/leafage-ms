@@ -36,80 +36,17 @@
           </button>
         </div>
         <span class="text-xs mt-1 text-gray-400 inline-flex items-center max-w-none">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="mr-1"
-          >
-            <use :xlink:href="'/svg/feather-sprite.svg#' + 'help-circle'" />
-          </svg> Looking to manage account security settings? You can find them in the
+          <QuestionMarkCircleIcon
+            class="w-4 h-4 ml-1"
+            aria-hidden="true"
+          />
+          Looking to manage user security settings? You can find them in the
           <RouterLink
             to="/settings/security"
             class="text-blue-600 mx-1 hover:underline"
-          >Account security</RouterLink>
+          >User security</RouterLink>
           tab.
         </span>
-      </div>
-    </fieldset>
-    <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
-        Public email
-      </legend>
-      <div class="mt-4 text-sm">
-        <label
-          for="email"
-          class="font-medium text-gray-700"
-        >Public email</label>
-        <div class="flex items-center space-x-4 mt-1">
-          <input
-            id="email"
-            v-model="user.email"
-            name="email"
-            type="email"
-            class="block w-80 border-gray-300 py-1 rounded-md"
-            :disabled="!editEmail"
-            aria-label="email"
-          >
-          <button
-            type="button"
-            name="email"
-            aria-label="email"
-            class="text-blue-600 hover:underline"
-            @click="editAllow(2)"
-          >
-            {{
-              editEmail ? 'Save' :
-              'Edit'
-            }}
-          </button>
-        </div>
-        <span class="text-xs text-gray-400">You can manage verified email addresses in your email settings.</span>
-      </div>
-    </fieldset>
-    <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
-        Change phone number
-      </legend>
-      <p class="text-sm text-gray-500">
-        Changing your phone number can have unintended side effects.
-      </p>
-      <div class="mt-4">
-        <button
-          aria-label="phone"
-          name="phone"
-          type="button"
-          class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
-        >
-          Change
-          phone number
-        </button>
-        <span class="text-xs text-gray-400">You can manage verified phone number in your phone number settings.</span>
       </div>
     </fieldset>
     <fieldset class="my-6">
@@ -216,24 +153,24 @@
         <div class="flex items-center">
           <input
             id="push-nothing"
-            name="push-notifications"
+            name="push-messages"
             type="radio"
             class="border-gray-300 cursor-pointer"
-            aria-label="push-notifications"
+            aria-label="push-messages"
           >
           <label
             for="push-nothing"
             class="ml-3 block text-sm font-medium text-gray-700"
-          >No push notifications</label>
+          >No push messages</label>
         </div>
       </div>
     </fieldset>
     <fieldset class="my-2">
       <legend class="font-medium text-gray-900 pr-4">
-        Delete Account
+        Delete User
       </legend>
       <p class="text-sm text-gray-500">
-        Once you delete your account, there is no going back. Please be certain.
+        Once you delete your user, there is no going back. Please be certain.
       </p>
       <button
         type="submit"
@@ -243,9 +180,9 @@
         @click="onSubmit"
       >
         Delete
-        Account
+        User
       </button>
-      <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your account to a FREE account?
+      <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your user to a FREE user?
         We won’t charge your payment information anymore.</span>
     </fieldset>
     <Confirm
@@ -257,38 +194,34 @@
 </template>
 
 <script lang="ts" setup>
+import { QuestionMarkCircleIcon } from "@heroicons/vue/24/outline";
 import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 
-import { instance, SERVER_URL } from "@/api";
-import type { User } from '@/api/request.type'
+import { instance, SERVER_URL } from "~/api";
+import type { User } from '~/api/request.type'
 
-import Confirm from "@/components/Confirm.vue"
+import Confirm from "~/components/Confirm.vue"
 
 let editEmail = ref(false)
 let editUsername = ref(false)
+
 let user = ref<User>({
   username: '',
-  firstname: '',
-  lastname: '',
-  gender: '',
-  phone: 0,
-  email: '',
-  birthday: '',
-  nationality: '',
-  degree: '',
-  hobbies: '',
-  company: '',
-  position: '',
-  description: ''
+  nickname: '',
+  avatar: '',
+  enabled: true,
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
 })
 
 let isShow = ref(false)
 
 const router = useRouter();
 
-const username = ref(JSON.parse(sessionStorage.getItem("account") || '').username)
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 onMounted(() => {
   fetch()
@@ -296,7 +229,7 @@ onMounted(() => {
 /**
  * 查询
  */
-const fetch = async (): Promise<void> => {
+const fetch = async () => {
   if (username.value && username.value.length > 0) {
     await instance.get(SERVER_URL.user.concat("/", username.value)).then(res => user.value = res.data)
   }
@@ -304,7 +237,7 @@ const fetch = async (): Promise<void> => {
 /**
  * 提交
  */
-const onSubmit = async (): Promise<void> => {
+const onSubmit = async () => {
   if (username.value && username.value.length > 0) {
     confirmOperate(true)
   }
@@ -313,14 +246,14 @@ const onSubmit = async (): Promise<void> => {
  * confirm 操作
  * @param operate 是否打开
  */
-const confirmOperate = (operate: boolean): void => {
+const confirmOperate = (operate: boolean) => {
   isShow.value = operate;
 };
 /**
  * confirm 提交
  */
-const confirmCommit = async (): Promise<void> => {
-  await instance.delete(SERVER_URL.account.concat("/", username.value)).then(() => {
+const confirmCommit = async () => {
+  await instance.delete(SERVER_URL.user.concat("/", username.value)).then(() => {
     sessionStorage.clear()
     router.replace({ path: "/signin" });
   });

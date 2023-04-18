@@ -1,7 +1,7 @@
 import { Random } from 'mockjs'
 
-import type { Pagation, Dictionary } from '@/api/request.type'
-import { parse } from '@/mock/utils';
+import type { Pagation, Dictionary } from '~/api/request.type'
+import { parse } from '~/mock/utils';
 
 const pagation: Pagation<Dictionary> = {
   page: 0,
@@ -13,10 +13,9 @@ const datas: Array<Dictionary> = [];
 
 for (let i = 0; i < 30090; i++) {
   datas.push({
-    code: Random.string('number', 9),
-    name: Random.cword(),
+    id: Random.increment(),
+    dictionaryName: Random.cword(),
     superior: Random.word(), // 华南、华北
-    alias: Random.word(),
     enabled: Random.boolean(),
     description: Random.csentence(5),
     modifyTime: Random.date()
@@ -35,8 +34,8 @@ export default [
         } else if (path === 'superior') {
           return datas.slice(0, 12)
         } else {
-          const code = path
-          return datas.filter(item => item.code == code)[0]
+          const id = path
+          return datas.filter(item => item.id == id)[0]
         }
       } else if (url.split('?').length > 1) {
         const params: any = parse(url)
@@ -50,8 +49,8 @@ export default [
     url: '/api/hypervisor/dictionaries',
     method: 'put',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
-      return datas.filter(item => item.code === code)[0]
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
+      return datas.filter(item => item.id === id)[0]
     }
   },
   {
@@ -59,7 +58,7 @@ export default [
     method: 'post',
     response: (options: any) => {
       let data: Dictionary = JSON.parse(options.body)
-      data = { ...data, code: Random.id() }
+      data = { ...data, id: Random.integer() }
       return data
     }
   },
@@ -67,12 +66,12 @@ export default [
     url: '/api/hypervisor/dictionaries',
     method: 'patch',
     response: (options: any) => {
-      const code = options.url.substring(options.url.lastIndexOf('/') + 1)
+      const id = options.url.substring(options.url.lastIndexOf('/') + 1)
       let data = JSON.parse(options.body)
       if (!data) {
         return true
       }
-      data = datas.filter(item => item.code === code)[0]
+      data = datas.filter(item => item.id === id)[0]
       data.enabled = !data.enabled
       return data
     },

@@ -1,48 +1,53 @@
 import Mock from 'mockjs'
+import { BookOpenIcon, ClipboardIcon, HomeIcon, LinkIcon, MapPinIcon, ShieldCheckIcon, Square3Stack3DIcon, TagIcon, UsersIcon } from '@heroicons/vue/24/outline'
 
-const account = { username: "little3201", nickname: "布吉岛", avatar: "https://cdn.leafage.top/logo.svg" }
+const user = {
+  username: "little3201", 
+  nickname: "布吉岛", 
+  avatar: "https://cdn.leafage.top/logo.svg", 
+  enabled: true, 
+  accountExpiresAt: '',
+  accountLocked: false,
+  credentialsExpiresAt: ''
+}
 const menus = [
-  { "code": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": "home" }, "children": [] },
+  { "id": "2122466RP", "name": "Dashboard", "superior": "", "expand": { "path": "/", "icon": HomeIcon }, "children": [] },
   {
-    "code": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": "layers" }, "children": [
-      { "code": "21224UJ5C", "name": "Group", "superior": "21224DRMU", "expand": { "path": "/group", "icon": "users" }, "children": [] },
+    "id": "21224DRMU", "name": "System", "superior": "", "expand": { "path": "/system", "icon": Square3Stack3DIcon }, "children": [
+      { "id": "21224UJ5C", "name": "Groups", "superior": "21224DRMU", "expand": { "path": "/groups", "icon": UsersIcon }, "children": [] },
       {
-        "code": "21224PV6C", "name": "Role", "superior": "21224DRMU", "expand": { "path": "/role", "icon": "pocket" }, "children": []
+        "id": "21224PV6C", "name": "Roles", "superior": "21224DRMU", "expand": { "path": "/roles", "icon": LinkIcon }, "children": []
       },
-      { "code": "212240439", "name": "Authority", "superior": "21224DRMU", "expand": { "path": "/authority", "icon": "link" }, "children": [] },
+      { "id": "212240439", "name": "Components", "superior": "21224DRMU", "expand": { "path": "/components", "icon": ShieldCheckIcon }, "children": [] },
       {
-        "code": "203315P3Q", "name": "Account", "superior": "21224DRMU", "expand": { "path": "/account", "icon": "user" }, "children": []
+        "id": "203315P3Q", "name": "Users", "superior": "21224DRMU", "expand": { "path": "/users", "icon": UsersIcon }, "children": []
       },
-      { "code": "21224PV1C", "name": "Dictionary", "superior": "21224DRMU", "expand": { "path": "/dictionary", "icon": "book" }, "children": [] }
+      { "id": "21224PV1C", "name": "Dictionaries", "superior": "21224DRMU", "expand": { "path": "/dictionaries", "icon": BookOpenIcon }, "children": [] }
     ]
   },
-  { "code": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": "clipboard" }, "children": [] },
-  { "code": "21224QI72", "name": "Resource", "superior": "", "expand": { "path": "/resource", "icon": "folder" }, "children": [] },
-  { "code": "21224HMLG", "name": "Category", "superior": "", "expand": { "path": "/category", "icon": "tag" }, "children": [] },
-  { "code": "21229HMLG", "name": "Region", "superior": "", "expand": { "path": "/region", "icon": "map-pin" }, "children": [] }
+  { "id": "21224B8JZ", "name": "Posts", "superior": "", "expand": { "path": "/posts", "icon": ClipboardIcon }, "children": [] },
+  { "id": "21224HMLG", "name": "Categories", "superior": "", "expand": { "path": "/categories", "icon": TagIcon }, "children": [] },
+  { "id": "21229HMLG", "name": "Regions", "superior": "", "expand": { "path": "/regions", "icon": MapPinIcon }, "children": [] }
 ]
 
 import signMock from './sign'
 
-import accountMock from './system/account';
-import roleMock from './system/role';
-import userMock from './system/user';
-import groupMock from './system/group';
-import authorityMock from './system/authority';
-import notificationMock from './system/notification';
-import dictionaryMock from './system/dictionary';
-import accesslogMock from './system/accesslog';
+import roleMock from './system/roles';
+import userMock from './system/users';
+import groupMock from './system/groups';
+import authorityMock from './system/components';
+import notificationMock from './system/messages';
+import dictionaryMock from './system/dictionaries';
+import accesslogMock from './system/accesslogs';
 
 import postsMock from './assets/posts';
-import categoryMock from './assets/category';
-import resourceMock from './assets/resource';
+import categoryMock from './assets/categories';
 import statisticsMock from './assets/statistics';
-import commentMock from './assets/comment';
-import regionMock from './assets/region';
+import commentMock from './assets/comments';
+import regionMock from './assets/regions';
 
 const mocks = [
   ...signMock,
-  ...accountMock,
   ...roleMock,
   ...userMock,
   ...groupMock,
@@ -53,7 +58,6 @@ const mocks = [
 
   ...postsMock,
   ...categoryMock,
-  ...resourceMock,
   ...statisticsMock,
   ...commentMock,
   ...regionMock,
@@ -64,6 +68,6 @@ export function mockXHR() {
   for (i of mocks) {
     Mock.mock(new RegExp(i.url), i.method || 'get', i.response);
   }
-  sessionStorage.setItem("account", JSON.stringify(account));
+  sessionStorage.setItem("user", JSON.stringify(user));
   sessionStorage.setItem("menus", JSON.stringify(menus))
 }

@@ -3,6 +3,7 @@
     <Operation
       :datas="datas"
       :file-name="'role'"
+      :items="items"
       @hand-reload="retrieve"
       @hand-add="showModal"
     />
@@ -41,6 +42,12 @@
               scope="col"
               class="px-4"
             >
+              {{ $t('enabled') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
               {{ $t('actions') }}
             </th>
           </tr>
@@ -66,6 +73,12 @@
               class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
+            <td class="px-4">
+              <Toogle
+                :checked="data.enabled"
+                @click="enable"
+              />
+            </td>
             <td>
               <Action
                 @del-action="confirmOperate"
@@ -161,9 +174,10 @@ import Action from "~/components/Action.vue"
 import Pagation from "~/components/Pagation.vue"
 import Confirm from "~/components/Confirm.vue"
 import Drawer from "~/components/Drawer.vue";
+import Toogle from '~/components/Toogle.vue';
 
 import { instance, SERVER_URL } from "~/api"
-import type { Role } from "~/api/request.type"
+import type { Role, Item } from "~/api/request.type"
 
 // 模态框参数
 let operation = reactive({
@@ -177,6 +191,7 @@ let pagation = reactive({
   size: 10,
   total: 0
 })
+
 const initData: Role = {
   id: 0,
   roleName: '',
@@ -186,6 +201,14 @@ const initData: Role = {
 }
 // 数据
 let formData = ref<Role>(initData)
+
+const items: Item[] = [
+  {
+    key: 'roleName',
+    label: '名称'
+  }
+]
+
 let datas = ref<Array<Role>>([])
 
 onMounted(() => {
@@ -284,5 +307,16 @@ const modelCommit = async (id: number) => {
 
 const onClose = () => {
   operation.modal = false
+}
+/**
+ * 启用/禁用
+ * @param id 主键
+ */
+ const enable = (id: number) => {
+  datas.value.forEach(item => {
+    if(id == item.id){
+      item.enabled = true
+    }
+  })
 }
 </script>

@@ -3,6 +3,7 @@
     <Operation
       :datas="datas"
       :file-name="'dictionary'"
+      :items="items"
       @hand-reload="retrieve"
       @hand-add="showModal"
     />
@@ -35,12 +36,6 @@
               scope="col"
               class="px-4"
             >
-              {{ $t('status') }}
-            </th>
-            <th
-              scope="col"
-              class="px-4"
-            >
               {{ $t('modifyTime') }}
             </th>
             <th
@@ -68,12 +63,6 @@
               class="px-4"
               v-text="data.description"
             />
-            <td class="px-4">
-              <Toogle
-                :checked="data.enabled"
-                @click="enable"
-              />
-            </td>
             <td
               class="px-4"
               v-text="new Date(data.modifyTime).toLocaleDateString()"
@@ -178,13 +167,13 @@ import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
 import Drawer from "~/components/Drawer.vue";
-import Toogle from '~/components/Toogle.vue'
 
 import { instance, SERVER_URL } from "~/api";
-import type { Dictionary } from "~/api/request.type";
+import type { Dictionary, Item } from "~/api/request.type";
 
 // 模态框参数
 let visible = ref(false);
+
 const initData: Dictionary = {
   id: 0,
   dictionaryName: '',
@@ -193,8 +182,22 @@ const initData: Dictionary = {
   description: '',
   modifyTime: ''
 }
+
 // 数据
 let formData = ref<Dictionary>(initData)
+
+
+const items: Item[] = [
+  {
+    key: 'dictionaryName',
+    label: '名称'
+  },
+  {
+    key: 'superior',
+    label: '上级'
+  }
+]
+
 let datas = ref<Array<Dictionary>>([])
 let superiors = ref<Array<Dictionary>>([])
 // 分页参数
@@ -297,15 +300,5 @@ const modelCommit = (id: number) => {
 const onClose = () => {
   visible.value = false
 }
-/**
- * 启用/禁用
- * @param id 主键
- */
-const enable = (id: number) => {
-  datas.value.forEach(item => {
-    if(id == item.id){
-      item.enabled = true
-    }
-  })
-}
+
 </script>

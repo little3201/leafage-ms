@@ -293,7 +293,7 @@ onMounted(() => {
 });
 
 const retrieve = async () => {
-  await instance.get(SERVER_URL.messages, { params: { page: 0, size: 6, read: false } })
+  await instance.get(SERVER_URL.messages, { params: { page: 0, size: 6, receiver: user.value.username } })
     .then(res => {
       messages.value = res.data.content
       count.value = res.data.totalElements

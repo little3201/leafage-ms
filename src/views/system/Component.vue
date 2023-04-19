@@ -4,6 +4,7 @@
       :need-add="false"
       :datas="datas"
       :file-name="'components'"
+      :items="items"
       @hand-reload="retrieve"
     />
     <div class="sm-t-h overflow-auto">
@@ -136,7 +137,7 @@
                     class="w-4 h-4 mr-1"
                     aria-hidden="true"
                   />
-                  {{ $t('role') }}
+                  {{ $t('roles') }}
                 </button>
               </Action>
             </td>
@@ -228,11 +229,23 @@ import Pagation from "~/components/Pagation.vue";
 import Modal from "~/components/Modal.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import type { Component, Role } from "~/api/request.type";
+import type { Component, Role, Item } from "~/api/request.type";
 import { LinkIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
 let visible = ref(false)
+
+const items: Item[] = [
+  {
+    key: 'componentName',
+    label: '名称'
+  },
+  {
+    key: 'superior',
+    label: '上级'
+  }
+]
+
 // 数据
 let datas = ref<Array<Component>>([]);
 let roles = ref<Array<Role>>([])

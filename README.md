@@ -23,7 +23,7 @@
 - [x] tailwindcss(plugins: typography、forms) —— css样式
 - [x] chart.js —— 统计图表（类型：line、bar）
 - [x] qiniu.js —— 前端上传文件
-- [x] feather-icons —— 图标库
+- [x] heroicons —— 图标库
 - [x] mockjs —— 测试数据 mock
 - [x] axios —— api请求
 - [x] marked(plugins: marked-extended-tables) —— markdown 解析（插件：表格）
@@ -32,8 +32,6 @@
 - [x] vue-i18n —— 国际化支持
 
 **访问地址：**<a href="https://www.leafage.top">博客站点</a>&nbsp;&nbsp;<a href="https://console.leafage.top">RBAC管理系统</a>
-
-**体验地址：**<a href="https://preview.leafage.top">立即体验</a>
 
 ## 更新
 

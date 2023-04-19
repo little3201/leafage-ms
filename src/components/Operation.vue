@@ -10,15 +10,15 @@
           type="button"
           @click="onShow"
         >
-          All categories 
+          {{ items[0].label }}
           <ChevronDownIcon
             class="w-4 h-4 ml-2"
             aria-hidden="true"
           />
         </button>
         <ul
-          v-show="visible"
-          class="absolute top-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-gray-700 py-2 text-sm text-gray-700 dark:text-gray-200"
+          v-show="visible && items.length > 0"
+          class="absolute top-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 py-2 text-sm text-gray-700 dark:text-gray-200"
         >
           <li
             v-for="(item, index) in items"
@@ -26,7 +26,7 @@
           >
             <button
               type="button"
-              class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="inline-flex justify-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >
               {{ item.label }}
             </button>
@@ -74,7 +74,7 @@
         name="import"
         aria-label="import"
         type="button"
-        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+        class="inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
       >
         <DocumentPlusIcon
           class="w-5 h-5 mr-2"
@@ -87,7 +87,7 @@
         name="export"
         aria-label="export"
         type="button"
-        class="hidden sm:inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none active:cursor-wait"
+        class="inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
         @click="onExport"
       >
         <DocumentTextIcon
@@ -100,7 +100,7 @@
         v-if="needAdd"
         name="add"
         aria-label="add"
-        class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait"
+        class="inline-flex items-center p-2 rounded-md bg-blue-600  text-white hover:bg-blue-700 focus:outline-none"
         @click="onAdd"
       >
         <PlusCircleIcon

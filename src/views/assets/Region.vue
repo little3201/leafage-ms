@@ -2,9 +2,10 @@
   <div class="mt-2">
     <Operation
       :datas="datas"
+      :need-add="false"
       :file-name="'region'"
+      :items="items"
       @hand-reload="retrieve"
-      @hand-add="showModal"
     />
     <div class="sm-t-h overflow-auto">
       <table
@@ -231,7 +232,7 @@ import Confirm from "~/components/Confirm.vue";
 import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import type { Region } from "~/api/request.type";
+import type { Region, Item } from "~/api/request.type";
 
 // 模态框参数
 let operation = reactive({
@@ -257,6 +258,16 @@ const initData: Region = {
 // form 数据
 let formData = ref<Region>(initData);
 
+const items: Item[] = [
+  {
+    key: 'regionName',
+    label: '名称'
+  },
+  {
+    key: 'superior',
+    label: '上级'
+  }
+]
 let datas = ref<Array<Region>>([]);
 let superiors = ref<Array<Region>>([]);
 
@@ -310,19 +321,6 @@ const fetch = async (id: number) => {
   if (formData.value.id) {
     await instance.get(SERVER_URL.region.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
-}
-/**
- * 添加
- */
-const create = async () => {
-  await instance.post(SERVER_URL.region, formData.value).then(res => {
-      if (datas.value.length >= pagation.size) {
-        // 删除第一个
-        datas.value.shift();
-      }
-      // 将结果添加到第一个
-      datas.value.unshift(res.data);
-    });
 }
 /**
  * 编辑
@@ -382,8 +380,6 @@ const showModal = (id: number) => {
 const modelCommit = async (id: number) => {
   if (id && id != 0) {
     modify(id)
-  } else {
-    create()
   }
   operation.modal = false
 };

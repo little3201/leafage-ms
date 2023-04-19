@@ -3,6 +3,7 @@
     <Operation
       :datas="datas"
       :file-name="'group'"
+      :items="items"
       @hand-reload="retrieve"
       @hand-add="showModal"
     />
@@ -166,7 +167,7 @@
               ---{{ $t('select') }}---
             </option>
             <option
-              v-for="(user, index) in members"
+              v-for="(user, index) in users"
               :key="index"
               :value="user.username"
               v-text="user.nickname"
@@ -320,7 +321,7 @@ import Modal from "~/components/Modal.vue";
 import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import { Group, User } from "~/api/request.type";
+import { Group, User, Item } from "~/api/request.type";
 import { LockClosedIcon, LockOpenIcon, UsersIcon } from "@heroicons/vue/24/outline";
 
 // 模态框参数
@@ -347,6 +348,15 @@ const initData: Group = {
 }
 // 数据
 let formData = ref<Group>(initData)
+
+const items: Item[] = [
+  {
+    key: 'groupName',
+    label: '名称'
+  }
+]
+
+let users = ref<Array<User>>([])
 let members = ref<Array<User>>([])
 let datas = ref<Array<Group>>([])
 
@@ -401,7 +411,13 @@ const retrieveMembers = async (id: number) => {
       .then(res => members.value = res.data)
   }
 }
-
+/**
+ * 查询关联账号
+ */
+ const retrieveUsers = async () => {
+    await instance.get(SERVER_URL.user, {params: {page: 0, size: 100}})
+      .then(res => users.value = res.data.content)
+}
 const create = async () => {
   await instance.post(SERVER_URL.group, formData.value).then(res => {
     if (datas.value.length >= pagation.size) {
@@ -433,6 +449,7 @@ const showModal = (id: number) => {
   } else {
     formData.value = initData;
   }
+  retrieveUsers()
   operation.modal = true;
 };
 /**

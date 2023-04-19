@@ -186,7 +186,7 @@
           >
             <div class="text-gray-600 text-center">
               <label
-                for="file-upload"
+                for="cover-upload"
                 class="cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
               >
                 <PhotoIcon
@@ -419,7 +419,7 @@ const retrieve = async () => {
 /**
  * 查询分类
  */
-const retrieveCategory = async () => {
+const retrieveCategories = async () => {
   await instance.get(SERVER_URL.category, { params: { page: 0, size: 99 } }).then(res => {
     categories.value = res.data.content;
   })
@@ -507,7 +507,7 @@ const showModal = (id: number) => {
   } else {
     formData.value = initData
   }
-  retrieveCategory()
+  retrieveCategories()
   operation.modal = true;
 };
 /**

@@ -1,10 +1,6 @@
 <template>
   <div class="sm-d-h overflow-auto">
-    <div class="flex items-center my-2">
-      <h2 class="text-lg font-medium mr-auto">
-        {{ $t('settings') }}
-      </h2>
-    </div>
+    <div class="flex items-center my-2" />
     <div class="flex md:space-x-4">
       <div class="hidden md:block">
         <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-60 shadow">

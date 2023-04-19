@@ -3,7 +3,7 @@
     <RouterLink
       v-if="data.children && data.children.length > 0"
       :to="data.expand.path"
-      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4"
+      class="flex flex-1 items-center h-12 hover:bg-blue-100 hover:bg-opacity-10 rounded-l-full pl-4 -mr-4"
       exacts
       @click="isExpand = !isExpand"
     >

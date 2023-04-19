@@ -16,7 +16,7 @@
               id="password"
               v-model.trim="pwd.old"
               name="password"
-              type="text"
+              type="password"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
               aria-label="password"
@@ -31,7 +31,7 @@
               id="newpassword"
               v-model.trim="pwd.new"
               name="newpassword"
-              type="text"
+              type="password"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
               aria-label="new password"
@@ -46,7 +46,7 @@
               id="confirmnewpassword"
               v-model.trim="pwd.confirm"
               name="confirmnewpassword"
-              type="text"
+              type="password"
               class="w-full border-gray-300 py-1 mt-1 rounded-md"
               required
               aria-label="confirm new password"

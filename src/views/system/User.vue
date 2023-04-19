@@ -4,6 +4,7 @@
       :need-add="false"
       :datas="datas"
       :file-name="'user'"
+      :items="items"
       @hand-reload="retrieve"
     />
     <div class="sm-t-h overflow-auto">
@@ -83,31 +84,35 @@
             <td class="px-4">
               {{ data.nickname }}
             </td>
-            
+
             <td class="px-4">
               <div class="flex items-center justify-center">
                 <span
+                  v-if="data.accountExpiresAt"
                   class="w-2 h-2 rounded-full"
-                  :class="new Date(data.accountExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
+                  :class="new Date(data.accountExpiresAt) > new Date() ? 'bg-lime-500' : 'bg-red-500'"
                 />
-                <span class="ml-2">{{ new Date(data.accountExpiresAt).toLocaleString('zh', { hour12: false }) }}</span>
+                <span class="ml-2">{{ data.accountExpiresAt ? new Date(data.accountExpiresAt).toLocaleString('zh', {
+                  hour12: false
+                }) : '-' }}</span>
               </div>
             </td>
             <td class="px-4">
               <div class="flex items-center justify-center">
                 <span
+                  v-if="data.credentialsExpiresAt"
                   class="w-2 h-2 rounded-full"
-                  :class="new Date(data.credentialsExpiresAt) > new Date() ? 'bg-lime-500': 'bg-red-500'"
+                  :class="new Date(data.credentialsExpiresAt) > new Date() ? 'bg-lime-500' : 'bg-red-500'"
                 />
-                <span class="ml-2">{{
-                  new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false })
+                <span class="ml-2">{{ data.credentialsExpiresAt ?
+                  new Date(data.credentialsExpiresAt).toLocaleString('zh', { hour12: false }) : '-'
                 }}</span>
               </div>
             </td>
             <td class="px-4">
               <div
                 class="flex items-center justify-center"
-                :class="data.accountLocked ? 'text-red-600': 'text-lime-600'"
+                :class="data.accountLocked ? 'text-red-600' : 'text-lime-600'"
               >
                 <LockClosedIcon
                   v-if="data.accountLocked"
@@ -126,7 +131,21 @@
               <Action
                 :need-edit="false"
                 :need-del="false"
-              />
+              >
+                <button
+                  type="button"
+                  name="grant"
+                  aria-label="grant"
+                  class="flex items-center mr-3 text-amber-600 focus:outline-none"
+                  @click="showModal(data.username)"
+                >
+                  <IdentificationIcon
+                    class="w-4 h-4 mr-1"
+                    aria-hidden="true"
+                  />
+                  {{ $t('grant') }}
+                </button>
+              </Action>
             </td>
           </tr>
         </tbody>
@@ -139,6 +158,73 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
+    <Drawer
+      :visible="operation.modal"
+      :title="'授权'"
+      @close-action="onClose"
+    >
+      <template #content>
+        <div class="w-full">
+          <label for="groups">{{ $t('groups') }}</label>
+          <select
+            id="groups"
+            name="groups"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="groups"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="(group, index) in groups"
+              :key="index"
+              :value="group.id"
+              v-text="group.groupName"
+            />
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="roles">{{ $t('roles') }}</label>
+          <select
+            id="roles"
+            name="roles"
+            class="mt-1 w-full block rounded-md border-gray-300"
+            aria-label="roles"
+          >
+            <option selected>
+              ---{{ $t('select') }}---
+            </option>
+            <option
+              v-for="(role, index) in roles"
+              :key="index"
+              :value="role.id"
+              v-text="role.roleName"
+            />
+          </select>
+        </div>
+      </template>
+      <template #footer>
+        <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
+          type="button"
+          name="cancle"
+          aria-label="cancle"
+          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
+          @click="onClose"
+        >
+          {{
+            $t('cancle')
+          }}
+        </button>
+      </template>
+    </Drawer>
   </div>
 </template>
 
@@ -148,13 +234,16 @@ import { onMounted, ref, reactive } from "vue";
 import Operation from "~/components/Operation.vue";
 import Action from "~/components/Action.vue";
 import Pagation from "~/components/Pagation.vue";
+import Drawer from "~/components/Drawer.vue";
 
 import { instance, SERVER_URL } from "~/api";
-import type { User } from "~/api/request.type";
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
+import type { User, Group, Role, Item } from "~/api/request.type";
+import { IdentificationIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/vue/24/outline";
 
-// 数据
-let datas = ref<Array<User>>([]);
+// 模态框参数
+let operation = reactive({
+  modal: false
+})
 
 // 分页参数
 let pagation = reactive({
@@ -162,6 +251,22 @@ let pagation = reactive({
   size: 10,
   total: 0
 })
+
+const items: Item[] = [
+  {
+    key: 'username',
+    label: '账号'
+  },
+  {
+    key: 'nickname',
+    label: '昵称'
+  }
+]
+
+// 数据
+let datas = ref<Array<User>>([]);
+let groups = ref<Array<Group>>([])
+let roles = ref<Array<Role>>([])
 
 onMounted(() => {
   retrieve();
@@ -186,6 +291,24 @@ const retrieve = async () => {
     })
 };
 /**
+ * 查询列表
+ */
+const retrieveGroups = async () => {
+  await instance.get(SERVER_URL.group, { params: { page: 0, size: 100 } })
+    .then(res => {
+      groups.value = res.data.content
+    })
+};
+/**
+ * 查询列表
+ */
+const retrieveRoles = async () => {
+  await instance.get(SERVER_URL.role, { params: { page: 0, size: 100 } })
+    .then(res => {
+      roles.value = res.data.content
+    })
+};
+/**
  * 解锁
  * @param username 账号
  */
@@ -199,5 +322,17 @@ const unlock = async (username: string) => {
       })
     }
   });
+}
+/**
+ * 新增/编辑：打开
+ * @param operate 是否打开
+ */
+const showModal = (username: string) => {
+  retrieveGroups()
+  retrieveRoles()
+  operation.modal = true;
+};
+const onClose = () => {
+  operation.modal = false
 }
 </script>

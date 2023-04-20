@@ -18,14 +18,19 @@ export default defineConfig({
     })
   ],
 
-  // server: {
-  //   proxy: {
-  //     // 选项写法
-  //     '/api': {
-  //       target: 'https://console.leafage.top/api',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      // 选项写法
+      '/assets': {
+        target: 'http://localhost:8764',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/assets/, '')
+      },
+      '/hypervisor': {
+        target: 'http://localhost:8763',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/hypervisor/, '')
+      }
+    }
+  }
 })

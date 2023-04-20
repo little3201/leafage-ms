@@ -272,6 +272,9 @@ const fetch = async (id: number) => {
     await instance.get(SERVER_URL.role.concat(`/${id}`)).then(res => formData.value = { ...res.data });
   }
 };
+/**
+ * 添加
+ */
 const create = async () => {
   await instance.post(SERVER_URL.role, formData.value).then(res => {
       if (datas.value.length >= pagation.size) {
@@ -282,6 +285,10 @@ const create = async () => {
       datas.value.unshift(res.data);
     });
 }
+/**
+ * 编辑
+ * @param id 主键
+ */
 const modify = async (id: number) => {
   await instance.put(SERVER_URL.role.concat(`/${id}`), formData.value)
       .then(res => {

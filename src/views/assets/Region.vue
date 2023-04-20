@@ -327,7 +327,7 @@ const fetch = async (id: number) => {
  * @param id 主键
  */
 const modify = async (id: number) => {
-  await instance.put(SERVER_URL.region.concat(`/${id}`), formData.value)
+  await instance.put(SERVER_URL.region.concat(`/${id}`), {...formData.value, superiorId: formData.value.superior})
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(

@@ -437,7 +437,7 @@ const fetch = async (id: number) => {
  * 添加
  */
 const create = async () => {
-  await instance.post(SERVER_URL.posts, formData).then(res => {
+  await instance.post(SERVER_URL.posts, {...formData.value, categoryId: formData.value.category}).then(res => {
       if (datas.value.length >= pagation.size) {
         // 删除最后一个
         datas.value.pop();
@@ -451,7 +451,7 @@ const create = async () => {
  * @param id 主键
  */
  const modify = async (id: number) => {
-  await instance.put(SERVER_URL.posts.concat(`/${id}`), formData.value)
+  await instance.put(SERVER_URL.posts.concat(`/${id}`), {...formData.value, categoryId: formData.value.category})
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(

@@ -248,7 +248,7 @@ const fetch = async (id: number) => {
  * 添加
  */
 const create = async () => {
-  await instance.post(SERVER_URL.dictionary, formData.value).then(res => {
+  await instance.post(SERVER_URL.dictionary, {...formData.value, superiorId: formData.value.superior}).then(res => {
     if (datas.value.length >= pagation.size) {
       // 删除第一个
       datas.value.shift();
@@ -263,7 +263,7 @@ const create = async () => {
  * @param id 主键
  */
 const modify = async (id: number) => {
-  await instance.put(SERVER_URL.dictionary.concat(`/${id}`), formData.value)
+  await instance.put(SERVER_URL.dictionary.concat(`/${id}`), {...formData.value, superiorId: formData.value.superior})
     .then(res => {
       // 将datas中修改项的历史数据删除
       datas.value = datas.value.filter(

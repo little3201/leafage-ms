@@ -418,6 +418,9 @@ const retrieveMembers = async (id: number) => {
     await instance.get(SERVER_URL.user, {params: {page: 0, size: 100}})
       .then(res => users.value = res.data.content)
 }
+/**
+ * 添加
+ */
 const create = async () => {
   await instance.post(SERVER_URL.group, formData.value).then(res => {
     if (datas.value.length >= pagation.size) {
@@ -428,6 +431,10 @@ const create = async () => {
     datas.value.unshift(res.data);
   });
 }
+/**
+ * 编辑
+ * @param id 主键
+ */
 const modify = async (id: number) => {
   await instance.put(SERVER_URL.group.concat(`/${id}`), formData.value)
     .then(res => {

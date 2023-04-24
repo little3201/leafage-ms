@@ -122,8 +122,8 @@
             />
             <td>
               <Action
-                :need-edit="false"
-                :need-del="false"
+                :editable="false"
+                :removeable="false"
               >
                 <button
                   v-if="data.count > 0"
@@ -155,8 +155,8 @@
 
     <Modal
       :visible="visible"
-      :show-close="true"
-      @close-action="onClose"
+      :closeable="true"
+      @close="onClose"
     >
       <template #content>
         <table

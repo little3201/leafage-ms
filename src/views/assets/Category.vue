@@ -84,8 +84,8 @@
             />
             <td>
               <Action
-                @del-action="confirmOperate"
-                @edit-action="showModal(data.id)"
+                @del="confirmOperate"
+                @edit="showModal(data.id)"
               />
             </td>
           </tr>
@@ -126,7 +126,7 @@
     <Drawer
       :visible="operation.modal"
       :title="'编辑类目'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">

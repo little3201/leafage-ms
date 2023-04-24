@@ -129,15 +129,15 @@
             </td>
             <td>
               <Action
-                :need-edit="false"
-                :need-del="false"
+                :editable="false"
+                :removeable="false"
               >
                 <button
                   type="button"
                   name="grant"
                   aria-label="grant"
                   class="flex items-center mr-3 text-amber-600 focus:outline-none"
-                  @click="showModal(data.username)"
+                  @click="showModal"
                 >
                   <IdentificationIcon
                     class="w-4 h-4 mr-1"
@@ -161,7 +161,7 @@
     <Drawer
       :visible="operation.modal"
       :title="'授权'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">
@@ -327,7 +327,7 @@ const unlock = async (username: string) => {
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const showModal = (username: string) => {
+const showModal = () => {
   retrieveGroups()
   retrieveRoles()
   operation.modal = true;

@@ -6,12 +6,12 @@
         name="unread"
         aria-label="unread"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none  flex flex-col justify-between  pt-3 rounded-t "
-        :class="{ 'text-blue-700 border-blue-700': !isRead }"
+        :class="{ 'text-blue-700 border-blue-700': !operation.read }"
         @click="switchType(false)"
       >
         <span class="mb-3">{{ $t('unread') }}</span>
         <div
-          v-show="!isRead"
+          v-show="!operation.read"
           class="w-full h-1 bg-blue-600 rounded-t-md"
         />
       </button>
@@ -20,13 +20,13 @@
         name="read"
         aria-label="read"
         class=" hover:text-blue-700 focus:text-blue-700 focus:outline-none flex flex-col justify-between  pt-3 rounded-t "
-        :class="{ 'text-blue-700 border-blue-700': isRead }"
+        :class="{ 'text-blue-700 border-blue-700': operation.read }"
         @click="switchType(true)"
       >
         <span class="mb-3">
           {{ $t('readed') }}</span>
         <div
-          v-show="isRead"
+          v-show="operation.read"
           class="w-full h-1 bg-blue-600 rounded-t-md"
         />
       </button>
@@ -40,7 +40,7 @@
         <div class="flex items-center">
           <p
             class="cursor-pointer hover:underline hover:text-blue-600"
-            @click="previewOperation(true, message.id)"
+            @click="showPreview(message.id)"
           >
             {{ message.title }}
           </p>
@@ -55,9 +55,8 @@
       </div>
     </div>
     <Modal
-      :is-show="isShow"
-      :need-footer="false"
-      @close-action="previewOperation"
+      :visible="operation.visible"
+      @close="onClose"
     >
       <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
@@ -69,7 +68,7 @@
 
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 
 import { instance, SERVER_URL } from "~/api";
 import type { Message } from "~/api/request.type";
@@ -78,8 +77,11 @@ import Modal from "~/components/Modal.vue"
 
 let messages = ref<Array<Message>>([])
 
-let isRead = ref(false)
-let isShow = ref(false)
+let operation = reactive({
+  read: false,
+  visible: false
+})
+
 let data = ref<Message>({
   id: 0,
   title: '',
@@ -89,41 +91,53 @@ let data = ref<Message>({
 })
 
 // 分页参数
-let page = ref(0);
-let size = ref(10);
-let total = ref(0);
+let pagation = reactive({
+  page: 0,
+  size: 10,
+  total: 0
+})
+
+const username = ref(JSON.parse(sessionStorage.getItem("user") || '').username)
 
 onMounted(() => {
-  retrieve(isRead.value)
+  retrieve(username)
 })
 /**
  * 查询列表
  */
-const retrieve = async (read: boolean) => {
-  await instance.get(SERVER_URL.messages, { params: { page: page.value, size: size.value, read: read } })
-    .then(res => {
-      messages.value = res.data.content
-      total.value = res.data.totalElements
-    })
+const retrieve = async (receiver: string) => {
+  if (receiver && receiver.length > 0) {
+    await instance.get(SERVER_URL.messages, { params: { page: pagation.page, size: pagation.size, receiver: receiver } })
+      .then(res => {
+        messages.value = res.data.content
+        pagation.total = res.data.totalElements
+      })
+  }
+}
+const fetch = async (id: number) => {
+  await instance.get(SERVER_URL.messages.concat(`/${id}`)).then(res => data.value = res.data)
 }
 /**
  * 已读/未读切换
  * @param read 是否已读
  */
 const switchType = async (read: boolean) => {
-  isRead.value = read
-  retrieve(read)
+  operation.read = read
+  retrieve(username)
 }
 /**
  * 预览
  * @param show 是否展示
  * @param id 主键
  */
-const previewOperation = (show: boolean, id: number) => {
-  if (show) {
-    instance.get(SERVER_URL.messages.concat(`/${id}`)).then(res => data.value = res.data);
+const showPreview = (id: number) => {
+  if (id && id != 0) {
+    fetch(id)
   }
-  isShow.value = show
+  operation.visible = true
 }
 
+const onClose = () => {
+  operation.visible = false
+}
 </script>

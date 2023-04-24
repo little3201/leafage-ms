@@ -1,6 +1,5 @@
 <template>
   <Modal
-    ref="confirmRef"
     :visible="visible"
   >
     <template #content>

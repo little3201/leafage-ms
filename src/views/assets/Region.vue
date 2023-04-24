@@ -89,8 +89,8 @@
             />
             <td>
               <Action
-                @del-action="confirmOperate"
-                @edit-action="showModal(formData.id)"
+                @del="confirmOperate"
+                @edit="showModal(formData.id)"
               />
             </td>
           </tr>
@@ -133,7 +133,7 @@
     <Drawer
       :visible="operation.modal"
       :title="'编辑行政区划'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">

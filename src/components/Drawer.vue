@@ -33,22 +33,24 @@
 </template>
 
 <script lang="ts" setup>
+import { withDefaults } from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-defineProps({
-  visible: {
-    type: Boolean,
-    default: false,
-  },
-  title: {
-    type: String,
-    default: ''
-  }
-})
 
-const emit = defineEmits(["closeAction"]);
+interface Props {
+  visible: boolean,
+  title: string
+}
+
+// 设置默认值
+withDefaults(defineProps<Props>(), {
+  visiable: false,
+  title: ''
+});
+
+const emit = defineEmits(["close"]);
 
 const onClose = () => {
-  emit("closeAction", false);
+  emit("close", false);
 };
 </script>
 

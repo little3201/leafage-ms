@@ -30,6 +30,12 @@
               scope="col"
               class="px-4"
             >
+              {{ $t('superior') }}
+            </th>
+            <th
+              scope="col"
+              class="px-4"
+            >
               {{ $t('description') }}
             </th>
             <th
@@ -61,6 +67,10 @@
             />
             <td
               class="px-4"
+              v-text="data.superior"
+            />
+            <td
+              class="px-4"
               v-text="data.description"
             />
             <td
@@ -69,8 +79,8 @@
             />
             <td>
               <Action
-                :need-del="false"
-                @edit-action="showModal(data.id)"
+                :editable="true"
+                @edit="showModal(data.id)"
               />
             </td>
           </tr>
@@ -87,7 +97,7 @@
     <Drawer
       :visible="visible"
       :title="'编辑字典'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">

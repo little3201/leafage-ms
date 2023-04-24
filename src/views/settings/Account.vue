@@ -186,9 +186,9 @@
         We won’t charge your payment information anymore.</span>
     </fieldset>
     <Confirm
-      :is-show="isShow"
-      @cancel-action="confirmOperate"
-      @commit-action="confirmCommit"
+      :visible="isShow"
+      @cancel="confirmOperate"
+      @commit="confirmCommit"
     />
   </div>
 </template>

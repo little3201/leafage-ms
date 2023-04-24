@@ -89,8 +89,10 @@
             />
             <td>
               <Action
-                @del-action="confirmOperate"
-                @edit-action="showModal(data.id)"
+                :editable="true"
+                :removeable="true"
+                @edit="showModal(data.id)"
+                @del="confirmOperate"
               />
             </td>
           </tr>
@@ -133,7 +135,7 @@
     <Drawer
       :visible="operation.modal"
       :title="'编辑帖子'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">
@@ -464,8 +466,9 @@ const create = async () => {
 /**
  * 添加tag
  */
-const addTag = (tag: string) => {
-  formData.value.tags.push(tag)
+const addTag = (item: string) => {
+  formData.value.tags.push(item)
+  tag.value =  ''
 };
 /**
  * 删除tag

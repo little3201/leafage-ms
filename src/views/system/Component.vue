@@ -121,10 +121,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
-              <Action
-                :need-edit="false"
-                :need-del="false"
-              >
+              <Action>
                 <button
                   v-if="data.count > 0"
                   type="button"
@@ -155,8 +152,8 @@
 
     <Modal
       :visible="visible"
-      :show-close="true"
-      @close-action="onClose"
+      :closeable="true"
+      @close="onClose"
     >
       <template #content>
         <table

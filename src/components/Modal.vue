@@ -10,7 +10,7 @@
         class=" bg-white rounded-lg text-left overflow-x-hidden overflow-y-auto max-h-screen md:max-w-lg lg:max-w-2xl my-6"
       >
         <button
-          v-if="showClose"
+          v-if="closeable"
           type="button"
           name="close"
           aria-label="close"
@@ -39,22 +39,24 @@
 </template>
 
 <script lang="ts" setup>
+import {withDefaults} from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline'
-defineProps({
-  visible: {
-    type: Boolean,
-    default: false,
-  },
-  showClose: {
-    type: Boolean,
-    default: false
-  }
+
+interface Props {
+  visible: boolean,
+  closeable?: boolean
+}
+
+// 设置默认值
+withDefaults(defineProps<Props>(), {
+  visiable: false,
+  closeable: false
 });
 
-const emit = defineEmits(["closeAction"]);
+const emit = defineEmits(["close"]);
 
 const onClose = () => {
-  emit("closeAction", false);
+  emit("close", false);
 };
 </script>
 

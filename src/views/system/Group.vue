@@ -80,8 +80,10 @@
             />
             <td>
               <Action
-                @del-action="confirmOperate"
-                @edit-action="showModal(data.id)"
+                :editable="true"
+                :removeable="true"
+                @edit="showModal(data.id)"
+                @del="confirmOperate"
               >
                 <button
                   v-if="data.count > 0"
@@ -139,7 +141,7 @@
     <Drawer
       :visible="operation.modal"
       :title="'编辑分组'"
-      @close-action="onClose"
+      @close="onClose"
     >
       <template #content>
         <div class="w-full">
@@ -200,8 +202,8 @@
     </Drawer>
     <Modal
       :visible="operation.members"
-      :show-close="true"
-      @close-action="onCloseMember"
+      :closeable="true"
+      @close="onCloseMember"
     >
       <template #content>
         <table

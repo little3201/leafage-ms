@@ -5,12 +5,12 @@
   >
     <slot />
     <button
-      v-if="needEdit"
+      v-if="editable"
       name="edit"
       aria-label="edit"
       type="button"
       class="flex items-center mr-3 focus:outline-none"
-      @click="$emit('editAction', true)"
+      @click="$emit('edit', true)"
     >
       <PencilSquareIcon
         class="w-4 h-4 mr-1"
@@ -19,12 +19,12 @@
       {{ $t('edit') }}
     </button>
     <button
-      v-if="needDel"
+      v-if="removeable"
       type="button"
       name="del"
       aria-label="del"
       class="flex items-center text-red-600 focus:outline-none"
-      @click="$emit('delAction', true)"
+      @click="$emit('del', true)"
     >
       <TrashIcon
         class="w-4 h-4 mr-1"
@@ -42,17 +42,17 @@ import type { User } from '~/api/request.type';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
-  needEdit: {
+  editable: {
     type: Boolean,
-    default: true,
+    default: false,
   },
-  needDel: {
+  removeable: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
-defineEmits(['editAction', 'delAction']);
+defineEmits(['edit', 'del']);
 
 const user = ref<User>({
   username: '',

@@ -36,7 +36,6 @@
             <RouterLink
               class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
               to="/settings/account"
-              exact
             >
               <CogIcon
                 class="w-4 h-4 mr-2"

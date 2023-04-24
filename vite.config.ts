@@ -21,15 +21,10 @@ export default defineConfig({
   server: {
     proxy: {
       // 选项写法
-      '/assets': {
-        target: 'http://localhost:8764',
+      '/api': {
+        target: 'http://localhost:8760',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/assets/, '')
-      },
-      '/hypervisor': {
-        target: 'http://localhost:8763',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/hypervisor/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

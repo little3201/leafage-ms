@@ -44,11 +44,11 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 defineProps({
   editable: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   removeable: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 

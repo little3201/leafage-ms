@@ -79,7 +79,7 @@
             />
             <td>
               <Action
-                :removeable="false"
+                :editable="true"
                 @edit="showModal(data.id)"
               />
             </td>

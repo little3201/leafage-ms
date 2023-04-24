@@ -128,10 +128,7 @@
               </div>
             </td>
             <td>
-              <Action
-                :editable="false"
-                :removeable="false"
-              >
+              <Action>
                 <button
                   type="button"
                   name="grant"

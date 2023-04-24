@@ -121,10 +121,7 @@
               v-text="new Date(data.modifyTime).toLocaleDateString()"
             />
             <td>
-              <Action
-                :editable="false"
-                :removeable="false"
-              >
+              <Action>
                 <button
                   v-if="data.count > 0"
                   type="button"

@@ -7,7 +7,7 @@ const pendingPool = new Map<string, AbortController>()
 const instance = axios.create({
     withCredentials: true,
     // 请求的完整路径就是baseURL中的
-    baseURL: '/'
+    baseURL: '/api'
 })
 
 // 请求拦截

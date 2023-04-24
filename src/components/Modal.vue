@@ -44,9 +44,10 @@ import { XMarkIcon } from '@heroicons/vue/24/outline'
 
 interface Props {
   visible: boolean,
-  closeable: boolean
+  closeable?: boolean
 }
 
+// 设置默认值
 withDefaults(defineProps<Props>(), {
   visiable: false,
   closeable: false

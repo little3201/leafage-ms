@@ -89,8 +89,10 @@
             />
             <td>
               <Action
+                :editable="true"
+                :removeable="true"
+                @edit="showModal(data.id)"
                 @del="confirmOperate"
-                @edit="showModal(formData.id)"
               />
             </td>
           </tr>

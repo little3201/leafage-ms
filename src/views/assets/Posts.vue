@@ -411,7 +411,7 @@ const removeCover = () => {
  * 查询列表
  */
 const retrieve = async () => {
-  await instance.get(SERVER_URL.posts, { params: { page: pagation.page, size: pagation.size } })
+  await instance.get(SERVER_URL.post, { params: { page: pagation.page, size: pagation.size } })
     .then(res => {
       datas.value = res.data.content
       pagation.total = res.data.totalElements
@@ -432,14 +432,14 @@ const retrieveCategories = async () => {
  */
 const fetch = async (id: number) => {
   if (id && id != 0) {
-    await instance.get(SERVER_URL.posts.concat(`/${id}`)).then(res => formData.value = {...res.data});
+    await instance.get(SERVER_URL.post.concat(`/${id}`)).then(res => formData.value = {...res.data});
   }
 };
 /**
  * 添加
  */
 const create = async () => {
-  await instance.post(SERVER_URL.posts, {...formData.value, categoryId: formData.value.category}).then(res => {
+  await instance.post(SERVER_URL.post, {...formData.value, categoryId: formData.value.category}).then(res => {
       if (datas.value.length >= pagation.size) {
         // 删除最后一个
         datas.value.pop();
@@ -453,7 +453,7 @@ const create = async () => {
  * @param id 主键
  */
  const modify = async (id: number) => {
-  await instance.put(SERVER_URL.posts.concat(`/${id}`), {...formData.value, categoryId: formData.value.category})
+  await instance.put(SERVER_URL.post.concat(`/${id}`), {...formData.value, categoryId: formData.value.category})
       .then(res => {
         // 将datas中修改项的历史数据删除
         datas.value = datas.value.filter(
@@ -487,7 +487,7 @@ const confirmOperate = () => {
  * confirm 提交
  */
 const confirmCommit = async (id: number) => {
-  await instance.delete(SERVER_URL.posts.concat(`/${id}`)).then(() => {
+  await instance.delete(SERVER_URL.post.concat(`/${id}`)).then(() => {
     // 将datas中修改项的历史数据删除
     datas.value = datas.value.filter(
       (item: Post) => item.id != formData.value.id

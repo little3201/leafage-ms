@@ -16,7 +16,7 @@ export const SERVER_URL = {
   dictionary: SERVER_PRE.hypervisor.concat('/dictionaries'), // 字典
   accesslog: SERVER_PRE.hypervisor.concat('/access-logs'), // 字典
 
-  posts: SERVER_PRE.assets.concat('/posts'), // 帖子
+  post: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/categories'), // 类别
   resource: SERVER_PRE.assets.concat('/resources'), // 资源
   statistics: SERVER_PRE.assets.concat('/statistics'), // 统计

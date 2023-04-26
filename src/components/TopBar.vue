@@ -174,13 +174,13 @@
             v-text="user.nickname.substring(0, 1)"
           />
         </button>
-        <RouterLink
+        <button
           v-else
-          to="/signin"
           class="bg-blue-600 whitespace-nowrap text-sm text-white hover:bg-blue-700 px-3 py-1.5 rounded-full"
+          @click="toSignin"
         >
           {{ $t('signin') }}
-        </RouterLink>
+        </button>
         <div
           v-show="isAccount"
           class="origin-top-right p-2 absolute w-36 right-0 mt-3 rounded-md shadow-md bg-white divide-y z-10"
@@ -334,6 +334,9 @@ const operate = (operation: string) => {
       isLanguage.value = false;
       isAccount.value = false;
   }
+}
+const toSignin = () => {
+  window.location.href = '/api/auth/'
 }
 /**
  * 切换语言

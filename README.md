@@ -52,6 +52,14 @@ yarn dev
 yarn build
 ```
 
+### Run for production
+```
+docker build -t leafage-pw:v1 .
+
+docker run -d --name leafage-pw:v1
+```
+
+
 <a href="https://github.com/little3201/leafage-ms/blob/master/LICENSE">
   <h2>MIT</h2>
 </a>

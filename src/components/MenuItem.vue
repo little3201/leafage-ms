@@ -77,7 +77,7 @@
   }
   
   .router-link-exact-active {
-    @apply bg-gray-100 text-black;
+    @apply bg-neutral-100 text-black;
   }
   
   .router-link-exact-active:before {

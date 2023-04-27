@@ -4,13 +4,13 @@
       <legend class="sr-only" />
     </fieldset>
     <fieldset class="my-2">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         Change usernmae
       </legend>
       <div class="mt-4 text-sm">
         <label
           for="username"
-          class="font-medium text-gray-700"
+          class="font-medium text-neutral-700"
         >{{ $t('username') }}</label>
         <div class="flex items-center space-x-4 mt-1">
           <input
@@ -18,7 +18,7 @@
             v-model="user.username"
             name="username"
             type="text"
-            class="block w-80 border-gray-300 py-1 rounded-md"
+            class="block w-80 border-neutral-300 py-1 rounded-md"
             :disabled="!editUsername"
             aria-label="username"
           >
@@ -35,7 +35,7 @@
             }}
           </button>
         </div>
-        <span class="text-xs mt-1 text-gray-400 inline-flex items-center max-w-none">
+        <span class="text-xs mt-1 text-neutral-400 inline-flex items-center max-w-none">
           <QuestionMarkCircleIcon
             class="w-4 h-4 ml-1"
             aria-hidden="true"
@@ -50,7 +50,7 @@
       </div>
     </fieldset>
     <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         By Email
       </legend>
       <div class="mt-4 space-y-4">
@@ -60,16 +60,16 @@
               id="comments"
               name="comments"
               type="checkbox"
-              class="border-gray-300 rounded cursor-pointer"
+              class="border-neutral-300 rounded cursor-pointer"
               aria-label="comments"
             >
           </div>
           <div class="ml-3 text-sm">
             <label
               for="comments"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >{{ $t('comments') }}</label>
-            <p class="text-gray-500">
+            <p class="text-neutral-500">
               Get notified when someones posts a comment on a posting.
             </p>
           </div>
@@ -80,16 +80,16 @@
               id="candidates"
               name="candidates"
               type="checkbox"
-              class="border-gray-300 rounded cursor-pointer"
+              class="border-neutral-300 rounded cursor-pointer"
               aria-label="candidates"
             >
           </div>
           <div class="ml-3 text-sm">
             <label
               for="candidates"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Candidates</label>
-            <p class="text-gray-500">
+            <p class="text-neutral-500">
               Get notified when a candidate applies for a job.
             </p>
           </div>
@@ -100,16 +100,16 @@
               id="offers"
               name="offers"
               type="checkbox"
-              class="border-gray-300 rounded cursor-pointer"
+              class="border-neutral-300 rounded cursor-pointer"
               aria-label="offers"
             >
           </div>
           <div class="ml-3 text-sm">
             <label
               for="offers"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Offers</label>
-            <p class="text-gray-500">
+            <p class="text-neutral-500">
               Get notified when a candidate accepts or rejects an offer.
             </p>
           </div>
@@ -117,10 +117,10 @@
       </div>
     </fieldset>
     <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         Push Notifications
       </legend>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-neutral-500">
         These are delivered via SMS to your mobile phone.
       </p>
       <div class="mt-4 space-y-4">
@@ -129,12 +129,12 @@
             id="push-everything"
             name="push-everything"
             type="radio"
-            class="border-gray-300 cursor-pointer"
+            class="border-neutral-300 cursor-pointer"
             aria-label="push-everything"
           >
           <label
             for="push-everything"
-            class="ml-3 block text-sm font-medium text-gray-700"
+            class="ml-3 block text-sm font-medium text-neutral-700"
           >Everything</label>
         </div>
         <div class="flex items-center">
@@ -142,12 +142,12 @@
             id="push-email"
             name="push-email"
             type="radio"
-            class="border-gray-300 cursor-pointer"
+            class="border-neutral-300 cursor-pointer"
             aria-label="push-email"
           >
           <label
             for="push-email"
-            class="ml-3 block text-sm font-medium text-gray-700"
+            class="ml-3 block text-sm font-medium text-neutral-700"
           >Same as email</label>
         </div>
         <div class="flex items-center">
@@ -155,21 +155,21 @@
             id="push-nothing"
             name="push-messages"
             type="radio"
-            class="border-gray-300 cursor-pointer"
+            class="border-neutral-300 cursor-pointer"
             aria-label="push-messages"
           >
           <label
             for="push-nothing"
-            class="ml-3 block text-sm font-medium text-gray-700"
+            class="ml-3 block text-sm font-medium text-neutral-700"
           >No push messages</label>
         </div>
       </div>
     </fieldset>
     <fieldset class="my-2">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         Delete User
       </legend>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-neutral-500">
         Once you delete your user, there is no going back. Please be certain.
       </p>
       <button
@@ -182,7 +182,7 @@
         Delete
         User
       </button>
-      <span class="text-xs text-gray-400">Are you sure you don’t want to just downgrade your user to a FREE user?
+      <span class="text-xs text-neutral-400">Are you sure you don’t want to just downgrade your user to a FREE user?
         We won’t charge your payment information anymore.</span>
     </fieldset>
     <Confirm

@@ -18,13 +18,14 @@ export default defineConfig({
     })
   ],
 
-  // server: {
-  //   proxy: {
-  //     // 选项写法
-  //     '^/api': {
-  //       target: 'https://console.leafage.top',
-  //       changeOrigin: true
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      // 选项写法
+      '^/api': {
+        target: 'http://localhost:8760',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

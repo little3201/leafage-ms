@@ -13,7 +13,7 @@
         aria-label="components"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -74,7 +74,7 @@
           <tr
             v-for="(data, index) in datas"
             :key="index"
-            class="text-center bg-white border-y-4 border lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 border lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
@@ -128,7 +128,7 @@
                   name="role"
                   aria-label="role"
                   class="flex items-center mr-3 text-purple-600 focus:outline-none"
-                  @click="showModal(data.id)"
+                  @click="onModal(data.id)"
                 >
                   <LinkIcon
                     class="w-4 h-4 mr-1"
@@ -153,7 +153,7 @@
     <Modal
       :visible="visible"
       :closeable="true"
-      @close="onClose"
+      @close="modalClose"
     >
       <template #content>
         <table
@@ -161,7 +161,7 @@
           aria-label="role"
         >
           <thead>
-            <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
               <th
                 scope="col"
                 class="px-4 py-2 sm:py-3 text-left"
@@ -192,7 +192,7 @@
             <tr
               v-for="(role, index) in roles"
               :key="index"
-              class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
+              class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 group hover:bg-neutral-50 hover:text-blue-600"
             >
               <td class="px-4 py-2 sm:py-3 text-left">
                 {{ index + 1 }}
@@ -281,15 +281,14 @@ const retrieveRoles = async (id: number) => {
 }
 /**
  * 打开 modal
- * @param show 是否展示
  * @param id 主键
  */
-const showModal = async (id: number) => {
+const onModal = async (id: number) => {
   retrieveRoles(id)
   visible.value = true
 }
 
-const onClose = () => {
+const modalClose = () => {
   visible.value = false
 }
 </script>

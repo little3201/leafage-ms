@@ -3,7 +3,7 @@
     <div class="flex items-center my-2" />
     <div class="flex md:space-x-4">
       <div class="hidden md:block">
-        <div class="bg-white divide-y px-4 rounded-md text-sm text-gray-600 w-60 shadow">
+        <div class="bg-white divide-y px-4 rounded-md text-sm text-neutral-600 w-60 shadow">
           <div class="inline-flex items-center py-4">
             <figure class="rounded-full w-12 h-12 border">
               <img
@@ -17,14 +17,14 @@
             <div class="ml-4 mr-auto">
               <strong v-text="user.nickname" />
               <p
-                class="text-gray-400 text-sm"
+                class="text-neutral-400 text-sm"
                 v-text="user.username"
               />
             </div>
           </div>
           <div class="py-4 space-y-1">
             <RouterLink
-              class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              class="flex items-center hover:text-blue-600 hover:bg-neutral-100 rounded-md p-2"
               to="/settings/profile"
             >
               <IdentificationIcon
@@ -34,7 +34,7 @@
               {{ $t('profile') }}
             </RouterLink>
             <RouterLink
-              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-neutral-100 rounded-md p-2"
               to="/settings/account"
             >
               <CogIcon
@@ -44,7 +44,7 @@
               {{ $t('account') }}
             </RouterLink>
             <RouterLink
-              class="flex items-center hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              class="flex items-center hover:text-blue-600 hover:bg-neutral-100 rounded-md p-2"
               to="/settings/security"
             >
               <ShieldCheckIcon
@@ -56,7 +56,7 @@
           </div>
           <div class="py-4">
             <RouterLink
-              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-neutral-100 rounded-md p-2"
               to="/settings/messages"
             >
               <BellAlertIcon
@@ -66,7 +66,7 @@
               {{ $t('messages') }}
             </RouterLink>
             <RouterLink
-              class="flex items-center my-1 hover:text-blue-600 hover:bg-gray-100 rounded-md p-2"
+              class="flex items-center my-1 hover:text-blue-600 hover:bg-neutral-100 rounded-md p-2"
               to="/settings/accesslogs"
             >
               <DocumentTextIcon
@@ -99,6 +99,6 @@ const user: User = ref(JSON.parse(sessionStorage.getItem("user") || ''))
 
 <style scoped>
 .router-link-exact-active {
-  @apply text-blue-700 bg-gray-100;
+  @apply text-blue-700 bg-neutral-100;
 }
 </style>

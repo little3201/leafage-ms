@@ -11,7 +11,7 @@
         <input
           v-model="formData.email"
           type="email"
-          class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
+          class="block border-neutral-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Email"
           required
           
@@ -21,7 +21,7 @@
         <input
           v-model.trim="formData.password"
           type="password"
-          class="block border-gray-300 rounded-md w-full shadow-sm"
+          class="block border-neutral-300 rounded-md w-full shadow-sm"
           placeholder="Password"
           required
           autocomplete="off"
@@ -30,18 +30,18 @@
         <input
           v-model.trim="confirmPassword"
           type="password"
-          class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
+          class="block border-neutral-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Confirm Password"
           required
           autocomplete="off"
           aria-label="confirm password"
         >
       </div>
-      <div class="flex items-center text-gray-700">
+      <div class="flex items-center text-neutral-700">
         <input
           v-model="agree"
           type="checkbox"
-          class="rounded border-gray-300 shadow-sm mr-2"
+          class="rounded border-neutral-300 shadow-sm mr-2"
           aria-label="agree"
         >
         <label class="cursor-pointer">I agree to the Leafage</label>
@@ -54,7 +54,7 @@
         type="submit"
         name="submit"
         aria-label="submit"
-        class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
+        class="w-full mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
         @click="onSubmit"
       >
         {{

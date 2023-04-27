@@ -5,7 +5,7 @@
       :file-name="'group'"
       :items="items"
       @hand-reload="retrieve"
-      @hand-add="showModal"
+      @hand-add="onModal"
     />
 
     <div class="sm-t-h overflow-auto">
@@ -14,7 +14,7 @@
         aria-label="group"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -57,7 +57,7 @@
           <tr
             v-for="(data, index) in datas"
             :key="index"
-            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 group hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 group hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
@@ -82,8 +82,8 @@
               <Action
                 :editable="true"
                 :removeable="true"
-                @edit="showModal(data.id)"
-                @del="confirmOperate"
+                @edit="onModal(data.id)"
+                @del="onConfirm"
               >
                 <button
                   v-if="data.count > 0"
@@ -91,7 +91,7 @@
                   name="members"
                   aria-label="members"
                   class="flex items-center mr-3 text-amber-600 focus:outline-none"
-                  @click="showMembers(data.id)"
+                  @click="onMember(data.id)"
                 >
                   <UsersIcon
                     class="w-4 h-4 mr-1"
@@ -101,6 +101,32 @@
                 </button>
               </Action>
             </td>
+            <Confirm
+              :visible="operation.confirm"
+            >
+              <template #footer>
+                <button
+                  type="submit"
+                  name="confirm"
+                  aria-label="confirm"
+                  class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                  @click="confirmCommit(data.id)"
+                >
+                  {{ $t('confirm') }}
+                </button>
+                <button
+                  type="button"
+                  name="cancle"
+                  aria-label="cancle"
+                  class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-neutral-400 sm:mt-0 sm:ml-3 sm:w-auto"
+                  @click="confirmClose"
+                >
+                  {{
+                    $t('cancle')
+                  }}
+                </button>
+              </template>
+            </Confirm>
           </tr>
         </tbody>
       </table>
@@ -112,36 +138,10 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm
-      :visible="operation.confirm"
-    >
-      <template #footer>
-        <button
-          type="submit"
-          name="confirm"
-          aria-label="confirm"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="confirmCommit(formData.id)"
-        >
-          {{ $t('confirm') }}
-        </button>
-        <button
-          type="button"
-          name="cancle"
-          aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
-        >
-          {{
-            $t('cancle')
-          }}
-        </button>
-      </template>
-    </Confirm>
     <Drawer
       :visible="operation.modal"
       :title="'编辑分组'"
-      @close="onClose"
+      @close="modalClose"
     >
       <template #content>
         <div class="w-full">
@@ -151,7 +151,7 @@
             v-model.trim="formData.groupName"
             name="name"
             type="text"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('name')"
             aria-label="name"
           >
@@ -162,7 +162,7 @@
             id="principal"
             v-model.lazy="formData.principal"
             name="principal"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             aria-label="principal"
           >
             <option selected>
@@ -182,7 +182,7 @@
           type="submit"
           name="commit"
           aria-label="commit"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
           @click="modelCommit(formData.id)"
         >
           {{ $t('commit') }}
@@ -191,8 +191,8 @@
           type="button"
           name="cancle"
           aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
+          class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
+          @click="modalClose"
         >
           {{
             $t('cancle')
@@ -203,7 +203,7 @@
     <Modal
       :visible="operation.members"
       :closeable="true"
-      @close="onCloseMember"
+      @close="closeMember"
     >
       <template #content>
         <table
@@ -211,7 +211,7 @@
           aria-label="group-members"
         >
           <thead>
-            <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+            <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
               <th
                 scope="col"
                 class="px-4 py-2 sm:py-3 text-left"
@@ -254,7 +254,7 @@
             <tr
               v-for="(user, index) in members"
               :key="index"
-              class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+              class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
             >
               <td class="px-4 py-2 sm:py-3 text-left">
                 {{ index + 1 }}
@@ -387,9 +387,8 @@ const retrieve = async () => {
 }
 /**
  * confirm 操作
- * @param operate 是否打开
  */
-const confirmOperate = () => {
+const onConfirm = () => {
   operation.confirm = true;
 };
 /**
@@ -397,11 +396,8 @@ const confirmOperate = () => {
  */
 const confirmCommit = async (id: number) => {
   await instance.delete(SERVER_URL.group.concat(`/${id}`)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Group) => item.id != id
-    );
-    operation.confirm = false;
+    retrieve()
+    confirmClose()
   });
 };
 /**
@@ -452,14 +448,14 @@ const modify = async (id: number) => {
  * 新增/编辑：打开
  * @param operate 是否打开
  */
-const showModal = (id: number) => {
+const onModal = (id: number) => {
   if (id && id != 0) {
     fetch(id)
   } else {
     formData.value = initData;
   }
   retrieveUsers()
-  operation.modal = true;
+  operation.modal = true
 };
 /**
  * 查询详情
@@ -482,19 +478,30 @@ const modelCommit = (id: number) => {
 };
 /**
  * 预览
- * @param show 是否展示
  * @param id 主键
  */
-const showMembers = (id: number) => {
+const onMember = (id: number) => {
   if (id && id != 0) {
     retrieveMembers(id)
   }
   operation.members = true
 }
-const onCloseMember = () => {
+/**
+ * 关闭 member展示
+ */
+const closeMember = () => {
   operation.members = false
 }
-const onClose = () => {
+/**
+ * 关闭modal
+ */
+const modalClose = () => {
   operation.modal = false
+}
+/**
+ * 关闭confirm
+ */
+ const confirmClose = () => {
+  operation.confirm = false
 }
 </script>

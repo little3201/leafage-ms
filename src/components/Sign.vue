@@ -23,7 +23,7 @@
             <p class="text-white font-medium text-xl leading-tight">
               基于 RBAC（Role-Based Access Control） 模型的管理系统实践
             </p>
-            <p class="text-gray-300">
+            <p class="text-neutral-300">
               采用 MIT 开源协议，使用 vue3、vite.js 的基础框架构建
             </p>
           </div>

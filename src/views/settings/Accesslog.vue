@@ -6,7 +6,7 @@
         aria-label="access-logs"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -43,7 +43,7 @@
           <tr
             v-for="(data, index) in accesslogs"
             :key="index"
-            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}

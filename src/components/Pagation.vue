@@ -9,8 +9,8 @@
         name="fist-page"
         aria-label="first-page"
         :disabled="page == 0"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
-        :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
+        class="focus:outline-none w-8 h-8 hover:border border-neutral-300 rounded-full"
+        :class="{ 'text-neutral-300 cursor-not-allowed': page == 0 }"
         @click="(page = 0), give(page)"
       >
         <ChevronDoubleLeftIcon
@@ -23,8 +23,8 @@
         name="page-decrease"
         aria-label="page-decrease"
         :disabled="page == 0"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
-        :class="{ 'text-gray-300 cursor-not-allowed': page == 0 }"
+        class="focus:outline-none w-8 h-8 hover:border border-neutral-300 rounded-full"
+        :class="{ 'text-neutral-300 cursor-not-allowed': page == 0 }"
         @click="decrease"
       >
         <ChevronLeftIcon
@@ -42,7 +42,7 @@
         type="button"
         :name="`page-${index}`"
         :aria-label="`page-${index}`"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
+        class="focus:outline-none w-8 h-8 hover:border border-neutral-300 rounded-full"
         :class="{
           'bg-white rounded-full border shadow-sm': index == page + 1,
           hidden: pages > 5 && (index > page + 3 || index < page - 1),
@@ -57,8 +57,8 @@
         name="page-increment"
         aria-label="page-increment"
         :disabled="page == pages - 1"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
-        :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
+        class="focus:outline-none w-8 h-8 hover:border border-neutral-300 rounded-full"
+        :class="{ 'text-neutral-300 cursor-not-allowed': page == pages - 1 }"
         @click="increment"
       >
         <ChevronRightIcon
@@ -71,8 +71,8 @@
         :disabled="page == pages - 1"
         name="last-page"
         aria-label="last-page"
-        class="focus:outline-none w-8 h-8 hover:border border-gray-300 rounded-full"
-        :class="{ 'text-gray-300 cursor-not-allowed': page == pages - 1 }"
+        class="focus:outline-none w-8 h-8 hover:border border-neutral-300 rounded-full"
+        :class="{ 'text-neutral-300 cursor-not-allowed': page == pages - 1 }"
         @click="(page = pages - 1), give(page)"
       >
         <ChevronDoubleRightIcon
@@ -82,7 +82,7 @@
       </button>
       <select
         v-model.number="size"
-        class="py-1 border border-gray-300 rounded-md"
+        class="py-1 border border-neutral-300 rounded-md"
         aria-label="page size"
       >
         <option>10</option>

@@ -13,7 +13,7 @@
         aria-label="region"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm h-12">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm h-12">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -62,7 +62,7 @@
           <tr
             v-for="(data, index) in datas"
             :key="index"
-            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
@@ -91,10 +91,36 @@
               <Action
                 :editable="true"
                 :removeable="true"
-                @edit="showModal(data.id)"
-                @del="confirmOperate"
+                @edit="onModal(data.id)"
+                @del="onConfirm"
               />
             </td>
+            <Confirm
+              :visible="operation.confirm"
+            >
+              <template #footer>
+                <button
+                  type="submit"
+                  name="confirm"
+                  aria-label="confirm"
+                  class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                  @click="confirmCommit(data.id)"
+                >
+                  {{ $t('confirm') }}
+                </button>
+                <button
+                  type="button"
+                  name="cancle"
+                  aria-label="cancle"
+                  class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-neutral-600 sm:mt-0 sm:ml-3 sm:w-auto"
+                  @click="confirmClose"
+                >
+                  {{
+                    $t('cancle')
+                  }}
+                </button>
+              </template>
+            </Confirm>
           </tr>
         </tbody>
       </table>
@@ -106,36 +132,11 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm
-      :visible="operation.confirm"
-    >
-      <template #footer>
-        <button
-          type="submit"
-          name="confirm"
-          aria-label="confirm"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="confirmCommit(formData.id)"
-        >
-          {{ $t('confirm') }}
-        </button>
-        <button
-          type="button"
-          name="cancle"
-          aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
-        >
-          {{
-            $t('cancle')
-          }}
-        </button>
-      </template>
-    </Confirm>
+    
     <Drawer
       :visible="operation.modal"
       :title="'编辑行政区划'"
-      @close="onClose"
+      @close="modalClose"
     >
       <template #content>
         <div class="w-full">
@@ -145,7 +146,7 @@
             v-model.trim="formData.regionName"
             name="name"
             type="text"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('name')"
             required
                 
@@ -158,7 +159,7 @@
             id="superior"
             v-model="formData.superior"
             name="superior"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             aria-label="region superior"
           >
             <option selected>
@@ -180,7 +181,7 @@
             v-model.trim="formData.postalCode"
             name="postal-id"
             type="number"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('postalCode')"
             aria-label="postal-id"
           >
@@ -192,7 +193,7 @@
             v-model.trim="formData.areaCode"
             name="area-id"
             type="number"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('areaCode')"
             aria-label="area-id"
           >
@@ -203,7 +204,7 @@
           type="submit"
           name="commit"
           aria-label="commit"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
           @click="modelCommit(formData.id)"
         >
           {{ $t('commit') }}
@@ -212,8 +213,8 @@
           type="button"
           name="cancle"
           aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
+          class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
+          @click="modalClose"
         >
           {{
             $t('cancle')
@@ -341,31 +342,36 @@ const modify = async (id: number) => {
 }
 /**
  * confirm 操作
- * @param operate 是否打开
  */
-const confirmOperate = (operate: boolean) => {
-  operation.confirm = operate;
+const onConfirm = () => {
+  operation.confirm = true;
 };
 /**
  * confirm 提交
  */
 const confirmCommit = async (id: number) => {
   await instance.delete(SERVER_URL.region.concat(`/${id}`)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Region) => item.id != id
-    );
-    operation.confirm = false;
+    retrieve()
+    confirmClose()
   });
 };
-const onClose = () => {
+/**
+ * 关闭modal
+ */
+const modalClose = () => {
   operation.modal = false
+}
+/**
+ * 关闭modal
+ */
+ const confirmClose = () => {
+  operation.confirm = false
 }
 /**
  * 新增/编辑：打开
  * @param id 主键
  */
-const showModal = (id: number) => {
+const onModal = (id: number) => {
   if (id && id != 0) {
     Promise.all([
       fetch(id),
@@ -383,7 +389,7 @@ const modelCommit = async (id: number) => {
   if (id && id != 0) {
     modify(id)
   }
-  operation.modal = false
+  modalClose()
 };
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-1 px-2 hover:bg-gray-300 hover:bg-opacity-30 rounded-md">
+  <div class="my-1 px-2 hover:bg-neutral-300 hover:bg-opacity-30 rounded-md">
     <div class="flex flex-1 items-center">
       <button
         v-if="data.children && data.children.length > 0"

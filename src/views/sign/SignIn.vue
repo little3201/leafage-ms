@@ -9,7 +9,7 @@
           v-model="formData.username"
           type="text"
           name="username"
-          class="block border-gray-300 rounded-md w-full my-6 shadow-sm"
+          class="block border-neutral-300 rounded-md w-full my-6 shadow-sm"
           placeholder="Username/Email"
           required
           
@@ -20,7 +20,7 @@
           v-model="formData.password"
           type="password"
           name="password"
-          class="block border-gray-300 rounded-md w-full shadow-sm"
+          class="block border-neutral-300 rounded-md w-full shadow-sm"
           placeholder="Password"
           required
           autocomplete="off"
@@ -33,12 +33,12 @@
           {{ errMsg }}
         </p>
       </div>
-      <div class="flex text-gray-700 mt-6">
+      <div class="flex text-neutral-700 mt-6">
         <div class="inline-flex items-center mr-auto">
           <input
             id="remember-me"
             type="checkbox"
-            class="rounded border-gray-300 shadow-sm mr-2"
+            class="rounded border-neutral-300 shadow-sm mr-2"
             aria-label="remember me"
           >
           <label
@@ -56,7 +56,7 @@
         name="submit"
         aria-label="submit"
         :disabled="isLoad"
-        class="w-full inline-flex items-center justify-center mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md active:cursor-wait"
+        class="w-full inline-flex items-center justify-center mt-6 focus:outline-none text-white bg-blue-600 hover:bg-blue-700 hover:text-white py-2 rounded-md"
         @click="onSubmit"
       >
         <ArrowPathIcon

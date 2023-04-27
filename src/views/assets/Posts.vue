@@ -5,7 +5,7 @@
       :file-name="'posts'"
       :items="items"
       @hand-reload="retrieve"
-      @hand-add="showModal"
+      @hand-add="onModal"
     />
     <div class="sm-t-h overflow-auto">
       <table
@@ -13,7 +13,7 @@
         aria-label="posts"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -56,7 +56,7 @@
           <tr
             v-for="(data, index) in datas"
             :key="index"
-            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
@@ -78,7 +78,7 @@
               <span
                 v-for="(t, idx) in data.tags"
                 :key="idx"
-                class="mr-1 text-sm border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+                class="mr-1 text-sm border border-neutral-300 bg-neutral-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
               >
                 {{ t }}
               </span>
@@ -91,10 +91,36 @@
               <Action
                 :editable="true"
                 :removeable="true"
-                @edit="showModal(data.id)"
-                @del="confirmOperate"
+                @edit="onModal(data.id)"
+                @del="onConfirm"
               />
             </td>
+            <Confirm
+              :visible="operation.confirm"
+            >
+              <template #footer>
+                <button
+                  type="submit"
+                  name="confirm"
+                  aria-label="confirm"
+                  class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                  @click="confirmCommit(data.id)"
+                >
+                  {{ $t('confirm') }}
+                </button>
+                <button
+                  type="button"
+                  name="cancle"
+                  aria-label="cancle"
+                  class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-neutral-400 sm:mt-0 sm:ml-3 sm:w-auto"
+                  @click="confirmClose"
+                >
+                  {{
+                    $t('cancle')
+                  }}
+                </button>
+              </template>
+            </Confirm>
           </tr>
         </tbody>
       </table>
@@ -106,36 +132,11 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm
-      :visible="operation.confirm"
-    >
-      <template #footer>
-        <button
-          type="submit"
-          name="confirm"
-          aria-label="confirm"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="confirmCommit(formData.id)"
-        >
-          {{ $t('confirm') }}
-        </button>
-        <button
-          type="button"
-          name="cancle"
-          aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
-        >
-          {{
-            $t('cancle')
-          }}
-        </button>
-      </template>
-    </Confirm>
+    
     <Drawer
       :visible="operation.modal"
       :title="'编辑帖子'"
-      @close="onClose"
+      @close="modalClose"
     >
       <template #content>
         <div class="w-full">
@@ -145,7 +146,7 @@
             v-model.trim="formData.title"
             type="text"
             name="title"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('title')"
             maxlength="50"
             required
@@ -184,12 +185,12 @@
           </figure>
           <div
             v-else
-            class="h-32 mt-1 rounded-md border border-gray-300 flex items-center justify-center"
+            class="h-32 mt-1 rounded-md border border-neutral-300 flex items-center justify-center"
           >
-            <div class="text-gray-600 text-center">
+            <div class="text-neutral-600 text-center">
               <label
                 for="cover-upload"
-                class="cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+                class="cursor-pointer bg-white rounded-md text-neutral-400 hover:text-blue-600"
               >
                 <PhotoIcon
                   class="w-8 h-8 mx-auto"
@@ -204,8 +205,8 @@
                   aria-label="cover-upload"
                   @change="uploadImage($event)"
                 >
-                <p class="text-xs text-gray-500">png, jpeg, jpg</p>
-                <p class="text-xs text-gray-500">up to 2MB</p>
+                <p class="text-xs text-neutral-500">png, jpeg, jpg</p>
+                <p class="text-xs text-neutral-500">up to 2MB</p>
               </label>
             </div>
           </div>
@@ -217,7 +218,7 @@
             v-model.lazy="formData.category"
             name="category"
             required
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             aria-label="posts category"
           >
             <option selected>
@@ -238,7 +239,7 @@
             v-model.trim="tag"
             type="text"
             name="tags"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             aria-label="tag"
             :placeholder="$t('tags')"
             @keydown.enter="addTag(tag)"
@@ -248,7 +249,7 @@
           <span
             v-for="(t, index) in formData.tags"
             :key="index"
-            class="mr-1 border border-gray-300 bg-gray-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
+            class="mr-1 border border-neutral-300 bg-neutral-100 rounded-md px-1 whitespace-nowrap inline-flex items-center"
           >
             {{ t }}
             <XMarkIcon
@@ -265,7 +266,7 @@
             name="preview"
             aria-label="preview"
             class="absolute top-2 right-1 focus:outline-none"
-            @click="previewHtml"
+            @click="onPreview"
           >
             <EyeSlashIcon
               v-if="operation.preview"
@@ -288,14 +289,14 @@
               id="context"
               v-model.trim="formData.context"
               name="context"
-              class="mt-1 w-full h-full rounded-md border-gray-300"
+              class="mt-1 w-full h-full rounded-md border-neutral-300"
               required
               placeholder="markdown..."
             />
             <div
               v-else
               ref="rendedHtmlRef"
-              class="mt-1 p-2 prose prose-base prose-blue overflow-y-auto w-full h-full border border-gray-300 rounded-md"
+              class="mt-1 p-2 prose prose-base prose-blue overflow-y-auto w-full h-full border border-neutral-300 rounded-md"
               v-html="rendedHtml"
             />
           </div>
@@ -306,7 +307,7 @@
           type="submit"
           name="commit"
           aria-label="commit"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
           @click="modelCommit(formData.id)"
         >
           {{ $t('commit') }}
@@ -315,8 +316,8 @@
           type="button"
           name="cancle"
           aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
+          class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
+          @click="modalClose"
         >
           {{
             $t('cancle')
@@ -480,7 +481,7 @@ const removeTag = (tag: string) => {
 /**
  * confirm 操作
  */
-const confirmOperate = () => {
+const onConfirm = () => {
   operation.confirm = true;
 };
 /**
@@ -489,22 +490,27 @@ const confirmOperate = () => {
 const confirmCommit = async (id: number) => {
   await instance.delete(SERVER_URL.post.concat(`/${id}`)).then(() => {
     // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Post) => item.id != formData.value.id
-    );
-    operation.confirm = false;
+    retrieve()
+    confirmClose()
   });
 };
-
-const onClose = () => {
+/**
+ * 关闭 drawer
+ */
+const modalClose = () => {
   operation.modal = false
 }
-
+/**
+ * 关闭 confirm
+ */
+const confirmClose = () => {
+  operation.confirm = false
+}
 /**
  * 新增/编辑：打开
  * @param id 主键
  */
-const showModal = (id: number) => {
+const onModal = (id: number) => {
   if (id && id != 0) {
     fetch(id)
   } else {
@@ -522,7 +528,7 @@ const modelCommit = async (id: number) => {
   } else {
     create()
   }
-  operation.modal = false
+  modalClose()
 };
 /**
  * 上传文件
@@ -544,7 +550,7 @@ const uploadImage = (event: Event) => {
 /**
  * 转换md为html
  */
-const previewHtml = async () => {
+const onPreview = async () => {
   operation.preview = !operation.preview
   if (formData.value.context) {
     rendedHtml.value = await markdownToHtml(formData.value.context)

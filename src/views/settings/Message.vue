@@ -40,23 +40,23 @@
         <div class="flex items-center">
           <p
             class="cursor-pointer hover:underline hover:text-blue-600"
-            @click="showPreview(message.id)"
+            @click="onPreview(message.id)"
           >
             {{ message.title }}
           </p>
           <span
-            class="text-xs text-gray-400 ml-auto whitespace-no-wrap"
+            class="text-xs text-neutral-400 ml-auto whitespace-no-wrap"
             v-text="new Date(message.modifyTime).toLocaleString('zh', { hour12: false })"
           />
         </div>
-        <div class="w-full text-sm text-gray-500 py-2 truncate">
+        <div class="w-full text-sm text-neutral-500 py-2 truncate">
           {{ message.context }}
         </div>
       </div>
     </div>
     <Modal
       :visible="operation.visible"
-      @close="onClose"
+      @close="previewClose"
     >
       <article class="prose prose-base">
         <strong class="text-lg">{{ data.title }}</strong>
@@ -130,14 +130,14 @@ const switchType = async (read: boolean) => {
  * @param show 是否展示
  * @param id 主键
  */
-const showPreview = (id: number) => {
+const onPreview = (id: number) => {
   if (id && id != 0) {
     fetch(id)
   }
   operation.visible = true
 }
 
-const onClose = () => {
+const previewClose = () => {
   operation.visible = false
 }
 </script>

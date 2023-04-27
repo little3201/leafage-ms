@@ -23,11 +23,11 @@
       </span>
     </div>
     <div class="flex flex-1 items-center justify-between md:justify-end md:space-x-8">
-      <div class="hidden sm:block relative w-56 rounded-full bg-gray-300">
+      <div class="hidden sm:block relative w-56 rounded-full bg-neutral-300">
         <input
           type="text"
           name="search"
-          class="w-56 py-1.5 border-gray-300 bg-blue-100 bg-opacity-50 rounded-full"
+          class="w-56 py-1.5 border-neutral-300 bg-blue-100 bg-opacity-50 rounded-full"
           :placeholder="$t('search')"
           aria-label="search"
         >
@@ -58,7 +58,7 @@
           v-show="isNotify && messages.length > 0"
           class="origin-top-left p-2 absolute top-6 left-0 md:right-0 w-64 md:w-80 md:left-auto  mt-4 rounded-md shadow-lg bg-white z-10"
         >
-          <span class="my-4 px-2 text-lg">{{ $t('messages') }}: <span class="text-sm text-gray-400">{{ count }}
+          <span class="my-4 px-2 text-lg">{{ $t('messages') }}: <span class="text-sm text-neutral-400">{{ count }}
             {{ $t('unreadTotal') }}</span></span>
           <div class="divide-y">
             <div
@@ -66,7 +66,7 @@
               :key="index"
               class="overflow-hidden"
             >
-              <div class="hover:bg-gray-100 rounded-md p-2">
+              <div class="hover:bg-neutral-100 rounded-md p-2">
                 <RouterLink
                   to="/settings/messages"
                   @click="operate('')"
@@ -76,10 +76,10 @@
                     v-text="message.title"
                   />
                   <p
-                    class="text-xs text-gray-500 my-1 whitespace-no-wrap"
+                    class="text-xs text-neutral-500 my-1 whitespace-no-wrap"
                     v-text="new Date(message.modifyTime).toLocaleString()"
                   />
-                  <div class="w-full text-xs truncate text-gray-600">
+                  <div class="w-full text-xs truncate text-neutral-600">
                     {{ message.context }}
                   </div>
                 </RouterLink>
@@ -88,7 +88,7 @@
             <div class="py-2 text-center">
               <RouterLink
                 to="/settings/messages"
-                class="text-gray-400"
+                class="text-neutral-400"
                 @click="operate('')"
               >
                 {{ $t('viewMore') }}
@@ -192,14 +192,14 @@
             <h3 class="font-blod">
               {{ user.nickname }}
             </h3>
-            <h4 class="text-gray-400 text-sm">
+            <h4 class="text-neutral-400 text-sm">
               {{ user.username }}
             </h4>
           </div>
           <div class="text-sm py-1">
             <RouterLink
               to="/settings/profile"
-              class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
+              class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-neutral-100 rounded-md px-2 py-1"
               @click="operate('')"
             >
               <IdentificationIcon
@@ -210,7 +210,7 @@
             </RouterLink>
             <RouterLink
               to="/settings"
-              class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-gray-100 rounded-md px-2 py-1"
+              class="flex items-center transition duration-300 ease-in-out hover:text-blue-600 hover:bg-neutral-100 rounded-md px-2 py-1"
               @click="operate('')"
             >
               <CogIcon
@@ -223,7 +223,7 @@
               type="button"
               name="help"
               aria-label="help"
-              class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
+              class="flex items-center w-full hover:text-blue-600 focus:outline-none hover:bg-neutral-100 rounded-md px-2 py-1"
             >
               <QuestionMarkCircleIcon
                 class="w-4 h-4 mr-2"
@@ -237,7 +237,7 @@
               type="button"
               name="sign-out"
               aria-label="sign-out"
-              class="flex items-center w-full hover:text-blue-600 focus:outline-none active:cursor-wait hover:bg-gray-100 rounded-md px-2 py-1"
+              class="flex items-center w-full hover:text-blue-600 focus:outline-none hover:bg-neutral-100 rounded-md px-2 py-1"
               @click.prevent="signout"
             >
               <ArrowRightCircleIcon

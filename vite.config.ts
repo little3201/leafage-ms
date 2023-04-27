@@ -22,8 +22,9 @@ export default defineConfig({
   //   proxy: {
   //     // 选项写法
   //     '^/api': {
-  //       target: 'https://console.leafage.top',
-  //       changeOrigin: true
+  //       target: 'http://localhost:8760',
+  //       changeOrigin: true,
+  //       rewrite: path => path.replace(/^\/api/, '')
   //     }
   //   }
   // }

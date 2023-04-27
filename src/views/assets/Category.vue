@@ -5,7 +5,7 @@
       :file-name="'category'"
       :items="items"
       @hand-reload="retrieve"
-      @hand-add="showModal"
+      @hand-add="onModal"
     />
     <div class="sm-t-h overflow-auto">
       <table
@@ -13,7 +13,7 @@
         aria-label="category"
       >
         <thead>
-          <tr class="sticky top-0 bg-gray-100 uppercase text-center text-xs sm:text-sm">
+          <tr class="sticky top-0 bg-neutral-100 uppercase text-center text-xs sm:text-sm">
             <th
               scope="col"
               class="px-4 py-2 sm:py-3 text-left"
@@ -56,7 +56,7 @@
           <tr
             v-for="(data, index) in datas"
             :key="index"
-            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-gray-100 hover:bg-gray-50 hover:text-blue-600"
+            class="text-center bg-white border-y-4 lg:border-y-8 first:border-t-0 last:border-b-0 border-neutral-100 hover:bg-neutral-50 hover:text-blue-600"
           >
             <td class="px-4 py-2 sm:py-3 text-left">
               {{ index + 1 }}
@@ -86,10 +86,34 @@
               <Action
                 :editable="true"
                 :removeable="true"
-                @edit="showModal(data.id)"
-                @del="confirmOperate"
+                @edit="onModal(data.id)"
+                @del="onConfirm"
               />
             </td>
+            <Confirm :visible="operation.confirm">
+              <template #footer>
+                <button
+                  type="submit"
+                  name="confirm"
+                  aria-label="confirm"
+                  class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                  @click="confirmCommit(data.id)"
+                >
+                  {{ $t('confirm') }}
+                </button>
+                <button
+                  type="button"
+                  name="cancle"
+                  aria-label="cancle"
+                  class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-neutral-400 sm:mt-0 sm:ml-3 sm:w-auto"
+                  @click="confirmClose"
+                >
+                  {{
+                    $t('cancle')
+                  }}
+                </button>
+              </template>
+            </Confirm>
           </tr>
         </tbody>
       </table>
@@ -101,34 +125,11 @@
       @retrieve="retrieve"
       @set-page="setPage"
     />
-    <Confirm :visible="operation.confirm">
-      <template #footer>
-        <button
-          type="submit"
-          name="confirm"
-          aria-label="confirm"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto active:cursor-wait bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="confirmCommit(formData.id)"
-        >
-          {{ $t('confirm') }}
-        </button>
-        <button
-          type="button"
-          name="cancle"
-          aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto active:cursor-wait"
-          @click="onClose"
-        >
-          {{
-            $t('cancle')
-          }}
-        </button>
-      </template>
-    </Confirm>
+    
     <Drawer
       :visible="operation.modal"
       :title="'编辑类目'"
-      @close="onClose"
+      @close="modalClose"
     >
       <template #content>
         <div class="w-full">
@@ -138,7 +139,7 @@
             v-model.trim="formData.categoryName"
             type="text"
             name="name"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('name')"
             required
               
@@ -151,31 +152,31 @@
             id="description"
             v-model.trim="formData.description"
             name="description"
-            class="mt-1 w-full block rounded-md border-gray-300"
+            class="mt-1 w-full block rounded-md border-neutral-300"
             :placeholder="$t('description')"
           />
         </div>
       </template>
       <template #footer>
         <button
+          type="submit"
+          name="commit"
+          aria-label="commit"
+          class="w-full rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
+          @click="modelCommit(formData.id)"
+        >
+          {{ $t('commit') }}
+        </button>
+        <button
           type="button"
           name="cancle"
           aria-label="cancle"
-          class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
-          @click="onClose"
+          class="mt-3 w-full rounded-md border border-neutral-300 shadow-sm px-4 py-2 bg-white font-medium text-neutral-700 hover:bg-neutral-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-blue-600 sm:mt-0 sm:ml-3 sm:w-auto"
+          @click="modalClose"
         >
           {{
             $t('cancle')
           }}
-        </button>
-        <button
-          type="submit"
-          name="commit"
-          aria-label="commit"
-          class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 font-medium text-white focus:outline-none focus:ring-1 focus:ring-offset-2 sm:ml-3 sm:w-auto bg-blue-600 hover:bg-blue-700 focus:ring-blue-500"
-          @click="modelCommit(formData.id)"
-        >
-          {{ $t('commit') }}
         </button>
       </template>
     </Drawer>
@@ -289,7 +290,7 @@ const modify = async (id: number) => {
 /**
  * confirm 操作
  */
-const confirmOperate = () => {
+const onConfirm = () => {
   operation.confirm = true;
 };
 /**
@@ -297,23 +298,27 @@ const confirmOperate = () => {
  */
 const confirmCommit = async (id: number) => {
   await instance.delete(SERVER_URL.category.concat(`/${id}`)).then(() => {
-    // 将datas中修改项的历史数据删除
-    datas.value = datas.value.filter(
-      (item: Category) => item.id != id
-    );
-    operation.confirm = false;
+    retrieve()
+    confirmClose()
   });
 };
-
-const onClose = () => {
+/**
+ * 关闭 drawer
+ */
+ const modalClose = () => {
   operation.modal = false
 }
-
+/**
+ * 关闭 confirm
+ */
+const confirmClose = () => {
+  operation.confirm = false
+}
 /**
  * 新增/编辑：打开
  * @param id 主键
  */
-const showModal = (id: number) => {
+const onModal = (id: number) => {
   if (id && id != 0) {
     fetch(id);
   } else {
@@ -330,7 +335,7 @@ const modelCommit = (id: number) => {
   } else {
     create()
   }
-  onClose();
+  modalClose();
 };
 
 </script>

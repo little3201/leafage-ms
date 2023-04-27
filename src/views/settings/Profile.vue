@@ -5,17 +5,17 @@
         <legend class=" sr-only" />
       </fieldset>
       <fieldset class="my-4">
-        <legend class="font-medium text-gray-900 pr-4">
+        <legend class="font-medium text-neutral-900 pr-4">
           Change nickname
         </legend>
-        <p class="text-sm text-gray-500">
+        <p class="text-sm text-neutral-500">
           Changing your username can have unintended side effects.
         </p>
         <div class="flex">
           <div class="mt-4 text-sm">
             <label
               for="nickname"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Nicknmae</label>
             <div class="flex items-center space-x-4 mt-1">
               <input
@@ -23,7 +23,7 @@
                 v-model="user.nickname"
                 name="nickname"
                 type="text"
-                class="block border-gray-300 py-1 rounded-md"
+                class="block border-neutral-300 py-1 rounded-md"
                 :disabled="!isEdit"
                 aria-label="nickname"
               >
@@ -39,7 +39,7 @@
                 }}
               </button>
             </div>
-            <span class="text-xs text-gray-400">Your name may appear around GitHub where you contribute or are
+            <span class="text-xs text-neutral-400">Your name may appear around GitHub where you contribute or are
               mentioned. You can remove it at any time.</span>
           </div>
           <div class="mr-20 ml-8 text-center">
@@ -75,10 +75,10 @@
               v-else
               class="w-32 h-32 border rounded-full flex justify-center items-center"
             >
-              <div class="text-gray-600 text-center">
+              <div class="text-neutral-600 text-center">
                 <label
                   for="avatar-upload"
-                  class="relative cursor-pointer bg-white rounded-md text-gray-400 hover:text-blue-600"
+                  class="relative cursor-pointer bg-white rounded-md text-neutral-400 hover:text-blue-600"
                 >
                   <svg
                     class="mx-auto h-8 w-8"
@@ -103,8 +103,8 @@
                     aria-label="avatar"
                     @click="uploadImage($event)"
                   >
-                  <p class="text-xs text-gray-500">png, jpeg, jpg</p>
-                  <p class="text-xs text-gray-500">up to 500KB</p>
+                  <p class="text-xs text-neutral-500">png, jpeg, jpg</p>
+                  <p class="text-xs text-neutral-500">up to 500KB</p>
                 </label>
               </div>
             </div>

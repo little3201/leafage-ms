@@ -14,7 +14,7 @@
           type="button"
           name="close"
           aria-label="close"
-          class="inline-flex items-center justify-center rounded-bl-full bg-gray-400 opacity-70 absolute top-0 right-0 w-12 h-12"
+          class="inline-flex items-center justify-center rounded-bl-full bg-neutral-400 opacity-70 absolute top-0 right-0 w-12 h-12"
           @click="onClose"
         >
           <span class="sr-only">Close</span>
@@ -30,7 +30,7 @@
           </div>
         </div>
         <!-- footer -->
-        <div class="bg-gray-50 py-3 px-4 sm:flex sm:flex-row-reverse text-sm">
+        <div class="bg-neutral-50 py-3 px-4 sm:flex sm:flex-row-reverse text-sm">
           <slot name="footer" />
         </div>
       </div>

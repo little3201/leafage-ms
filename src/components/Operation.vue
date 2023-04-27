@@ -6,7 +6,7 @@
     <form>
       <div class="flex items-center relative">
         <button
-          class="flex-shrink-0 inline-flex items-center py-2 px-3 text-sm text-center text-gray-900 border border-gray-300 rounded-l-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600"
+          class="flex-shrink-0 inline-flex items-center py-2 px-3 text-sm text-center text-neutral-900 border border-neutral-300 rounded-l-lg hover:bg-neutral-200 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-white dark:border-neutral-600"
           type="button"
           @click="onShow"
         >
@@ -18,7 +18,7 @@
         </button>
         <ul
           v-show="visible && items.length > 0"
-          class="absolute top-10 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 py-2 text-sm text-gray-700 dark:text-gray-200"
+          class="absolute top-10 z-10 bg-white divide-y divide-neutral-100 rounded-lg shadow-lg dark:bg-neutral-700 py-2 text-sm text-neutral-700 dark:text-neutral-200"
         >
           <li
             v-for="(item, index) in items"
@@ -26,7 +26,7 @@
           >
             <button
               type="button"
-              class="inline-flex justify-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              class="inline-flex justify-center px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-600 dark:hover:text-white"
             >
               {{ item.label }}
             </button>
@@ -36,7 +36,7 @@
           <input
             id="search-dropdown"
             type="search"
-            class="p-2 w-72 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border focus:ring-0 border-gray-300 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            class="p-2 w-72 text-sm text-neutral-900 bg-neutral-50 rounded-r-lg border-l-neutral-50 border focus:ring-0 border-neutral-300 dark:bg-neutral-700 dark:border-l-neutral-700  dark:border-neutral-600 dark:placeholder-neutral-400 dark:text-white"
             placeholder="Search Mockups..."
             required
           >
@@ -57,7 +57,7 @@
       type="button"
       name="reload"
       aria-label="reload"
-      class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+      class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
       @click="onReload"
     >
       <ArrowPathIcon
@@ -74,7 +74,7 @@
         name="import"
         aria-label="import"
         type="button"
-        class="inline-flex items-center p-2 rounded-md bg-white  text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
+        class="inline-flex items-center p-2 rounded-md bg-white  text-neutral-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
       >
         <DocumentPlusIcon
           class="w-5 h-5 mr-2"
@@ -87,7 +87,7 @@
         name="export"
         aria-label="export"
         type="button"
-        class="inline-flex items-center p-2 rounded-md bg-white text-gray-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
+        class="inline-flex items-center p-2 rounded-md bg-white text-neutral-700 border hover:text-blue-600 hover:border-blue-600 focus:outline-none"
         @click="onExport"
       >
         <DocumentTextIcon

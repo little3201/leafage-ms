@@ -8,7 +8,7 @@
         <span class="hidden xl:block">Leafage</span>
       </h1>
     </RouterLink>
-    <div class="my-4 h-px w-full bg-gray-200 bg-opacity-30" />
+    <div class="my-4 h-px w-full bg-neutral-200 bg-opacity-30" />
     <div class="sm:w-20 xl:w-52 my-8">
       <MenuItem
         v-for="data in datas"

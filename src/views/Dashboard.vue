@@ -8,7 +8,7 @@
         type="button"
         name="reload"
         aria-label="reload"
-        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none active:cursor-wait"
+        class="ml-4 inline-flex items-center text-blue-600 focus:outline-none"
         @click="refresh"
       >
         <ArrowPathIcon
@@ -26,7 +26,7 @@
               class="w-7 h-7 mr-1 text-blue-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('viewed') }}</span>
+            <span class="text-base text-neutral-600 ml-1 mr-auto">{{ $t('viewed') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -63,7 +63,7 @@
               class="w-7 h-7 mr-1 text-yellow-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('comments') }}</span>
+            <span class="text-base text-neutral-600 ml-1 mr-auto">{{ $t('comments') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -100,7 +100,7 @@
               class="w-7 h-7 mr-1 text-purple-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('likes') }}</span>
+            <span class="text-base text-neutral-600 ml-1 mr-auto">{{ $t('likes') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"
@@ -137,7 +137,7 @@
               class="w-7 h-7 mr-1 text-green-600"
               aria-hidden="true"
             />
-            <span class="text-base text-gray-600 ml-1 mr-auto">{{ $t('downloads') }}</span>
+            <span class="text-base text-neutral-600 ml-1 mr-auto">{{ $t('downloads') }}</span>
             <div class="flex flex-row-reverse">
               <div
                 class="inline-flex items-center justify-end -mt-4 text-lime-500 pr-1 text-sm"

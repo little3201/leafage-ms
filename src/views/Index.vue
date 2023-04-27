@@ -10,7 +10,7 @@
         :datas="menus"
         class="hidden md:block"
       />
-      <main class="hidden md:block px-4 rounded-3xl bg-gray-100 w-full overflow-hidden">
+      <main class="hidden md:block px-4 rounded-3xl bg-neutral-100 w-full overflow-hidden">
         <TopBar />
         <RouterView />
       </main>

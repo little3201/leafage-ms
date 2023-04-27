@@ -2,7 +2,7 @@
   <div class="divide-y">
     <fieldset />
     <fieldset class="my-4">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         Change password
       </legend>
       <form @submit.prevent>
@@ -10,14 +10,14 @@
           <div class="text-sm">
             <label
               for="password"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Old password</label>
             <input
               id="password"
               v-model.trim="pwd.old"
               name="password"
               type="password"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              class="w-full border-neutral-300 py-1 mt-1 rounded-md"
               required
               aria-label="password"
             >
@@ -25,14 +25,14 @@
           <div class="text-sm">
             <label
               for="newpassword"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >New password</label>
             <input
               id="newpassword"
               v-model.trim="pwd.new"
               name="newpassword"
               type="password"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              class="w-full border-neutral-300 py-1 mt-1 rounded-md"
               required
               aria-label="new password"
             >
@@ -40,20 +40,20 @@
           <div class="text-sm">
             <label
               for="confirmnewpassword"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Confirm new password</label>
             <input
               id="confirmnewpassword"
               v-model.trim="pwd.confirm"
               name="confirmnewpassword"
               type="password"
-              class="w-full border-gray-300 py-1 mt-1 rounded-md"
+              class="w-full border-neutral-300 py-1 mt-1 rounded-md"
               required
               aria-label="confirm new password"
             >
           </div>
           <div>
-            <p class="text-xs text-gray-400">
+            <p class="text-xs text-neutral-400">
               Make sure it's at least 15 characters OR at least 8 characters including a
               number and a lowercase letter. Learn more.
             </p>
@@ -62,7 +62,7 @@
                 name="submit"
                 aria-label="submit"
                 type="submit"
-                class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none active:cursor-wait px-2 py-1 rounded-md block"
+                class="mt-1 bg-blue-600  text-white hover:bg-blue-700 focus:outline-none px-2 py-1 rounded-md block"
                 @click="onSubmit"
               >
                 Update
@@ -80,7 +80,7 @@
       </form>
     </fieldset>
     <fieldset class="my-6">
-      <legend class="font-medium text-gray-900 pr-4">
+      <legend class="font-medium text-neutral-900 pr-4">
         Two-factor authentication
       </legend>
       <div class="text-center">
@@ -94,7 +94,7 @@
         <h3 class="text-xl font-semibold">
           Two factor authentication is not enabled yet.
         </h3>
-        <p class="text-gray-500 text-sm my-2 mx-16">
+        <p class="text-neutral-500 text-sm my-2 mx-16">
           Two-factor authentication adds an additional layer of security to
           your user by requiring more than just a password to sign in.
         </p>
@@ -102,7 +102,7 @@
           name="enable"
           aria-label="enable"
           type="button"
-          class="my-4 border border-gray-300 text-gray-600 hover:border-blue-600 hover:text-blue-600 px-2 py-1 rounded-md"
+          class="my-4 border border-neutral-300 text-neutral-600 hover:border-blue-600 hover:text-blue-600 px-2 py-1 rounded-md"
         >
           Enable
           Two factor authentication
@@ -116,10 +116,10 @@
       </div>
     </fieldset>
     <fieldset class="my-6">
-      <legend class="text-base font-medium text-gray-900 pr-4">
+      <legend class="text-base font-medium text-neutral-900 pr-4">
         Sessions
       </legend>
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-neutral-500">
         This is a list of devices that have logged into your user. Revoke any sessions
         that you do not recognize.
       </p>
@@ -131,7 +131,7 @@
         >
           <div class="flex items-center">
             <span
-              class="w-2 h-2 bg-gray-400 rounded-full"
+              class="w-2 h-2 bg-neutral-400 rounded-full"
               :class="{ 'bg-lime-500': index == 1 }"
             />
             <DevicePhoneMobileIcon
@@ -144,10 +144,10 @@
               class="w-6 h-6 mx-2"
               aria-hidden="true"
             />
-            <div class="mr-auto text-sm text-gray-600">
+            <div class="mr-auto text-sm text-neutral-600">
               <span>陕西西安</span>
               <span class="mx-2">111.12.12.12</span>
-              <p class="text-gray-400 text-xs">
+              <p class="text-neutral-400 text-xs">
                 {{ new Date().toLocaleString() }}
               </p>
             </div>
@@ -155,17 +155,17 @@
               type="button"
               name="see-more"
               aria-label="see-more"
-              class="text-gray-600 text-sm border py-1 px-2 rounded-md"
+              class="text-neutral-600 text-sm border py-1 px-2 rounded-md"
             >
               See more
             </button>
           </div>
-          <span class="text-gray-500 text-sm">Seen in HK</span>
+          <span class="text-neutral-500 text-sm">Seen in HK</span>
         </div>
       </div>
     </fieldset>
     <fieldset class="my-4">
-      <legend class="text-base font-medium text-gray-900 pr-4">
+      <legend class="text-base font-medium text-neutral-900 pr-4">
         OAuth2
       </legend>
       <div class="mt-4 space-y-4">
@@ -175,16 +175,16 @@
               id="github"
               name="github"
               type="checkbox"
-              class="block border-gray-300 rounded cursor-pointer"
+              class="block border-neutral-300 rounded cursor-pointer"
               aria-label="github"
             >
           </div>
           <div class="ml-3 text-sm">
             <label
               for="github"
-              class="font-medium text-gray-700"
+              class="font-medium text-neutral-700"
             >Github</label>
-            <p class="text-gray-500">
+            <p class="text-neutral-500">
               {{ new Date().toString() }}
             </p>
           </div>

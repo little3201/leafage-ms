@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="user.username && user.username.length > 0"
+    v-if="isLogin"
     class="flex justify-center items-center text-sm"
   >
     <slot />
@@ -37,8 +37,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-
-import type { User } from '~/api/request.type';
+import { getCookie } from '~/composables/cookies';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 
 defineProps({
@@ -54,20 +53,12 @@ defineProps({
 
 defineEmits(['edit', 'del']);
 
-const user = ref<User>({
-  username: '',
-  nickname: '',
-  avatar: '',
-  enabled: true,
-  accountExpiresAt: '',
-  accountLocked: false,
-  credentialsExpiresAt: ''
-});
+const isLogin = ref(false);
 
 onMounted(() => {
-  let data = sessionStorage.getItem('user');
-  if (data && data !== 'undefined') {
-    user.value = JSON.parse(data);
+  const username = getCookie('username');
+  if (username && username.length > 0) {
+    isLogin.value = true;
   }
 });
 </script>

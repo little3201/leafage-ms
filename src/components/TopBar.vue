@@ -255,9 +255,9 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { useI18n } from 'vue-i18n'
 
+import { getCookie } from '../composables/cookies'
 import { instance, SERVER_URL } from "~/api";
 import type { User, Message } from "~/api/request.type";
 import { ArrowRightCircleIcon, BellIcon, ChevronRightIcon, CogIcon, IdentificationIcon, LanguageIcon, MagnifyingGlassIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
@@ -273,7 +273,7 @@ let messages = ref<Array<Message>>([])
 let count = ref(0)
 
 const { locale } = useI18n()
-const router = useRouter();
+
 const user = ref<User>({
   username: '',
   nickname: '',
@@ -285,28 +285,35 @@ const user = ref<User>({
 });
 
 onMounted(() => {
-  let data = sessionStorage.getItem("user");
-  if (data && data !== "undefined") {
-    user.value = JSON.parse(data)
-    retrieve();
-  }
-});
+  const username = getCookie('username')
 
-const retrieve = async () => {
-  await instance.get(SERVER_URL.messages, { params: { page: 0, size: 6, receiver: user.value.username } })
+  Promise.all([fetch(username), retrieve(username)])
+});
+/**
+ * 获取消息
+ * @param username 账号
+ */
+const retrieve = async (username: string) => {
+  await instance.get(SERVER_URL.messages, { params: { page: 0, size: 6, receiver: username } })
     .then(res => {
       messages.value = res.data.content
       count.value = res.data.totalElements
     })
 }
-
+/**
+ * 查用户
+ * @param username 账号
+ */
+const fetch = async (username: string) => {
+  await instance.get(SERVER_URL.user.concat(`/${username}`)).then(res => user.value = res.data)
+}
 /**
  * 登出
  */
 const signout = async () => {
-  await instance.post("/logout").then(() => sessionStorage.clear());
+  await instance.post("/auth/logout").then(() => sessionStorage.clear());
 
-  router.replace("/signin");
+  toSignin()
 };
 
 /**

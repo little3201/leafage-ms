@@ -254,12 +254,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from "vue"
 import { useI18n } from 'vue-i18n'
 
 import { getCookie } from '../composables/cookies'
-import { instance, SERVER_URL } from "~/api";
-import type { User, Message } from "~/api/request.type";
+import { instance, SERVER_URL } from "~/api"
+import type { User, Message } from "~/api/request.type"
 import { ArrowRightCircleIcon, BellIcon, ChevronRightIcon, CogIcon, IdentificationIcon, LanguageIcon, MagnifyingGlassIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 
 // 控制通知是否打开
@@ -286,8 +286,9 @@ const user = ref<User>({
 
 onMounted(() => {
   const username = getCookie('username')
-
-  Promise.all([fetch(username), retrieve(username)])
+  if(username && username.length > 0){
+    Promise.all([fetch(username), retrieve(username)])
+  }
 });
 /**
  * 获取消息

@@ -1,6 +1,7 @@
 import { Random } from 'mockjs'
+import { BookOpenIcon, ClipboardIcon, HomeIcon, LinkIcon, MapPinIcon, ShieldCheckIcon, Square3Stack3DIcon, TagIcon, UsersIcon } from '@heroicons/vue/24/outline'
 
-import type { Pagation, User } from '~/api/request.type'
+import type { NodeData, Pagation, User } from '~/api/request.type'
 import { parse } from '~/mock/utils';
 
 const pagation: Pagation<User> = {
@@ -10,6 +11,25 @@ const pagation: Pagation<User> = {
   content: []
 }
 const datas: Array<User> = [];
+const components: Array<NodeData> = [
+  { "id": 1, "name": "Dashboard", "superiorId": 0, "expand": { "path": "/", "icon": HomeIcon }, "children": [] },
+  {
+    "id": 2, "name": "System", "superiorId": 0, "expand": { "path": "/system", "icon": Square3Stack3DIcon }, "children": [
+      { "id": 3, "name": "Groups", "superiorId": 2, "expand": { "path": "/groups", "icon": UsersIcon }, "children": [] },
+      {
+        "id": 4, "name": "Roles", "superiorId": 2, "expand": { "path": "/roles", "icon": LinkIcon }, "children": []
+      },
+      { "id": 5, "name": "Components", "superiorId": 2, "expand": { "path": "/components", "icon": ShieldCheckIcon }, "children": [] },
+      {
+        "id": 6, "name": "Users", "superiorId": 2, "expand": { "path": "/users", "icon": UsersIcon }, "children": []
+      },
+      { "id": 7, "name": "Dictionaries", "superiorId": 2, "expand": { "path": "/dictionaries", "icon": BookOpenIcon }, "children": [] }
+    ]
+  },
+  { "id": 8, "name": "Posts", "superiorId": 0, "expand": { "path": "/posts", "icon": ClipboardIcon }, "children": [] },
+  { "id": 9, "name": "Categories", "superiorId": 0, "expand": { "path": "/categories", "icon": TagIcon }, "children": [] },
+  { "id": 10, "name": "Regions", "superiorId": 0, "expand": { "path": "/regions", "icon": MapPinIcon }, "children": [] }
+]
 
 for (let i = 0; i < 139; i++) {
   datas.push({
@@ -35,10 +55,14 @@ export default [
       const url = options.url
       if (url.split('?').length == 1) {
         const path = url.substring(url.lastIndexOf('/') + 1)
-        if (path === 'role') {
+        if (path === 'roles') {
           return roles
-        } else if (path === 'group') {
+        } else if (path === 'groups') {
           return groups
+        } else if (path === 'components') {
+          return components
+        } else {
+          return datas[0]
         }
       }
       if (url.split('?').length > 1) {

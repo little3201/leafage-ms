@@ -13,3 +13,10 @@ export const getCookie = (cname: string) => {
     }
     return "";
 }
+
+export const setCookie = (cname: string, cvalue: boolean | number | string, exhours: number) => {
+    const d = new Date();
+    d.setTime(d.getTime() + (exhours * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}

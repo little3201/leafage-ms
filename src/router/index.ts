@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router';
 import routes from './routes';
 import ProgressBar from "@badrap/bar-of-progress";
+import { getCookie } from '~/composables/cookies';
 
 const progress = new ProgressBar();
 
@@ -12,10 +13,10 @@ const router = createRouter({
 /* 路由之前 */
 router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormalized, next) => {
   progress.start()
-  const user = sessionStorage.getItem("user")
-  const isAuthenticated = user && Object.keys(user).length > 0;
-  if (to.meta.requiresAuth && to.path !== '/signin' && !isAuthenticated) {
-    next({ path: '/signin', query: { redierct: to.fullPath } })
+  const username = getCookie("username")
+  const isAuthenticated = username && username.length > 0;
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    window.location.href = '/api/auth/'
   } else {
     next()
   }

@@ -113,12 +113,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/signin',
     name: 'SignIn',
-    component: () => import('/src/views/sign/SignIn.vue'),
+    component: () => import('~/views/sign/SignIn.vue'),
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: () => import('/src/views/sign/SignUp.vue'),
+    component: () => import('~/views/sign/SignUp.vue'),
   },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ];

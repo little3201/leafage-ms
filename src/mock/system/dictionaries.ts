@@ -11,7 +11,7 @@ const pagation: Pagation<Dictionary> = {
 }
 const datas: Array<Dictionary> = [];
 
-for (let i = 0; i < 30090; i++) {
+for (let i = 0; i < 390; i++) {
   datas.push({
     id: Random.increment(),
     dictionaryName: Random.cword(),

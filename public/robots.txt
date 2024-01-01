@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://console.leafage.top/sitemap.xml

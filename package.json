@@ -2,7 +2,7 @@
   "name": "leafage-ms",
   "version": "0.0.1",
   "description": "A Vue Project",
-  "productName": "leafage MS",
+  "productName": "leafage-ms",
   "author": "liwenqiang <little3201@163.com>",
   "private": true,
   "scripts": {

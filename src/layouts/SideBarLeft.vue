@@ -1,10 +1,26 @@
 <template>
   <q-list>
-    <q-item-label header>
-      Essential Links
-    </q-item-label>
+    <q-list>
+      <q-expansion-item expand-separator icon="settings" label="System">
+        <q-card>
+          <q-card-section>
+            <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
 
-    <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
+      <q-expansion-item icon="assessment" label="Dashboard">
+        <q-card>
+          <q-card-section>
+            <EssentialLink v-bind="{
+              title: 'Dashboard',
+              icon: 'dashboard',
+              link: '/dashboard'
+            }" />
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+    </q-list>
   </q-list>
 </template>
 
@@ -13,28 +29,19 @@ import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const essentialLinks: EssentialLinkProps[] = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'User',
+    icon: 'people',
+    link: '/system/user'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
+    title: 'Role',
     icon: 'code',
-    link: 'https://github.com/quasarframework'
+    link: '/system/role'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Dictionary',
+    icon: 'book',
+    link: '/system/dictionary'
   }
 ]
 </script>

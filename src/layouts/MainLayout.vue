@@ -14,10 +14,9 @@
         </q-toolbar-title>
 
         <q-toolbar-title>
-          <q-tabs align="center">
-            <q-route-tab to="/" label="Index Page" />
-            <q-route-tab to="/system" label="System Page" />
-            <q-route-tab to="/dashboard" label="Dashboard" />
+          <q-tabs align="center" inline-label>
+            <q-route-tab to="/" icon="home" label="Home" />
+            <q-route-tab to="/dashboard" icon="dashboard" label="Dashboard" />
           </q-tabs>
         </q-toolbar-title>
 
@@ -33,17 +32,17 @@
     <q-page-container style="overflow: hidden;">
       <router-view />
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn round color="primary" icon="arrow_back" class="rotate-90" />
+        <q-btn title="arrow_back" round color="primary" icon="arrow_back" class="rotate-90" />
       </q-page-sticky>
     </q-page-container>
 
-    <q-footer elevated>
+    <!-- <q-footer elevated>
       <q-toolbar>
         <q-toolbar-title>
           Footer
         </q-toolbar-title>
       </q-toolbar>
-    </q-footer>
+    </q-footer> -->
 
   </q-layout>
 </template>

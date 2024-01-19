@@ -38,20 +38,20 @@
         <q-btn color="primary" :disable="loading" label="Add row" @click="addRow" />
       </template>
       <template v-slot:body-cell-username="props">
-        <q-td :props="props" class="q-gutter-sm">
+        <q-td :props="props">
           <q-avatar size="md" class="q-mt-none">
             <!-- <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png"> -->
             <q-img src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
-          <span>{{ props.row.username }}</span>
+          <span class="q-ml-sm">{{ props.row.username }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
-        <q-td :props="props" class="q-gutter-sm ">
+        <q-td :props="props">
           <q-btn size="sm" title="edit" round color="primary" icon="edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
           <q-btn size="sm" title="delete" round color="primary" icon="delete" @click="removeRow(props.row.id)"
-            class="q-mt-none" />
+            class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
     </q-table>
@@ -77,22 +77,24 @@ const age = ref(null)
 const accept = ref(false)
 
 const pagination = ref({
-  sortBy: 'desc',
+  sortBy: 'lastModifiedDate',
   descending: false,
   page: 1,
-  rowsPerPage: 10,
+  rowsPerPage: 7,
   rowsNumber: 10
 })
 
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
+  { name: 'index', label: '#', field: 'index' },
   { name: 'username', label: 'username', field: 'username', sortable: true },
-  { name: 'nickname', label: 'nickname', field: 'nickname', sortable: true },
-  { name: 'accountNonLocked', label: 'non locked', field: 'accountNonLocked' },
+  { name: 'firstname', label: 'firstname', field: 'firstname', sortable: true },
+  { name: 'lastname', label: 'lastname', field: 'lastname', sortable: true },
+  { name: 'accountNonLocked', label: 'is locked', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'expires at', field: 'accountExpiresAt' },
   { name: 'credentialsExpiresAt', label: 'credentials expires at', field: 'credentialsExpiresAt' },
-  { name: 'modifyTime', label: 'modify time', field: 'modifyTime', sortable: true },
+  { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
@@ -105,12 +107,14 @@ onMounted(() => {
  */
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
-  const { page, rowsPerPage, descending } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
   await api.get(SERVER_URL.user, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
+    pagination.value.sortBy = sortBy
+    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending

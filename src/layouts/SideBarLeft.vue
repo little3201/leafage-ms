@@ -1,7 +1,7 @@
 <template>
   <q-list>
     <q-list>
-      <q-expansion-item expand-separator icon="settings" label="System">
+      <q-expansion-item expand-separator icon="settings" label="System" default-opened>
         <q-card>
           <q-card-section>
             <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
@@ -9,17 +9,11 @@
         </q-card>
       </q-expansion-item>
 
-      <q-expansion-item icon="assessment" label="Dashboard">
-        <q-card>
-          <q-card-section>
-            <EssentialLink v-bind="{
-              title: 'Dashboard',
-              icon: 'dashboard',
-              link: '/dashboard'
-            }" />
-          </q-card-section>
-        </q-card>
-      </q-expansion-item>
+      <EssentialLink v-bind="{
+        title: 'Dashboard',
+        icon: 'dashboard',
+        link: '/dashboard'
+      }" />
     </q-list>
   </q-list>
 </template>
@@ -30,17 +24,22 @@ import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'User',
-    icon: 'people',
+    icon: 'manage_accounts',
     link: '/system/user'
   },
   {
+    title: 'Group',
+    icon: 'group',
+    link: '/system/group'
+  },
+  {
     title: 'Role',
-    icon: 'code',
+    icon: 'admin_panel_settings',
     link: '/system/role'
   },
   {
     title: 'Dictionary',
-    icon: 'book',
+    icon: 'library_books',
     link: '/system/dictionary'
   }
 ]

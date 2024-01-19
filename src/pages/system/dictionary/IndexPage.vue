@@ -5,12 +5,12 @@
       <q-card style="min-width: 350px">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">Role</div>
+            <div class="text-h6">Dictionary</div>
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="name" label="Your name *" hint="Name and surname" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="name" label="The name *" hint="Name and surname" lazy-rules
+              :rules="[val => val && val.length > 0 || 'Please type name']" />
 
             <q-input v-model="description" label="The description *" lazy-rules :rules="[
               val => val !== null && val !== '' || 'Please type description',
@@ -29,7 +29,7 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Role" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat bordered ref="tableRef" title="Dictionary" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top>
@@ -83,7 +83,8 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'roleName', label: 'name', field: 'roleName', sortable: true },
+  { name: 'name', label: 'name', field: 'name', sortable: true },
+  { name: 'description', label: 'description', field: 'description', sortable: true },
   { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
 ]
@@ -100,7 +101,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  await api.get(SERVER_URL.role, { params }).then(res => {
+  await api.get(SERVER_URL.dictionary, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy

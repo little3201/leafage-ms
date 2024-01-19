@@ -12,7 +12,9 @@ const routes: RouteRecordRaw[] = [
         redirect: { path: 'user' },
         children: [
           { path: 'user', component: () => import('pages/system/user/IndexPage.vue') },
-          { path: 'role', component: () => import('pages/system/role/IndexPage.vue') }
+          { path: 'group', component: () => import('pages/system/group/IndexPage.vue') },
+          { path: 'role', component: () => import('pages/system/role/IndexPage.vue') },
+          { path: 'dictionary', component: () => import('pages/system/dictionary/IndexPage.vue') }
         ]
       }
     ]

@@ -8,7 +8,7 @@
 
         <q-toolbar-title :shrink="true">
           <q-avatar>
-            <img alt="logo" src="logo.svg">
+            <img alt="logo" src="/logo.svg">
           </q-avatar>
           Title
         </q-toolbar-title>
@@ -20,7 +20,12 @@
           </q-tabs>
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title :shrink="true">
+          <q-avatar size="md">
+            <!-- <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png"> -->
+            <q-img src="https://cdn.quasar.dev/img/avatar.png" />
+          </q-avatar>
+        </q-toolbar-title>
       </q-toolbar>
 
     </q-header>
@@ -31,9 +36,9 @@
 
     <q-page-container style="overflow: hidden;">
       <router-view />
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <!-- <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn title="arrow_back" round color="primary" icon="arrow_back" class="rotate-90" />
-      </q-page-sticky>
+      </q-page-sticky> -->
     </q-page-container>
 
     <!-- <q-footer elevated>

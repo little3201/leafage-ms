@@ -8,17 +8,17 @@ const SERVER_PRE = {
 export const SERVER_URL = {
   user: SERVER_PRE.hypervisor.concat('/users'), // 用户
   role: SERVER_PRE.hypervisor.concat('/roles'), // 角色
-  components: SERVER_PRE.hypervisor.concat('/components'), // 权限
+  privilege: SERVER_PRE.hypervisor.concat('/privileges'), // 权限
   group: SERVER_PRE.hypervisor.concat('/groups'), // 分组
-  message: SERVER_PRE.hypervisor.concat('/messages'), // 消息通知
 
-  region: SERVER_PRE.hypervisor.concat('/regions'), // 行政区划
   dictionary: SERVER_PRE.hypervisor.concat('/dictionaries'), // 字典
-  accesslog: SERVER_PRE.hypervisor.concat('/access-logs'), // 字典
+
+  message: SERVER_PRE.hypervisor.concat('/messages'), // 消息通知
+  region: SERVER_PRE.hypervisor.concat('/regions'), // 行政区划
+  accesslog: SERVER_PRE.hypervisor.concat('/access-logs'), // 访问日志
 
   post: SERVER_PRE.assets.concat('/posts'), // 帖子
   category: SERVER_PRE.assets.concat('/categories'), // 类别
-  resource: SERVER_PRE.assets.concat('/resources'), // 资源
   statistic: SERVER_PRE.assets.concat('/statistics'), // 统计
   comment: SERVER_PRE.assets.concat('/comments') // 评论
 }

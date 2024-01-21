@@ -35,15 +35,15 @@
       <template v-slot:top>
         <div class="col-2 q-table__title">Users</div>
         <q-space />
-        <q-btn color="primary" title="add" :disable="loading" icon="add_circle" label="Add" @click="addRow" />
-        <q-btn color="primary" title="export" class="q-ml-sm" icon="sim_card_download" label="Export"
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="edit" @click="editRow(props.row.id)"
+          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="delete" @click="removeRow(props.row.id)"
+          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -57,7 +57,7 @@ import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 
 import { api } from 'boot/axios'
-import { SERVER_URL } from 'src/api/constant'
+import { SERVER_URL } from 'src/api/paths'
 
 const $q = useQuasar()
 
@@ -101,7 +101,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  await api.get(SERVER_URL.dictionary, { params }).then(res => {
+  await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -176,3 +176,4 @@ function exportTable() {
   }
 }
 </script>
+src/api/paths

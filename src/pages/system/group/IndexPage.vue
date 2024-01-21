@@ -39,9 +39,9 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="edit" @click="editRow(props.row.id)"
+          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="delete" @click="removeRow(props.row.id)"
+          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -54,7 +54,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 
 import { api } from 'boot/axios'
-import { SERVER_URL } from 'src/api/constant'
+import { SERVER_URL } from 'src/api/paths'
 
 const visiable = ref<boolean>(false)
 
@@ -96,7 +96,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  await api.get(SERVER_URL.group, { params }).then(res => {
+  await api.get(SERVER_URL.GROUP, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -131,3 +131,4 @@ function onSubmit() { }
 
 function onReset() { }
 </script>
+src/api/paths

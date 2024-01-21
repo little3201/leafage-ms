@@ -5,7 +5,7 @@
       <q-card style="min-width: 350px">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">Role</div>
+            <div class="text-h6">Group</div>
           </q-card-section>
 
           <q-card-section>
@@ -29,21 +29,19 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Role" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat bordered ref="tableRef" title="Group" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top>
         <div class="col-2 q-table__title">Users</div>
         <q-space />
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
-        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
-          @click="exportTable" />
+        <q-btn color="primary" :disable="loading" label="Add row" @click="addRow" />
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
+          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -53,13 +51,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
-
-const $q = useQuasar()
 
 const visiable = ref<boolean>(false)
 
@@ -83,7 +78,8 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'roleName', label: 'name', field: 'roleName', sortable: true },
+  { name: 'name', label: 'name', field: 'name', sortable: true },
+  { name: 'description', label: 'description', field: 'description', sortable: true },
   { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
 ]
@@ -100,7 +96,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  await api.get(SERVER_URL.ROLE, { params }).then(res => {
+  await api.get(SERVER_URL.REGION, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -134,45 +130,5 @@ function removeRow(id: number) {
 function onSubmit() { }
 
 function onReset() { }
-
-function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
-  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
-
-  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
-
-  formatted = formatted.split('"').join('""')
-
-  return `"${formatted}"`
-}
-
-function exportTable() {
-  if (!columns || !rows.value || columns.length === 0 || rows.value.length === 0) {
-    // Handle the case where columns or rows are undefined or empty
-    console.error('Columns or rows are undefined or empty.')
-    return
-  }
-  // naive encoding to csv format
-  const content = [columns.map(col => wrapCsvValue(col.label))]
-    .concat(rows.value.map(row => columns.map(col =>
-      wrapCsvValue(typeof col.field === 'function' ? col.field(row) : row[col.field === void 0 ? col.name : col.field],
-        col.format,
-        row
-      )).join(','))
-    ).join('\r\n')
-
-  const status = exportFile(
-    'table-export.csv',
-    content,
-    'text/csv'
-  )
-
-  if (status !== true) {
-    $q.notify({
-      message: 'Browser denied file download...',
-      color: 'negative',
-      icon: 'warning'
-    })
-  }
-}
 </script>
 src/api/paths

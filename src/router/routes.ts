@@ -14,7 +14,8 @@ const routes: RouteRecordRaw[] = [
           { path: 'user', component: () => import('pages/system/user/IndexPage.vue') },
           { path: 'group', component: () => import('pages/system/group/IndexPage.vue') },
           { path: 'role', component: () => import('pages/system/role/IndexPage.vue') },
-          { path: 'dictionary', component: () => import('pages/system/dictionary/IndexPage.vue') }
+          { path: 'dictionary', component: () => import('pages/system/dictionary/IndexPage.vue') },
+          { path: 'region', component: () => import('pages/system/region/IndexPage.vue') }
         ]
       }
     ]

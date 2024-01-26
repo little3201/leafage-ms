@@ -9,15 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="name" label="Your name *" hint="Name and surname" lazy-rules
+            <q-input v-model="form.name" label="Role name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="description" label="The description *" lazy-rules :rules="[
-              val => val !== null && val !== '' || 'Please type description',
-              val => val > 0 && val < 100 || 'Please type a real age'
-            ]" />
-
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <q-input v-model="form.description" label="Role deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -39,6 +34,18 @@
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
+      <template v-slot:body-cell-members="props">
+        <q-td :props="props" class="q-gutter-sm">
+          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ marginLeft: '-12px', border: '2px solid white' }">
+            <q-img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+          </q-avatar>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-lastModifiedDate="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
@@ -53,8 +60,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 import type { QTableProps } from 'quasar'
+
+import type { Role } from 'src/api/models.type'
 
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
@@ -68,9 +77,10 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
-const name = ref(null)
-const description = ref(null)
-const accept = ref(false)
+const form = ref<Role>({
+  name: '',
+  description: ''
+})
 
 const pagination = ref({
   sortBy: 'lastModifiedDate',
@@ -83,7 +93,9 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'roleName', label: 'name', field: 'roleName', sortable: true },
+  { name: 'name', label: 'name', field: 'name', sortable: true },
+  { name: 'members', label: 'members', field: 'members' },
+  { name: 'description', label: 'description', field: 'description' },
   { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
 ]
@@ -175,4 +187,3 @@ function exportTable() {
   }
 }
 </script>
-src/api/paths

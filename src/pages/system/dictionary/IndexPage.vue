@@ -9,15 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="name" label="The name *" hint="Name and surname" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type name']" />
+            <q-input v-model="form.name" label="Dictionary name" lazy-rules
+              :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="description" label="The description *" lazy-rules :rules="[
-              val => val !== null && val !== '' || 'Please type description',
-              val => val > 0 && val < 100 || 'Please type a real age'
-            ]" />
-
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <q-input v-model="form.description" label="Dictionary deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -39,6 +34,11 @@
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
+      <template v-slot:body-cell-lastModifiedDate="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
@@ -53,8 +53,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 import type { QTableProps } from 'quasar'
+
+import type { Dictionary } from 'src/api/models.type'
 
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
@@ -68,9 +70,10 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
-const name = ref(null)
-const description = ref(null)
-const accept = ref(false)
+const form = ref<Dictionary>({
+  name: '',
+  description: ''
+})
 
 const pagination = ref({
   sortBy: 'lastModifiedDate',

@@ -9,15 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="name" label="Your name *" hint="Name and surname" lazy-rules
+            <q-input v-model="form.name" label="Group name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="description" label="The description *" lazy-rules :rules="[
-              val => val !== null && val !== '' || 'Please type description',
-              val => val > 0 && val < 100 || 'Please type a real age'
-            ]" />
-
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <q-input v-model="form.description" label="Group deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -37,11 +32,23 @@
         <q-space />
         <q-btn color="primary" :disable="loading" label="Add row" @click="addRow" />
       </template>
+      <template v-slot:body-cell-members="props">
+        <q-td :props="props" class="q-gutter-sm">
+          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ marginLeft: '-12px', border: '2px solid white' }">
+            <q-img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+          </q-avatar>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-lastModifiedDate="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_sym_r_delete" @click="removeRow(props.row.id)"
+          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -52,6 +59,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
+import { date } from 'quasar'
+
+import type { Group } from 'src/api/models.type'
 
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
@@ -63,9 +73,10 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
-const name = ref(null)
-const description = ref(null)
-const accept = ref(false)
+const form = ref<Group>({
+  name: '',
+  description: ''
+})
 
 const pagination = ref({
   sortBy: 'lastModifiedDate',
@@ -79,7 +90,8 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', field: 'name', sortable: true },
-  { name: 'description', label: 'description', field: 'description', sortable: true },
+  { name: 'members', label: 'members', field: 'members' },
+  { name: 'description', label: 'description', field: 'description' },
   { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
 ]

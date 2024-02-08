@@ -32,6 +32,7 @@ export default {
   modifyTime: 'Modify Time',
 
   username: 'Username',
+  password: 'Password',
   nickname: 'Nickname',
   accountLocked: 'Account Locked',
   accountExpiresAt: 'User Expires At',
@@ -91,5 +92,10 @@ export default {
   regions: 'Regions',
   statitics: 'Statitics',
   messages: 'Notifications',
-  status: 'Status'
+  status: 'Status',
+
+  welcome: 'Welcome',
+  rememberMe: 'Remember Me',
+  version: 'Version',
+  info: 'Info'
 }

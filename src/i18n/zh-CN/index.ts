@@ -32,6 +32,7 @@ export default {
   modifyTime: '更新时间',
 
   username: '账号',
+  password: '密码',
   nickname: '昵称',
   accountLocked: '账号锁状态',
   accountExpiresAt: '账号失效时间',
@@ -91,5 +92,10 @@ export default {
   regions: '行政区划',
   statitics: '数据统计',
   messages: '消息通知',
-  status: '状态'
+  status: '状态',
+
+  welcome: '欢迎',
+  rememberMe: '记住我',
+  version: '版本',
+  info: '信息'
 }

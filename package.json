@@ -33,6 +33,8 @@
     "eslint-plugin-n": "^16.6.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.19.2",
+    "lottie-web": "^5.12.2",
+    "postcss": "^8.4.34",
     "typescript": "^5.3.3"
   },
   "engines": {

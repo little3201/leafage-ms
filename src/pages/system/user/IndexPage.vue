@@ -33,15 +33,15 @@
     <q-table flat bordered ref="tableRef" title="User" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
-      <template v-slot:top>
-        <div class="col-2 q-table__title">Users</div>
-        <q-space />
-        <q-btn color="primary" :disable="loading" label="Add User" @click="addUser" />
+      <template v-slot:top-right>
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
+          @click="exportTable" />
       </template>
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
           <q-avatar size="md" class="q-mt-none">
-            <q-img src="https://cdn.quasar.dev/img/avatar.png" />
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
           <span class="q-ml-sm">{{ props.row.username }}</span>
         </q-td>
@@ -51,11 +51,17 @@
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
         </q-td>
       </template>
+      <template v-slot:body-cell-accountNonLocked="props">
+        <q-td :props="props">
+          <q-icon size="xs" :color="props.row.accountNonLocked ? 'green' : 'red'"
+            :name="props.row.accountNonLocked ? 'sym_r_lock_open' : 'sym_r_lock'" />
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editUser(props.row.id)"
+          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeUser(props.row.id)"
+          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -66,12 +72,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { date } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 
 import type { User } from 'src/api/models.type'
 
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
+
+const $q = useQuasar()
 
 const visible = ref<boolean>(false)
 const editingUser = ref<boolean>(false)
@@ -99,13 +107,13 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'username', label: 'Username', field: 'username', sortable: true },
-  { name: 'firstname', label: 'First Name', field: 'firstname', sortable: true },
-  { name: 'lastname', label: 'Last Name', field: 'lastname', sortable: true },
-  { name: 'accountNonLocked', label: 'Is Locked', field: 'accountNonLocked' },
-  { name: 'accountExpiresAt', label: 'Expires At', field: 'accountExpiresAt' },
-  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', field: 'credentialsExpiresAt' },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', field: 'lastModifiedDate', sortable: true },
+  { name: 'username', label: 'Username', align: 'left', field: 'username', sortable: true },
+  { name: 'firstname', label: 'First Name', align: 'left', field: 'firstname', sortable: true },
+  { name: 'lastname', label: 'Last Name', align: 'left', field: 'lastname', sortable: true },
+  { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
+  { name: 'accountExpiresAt', label: 'Expires At', align: 'left', field: 'accountExpiresAt', sortable: true },
+  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'left', field: 'credentialsExpiresAt', sortable: true },
+  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
@@ -134,12 +142,12 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     })
 }
 
-function addUser() {
+function addRow() {
   visible.value = true
   editingUser.value = false
 }
 
-function editUser(id: number) {
+function editRow(id: number) {
   visible.value = true
   editingUser.value = true
   // You can populate the form with existing user data based on the id
@@ -151,7 +159,7 @@ function editUser(id: number) {
   }
 }
 
-function removeUser(id: number) {
+function removeRow(id: number) {
   console.log('Removing user with ID:', id)
   loading.value = true
   // You can send a request to delete the user with the specified id
@@ -180,5 +188,45 @@ function onReset() {
   form.value.username = ''
   form.value.firstname = ''
   form.value.lastname = ''
+}
+
+function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
+  let formatted = formatFn !== void 0 ? formatFn(val, row) : val
+
+  formatted = formatted === void 0 || formatted === null ? '' : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+
+  return `"${formatted}"`
+}
+
+function exportTable() {
+  if (!columns || !rows.value || columns.length === 0 || rows.value.length === 0) {
+    // Handle the case where columns or rows are undefined or empty
+    console.error('Columns or rows are undefined or empty.')
+    return
+  }
+  // naive encoding to csv format
+  const content = [columns.map(col => wrapCsvValue(col.label))]
+    .concat(rows.value.map(row => columns.map(col =>
+      wrapCsvValue(typeof col.field === 'function' ? col.field(row) : row[col.field === void 0 ? col.name : col.field],
+        col.format,
+        row
+      )).join(','))
+    ).join('\r\n')
+
+  const status = exportFile(
+    'table-export.csv',
+    content,
+    'text/csv'
+  )
+
+  if (status !== true) {
+    $q.notify({
+      message: 'Browser denied file download...',
+      color: 'negative',
+      icon: 'warning'
+    })
+  }
 }
 </script>

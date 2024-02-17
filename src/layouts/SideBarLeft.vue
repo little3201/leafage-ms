@@ -1,6 +1,17 @@
 <template>
   <q-list>
     <q-list>
+      <EssentialLink v-bind="{
+        title: 'Dashboard',
+        icon: 'sym_r_dashboard',
+        link: '/dashboard'
+      }" />
+
+      <EssentialLink v-bind="{
+        title: 'Home',
+        icon: 'sym_r_dashboard',
+        link: '/'
+      }" />
       <q-expansion-item expand-separator icon="sym_r_settings" label="System" default-opened>
         <q-card>
           <q-card-section>
@@ -9,11 +20,6 @@
         </q-card>
       </q-expansion-item>
 
-      <EssentialLink v-bind="{
-        title: 'Dashboard',
-        icon: 'sym_r_dashboard',
-        link: '/dashboard'
-      }" />
     </q-list>
   </q-list>
 </template>

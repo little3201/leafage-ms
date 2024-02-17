@@ -24,21 +24,21 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Role" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat bordered ref="tableRef" title="Roles" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
-      <template v-slot:top>
-        <div class="col-2 q-table__title">Users</div>
-        <q-space />
+      <template v-slot:top-right>
         <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
       <template v-slot:body-cell-members="props">
         <q-td :props="props" class="q-gutter-sm">
-          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ marginLeft: '-12px', border: '2px solid white' }">
-            <q-img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
-          </q-avatar>
+          <div class="no-margin">
+            <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
+              <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+            </q-avatar>
+          </div>
         </q-td>
       </template>
       <template v-slot:body-cell-lastModifiedDate="props">
@@ -93,11 +93,11 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'name', field: 'name', sortable: true },
-  { name: 'members', label: 'members', field: 'members' },
-  { name: 'description', label: 'description', field: 'description' },
-  { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
-  { name: 'id', label: 'actions', field: 'id' }
+  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'members', label: 'Members', align: 'center', field: 'members' },
+  { name: 'description', label: 'Description', align: 'left', field: 'description' },
+  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
+  { name: 'id', label: 'Actions', field: 'id' }
 ]
 
 onMounted(() => {

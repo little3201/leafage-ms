@@ -7,23 +7,22 @@
           aria-disabled="false" />
 
         <q-toolbar-title :shrink="true">
-          <q-avatar>
-            <img alt="logo" src="/logo.svg">
-          </q-avatar>
-          Title
+          <q-img alt="logo" src="/logo-only.svg" style="width: 46px; height: 46px;" />
+          {{ $t('Application') }}
         </q-toolbar-title>
 
-        <q-toolbar-title>
-          <q-tabs align="center" inline-label>
-            <q-route-tab to="/" icon="sym_r_home" label="Home" />
-            <q-route-tab to="/dashboard" icon="sym_r_dashboard" label="Dashboard" />
-          </q-tabs>
-        </q-toolbar-title>
+        <q-separator color="white" vertical inset />
 
+        <q-breadcrumbs class="text-grey q-ma-sm" active-color="white" style="font-size: 16px">
+          <q-breadcrumbs-el label="Home" icon="sym_r_home" />
+          <q-breadcrumbs-el label="Components" icon="sym_r_widgets" />
+          <q-breadcrumbs-el label="Breadcrumbs" />
+        </q-breadcrumbs>
+
+        <q-space />
         <q-toolbar-title :shrink="true">
           <q-avatar size="md">
-            <!-- <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png"> -->
-            <q-img src="https://cdn.quasar.dev/img/avatar.png" />
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
           </q-avatar>
         </q-toolbar-title>
       </q-toolbar>

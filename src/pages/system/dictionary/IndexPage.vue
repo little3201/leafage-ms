@@ -24,12 +24,10 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Dictionary" selection="multiple" v-model:selected="selected" :rows="rows"
-      :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
+    <q-table flat bordered ref="tableRef" title="Dictionaries" selection="multiple" v-model:selected="selected"
+      :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
-      <template v-slot:top>
-        <div class="col-2 q-table__title">Users</div>
-        <q-space />
+      <template v-slot:top-right>
         <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
@@ -86,10 +84,10 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'name', field: 'name', sortable: true },
-  { name: 'description', label: 'description', field: 'description', sortable: true },
-  { name: 'lastModifiedDate', label: 'last modified date', field: 'lastModifiedDate', sortable: true },
-  { name: 'id', label: 'actions', field: 'id' }
+  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'description', label: 'Description', align: 'left', field: 'description' },
+  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
+  { name: 'id', label: 'Actions', field: 'id' }
 ]
 
 onMounted(() => {

@@ -68,15 +68,15 @@
           style="width: 65vw;height: 70vh;border-radius: 20px;">
           <q-card-section horizontal style="width: 50%;">
             <q-card-section class="row justify-center" style="width: 100%;">
-              <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
+              <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
                 <div class="column justify-center items-center" style="margin-top: -120px">
                   <div ref="lottieRef" style="height: 450px, width: 450px" />
                   <div class="column q-gutter-y-xs">
                     <span class="text-weight-bold text-h5" style="margin-top: -40px">
-                      欢迎访问
+                      {{ $t('welcome') }}
                     </span>
                     <span class="text-subtitle1">
-                      {{ '描述' }}
+                      {{ $t('welcome') }}
                     </span>
                   </div>
                 </div>
@@ -86,7 +86,7 @@
           <q-separator vertical dark />
           <q-card-section horizontal class="full-height" style="width: 50%; background: #f3fbff;">
             <q-card-section class="row justify-center full-width">
-              <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
+              <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
                 <div class="col justify-center items-center">
                   <q-card flat class="q-px-md transparent">
                     <q-card-section>
@@ -130,8 +130,8 @@
         </q-card>
 
         <footer class="fixed-bottom absolute-bottom text-center">
-          <q-btn flat label="Github" @click="openLink('https://github.com/Junvary/gin-quasar-admin')" />
-          <q-btn flat label="Gitee" @click="openLink('https://gitee.com/junvary/gin-quasar-admin')" />
+          <q-btn flat rounded label="Github" @click="openLink('https://github.com/little3201/leafage-ms')" />
+          <q-btn flat rounded label="Gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
           <p>Copyright &copy; 2018 - {{ new Date().getFullYear() }} leafage.top All rights reserved.</p>
         </footer>
       </q-page>

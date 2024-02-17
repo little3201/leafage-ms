@@ -34,7 +34,7 @@
       <SideBarLeft />
     </q-drawer>
 
-    <q-page-container style="overflow: hidden;">
+    <q-page-container class="overflow-hidden">
       <router-view />
     </q-page-container>
 

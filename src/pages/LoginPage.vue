@@ -1,12 +1,13 @@
 <template>
-  <q-layout>
-    <q-page-container>
-      <q-page padding class="row justify-center items-center overflow-hidden window-height"
-        :style="{ background: $q.dark.isActive ? 'black' : '#e3f4fa' }">
-        <div class="fixed-top-left absolute-top-left q-pa-md">
+  <q-layout class="overflow-hidden" :style="{ background: $q.dark.isActive ? 'black' : '#e3f4fa' }">
+    <q-header class="transparent text-black">
+      <q-toolbar>
+        <q-toolbar-title :shrink="true">
           <q-img alt="logo" src="/logo-only.svg" style="width: 64px; height: 64px;" />
-        </div>
-        <div class="z-top fixed-top-right absolute-top-right q-pa-md">
+        </q-toolbar-title>
+        <q-space />
+
+        <q-toolbar-title :shrink="true">
           <q-btn icon="sym_r_language" round flat>
             <q-menu>
               <q-list dense>
@@ -24,14 +25,20 @@
               </q-list>
             </q-menu>
           </q-btn>
+
           <q-toggle v-model="darkTheme" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
             :color="darkTheme ? 'black' : ''" />
-        </div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+    <q-page-container>
+      <q-page class="row justify-center items-center full-height">
+
         <figure class="absolute" style="height: 500px;
         width: 500px;
         background: #1976D2;
         border-radius: 50%;
-        top: -200px;
+        top: -270px;
         right: -200px;
         background: -webkit-radial-gradient(circle at top right, #ffffff, #1976D2);
         background: -moz-radial-gradient(circle at top right, #ffffff, #1976D2);
@@ -40,7 +47,7 @@
         width: 300px;
         background: #21BA45;
         border-radius: 50%;
-        bottom: 100px;
+        bottom: 50px;
         right: -100px;
         background: -webkit-radial-gradient(circle at center right, #26A69A, #21BA45);
         background: -moz-radial-gradient(circle at center right, #26A69A, #21BA45);
@@ -49,7 +56,7 @@
         width: 600px;
         background: #F2C037;
         border-radius: 50%;
-        bottom: -200px;
+        bottom: -270px;
         left: -200px;
         background: -webkit-radial-gradient(circle at bottom left, #cf9900, #F2C037);
         background: -moz-radial-gradient(circle at bottom left, #cf9900, #F2C037);
@@ -58,7 +65,7 @@
         width: 300px;
         background: #C10015;
         border-radius: 50%;
-        bottom: -150px;
+        bottom: -230px;
         left: 200px;
         background: -webkit-radial-gradient(circle at center bottom, #ffffff, #C10015);
         background: -moz-radial-gradient(circle at center bottom, #ffffff, #C10015);
@@ -84,7 +91,7 @@
             </q-card-section>
           </q-card-section>
           <q-separator vertical dark />
-          <q-card-section horizontal class="full-height" style="width: 50%; background: #f3fbff;">
+          <q-card-section horizontal class="full-height no-border-radius" style="width: 50%; background: #f3fbff;">
             <q-card-section class="row justify-center full-width">
               <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
                 <div class="col justify-center items-center">
@@ -128,14 +135,13 @@
             </q-card-section>
           </q-card-section>
         </q-card>
-
-        <footer class="fixed-bottom absolute-bottom text-center">
-          <q-btn flat rounded label="Github" @click="openLink('https://github.com/little3201/leafage-ms')" />
-          <q-btn flat rounded label="Gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
-          <p>Copyright &copy; 2018 - {{ new Date().getFullYear() }} leafage.top All rights reserved.</p>
-        </footer>
       </q-page>
     </q-page-container>
+    <q-footer class="transparent text-center text-black">
+      <q-btn flat rounded label="Github" @click="openLink('https://github.com/little3201/leafage-ms')" />
+      <q-btn flat rounded label="Gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
+      <p>Copyright &copy; 2018 - {{ new Date().getFullYear() }} leafage.top All rights reserved.</p>
+    </q-footer>
   </q-layout>
 </template>
 

@@ -95,7 +95,5 @@ export default {
   status: '状态',
 
   welcome: '欢迎',
-  rememberMe: '记住我',
-  version: '版本',
-  info: '信息'
+  rememberMe: '记住我 ？'
 }

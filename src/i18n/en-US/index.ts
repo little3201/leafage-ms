@@ -95,7 +95,5 @@ export default {
   status: 'Status',
 
   welcome: 'Welcome',
-  rememberMe: 'Remember me',
-  version: 'Version',
-  info: 'Info'
+  rememberMe: 'Remember me ?'
 }

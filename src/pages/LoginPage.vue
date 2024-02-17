@@ -16,7 +16,7 @@
                 </q-item>
                 <q-separator />
                 <q-item clickable v-close-popup>
-                  <q-item-section>繁体中文</q-item-section>
+                  <q-item-section>繁體中文</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable v-close-popup>

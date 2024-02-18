@@ -16,6 +16,7 @@ export default {
   settings: 'Settings',
   help: 'Help',
   signin: 'Sign In',
+  signinTo: 'Sign in to your account',
   signup: 'Sign Up',
   signout: 'Sign Out',
 
@@ -94,6 +95,7 @@ export default {
   messages: 'Notifications',
   status: 'Status',
 
-  welcome: 'Welcome',
+  welcome: 'Hi! Welcome Back.',
+  subtitle: 'Please sign in to continue exploring.',
   rememberMe: 'Remember me ?'
 }

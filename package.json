@@ -1,9 +1,9 @@
 {
   "name": "leafage-ms",
   "version": "0.0.1",
-  "description": "A Vue Project",
+  "description": "A system based on RBAC.",
   "productName": "leafage-ms",
-  "author": "liwenqiang <little3201@163.com>",
+  "author": "wq.li <little3201@163.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
@@ -15,14 +15,14 @@
     "@quasar/extras": "^1.16.9",
     "axios": "^1.6.3",
     "pinia": "^2.1.7",
-    "quasar": "^2.14.2",
-    "vue": "^3.4.1",
-    "vue-i18n": "^9.2.2",
+    "quasar": "^2.14.4",
+    "vue": "^3.4.19",
+    "vue-i18n": "^9.9.1",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^7.0.0",
-    "@quasar/app-vite": "^1.7.1",
+    "@quasar/app-vite": "^1.7.3",
     "@types/node": "^20.10.6",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",

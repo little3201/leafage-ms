@@ -16,6 +16,7 @@ export default {
   settings: '设置',
   help: '帮助',
   signin: '登录',
+  signinTo: '登录您的帐户',
   signup: '注册',
   signout: '退出登录',
 

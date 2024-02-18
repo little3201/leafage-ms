@@ -83,7 +83,7 @@
                       {{ $t('welcome') }}
                     </span>
                     <span class="text-subtitle1">
-                      {{ $t('welcome') }}
+                      {{ $t('subtitle') }}
                     </span>
                   </div>
                 </div>
@@ -102,7 +102,7 @@
                           <q-img alt="logo" src="/logo.svg" style="height: 140px; max-width: 150px" />
                         </div>
                         <div class="text-h6 text-center q-mb-xs">
-                          {{ $t('welcome') }}
+                          {{ $t('signinTo') }}
                         </div>
                         <q-form @submit="onSubmit" class="q-mt-md">
                           <q-input :disable="loading" dense no-error-icon v-model.trim="form.username" color="black"
@@ -115,18 +115,11 @@
                                 class="cursor-pointer" @click="isPwd = !isPwd" />
                             </template>
                           </q-input>
-                          <div class="column q-gutter-y-md q-mt-none">
-                            <q-checkbox :disable="loading" v-model="rememberMe" :label="$t('rememberMe')" dense
-                              @update:model-value="changeRememberMe" />
-                          </div>
-                          <div class="col items-center justify-around q-mt-md">
-                            <q-btn rounded glossy :label="$t('signin')" type="submit" color="primary" :loading="loading"
-                              class="full-width" />
-                          </div>
+                          <q-checkbox :disable="loading" v-model="rememberMe" :label="$t('rememberMe')" dense
+                            @update:model-value="changeRememberMe" class="q-my-md" />
+                          <q-btn no-caps rounded glossy :label="$t('signin')" type="submit" color="primary"
+                            :loading="loading" class="full-width" />
                         </q-form>
-                        <q-inner-loading :showing="loading" style="background-color: rgba(0, 0, 0, 0);">
-                          <q-spinner-hourglass color="primary" size="3em" />
-                        </q-inner-loading>
                       </q-card-section>
                     </q-card-section>
                   </q-card>

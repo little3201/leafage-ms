@@ -10,17 +10,15 @@
         <q-toolbar-title :shrink="true">
           <q-btn icon="sym_r_language" round flat>
             <q-menu>
-              <q-list dense>
-                <q-item clickable v-close-popup>
+              <q-list dense separator>
+                <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
+                  <q-item-section>English(US)</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
                   <q-item-section>简体中文</q-item-section>
                 </q-item>
-                <q-separator />
-                <q-item clickable v-close-popup>
+                <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
                   <q-item-section>繁體中文</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable v-close-popup>
-                  <q-item-section>English(US)</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -138,15 +136,18 @@
   </q-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeMount, ref, onMounted } from 'vue'
-// import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
 
-// const $q = useQuasar()
+const router = useRouter()
+const { locale } = useI18n({ useScope: 'global' })
 
 onBeforeMount(() => {
 })
+
 const isPwd = ref(true)
 const rememberMe = ref(true)
 const form = ref({
@@ -155,29 +156,41 @@ const form = ref({
   captcha: '',
   captcha_id: ''
 })
-const loading = ref(false)
-const changeRememberMe = (value) => {
-  return value
-}
 
-const openLink = (url) => {
-  window.open(url)
-}
 const darkTheme = ref(false)
 
-const onSubmit = async () => { }
+const loading = ref(false)
+const lottieRef = ref<Element | null>(null)
 
-const lottieRef = ref(null)
 onMounted(() => {
   show()
 })
-const show = () => {
-  lottie.loadAnimation({
-    container: lottieRef.value,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'src/assets/bg.json'
-  })
+
+function changeRememberMe(value: boolean) {
+  return value
+}
+
+function openLink(url: string) {
+  window.open(url)
+}
+
+async function onSubmit() {
+  loading.value = true
+  setTimeout(() => {
+    router.replace('/')
+    loading.value = false
+  }, 300)
+}
+
+function show() {
+  if (lottieRef.value) {
+    lottie.loadAnimation({
+      container: lottieRef.value,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: 'src/assets/bg.json'
+    })
+  }
 }
 </script>

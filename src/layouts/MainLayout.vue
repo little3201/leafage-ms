@@ -8,7 +8,7 @@
 
         <q-toolbar-title :shrink="true">
           <q-img alt="logo" src="/logo-only.svg" style="width: 46px; height: 46px;" />
-          {{ $t('Application') }}
+          {{ $t('application') }}
         </q-toolbar-title>
 
         <q-separator color="white" vertical inset />
@@ -21,9 +21,13 @@
 
         <q-space />
         <q-toolbar-title :shrink="true">
+          <q-btn flat dense round icon="sym_r_notifications" class="q-mr-md">
+            <q-badge floating color="red" rounded style="top: 0px; right: 0px;" />
+          </q-btn>
           <q-avatar size="md">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
           </q-avatar>
+          <span class="q-ml-sm" style="font-size: 16px;">{{ user.username }}</span>
         </q-toolbar-title>
       </q-toolbar>
 
@@ -50,8 +54,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useUserStore } from 'stores/user-store'
+
 import SideBarLeft from './SideBarLeft.vue'
 
+const user = useUserStore()
 const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer() {

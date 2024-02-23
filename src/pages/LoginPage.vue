@@ -8,7 +8,7 @@
         <q-space />
 
         <q-toolbar-title :shrink="true">
-          <q-btn icon="sym_r_language" round flat>
+          <q-btn icon="sym_r_language" round flat title="language_switch">
             <q-menu>
               <q-list dense separator>
                 <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -24,7 +24,7 @@
             </q-menu>
           </q-btn>
 
-          <q-toggle v-model="darkTheme" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
+          <q-toggle v-model="darkTheme" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode" title="theme_toogle"
             :color="darkTheme ? 'black' : ''" />
         </q-toolbar-title>
       </q-toolbar>
@@ -32,42 +32,14 @@
     <q-page-container>
       <q-page class="row justify-center items-center full-height">
 
-        <figure class="absolute" style="height: 500px;
-        width: 500px;
-        background: #1976D2;
-        border-radius: 50%;
-        top: -270px;
-        right: -200px;
-        background: -webkit-radial-gradient(circle at top right, #ffffff, #1976D2);
-        background: -moz-radial-gradient(circle at top right, #ffffff, #1976D2);
-        background: radial-gradient(circle at top right, #ffffff, #1976D2);" />
-        <figure class="absolute" style="height: 300px;
-        width: 300px;
-        background: #21BA45;
-        border-radius: 50%;
-        bottom: 50px;
-        right: -100px;
-        background: -webkit-radial-gradient(circle at center right, #26A69A, #21BA45);
-        background: -moz-radial-gradient(circle at center right, #26A69A, #21BA45);
-        background: radial-gradient(circle at center right, #26A69A, #21BA45);" />
-        <figure class="absolute" style="height: 600px;
-        width: 600px;
-        background: #F2C037;
-        border-radius: 50%;
-        bottom: -270px;
-        left: -200px;
-        background: -webkit-radial-gradient(circle at bottom left, #cf9900, #F2C037);
-        background: -moz-radial-gradient(circle at bottom left, #cf9900, #F2C037);
-        background: radial-gradient(circle at bottom left, #ffbb00, #F2C037);" />
-        <figure class="absolute" style="height: 300px;
-        width: 300px;
-        background: #C10015;
-        border-radius: 50%;
-        bottom: -230px;
-        left: 200px;
-        background: -webkit-radial-gradient(circle at center bottom, #ffffff, #C10015);
-        background: -moz-radial-gradient(circle at center bottom, #ffffff, #C10015);
-        background: radial-gradient(circle at center bottom, #e05969, #C10015);" />
+        <figure class="absolute bg-primary-gradient rounded-full"
+          style="height: 500px; width: 500px;  top: -270px; right: -200px; background-color: var($primary);" />
+        <figure class="absolute bg-positive-gradient rounded-full"
+          style="height: 300px; width: 300px; bottom: 50px; right: -100px; background-color: var($positive );" />
+        <figure class="absolute bg-warning-gradient rounded-full"
+          style="height: 600px; width: 600px; bottom: -270px; left: -200px; background-color: var($warning);" />
+        <figure class="absolute bg-negative-gradient rounded-full"
+          style="height: 300px;  width: 300px; bottom: -230px; left: 200px; background-color: var($negative);" />
 
         <q-card bordered class="column justify-center items-center shadow-15 overflow-hidden"
           style="width: 65vw;height: 70vh;border-radius: 20px;">
@@ -116,7 +88,7 @@
                           <q-checkbox :disable="loading" v-model="rememberMe" :label="$t('rememberMe')" dense
                             @update:model-value="changeRememberMe" class="q-my-md" />
                           <q-btn no-caps rounded glossy :label="$t('signin')" type="submit" color="primary"
-                            :loading="loading" class="full-width" />
+                            :loading="loading" class="full-width" title="signin_submit" />
                         </q-form>
                       </q-card-section>
                     </q-card-section>
@@ -129,8 +101,8 @@
       </q-page>
     </q-page-container>
     <q-footer class="transparent text-center text-black">
-      <q-btn flat rounded label="Github" @click="openLink('https://github.com/little3201/leafage-ms')" />
-      <q-btn flat rounded label="Gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
+      <q-btn flat rounded label="Github" title="github" @click="openLink('https://github.com/little3201/leafage-ms')" />
+      <q-btn flat rounded label="Gitee" title="gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
       <p>Copyright &copy; 2018 - {{ new Date().getFullYear() }} leafage.top All rights reserved.</p>
     </q-footer>
   </q-layout>
@@ -141,10 +113,12 @@ import { onBeforeMount, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
+import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import { useUserStore } from 'stores/user-store'
 
 const router = useRouter()
+const $q = useQuasar()
 const userStore = useUserStore()
 
 onBeforeMount(() => {
@@ -183,12 +157,11 @@ function onSubmit() {
     // 获取之前路由
     const redirectRoute = router.currentRoute.value.query.redirect as string | undefined
     router.replace(redirectRoute || '/')
-  }).catch(error => {
-    console.error('Request failed:', error.message)
-  }).finally(() => {
-    // 在请求结束后执行
-    loading.value = false
-  })
+  }).catch(error => $q.notify({ type: 'negative', message: `Request failed: ${error.message}`, position: 'top' }))
+    .finally(() => {
+      // 在请求结束后执行
+      loading.value = false
+    })
 }
 
 function show() {

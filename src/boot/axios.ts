@@ -43,7 +43,7 @@ export default boot(({ app }) => {
     },
     (error: AxiosError) => {
       // 如果请求失败，取消后续请求
-      abortController.abort()
+      // abortController.abort()
       return Promise.reject(error)
     }
   )

@@ -15,10 +15,10 @@
                   <q-item-section>English(US)</q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
-                  <q-item-section>简体中文</q-item-section>
+                  <q-item-section>中文（简体）</q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
-                  <q-item-section>繁體中文</q-item-section>
+                  <q-item-section>中文（繁體）</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -103,10 +103,10 @@
                           {{ $t('signinTo') }}
                         </div>
                         <q-form @submit="onSubmit" class="q-mt-md">
-                          <q-input :disable="loading" dense no-error-icon v-model.trim="form.username" color="black"
+                          <q-input :disable="loading" dense no-error-icon v-model.trim="form.username"
                             :placeholder="$t('username')" :rules="[(val) => (val && val.length > 0) || $t('username')]" />
                           <q-input :disable="loading" dense no-error-icon :type="isPwd ? 'password' : 'text'"
-                            v-model.trim="form.password" :placeholder="$t('password')" color="black"
+                            v-model.trim="form.password" :placeholder="$t('password')"
                             :rules="[(val) => (val && val.length > 0) || $t('password')]">
                             <template v-slot:append>
                               <q-icon size="xs" :name="isPwd ? 'sym_r_visibility_off' : 'sym_r_visibility'"
@@ -141,26 +141,26 @@ import { onBeforeMount, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
+import { api } from 'boot/axios'
+import { useUserStore } from 'stores/user-store'
 
 const router = useRouter()
-const { locale } = useI18n({ useScope: 'global' })
+const userStore = useUserStore()
 
 onBeforeMount(() => {
 })
 
+const { locale } = useI18n({ useScope: 'global' })
 const isPwd = ref(true)
 const rememberMe = ref(true)
+const darkTheme = ref(false)
+const loading = ref(false)
+const lottieRef = ref<HTMLDivElement | null>(null)
+
 const form = ref({
   username: '',
-  password: '',
-  captcha: '',
-  captcha_id: ''
+  password: ''
 })
-
-const darkTheme = ref(false)
-
-const loading = ref(false)
-const lottieRef = ref<Element | null>(null)
 
 onMounted(() => {
   show()
@@ -174,12 +174,21 @@ function openLink(url: string) {
   window.open(url)
 }
 
-async function onSubmit() {
+function onSubmit() {
   loading.value = true
-  setTimeout(() => {
-    router.replace('/')
+
+  api.post('/login', new URLSearchParams(form.value)).then(res => {
+    console.log(res.data)
+    userStore.updateUser(form.value.username)
+    // 获取之前路由
+    const redirectRoute = router.currentRoute.value.query.redirect as string | undefined
+    router.replace(redirectRoute || '/')
+  }).catch(error => {
+    console.error('Request failed:', error.message)
+  }).finally(() => {
+    // 在请求结束后执行
     loading.value = false
-  }, 300)
+  })
 }
 
 function show() {
@@ -189,8 +198,9 @@ function show() {
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      path: 'src/assets/bg.json'
+      path: '/bg.json'
     })
   }
 }
 </script>
+src/stores/user-store

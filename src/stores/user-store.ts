@@ -1,39 +1,34 @@
 import { defineStore } from 'pinia'
-import { api } from 'boot/axios'
+import { SessionStorage } from 'quasar'
+
+interface User {
+  username: string;
+}
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    username: '章三',
-    firstname: '',
-    lastname: '',
-    avatar: '',
-    rememberMe: true
+    isLoggedIn: false,
+    user: null as User | null
   }),
   getters: {
+    getUsername(): string | null {
+      const user = JSON.parse(SessionStorage.getItem('user') || '{}') as User | null
+      return this.user ? this.user.username : (user ? user.username : null)
+    }
   },
   actions: {
-    logout() {
-      this.$patch({
-        username: '',
-        firstname: '',
-        lastname: '',
-        avatar: '',
-        rememberMe: true
-      })
-
-      // we could do other stuff like redirecting the user
+    updateUser(username: string) {
+      // 更新用户状态
+      this.isLoggedIn = true
+      this.user = { username }
+      SessionStorage.set('user', JSON.stringify(this.user))
     },
 
-    /**
-     * Attempt to login a user
-     */
-    async login(username: string, password: string) {
-      const userData = await api.post({ username, password })
-
-      this.$patch({
-        username,
-        ...userData
-      })
+    clearUser() {
+      // 清除用户状态
+      this.isLoggedIn = false
+      this.user = null
+      SessionStorage.remove('user')
     }
   }
 })

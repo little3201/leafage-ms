@@ -81,6 +81,7 @@ export default {
   grant: 'Grants',
   members: 'memberss',
 
+  home: 'Home',
   dashboard: 'Dashboard',
   system: 'System',
   groups: 'Groups',

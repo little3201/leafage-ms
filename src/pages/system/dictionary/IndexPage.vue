@@ -53,11 +53,10 @@
 import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar, date } from 'quasar'
 import type { QTableProps } from 'quasar'
-
-import type { Dictionary } from 'src/api/models.type'
-
 import { api } from 'boot/axios'
+
 import { SERVER_URL } from 'src/api/paths'
+import type { Dictionary } from 'src/api/models.type'
 
 const $q = useQuasar()
 
@@ -102,7 +101,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
+  try {
+    const res = await api.get(SERVER_URL.DICTIONARY, { params })
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -110,10 +110,11 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  }).catch(error => console.log(error))
-    .finally(function () {
-      loading.value = false
-    })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    loading.value = false
+  }
 }
 
 function addRow() {

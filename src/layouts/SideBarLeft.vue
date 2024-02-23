@@ -2,17 +2,17 @@
   <q-list>
     <q-list>
       <EssentialLink v-bind="{
-        title: 'Dashboard',
+        title: 'dashboard',
         icon: 'sym_r_dashboard',
         link: '/dashboard'
       }" />
 
       <EssentialLink v-bind="{
-        title: 'Home',
-        icon: 'sym_r_dashboard',
+        title: 'home',
+        icon: 'sym_r_home',
         link: '/'
       }" />
-      <q-expansion-item expand-separator icon="sym_r_settings" label="System" default-opened>
+      <q-expansion-item expand-separator icon="sym_r_settings" :label="$t('system')" default-opened>
         <q-card>
           <q-card-section>
             <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
@@ -29,29 +29,29 @@ import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
 
 const essentialLinks: EssentialLinkProps[] = [
   {
-    title: 'User',
+    title: 'users',
     icon: 'sym_r_manage_accounts',
-    link: '/system/user'
+    link: '/system/users'
   },
   {
-    title: 'Group',
+    title: 'groups',
     icon: 'sym_r_group',
-    link: '/system/group'
+    link: '/system/groups'
   },
   {
-    title: 'Role',
+    title: 'roles',
     icon: 'sym_r_admin_panel_settings',
-    link: '/system/role'
+    link: '/system/roles'
   },
   {
-    title: 'Dictionary',
+    title: 'dictionaries',
     icon: 'sym_r_library_books',
-    link: '/system/dictionary'
+    link: '/system/dictionaries'
   },
   {
-    title: 'Region',
+    title: 'regions',
     icon: 'sym_r_public',
-    link: '/system/region'
+    link: '/system/regions'
   }
 ]
 </script>

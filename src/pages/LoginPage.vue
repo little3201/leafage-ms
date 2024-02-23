@@ -10,17 +10,15 @@
         <q-toolbar-title :shrink="true">
           <q-btn icon="sym_r_language" round flat>
             <q-menu>
-              <q-list dense>
-                <q-item clickable v-close-popup>
-                  <q-item-section>简体中文</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable v-close-popup>
-                  <q-item-section>繁體中文</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable v-close-popup>
+              <q-list dense separator>
+                <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
                   <q-item-section>English(US)</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
+                  <q-item-section>中文（简体）</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
+                  <q-item-section>中文（繁體）</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -105,10 +103,10 @@
                           {{ $t('signinTo') }}
                         </div>
                         <q-form @submit="onSubmit" class="q-mt-md">
-                          <q-input :disable="loading" dense no-error-icon v-model.trim="form.username" color="black"
+                          <q-input :disable="loading" dense no-error-icon v-model.trim="form.username"
                             :placeholder="$t('username')" :rules="[(val) => (val && val.length > 0) || $t('username')]" />
                           <q-input :disable="loading" dense no-error-icon :type="isPwd ? 'password' : 'text'"
-                            v-model.trim="form.password" :placeholder="$t('password')" color="black"
+                            v-model.trim="form.password" :placeholder="$t('password')"
                             :rules="[(val) => (val && val.length > 0) || $t('password')]">
                             <template v-slot:append>
                               <q-icon size="xs" :name="isPwd ? 'sym_r_visibility_off' : 'sym_r_visibility'"
@@ -138,46 +136,71 @@
   </q-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeMount, ref, onMounted } from 'vue'
-// import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
+import { api } from 'boot/axios'
+import { useUserStore } from 'stores/user-store'
 
-// const $q = useQuasar()
+const router = useRouter()
+const userStore = useUserStore()
 
 onBeforeMount(() => {
 })
+
+const { locale } = useI18n({ useScope: 'global' })
 const isPwd = ref(true)
 const rememberMe = ref(true)
+const darkTheme = ref(false)
+const loading = ref(false)
+const lottieRef = ref<HTMLDivElement | null>(null)
+
 const form = ref({
   username: '',
-  password: '',
-  captcha: '',
-  captcha_id: ''
+  password: ''
 })
-const loading = ref(false)
-const changeRememberMe = (value) => {
-  return value
-}
 
-const openLink = (url) => {
-  window.open(url)
-}
-const darkTheme = ref(false)
-
-const onSubmit = async () => { }
-
-const lottieRef = ref(null)
 onMounted(() => {
   show()
 })
-const show = () => {
-  lottie.loadAnimation({
-    container: lottieRef.value,
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'src/assets/bg.json'
+
+function changeRememberMe(value: boolean) {
+  return value
+}
+
+function openLink(url: string) {
+  window.open(url)
+}
+
+function onSubmit() {
+  loading.value = true
+
+  api.post('/login', new URLSearchParams(form.value)).then(res => {
+    console.log(res.data)
+    userStore.updateUser(form.value.username)
+    // 获取之前路由
+    const redirectRoute = router.currentRoute.value.query.redirect as string | undefined
+    router.replace(redirectRoute || '/')
+  }).catch(error => {
+    console.error('Request failed:', error.message)
+  }).finally(() => {
+    // 在请求结束后执行
+    loading.value = false
   })
 }
+
+function show() {
+  if (lottieRef.value) {
+    lottie.loadAnimation({
+      container: lottieRef.value,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/bg.json'
+    })
+  }
+}
 </script>
+src/stores/user-store

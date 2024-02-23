@@ -81,6 +81,7 @@ export default {
   grant: '授权',
   members: '成员',
 
+  home: '首页',
   dashboard: '控制台',
   system: '系统管理',
   groups: '分组',

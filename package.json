@@ -1,72 +1,46 @@
 {
   "name": "leafage-ms",
   "version": "0.0.1",
+  "description": "A system based on RBAC.",
+  "productName": "leafage-ms",
+  "author": "wq.li <little3201@163.com>",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
-    "serve": "vite preview"
+    "lint": "eslint --ext .js,.ts,.vue ./",
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "quasar dev",
+    "build": "quasar build"
   },
   "dependencies": {
-    "@badrap/bar-of-progress": "^0.2.2",
-    "@intlify/unplugin-vue-i18n": "^0.10.0",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.14",
-    "axios": "^1.3.4",
-    "chart.js": "^4.2.1",
-    "crypto-js": "^4.1.1",
-    "postcss": "^8.4.21",
-    "qiniu-js": "^3.4.1",
-    "rehype-external-links": "^2.0.1",
-    "rehype-highlight": "^6.0.0",
-    "rehype-sanitize": "^5.0.1",
-    "rehype-stringify": "^9.0.3",
-    "remark-gfm": "^3.0.1",
-    "remark-parse": "^10.0.1",
-    "remark-rehype": "^10.1.0",
-    "tailwindcss": "^3.3.1",
-    "vue": "^3.2.47",
-    "vue-i18n": "^9.2.2",
-    "vue-router": "^4.1.6",
-    "xlsx": "^0.18.5"
+    "@quasar/extras": "^1.16.9",
+    "axios": "^1.6.3",
+    "pinia": "^2.1.7",
+    "quasar": "^2.14.4",
+    "vue": "^3.4.19",
+    "vue-i18n": "^9.9.1",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@heroicons/vue": "^2.0.17",
-    "@types/crypto-js": "^4.1.1",
-    "@types/mockjs": "^1.0.7",
-    "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
-    "@typescript-eslint/parser": "^5.57.0",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "eslint": "^8.37.0",
-    "eslint-plugin-vue": "^9.10.0",
-    "mockjs": "^1.1.0",
-    "prettier": "^2.8.7",
-    "typescript": "^5.0.3",
-    "vite": "^4.3.1",
-    "vue-tsc": "^1.4.4"
+    "@intlify/vite-plugin-vue-i18n": "^7.0.0",
+    "@quasar/app-vite": "^1.7.3",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.19.2",
+    "lottie-web": "^5.12.2",
+    "postcss": "^8.4.34",
+    "typescript": "^5.3.3"
   },
-  "keywords": [
-    "vue3",
-    "vite",
-    "leafage",
-    "tailwindcss",
-    "xlsx",
-    "qiniu-js",
-    "remark",
-    "vue-i18n",
-    "vueuse"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/little3201/leafage-ms.git"
+  "engines": {
+    "node": "^20 || ^18",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
   },
-  "author": "liwenqiang",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/little3201/leafage-ms/issues"
-  },
-  "homepage": "https://console.leafage.top",
-  "packageManager": "yarn@3.5.0"
+  "packageManager": "yarn@4.0.2"
 }

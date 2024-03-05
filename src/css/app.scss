@@ -1,0 +1,21 @@
+// app global css in SCSS form
+
+.bg-primary-gradient {
+    background: radial-gradient(circle at top right, #ffffff, $primary);
+}
+
+.bg-negative-gradient {
+    background: radial-gradient(circle at center bottom, #e05969, $negative);
+}
+
+.bg-positive-gradient {
+    background: radial-gradient(circle at center right, #26A69A, $positive);
+}
+
+.bg-warning-gradient {
+    background: radial-gradient(circle at bottom left, #cf9900, $warning);
+}
+
+.rounded-full {
+    border-radius: 50%;
+}

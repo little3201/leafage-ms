@@ -34,7 +34,8 @@ export default {
 
   username: 'Username',
   password: 'Password',
-  nickname: 'Nickname',
+  firstname: 'First Name',
+  lastname: 'Last Name',
   accountLocked: 'Account Locked',
   accountExpiresAt: 'User Expires At',
   credentialsExpiresAt: 'Credentials Expires At',

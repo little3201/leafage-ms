@@ -74,11 +74,13 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar, date } from 'quasar'
 import { api } from 'boot/axios'
+import { useI18n } from 'vue-i18n'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { User } from 'src/api/models.type'
 
 const $q = useQuasar()
+const { t } = useI18n()
 
 const visible = ref<boolean>(false)
 const editingUser = ref<boolean>(false)
@@ -106,9 +108,9 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'username', label: 'Username', align: 'left', field: 'username', sortable: true },
-  { name: 'firstname', label: 'First Name', align: 'left', field: 'firstname', sortable: true },
-  { name: 'lastname', label: 'Last Name', align: 'left', field: 'lastname', sortable: true },
+  { name: 'username', label: t('username'), align: 'left', field: 'username', sortable: true },
+  { name: 'firstname', label: t('firstname'), align: 'left', field: 'firstname', sortable: true },
+  { name: 'lastname', label: t('lastname'), align: 'left', field: 'lastname', sortable: true },
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'Expires At', align: 'left', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'left', field: 'credentialsExpiresAt', sortable: true },

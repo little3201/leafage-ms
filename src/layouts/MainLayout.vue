@@ -21,7 +21,7 @@
         <q-space />
 
         <q-toolbar-title :shrink="true">
-          <q-btn icon="sym_r_language" round flat>
+          <q-btn icon="sym_r_translate" round flat>
             <q-menu>
               <q-list dense separator>
                 <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -79,4 +79,3 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
-src/stores/user-store

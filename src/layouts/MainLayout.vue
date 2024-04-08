@@ -12,11 +12,11 @@
         <q-btn id="btn-drawer" title="btn-drawer" dense flat round icon="sym_r_menu" @click="toggleLeftDrawer"
           aria-disabled="false" />
 
-        <q-breadcrumbs class="q-ma-sm" active-color="white" style="font-size: 16px">
+        <!-- <q-breadcrumbs class="q-ma-sm" active-color="white" style="font-size: 16px">
           <q-breadcrumbs-el v-for="(route, index) in $route.matched" :key="index"
             :label="$t(route.name ? route.name.toString() : '')"
             :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
-        </q-breadcrumbs>
+        </q-breadcrumbs> -->
 
         <q-space />
 

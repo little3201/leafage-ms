@@ -46,6 +46,16 @@
           <span class="q-ml-sm">{{ props.row.username }}</span>
         </q-td>
       </template>
+      <template v-slot:body-cell-accountExpiresAt="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-credentialsExpiresAt="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
@@ -112,8 +122,8 @@ const columns: QTableProps['columns'] = [
   { name: 'firstname', label: t('firstname'), align: 'left', field: 'firstname', sortable: true },
   { name: 'lastname', label: t('lastname'), align: 'left', field: 'lastname', sortable: true },
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
-  { name: 'accountExpiresAt', label: 'Expires At', align: 'left', field: 'accountExpiresAt', sortable: true },
-  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'left', field: 'credentialsExpiresAt', sortable: true },
+  { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
+  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]

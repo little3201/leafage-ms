@@ -2,7 +2,7 @@ import { DefaultBodyType, http, HttpResponse } from 'msw'
 
 let datas = new Array()
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
     let data = {
         id: '' + i,
         username: 'username' + i,
@@ -24,7 +24,8 @@ export const usersHandlers = [
         // Construct a JSON response with the list of all Dictionarys
         // as the response body.
         let data = {
-            content: Array.from(datas.slice(Number(page), Number(size)))
+            content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+            totalElements: datas.length
         }
 
         return HttpResponse.json(data)

@@ -1,0 +1,11 @@
+import { boot } from 'quasar/wrappers'
+import { setupWorker } from 'msw/browser'
+import { handlers } from 'src/mocks/handlers' // 您的请求处理程序
+
+export default boot(() => {
+    if (process.env.DEV) {
+        const worker = setupWorker(...handlers)
+        worker.start()
+    }
+})
+

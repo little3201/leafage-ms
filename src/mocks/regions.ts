@@ -9,6 +9,7 @@ for (let i = 0; i < 20; i++) {
     name: 'region_' + i,
     areaCode: i,
     postalCode: i,
+    enabled: true,
     description: 'description',
     lastModifiedDate: new Date()
   }

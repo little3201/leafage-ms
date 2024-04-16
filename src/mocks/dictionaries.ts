@@ -9,6 +9,7 @@ for (let i = 0; i < 20; i++) {
     id: i,
     name: 'dictionary_' + i,
     description: 'description',
+    enabled: true,
     lastModifiedDate: new Date()
   }
   for (let j = 0; j < i; j++) {
@@ -16,6 +17,7 @@ for (let i = 0; i < 20; i++) {
       id: j,
       name: 'dictionary_' + i + '_' + j,
       superiorId: i,
+      enabled: true,
       description: 'description',
       lastModifiedDate: new Date()
     }
@@ -25,25 +27,24 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const dictionariesHandlers = [
+  http.get('/api/dictionaries/:id/subset', ({ params }) => {
+    const superiorId = params.id
+    return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(superiorId)))
+  }),
   http.get('/api/dictionaries', ({ request }) => {
     const url = new URL(request.url)
 
-    if (url.searchParams.has('superiorId')) {
-      const superiorId = url.searchParams.get('superiorId')
-      return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(superiorId)))
-    } else {
-      const page = url.searchParams.get('page')
-      const size = url.searchParams.get('size')
+    const page = url.searchParams.get('page')
+    const size = url.searchParams.get('size')
 
-      // Construct a JSON response with the list of all Dictionarys
-      // as the response body.
-      const data = {
-        content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
-        totalElements: datas.length
-      }
-
-      return HttpResponse.json(data)
+    // Construct a JSON response with the list of all Dictionarys
+    // as the response body.
+    const data = {
+      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      totalElements: datas.length
     }
+
+    return HttpResponse.json(data)
   }),
   http.post('/api/dictionaries', async ({ request }) => {
     // Read the intercepted request body as JSON.

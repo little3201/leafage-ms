@@ -49,14 +49,15 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <span v-if="col.name == 'lastModifiedDate'">
-              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}</span>
-            <div v-else-if="col.name == 'id'">
+              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}
+            </span>
+            <div v-else-if="col.name == 'id'" class="text-right">
               <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
               <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(col.value)"
                 class="q-mt-none q-ml-sm" />
             </div>
-            <div v-else-if="col.name == 'enabled'">
+            <div v-else-if="col.name == 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" color="green" />
             </div>
             <span v-else>{{ col.value }}</span>

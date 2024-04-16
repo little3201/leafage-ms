@@ -28,7 +28,7 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
@@ -121,7 +121,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
   } catch (error) {
-    console.log(error)
+    $q.notify({
+      message: 'Retrieve datas error...',
+      type: 'negative'
+    })
   } finally {
     loading.value = false
   }

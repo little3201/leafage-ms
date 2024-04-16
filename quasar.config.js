@@ -105,7 +105,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
+      open: true // opens browser window automatically
       // proxy: {
       //   '^/api': {
       //     target: 'http://127.0.0.1:8763',
@@ -117,7 +117,11 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        notify: {
+          position: 'top'
+        }
+      },
 
       iconSet: 'material-symbols-rounded', // Quasar icon set
       lang: 'en-US', // Quasar language pack

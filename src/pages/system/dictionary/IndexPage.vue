@@ -24,26 +24,46 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Dictionaries" selection="multiple" v-model:selected="selected"
-      :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width">
+    <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
+      :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
-      <template v-slot:body-cell-lastModifiedDate="props">
-        <q-td :props="props">
-          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
-        </q-td>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ col.label }}
+          </q-th>
+        </q-tr>
       </template>
-      <template v-slot:body-cell-id="props">
-        <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
-            class="q-mt-none q-ml-sm" />
-        </q-td>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td auto-width>
+            <q-btn round flat dense @click="props.expand = !props.expand"
+              :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
+          </q-td>
+          <q-td v-for="col in props.cols" :key="col.name" :props="props">
+            <span v-if="col.name == 'lastModifiedDate'">
+              {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}</span>
+            <div v-else-if="col.name == 'id'">
+              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+                class="q-mt-none" />
+              <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
+                class="q-mt-none q-ml-sm" />
+            </div>
+            <span v-else>{{ col.value }}</span>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <q-td colspan="100%">
+            <sub-page :title="props.row.name" :superior-id="props.row.id" />
+          </q-td>
+        </q-tr>
       </template>
     </q-table>
   </q-page>
@@ -54,6 +74,7 @@ import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar, date } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
+import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { Dictionary } from 'src/api/models.type'
@@ -64,7 +85,6 @@ const visiable = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
-const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Dictionary>({
@@ -79,8 +99,6 @@ const pagination = ref({
   rowsPerPage: 7,
   rowsNumber: 10
 })
-
-const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
@@ -111,7 +129,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
   } catch (error) {
-    console.log(error)
+    $q.notify({
+      message: 'Retrieve datas error...',
+      type: 'negative'
+    })
   } finally {
     loading.value = false
   }
@@ -178,4 +199,3 @@ function exportTable() {
   }
 }
 </script>
-src/api/paths

@@ -6,8 +6,7 @@ const datas: Group[] = []
 for (let i = 0; i < 20; i++) {
   const data: Group = {
     id: i,
-    name: 'group_' + i,
-    description: 'description',
+    groupName: 'group_' + i,
     lastModifiedDate: new Date()
   }
   datas.push(data)

@@ -46,6 +46,11 @@
           <span class="q-ml-sm">{{ props.row.username }}</span>
         </q-td>
       </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
+      </template>
       <template v-slot:body-cell-accountExpiresAt="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
@@ -121,6 +126,7 @@ const columns: QTableProps['columns'] = [
   { name: 'username', label: t('username'), align: 'left', field: 'username', sortable: true },
   { name: 'firstname', label: t('firstname'), align: 'left', field: 'firstname', sortable: true },
   { name: 'lastname', label: t('lastname'), align: 'left', field: 'lastname', sortable: true },
+  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },

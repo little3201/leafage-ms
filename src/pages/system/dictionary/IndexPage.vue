@@ -47,21 +47,24 @@
             <q-btn round flat dense @click="props.expand = !props.expand"
               :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
           </q-td>
-          <q-td v-for="col in props.cols" :key="col.name" :props="props">
+          <q-td v-for="col in props.cols" :key="col.name">
             <span v-if="col.name == 'lastModifiedDate'">
-              {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}</span>
+              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}</span>
             <div v-else-if="col.name == 'id'">
-              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
-              <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
+              <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(col.value)"
                 class="q-mt-none q-ml-sm" />
+            </div>
+            <div v-else-if="col.name == 'enabled'">
+              <q-toggle v-model="props.row.enabled" color="green" />
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
           <q-td colspan="100%">
-            <sub-page :title="props.row.name" :superior-id="props.row.id" />
+            <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
           </q-td>
         </q-tr>
       </template>
@@ -102,6 +105,7 @@ const pagination = ref({
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }

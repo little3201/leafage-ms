@@ -9,10 +9,8 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Group name" lazy-rules
+            <q-input v-model="form.groupName" label="Group name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.description" label="Group deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -39,6 +37,11 @@
               <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
             </q-avatar>
           </div>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
         </q-td>
       </template>
       <template v-slot:body-cell-lastModifiedDate="props">
@@ -77,8 +80,7 @@ const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Group>({
-  name: '',
-  description: ''
+  groupName: ''
 })
 
 const pagination = ref({
@@ -92,9 +94,9 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'name', label: 'Name', align: 'left', field: 'groupName', sortable: true },
   { name: 'members', label: 'Members', align: 'center', field: 'members' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
+  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]

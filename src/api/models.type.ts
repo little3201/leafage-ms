@@ -16,10 +16,8 @@ export interface User extends AudtiMetadata {
 }
 
 export interface Group extends AudtiMetadata {
-  name: string
-  superiorId?: number
+  groupName: string
   enabled?: boolean
-  description?: string
 }
 
 export interface Role extends AudtiMetadata {

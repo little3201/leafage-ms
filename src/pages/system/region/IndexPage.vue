@@ -32,6 +32,11 @@
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
@@ -88,6 +93,7 @@ const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
   { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
+  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }

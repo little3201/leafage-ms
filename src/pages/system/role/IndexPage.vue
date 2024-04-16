@@ -41,6 +41,11 @@
           </div>
         </q-td>
       </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
@@ -94,6 +99,7 @@ const selected = ref([])
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'members', label: 'Members', align: 'center', field: 'members' },
+  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }

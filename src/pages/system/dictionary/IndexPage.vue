@@ -27,7 +27,8 @@
     <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
       :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
+        <q-btn color="primary" title="refresh" :disable="loading" icon="sym_r_refresh" label="Refresh"
+          @click="refresh" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
@@ -139,8 +140,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   }).finally(() => { loading.value = false })
 }
 
-function addRow() {
-  visiable.value = true
+function refresh() {
+  tableRef.value.requestServerInteraction()
 }
 
 function editRow(id: number) {

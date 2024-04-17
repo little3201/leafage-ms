@@ -78,6 +78,7 @@ const loading = ref(false)
 
 const form = ref<Dictionary>({
   name: '',
+  superiorId: props.superiorId,
   description: ''
 })
 

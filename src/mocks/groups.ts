@@ -7,7 +7,7 @@ for (let i = 0; i < 20; i++) {
   const data: Group = {
     id: i,
     groupName: 'group_' + i,
-    enabled: true,
+    enabled: i % 3 > 0,
     lastModifiedDate: new Date()
   }
   datas.push(data)

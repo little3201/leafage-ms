@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lFf">
+  <q-layout view="hHh LpR lff">
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
@@ -61,6 +61,10 @@
       <router-view />
     </q-page-container>
 
+    <q-footer class="bg-transparent">
+      <p class="text-center text-black">Copyright &copy; 2018 - {{ new Date().getFullYear() }}
+        All rights reserved.</p>
+    </q-footer>
   </q-layout>
 </template>
 

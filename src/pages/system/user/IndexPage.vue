@@ -1,6 +1,5 @@
 <template>
   <q-page class="row items-center justify-evenly" padding>
-
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 350px">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">

@@ -7,7 +7,7 @@ for (let i = 0; i < 20; i++) {
   const data: Role = {
     id: i,
     name: 'role_' + i,
-    enabled: true,
+    enabled: i % 3 > 0,
     description: 'description',
     lastModifiedDate: new Date()
   }

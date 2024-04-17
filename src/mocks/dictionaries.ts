@@ -8,8 +8,8 @@ for (let i = 0; i < 20; i++) {
   const data: Dictionary = {
     id: i,
     name: 'dictionary_' + i,
-    description: 'description',
-    enabled: true,
+    description: 'this is description for this row',
+    enabled: i % 3 > 0,
     lastModifiedDate: new Date()
   }
   for (let j = 0; j < i; j++) {
@@ -17,7 +17,7 @@ for (let i = 0; i < 20; i++) {
       id: j,
       name: 'dictionary_' + i + '_' + j,
       superiorId: i,
-      enabled: true,
+      enabled: j % 2 > 0,
       description: 'description',
       lastModifiedDate: new Date()
     }

@@ -9,8 +9,8 @@ for (let i = 0; i < 20; i++) {
     username: 'username' + i,
     firstname: 'firstname_' + i,
     lastname: 'lastname_' + i,
-    enabled: true,
-    accountNonLocked: true,
+    enabled: i % 2 > 0,
+    accountNonLocked: i % 3 > 0,
     accountExpiresAt: new Date(),
     credentialsExpiresAt: new Date(),
     lastModifiedDate: new Date()

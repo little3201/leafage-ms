@@ -118,6 +118,7 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {
+        dark: 'auto',
         notify: {
           position: 'top'
         }

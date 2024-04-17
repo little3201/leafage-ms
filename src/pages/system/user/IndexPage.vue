@@ -68,7 +68,7 @@
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-icon size="xs" :color="props.row.accountNonLocked ? 'green' : 'red'"
+          <q-icon size="sm" :color="props.row.accountNonLocked ? 'green' : 'red'"
             :name="props.row.accountNonLocked ? 'sym_r_lock_open' : 'sym_r_lock'" />
         </q-td>
       </template>
@@ -89,13 +89,11 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar, date } from 'quasar'
 import { api } from 'boot/axios'
-import { useI18n } from 'vue-i18n'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { User } from 'src/api/models.type'
 
 const $q = useQuasar()
-const { t } = useI18n()
 
 const visible = ref<boolean>(false)
 const editingUser = ref<boolean>(false)
@@ -123,10 +121,10 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'username', label: t('username'), align: 'left', field: 'username', sortable: true },
-  { name: 'firstname', label: t('firstname'), align: 'left', field: 'firstname', sortable: true },
-  { name: 'lastname', label: t('lastname'), align: 'left', field: 'lastname', sortable: true },
-  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
+  { name: 'username', label: 'Username', align: 'left', field: 'username', sortable: true },
+  { name: 'firstname', label: 'Firstname', align: 'left', field: 'firstname', sortable: true },
+  { name: 'lastname', label: 'Lastname', align: 'left', field: 'lastname', sortable: true },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
@@ -146,8 +144,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage }
 
-  try {
-    const res = await api.get(SERVER_URL.USER, { params })
+  await api.get(SERVER_URL.USER, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -155,14 +152,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
+  }).catch(error => {
     $q.notify({
-      message: 'Retrieve datas error...',
+      message: error.message,
       type: 'negative'
     })
-  } finally {
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

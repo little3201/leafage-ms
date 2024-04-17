@@ -99,7 +99,7 @@ const selected = ref([])
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'members', label: 'Members', align: 'center', field: 'members' },
-  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -117,8 +117,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  try {
-    const res = await api.get(SERVER_URL.ROLE, { params })
+
+  await api.get(SERVER_URL.ROLE, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -126,14 +126,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
+  }).catch(error => {
     $q.notify({
-      message: 'Retrieve datas error...',
+      message: error.message,
       type: 'negative'
     })
-  } finally {
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

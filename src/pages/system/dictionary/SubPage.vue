@@ -24,8 +24,11 @@
     </q-dialog>
 
     <q-table flat ref="subtableRef" :title="title" selection="multiple" v-model:selected="selected" :rows="rows"
-      :columns="columns" row-key="id" binary-state-sort @request="onRequest" :hide-bottom="true"
+      :columns="columns" row-key="id" binary-state-sort @request="onRequest" hide-bottom
       class="full-width bg-transparent">
+      <template v-slot:top-right>
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
@@ -43,6 +46,9 @@
           <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
+      </template>
+      <template v-slot:body-cell-expand="props">
+        {{ props.expand }}
       </template>
     </q-table>
   </div>
@@ -79,7 +85,7 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -95,17 +101,20 @@ onMounted(() => {
 async function onRequest() {
   loading.value = true
 
-  try {
-    const res = await api.get(SERVER_URL.DICTIONARY.concat(`/${props.superiorId}/subset`))
+  await api.get(SERVER_URL.DICTIONARY.concat(`/${props.superiorId}/subset`)).then(res => {
     rows.value = res.data
-  } catch (error) {
+  }).catch(error => {
     $q.notify({
-      message: 'Retrieve datas error...',
+      message: error.message,
       type: 'negative'
     })
-  } finally {
+  }).finally(() => {
     loading.value = false
-  }
+  })
+}
+
+function addRow() {
+  visiable.value = true
 }
 
 function editRow(id: number) {

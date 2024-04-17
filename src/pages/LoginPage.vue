@@ -2,31 +2,28 @@
   <q-layout class="overflow-hidden" :style="{ background: $q.dark.isActive ? 'black' : '#e3f4fa' }">
     <q-header class="transparent text-black">
       <q-toolbar>
-        <q-toolbar-title :shrink="true">
+        <q-toolbar-title>
           <q-img alt="logo" src="/logo-only.svg" style="width: 64px; height: 64px;" />
         </q-toolbar-title>
-        <q-space />
 
-        <q-toolbar-title :shrink="true">
-          <q-btn icon="sym_r_translate" round flat title="language_switch">
-            <q-menu>
-              <q-list dense separator>
-                <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
-                  <q-item-section>English(US)</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
-                  <q-item-section>中文（简体）</q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
-                  <q-item-section>中文（繁體）</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+        <q-btn icon="sym_r_translate" round flat title="language_switch">
+          <q-menu>
+            <q-list dense separator>
+              <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
+                <q-item-section>English(US)</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
+                <q-item-section>中文（简体）</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
+                <q-item-section>中文（繁體）</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
 
-          <q-toggle v-model="darkTheme" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode" title="theme_toogle"
-            :color="darkTheme ? 'black' : ''" />
-        </q-toolbar-title>
+        <q-toggle v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
+          title="theme_toogle" :color="$q.dark.isActive ? 'black' : ''" />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -61,7 +58,8 @@
             </q-card-section>
           </q-card-section>
           <q-separator vertical dark />
-          <q-card-section horizontal class="full-height no-border-radius" style="width: 50%; background: #f3fbff;">
+          <q-card-section horizontal class="full-height no-border-radius" style="width: 50%;"
+            :style="{ background: $q.dark.isActive ? '' : '#f3fbff' }">
             <q-card-section class="row justify-center full-width">
               <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
                 <div class="col justify-center items-center">
@@ -101,10 +99,12 @@
         </q-card>
       </q-page>
     </q-page-container>
-    <q-footer class="transparent text-center text-black">
+    <q-footer class="transparent text-center" :class="$q.dark.isActive ? 'text-white' : 'text-black'">
       <q-btn flat rounded label="Github" title="github" @click="openLink('https://github.com/little3201/leafage-ms')" />
       <q-btn flat rounded label="Gitee" title="gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
-      <p>Copyright &copy; 2018 - {{ new Date().getFullYear() }} leafage.top All rights reserved.</p>
+      <p :class="{ 'text-white': $q.dark.isActive }">Copyright &copy; 2018 - {{ new Date().getFullYear() }}
+        leafage.top
+        All rights reserved.</p>
     </q-footer>
   </q-layout>
 </template>
@@ -128,7 +128,6 @@ onBeforeMount(() => {
 const { locale } = useI18n({ useScope: 'global' })
 const isPwd = ref(true)
 const rememberMe = ref(true)
-const darkTheme = ref(false)
 const loading = ref(false)
 const lottieRef = ref<HTMLDivElement | null>(null)
 
@@ -153,12 +152,11 @@ function onSubmit() {
   loading.value = true
 
   api.post('/login', new URLSearchParams(form.value)).then(res => {
-    console.log(res.data)
-    userStore.updateUser(form.value.username)
+    userStore.updateUser(res.data.username)
     // 获取之前路由
     const redirectRoute = router.currentRoute.value.query.redirect as string | undefined
     router.replace(redirectRoute || '/')
-  }).catch(error => $q.notify({ type: 'negative', message: `Request failed: ${error.message}`, position: 'top' }))
+  }).catch(error => $q.notify({ type: 'negative', message: error.message }))
     .finally(() => {
       // 在请求结束后执行
       loading.value = false
@@ -177,4 +175,3 @@ function show() {
   }
 }
 </script>
-src/stores/user-store

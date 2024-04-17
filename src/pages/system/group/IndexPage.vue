@@ -49,6 +49,7 @@
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
         </q-td>
       </template>
+
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
@@ -96,7 +97,7 @@ const selected = ref([])
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'groupName', sortable: true },
   { name: 'members', label: 'Members', align: 'center', field: 'members' },
-  { name: 'enabled', label: 'Status', align: 'center', field: 'enabled' },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
@@ -113,8 +114,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  try {
-    const res = await api.get(SERVER_URL.GROUP, { params })
+
+  await api.get(SERVER_URL.GROUP, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -122,14 +123,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
+  }).catch(error => {
     $q.notify({
-      message: 'Retrieve datas error...',
+      message: error.message,
       type: 'negative'
     })
-  } finally {
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

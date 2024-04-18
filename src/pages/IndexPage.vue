@@ -1,6 +1,8 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <div>Index</div>
+  <q-page padding>
+    <q-card flat>
+      <q-card-section>Index</q-card-section>
+    </q-card>
   </q-page>
 </template>
 

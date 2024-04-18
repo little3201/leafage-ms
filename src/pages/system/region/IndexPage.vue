@@ -28,9 +28,14 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
+      </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
       </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
@@ -69,6 +74,8 @@ const loading = ref(false)
 
 const form = ref<Region>({
   name: '',
+  areaCode: 0,
+  postalCode: 0,
   description: ''
 })
 
@@ -86,6 +93,7 @@ const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
   { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -103,8 +111,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  try {
-    const res = await api.get(SERVER_URL.REGION, { params })
+
+  await api.get(SERVER_URL.REGION, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -112,11 +120,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
-    console.log(error)
-  } finally {
+  }).catch(error => {
+    $q.notify({
+      message: error.message,
+      type: 'negative'
+    })
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

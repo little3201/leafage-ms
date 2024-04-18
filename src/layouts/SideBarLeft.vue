@@ -45,7 +45,7 @@ const essentialLinks: EssentialLinkProps[] = [
   },
   {
     title: 'dictionaries',
-    icon: 'sym_r_library_books',
+    icon: 'sym_r_menu_book',
     link: '/system/dictionaries'
   },
   {

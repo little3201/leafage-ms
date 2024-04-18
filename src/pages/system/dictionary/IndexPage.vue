@@ -24,26 +24,49 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Dictionaries" selection="multiple" v-model:selected="selected"
-      :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width">
+    <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
+      :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="refresh" :disable="loading" icon="sym_r_refresh" label="Refresh"
+          @click="refresh" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
-      <template v-slot:body-cell-lastModifiedDate="props">
-        <q-td :props="props">
-          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
-        </q-td>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ col.label }}
+          </q-th>
+        </q-tr>
       </template>
-      <template v-slot:body-cell-id="props">
-        <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
-            class="q-mt-none q-ml-sm" />
-        </q-td>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td auto-width>
+            <q-btn round flat dense @click="props.expand = !props.expand"
+              :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
+          </q-td>
+          <q-td v-for="col in props.cols" :key="col.name">
+            <span v-if="col.name == 'lastModifiedDate'">
+              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}
+            </span>
+            <div v-else-if="col.name == 'id'" class="text-right">
+              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+                class="q-mt-none" />
+            </div>
+            <div v-else-if="col.name == 'enabled'" class="text-center">
+              <q-toggle v-model="props.row.enabled" color="green" />
+            </div>
+            <span v-else>{{ col.value }}</span>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <q-td colspan="100%">
+            <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
+          </q-td>
+        </q-tr>
       </template>
     </q-table>
   </q-page>
@@ -54,6 +77,7 @@ import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar, date } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
+import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { Dictionary } from 'src/api/models.type'
@@ -64,7 +88,6 @@ const visiable = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
-const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Dictionary>({
@@ -80,10 +103,9 @@ const pagination = ref({
   rowsNumber: 10
 })
 
-const selected = ref([])
-
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -101,8 +123,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  try {
-    const res = await api.get(SERVER_URL.DICTIONARY, { params })
+
+  await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -110,28 +132,21 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
-    console.log(error)
-  } finally {
-    loading.value = false
-  }
+  }).catch(error => {
+    $q.notify({
+      message: error.message,
+      type: 'negative'
+    })
+  }).finally(() => { loading.value = false })
 }
 
-function addRow() {
-  visiable.value = true
+function refresh() {
+  tableRef.value.requestServerInteraction()
 }
 
 function editRow(id: number) {
   visiable.value = true
   console.log('id: ', id)
-}
-
-function removeRow(id: number) {
-  console.log('id: ', id)
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
 }
 
 function onSubmit() { }
@@ -178,4 +193,3 @@ function exportTable() {
   }
 }
 </script>
-src/api/paths

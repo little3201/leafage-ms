@@ -15,9 +15,9 @@ export default {
   profile: '個人中心',
   settings: '設置',
   help: '幫助',
-  signin: '登錄',
+  signin: '登 錄',
   signinTo: '登錄您的帳戶',
-  signup: '註冊',
+  signup: '註 冊',
   signout: '退出登錄',
 
   accesslogs: '操作日誌',
@@ -34,7 +34,8 @@ export default {
 
   username: '賬號',
   password: '密碼',
-  nickname: '昵稱',
+  firstname: '姓',
+  lastname: '名字',
   accountLocked: '賬號鎖狀態',
   accountExpiresAt: '賬號失效時間',
   credentialsExpiresAt: '密碼失效時間',
@@ -96,6 +97,7 @@ export default {
   messages: '消息通知',
   status: '狀態',
 
-  welcome: '歡迎',
+  welcome: '嗨！歡迎回來',
+  subtitle: '請填寫您的帳號和密碼，讓我們繼續探索',
   rememberMe: '記住我 ？'
 }

@@ -30,7 +30,8 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
       'i18n',
-      'axios'
+      'axios',
+      'msw-server'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -56,7 +57,7 @@ module.exports = configure(function (ctx) {
     build: {
       target: {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-        node: 'node16'
+        node: 'node18'
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
@@ -75,7 +76,9 @@ module.exports = configure(function (ctx) {
           : 'https://console.leafage.top/api'
       },
 
-      // rawDefine: {}
+      rawDefine: {
+        'globalThis.process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      },
       // ignorePublicFolder: true,
       // minify: false,
       // polyfillModulePreload: true,
@@ -102,19 +105,24 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
-      proxy: {
-        '^/api': {
-          target: 'http://127.0.0.1:8763',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
-        }
-      }
+      open: true // opens browser window automatically
+      // proxy: {
+      //   '^/api': {
+      //     target: 'http://127.0.0.1:8763',
+      //     changeOrigin: true,
+      //     rewrite: (path) => path.replace(/^\/api/, '')
+      //   }
+      // }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        dark: 'auto',
+        notify: {
+          position: 'top'
+        }
+      },
 
       iconSet: 'material-symbols-rounded', // Quasar icon set
       lang: 'en-US', // Quasar language pack

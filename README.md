@@ -1,6 +1,6 @@
-# Quasar App (quasar-project)
+# Leafage MS
 
-A Quasar Project
+Integrated with [mswjs](https://mswjs.io) for mock request.
 
 ## Install the dependencies
 ```bash
@@ -11,6 +11,8 @@ npm install
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
+yarn dev
+# or
 quasar dev
 ```
 

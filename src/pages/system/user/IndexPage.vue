@@ -1,6 +1,5 @@
 <template>
   <q-page class="row items-center justify-evenly" padding>
-
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 350px">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
@@ -34,7 +33,7 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
@@ -46,6 +45,21 @@
           <span class="q-ml-sm">{{ props.row.username }}</span>
         </q-td>
       </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-accountExpiresAt="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-credentialsExpiresAt="props">
+        <q-td :props="props">
+          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
@@ -53,7 +67,7 @@
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-icon size="xs" :color="props.row.accountNonLocked ? 'green' : 'red'"
+          <q-icon size="sm" :color="props.row.accountNonLocked ? 'green' : 'red'"
             :name="props.row.accountNonLocked ? 'sym_r_lock_open' : 'sym_r_lock'" />
         </q-td>
       </template>
@@ -107,11 +121,12 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'username', label: 'Username', align: 'left', field: 'username', sortable: true },
-  { name: 'firstname', label: 'First Name', align: 'left', field: 'firstname', sortable: true },
-  { name: 'lastname', label: 'Last Name', align: 'left', field: 'lastname', sortable: true },
+  { name: 'firstname', label: 'Firstname', align: 'left', field: 'firstname', sortable: true },
+  { name: 'lastname', label: 'Lastname', align: 'left', field: 'lastname', sortable: true },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
-  { name: 'accountExpiresAt', label: 'Expires At', align: 'left', field: 'accountExpiresAt', sortable: true },
-  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'left', field: 'credentialsExpiresAt', sortable: true },
+  { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
+  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
@@ -128,8 +143,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage }
 
-  try {
-    const res = await api.get(SERVER_URL.USER, { params })
+  await api.get(SERVER_URL.USER, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -137,11 +151,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
-    console.log(error)
-  } finally {
+  }).catch(error => {
+    $q.notify({
+      message: error.message,
+      type: 'negative'
+    })
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

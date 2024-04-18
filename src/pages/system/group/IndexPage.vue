@@ -9,10 +9,8 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Group name" lazy-rules
+            <q-input v-model="form.groupName" label="Group name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.description" label="Group deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -28,7 +26,7 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add_circle" label="Add" @click="addRow" />
+        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
         <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
@@ -41,11 +39,17 @@
           </div>
         </q-td>
       </template>
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-toggle v-model="props.row.enabled" color="green" />
+        </q-td>
+      </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
           {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
         </q-td>
       </template>
+
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
@@ -77,8 +81,7 @@ const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Group>({
-  name: '',
-  description: ''
+  groupName: ''
 })
 
 const pagination = ref({
@@ -92,9 +95,9 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
+  { name: 'name', label: 'Name', align: 'left', field: 'groupName', sortable: true },
   { name: 'members', label: 'Members', align: 'center', field: 'members' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
+  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
@@ -111,8 +114,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
 
   const params = { page: page - 1, size: rowsPerPage }
-  try {
-    const res = await api.get(SERVER_URL.GROUP, { params })
+
+  await api.get(SERVER_URL.GROUP, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -120,11 +123,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = res.data.sortBy
     pagination.value.descending = descending
-  } catch (error) {
-    console.log(error)
-  } finally {
+  }).catch(error => {
+    $q.notify({
+      message: error.message,
+      type: 'negative'
+    })
+  }).finally(() => {
     loading.value = false
-  }
+  })
 }
 
 function addRow() {

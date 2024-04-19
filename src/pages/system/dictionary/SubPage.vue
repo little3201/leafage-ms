@@ -15,8 +15,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" type="reset" v-close-popup />
-            <q-btn type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
@@ -27,7 +27,7 @@
       :columns="columns" row-key="id" binary-state-sort @request="onRequest" hide-bottom
       class="full-width bg-transparent">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
+        <q-btn title="add" color="primary" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
       </template>
       <template v-slot:body-cell-lastModifiedDate="props">
         <q-td :props="props">
@@ -41,14 +41,11 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
+          <q-btn title="delete" size="sm" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
-      </template>
-      <template v-slot:body-cell-expand="props">
-        {{ props.expand }}
       </template>
     </q-table>
   </div>
@@ -102,7 +99,7 @@ onMounted(() => {
 async function onRequest() {
   loading.value = true
 
-  await api.get(SERVER_URL.DICTIONARY.concat(`/${props.superiorId}/subset`)).then(res => {
+  await api.get(`${SERVER_URL.DICTIONARY}/${props.superiorId}/subset`).then(res => {
     rows.value = res.data
   }).catch(error => {
     $q.notify({

@@ -6,7 +6,7 @@
           <q-img alt="logo" src="/logo-only.svg" style="width: 64px; height: 64px;" />
         </q-toolbar-title>
 
-        <q-btn icon="sym_r_translate" round flat title="language_switch">
+        <q-btn title="translate" icon="sym_r_translate" round flat>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -27,7 +27,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="row justify-center items-center full-height">
+      <q-page class="row justify-center items-center">
 
         <figure class="absolute bg-primary-gradient rounded-full"
           style="height: 500px; width: 500px;  top: -270px; right: -200px; background-color: var('$primary');" />
@@ -59,7 +59,7 @@
           </q-card-section>
           <q-separator vertical dark />
           <q-card-section horizontal class="full-height no-border-radius" style="width: 50%;"
-            :style="{ background: $q.dark.isActive ? '' : '#f3fbff' }">
+            :style="{ backgroundColor: $q.dark.isActive ? '' : '#f3fbff' }">
             <q-card-section class="row justify-center full-width">
               <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
                 <div class="col justify-center items-center">
@@ -86,8 +86,8 @@
                           </q-input>
                           <q-checkbox :disable="loading" v-model="rememberMe" :label="$t('rememberMe')" dense
                             @update:model-value="changeRememberMe" class="q-my-md" />
-                          <q-btn no-caps rounded glossy :label="$t('signin')" type="submit" color="primary"
-                            :loading="loading" class="full-width" title="signin_submit" />
+                          <q-btn title="signin" no-caps rounded glossy :label="$t('signin')" type="submit"
+                            color="primary" :loading="loading" class="full-width" />
                         </q-form>
                       </q-card-section>
                     </q-card-section>
@@ -100,8 +100,8 @@
       </q-page>
     </q-page-container>
     <q-footer class="transparent text-center" :class="$q.dark.isActive ? 'text-white' : 'text-black'">
-      <q-btn flat rounded label="Github" title="github" @click="openLink('https://github.com/little3201/leafage-ms')" />
-      <q-btn flat rounded label="Gitee" title="gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
+      <q-btn title="github" flat rounded label="Github" @click="openLink('https://github.com/little3201/leafage-ms')" />
+      <q-btn title="gitee" flat rounded label="Gitee" @click="openLink('https://gitee.com/little3201/leafage-ms')" />
       <p :class="{ 'text-white': $q.dark.isActive }">Copyright &copy; 2018 - {{ new Date().getFullYear() }}
         leafage.top
         All rights reserved.</p>

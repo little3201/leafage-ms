@@ -6,8 +6,8 @@
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
-          <q-btn id="btn-drawer" title="btn-drawer" dense flat round icon="sym_r_menu" @click="toggleLeftDrawer"
-            aria-disabled="false" />
+          <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
+            @click="leftDrawerOpen = !leftDrawerOpen" aria-disabled="false" />
         </q-toolbar-title>
 
         <!-- <q-breadcrumbs class="q-ma-sm" active-color="white" style="font-size: 16px">
@@ -19,7 +19,7 @@
         <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
           :color="$q.dark.isActive ? 'black' : ''" />
 
-        <q-btn icon="sym_r_translate" round flat dense>
+        <q-btn title="translate" icon="sym_r_translate" round flat dense>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -79,8 +79,4 @@ const userStore = useUserStore()
 const { locale } = useI18n({ useScope: 'global' })
 
 const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
 </script>

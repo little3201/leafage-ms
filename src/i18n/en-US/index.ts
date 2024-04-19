@@ -26,11 +26,10 @@ export default {
 
   no: 'NO.',
   name: 'Name',
-  alias: 'Alias',
   id: 'ID',
   superior: 'Superior',
   description: 'Description',
-  modifyTime: 'Modify Time',
+  lastModifiedDate: 'Last Modified Date',
 
   username: 'Username',
   password: 'Password',

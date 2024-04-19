@@ -16,8 +16,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" type="reset" v-close-popup />
-            <q-btn type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
@@ -27,9 +27,9 @@
     <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
       :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="refresh" :disable="loading" icon="sym_r_refresh" label="Refresh"
+        <q-btn title="refresh" color="primary" :disable="loading" icon="sym_r_refresh" label="Refresh"
           @click="refresh" />
-        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="export" color="primary" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
       </template>
 
@@ -45,7 +45,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td auto-width>
-            <q-btn round flat dense @click="props.expand = !props.expand"
+            <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
               :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
@@ -53,7 +53,7 @@
               {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}
             </span>
             <div v-else-if="col.name == 'id'" class="text-right">
-              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+              <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
             </div>
             <div v-else-if="col.name == 'enabled'" class="text-center">

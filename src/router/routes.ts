@@ -3,7 +3,6 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'application',
     component: () => import('layouts/MainLayout.vue'),
     meta: { icon: 'sym_r_grid_view' },
     children: [

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly" padding>
+  <q-page padding>
 
     <q-dialog v-model="visiable" persistent>
       <q-card style="min-width: 350px">
@@ -27,10 +27,14 @@
     <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
       :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn title="refresh" color="primary" :disable="loading" icon="sym_r_refresh" label="Refresh"
+        <q-input dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="sym_r_search" />
+          </template>
+        </q-input>
+        <q-btn title="refresh" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh" label="Refresh"
           @click="refresh" />
-        <q-btn title="export" color="primary" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
-          @click="exportTable" />
+        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -88,6 +92,7 @@ const visiable = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
+const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Dictionary>({

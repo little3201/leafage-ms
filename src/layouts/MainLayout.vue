@@ -16,10 +16,7 @@
             :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
         </q-breadcrumbs> -->
 
-        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
-          :color="$q.dark.isActive ? 'black' : ''" />
-
-        <q-btn title="translate" icon="sym_r_translate" round flat dense>
+        <q-btn title="language" icon="sym_r_language" round flat dense>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -35,6 +32,9 @@
           </q-menu>
         </q-btn>
 
+        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
+          :color="$q.dark.isActive ? 'black' : ''" />
+
         <q-chip clickable color="primary" text-color="white">
           <q-avatar size="sm">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
@@ -42,10 +42,10 @@
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
-                <q-item-section>Sign out</q-item-section>
+                <q-item-section>Change Password</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section>Home</q-item-section>
+              <q-item clickable v-close-popup @click="onLogout">
+                <q-item-section>Sign Out</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -72,11 +72,25 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { api } from 'boot/axios'
+
 import SideBarLeft from './SideBarLeft.vue'
 
 const userStore = useUserStore()
+const router = useRouter()
+const $q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
 
 const leftDrawerOpen = ref(false)
+
+function onLogout() {
+  api.post('/logout').then(() => {
+    userStore.clearUser()
+
+    router.replace('/login')
+  }).catch(error => $q.notify({ type: 'negative', message: error.message }))
+}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly" padding>
+  <q-page padding>
 
     <q-dialog v-model="visiable" persistent>
       <q-card style="min-width: 350px">
@@ -28,9 +28,14 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn title="add" color="primary" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
-        <q-btn title="export" color="primary" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
-          @click="exportTable" />
+        <q-input dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="sym_r_search" />
+          </template>
+        </q-input>
+        <q-btn title="add" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
+          @click="addRow" />
+        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
       </template>
       <template v-slot:body-cell-members="props">
         <q-td :props="props" class="q-gutter-sm">

@@ -21,9 +21,36 @@ export const regionsHandlers = [
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
+
+    // sort and filter
+    const sortBy = url.searchParams.get('sortBy') as never
+    if (sortBy) {
+      datas.sort((a: Region, b: Region) => {
+        if (a[sortBy] > b[sortBy]) {
+          return 1
+        }
+        if (a[sortBy] < b[sortBy]) {
+          return -1
+        }
+        return 0
+      })
+    }
+
+    let data = {
+    }
+
+    const filter = url.searchParams.get('filter')
+    if (filter) {
+      const result = datas.filter(item => item.name.includes(filter)).slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))
+      data = {
+        content: result,
+        totalElements: result.length
+      }
+      return HttpResponse.json(data)
+    }
     // Construct a JSON response with the list of all Dictionarys
     // as the response body.
-    const data = {
+    data = {
       content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
       totalElements: datas.length
     }

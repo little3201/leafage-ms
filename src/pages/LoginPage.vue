@@ -6,7 +6,7 @@
           <q-img alt="logo" src="/logo-only.svg" style="width: 64px; height: 64px;" />
         </q-toolbar-title>
 
-        <q-btn title="translate" icon="sym_r_translate" round flat>
+        <q-btn title="language" icon="sym_r_language" round flat>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">

@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-dialog v-model="visible" persistent>
-      <q-card style="min-width: 350px">
+      <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">{{ editingUser ? 'Edit User' : 'Add User' }}</div>
@@ -65,11 +65,6 @@
           {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
         </q-td>
       </template>
-      <template v-slot:body-cell-lastModifiedDate="props">
-        <q-td :props="props">
-          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
-        </q-td>
-      </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
           <q-icon size="sm" :color="props.row.accountNonLocked ? 'green' : 'red'"
@@ -115,11 +110,11 @@ const form = ref<User>({
 })
 
 const pagination = ref({
-  sortBy: 'lastModifiedDate',
-  descending: false,
+  sortBy: 'id',
+  descending: true,
   page: 1,
   rowsPerPage: 7,
-  rowsNumber: 10
+  rowsNumber: 0
 })
 
 const selected = ref([])
@@ -132,7 +127,6 @@ const columns: QTableProps['columns'] = [
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
@@ -144,9 +138,11 @@ onMounted(() => {
 
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
-  const { page, rowsPerPage, sortBy, descending } = props.pagination
 
-  const params = { page: page - 1, size: rowsPerPage }
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
+
+  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   await api.get(SERVER_URL.USER, { params }).then(res => {
     rows.value = res.data.content

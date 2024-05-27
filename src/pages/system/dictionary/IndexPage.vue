@@ -2,7 +2,7 @@
   <q-page padding>
 
     <q-dialog v-model="visiable" persistent>
-      <q-card style="min-width: 350px">
+      <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">Dictionary</div>
@@ -53,10 +53,7 @@
               :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
-            <span v-if="col.name == 'lastModifiedDate'">
-              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}
-            </span>
-            <div v-else-if="col.name == 'id'" class="text-right">
+            <div v-if="col.name == 'id'" class="text-right">
               <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
             </div>
@@ -78,7 +75,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar, date } from 'quasar'
+import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
 import SubPage from './SubPage.vue'
@@ -101,18 +98,17 @@ const form = ref<Dictionary>({
 })
 
 const pagination = ref({
-  sortBy: 'lastModifiedDate',
-  descending: false,
+  sortBy: 'id',
+  descending: true,
   page: 1,
   rowsPerPage: 7,
-  rowsNumber: 10
+  rowsNumber: 0
 })
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
@@ -125,9 +121,11 @@ onMounted(() => {
  */
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
-  const { page, rowsPerPage, sortBy, descending } = props.pagination
 
-  const params = { page: page - 1, size: rowsPerPage }
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
+
+  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
     rows.value = res.data.content

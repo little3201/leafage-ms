@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="visiable" persistent>
-    <q-card style="min-width: 350px">
+    <q-card style="min-width: 25em">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-card-section>
           <div class="text-h6">Dictionary</div>
@@ -28,11 +28,6 @@
     <template v-slot:top-right>
       <q-btn title="add" color="primary" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
     </template>
-    <template v-slot:body-cell-lastModifiedDate="props">
-      <q-td :props="props">
-        {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
-      </q-td>
-    </template>
     <template v-slot:body-cell-enabled="props">
       <q-td :props="props">
         <q-toggle v-model="props.row.enabled" color="green" />
@@ -51,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useQuasar, date } from 'quasar'
+import { useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
 
@@ -83,7 +78,6 @@ const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 

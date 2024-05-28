@@ -36,12 +36,10 @@
         <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
       </template>
       <template v-slot:body-cell-members="props">
-        <q-td :props="props" class="q-gutter-sm">
-          <div class="no-margin">
-            <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
-              <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
-            </q-avatar>
-          </div>
+        <q-td :props="props">
+          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
+            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+          </q-avatar>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">

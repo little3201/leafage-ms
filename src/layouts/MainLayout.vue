@@ -3,6 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
+          <q-img alt="logo" src="/logo-only.svg" style="width: 3em; height: 3em;" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
@@ -36,8 +37,8 @@
           :color="$q.dark.isActive ? 'black' : ''" />
 
         <q-chip clickable color="primary" text-color="white">
-          <q-avatar size="sm">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
+          <q-avatar size="32px">
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="32px" height="32px">
           </q-avatar>{{ userStore.getUsername }}
           <q-menu>
             <q-list dense separator>

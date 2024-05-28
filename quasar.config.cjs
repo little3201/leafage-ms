@@ -120,7 +120,7 @@ module.exports = configure(function (ctx) {
       config: {
         dark: 'auto',
         notify: {
-          position: 'top'
+          progress: true
         }
       },
 

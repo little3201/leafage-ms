@@ -5,6 +5,7 @@
   "productName": "leafage-ms",
   "author": "wq.li <little3201@163.com>",
   "private": true,
+  "type": "module",
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "test": "echo \"No test specified\" && exit 0",

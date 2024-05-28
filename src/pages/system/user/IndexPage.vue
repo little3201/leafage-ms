@@ -44,7 +44,7 @@
       </template>
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
-          <q-avatar size="md" class="q-mt-none">
+          <q-avatar size="md">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
           <span class="q-ml-sm">{{ props.row.username }}</span>

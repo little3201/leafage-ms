@@ -15,6 +15,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.11",
     "axios": "^1.6.8",
+    "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
     "quasar": "^2.15.1",
     "vue": "^3.4.21",
@@ -34,7 +35,6 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.24.0",
-    "lottie-web": "^5.12.2",
     "msw": "^2.2.13",
     "postcss": "^8.4.38",
     "typescript": "^5.4.4"

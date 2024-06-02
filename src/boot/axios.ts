@@ -4,7 +4,7 @@ import { Notify } from 'quasar'
 
 const abortControllerMap: Map<string, AbortController> = new Map()
 
-const api: AxiosInstance = axios.create({ baseURL: process.env.API })
+const api: AxiosInstance = axios.create({ baseURL: process.env.API, timeout: 30000 })
 
 export default boot(() => {
   // 请求拦截器

@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/logo-only.svg" style="width: 3em; height: 3em;" />
+          <q-img alt="logo" src="/logo-only.svg" style="width: 2em; height: 2em;" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
@@ -60,6 +60,7 @@
 
     <q-page-container class="overflow-hidden">
       <router-view />
+      <slot></slot>
     </q-page-container>
 
     <q-footer class="bg-transparent">

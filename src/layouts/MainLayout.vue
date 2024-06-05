@@ -81,18 +81,18 @@ import { api } from 'boot/axios'
 import SideBarLeft from './SideBarLeft.vue'
 
 const userStore = useUserStore()
-const router = useRouter()
+const { replace } = useRouter()
 const $q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref<boolean>(false)
 
 function onLogout() {
   api.post('/logout').then(() => {
     userStore.clearUser()
 
-    router.replace('/login')
+    replace('/login')
   }).catch(error => $q.notify({ type: 'negative', message: error.message }))
 }
 </script>

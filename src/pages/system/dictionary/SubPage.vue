@@ -64,7 +64,7 @@ const visiable = ref<boolean>(false)
 
 const subtableRef = ref()
 const rows = ref<QTableProps['rows']>([])
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const form = ref<Dictionary>({
   name: '',

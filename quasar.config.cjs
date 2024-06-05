@@ -31,7 +31,8 @@ module.exports = configure(function (ctx) {
     boot: [
       'i18n',
       'axios',
-      'msw-server'
+      'msw-server',
+      'router'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

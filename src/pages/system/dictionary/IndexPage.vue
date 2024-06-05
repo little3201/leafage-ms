@@ -112,7 +112,7 @@ const columns: QTableProps['columns'] = [
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
-onMounted(() => {
+onMounted(async () => {
   tableRef.value.requestServerInteraction()
 })
 

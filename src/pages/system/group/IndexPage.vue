@@ -75,7 +75,7 @@ const visiable = ref<boolean>(false)
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const form = ref<Group>({
   groupName: ''

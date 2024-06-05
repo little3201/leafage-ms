@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
@@ -107,17 +107,14 @@ import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import { useUserStore } from 'stores/user-store'
 
-const router = useRouter()
+const { currentRoute, replace } = useRouter()
 const $q = useQuasar()
 const userStore = useUserStore()
 
-onBeforeMount(() => {
-})
-
 const { locale } = useI18n({ useScope: 'global' })
-const showPwd = ref(true)
-const rememberMe = ref(true)
-const loading = ref(false)
+const showPwd = ref<boolean>(true)
+const rememberMe = ref<boolean>(true)
+const loading = ref<boolean>(false)
 const lottieRef = ref<HTMLDivElement | null>(null)
 
 const form = ref({
@@ -143,8 +140,8 @@ function onSubmit() {
   api.post('/login', new URLSearchParams(form.value)).then(res => {
     userStore.updateUser(res.data.username)
     // 获取之前路由
-    const redirectRoute = router.currentRoute.value.query.redirect as string | undefined
-    router.replace(redirectRoute || '/')
+    const redirectRoute = currentRoute.value.query.redirect as string | undefined
+    replace(redirectRoute || '/')
   }).catch(error => $q.notify({ type: 'negative', message: error.message }))
     .finally(() => {
       // 在请求结束后执行

@@ -24,8 +24,8 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
-      :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
+    <q-table flat ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id" :loading="loading"
+      v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>

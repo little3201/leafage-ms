@@ -29,7 +29,7 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat bordered ref="tableRef" title="User" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" title="User" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>

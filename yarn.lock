@@ -614,7 +614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.12.4, @types/node@npm:^20.12.5":
+"@types/node@npm:*, @types/node@npm:^20.12.4":
   version: 20.12.5
   resolution: "@types/node@npm:20.12.5"
   dependencies:
@@ -4008,7 +4008,6 @@ __metadata:
   dependencies:
     "@quasar/app-vite": "npm:^1.9.3"
     "@quasar/extras": "npm:^1.16.11"
-    "@types/node": "npm:^20.12.5"
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.5.0"
     autoprefixer: "npm:^10.4.19"

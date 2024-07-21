@@ -26,11 +26,10 @@ export default {
 
   no: '序号',
   name: '名称',
-  alias: '别名',
   id: '主键',
   superior: '上级',
   description: '描述',
-  modifyTime: '更新时间',
+  lastModifiedDate: '更新时间',
 
   username: '账号',
   password: '密码',

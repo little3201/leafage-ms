@@ -1,8 +1,8 @@
 <template>
-  <q-page class="row items-center justify-evenly" padding>
+  <q-page padding>
 
     <q-dialog v-model="visiable" persistent>
-      <q-card style="min-width: 350px">
+      <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">Dictionary</div>
@@ -16,8 +16,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" type="reset" v-close-popup />
-            <q-btn type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
@@ -27,10 +27,14 @@
     <q-table flat bordered ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id"
       :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="refresh" :disable="loading" icon="sym_r_refresh" label="Refresh"
+        <q-input dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="sym_r_search" />
+          </template>
+        </q-input>
+        <q-btn title="refresh" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh" label="Refresh"
           @click="refresh" />
-        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
-          @click="exportTable" />
+        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -45,15 +49,12 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td auto-width>
-            <q-btn round flat dense @click="props.expand = !props.expand"
+            <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
               :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
-            <span v-if="col.name == 'lastModifiedDate'">
-              {{ date.formatDate(col.value, 'YYYY/MM/DD HH:mm') }}
-            </span>
-            <div v-else-if="col.name == 'id'" class="text-right">
-              <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+            <div v-if="col.name == 'id'" class="text-right">
+              <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
             </div>
             <div v-else-if="col.name == 'enabled'" class="text-center">
@@ -74,7 +75,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar, date } from 'quasar'
+import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
 import SubPage from './SubPage.vue'
@@ -88,6 +89,7 @@ const visiable = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
+const filter = ref('')
 const loading = ref(false)
 
 const form = ref<Dictionary>({
@@ -96,22 +98,21 @@ const form = ref<Dictionary>({
 })
 
 const pagination = ref({
-  sortBy: 'lastModifiedDate',
-  descending: false,
+  sortBy: 'id',
+  descending: true,
   page: 1,
   rowsPerPage: 7,
-  rowsNumber: 10
+  rowsNumber: 0
 })
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
-onMounted(() => {
+onMounted(async () => {
   tableRef.value.requestServerInteraction()
 })
 
@@ -120,9 +121,11 @@ onMounted(() => {
  */
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
-  const { page, rowsPerPage, sortBy, descending } = props.pagination
 
-  const params = { page: page - 1, size: rowsPerPage }
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
+
+  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
     rows.value = res.data.content

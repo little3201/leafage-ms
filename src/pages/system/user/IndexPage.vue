@@ -1,7 +1,7 @@
 <template>
-  <q-page class="row items-center justify-evenly" padding>
+  <q-page padding>
     <q-dialog v-model="visible" persistent>
-      <q-card style="min-width: 350px">
+      <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">{{ editingUser ? 'Edit User' : 'Add User' }}</div>
@@ -22,8 +22,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" type="reset" v-close-popup />
-            <q-btn type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
         </q-form>
       </q-card>
@@ -33,13 +33,18 @@
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
-        <q-btn color="primary" title="add" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
-        <q-btn color="primary" title="export" class="q-ml-sm" icon="sym_r_sim_card_download" label="Export"
-          @click="exportTable" />
+        <q-input dense debounce="300" v-model="filter" placeholder="Search">
+          <template v-slot:append>
+            <q-icon name="sym_r_search" />
+          </template>
+        </q-input>
+        <q-btn title="add" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
+          @click="addRow" />
+        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
       </template>
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
-          <q-avatar size="md" class="q-mt-none">
+          <q-avatar size="md">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
           <span class="q-ml-sm">{{ props.row.username }}</span>
@@ -60,11 +65,6 @@
           {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
         </q-td>
       </template>
-      <template v-slot:body-cell-lastModifiedDate="props">
-        <q-td :props="props">
-          {{ date.formatDate(props.row.lastModifiedDate, 'YYYY/MM/DD HH:mm') }}
-        </q-td>
-      </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
           <q-icon size="sm" :color="props.row.accountNonLocked ? 'green' : 'red'"
@@ -73,9 +73,9 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn size="sm" title="edit" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn size="sm" title="delete" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
+          <q-btn title="delete" size="sm" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
             class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -100,7 +100,7 @@ const editingUser = ref<boolean>(false)
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
 const form = ref<User>({
   username: '',
@@ -110,11 +110,11 @@ const form = ref<User>({
 })
 
 const pagination = ref({
-  sortBy: 'lastModifiedDate',
-  descending: false,
+  sortBy: 'id',
+  descending: true,
   page: 1,
   rowsPerPage: 7,
-  rowsNumber: 10
+  rowsNumber: 0
 })
 
 const selected = ref([])
@@ -127,7 +127,6 @@ const columns: QTableProps['columns'] = [
   { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
-  { name: 'lastModifiedDate', label: 'Last Modified Date', align: 'left', field: 'lastModifiedDate', sortable: true },
   { name: 'id', label: 'Actions', field: 'id' }
 ]
 
@@ -139,9 +138,11 @@ onMounted(() => {
 
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
-  const { page, rowsPerPage, sortBy, descending } = props.pagination
 
-  const params = { page: page - 1, size: rowsPerPage }
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
+
+  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   await api.get(SERVER_URL.USER, { params }).then(res => {
     rows.value = res.data.content

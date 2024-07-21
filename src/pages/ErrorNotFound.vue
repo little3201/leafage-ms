@@ -9,15 +9,8 @@
         Oops. Nothing here...
       </div>
 
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
-      />
+      <q-btn type="button" title="go_home" class="q-mt-xl" color="white" text-color="blue" unelevated to="/"
+        label="Go Home" no-caps />
     </div>
   </div>
 </template>

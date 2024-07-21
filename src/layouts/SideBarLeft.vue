@@ -2,12 +2,6 @@
   <q-list>
     <q-list>
       <EssentialLink v-bind="{
-        title: 'dashboard',
-        icon: 'sym_r_dashboard',
-        link: '/dashboard'
-      }" />
-
-      <EssentialLink v-bind="{
         title: 'home',
         icon: 'sym_r_home',
         link: '/'

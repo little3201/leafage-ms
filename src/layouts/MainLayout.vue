@@ -3,11 +3,12 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
+          <q-img alt="logo" src="/logo-only.svg" style="width: 2em; height: 2em;" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
-          <q-btn id="btn-drawer" title="btn-drawer" dense flat round icon="sym_r_menu" @click="toggleLeftDrawer"
-            aria-disabled="false" />
+          <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
+            @click="leftDrawerOpen = !leftDrawerOpen" aria-disabled="false" />
         </q-toolbar-title>
 
         <!-- <q-breadcrumbs class="q-ma-sm" active-color="white" style="font-size: 16px">
@@ -16,10 +17,7 @@
             :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
         </q-breadcrumbs> -->
 
-        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
-          :color="$q.dark.isActive ? 'black' : ''" />
-
-        <q-btn icon="sym_r_translate" round flat dense>
+        <q-btn title="language" icon="sym_r_language" round flat dense>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
@@ -35,17 +33,20 @@
           </q-menu>
         </q-btn>
 
+        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
+          :color="$q.dark.isActive ? 'black' : ''" />
+
         <q-chip clickable color="primary" text-color="white">
-          <q-avatar size="sm">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png">
+          <q-avatar size="32px">
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="32px" height="32px">
           </q-avatar>{{ userStore.getUsername }}
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
-                <q-item-section>Sign out</q-item-section>
+                <q-item-section>Change Password</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section>Home</q-item-section>
+              <q-item clickable v-close-popup @click="onLogout">
+                <q-item-section>Sign Out</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -59,6 +60,7 @@
 
     <q-page-container class="overflow-hidden">
       <router-view />
+      <slot></slot>
     </q-page-container>
 
     <q-footer class="bg-transparent">
@@ -72,15 +74,25 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { api } from 'boot/axios'
+
 import SideBarLeft from './SideBarLeft.vue'
 
 const userStore = useUserStore()
+const { replace } = useRouter()
+const $q = useQuasar()
 
 const { locale } = useI18n({ useScope: 'global' })
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref<boolean>(false)
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+function onLogout() {
+  api.post('/logout').then(() => {
+    userStore.clearUser()
+
+    replace('/login')
+  }).catch(error => $q.notify({ type: 'negative', message: error.message }))
 }
 </script>

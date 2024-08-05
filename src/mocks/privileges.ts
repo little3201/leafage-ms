@@ -1,12 +1,16 @@
 import { http, HttpResponse } from 'msw'
-import type { Role } from 'src/models'
+import type { Privilege } from 'src/models'
 
-const datas: Role[] = []
+const datas: Privilege[] = []
 
 for (let i = 0; i < 20; i++) {
-  const data: Role = {
+  const data: Privilege = {
     id: i,
-    name: 'role_' + i,
+    name: 'privilege_' + i,
+    superiorId: i,
+    meta: {
+      icon: 'user'
+    },
     enabled: i % 3 > 0,
     description: 'description',
     lastModifiedDate: new Date()
@@ -15,7 +19,7 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const rolesHandlers = [
-  http.get('/api/roles', ({ request }) => {
+  http.get('/api/privileges', ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
@@ -28,9 +32,9 @@ export const rolesHandlers = [
 
     return HttpResponse.json(data)
   }),
-  http.post('/api/roles', async ({ request }) => {
+  http.post('/api/privileges', async ({ request }) => {
     // Read the intercepted request body as JSON.
-    const newData = await request.json() as Role
+    const newData = await request.json() as Privilege
 
     // Push the new Dictionary to the map of all Dictionarys.
     datas.push(newData)
@@ -39,7 +43,7 @@ export const rolesHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.delete('/api/roles/:id', ({ params }) => {
+  http.delete('/api/privileges/:id', ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

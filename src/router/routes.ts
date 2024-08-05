@@ -41,6 +41,12 @@ const routes: RouteRecordRaw[] = [
         meta: { icon: 'sym_r_admin_panel_settings' }
       },
       {
+        path: 'privileges',
+        name: 'privileges',
+        component: () => import('pages/system/privilege/IndexPage.vue'),
+        meta: { icon: 'sym_r_admin_panel_settings' }
+      },
+      {
         path: 'dictionaries',
         name: 'dictionaries',
         component: () => import('pages/system/dictionary/IndexPage.vue'),

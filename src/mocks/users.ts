@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { User } from 'src/api/models.type'
+import type { User } from 'src/models'
 
 const datas: User[] = []
 

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import type { Group } from 'src/api/models.type'
+import type { Group } from 'src/models'
 
 const datas: Group[] = []
 

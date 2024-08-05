@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
-    "axios": "^1.6.8",
+    "axios": "^1.7.3",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
     "quasar": "^2.16.4",
@@ -42,7 +42,7 @@
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.4.0",
   "msw": {
     "workerDirectory": [
       "public"

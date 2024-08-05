@@ -32,9 +32,10 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="refresh" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh" label="Refresh"
+        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
           @click="refresh" />
-        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+          @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -54,7 +55,7 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name == 'id'" class="text-right">
-              <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
             </div>
             <div v-else-if="col.name == 'enabled'" class="text-center">
@@ -64,7 +65,7 @@
           </q-td>
         </q-tr>
         <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%">
+          <q-td colspan="100%" class="q-pr-none">
             <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
           </q-td>
         </q-tr>
@@ -81,7 +82,7 @@ import { api } from 'boot/axios'
 import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Dictionary } from 'src/api/models.type'
+import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 

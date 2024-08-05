@@ -37,8 +37,8 @@
           :color="$q.dark.isActive ? 'black' : ''" />
 
         <q-chip clickable color="primary" text-color="white">
-          <q-avatar size="32px">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="32px" height="32px">
+          <q-avatar size="28px">
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="28px" height="29px">
           </q-avatar>{{ userStore.getUsername }}
           <q-menu>
             <q-list dense separator>

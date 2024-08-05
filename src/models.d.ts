@@ -26,6 +26,18 @@ export interface Role extends AudtiMetadata {
   description?: string
 }
 
+export interface Privilege extends AudtiMetadata {
+  name: string
+  superiorId?: number
+  path?: string
+  meta: {
+    icon?: string
+    actions?: string[]
+  }
+  enabled?: boolean
+  description?: string
+}
+
 export interface Dictionary extends AudtiMetadata {
   name: string
   superiorId?: number

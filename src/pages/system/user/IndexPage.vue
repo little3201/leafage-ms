@@ -2,13 +2,13 @@
   <q-page padding>
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit" @reset="onReset">
           <q-card-section>
             <div class="text-h6">{{ editingUser ? 'Edit User' : 'Add User' }}</div>
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.username" label="Your username" hint="For login" lazy-rules
+            <q-input v-model="form.username" label="Your username" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
             <q-input v-model="form.firstname" label="Your firstname *" lazy-rules
@@ -18,12 +18,11 @@
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
             <q-input v-model="form.description" label="Deacription" type="textarea" />
-
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
-            <q-btn title="submit" type="submit" label="Submit" color="primary" />
+          <q-card-actions align="right">
+            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
           </q-card-actions>
         </q-form>
       </q-card>
@@ -38,9 +37,10 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
           @click="addRow" />
-        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+          @click="exportTable" />
       </template>
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
@@ -73,10 +73,10 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn title="delete" size="sm" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
-            class="q-mt-none q-ml-sm" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+            @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
     </q-table>
@@ -90,7 +90,7 @@ import { exportFile, useQuasar, date } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { User } from 'src/api/models.type'
+import type { User } from 'src/models'
 
 const $q = useQuasar()
 

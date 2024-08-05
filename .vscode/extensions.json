@@ -2,7 +2,8 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "wayou.vscode-todo-highlight"
+    "wayou.vscode-todo-highlight",
+    "arcanis.vscode-zipfs"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

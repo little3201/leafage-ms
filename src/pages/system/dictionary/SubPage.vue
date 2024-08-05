@@ -14,8 +14,8 @@
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
-          <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
-          <q-btn title="submit" type="submit" label="Submit" color="primary" />
+          <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
+          <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
         </q-card-actions>
 
       </q-form>
@@ -26,7 +26,9 @@
     :columns="columns" row-key="id" binary-state-sort @request="onRequest" hide-pagination hide-selected-banner
     class="full-width bg-transparent">
     <template v-slot:top-right>
-      <q-btn title="add" color="primary" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
+      <q-btn title="add" rounded color="primary" :disable="loading" icon="sym_r_add" label="Add" @click="addRow" />
+      <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
+        @click="refresh" />
     </template>
     <template v-slot:body-cell-enabled="props">
       <q-td :props="props">
@@ -35,10 +37,10 @@
     </template>
     <template v-slot:body-cell-id="props">
       <q-td :props="props">
-        <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+        <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
           class="q-mt-none" />
-        <q-btn title="delete" size="sm" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
-          class="q-mt-none q-ml-sm" />
+        <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+          @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
       </q-td>
     </template>
   </q-table>
@@ -51,7 +53,7 @@ import type { QTableProps } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Dictionary } from 'src/api/models.type'
+import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 
@@ -91,6 +93,19 @@ onMounted(() => {
 async function onRequest() {
   loading.value = true
 
+  await api.get(`${SERVER_URL.DICTIONARY}/${props.superiorId}/subset`).then(res => {
+    rows.value = res.data
+  }).catch(error => {
+    $q.notify({
+      message: error.message,
+      type: 'negative'
+    })
+  }).finally(() => {
+    loading.value = false
+  })
+}
+
+async function refresh() {
   await api.get(`${SERVER_URL.DICTIONARY}/${props.superiorId}/subset`).then(res => {
     rows.value = res.data
   }).catch(error => {

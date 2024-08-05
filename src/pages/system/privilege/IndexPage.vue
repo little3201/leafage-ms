@@ -5,14 +5,14 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">Role</div>
+            <div class="text-h6">Group</div>
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Role name" lazy-rules
+            <q-input v-model="form.name" label="Region name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="form.description" label="Role deacription" type="textarea" />
+            <q-input v-model="form.description" label="Region deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
@@ -24,7 +24,7 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="Roles" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" title="Regions" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
@@ -37,13 +37,6 @@
           @click="addRow" />
         <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
           @click="exportTable" />
-      </template>
-      <template v-slot:body-cell-members="props">
-        <q-td :props="props">
-          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
-            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
-          </q-avatar>
-        </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
@@ -64,12 +57,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
+import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Role } from 'src/models'
+import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
 
@@ -80,8 +73,11 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Role>({
+const form = ref<Privilege>({
   name: '',
+  meta: {
+    icon: ''
+  },
   description: ''
 })
 
@@ -97,7 +93,8 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'members', label: 'Members', align: 'center', field: 'members' },
+  { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
+  { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -118,7 +115,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.ROLE, { params }).then(res => {
+  await api.get(SERVER_URL.PRIVILEGE, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy

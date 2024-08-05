@@ -57,8 +57,8 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-        node: 'node18'
+        browser: ['es2022', 'edge88', 'firefox115', 'chrome115', 'safari14'],
+        node: 'node20'
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
@@ -74,7 +74,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? '/api'
-          : 'https://console.leafage.top/api'
+          : 'https://api.leafage.top/v1'
       },
 
       rawDefine: {

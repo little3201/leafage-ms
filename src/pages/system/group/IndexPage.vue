@@ -14,8 +14,8 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
-            <q-btn title="submit" type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
@@ -31,9 +31,10 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
           @click="addRow" />
-        <q-btn title="export" color="primary" icon="sym_r_sim_card_download" label="Export" @click="exportTable" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+          @click="exportTable" />
       </template>
       <template v-slot:body-cell-members="props">
         <q-td :props="props">
@@ -49,10 +50,10 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" size="sm" round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
             class="q-mt-none" />
-          <q-btn title="delete" size="sm" round color="primary" icon="sym_r_delete" @click="removeRow(props.row.id)"
-            class="q-mt-none q-ml-sm" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+            @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
     </q-table>
@@ -66,7 +67,7 @@ import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Group } from 'src/api/models.type'
+import type { Group } from 'src/models'
 
 const $q = useQuasar()
 

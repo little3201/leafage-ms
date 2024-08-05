@@ -12,12 +12,6 @@
     "typescript",
     "vue"
   ],
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "eslint.format.enable": true,
-  "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "eslint.nodePath": ".yarn/sdks",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.format.enable": true
 }

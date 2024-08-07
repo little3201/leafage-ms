@@ -1,7 +1,7 @@
 // app global css in SCSS form
 
 .bg-primary-gradient {
-    background: radial-gradient(circle at top right, #ffffff, $primary);
+    background-color: radial-gradient(circle at top right, #ffffff, $primary);
 }
 
 .bg-negative-gradient {
@@ -18,4 +18,8 @@
 
 .rounded-full {
     border-radius: 50%;
+}
+
+.bg-dark-page {
+  background-color: var(--q-dark-page);
 }

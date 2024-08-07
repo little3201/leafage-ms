@@ -57,8 +57,8 @@
           <div v-else-if="col.name === 'enabled'" class="text-center">
             <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
           </div>
-          <div v-else-if="col.name === 'icon'">
-            <q-icon :name="col.value" size="sm" />
+          <div v-else-if="col.name === 'name'">
+            <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ col.value }}
           </div>
           <span v-else>{{ col.value }}</span>
         </q-td>
@@ -113,7 +113,6 @@ const pagination = ref({
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
   { name: 'path', label: 'Path', align: 'left', field: 'path', sortable: true },
-  { name: 'icon', label: 'Icon', align: 'left', field: 'icon', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'id', label: 'Actions', field: 'id' }

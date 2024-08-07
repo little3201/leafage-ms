@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR lff">
+  <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? 'bg-dark-page' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">

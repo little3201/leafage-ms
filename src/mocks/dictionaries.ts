@@ -8,12 +8,12 @@ for (let i = 0; i < 20; i++) {
   const data: Dictionary = {
     id: i,
     name: 'dictionary_' + i,
-    description: 'this is description for this row',
     enabled: i % 3 > 0,
+    description: 'This is dictionary description about xxx',
     lastModifiedDate: new Date()
   }
   for (let j = 0; j < i; j++) {
-    const data: Dictionary = {
+    const subData: Dictionary = {
       id: j,
       name: 'dictionary_' + i + '_' + j,
       superiorId: i,
@@ -21,7 +21,7 @@ for (let i = 0; i < 20; i++) {
       description: 'description',
       lastModifiedDate: new Date()
     }
-    subDatas.push(data)
+    subDatas.push(subData)
   }
   datas.push(data)
 }

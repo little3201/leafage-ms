@@ -4,7 +4,7 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset">
           <q-card-section>
-            <div class="text-h6">{{ editingUser ? 'Edit User' : 'Add User' }}</div>
+            <div class="text-h6">User</div>
           </q-card-section>
 
           <q-card-section>
@@ -16,30 +16,29 @@
 
             <q-input v-model="form.lastname" label="Your lastname *" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.description" label="Deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
+            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="User" selection="multiple" v-model:selected="selected" :rows="rows"
+
+    <q-table flat ref="tableRef" :title="$t('users')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width">
+      binary-state-sort @request="onRequest" class="full-width q-pl-md">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
-          @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
+          :label="$t('add')" @click="addRow" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
       <template v-slot:body-cell-username="props">
@@ -52,23 +51,26 @@
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" color="green" />
+          <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
         </q-td>
       </template>
       <template v-slot:body-cell-accountExpiresAt="props">
         <q-td :props="props">
+          <q-badge :color="calculate(props.row.accountExpiresAt)" rounded class="q-mr-sm" />
           {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
         </q-td>
       </template>
       <template v-slot:body-cell-credentialsExpiresAt="props">
         <q-td :props="props">
-          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+          <q-badge :color="calculate(props.row.credentialsExpiresAt)" rounded class="q-mr-sm" />
+          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH: mm:ss') }}
         </q-td>
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-icon size="sm" :color="props.row.accountNonLocked ? 'green' : 'red'"
-            :name="props.row.accountNonLocked ? 'sym_r_lock_open' : 'sym_r_lock'" />
+          <q-btn title="accountNonLocked" padding="xs" flat round :disable="loading"
+            :color="props.row.accountNonLocked ? 'positive' : 'warning'"
+            :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'" @click="lockRow(props.row)" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -80,6 +82,8 @@
         </q-td>
       </template>
     </q-table>
+
+
   </q-page>
 </template>
 
@@ -95,7 +99,6 @@ import type { User } from 'src/models'
 const $q = useQuasar()
 
 const visible = ref<boolean>(false)
-const editingUser = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
@@ -164,17 +167,15 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
 function addRow() {
   visible.value = true
-  editingUser.value = false
 }
 
 function editRow(id: number) {
   visible.value = true
-  editingUser.value = true
   // You can populate the form with existing user data based on the id
   if (rows.value) {
-    const user = rows.value.find(u => u.id === id)
-    if (user) {
-      form.value = { ...user }
+    const row = rows.value.find(u => u.id === id)
+    if (row) {
+      form.value = { ...row }
     }
   }
 }
@@ -190,15 +191,14 @@ function removeRow(id: number) {
   }, 500)
 }
 
-async function onSubmit() {
-  if (editingUser.value) {
-    // Logic for editing an existing user
-    // You may need to send a request to update the user with the form data
-  } else {
-    // Logic for adding a new user
-    // You may need to send a request to add a new user with the form data
+function lockRow(row: User) {
+  // You can populate the form with existing user data based on the id
+  if (row) {
+    row.accountNonLocked = !row.accountNonLocked
   }
+}
 
+async function onSubmit() {
   // Close the dialog after submitting
   visible.value = false
 }
@@ -247,6 +247,24 @@ function exportTable() {
       color: 'negative',
       icon: 'warning'
     })
+  }
+}
+
+function calculate(target: string) {
+  const now = new Date()
+  const targetDate = new Date(target)
+  // 失效时间是否小于7天
+  const diff = date.getDateDiff(targetDate, now, 'days')
+  if (diff > 7) {
+    return 'positive'
+  } else {
+    // 是否失效
+    const diffSec = date.getDateDiff(targetDate, now, 'seconds')
+    if (diffSec > 0) {
+      return 'warning'
+    } else {
+      return 'negative'
+    }
   }
 }
 </script>

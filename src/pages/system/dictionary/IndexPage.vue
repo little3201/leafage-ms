@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
 
-    <q-dialog v-model="visiable" persistent>
+    <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
@@ -15,8 +15,8 @@
             <q-input v-model="form.description" label="Dictionary deacription" type="textarea" />
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" label="Cancel" type="reset" v-close-popup />
+          <q-card-actions align="right">
+            <q-btn title="cancel" label="Cancel" unelevated type="reset" v-close-popup />
             <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
@@ -24,8 +24,8 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="Dictionaries" :rows="rows" :columns="columns" row-key="id" :loading="loading"
-      v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
+    <q-table flat ref="tableRef" :title="$t('dictionaries')" :rows="rows" :columns="columns" row-key="id"
+      :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
@@ -34,7 +34,7 @@
         </q-input>
         <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
           @click="refresh" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -54,12 +54,12 @@
               :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
-            <div v-if="col.name == 'id'" class="text-right">
+            <div v-if="col.name === 'id'" class="text-right">
               <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
                 class="q-mt-none" />
             </div>
-            <div v-else-if="col.name == 'enabled'" class="text-center">
-              <q-toggle v-model="props.row.enabled" color="green" />
+            <div v-else-if="col.name === 'enabled'" class="text-center">
+              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
@@ -86,7 +86,7 @@ import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 
-const visiable = ref<boolean>(false)
+const visible = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
@@ -149,11 +149,20 @@ function refresh() {
 }
 
 function editRow(id: number) {
-  visiable.value = true
-  console.log('id: ', id)
+  visible.value = true
+  // You can populate the form with existing user data based on the id
+  if (rows.value) {
+    const row = rows.value.find(u => u.id === id)
+    if (row) {
+      form.value = { ...row }
+    }
+  }
 }
 
-function onSubmit() { }
+function onSubmit() {
+  // Close the dialog after submitting
+  visible.value = false
+}
 
 function onReset() { }
 

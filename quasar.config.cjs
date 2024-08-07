@@ -57,7 +57,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2022', 'edge88', 'firefox115', 'chrome115', 'safari14'],
+        browser: ['es2022', 'edge115', 'firefox115', 'chrome115', 'safari14'],
         node: 'node20'
       },
 
@@ -136,7 +136,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'SessionStorage']
+      plugins: ['Notify', 'LocalStorage']
     },
 
     // animations: 'all', // --- includes all animations

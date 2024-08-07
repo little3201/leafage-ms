@@ -1,24 +1,25 @@
 <template>
-  <q-item v-ripple exact :to="link">
-    <q-item-section v-if="icon" avatar>
-      <q-icon :name="icon" />
+  <q-item clickable v-ripple exact :to="parentPath + link.path">
+    <q-item-section v-if="link.icon" avatar side>
+      <q-icon :name="link.icon" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ $t(title) }}</q-item-label>
+      <q-item-label>{{ $t(link.name) }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-export interface EssentialLinkProps {
-  title: string;
-  link?: string;
-  icon?: string;
-}
-withDefaults(defineProps<EssentialLinkProps>(), {
-  title: '',
-  link: '#',
-  icon: ''
+import type { TreeNode } from 'src/models'
+
+withDefaults(defineProps<{
+  link: TreeNode
+  parentPath?: string
+}>(), {
+  link: {
+    name: '', path: '#', icon: ''
+  },
+  parentPath: ''
 })
 </script>

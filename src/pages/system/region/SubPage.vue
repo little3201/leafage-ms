@@ -1,80 +1,77 @@
 <template>
-  <q-page padding>
+  <q-dialog v-model="visible" persistent>
+    <q-card style="min-width: 25em">
+      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-card-section>
+          <div class="text-h6">Region</div>
+        </q-card-section>
 
-    <q-dialog v-model="visible" persistent>
-      <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-          <q-card-section>
-            <div class="text-h6">Group</div>
-          </q-card-section>
+        <q-card-section>
+          <q-input v-model="form.name" label="Region name" lazy-rules
+            :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-          <q-card-section>
-            <q-input v-model="form.name" label="Region name" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+          <q-input v-model="form.description" label="Region deacription" type="textarea" />
+        </q-card-section>
 
-            <q-input v-model="form.description" label="Region deacription" type="textarea" />
-          </q-card-section>
+        <q-card-actions align="right">
+          <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
+          <q-btn title="submit" type="submit" label="Submit" color="primary" />
+        </q-card-actions>
 
-          <q-card-actions align="right">
-            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" label="Submit" color="primary" />
-          </q-card-actions>
+      </q-form>
+    </q-card>
+  </q-dialog>
 
-        </q-form>
-      </q-card>
-    </q-dialog>
+  <q-table flat ref="tableRef" :title="title" selection="multiple" v-model:selected="selected" :rows="rows"
+    :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
+    binary-state-sort @request="onRequest" class="full-width">
+    <template v-slot:top-right>
+      <q-input dense debounce="300" v-model="filter" placeholder="Search">
+        <template v-slot:append>
+          <q-icon name="sym_r_search" />
+        </template>
+      </q-input>
+      <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" :label="$t('add')"
+        @click="addRow" />
+      <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
+        @click="exportTable" />
+    </template>
 
-    <q-table flat ref="tableRef" :title="$t('regions')" selection="multiple" v-model:selected="selected" :rows="rows"
-      :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width">
-      <template v-slot:top-right>
-        <q-input dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="sym_r_search" />
-          </template>
-        </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('add')" @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
-          @click="exportTable" />
-      </template>
+    <template v-slot:header="props">
+      <q-tr :props="props">
+        <q-th auto-width />
+        <q-th v-for="col in props.cols" :key="col.name" :props="props">
+          {{ col.label }}
+        </q-th>
+      </q-tr>
+    </template>
 
-      <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th auto-width />
-          <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
-
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td auto-width>
-            <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-              :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
-          </q-td>
-          <q-td v-for="col in props.cols" :key="col.name">
-            <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit"
-                @click="editRow(props.row.id)" class="q-mt-none" />
-              <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
-                @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
-            </div>
-            <div v-else-if="col.name === 'enabled'" class="text-center">
-              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
-            </div>
-            <span v-else>{{ col.value }}</span>
-          </q-td>
-        </q-tr>
-        <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%" class="q-pr-none">
-            <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table>
-  </q-page>
+    <template v-slot:body="props">
+      <q-tr :props="props">
+        <q-td auto-width>
+          <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
+            :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
+        </q-td>
+        <q-td v-for="col in props.cols" :key="col.name">
+          <div v-if="col.name === 'id'" class="text-right">
+            <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+              class="q-mt-none" />
+            <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+              @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
+          </div>
+          <div v-else-if="col.name === 'enabled'" class="text-center">
+            <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+          </div>
+          <span v-else>{{ col.value }}</span>
+        </q-td>
+      </q-tr>
+      <q-tr v-show="props.expand" :props="props">
+        <q-td colspan="100%" class="q-pr-none">
+          <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
+        </q-td>
+      </q-tr>
+    </template>
+  </q-table>
 </template>
 
 <script setup lang="ts">
@@ -82,12 +79,16 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
-import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { Region } from 'src/models'
 
 const $q = useQuasar()
+
+const props_ = withDefaults(defineProps<{ title: string, superiorId: number | undefined }>(), {
+  title: '',
+  superiorId: undefined
+})
 
 const visible = ref<boolean>(false)
 
@@ -137,7 +138,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.REGION, { params }).then(res => {
+  await api.get(`${SERVER_URL.REGION}/${props_.superiorId}/subset`, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy

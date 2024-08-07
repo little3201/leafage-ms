@@ -6,28 +6,13 @@
           <q-img alt="logo" src="/logo-only.svg" style="width: 3em; height: 3em;" />
         </q-toolbar-title>
 
-        <q-btn title="language" icon="sym_r_language" round flat>
-          <q-menu>
-            <q-list dense separator>
-              <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
-                <q-item-section>English(US)</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
-                <q-item-section>中文（简体）</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
-                <q-item-section>中文（繁體）</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+        <LanguageList />
 
-        <q-toggle v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
-          title="theme_toogle" :color="$q.dark.isActive ? 'black' : ''" />
+        <ThemeToogle />
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="row justify-center items-center">
+      <q-page padding class="row justify-center items-center">
 
         <figure class="absolute bg-primary-gradient rounded-full"
           style="height: 35em; width: 35em;  top: -19em; right: -14em; background-color: var('$primary');" />
@@ -100,20 +85,21 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import { useUserStore } from 'stores/user-store'
 
+import LanguageList from 'components/LanguageList.vue'
+import ThemeToogle from 'components/ThemeToogle.vue'
+
 const { currentRoute, replace } = useRouter()
 const $q = useQuasar()
 const userStore = useUserStore()
 
-const { locale } = useI18n({ useScope: 'global' })
 const showPwd = ref<boolean>(true)
-const rememberMe = ref<boolean>(true)
+const rememberMe = ref<boolean>(false)
 const loading = ref<boolean>(false)
 const lottieRef = ref<HTMLDivElement | null>(null)
 

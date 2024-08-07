@@ -1,9 +1,9 @@
 <template>
   <q-layout view="hHh LpR lff">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/logo-only.svg" style="width: 2em; height: 2em;" />
+          <q-img alt="logo" src="/logo-only.svg" width="2em" height="2em" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
@@ -17,28 +17,13 @@
             :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
         </q-breadcrumbs> -->
 
-        <q-btn title="language" icon="sym_r_language" round flat dense>
-          <q-menu>
-            <q-list dense separator>
-              <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
-                <q-item-section>English(US)</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
-                <q-item-section>中文（简体）</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
-                <q-item-section>中文（繁體）</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
+        <LanguageList />
 
-        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
-          :color="$q.dark.isActive ? 'black' : ''" />
+        <ThemeToogle />
 
         <q-chip clickable color="primary" text-color="white">
-          <q-avatar size="28px">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="28px" height="29px">
+          <q-avatar size="2em">
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="2em" height="2em">
           </q-avatar>{{ userStore.getUsername }}
           <q-menu>
             <q-list dense separator>
@@ -54,37 +39,38 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated :width="230">
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered :width="220">
       <SideBarLeft />
     </q-drawer>
 
     <q-page-container class="overflow-hidden">
       <router-view />
-      <slot></slot>
     </q-page-container>
 
     <q-footer class="bg-transparent">
-      <p class="text-center text-black">Copyright &copy; 2018 - {{ new Date().getFullYear() }}
-        All rights reserved.</p>
+      <q-toolbar>
+        <q-toolbar-title class="text-center text-body2" :class="$q.dark.isActive ? 'text-white' : 'text-black'">
+          Copyright &copy; 2018 - {{ new Date().getFullYear() }} All rights reserved.
+        </q-toolbar-title>
+      </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 import SideBarLeft from './SideBarLeft.vue'
+import LanguageList from 'components/LanguageList.vue'
+import ThemeToogle from 'components/ThemeToogle.vue'
 
 const userStore = useUserStore()
 const { replace } = useRouter()
 const $q = useQuasar()
-
-const { locale } = useI18n({ useScope: 'global' })
 
 const leftDrawerOpen = ref<boolean>(false)
 

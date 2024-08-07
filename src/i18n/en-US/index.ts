@@ -2,16 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
-  application: 'Application',
-  reload: 'Reload Data',
-  pagation: 'The records in rows {page} - {size} ，of {total} total.',
-  deletion: 'Do you want to confirm the deletion?',
-  note: 'This information will be deleted and will not be recovered once deleted.',
-  viewMore: 'View More',
-  unreadTotal: 'unread total',
-
   search: 'Search...',
-  select: 'Plesse Select',
   profile: 'Profile',
   settings: 'Settings',
   help: 'Help',
@@ -19,10 +10,6 @@ export default {
   signinTo: 'Sign in to your account',
   signup: 'Sign Up',
   signout: 'Sign Out',
-
-  accesslogs: 'Access Logs',
-  account: 'Account Settings',
-  security: 'Account Security',
 
   no: 'NO.',
   name: 'Name',
@@ -47,22 +34,6 @@ export default {
 
   areaCode: 'Area Code',
   postalCode: 'Postal Code',
-  userCount: 'User Count',
-  roleCount: 'Role Count',
-  postsCount: 'Posts Count',
-
-  unread: 'Unread',
-  readed: 'Readed',
-
-  title: 'Title',
-  context: 'Context',
-  cover: 'Cover',
-  tags: 'Tags',
-  category: 'Category',
-  viewed: 'Viewed',
-  likes: 'Likes',
-  comments: 'Comments',
-  downloads: 'Downloads',
 
   enabled: 'Is Enabled',
   enable: 'Enable',
@@ -74,7 +45,7 @@ export default {
   confirm: 'Confirm',
   commit: 'Commit',
   cancle: 'Cancle',
-  add: 'Add New',
+  add: 'Add',
   edit: 'Edit',
   delete: 'Delete',
   unlock: 'Unlock',
@@ -82,19 +53,15 @@ export default {
   members: 'memberss',
 
   home: 'Home',
-  dashboard: 'Dashboard',
   system: 'System',
   groups: 'Groups',
   roles: 'Roles',
-  components: 'Components',
+  privileges: 'Privileges',
   users: 'Users',
   dictionaries: 'Dictionaries',
-  posts: 'Posts',
-  categories: 'Categroies',
   regions: 'Regions',
-  statitics: 'Statitics',
-  messages: 'Notifications',
-  status: 'Status',
+  logs: 'Logs',
+  accessLogs: 'Access Logs',
 
   welcome: 'Hi! Welcome Back.',
   subtitle: 'Please sign in to continue exploring.',

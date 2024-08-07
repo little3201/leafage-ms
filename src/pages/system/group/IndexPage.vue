@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
 
-    <q-dialog v-model="visiable" persistent>
+    <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
@@ -13,16 +13,16 @@
               :rules="[val => val && val.length > 0 || 'Please type something']" />
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
+          <q-card-actions align="right">
+            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="Groups" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" :title="$t('groups')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
@@ -31,9 +31,9 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
-          @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
+          :label="$t('add')" @click="addRow" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
       <template v-slot:body-cell-members="props">
@@ -45,7 +45,7 @@
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" color="green" />
+          <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -71,7 +71,7 @@ import type { Group } from 'src/models'
 
 const $q = useQuasar()
 
-const visiable = ref<boolean>(false)
+const visible = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
@@ -133,12 +133,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 }
 
 function addRow() {
-  visiable.value = true
+  visible.value = true
 }
 
 function editRow(id: number) {
-  visiable.value = true
-  console.log('id: ', id)
+  visible.value = true
+  // You can populate the form with existing user data based on the id
+  if (rows.value) {
+    const row = rows.value.find(u => u.id === id)
+    if (row) {
+      form.value = { ...row }
+    }
+  }
 }
 
 function removeRow(id: number) {
@@ -149,7 +155,10 @@ function removeRow(id: number) {
   }, 500)
 }
 
-function onSubmit() { }
+function onSubmit() {
+  // Close the dialog after submitting
+  visible.value = false
+}
 
 function onReset() { }
 

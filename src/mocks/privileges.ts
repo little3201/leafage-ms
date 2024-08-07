@@ -2,23 +2,39 @@ import { http, HttpResponse } from 'msw'
 import type { Privilege } from 'src/models'
 
 const datas: Privilege[] = []
+const subDatas: Privilege[] = []
 
 for (let i = 0; i < 20; i++) {
   const data: Privilege = {
     id: i,
     name: 'privilege_' + i,
-    superiorId: i,
-    meta: {
-      icon: 'user'
-    },
+    path: '/privilege_' + i,
+    icon: 'sym_r_home',
     enabled: i % 3 > 0,
-    description: 'description',
+    description: 'This is privilege description about xxx',
     lastModifiedDate: new Date()
+  }
+  for (let j = 0; j < i; j++) {
+    const subData: Privilege = {
+      id: j,
+      name: 'privilege_' + i + '_' + j,
+      superiorId: i,
+      path: 'privilege_' + i + '_' + j,
+      icon: 'sym_r_group',
+      enabled: j % 2 > 0,
+      description: 'description',
+      lastModifiedDate: new Date()
+    }
+    subDatas.push(subData)
   }
   datas.push(data)
 }
 
-export const rolesHandlers = [
+export const privilegessHandlers = [
+  http.get('/api/privileges/:id/subset', ({ params }) => {
+    const superiorId = params.id
+    return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(superiorId)))
+  }),
   http.get('/api/privileges', ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')

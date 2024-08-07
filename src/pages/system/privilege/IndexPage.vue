@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
 
-    <q-dialog v-model="visiable" persistent>
+    <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
@@ -15,16 +15,16 @@
             <q-input v-model="form.description" label="Region deacription" type="textarea" />
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
+          <q-card-actions align="right">
+            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="Regions" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" :title="$t('privileges')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
@@ -33,23 +33,46 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
-          @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
+          @click="refresh" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
-      <template v-slot:body-cell-enabled="props">
-        <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" color="green" />
-        </q-td>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ col.label }}
+          </q-th>
+        </q-tr>
       </template>
-      <template v-slot:body-cell-id="props">
-        <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
-          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
-            @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
-        </q-td>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td auto-width>
+            <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
+              :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
+          </q-td>
+          <q-td v-for="col in props.cols" :key="col.name">
+            <div v-if="col.name === 'id'" class="text-right">
+              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+                class="q-mt-none" />
+            </div>
+            <div v-else-if="col.name === 'enabled'" class="text-center">
+              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+            </div>
+            <div v-else-if="col.name === 'name'">
+              <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ col.value }}
+            </div>
+            <span v-else>{{ col.value }}</span>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <q-td colspan="100%" class="q-pr-none">
+            <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
+          </q-td>
+        </q-tr>
       </template>
     </q-table>
   </q-page>
@@ -60,13 +83,14 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
+import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
 import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
 
-const visiable = ref<boolean>(false)
+const visible = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
@@ -75,9 +99,8 @@ const loading = ref<boolean>(false)
 
 const form = ref<Privilege>({
   name: '',
-  meta: {
-    icon: ''
-  },
+  path: '',
+  icon: '',
   description: ''
 })
 
@@ -93,8 +116,7 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
-  { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
+  { name: 'path', label: 'Path', align: 'left', field: 'path', sortable: true },
   { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'Description', align: 'left', field: 'description' },
   { name: 'id', label: 'Actions', field: 'id' }
@@ -133,24 +155,25 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function addRow() {
-  visiable.value = true
+function refresh() {
+  tableRef.value.requestServerInteraction()
 }
 
 function editRow(id: number) {
-  visiable.value = true
-  console.log('id: ', id)
+  visible.value = true
+  // You can populate the form with existing user data based on the id
+  if (rows.value) {
+    const row = rows.value.find(u => u.id === id)
+    if (row) {
+      form.value = { ...row }
+    }
+  }
 }
 
-function removeRow(id: number) {
-  console.log('id: ', id)
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
+function onSubmit() {
+  // Close the dialog after submitting
+  visible.value = false
 }
-
-function onSubmit() { }
 
 function onReset() { }
 

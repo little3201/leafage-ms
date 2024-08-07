@@ -30,10 +30,8 @@ export interface Privilege extends AudtiMetadata {
   name: string
   superiorId?: number
   path?: string
-  meta: {
-    icon?: string
-    actions?: string[]
-  }
+  icon?: string
+  actions?: string[]
   enabled?: boolean
   description?: string
 }
@@ -52,4 +50,12 @@ export interface Region extends AudtiMetadata {
   postalCode: number
   enabled?: boolean
   description?: string
+}
+
+export interface TreeNode {
+  name: string
+  superiorId?: number
+  path?: string
+  icon?: string
+  children?: TreeNode[]
 }

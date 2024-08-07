@@ -8,7 +8,7 @@ for (let i = 0; i < 20; i++) {
     id: i,
     name: 'role_' + i,
     enabled: i % 3 > 0,
-    description: 'description',
+    description: 'This is role description about xxx',
     lastModifiedDate: new Date()
   }
   datas.push(data)

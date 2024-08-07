@@ -1,51 +1,69 @@
 <template>
   <q-list>
-    <q-list>
-      <EssentialLink v-bind="{
-        title: 'home',
-        icon: 'sym_r_home',
-        link: '/'
-      }" />
-      <q-expansion-item expand-separator icon="sym_r_settings" :label="$t('system')" default-opened>
-        <q-card>
-          <q-card-section>
-            <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
-          </q-card-section>
-        </q-card>
-      </q-expansion-item>
-
-    </q-list>
+    <!-- home -->
+    <EssentialLink :link="{
+      name: 'home',
+      icon: 'sym_r_home',
+      path: '/'
+    }" />
+    <!-- privileges -->
+    <EssentialList :essentialLinks="essentialLinks" />
   </q-list>
 </template>
 
 <script setup lang="ts">
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue'
+import EssentialLink from 'components/EssentialLink.vue'
+import EssentialList from 'components/EssentialList.vue'
+import type { TreeNode } from 'src/models'
 
-const essentialLinks: EssentialLinkProps[] = [
+const essentialLinks: TreeNode[] = [
   {
-    title: 'users',
-    icon: 'sym_r_manage_accounts',
-    link: '/system/users'
+    name: 'system',
+    path: '/system',
+    children: [
+      {
+        name: 'users',
+        icon: 'sym_r_manage_accounts',
+        path: 'users',
+      },
+      {
+        name: 'groups',
+        icon: 'sym_r_group',
+        path: 'groups'
+      },
+      {
+        name: 'roles',
+        icon: 'sym_r_admin_panel_settings',
+        path: 'roles'
+      },
+      {
+        name: 'privileges',
+        icon: 'sym_r_admin_panel_settings',
+        path: 'privileges'
+      },
+      {
+        name: 'dictionaries',
+        icon: 'sym_r_menu_book',
+        path: 'dictionaries'
+      },
+      {
+        name: 'regions',
+        icon: 'sym_r_public',
+        path: 'regions'
+      }
+    ]
   },
   {
-    title: 'groups',
-    icon: 'sym_r_group',
-    link: '/system/groups'
-  },
-  {
-    title: 'roles',
-    icon: 'sym_r_admin_panel_settings',
-    link: '/system/roles'
-  },
-  {
-    title: 'dictionaries',
-    icon: 'sym_r_menu_book',
-    link: '/system/dictionaries'
-  },
-  {
-    title: 'regions',
+    name: 'logs',
     icon: 'sym_r_public',
-    link: '/system/regions'
+    path: 'logs',
+    children: [
+      {
+        name: 'accessLogs',
+        icon: 'sym_r_public',
+        path: 'access-logs'
+      }
+    ]
   }
 ]
 </script>

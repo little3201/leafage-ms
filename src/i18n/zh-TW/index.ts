@@ -2,16 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
-  application: '系統',
-  reload: '重載數據',
-  pagation: '第 {page} - {size} 行記錄，共 {total} 條記錄',
-  deletion: '是否確認刪除？',
-  note: '將要刪除本條信息，一旦刪除將不可恢復。',
-  viewMore: '查看更多',
-  unreadTotal: '未讀消息',
-
   search: '搜索...',
-  select: '請選擇',
   profile: '個人中心',
   settings: '設置',
   help: '幫助',
@@ -19,10 +10,6 @@ export default {
   signinTo: '登錄您的帳戶',
   signup: '註 冊',
   signout: '退出登錄',
-
-  accesslogs: '操作日誌',
-  account: '賬號設置',
-  security: '賬號安全',
 
   no: '序號',
   name: '名稱',
@@ -47,22 +34,6 @@ export default {
 
   areaCode: '區號',
   postalCode: '郵編',
-  userCount: '用戶數',
-  roleCount: '角色數',
-  postsCount: '貼子數',
-
-  unread: '未讀',
-  readed: '已讀',
-
-  title: '標題',
-  cover: '封面',
-  tags: '標籤',
-  context: '內容',
-  category: '分類',
-  viewed: '瀏覽量',
-  likes: '點贊數',
-  comments: '評論數',
-  downloads: '下載量',
 
   enabled: '是否啟用',
   enable: '啟用',
@@ -82,19 +53,15 @@ export default {
   members: '成員',
 
   home: '首頁',
-  dashboard: '控制台',
   system: '系統管理',
   groups: '分組',
   roles: '角色',
-  components: '權限',
+  privileges: '權限',
   users: '用戶',
   dictionaries: '字典',
-  posts: '帖子管理',
-  categories: '類目管理',
   regions: '行政區劃',
-  statitics: '數據統計',
-  messages: '消息通知',
-  status: '狀態',
+  logs: '日誌管理',
+  accessLogs: '訪問紀錄',
 
   welcome: '嗨！歡迎回來',
   subtitle: '請填寫您的帳號和密碼，讓我們繼續探索',

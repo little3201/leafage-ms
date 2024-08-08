@@ -21,7 +21,7 @@
 
         <ThemeToogle />
 
-        <q-chip clickable color="primary" text-color="white">
+        <q-chip clickable color="primary" size="md" text-color="white">
           <q-avatar size="2em">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="2em" height="2em">
           </q-avatar>{{ userStore.getUsername }}
@@ -50,7 +50,7 @@
     <q-footer class="bg-transparent">
       <q-toolbar>
         <q-toolbar-title class="text-center text-body2" :class="$q.dark.isActive ? 'text-white' : 'text-black'">
-          Copyright &copy; 2018 - {{ new Date().getFullYear() }} All rights reserved.
+          &copy; {{ new Date().getFullYear() }} All Rights Reserved.
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

@@ -41,12 +41,28 @@
         <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ $t(col.label) }}
+          </q-th>
+        </q-tr>
+      </template>
+
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
           <q-avatar size="md">
             <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
           </q-avatar>
           <span class="q-ml-sm">{{ props.row.username }}</span>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-fullname="props">
+        <q-td :props="props">
+          <span class="q-ml-sm">{{ props.row.firstname }}</span>
+          <span class="q-ml-sm">{{ props.row.lastname }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
@@ -123,14 +139,13 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'username', label: 'Username', align: 'left', field: 'username', sortable: true },
-  { name: 'firstname', label: 'Firstname', align: 'left', field: 'firstname', sortable: true },
-  { name: 'lastname', label: 'Lastname', align: 'left', field: 'lastname', sortable: true },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'accountNonLocked', label: 'Is Locked', align: 'center', field: 'accountNonLocked' },
-  { name: 'accountExpiresAt', label: 'Expires At', align: 'center', field: 'accountExpiresAt', sortable: true },
-  { name: 'credentialsExpiresAt', label: 'Credentials Expires At', align: 'center', field: 'credentialsExpiresAt', sortable: true },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'username', label: 'username', align: 'left', field: 'username', sortable: true },
+  { name: 'fullname', label: 'fullname', align: 'center', field: 'fullname', sortable: true },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'accountNonLocked', label: 'accountLocked', align: 'center', field: 'accountNonLocked' },
+  { name: 'accountExpiresAt', label: 'accountExpiresAt', align: 'center', field: 'accountExpiresAt', sortable: true },
+  { name: 'credentialsExpiresAt', label: 'credentialsExpiresAt', align: 'center', field: 'credentialsExpiresAt', sortable: true },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {

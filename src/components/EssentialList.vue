@@ -9,7 +9,7 @@
       </q-card>
     </q-expansion-item>
     <!-- single item -->
-    <EssentialLink v-else :link="link" :parent-path="parentPath + '/'" />
+    <EssentialLink v-else :link="link" :parent-path="parentPath" />
   </template>
 </template>
 

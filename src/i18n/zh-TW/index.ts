@@ -22,6 +22,7 @@ export default {
   password: '密碼',
   firstname: '姓',
   lastname: '名字',
+  fullname: '姓名',
   accountLocked: '賬號鎖狀態',
   accountExpiresAt: '賬號失效時間',
   credentialsExpiresAt: '密碼失效時間',

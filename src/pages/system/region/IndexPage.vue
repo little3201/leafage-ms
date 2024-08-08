@@ -43,7 +43,7 @@
         <q-tr :props="props">
           <q-th auto-width />
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
+            {{ $t(col.label) }}
           </q-th>
         </q-tr>
       </template>
@@ -114,12 +114,12 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
-  { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'postalCode', label: 'postalCode', align: 'left', field: 'postalCode', sortable: true },
+  { name: 'areaCode', label: 'areaCode', align: 'left', field: 'areaCode', sortable: true },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'description', label: 'description', align: 'left', field: 'description' },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {

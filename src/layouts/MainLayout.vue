@@ -17,7 +17,7 @@
             :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
         </q-breadcrumbs> -->
 
-        <LanguageList />
+        <LanguageSelector />
 
         <ThemeToogle />
 
@@ -65,7 +65,7 @@ import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 import SideBarLeft from './SideBarLeft.vue'
-import LanguageList from 'components/LanguageList.vue'
+import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
 
 const userStore = useUserStore()

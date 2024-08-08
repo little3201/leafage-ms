@@ -7,7 +7,7 @@
           <span class="q-ml-sm text-weight-medium">Management System</span>
         </q-toolbar-title>
 
-        <LanguageList />
+        <LanguageSelector />
 
         <ThemeToogle />
       </q-toolbar>
@@ -90,7 +90,7 @@ import { useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import { useUserStore } from 'stores/user-store'
 
-import LanguageList from 'components/LanguageList.vue'
+import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
 
 const { currentRoute, replace } = useRouter()

@@ -22,6 +22,7 @@ export default {
   password: 'Password',
   firstname: 'First Name',
   lastname: 'Last Name',
+  fullname: 'Full Name',
   accountLocked: 'Account Locked',
   accountExpiresAt: 'User Expires At',
   credentialsExpiresAt: 'Credentials Expires At',

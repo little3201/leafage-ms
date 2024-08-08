@@ -30,6 +30,15 @@
       <q-btn title="add" rounded color="primary" :disable="loading" icon="sym_r_add" :label="$t('add')"
         @click="addRow" />
     </template>
+
+    <template v-slot:header="props">
+      <q-tr :props="props">
+        <q-th v-for="col in props.cols" :key="col.name" :props="props">
+          {{ $t(col.label) }}
+        </q-th>
+      </q-tr>
+    </template>
+
     <template v-slot:body-cell-enabled="props">
       <q-td :props="props">
         <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
@@ -75,10 +84,10 @@ const form = ref<Dictionary>({
 })
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'description', label: 'description', align: 'left', field: 'description' },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {

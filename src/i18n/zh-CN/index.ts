@@ -22,6 +22,7 @@ export default {
   password: '密码',
   firstname: '姓',
   lastname: '名字',
+  fullname: '姓名',
   accountLocked: '账号锁状态',
   accountExpiresAt: '账号失效时间',
   credentialsExpiresAt: '密码失效时间',
@@ -36,8 +37,6 @@ export default {
   postalCode: '邮编',
 
   enabled: '是否启用',
-  enable: '启用',
-  disable: '禁用',
 
   actions: '操作',
   import: '导入',

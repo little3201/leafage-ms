@@ -38,7 +38,7 @@
       <q-tr :props="props">
         <q-th auto-width />
         <q-th v-for="col in props.cols" :key="col.name" :props="props">
-          {{ col.label }}
+          {{ $t(col.label) }}
         </q-th>
       </q-tr>
     </template>
@@ -111,11 +111,11 @@ const pagination = ref({
 })
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'path', label: 'Path', align: 'left', field: 'path', sortable: true },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'description', label: 'description', align: 'left', field: 'description' },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {

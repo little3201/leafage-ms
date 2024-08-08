@@ -36,6 +36,16 @@
         <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
           @click="exportTable" />
       </template>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ $t(col.label) }}
+          </q-th>
+        </q-tr>
+      </template>
+
       <template v-slot:body-cell-members="props">
         <q-td :props="props">
           <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
@@ -93,10 +103,10 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'groupName', sortable: true },
-  { name: 'members', label: 'Members', align: 'center', field: 'members' },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'name', label: 'name', align: 'left', field: 'groupName', sortable: true },
+  { name: 'members', label: 'members', align: 'center', field: 'members' },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {

@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable v-ripple exact :to="parentPath + link.path">
+  <q-item clickable v-ripple exact :to="pathResolve(link.path)">
     <q-item-section v-if="link.icon" avatar side>
       <q-icon :name="link.icon" />
     </q-item-section>
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type { TreeNode } from 'src/models'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   link: TreeNode
   parentPath?: string
 }>(), {
@@ -22,4 +22,9 @@ withDefaults(defineProps<{
   },
   parentPath: ''
 })
+
+function pathResolve(path: string): string {
+  const childPath = path.startsWith('/') ? path : `/${path}`
+  return `${props.parentPath}${childPath}`.replace(/\/\//g, '/').trim()
+}
 </script>

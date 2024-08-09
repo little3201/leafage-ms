@@ -85,7 +85,7 @@ import type { Region } from 'src/models'
 
 const $q = useQuasar()
 
-const props_ = withDefaults(defineProps<{ title: string, superiorId: number | undefined }>(), {
+const props_ = withDefaults(defineProps<{ title: string, superiorId?: number | undefined }>(), {
   title: '',
   superiorId: undefined
 })

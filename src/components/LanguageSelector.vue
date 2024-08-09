@@ -19,13 +19,16 @@ import { useLocaleStore } from 'stores/locale-store'
 const { locale } = useI18n({ useScope: 'global' })
 const localeStore = useLocaleStore()
 
-function changeLocale(lang: string) {
+function changeLocale(lang: string = 'en-US') {
   locale.value = lang
   localeStore.setLang(lang)
   changeHtmlLang(lang)
 }
 
 function changeHtmlLang(lang: string) {
-  document.querySelector('html').setAttribute('lang', lang)
+  const htmlElement = document.querySelector('html')
+  if (htmlElement) {
+    htmlElement.setAttribute('lang', lang)
+  }
 }
 </script>

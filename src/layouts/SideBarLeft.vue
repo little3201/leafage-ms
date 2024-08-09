@@ -1,7 +1,7 @@
 <template>
   <q-list>
     <!-- home -->
-    <EssentialLink :link="{
+    <EssentialLink v-bind="{
       name: 'home',
       icon: 'sym_r_home',
       path: '/'
@@ -20,11 +20,12 @@ const essentialLinks: TreeNode[] = [
   {
     name: 'system',
     path: '/system',
+    icon: 'sym_r_settings',
     children: [
       {
         name: 'users',
         icon: 'sym_r_manage_accounts',
-        path: 'users',
+        path: 'users'
       },
       {
         name: 'groups',
@@ -38,12 +39,12 @@ const essentialLinks: TreeNode[] = [
       },
       {
         name: 'privileges',
-        icon: 'sym_r_admin_panel_settings',
+        icon: 'sym_r_lock',
         path: 'privileges'
       },
       {
         name: 'dictionaries',
-        icon: 'sym_r_menu_book',
+        icon: 'sym_r_book_2',
         path: 'dictionaries'
       },
       {
@@ -55,12 +56,12 @@ const essentialLinks: TreeNode[] = [
   },
   {
     name: 'logs',
-    icon: 'sym_r_public',
+    icon: 'sym_r_note_stack',
     path: 'logs',
     children: [
       {
         name: 'accessLogs',
-        icon: 'sym_r_public',
+        icon: 'sym_r_lab_profile',
         path: 'access-logs'
       }
     ]

@@ -26,7 +26,6 @@
       </q-card>
     </q-dialog>
 
-
     <q-table flat ref="tableRef" :title="$t('users')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width q-pl-md">
@@ -98,7 +97,6 @@
         </q-td>
       </template>
     </q-table>
-
 
   </q-page>
 </template>

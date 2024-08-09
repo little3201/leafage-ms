@@ -1,30 +1,28 @@
 <template>
-  <q-item clickable v-ripple exact :to="pathResolve(link.path)">
-    <q-item-section v-if="link.icon" avatar side>
-      <q-icon :name="link.icon" />
+  <q-item clickable v-ripple exact :to="pathResolve(parentPath, path)">
+    <q-item-section v-if="icon" avatar>
+      <q-icon :name="icon" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ $t(link.name) }}</q-item-label>
+      <q-item-label>{{ $t(name) }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-import type { TreeNode } from 'src/models'
+import { pathResolve } from 'src/utils'
 
-const props = withDefaults(defineProps<{
-  link: TreeNode
+withDefaults(defineProps<{
+  name: string,
+  path: string,
+  icon: string,
   parentPath?: string
 }>(), {
-  link: {
-    name: '', path: '#', icon: ''
-  },
+  name: '',
+  path: '#',
+  icon: '',
   parentPath: ''
 })
 
-function pathResolve(path: string): string {
-  const childPath = path.startsWith('/') ? path : `/${path}`
-  return `${props.parentPath}${childPath}`.replace(/\/\//g, '/').trim()
-}
 </script>

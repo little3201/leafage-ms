@@ -66,7 +66,7 @@ import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 
-const props = withDefaults(defineProps<{ title: string, superiorId: number | undefined }>(), {
+const props = withDefaults(defineProps<{ title: string, superiorId?: number | undefined }>(), {
   title: '',
   superiorId: undefined
 })

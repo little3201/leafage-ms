@@ -14,9 +14,9 @@
 import { pathResolve } from 'src/utils'
 
 withDefaults(defineProps<{
-  name: string,
-  path: string,
-  icon: string,
+  name: string
+  path: string
+  icon: string
   parentPath?: string
 }>(), {
   name: '',

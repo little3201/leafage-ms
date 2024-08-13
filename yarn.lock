@@ -4031,6 +4031,7 @@ __metadata:
     lottie-web: "npm:^5.12.2"
     msw: "npm:^2.3.5"
     pinia: "npm:^2.1.7"
+    pinia-plugin-persistedstate: "npm:^3.2.1"
     postcss: "npm:^8.4.38"
     quasar: "npm:^2.16.4"
     typescript: "npm:^5.4.4"
@@ -4835,6 +4836,15 @@ __metadata:
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 10c0/26c02b8d06f03206fc2ab8d16f19960f2ff9e81a658f831ecb656d8f17d9edc799e8364b1f4a7873e89d9702dff96204be0fa26fe4181f6843f040f819dac4be
+  languageName: node
+  linkType: hard
+
+"pinia-plugin-persistedstate@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "pinia-plugin-persistedstate@npm:3.2.1"
+  peerDependencies:
+    pinia: ^2.0.0
+  checksum: 10c0/c01ff96176f71298a4ae42f7814f48c7b4860fe1cf90888e2500b856077e6b2f9272ecde1979324b4489ad5e4e80175d9e125425fa21439ae66871ab1837a5dd
   languageName: node
   linkType: hard
 

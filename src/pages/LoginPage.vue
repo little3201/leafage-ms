@@ -6,9 +6,9 @@
           <q-img alt="logo" src="/logo-only.svg" width="3rem" height="3rem" />
           <span class="q-ml-sm text-weight-medium">Management System</span>
         </q-toolbar-title>
-
+        <!-- language -->
         <LanguageSelector />
-
+        <!-- theme -->
         <ThemeToogle />
       </q-toolbar>
     </q-header>
@@ -55,12 +55,13 @@
                 <q-form @submit="onSubmit" class="q-mt-md full-width q-px-xl">
                   <q-input :disable="loading" dense no-error-icon v-model.trim="form.username"
                     :placeholder="$t('username')"
-                    :rules="[(val) => (val && val.length > 5 && val.length < 12) || $t('username')]" />
+                    :rules="[(val) => (val && val.length > 5 && val.length < 12) || $t('username')]">>
+                  </q-input>
                   <q-input :disable="loading" dense no-error-icon :type="showPwd ? 'password' : 'text'"
                     v-model.trim="form.password" :placeholder="$t('password')"
                     :rules="[(val) => (val && val.length > 8 && val.length < 32) || $t('password')]">
                     <template v-slot:append>
-                      <q-icon size="xs" :name="showPwd ? 'sym_r_visibility_off' : 'sym_r_visibility'"
+                      <q-icon size="xs" :name="showPwd ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
                         class="cursor-pointer" @click="showPwd = !showPwd" />
                     </template>
                   </q-input>
@@ -87,7 +88,6 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import lottie from 'lottie-web'
 import { useQuasar } from 'quasar'
-import { api } from 'boot/axios'
 import { useUserStore } from 'stores/user-store'
 
 import LanguageSelector from 'components/LanguageSelector.vue'
@@ -117,13 +117,11 @@ function changeRememberMe(value: boolean) {
 
 function onSubmit() {
   loading.value = true
-
-  api.post('/login', new URLSearchParams(form.value)).then(res => {
-    userStore.updateUser(res.data.username)
-    // 获取之前路由
-    const redirectRoute = currentRoute.value.query.redirect as string | undefined
-    replace(redirectRoute || '/')
-  }).catch(error => $q.notify({ type: 'negative', message: error.message }))
+  userStore.login(form.value.username, form.value.password)
+    .then(() => {
+      const redirectRoute = currentRoute.value.query.redirect as string
+      replace(redirectRoute || '/')
+    }).catch(error => $q.notify({ type: 'negative', message: error.message }))
     .finally(() => {
       // 在请求结束后执行
       loading.value = false

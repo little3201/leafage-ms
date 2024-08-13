@@ -9,7 +9,7 @@ const localeStore = useLocaleStore()
 export default boot(({ app }) => {
   const i18n = createI18n({
     legacy: false,
-    locale: localeStore.getLang || 'zh-CN',
+    locale: localeStore.lang || 'zh-CN',
     messages
   })
 

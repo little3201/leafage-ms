@@ -30,8 +30,11 @@ export interface Privilege extends AudtiMetadata {
   name: string
   superiorId?: number
   path?: string
+  redirect?: string
+  component?: string
   icon?: string
   actions?: string[]
+  order: number
   enabled?: boolean
   description?: string
 }
@@ -53,9 +56,18 @@ export interface Region extends AudtiMetadata {
 }
 
 export interface TreeNode {
+  id: number
   name: string
   superiorId?: number
-  path?: string
-  icon?: string
   children?: TreeNode[]
+}
+
+export interface PrivilegeTreeNode extends TreeNode {
+  path?: string
+  redirect?: string
+  component: string
+  icon?: string
+  actions?: string[]
+  order: number
+  children?: PrivilegeTreeNode[]
 }

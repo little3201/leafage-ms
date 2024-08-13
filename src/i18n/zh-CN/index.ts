@@ -62,7 +62,6 @@ export default {
   logs: '日志管理',
   accessLogs: '访问日志',
 
-
   welcome: '嗨！欢迎回来',
   subtitle: '请填写您的账号和密码，让我们继续探索',
   rememberMe: '记住我 ？'

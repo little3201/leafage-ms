@@ -25,9 +25,9 @@
   <q-table flat ref="subtableRef" :title="title" :rows="rows" :columns="columns" row-key="id" binary-state-sort
     @request="onRequest" hide-pagination hide-selected-banner class="full-width bg-transparent">
     <template v-slot:top-right>
-      <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
+      <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="mdi-refresh"
         @click="refresh" />
-      <q-btn title="add" rounded color="primary" :disable="loading" icon="sym_r_add" :label="$t('add')"
+      <q-btn title="add" rounded color="primary" :disable="loading" icon="mdi-plus" :label="$t('add')"
         @click="addRow" />
     </template>
 
@@ -46,9 +46,9 @@
     </template>
     <template v-slot:body-cell-id="props">
       <q-td :props="props">
-        <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-          class="q-mt-none" />
-        <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+        <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+          @click="editRow(props.row.id)" class="q-mt-none" />
+        <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
           @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
       </q-td>
     </template>
@@ -66,7 +66,10 @@ import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 
-const props = withDefaults(defineProps<{ title: string, superiorId?: number | undefined }>(), {
+const props = withDefaults(defineProps<{
+  title: string
+  superiorId?: number | undefined
+}>(), {
   title: '',
   superiorId: undefined
 })

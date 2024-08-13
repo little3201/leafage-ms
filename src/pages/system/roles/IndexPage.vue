@@ -1,43 +1,41 @@
 <template>
   <q-page padding>
+
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset">
+        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">User</div>
+            <div class="text-h6">Role</div>
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.username" label="Your username" lazy-rules
+            <q-input v-model="form.name" label="Role name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="form.firstname" label="Your firstname *" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.lastname" label="Your lastname *" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.description" label="Role deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
             <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
             <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
+
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" :title="$t('users')" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" :title="$t('roles')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width q-pl-md">
+      binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="sym_r_search" />
+            <q-icon name="mdi-search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('add')" @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
+          @click="addRow" />
+        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -50,18 +48,11 @@
         </q-tr>
       </template>
 
-      <template v-slot:body-cell-username="props">
+      <template v-slot:body-cell-members="props">
         <q-td :props="props">
-          <q-avatar size="md">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
+          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
+            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
           </q-avatar>
-          <span class="q-ml-sm">{{ props.row.username }}</span>
-        </q-td>
-      </template>
-      <template v-slot:body-cell-fullname="props">
-        <q-td :props="props">
-          <span class="q-ml-sm">{{ props.row.firstname }}</span>
-          <span class="q-ml-sm">{{ props.row.lastname }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
@@ -69,46 +60,26 @@
           <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
         </q-td>
       </template>
-      <template v-slot:body-cell-accountExpiresAt="props">
-        <q-td :props="props">
-          <q-badge :color="calculate(props.row.accountExpiresAt)" rounded class="q-mr-sm" />
-          {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
-        </q-td>
-      </template>
-      <template v-slot:body-cell-credentialsExpiresAt="props">
-        <q-td :props="props">
-          <q-badge :color="calculate(props.row.credentialsExpiresAt)" rounded class="q-mr-sm" />
-          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH: mm:ss') }}
-        </q-td>
-      </template>
-      <template v-slot:body-cell-accountNonLocked="props">
-        <q-td :props="props">
-          <q-btn title="accountNonLocked" padding="xs" flat round :disable="loading"
-            :color="props.row.accountNonLocked ? 'positive' : 'warning'"
-            :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'" @click="lockRow(props.row)" />
-        </q-td>
-      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
-          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+            @click="editRow(props.row.id)" class="q-mt-none" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
     </q-table>
-
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar, date } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { User } from 'src/models'
+import type { Role } from 'src/models'
 
 const $q = useQuasar()
 
@@ -119,10 +90,8 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<User>({
-  username: '',
-  firstname: '',
-  lastname: '',
+const form = ref<Role>({
+  name: '',
   description: ''
 })
 
@@ -137,21 +106,20 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'username', label: 'username', align: 'left', field: 'username', sortable: true },
-  { name: 'fullname', label: 'fullname', align: 'center', field: 'fullname', sortable: true },
+  { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'members', label: 'members', align: 'center', field: 'members' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
-  { name: 'accountNonLocked', label: 'accountLocked', align: 'center', field: 'accountNonLocked' },
-  { name: 'accountExpiresAt', label: 'accountExpiresAt', align: 'center', field: 'accountExpiresAt', sortable: true },
-  { name: 'credentialsExpiresAt', label: 'credentialsExpiresAt', align: 'center', field: 'credentialsExpiresAt', sortable: true },
+  { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {
-  if (tableRef.value) {
-    tableRef.value.requestServerInteraction()
-  }
+  tableRef.value.requestServerInteraction()
 })
 
+/**
+ * 查询列表
+ */
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
 
@@ -160,7 +128,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.USER, { params }).then(res => {
+  await api.get(SERVER_URL.ROLE, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -194,34 +162,19 @@ function editRow(id: number) {
 }
 
 function removeRow(id: number) {
-  console.log('Removing user with ID:', id)
+  console.log('id: ', id)
   loading.value = true
-  // You can send a request to delete the user with the specified id
   setTimeout(() => {
     loading.value = false
-    // Refresh the table data after deleting the user
-    tableRef.value?.requestServerInteraction()
   }, 500)
 }
 
-function lockRow(row: User) {
-  // You can populate the form with existing user data based on the id
-  if (row) {
-    row.accountNonLocked = !row.accountNonLocked
-  }
-}
-
-async function onSubmit() {
+function onSubmit() {
   // Close the dialog after submitting
   visible.value = false
 }
 
-function onReset() {
-  // Reset the form data
-  form.value.username = ''
-  form.value.firstname = ''
-  form.value.lastname = ''
-}
+function onReset() { }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val
@@ -260,24 +213,6 @@ function exportTable() {
       color: 'negative',
       icon: 'warning'
     })
-  }
-}
-
-function calculate(target: string) {
-  const now = new Date()
-  const targetDate = new Date(target)
-  // 失效时间是否小于7天
-  const diff = date.getDateDiff(targetDate, now, 'days')
-  if (diff > 7) {
-    return 'positive'
-  } else {
-    // 是否失效
-    const diffSec = date.getDateDiff(targetDate, now, 'seconds')
-    if (diffSec > 0) {
-      return 'warning'
-    } else {
-      return 'negative'
-    }
   }
 }
 </script>

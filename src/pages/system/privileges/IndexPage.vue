@@ -5,18 +5,18 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">Dictionary</div>
+            <div class="text-h6">Group</div>
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Dictionary name" lazy-rules
+            <q-input v-model="form.name" label="Region name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="form.description" label="Dictionary deacription" type="textarea" />
+            <q-input v-model="form.description" label="Region deacription" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn title="cancel" label="Cancel" unelevated type="reset" v-close-popup />
+            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
             <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
@@ -24,17 +24,18 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" :title="$t('dictionaries')" :rows="rows" :columns="columns" row-key="id"
-      :loading="loading" v-model:pagination="pagination" binary-state-sort @request="onRequest" class="full-width">
+    <q-table flat ref="tableRef" :title="$t('privileges')" selection="multiple" v-model:selected="selected" :rows="rows"
+      :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
+      binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="sym_r_search" />
+            <q-icon name="mdi-search" />
           </template>
         </q-input>
-        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
+        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="mdi-refresh"
           @click="refresh" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" :label="$t('export')"
+        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -51,15 +52,18 @@
         <q-tr :props="props">
           <q-td auto-width>
             <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-              :icon="props.expand ? 'sym_r_expand_less' : 'sym_r_expand_more'" />
+              :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
-                class="q-mt-none" />
+              <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+                @click="editRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+            </div>
+            <div v-else-if="col.name === 'name'">
+              <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ col.value }}
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
@@ -76,13 +80,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
+import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Dictionary } from 'src/models'
+import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
 
@@ -91,10 +95,13 @@ const visible = ref<boolean>(false)
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
-const form = ref<Dictionary>({
+const form = ref<Privilege>({
   name: '',
+  path: '',
+  icon: '',
+  order: 1,
   description: ''
 })
 
@@ -106,14 +113,17 @@ const pagination = ref({
   rowsNumber: 0
 })
 
+const selected = ref([])
+
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
-onMounted(async () => {
+onMounted(() => {
   tableRef.value.requestServerInteraction()
 })
 
@@ -128,7 +138,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
+  await api.get(SERVER_URL.PRIVILEGE, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -141,7 +151,9 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
       message: error.message,
       type: 'negative'
     })
-  }).finally(() => { loading.value = false })
+  }).finally(() => {
+    loading.value = false
+  })
 }
 
 function refresh() {

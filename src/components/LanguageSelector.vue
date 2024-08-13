@@ -1,5 +1,5 @@
 <template>
-  <q-btn title="language" icon="sym_r_language" round flat dense>
+  <q-btn title="language" icon="mdi-translate" round flat dense>
     <q-menu>
       <q-list dense separator>
         <q-item clickable v-close-popup v-for="option in localeOptions" :key="option.value"
@@ -21,7 +21,7 @@ const localeStore = useLocaleStore()
 
 function changeLocale(lang: string = 'en-US') {
   locale.value = lang
-  localeStore.setLang(lang)
+  localeStore.changeLang(lang)
   changeHtmlLang(lang)
 }
 

@@ -4,7 +4,7 @@
       <q-card>
         <q-card-section>
           <!-- children -->
-          <EssentialList :essentialLinks="link.children" :parent-path="pathResolve(parentPath || '', link.path)" />
+          <EssentialList :essentialLinks="link.children" :parent-path="pathResolve(parentPath, link.path)" />
         </q-card-section>
       </q-card>
     </q-expansion-item>
@@ -15,11 +15,13 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import type { TreeNode } from 'src/models'
+import type { PrivilegeTreeNode } from 'src/models'
 import { pathResolve } from 'src/utils'
 
-defineProps<{
-  essentialLinks: TreeNode[],
+withDefaults(defineProps<{
+  essentialLinks: PrivilegeTreeNode[]
   parentPath?: string
-}>()
+}>(), {
+  parentPath: ''
+})
 </script>

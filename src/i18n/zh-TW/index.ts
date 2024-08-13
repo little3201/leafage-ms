@@ -62,7 +62,10 @@ export default {
   dictionaries: '字典',
   regions: '行政區劃',
   logs: '日誌管理',
-  accessLogs: '訪問紀錄',
+  accessLog: '訪問紀錄',
+  operationLog: '操作紀錄',
+  auditLog: '審計日誌',
+  schedulerLog: '調度日誌',
 
   welcome: '嗨！歡迎回來',
   subtitle: '請填寫您的帳號和密碼，讓我們繼續探索',

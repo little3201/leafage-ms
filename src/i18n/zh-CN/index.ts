@@ -59,8 +59,11 @@ export default {
   users: '用户',
   dictionaries: '字典',
   regions: '行政区划',
-  logs: '日志管理',
-  accessLogs: '访问日志',
+  logs: '日志记录',
+  operationLog: '操作日志',
+  accessLog: '访问日志',
+  auditLog: '审计日志',
+  schedulerLog: '调度日志',
 
   welcome: '嗨！欢迎回来',
   subtitle: '请填写您的账号和密码，让我们继续探索',

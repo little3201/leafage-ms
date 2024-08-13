@@ -58,7 +58,7 @@
             <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
           </div>
           <div v-else-if="col.name === 'name'">
-            <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ col.value }}
+            <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
           </div>
           <span v-else>{{ col.value }}</span>
         </q-td>

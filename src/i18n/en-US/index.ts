@@ -62,7 +62,10 @@ export default {
   dictionaries: 'Dictionaries',
   regions: 'Regions',
   logs: 'Logs',
-  accessLogs: 'Access Logs',
+  operationLog: 'Operation Log',
+  accessLog: 'Access Log',
+  auditLog: 'Audit Log',
+  schedulerLog: 'Scheduler Log',
 
   welcome: 'Hi! Welcome Back.',
   subtitle: 'Please sign in to continue exploring.',

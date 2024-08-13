@@ -22,10 +22,10 @@
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
-                <q-item-section>Profile</q-item-section>
+                <q-item-section>{{ $t('profile') }}</q-item-section>
               </q-item>
               <q-item clickable v-close-popup @click="onLogout">
-                <q-item-section>Sign Out</q-item-section>
+                <q-item-section>{{ $t('signout') }}</q-item-section>
               </q-item>
             </q-list>
           </q-menu>

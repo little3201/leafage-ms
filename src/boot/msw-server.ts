@@ -4,8 +4,8 @@ import { handlers } from 'src/mocks/handlers' // 您的请求处理程序
 
 export default boot(() => {
   // dev
-  if (process.env.DEV) {
-    const worker = setupWorker(...handlers)
-    worker.start()
-  }
+  // if (process.env.DEV) {
+  const worker = setupWorker(...handlers)
+  worker.start()
+  // }
 })

@@ -55,7 +55,7 @@
                 <q-form @submit="onSubmit" class="q-mt-md full-width q-px-xl">
                   <q-input :disable="loading" dense no-error-icon v-model.trim="form.username"
                     :placeholder="$t('username')"
-                    :rules="[(val) => (val && val.length > 5 && val.length < 12) || $t('username')]">>
+                    :rules="[(val) => (val && val.length > 5 && val.length < 12) || $t('username')]">
                   </q-input>
                   <q-input :disable="loading" dense no-error-icon :type="showPwd ? 'password' : 'text'"
                     v-model.trim="form.password" :placeholder="$t('password')"

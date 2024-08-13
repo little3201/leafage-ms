@@ -4,6 +4,7 @@ import { groupsHandlers } from './groups'
 import { regionsHandlers } from './regions'
 import { rolesHandlers } from './roles'
 import { usersHandlers } from './users'
+import { privilegessHandlers } from './privileges'
 
 export const handlers = [
   ...commonHandlers,
@@ -11,5 +12,6 @@ export const handlers = [
   ...groupsHandlers,
   ...regionsHandlers,
   ...rolesHandlers,
-  ...usersHandlers
+  ...usersHandlers,
+  ...privilegessHandlers
 ]

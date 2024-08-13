@@ -1,24 +1,28 @@
 <template>
-  <q-item v-ripple exact :to="link">
+  <q-item clickable v-ripple exact :to="pathResolve(parentPath, path)">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ $t(title) }}</q-item-label>
+      <q-item-label>{{ $t(name) }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
-export interface EssentialLinkProps {
-  title: string;
-  link?: string;
-  icon?: string;
-}
-withDefaults(defineProps<EssentialLinkProps>(), {
-  title: '',
-  link: '#',
-  icon: ''
+import { pathResolve } from 'src/utils'
+
+withDefaults(defineProps<{
+  name: string
+  path: string
+  icon: string
+  parentPath?: string
+}>(), {
+  name: '',
+  path: '#',
+  icon: '',
+  parentPath: ''
 })
+
 </script>

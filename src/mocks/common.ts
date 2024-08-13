@@ -6,7 +6,11 @@ export const commonHandlers = [
 
     const username = info.get('username')
     // Read the intercepted request body.
-    return HttpResponse.json({ username })
+    return HttpResponse.json({ user: { username, avatar: '' }, access_token: 'sfa23asdfasdfasdf' }, {
+      headers: {
+        'Set-Cookie': 'logged_in=yes'
+      }
+    })
   }),
   http.post('/api/logout', ({ cookies }) => {
     if (!cookies.logged_in) {

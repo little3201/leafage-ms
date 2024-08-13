@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
 
-    <q-dialog v-model="visiable" persistent>
+    <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
@@ -9,45 +9,60 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Region name" lazy-rules
+            <q-input v-model="form.groupName" label="Group name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.description" label="Region deacription" type="textarea" />
           </q-card-section>
 
-          <q-card-actions align="right" class="text-primary">
-            <q-btn title="cancel" type="reset" rounded unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" rounded label="Submit" color="primary" />
+          <q-card-actions align="right">
+            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
+            <q-btn title="submit" type="submit" label="Submit" color="primary" />
           </q-card-actions>
 
         </q-form>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" title="Regions" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" :title="$t('groups')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="sym_r_search" />
+            <q-icon name="mdi-search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" label="Add"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
           @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_sim_card_download" label="Export"
+        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
           @click="exportTable" />
+      </template>
+
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ $t(col.label) }}
+          </q-th>
+        </q-tr>
+      </template>
+
+      <template v-slot:body-cell-members="props">
+        <q-td :props="props">
+          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
+            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
+          </q-avatar>
+        </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" color="green" />
+          <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
-          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+            @click="editRow(props.row.id)" class="q-mt-none" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>
@@ -62,22 +77,19 @@ import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Region } from 'src/models'
+import type { Group } from 'src/models'
 
 const $q = useQuasar()
 
-const visiable = ref<boolean>(false)
+const visible = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Region>({
-  name: '',
-  areaCode: 0,
-  postalCode: 0,
-  description: ''
+const form = ref<Group>({
+  groupName: ''
 })
 
 const pagination = ref({
@@ -91,12 +103,10 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'Name', align: 'left', field: 'name', sortable: true },
-  { name: 'postalCode', label: 'Postal Code', align: 'left', field: 'postalCode', sortable: true },
-  { name: 'areaCode', label: 'Area Code', align: 'left', field: 'areaCode', sortable: true },
-  { name: 'enabled', label: 'Enabled', align: 'center', field: 'enabled' },
-  { name: 'description', label: 'Description', align: 'left', field: 'description' },
-  { name: 'id', label: 'Actions', field: 'id' }
+  { name: 'name', label: 'name', align: 'left', field: 'groupName', sortable: true },
+  { name: 'members', label: 'members', align: 'center', field: 'members' },
+  { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
+  { name: 'id', label: 'actions', field: 'id' }
 ]
 
 onMounted(() => {
@@ -114,7 +124,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.REGION, { params }).then(res => {
+  await api.get(SERVER_URL.GROUP, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -133,12 +143,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 }
 
 function addRow() {
-  visiable.value = true
+  visible.value = true
 }
 
 function editRow(id: number) {
-  visiable.value = true
-  console.log('id: ', id)
+  visible.value = true
+  // You can populate the form with existing user data based on the id
+  if (rows.value) {
+    const row = rows.value.find(u => u.id === id)
+    if (row) {
+      form.value = { ...row }
+    }
+  }
 }
 
 function removeRow(id: number) {
@@ -149,7 +165,10 @@ function removeRow(id: number) {
   }, 500)
 }
 
-function onSubmit() { }
+function onSubmit() {
+  // Close the dialog after submitting
+  visible.value = false
+}
 
 function onReset() { }
 

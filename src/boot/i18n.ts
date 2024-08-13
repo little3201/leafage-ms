@@ -1,11 +1,15 @@
 import { boot } from 'quasar/wrappers'
 import { createI18n } from 'vue-i18n'
-import messages from 'src/i18n'
+import { messages } from 'src/i18n'
+
+import { useLocaleStore } from 'stores/locale-store'
+
+const localeStore = useLocaleStore()
 
 export default boot(({ app }) => {
   const i18n = createI18n({
-    locale: 'en-US',
     legacy: false,
+    locale: localeStore.lang || 'zh-CN',
     messages
   })
 

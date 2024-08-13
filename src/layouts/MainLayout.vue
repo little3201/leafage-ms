@@ -1,52 +1,31 @@
 <template>
   <q-layout view="hHh LpR lff">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/logo-only.svg" style="width: 2em; height: 2em;" />
+          <q-img alt="logo" src="/logo-only.svg" width="2em" height="2em" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
-          <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
-            @click="leftDrawerOpen = !leftDrawerOpen" aria-disabled="false" />
+          <q-btn title="drawer" type="button" dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen"
+            aria-disabled="false" />
         </q-toolbar-title>
+        <!-- language -->
+        <LanguageSelector />
+        <!-- theme -->
+        <ThemeToogle />
 
-        <!-- <q-breadcrumbs class="q-ma-sm" active-color="white" style="font-size: 16px">
-          <q-breadcrumbs-el v-for="(route, index) in $route.matched" :key="index"
-            :label="$t(route.name ? route.name.toString() : '')"
-            :icon="route.meta.icon ? route.meta.icon.toString() : undefined" />
-        </q-breadcrumbs> -->
-
-        <q-btn title="language" icon="sym_r_language" round flat dense>
-          <q-menu>
-            <q-list dense separator>
-              <q-item clickable v-close-popup :active="locale === 'en-US'" @click="locale = 'en-US'">
-                <q-item-section>English(US)</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-CN'" @click="locale = 'zh-CN'">
-                <q-item-section>中文（简体）</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup :active="locale === 'zh-TW'" @click="locale = 'zh-TW'">
-                <q-item-section>中文（繁體）</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
-
-        <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
-          :color="$q.dark.isActive ? 'black' : ''" />
-
-        <q-chip clickable color="primary" text-color="white">
-          <q-avatar size="28px">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="28px" height="29px">
-          </q-avatar>{{ userStore.getUsername }}
+        <q-chip clickable color="primary" size="md" text-color="white">
+          <q-avatar size="2em">
+            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="2em" height="2em">
+          </q-avatar>{{ userStore.user?.username }}
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
-                <q-item-section>Change Password</q-item-section>
+                <q-item-section>{{ $t('profile') }}</q-item-section>
               </q-item>
               <q-item clickable v-close-popup @click="onLogout">
-                <q-item-section>Sign Out</q-item-section>
+                <q-item-section>{{ $t('signout') }}</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -54,45 +33,57 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated :width="230">
-      <SideBarLeft />
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered :width="220">
+      <q-list>
+        <!-- home -->
+        <EssentialLink v-bind="{
+          name: 'home',
+          icon: 'mdi-home-outline',
+          path: '/'
+        }" />
+        <!-- privileges -->
+        <EssentialList :essentialLinks="essentialLinks" />
+      </q-list>
     </q-drawer>
 
     <q-page-container class="overflow-hidden">
       <router-view />
-      <slot></slot>
     </q-page-container>
 
     <q-footer class="bg-transparent">
-      <p class="text-center text-black">Copyright &copy; 2018 - {{ new Date().getFullYear() }}
-        All rights reserved.</p>
+      <q-toolbar>
+        <q-toolbar-title class="text-center text-body2" :class="$q.dark.isActive ? '' : 'text-black'">
+          &copy; {{ new Date().getFullYear() }} All Rights Reserved.
+        </q-toolbar-title>
+      </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useUserStore } from 'stores/user-store'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { api } from 'boot/axios'
 
-import SideBarLeft from './SideBarLeft.vue'
+import EssentialLink from 'components/EssentialLink.vue'
+import EssentialList from 'components/EssentialList.vue'
+import LanguageSelector from 'components/LanguageSelector.vue'
+import ThemeToogle from 'components/ThemeToogle.vue'
+
+import type { PrivilegeTreeNode } from 'src/models'
 
 const userStore = useUserStore()
 const { replace } = useRouter()
-const $q = useQuasar()
 
-const { locale } = useI18n({ useScope: 'global' })
+const $q = useQuasar()
 
 const leftDrawerOpen = ref<boolean>(false)
 
-function onLogout() {
-  api.post('/logout').then(() => {
-    userStore.clearUser()
+const essentialLinks: PrivilegeTreeNode[] = userStore.privileges as PrivilegeTreeNode[]
 
-    replace('/login')
-  }).catch(error => $q.notify({ type: 'negative', message: error.message }))
+function onLogout() {
+  userStore.logout().then(() => replace('/login'))
+    .catch(error => $q.notify({ type: 'negative', message: error.message }))
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <q-page padding>
-    <q-card flat>
-      <q-card-section>
-        <q-date v-model="data" />
-      </q-card-section>
-    </q-card>
+    <!-- <q-card flat>
+      <q-card-section> -->
+    <q-date v-model="data" />
+    <!-- </q-card-section>
+    </q-card> -->
   </q-page>
 </template>
 

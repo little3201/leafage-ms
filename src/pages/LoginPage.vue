@@ -1,9 +1,9 @@
 <template>
-  <q-layout class="overflow-hidden" :class="$q.dark.isActive ? 'bg-dark-page' : 'bg-light-blue-1'">
+  <q-layout class="overflow-hidden" :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
     <q-header class="transparent text-black">
       <q-toolbar>
         <q-toolbar-title>
-          <q-img alt="logo" src="/logo-only.svg" width="3rem" height="3rem" />
+          <q-img alt="logo" src="/vite.svg" width="3rem" height="3rem" />
           <span class="q-ml-sm text-weight-medium">Management System</span>
         </q-toolbar-title>
         <!-- language -->
@@ -24,9 +24,9 @@
         <figure class="absolute bg-negative-gradient rounded-full"
           style="height: 21em;  width: 21em; bottom: -16em; left: 14em; " />
 
-        <q-card bordered class="column justify-center items-center shadow-15 overflow-hidden"
+        <q-card bordered class="column justify-center items-center shadow-12 overflow-hidden"
           style="width: 65vw;height: 70vh;border-radius: 20px;">
-          <q-card-section horizontal style="width: 50%;">
+          <q-card-section horizontal class="full-height" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
                 <div ref="lottieRef" style="height: 32em; width: 32em" />
@@ -47,7 +47,7 @@
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">
-                  <q-img alt="logo" src="/logo.svg" style="height: 10em; width: 10em" />
+                  <q-img alt="logo" src="/vite.svg" style="height: 10em; width: 10em" />
                 </div>
                 <div class="text-h6 text-center q-mb-xs">
                   {{ $t('signinTo') }}

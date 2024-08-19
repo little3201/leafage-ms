@@ -4,7 +4,7 @@
     <q-card style="min-width: 25em">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-card-section>
-          <div class="text-h6">Group</div>
+          <div class="text-h6">{{ $t('privileges') }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -15,8 +15,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
-          <q-btn title="submit" type="submit" label="Submit" color="primary" />
+          <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
+          <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
         </q-card-actions>
 
       </q-form>
@@ -118,6 +118,7 @@ const pagination = ref({
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
   { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
+  { name: 'order', label: 'order', align: 'left', field: 'order' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }

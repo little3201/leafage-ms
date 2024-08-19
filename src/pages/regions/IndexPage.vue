@@ -5,7 +5,7 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">{{ $t('privileges') }}</div>
+            <div class="text-h6">{{ $t('regions') }}</div>
           </q-card-section>
 
           <q-card-section>
@@ -24,7 +24,7 @@
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" :title="$t('privileges')" selection="multiple" v-model:selected="selected" :rows="rows"
+    <q-table flat ref="tableRef" :title="$t('regions')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
@@ -33,8 +33,8 @@
             <q-icon name="mdi-search" />
           </template>
         </q-input>
-        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="mdi-refresh"
-          @click="refresh" />
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
+          @click="addRow" />
         <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
           @click="exportTable" />
       </template>
@@ -57,13 +57,12 @@
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
               <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-                @click="editRow(col.value)" class="q-mt-none" />
+                @click="editRow(props.row.id)" class="q-mt-none" />
+              <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
+                @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
-            </div>
-            <div v-else-if="col.name === 'name'">
-              <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
@@ -86,7 +85,7 @@ import { api } from 'boot/axios'
 import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Privilege } from 'src/models'
+import type { Region } from 'src/models'
 
 const $q = useQuasar()
 
@@ -97,11 +96,10 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Privilege>({
+const form = ref<Region>({
   name: '',
-  path: '',
-  icon: '',
-  order: 1,
+  areaCode: 0,
+  postalCode: 0,
   description: ''
 })
 
@@ -117,8 +115,8 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
-  { name: 'order', label: 'order', align: 'left', field: 'order' },
+  { name: 'postalCode', label: 'postalCode', align: 'left', field: 'postalCode', sortable: true },
+  { name: 'areaCode', label: 'areaCode', align: 'left', field: 'areaCode', sortable: true },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
@@ -139,7 +137,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.PRIVILEGE, { params }).then(res => {
+  await api.get(SERVER_URL.REGION, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -157,8 +155,8 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function refresh() {
-  tableRef.value.requestServerInteraction()
+function addRow() {
+  visible.value = true
 }
 
 function editRow(id: number) {
@@ -170,6 +168,14 @@ function editRow(id: number) {
       form.value = { ...row }
     }
   }
+}
+
+function removeRow(id: number) {
+  console.log('id: ', id)
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+  }, 500)
 }
 
 function onSubmit() {

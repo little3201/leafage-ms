@@ -3,7 +3,7 @@
     <q-card style="min-width: 25em">
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <q-card-section>
-          <div class="text-h6">Dictionary</div>
+          <div class="text-h6">{{ $t('dictionaries') }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -14,8 +14,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
-          <q-btn title="submit" type="submit" label="Submit" color="primary" />
+          <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
+          <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
         </q-card-actions>
 
       </q-form>

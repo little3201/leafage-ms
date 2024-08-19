@@ -23,6 +23,17 @@ const datas: Privilege[] = [
     enabled: true,
     icon: 'mdi-clipboard-list-outline',
     description: 'this is description for this row'
+  },
+  {
+    id: 12,
+    path: '/regions',
+    component: '#',
+    name: 'regions',
+    redirect: '/regions',
+    order: 3,
+    enabled: true,
+    icon: 'mdi-database-marker-outline',
+    description: 'this is description for this row'
   }
 ]
 
@@ -125,6 +136,17 @@ const subDatas: Privilege[] = [
     enabled: true,
     icon: 'mdi-calendar-text-outline',
     description: 'this is description for this row'
+  },
+  {
+    id: 13,
+    superiorId: 12,
+    path: '',
+    component: 'pages/regions/IndexPage',
+    name: 'regions',
+    order: 1,
+    enabled: true,
+    icon: 'mdi-database-marker-outline',
+    description: 'this is description for this row'
   }
 ]
 
@@ -135,7 +157,6 @@ const treeNodes: PrivilegeTreeNode[] = [
     component: '#',
     redirect: '/system/users',
     name: 'system',
-    order: 1,
     icon: 'mdi-cog-outline',
     children: [
       {
@@ -143,7 +164,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'groups',
         component: 'pages/system/groups/IndexPage',
         name: 'groups',
-        order: 1,
         icon: 'mdi-account-multiple-plus-outline'
       },
       {
@@ -151,7 +171,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'users',
         component: 'pages/system/users/IndexPage',
         name: 'users',
-        order: 2,
         icon: 'mdi-account-outline'
       },
       {
@@ -159,7 +178,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'privileges',
         component: 'pages/system/privileges/IndexPage',
         name: 'privileges',
-        order: 3,
         icon: 'mdi-shield-key-outline'
       },
       {
@@ -167,7 +185,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'roles',
         component: 'pages/system/roles/IndexPage',
         name: 'roles',
-        order: 4,
         icon: 'mdi-shield-account-outline'
       },
       {
@@ -175,7 +192,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'dictionaries',
         component: 'pages/system/dictionaries/IndexPage',
         name: 'dictionaries',
-        order: 5,
         icon: 'mdi-book-outline'
       }
     ]
@@ -186,7 +202,6 @@ const treeNodes: PrivilegeTreeNode[] = [
     component: '#',
     redirect: '/logs/operation',
     name: 'logs',
-    order: 2,
     icon: 'mdi-clipboard-list-outline',
     children: [
       {
@@ -194,7 +209,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'operation',
         component: 'pages/logs/operation/IndexPage',
         name: 'operationLog',
-        order: 1,
         icon: 'mdi-clipboard-text-outline'
       },
       {
@@ -202,7 +216,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'access',
         component: 'pages/logs/access/IndexPage',
         name: 'accessLog',
-        order: 2,
         icon: 'mdi-file-document-outline'
       },
       {
@@ -210,7 +223,6 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'audit',
         component: 'pages/logs/audit/IndexPage',
         name: 'auditLog',
-        order: 3,
         icon: 'mdi-clipboard-check-outline'
       },
       {
@@ -218,8 +230,25 @@ const treeNodes: PrivilegeTreeNode[] = [
         path: 'scheduler',
         component: 'pages/logs/scheduler/IndexPage',
         name: 'schedulerLog',
-        order: 4,
         icon: 'mdi-calendar-text-outline'
+      }
+    ]
+  },
+  {
+    id: 12,
+    path: '/regions',
+    component: '#',
+    name: 'regions',
+    redirect: '/regions',
+    icon: 'mdi-database-marker-outline',
+    children: [
+      {
+        id: 13,
+        path: '',
+        component: 'pages/regions/IndexPage',
+        name: 'regions-index',
+        icon: 'mdi-database-marker-outline',
+        hidden: true
       }
     ]
   }

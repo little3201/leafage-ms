@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="hHh LpR lff">
+  <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? '' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/logo-only.svg" width="2em" height="2em" />
+          <q-img alt="logo" src="/vite.svg" width="2em" height="2em" />
           <span>Management System</span>
         </q-toolbar-title>
         <q-toolbar-title>
@@ -17,7 +17,7 @@
 
         <q-chip clickable color="primary" size="md" text-color="white">
           <q-avatar size="2em">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="2em" height="2em">
+            <img alt="avatar" :src="userStore.user?.avatar" width="2em" height="2em">
           </q-avatar>{{ userStore.user?.username }}
           <q-menu>
             <q-list dense separator>

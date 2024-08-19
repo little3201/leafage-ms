@@ -1,6 +1,6 @@
 <template>
   <template v-for="link in essentialLinks" :key="link.name">
-    <q-expansion-item v-if="link.children" :icon="link.icon" :label="$t(link.name)">
+    <q-expansion-item v-if="link.children && isSubMenu(link)" :icon="link.icon" :label="$t(link.name)">
       <q-card>
         <q-card-section>
           <!-- children -->
@@ -24,4 +24,18 @@ withDefaults(defineProps<{
 }>(), {
   parentPath: ''
 })
+
+function isSubMenu(route: PrivilegeTreeNode) {
+  if (route.children && route.children.length > 0) {
+    const children = route.children
+    for (const child of children) {
+      if (child.hidden) {
+        return false
+      }
+    }
+    return true
+  } else {
+    return false
+  }
+}
 </script>

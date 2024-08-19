@@ -4,7 +4,7 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset">
           <q-card-section>
-            <div class="text-h6">User</div>
+            <div class="text-h6">{{ $t('users') }}</div>
           </q-card-section>
 
           <q-card-section>
@@ -19,8 +19,8 @@
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" label="Submit" color="primary" />
+            <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
+            <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
           </q-card-actions>
         </q-form>
       </q-card>
@@ -28,7 +28,7 @@
 
     <q-table flat ref="tableRef" :title="$t('users')" selection="multiple" v-model:selected="selected" :rows="rows"
       :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
-      binary-state-sort @request="onRequest" class="full-width q-pl-md">
+      binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
@@ -141,7 +141,7 @@ const columns: QTableProps['columns'] = [
   { name: 'username', label: 'username', align: 'left', field: 'username', sortable: true },
   { name: 'fullname', label: 'fullname', align: 'center', field: 'fullname', sortable: true },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
-  { name: 'accountNonLocked', label: 'accountLocked', align: 'center', field: 'accountNonLocked' },
+  { name: 'accountNonLocked', label: 'accountNonLocked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'accountExpiresAt', align: 'center', field: 'accountExpiresAt', sortable: true },
   { name: 'credentialsExpiresAt', label: 'credentialsExpiresAt', align: 'center', field: 'credentialsExpiresAt', sortable: true },
   { name: 'id', label: 'actions', field: 'id' }
@@ -205,6 +205,10 @@ function removeRow(id: number) {
   }, 500)
 }
 
+/**
+ * 解锁/上锁
+ * @param row 数据行
+ */
 function lockRow(row: User) {
   // You can populate the form with existing user data based on the id
   if (row) {

@@ -104,7 +104,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   await api.get(SERVER_URL.REGION, { params }).then(res => {
     rows.value = res.data.content

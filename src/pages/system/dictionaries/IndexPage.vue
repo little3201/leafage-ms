@@ -130,14 +130,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
   const params = { sortBy, descending, filter: filter || '' }
 
-  await retrieveDictionaries(page - 1, rowsPerPage, params).then(res => {
-    rows.value = res.data.content
+  retrieveDictionaries(page, rowsPerPage, params).then(res => {
     pagination.value.page = page
-    pagination.value.sortBy = sortBy
-    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
-    pagination.value.sortBy = res.data.sortBy
+    pagination.value.sortBy = sortBy
     pagination.value.descending = descending
+
+    rows.value = res.data.content
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -150,7 +150,7 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-function editRow(id: number) {
+async function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

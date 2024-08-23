@@ -15,14 +15,13 @@ for (let i = 0; i < 20; i++) {
 
 export const groupsHandlers = [
   http.get('/api/groups', ({ request }) => {
-    debugger
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
     // Construct a JSON response with the list of all Dictionarys
     // as the response body.
     const data = {
-      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
       totalElements: datas.length
     }
 

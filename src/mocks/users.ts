@@ -7,8 +7,8 @@ for (let i = 0; i < 20; i++) {
   const data: User = {
     id: i,
     username: 'username' + i,
-    firstname: 'firstname_' + i,
-    lastname: 'lastname_' + i,
+    avatar: '/src/assets/images/avatar.jpg',
+    email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,
     accountExpiresAt: new Date(2024, 7, i),
@@ -26,7 +26,7 @@ export const usersHandlers = [
     // Construct a JSON response with the list of all Dictionarys
     // as the response body.
     const data = {
-      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
       totalElements: datas.length
     }
 

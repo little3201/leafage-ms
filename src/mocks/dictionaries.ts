@@ -8,6 +8,7 @@ for (let i = 0; i < 20; i++) {
   const data: Dictionary = {
     id: i,
     name: 'dictionary_' + i,
+    order: i + 1,
     enabled: i % 3 > 0,
     description: 'This is dictionary description about xxx',
     lastModifiedDate: new Date()
@@ -16,6 +17,7 @@ for (let i = 0; i < 20; i++) {
     const subData: Dictionary = {
       id: j,
       name: 'dictionary_' + i + '_' + j,
+      order: j + 1,
       superiorId: i,
       enabled: j % 2 > 0,
       description: 'description',

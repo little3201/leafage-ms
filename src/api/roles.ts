@@ -2,7 +2,7 @@ import { api } from 'boot/axios'
 
 export const retrieveRoles = (page?: number, size?: number, params?: object) => {
   if (page && size) {
-    return api.get('/roles', { params: { page: page - 1, size, ...params } })
+    return api.get('/roles', { params: { page, size, ...params } })
   }
   return api.get('/roles')
 }

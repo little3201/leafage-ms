@@ -16,7 +16,7 @@
         <ThemeToogle class="q-mx-sm" />
 
         <div class="cursor-pointer">
-          <q-avatar size="2rem">
+          <q-avatar size="md">
             <q-img alt="avatar" :src="userStore.user?.avatar" width="2rem" height="2rem" />
           </q-avatar>
           <span class="q-ml-sm">{{ userStore.user?.username }}</span>

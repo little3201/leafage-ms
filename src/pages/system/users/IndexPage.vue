@@ -50,15 +50,9 @@
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
           <q-avatar size="md">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" />
+            <q-img alt="avatar" :src="props.row.avatar" width="2em" height="2em" />
           </q-avatar>
           <span class="q-ml-sm">{{ props.row.username }}</span>
-        </q-td>
-      </template>
-      <template v-slot:body-cell-fullname="props">
-        <q-td :props="props">
-          <span class="q-ml-sm">{{ props.row.firstname }}</span>
-          <span class="q-ml-sm">{{ props.row.lastname }}</span>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
@@ -103,9 +97,8 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar, date } from 'quasar'
-import { api } from 'boot/axios'
+import { retrieveUsers, fetchUser } from 'src/api/users'
 
-import { SERVER_URL } from 'src/api/paths'
 import type { User } from 'src/models'
 
 const $q = useQuasar()
@@ -155,16 +148,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.USER, { params }).then(res => {
-    rows.value = res.data.content
+  retrieveUsers(page, rowsPerPage, { params }).then(res => {
     pagination.value.page = page
-    pagination.value.sortBy = sortBy
-    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
-    pagination.value.sortBy = res.data.sortBy
+    pagination.value.sortBy = sortBy
     pagination.value.descending = descending
+
+    rows.value = res.data.content
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -179,14 +172,11 @@ function addRow() {
   visible.value = true
 }
 
-function editRow(id: number) {
+async function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
+  if (id) {
+    fetchUser(id).then(res => { form.value = res.data })
   }
 }
 

@@ -102,24 +102,25 @@ onMounted(() => {
  */
 async function onRequest() {
   loading.value = true
-
-  await retrieveDictionarySubset(props.superiorId as number).then(res => {
-    rows.value = res.data
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
+  if (props.superiorId) {
+    retrieveDictionarySubset(props.superiorId).then(res => {
+      rows.value = res.data
+    }).catch(error => {
+      $q.notify({
+        message: error.message,
+        type: 'negative'
+      })
+    }).finally(() => {
+      loading.value = false
     })
-  }).finally(() => {
-    loading.value = false
-  })
+  }
 }
 
 function addRow() {
   visible.value = true
 }
 
-function editRow(id: number) {
+async function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

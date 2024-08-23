@@ -115,7 +115,7 @@ onMounted(() => {
 /**
  * 查询列表
  */
-function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
+async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
@@ -123,14 +123,14 @@ function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) 
 
   const params = { sortBy, descending, filter: filter || '' }
 
-  retrieveGroups(page - 1, rowsPerPage, { params }).then(res => {
-    rows.value = res.data.content
+  retrieveGroups(page, rowsPerPage, { params }).then(res => {
     pagination.value.page = page
-    pagination.value.sortBy = sortBy
-    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
-    pagination.value.sortBy = res.data.sortBy
+    pagination.value.sortBy = sortBy
     pagination.value.descending = descending
+
+    rows.value = res.data.content
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -145,7 +145,7 @@ function addRow() {
   visible.value = true
 }
 
-function editRow(id: number) {
+async function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

@@ -2,7 +2,7 @@ import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/api/paths'
 
 export const retrieveGroups = (page: number, size: number, params?: object) => {
-  return api.get(SERVER_URL.GROUP, { params: { page: page - 1, size, ...params } })
+  return api.get(SERVER_URL.GROUP, { params: { page, size, ...params } })
 }
 
 export const retrieveGroupSubset = (id: number) => {

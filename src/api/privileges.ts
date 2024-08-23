@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'
 
 export const retrievePrivileges = (page: number, size: number, params?: object) => {
-  return api.get('/privileges', { params: { page: page - 1, size, ...params } })
+  return api.get('/privileges', { params: { page, size, ...params } })
 }
 
 export const retrievePrivilegeSubset = (id: number) => {

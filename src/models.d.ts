@@ -5,8 +5,7 @@ interface AudtiMetadata {
 
 export interface User extends AudtiMetadata {
   username: string
-  firstname: string
-  lastname: string
+  email: string
   avatar?: string
   accountNonLocked?: boolean
   accountExpiresAt?: Date
@@ -42,6 +41,7 @@ export interface Privilege extends AudtiMetadata {
 export interface Dictionary extends AudtiMetadata {
   name: string
   superiorId?: number
+  order: number
   enabled?: boolean
   description?: string
 }
@@ -70,4 +70,55 @@ export interface PrivilegeTreeNode extends TreeNode {
   hidden?: boolean
   actions?: string[]
   children?: PrivilegeTreeNode[]
+}
+
+export interface OperationLog {
+  id?: number
+  module: string
+  method: string
+  operator: string
+  operation: string
+  params: string | null
+  ip: string
+  location: string
+  status: number | null
+  operatedTime: string | null
+}
+
+export interface AccessLog {
+  id?: number
+  api: string
+  method: string
+  operator: string
+  params: string | null
+  ip: string
+  location: string
+  status: number | null
+  responseTime: number | null
+  responseCode: number | null
+  responseMessage: string | null
+}
+
+export interface AuditLog {
+  id?: number
+  operator: string
+  operation: string
+  resource: string
+  oldValue: string | null
+  newValue: string | null
+  ip: string
+  location: string
+  status: number | null
+  operatedTime: string | null
+}
+
+export interface SchedulerLog {
+  id?: number
+  name: string
+  method: string
+  params: string
+  cronExpression: string
+  startTime: string
+  endTime: string
+  status: number | null
 }

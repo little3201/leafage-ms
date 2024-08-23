@@ -78,10 +78,10 @@
 import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
-import { api } from 'boot/axios'
+import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
+
 import SubPage from './SubPage.vue'
 
-import { SERVER_URL } from 'src/api/paths'
 import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
@@ -95,6 +95,7 @@ const loading = ref(false)
 
 const form = ref<Dictionary>({
   name: '',
+  order: 1,
   description: ''
 })
 
@@ -108,6 +109,7 @@ const pagination = ref({
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'order', label: 'order', align: 'left', field: 'order' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
@@ -126,16 +128,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.DICTIONARY, { params }).then(res => {
-    rows.value = res.data.content
+  retrieveDictionaries(page, rowsPerPage, params).then(res => {
     pagination.value.page = page
-    pagination.value.sortBy = sortBy
-    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
-    pagination.value.sortBy = res.data.sortBy
+    pagination.value.sortBy = sortBy
     pagination.value.descending = descending
+
+    rows.value = res.data.content
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -148,14 +150,11 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-function editRow(id: number) {
+async function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
+  if (id) {
+    fetchDictionary(id).then(res => { form.value = res.data })
   }
 }
 

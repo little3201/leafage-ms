@@ -76,9 +76,8 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar } from 'quasar'
-import { api } from 'boot/axios'
+import { retrievePrivilegeSubset, fetchPrivilege } from 'src/api/privileges'
 
-import { SERVER_URL } from 'src/api/paths'
 import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
@@ -134,26 +133,25 @@ onMounted(() => {
 async function onRequest() {
   loading.value = true
 
-  await api.get(`${SERVER_URL.PRIVILEGE}/${props.superiorId}/subset`).then(res => {
-    rows.value = res.data
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
+  if (props.superiorId) {
+    retrievePrivilegeSubset(props.superiorId).then(res => {
+      rows.value = res.data
+    }).catch(error => {
+      $q.notify({
+        message: error.message,
+        type: 'negative'
+      })
+    }).finally(() => {
+      loading.value = false
     })
-  }).finally(() => {
-    loading.value = false
-  })
+  }
 }
 
 function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
+  if (id) {
+    fetchPrivilege(id).then(res => { form.value = res.data })
   }
 }
 

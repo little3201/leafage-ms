@@ -8,7 +8,7 @@
         </q-toolbar-title>
         <q-toolbar-title>
           <q-btn title="drawer" type="button" dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen"
-            aria-disabled="false" />
+            class="cursor-pointer" />
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />
@@ -16,7 +16,7 @@
         <ThemeToogle class="q-mx-sm" />
 
         <div class="cursor-pointer">
-          <q-avatar size="2rem">
+          <q-avatar size="md">
             <q-img alt="avatar" :src="userStore.user?.avatar" width="2rem" height="2rem" />
           </q-avatar>
           <span class="q-ml-sm">{{ userStore.user?.username }}</span>

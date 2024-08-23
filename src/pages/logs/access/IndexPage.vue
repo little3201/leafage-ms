@@ -1,12 +1,12 @@
 <template>
   <q-page padding>
 
-    <q-dialog v-model="visible" persistent>
-      <q-card style="min-width: 25em">
-        <q-card-section>
+    <q-dialog v-model="visible">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">{{ $t('accessLog') }}</div>
           <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
+          <q-btn icon="mdi-close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
@@ -39,13 +39,13 @@
 
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive">{{ $t('success') }}</q-chip>
+          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
           <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+          <q-btn title="detail" padding="xs" flat round color="primary" icon="mdi-file-document-outline"
             @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
@@ -59,9 +59,9 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
-import { api } from 'boot/axios'
+import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
 
-import { SERVER_URL } from 'src/api/paths'
+import type { AccessLog } from 'src/models'
 
 const $q = useQuasar()
 
@@ -71,6 +71,20 @@ const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
+
+const row = ref<AccessLog>({
+  id: undefined,
+  operator: '',
+  api: '',
+  method: 'PST',
+  params: null,
+  ip: '',
+  location: '',
+  status: null,
+  responseTime: null,
+  responseCode: null,
+  responseMessage: ''
+})
 
 const pagination = ref({
   sortBy: 'id',
@@ -83,11 +97,16 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'postalCode', label: 'postalCode', align: 'left', field: 'postalCode', sortable: true },
-  { name: 'areaCode', label: 'areaCode', align: 'left', field: 'areaCode', sortable: true },
+  { name: 'api', label: 'api', align: 'left', field: 'api' },
+  { name: 'method', label: 'method', align: 'left', field: 'method' },
+  { name: 'params', label: 'params', align: 'left', field: 'params' },
+  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
+  { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
+  { name: 'location', label: 'location', align: 'center', field: 'location' },
   { name: 'status', label: 'status', align: 'center', field: 'status' },
-  { name: 'description', label: 'description', align: 'left', field: 'description' },
+  { name: 'responseTime', label: 'responseTime', align: 'center', field: 'responseTime' },
+  { name: 'responseCode', label: 'responseCode', align: 'center', field: 'responseCode' },
+  { name: 'responseMessage', label: 'responseMessage', align: 'center', field: 'responseMessage' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
@@ -102,18 +121,15 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
-  const filter = props.filter
 
-  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
-
-  await api.get(SERVER_URL.REGION, { params }).then(res => {
-    rows.value = res.data.content
+  retrieveAccessLogs(page, rowsPerPage).then(res => {
     pagination.value.page = page
-    pagination.value.sortBy = sortBy
-    pagination.value.rowsNumber = res.data.totalElements
     pagination.value.rowsPerPage = rowsPerPage
-    pagination.value.sortBy = res.data.sortBy
+    pagination.value.sortBy = sortBy
     pagination.value.descending = descending
+
+    rows.value = res.data.content
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -126,7 +142,9 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
 function showRow(id: number) {
   visible.value = true
-  console.log(id)
+  if (id) {
+    fetchAccessLog(id).then(res => { row.value = res.data })
+  }
 }
 
 function removeRow(id: number) {

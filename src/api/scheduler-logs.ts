@@ -1,7 +1,7 @@
 import { api } from 'boot/axios'
 
 export const retrieveSchedulerLogs = (page: number, size: number) => {
-  return api.get('/scheduler-logs', { params: { page: page - 1, size: size } })
+  return api.get('/scheduler-logs', { params: { page: page - 1, size } })
 }
 
 export const fetchSchedulerLog = (id: number) => {

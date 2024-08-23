@@ -15,6 +15,7 @@ for (let i = 0; i < 20; i++) {
 
 export const groupsHandlers = [
   http.get('/api/groups', ({ request }) => {
+    debugger
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')

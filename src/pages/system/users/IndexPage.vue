@@ -11,10 +11,7 @@
             <q-input v-model="form.username" label="Your username" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="form.firstname" label="Your firstname *" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.lastname" label="Your lastname *" lazy-rules
+            <q-input v-model="form.email" label="Your email *" lazy-rules type="email"
               :rules="[val => val && val.length > 0 || 'Please type something']" />
           </q-card-section>
 
@@ -122,8 +119,7 @@ const loading = ref<boolean>(false)
 
 const form = ref<User>({
   username: '',
-  firstname: '',
-  lastname: '',
+  email: '',
   description: ''
 })
 
@@ -224,8 +220,7 @@ async function onSubmit() {
 function onReset() {
   // Reset the form data
   form.value.username = ''
-  form.value.firstname = ''
-  form.value.lastname = ''
+  form.value.email = ''
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

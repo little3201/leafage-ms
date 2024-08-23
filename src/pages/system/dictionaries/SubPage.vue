@@ -26,7 +26,7 @@
     @request="onRequest" hide-pagination hide-selected-banner class="full-width bg-transparent">
     <template v-slot:top-right>
       <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="mdi-refresh"
-        @click="refresh" />
+        @click="onRequest" />
       <q-btn title="add" rounded color="primary" :disable="loading" icon="mdi-plus" :label="$t('add')"
         @click="addRow" />
     </template>
@@ -59,19 +59,17 @@
 import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
-import { api } from 'boot/axios'
+import { retrieveDictionarySubset, fetchDictionary } from 'src/api/dictionaries'
 
-import { SERVER_URL } from 'src/api/paths'
 import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
 
 const props = withDefaults(defineProps<{
   title: string
-  superiorId?: number | undefined
+  superiorId?: number
 }>(), {
-  title: '',
-  superiorId: undefined
+  title: ''
 })
 
 const visible = ref<boolean>(false)
@@ -83,11 +81,13 @@ const loading = ref<boolean>(false)
 const form = ref<Dictionary>({
   name: '',
   superiorId: props.superiorId,
+  order: 1,
   description: ''
 })
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
+  { name: 'order', label: 'order', align: 'left', field: 'order' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
@@ -103,20 +103,7 @@ onMounted(() => {
 async function onRequest() {
   loading.value = true
 
-  await api.get(`${SERVER_URL.DICTIONARY}/${props.superiorId}/subset`).then(res => {
-    rows.value = res.data
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
-  }).finally(() => {
-    loading.value = false
-  })
-}
-
-async function refresh() {
-  await api.get(`${SERVER_URL.DICTIONARY}/${props.superiorId}/subset`).then(res => {
+  await retrieveDictionarySubset(props.superiorId as number).then(res => {
     rows.value = res.data
   }).catch(error => {
     $q.notify({
@@ -135,11 +122,8 @@ function addRow() {
 function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
+  if (id) {
+    fetchDictionary(id).then(res => { form.value = res.data })
   }
 }
 

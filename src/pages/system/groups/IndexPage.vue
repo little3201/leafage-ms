@@ -74,9 +74,8 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
-import { api } from 'boot/axios'
+import { retrieveGroups, fetchGroup } from 'src/api/groups'
 
-import { SERVER_URL } from 'src/api/paths'
 import type { Group } from 'src/models'
 
 const $q = useQuasar()
@@ -116,15 +115,15 @@ onMounted(() => {
 /**
  * 查询列表
  */
-async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
+function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page: page - 1, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { sortBy, descending, filter: filter || '' }
 
-  await api.get(SERVER_URL.GROUP, { params }).then(res => {
+  retrieveGroups(page - 1, rowsPerPage, { params }).then(res => {
     rows.value = res.data.content
     pagination.value.page = page
     pagination.value.sortBy = sortBy
@@ -149,11 +148,8 @@ function addRow() {
 function editRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
+  if (id) {
+    fetchGroup(id).then(res => { form.value = res.data })
   }
 }
 

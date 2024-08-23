@@ -1,17 +1,18 @@
 import { api } from 'boot/axios'
+import { SERVER_URL } from 'src/api/paths'
 
 export const retrieveDictionaries = (page: number, size: number, params?: object) => {
-  return api.get('/dictionaries', { params: { page: page - 1, size: size, ...params } })
+  return api.get(SERVER_URL.DICTIONARY, { params: { page: page - 1, size, ...params } })
 }
 
 export const retrieveDictionarySubset = (id: number) => {
-  return api.get(`/dictionaries/${id}/subset`)
+  return api.get(`${SERVER_URL.DICTIONARY}/${id}/subset`)
 }
 
 export const retrieveDictionaryTree = () => {
-  return api.get('/dictionaries/tree')
+  return api.get(`${SERVER_URL.DICTIONARY}/tree`)
 }
 
 export const fetchDictionary = (id: number) => {
-  return api.get(`/dictionaries/${id}`)
+  return api.get(`${SERVER_URL.DICTIONARY}/${id}`)
 }

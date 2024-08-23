@@ -3,29 +3,20 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-          <q-card-section>
-            <div class="text-h6">Group</div>
-          </q-card-section>
+        <q-card-section>
+          <div class="text-h6">{{ $t('schedulerLog') }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
 
-          <q-card-section>
-            <q-input v-model="form.name" label="Region name" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
-
-            <q-input v-model="form.description" label="Region deacription" type="textarea" />
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn title="cancel" type="reset" unelevated label="Cancel" v-close-popup />
-            <q-btn title="submit" type="submit" label="Submit" color="primary" />
-          </q-card-actions>
-
-        </q-form>
+        <q-card-section>
+          xxxxxx
+        </q-card-section>
       </q-card>
     </q-dialog>
 
-    <q-table flat ref="tableRef" :title="$t('regions')" selection="multiple" v-model:selected="selected" :rows="rows"
-      :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
+    <q-table flat ref="tableRef" :title="$t('schedulerLog')" selection="multiple" v-model:selected="selected"
+      :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
       binary-state-sort @request="onRequest" class="full-width">
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
@@ -33,8 +24,6 @@
             <q-icon name="mdi-search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
-          @click="addRow" />
         <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
           @click="exportTable" />
       </template>
@@ -48,30 +37,19 @@
         </q-tr>
       </template>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td auto-width>
-            <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-              :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'" />
-          </q-td>
-          <q-td v-for="col in props.cols" :key="col.name">
-            <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-                @click="editRow(props.row.id)" class="q-mt-none" />
-              <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
-                @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
-            </div>
-            <div v-else-if="col.name === 'enabled'" class="text-center">
-              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
-            </div>
-            <span v-else>{{ col.value }}</span>
-          </q-td>
-        </q-tr>
-        <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%" class="q-pr-none">
-            <sub-page v-if="props.expand" :title="props.row.name" :superior-id="props.row.id" />
-          </q-td>
-        </q-tr>
+      <template v-slot:body-cell-status="props">
+        <q-td :props="props">
+          <q-chip v-if="props.row.status" color="positive">{{ $t('success') }}</q-chip>
+          <q-chip v-else color="positive">{{ $t('success') }}</q-chip>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-id="props">
+        <q-td :props="props">
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
+            @click="showRow(props.row.id)" class="q-mt-none" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
+            @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
+        </q-td>
       </template>
     </q-table>
   </q-page>
@@ -82,10 +60,8 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { api } from 'boot/axios'
-import SubPage from './SubPage.vue'
 
 import { SERVER_URL } from 'src/api/paths'
-import type { Region } from 'src/models'
 
 const $q = useQuasar()
 
@@ -95,13 +71,6 @@ const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
-
-const form = ref<Region>({
-  name: '',
-  areaCode: 0,
-  postalCode: 0,
-  description: ''
-})
 
 const pagination = ref({
   sortBy: 'id',
@@ -155,19 +124,9 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function addRow() {
+function showRow(id: number) {
   visible.value = true
-}
-
-function editRow(id: number) {
-  visible.value = true
-  // You can populate the form with existing user data based on the id
-  if (rows.value) {
-    const row = rows.value.find(u => u.id === id)
-    if (row) {
-      form.value = { ...row }
-    }
-  }
+  console.log(id)
 }
 
 function removeRow(id: number) {
@@ -177,13 +136,6 @@ function removeRow(id: number) {
     loading.value = false
   }, 500)
 }
-
-function onSubmit() {
-  // Close the dialog after submitting
-  visible.value = false
-}
-
-function onReset() { }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val

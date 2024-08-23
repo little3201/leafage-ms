@@ -1,10 +1,10 @@
 <template>
-  <q-layout view="hHh LpR lff">
+  <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? '' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/logo-only.svg" width="2em" height="2em" />
-          <span>Management System</span>
+          <q-img alt="logo" src="/vite.svg" width="2em" height="2em" />
+          <span>Project Management</span>
         </q-toolbar-title>
         <q-toolbar-title>
           <q-btn title="drawer" type="button" dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen"
@@ -13,12 +13,13 @@
         <!-- language -->
         <LanguageSelector />
         <!-- theme -->
-        <ThemeToogle />
+        <ThemeToogle class="q-mx-sm" />
 
-        <q-chip clickable color="primary" size="md" text-color="white">
-          <q-avatar size="2em">
-            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar.png" width="2em" height="2em">
-          </q-avatar>{{ userStore.user?.username }}
+        <div class="cursor-pointer">
+          <q-avatar size="2rem">
+            <q-img alt="avatar" :src="userStore.user?.avatar" width="2rem" height="2rem" />
+          </q-avatar>
+          <span class="q-ml-sm">{{ userStore.user?.username }}</span>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
@@ -29,7 +30,8 @@
               </q-item>
             </q-list>
           </q-menu>
-        </q-chip>
+        </div>
+
       </q-toolbar>
     </q-header>
 
@@ -62,9 +64,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useUserStore } from 'stores/user-store'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import { useUserStore } from 'stores/user-store'
 
 import EssentialLink from 'components/EssentialLink.vue'
 import EssentialList from 'components/EssentialList.vue'
@@ -73,10 +75,10 @@ import ThemeToogle from 'components/ThemeToogle.vue'
 
 import type { PrivilegeTreeNode } from 'src/models'
 
-const userStore = useUserStore()
 const { replace } = useRouter()
-
 const $q = useQuasar()
+
+const userStore = useUserStore()
 
 const leftDrawerOpen = ref<boolean>(false)
 

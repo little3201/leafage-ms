@@ -67,7 +67,7 @@ export interface PrivilegeTreeNode extends TreeNode {
   redirect?: string
   component: string
   icon?: string
+  hidden?: boolean
   actions?: string[]
-  order: number
   children?: PrivilegeTreeNode[]
 }

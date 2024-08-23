@@ -13,11 +13,10 @@ export default boot(({ router, store }) => {
         next({ path: '/' })
       } else {
         // 获取权限，注册路由表
-        if (to.path !== '/' && !userStore.routes.length) {
+        if (!to.name || !router.hasRoute(to.name)) {
           const routes = generateRoutes(userStore.privileges as PrivilegeTreeNode[])
 
           // 动态添加可访问路由表
-          userStore.updateRoutes(routes)
           routes.forEach((route) => {
             router.addRoute(route as RouteRecordRaw)
           })

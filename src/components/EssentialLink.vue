@@ -3,7 +3,6 @@
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
-
     <q-item-section>
       <q-item-label>{{ $t(name) }}</q-item-label>
     </q-item-section>

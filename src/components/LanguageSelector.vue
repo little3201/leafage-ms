@@ -4,7 +4,7 @@
       <q-list dense separator>
         <q-item clickable v-close-popup v-for="option in localeOptions" :key="option.value"
           :active="locale === option.value" @click="changeLocale(option.value)">
-          <q-item-section>{{ option.label }}{{ lang }}</q-item-section>
+          <q-item-section>{{ option.label }}</q-item-section>
         </q-item>
       </q-list>
     </q-menu>

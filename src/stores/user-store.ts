@@ -34,7 +34,5 @@ export const useUserStore = defineStore('user', {
       })
     }
   },
-  persist: {
-    paths: ['user', 'access_token', 'privileges']
-  }
+  persist: true
 })

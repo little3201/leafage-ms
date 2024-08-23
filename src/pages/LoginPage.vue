@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-img alt="logo" src="/vite.svg" width="3rem" height="3rem" />
-          <span class="q-ml-sm text-weight-medium">Management System</span>
+          <span class="q-ml-sm text-weight-medium">Project Management</span>
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />
@@ -47,7 +47,7 @@
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">
-                  <q-img alt="logo" src="/vite.svg" style="height: 10em; width: 10em" />
+                  <q-img alt="logo" src="/vite.svg" width="8em" height="8em" />
                 </div>
                 <div class="text-h6 text-center q-mb-xs">
                   {{ $t('signinTo') }}
@@ -95,6 +95,7 @@ import ThemeToogle from 'components/ThemeToogle.vue'
 
 const { currentRoute, replace } = useRouter()
 const $q = useQuasar()
+
 const userStore = useUserStore()
 
 const showPwd = ref<boolean>(true)

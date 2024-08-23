@@ -6,7 +6,7 @@ export const commonHandlers = [
 
     const username = info.get('username')
     // Read the intercepted request body.
-    return HttpResponse.json({ user: { username, avatar: 'assets/images/avatar.jpg' }, access_token: 'sfa23asdfasdfasdf' }, {
+    return HttpResponse.json({ user: { username, avatar: 'src/assets/images/avatar.jpg' }, access_token: 'sfa23asdfasdfasdf' }, {
       headers: {
         'Set-Cookie': 'logged_in=yes'
       }

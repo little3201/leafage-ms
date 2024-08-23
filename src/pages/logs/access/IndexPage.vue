@@ -40,7 +40,7 @@
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-chip v-if="props.row.status" size="sm" color="positive">{{ $t('success') }}</q-chip>
-          <q-chip v-else size="sm" color="negative">{{ $t('failure') }}</q-chip>
+          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">

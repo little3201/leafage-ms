@@ -5,6 +5,10 @@ import { regionsHandlers } from './regions'
 import { rolesHandlers } from './roles'
 import { usersHandlers } from './users'
 import { privilegessHandlers } from './privileges'
+import { operationLogsHandlers } from './operation-logs'
+import { accessLogsHandlers } from './access-logs'
+import { auditLogsHandlers } from './audit-logs'
+import { schedulerLogsHandlers } from './scheduler-logs'
 
 export const handlers = [
   ...commonHandlers,
@@ -13,5 +17,9 @@ export const handlers = [
   ...regionsHandlers,
   ...rolesHandlers,
   ...usersHandlers,
-  ...privilegessHandlers
+  ...privilegessHandlers,
+  ...operationLogsHandlers,
+  ...accessLogsHandlers,
+  ...auditLogsHandlers,
+  ...schedulerLogsHandlers
 ]

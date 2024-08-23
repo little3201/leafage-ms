@@ -128,7 +128,7 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'username', label: 'username', align: 'left', field: 'username', sortable: true },
-  { name: 'fullname', label: 'fullname', align: 'center', field: 'fullname', sortable: true },
+  { name: 'email', label: 'email', align: 'center', field: 'email', sortable: true },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'accountNonLocked', label: 'accountNonLocked', align: 'center', field: 'accountNonLocked' },
   { name: 'accountExpiresAt', label: 'accountExpiresAt', align: 'center', field: 'accountExpiresAt', sortable: true },

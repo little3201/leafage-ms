@@ -8,7 +8,7 @@
         </q-toolbar-title>
         <q-toolbar-title>
           <q-btn title="drawer" type="button" dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen"
-            aria-disabled="false" />
+            class="cursor-pointer" />
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />

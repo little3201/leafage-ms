@@ -6,7 +6,7 @@
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">{{ $t('accessLog') }}</div>
           <q-space />
-          <q-btn icon="mdi-close" flat round dense v-close-popup />
+          <q-btn icon="sym_r_close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
@@ -21,10 +21,10 @@
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="mdi-search" />
+            <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -45,9 +45,9 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="mdi-file-document-outline"
+          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_sticky_note"
             @click="showRow(props.row.id)" class="q-mt-none" />
-          <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>

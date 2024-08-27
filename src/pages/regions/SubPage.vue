@@ -28,12 +28,12 @@
     <template v-slot:top-right>
       <q-input dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
-          <q-icon name="mdi-search" />
+          <q-icon name="sym_r_search" />
         </template>
       </q-input>
-      <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
+      <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add" :label="$t('add')"
         @click="addRow" />
-      <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
+      <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
         @click="exportTable" />
     </template>
 
@@ -50,13 +50,13 @@
       <q-tr :props="props">
         <q-td auto-width>
           <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-            :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'" />
+            :icon="props.expand ? 'sym_r_keyboard_arrow_down' : 'sym_r_keyboard_arrow_right'" />
         </q-td>
         <q-td v-for="col in props.cols" :key="col.name">
           <div v-if="col.name === 'id'" class="text-right">
-            <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-              @click="editRow(props.row.id)" class="q-mt-none" />
-            <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
+            <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+              class="q-mt-none" />
+            <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
               @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
           </div>
           <div v-else-if="col.name === 'enabled'" class="text-center">

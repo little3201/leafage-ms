@@ -1,5 +1,5 @@
 <template>
-  <q-toggle size="sm" v-model="$q.dark.isActive" icon="mdi-weather-night" unchecked-icon="mdi-white-balance-sunny"
+  <q-toggle size="sm" v-model="$q.dark.isActive" icon="sym_r_dark_mode" unchecked-icon="sym_r_light_mode"
     :color="$q.dark.isActive ? 'black' : ''" @update:model-value="handleChange" />
 </template>
 

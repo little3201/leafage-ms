@@ -7,8 +7,8 @@
           <span>Project Management</span>
         </q-toolbar-title>
         <q-toolbar-title>
-          <q-btn title="drawer" type="button" dense flat round icon="mdi-menu" @click="leftDrawerOpen = !leftDrawerOpen"
-            class="cursor-pointer" />
+          <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
+            @click="leftDrawerOpen = !leftDrawerOpen" class="cursor-pointer" />
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />
@@ -40,7 +40,7 @@
         <!-- home -->
         <EssentialLink v-bind="{
           name: 'home',
-          icon: 'mdi-home-outline',
+          icon: 'sym_r_home',
           path: '/'
         }" />
         <!-- privileges -->

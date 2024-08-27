@@ -23,13 +23,13 @@
     </q-card>
   </q-dialog>
 
-  <q-table flat ref="tableRef" :title="title" :rows="rows" :columns="columns" row-key="id"
+  <q-table flat ref="tableRef" :title="$t(title)" :rows="rows" :columns="columns" row-key="id"
     v-model:pagination="pagination" :loading="loading" :filter="filter" binary-state-sort @request="onRequest"
     class="full-width">
     <template v-slot:top-right>
       <q-input dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
-          <q-icon name="mdi-search" />
+          <q-icon name="sym_r_search" />
         </template>
       </q-input>
     </template>
@@ -47,12 +47,12 @@
       <q-tr :props="props">
         <q-td auto-width>
           <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-            :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'" />
+            :icon="props.expand ? 'sym_r_keyboard_arrow_down' : 'sym_r_keyboard_arrow_right'" />
         </q-td>
         <q-td v-for="col in props.cols" :key="col.name">
           <div v-if="col.name === 'id'" class="text-right">
-            <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-              @click="editRow(col.value)" class="q-mt-none" />
+            <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+              class="q-mt-none" />
           </div>
           <div v-else-if="col.name === 'enabled'" class="text-center">
             <q-toggle v-model="props.row.enabled" size="sm" color="positive" />

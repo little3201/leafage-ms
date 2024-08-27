@@ -29,12 +29,12 @@
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="mdi-search" />
+            <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="mdi-plus" :label="$t('add')"
-          @click="addRow" />
-        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
+        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
+          :label="$t('add')" @click="addRow" />
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -76,15 +76,14 @@
         <q-td :props="props">
           <q-btn title="accountNonLocked" padding="xs" flat round :disable="loading"
             :color="props.row.accountNonLocked ? 'positive' : 'warning'"
-            :icon="props.row.accountNonLocked ? 'mdi-lock-open-variant-outline' : 'mdi-lock-outline'"
-            @click="lockRow(props.row)" />
+            :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'" @click="lockRow(props.row)" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-            @click="editRow(props.row.id)" class="q-mt-none" />
-          <q-btn title="delete" padding="xs" flat round color="negative" icon="mdi-trash-can-outline"
+          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+            class="q-mt-none" />
+          <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
       </template>

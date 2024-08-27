@@ -1,5 +1,5 @@
 <template>
-  <q-btn title="language" icon="mdi-translate" round flat dense>
+  <q-btn title="translate" icon="sym_r_translate" round flat dense>
     <q-menu>
       <q-list dense separator>
         <q-item clickable v-close-popup v-for="option in localeOptions" :key="option.value"

@@ -29,12 +29,12 @@
       <template v-slot:top-right>
         <q-input dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
-            <q-icon name="mdi-search" />
+            <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="mdi-refresh"
+        <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
           @click="refresh" />
-        <q-btn title="export" rounded outline color="primary" icon="mdi-file-download-outline" :label="$t('export')"
+        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
 
@@ -51,12 +51,12 @@
         <q-tr :props="props">
           <q-td auto-width>
             <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
-              :icon="props.expand ? 'mdi-chevron-down' : 'mdi-chevron-right'" />
+              :icon="props.expand ? 'sym_r_keyboard_arrow_down' : 'sym_r_keyboard_arrow_right'" />
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="mdi-pencil-outline"
-                @click="editRow(col.value)" class="q-mt-none" />
+              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
+                class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />

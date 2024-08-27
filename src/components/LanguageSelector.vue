@@ -1,10 +1,10 @@
 <template>
-  <q-btn title="language" icon="mdi-translate" round flat dense>
+  <q-btn title="translate" icon="sym_r_translate" round flat dense>
     <q-menu>
       <q-list dense separator>
         <q-item clickable v-close-popup v-for="option in localeOptions" :key="option.value"
           :active="locale === option.value" @click="changeLocale(option.value)">
-          <q-item-section>{{ option.label }}{{ lang }}</q-item-section>
+          <q-item-section>{{ option.label }}</q-item-section>
         </q-item>
       </q-list>
     </q-menu>

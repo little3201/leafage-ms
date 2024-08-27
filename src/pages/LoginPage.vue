@@ -61,7 +61,7 @@
                     v-model.trim="form.password" :placeholder="$t('password')"
                     :rules="[(val) => (val && val.length > 8 && val.length < 32) || $t('password')]">
                     <template v-slot:append>
-                      <q-icon size="xs" :name="showPwd ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                      <q-icon size="xs" :name="showPwd ? 'sym_r_visibility_off' : 'sym_r_visibility'"
                         class="cursor-pointer" @click="showPwd = !showPwd" />
                     </template>
                   </q-input>

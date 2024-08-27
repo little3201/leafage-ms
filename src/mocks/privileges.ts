@@ -10,7 +10,7 @@ const datas: Privilege[] = [
     name: 'system',
     order: 1,
     enabled: true,
-    icon: 'mdi-cog-outline',
+    icon: 'sym_r_settings',
     description: 'this is description for this row'
   },
   {
@@ -21,7 +21,7 @@ const datas: Privilege[] = [
     name: 'logs',
     order: 2,
     enabled: true,
-    icon: 'mdi-clipboard-list-outline',
+    icon: 'sym_r_lab_profile',
     description: 'this is description for this row'
   },
   {
@@ -32,7 +32,7 @@ const datas: Privilege[] = [
     redirect: '/regions',
     order: 3,
     enabled: true,
-    icon: 'mdi-database-marker-outline',
+    icon: 'sym_r_location_on',
     description: 'this is description for this row'
   }
 ]
@@ -46,7 +46,7 @@ const subDatas: Privilege[] = [
     name: 'groups',
     order: 1,
     enabled: true,
-    icon: 'mdi-account-multiple-plus-outline',
+    icon: 'sym_r_group',
     description: 'this is description for this row'
   },
   {
@@ -57,7 +57,7 @@ const subDatas: Privilege[] = [
     name: 'users',
     order: 2,
     enabled: true,
-    icon: 'mdi-account-outline',
+    icon: 'sym_r_person',
     description: 'this is description for this row'
   },
   {
@@ -68,7 +68,7 @@ const subDatas: Privilege[] = [
     name: 'privileges',
     order: 3,
     enabled: true,
-    icon: 'mdi-shield-key-outline',
+    icon: 'sym_r_admin_panel_settings',
     description: 'this is description for this row'
   },
   {
@@ -79,7 +79,7 @@ const subDatas: Privilege[] = [
     name: 'roles',
     order: 4,
     enabled: true,
-    icon: 'mdi-shield-account-outline',
+    icon: 'sym_r_shield_person',
     description: 'this is description for this row'
   },
   {
@@ -90,7 +90,7 @@ const subDatas: Privilege[] = [
     name: 'dictionaries',
     order: 5,
     enabled: true,
-    icon: 'mdi-book-outline',
+    icon: 'sym_r_book_3',
     description: 'this is description for this row'
   },
   {
@@ -101,7 +101,7 @@ const subDatas: Privilege[] = [
     name: 'operationLog',
     order: 1,
     enabled: true,
-    icon: 'mdi-clipboard-text-outline',
+    icon: 'sym_r_clinical_notes',
     description: 'this is description for this row'
   },
   {
@@ -112,7 +112,7 @@ const subDatas: Privilege[] = [
     name: 'accessLog',
     order: 2,
     enabled: true,
-    icon: 'mdi-file-document-outline',
+    icon: 'sym_r_sticky_note_2',
     description: 'this is description for this row'
   },
   {
@@ -123,7 +123,7 @@ const subDatas: Privilege[] = [
     name: 'auditLog',
     order: 3,
     enabled: true,
-    icon: 'mdi-clipboard-check-outline',
+    icon: 'sym_r_note_alt',
     description: 'this is description for this row'
   },
   {
@@ -134,7 +134,7 @@ const subDatas: Privilege[] = [
     name: 'schedulerLog',
     order: 4,
     enabled: true,
-    icon: 'mdi-calendar-text-outline',
+    icon: 'sym_r_event_note',
     description: 'this is description for this row'
   },
   {
@@ -145,7 +145,7 @@ const subDatas: Privilege[] = [
     name: 'regions',
     order: 1,
     enabled: true,
-    icon: 'mdi-database-marker-outline',
+    icon: 'sym_r_location_on',
     description: 'this is description for this row'
   }
 ]
@@ -157,42 +157,42 @@ const treeNodes: PrivilegeTreeNode[] = [
     component: '#',
     redirect: '/system/users',
     name: 'system',
-    icon: 'mdi-cog-outline',
+    icon: 'sym_r_settings',
     children: [
       {
         id: 2,
         path: 'groups',
         component: 'pages/system/groups/IndexPage',
         name: 'groups',
-        icon: 'mdi-account-multiple-plus-outline'
+        icon: 'sym_r_group'
       },
       {
         id: 3,
         path: 'users',
         component: 'pages/system/users/IndexPage',
         name: 'users',
-        icon: 'mdi-account-outline'
+        icon: 'sym_r_person'
       },
       {
         id: 4,
         path: 'privileges',
         component: 'pages/system/privileges/IndexPage',
         name: 'privileges',
-        icon: 'mdi-shield-key-outline'
+        icon: 'sym_r_admin_panel_settings'
       },
       {
         id: 5,
         path: 'roles',
         component: 'pages/system/roles/IndexPage',
         name: 'roles',
-        icon: 'mdi-shield-account-outline'
+        icon: 'sym_r_shield_person'
       },
       {
         id: 6,
         path: 'dictionaries',
         component: 'pages/system/dictionaries/IndexPage',
         name: 'dictionaries',
-        icon: 'mdi-book-outline'
+        icon: 'sym_r_book_3'
       }
     ]
   },
@@ -202,35 +202,35 @@ const treeNodes: PrivilegeTreeNode[] = [
     component: '#',
     redirect: '/logs/operation',
     name: 'logs',
-    icon: 'mdi-clipboard-list-outline',
+    icon: 'sym_r_lab_profile',
     children: [
       {
         id: 8,
         path: 'operation',
         component: 'pages/logs/operation/IndexPage',
         name: 'operationLog',
-        icon: 'mdi-clipboard-text-outline'
+        icon: 'sym_r_clinical_notes'
       },
       {
         id: 9,
         path: 'access',
         component: 'pages/logs/access/IndexPage',
         name: 'accessLog',
-        icon: 'mdi-file-document-outline'
+        icon: 'sym_r_sticky_note_2'
       },
       {
         id: 10,
         path: 'audit',
         component: 'pages/logs/audit/IndexPage',
         name: 'auditLog',
-        icon: 'mdi-clipboard-check-outline'
+        icon: 'sym_r_note_alt'
       },
       {
         id: 11,
         path: 'scheduler',
         component: 'pages/logs/scheduler/IndexPage',
         name: 'schedulerLog',
-        icon: 'mdi-calendar-text-outline'
+        icon: 'sym_r_event_note'
       }
     ]
   },
@@ -240,14 +240,14 @@ const treeNodes: PrivilegeTreeNode[] = [
     component: '#',
     name: 'regions',
     redirect: '/regions',
-    icon: 'mdi-database-marker-outline',
+    icon: 'sym_r_location_on',
     children: [
       {
         id: 13,
         path: '',
         component: 'pages/regions/IndexPage',
         name: 'regions-index',
-        icon: 'mdi-database-marker-outline',
+        icon: 'sym_r_location_on',
         hidden: true
       }
     ]

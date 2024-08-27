@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.11",
-    "axios": "^1.7.3",
+    "axios": "^1.7.4",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
     "quasar": "^2.16.4",

@@ -13,7 +13,7 @@ export const authenticationHandlers = [
     })
   }),
   http.post(`/api${SERVER_URL.SIGNOUT}`, ({ cookies }) => {
-    if (!cookies.logged_in) {
+    if (!cookies.username) {
       return new HttpResponse(null, { status: 401 })
     }
     return new HttpResponse()

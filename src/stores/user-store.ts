@@ -17,9 +17,11 @@ export const useUserStore = defineStore('user', {
   }),
   actions: {
     async logout() {
-      await signout()
-      Cookies.remove('username')
-      this.$reset()
+      const res = await signout()
+      if (res.status === 200) {
+        Cookies.remove('username')
+        this.$reset()
+      }
     },
     async login(username: string, password: string) {
       const res = await signin(username, password)
@@ -27,7 +29,7 @@ export const useUserStore = defineStore('user', {
         const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
         // 执行结果处理
         this.$patch({
-          user: userResp.data.user,
+          user: userResp.data,
           privileges: privilegesResp.data
         })
       }

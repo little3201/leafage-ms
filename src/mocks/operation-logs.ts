@@ -1,143 +1,144 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 import type { OperationLog } from 'src/models'
 
 const datas: OperationLog[] = [
   {
     id: 1,
-    module: 'System',
     operator: 'admin',
     operation: 'Create User',
-    method: 'POST',
-    params: '{"operator:"john", "role:"admin"}',
+    content: 'Create User: username: test',
     ip: '192.168.0.1',
     location: 'New York',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 2,
-    module: 'System',
     operator: 'john',
     operation: 'Update Profile',
-    method: 'PUT',
-    params: '{"email:"john@example.com"}',
+    content: 'Change avatar to test.jpg',
     ip: '192.168.0.2',
     location: 'London',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 401,
+    operatedTime: new Date()
   },
   {
     id: 3,
-    module: 'System',
     operator: 'alice',
     operation: 'Delete Post',
-    method: 'DELETE',
-    params: '{"post_id:123}',
+    content: 'Delete Post: test',
     ip: '192.168.0.3',
     location: 'San Francisco',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 4,
-    module: 'System',
     operator: 'bob',
     operation: 'Upload File',
-    method: 'POST',
-    params: '{"file_name:"report.pdf"}',
+    content: 'Upload file: test.txt',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 0,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 400,
+    operatedTime: new Date()
   },
   {
     id: 5,
-    module: 'System',
     operator: 'carol',
     operation: 'Login',
-    method: 'POST',
-    params: '{}',
+    content: 'test login',
     ip: '192.168.0.5',
     location: 'Paris',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 6,
-    module: 'System',
     operator: 'dave',
     operation: 'Logout',
-    method: 'POST',
-    params: '{}',
+    content: 'test logout',
     ip: '192.168.0.6',
     location: 'Tokyo',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 7,
-    module: 'System',
     operator: 'admin',
     operation: 'Change Password',
-    method: 'PUT',
-    params: '{"id:2}',
+    content: 'Change password at 2min ago',
     ip: '192.168.0.1',
     location: 'New York',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 8,
-    module: 'System',
     operator: 'john',
     operation: 'View Report',
-    method: 'GET',
-    params: '{"report_id:45}',
+    content: 'View shceduler report',
     ip: '192.168.0.2',
     location: 'London',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 9,
-    module: 'System',
     operator: 'alice',
     operation: 'Download File',
-    method: 'GET',
-    params: '{"file_id:789}',
+    content: 'Download file: xxx.txt',
     ip: '192.168.0.3',
     location: 'San Francisco',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 10,
-    module: 'System',
     operator: 'bob',
     operation: 'Update Settings',
-    method: 'PUT',
-    params: '{"settings:{"theme:"dark"}}',
+    content: 'Update dark mode',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 11,
-    module: 'System',
     operator: 'bob',
     operation: 'Update Settings',
-    method: 'PUT',
-    params: '{"settings:{"theme:"dark"}}',
+    content: 'Create theme, set primary to green',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    os: 'Windows 11',
+    browser: 'Edge 129.0.2792.89',
+    statusCode: 200,
+    operatedTime: new Date()
   }
 ]
 
 export const operationLogsHandlers = [
-  http.get('/api/operation-logs/:id', ({ params }) => {
+  http.get(`/api${SERVER_URL.OPERATION_LOG}/:id`, ({ params }) => {
     const { id } = params
     if (id) {
       return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
@@ -145,20 +146,22 @@ export const operationLogsHandlers = [
       return HttpResponse.json(null)
     }
   }),
-  http.get('/api/operation-logs', ({ request }) => {
+  http.get(`/api${SERVER_URL.OPERATION_LOG}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
     // Construct a JSON response with the list of all Role
     // as the response body.
     const data = {
-      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
-      totalElements: datas.length
+      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      page: {
+        totalElements: datas.length
+      }
     }
 
     return HttpResponse.json(data)
   }),
-  http.delete('/api/operation-logs/:id', ({ params }) => {
+  http.delete(`/api${SERVER_URL.OPERATION_LOG}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

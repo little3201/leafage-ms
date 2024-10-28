@@ -9,7 +9,7 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.groupName" label="Group name" lazy-rules
+            <q-input v-model="form.name" label="Group name" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
           </q-card-section>
 
@@ -88,7 +88,8 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const form = ref<Group>({
-  groupName: ''
+  name: '',
+  enabled: true
 })
 
 const pagination = ref({
@@ -121,16 +122,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending }
 
-  retrieveGroups(page, rowsPerPage, { params }).then(res => {
+  retrieveGroups({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

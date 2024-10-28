@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 
-export const commonHandlers = [
-  http.post('/api/login', async ({ request }) => {
+export const authenticationHandlers = [
+  http.post(`/api${SERVER_URL.SIGNIN}`, async ({ request }) => {
     const info = await request.formData()
 
     const username = info.get('username')
@@ -12,7 +13,7 @@ export const commonHandlers = [
       }
     })
   }),
-  http.post('/api/logout', ({ cookies }) => {
+  http.post(`/api${SERVER_URL.SIGNOUT}`, ({ cookies }) => {
     if (!cookies.logged_in) {
       return new HttpResponse(null, { status: 401 })
     }

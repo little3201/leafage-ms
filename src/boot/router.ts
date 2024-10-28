@@ -18,7 +18,7 @@ export default boot(({ router, store }) => {
 
           // 动态添加可访问路由表
           routes.forEach((route) => {
-            router.addRoute(route as RouteRecordRaw)
+            router.addRoute('home', route as RouteRecordRaw)
           })
           // 捕获所有未匹配的路径，放在配置的末尾
           router.addRoute({
@@ -55,15 +55,15 @@ export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] =>
   const res: RouteRecordRaw[] = []
   for (const route of routes) {
     const data: RouteRecordRaw = {
-      path: route.path as string,
+      path: route.meta.path,
       name: route.name,
-      redirect: route.redirect,
+      redirect: route.meta.redirect,
       component: null,
       children: []
     }
-    if (route.component) {
-      const comModule = modules[`../${route.component}.vue`]
-      const component = route.component as string
+    if (route.meta.component) {
+      const comModule = modules[`../${route.meta.component}.vue`]
+      const component = route.meta.component as string
       if (comModule) {
         // 动态加载路由文件
         data.component = comModule

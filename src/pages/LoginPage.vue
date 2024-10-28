@@ -55,11 +55,11 @@
                 <q-form @submit="onSubmit" class="q-mt-md full-width q-px-xl">
                   <q-input :disable="loading" dense no-error-icon v-model.trim="form.username"
                     :placeholder="$t('username')"
-                    :rules="[(val) => (val && val.length > 5 && val.length < 12) || $t('username')]">
+                    :rules="[(val) => (val && val.length >= 5 && val.length <= 12) || $t('username')]">
                   </q-input>
                   <q-input :disable="loading" dense no-error-icon :type="showPwd ? 'password' : 'text'"
                     v-model.trim="form.password" :placeholder="$t('password')"
-                    :rules="[(val) => (val && val.length > 8 && val.length < 32) || $t('password')]">
+                    :rules="[(val) => (val && val.length >= 8 && val.length <= 32) || $t('password')]">
                     <template v-slot:append>
                       <q-icon size="xs" :name="showPwd ? 'sym_r_visibility_off' : 'sym_r_visibility'"
                         class="cursor-pointer" @click="showPwd = !showPwd" />
@@ -116,7 +116,7 @@ function changeRememberMe(value: boolean) {
   return value
 }
 
-function onSubmit() {
+async function onSubmit() {
   loading.value = true
   userStore.login(form.value.username, form.value.password)
     .then(() => {

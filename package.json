@@ -13,17 +13,17 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.11",
+    "@quasar/extras": "^1.16.12",
     "axios": "^1.7.3",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
-    "quasar": "^2.16.4",
-    "vue": "^3.4.21",
-    "vue-i18n": "^9.13.1",
-    "vue-router": "^4.3.2"
+    "quasar": "^2.17.1",
+    "vue": "^3.5.12",
+    "vue-i18n": "^10.0.4",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.9.3",
+    "@quasar/app-vite": "^1.10.2",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "autoprefixer": "^10.4.19",

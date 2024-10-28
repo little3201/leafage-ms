@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { Cookies } from 'quasar'
-import { api } from 'boot/axios'
+import { signin, signout } from 'src/api/authentication'
 import { retrievePrivilegeTree } from 'src/api/privileges'
-import type { Privilege } from 'src/models'
+import type { PrivilegeTreeNode } from 'src/models'
 
 interface User {
   username: string
@@ -12,23 +12,21 @@ interface User {
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: null as User | null,
-    access_token: null as string | null,
-    privileges: [] as Privilege[]
+    privileges: [] as PrivilegeTreeNode[]
   }),
   actions: {
     async logout() {
-      await api.post('/logout')
+      await signout()
       Cookies.remove('logged_in')
       this.$reset()
     },
     async login(username: string, password: string) {
-      const res = await api.post('/login', new URLSearchParams({ username, password }))
+      const res = await signin(username, password)
       this.$patch({
-        user: res.data.user,
-        access_token: res.data.access_token
+        user: res.data.user
       })
       // privileges
-      const response = await retrievePrivilegeTree(username)
+      const response = await retrievePrivilegeTree()
       this.$patch({
         privileges: response.data
       })

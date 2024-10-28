@@ -102,7 +102,6 @@ const form = ref<Privilege>({
   path: '',
   component: '',
   icon: '',
-  order: 1,
   description: ''
 })
 

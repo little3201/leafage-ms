@@ -78,7 +78,7 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
-import { retrieveRegionSubset, fetchRegion } from 'src/api/regions'
+import { retrieveRegions, fetchRegion } from 'src/api/regions'
 
 import type { Region } from 'src/models'
 
@@ -141,14 +141,15 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
 
   if (props_.superiorId) {
-    retrieveRegionSubset(props_.superiorId, page, rowsPerPage, { params }).then(res => {
+    filter.superiorId = props_.superiorId
+    retrieveRegions({ ...params }, filter).then(res => {
       pagination.value.page = page
       pagination.value.rowsPerPage = rowsPerPage
       pagination.value.sortBy = sortBy
       pagination.value.descending = descending
 
       rows.value = res.data.content
-      pagination.value.rowsNumber = res.data.totalElements
+      pagination.value.rowsNumber = res.data.page.totalElements
     }).catch(error => {
       $q.notify({
         message: error.message,

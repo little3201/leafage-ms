@@ -77,12 +77,8 @@ const row = ref<AuditLog>({
   operation: '',
   operator: '',
   resource: '',
-  oldValue: '',
-  newValue: null,
   ip: '',
-  location: '',
-  status: null,
-  operatedTime: null
+  location: ''
 })
 
 const pagination = ref({
@@ -118,15 +114,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
 
-  retrieveAuditLogs(page, rowsPerPage).then(res => {
+  const params = { page, size: rowsPerPage, sortBy, descending }
+
+  retrieveAuditLogs({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

@@ -74,13 +74,7 @@ const loading = ref<boolean>(false)
 
 const row = ref<SchedulerLog>({
   id: undefined,
-  name: '',
-  method: '',
-  params: '',
-  cronExpression: '',
-  startTime: '',
-  endTime: '',
-  status: null
+  name: ''
 })
 
 const pagination = ref({
@@ -115,15 +109,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
 
-  retrieveSchedulerLogs(page, rowsPerPage).then(res => {
+  const params = { page, size: rowsPerPage, sortBy, descending }
+
+  retrieveSchedulerLogs({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

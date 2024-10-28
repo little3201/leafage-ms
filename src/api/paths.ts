@@ -1,7 +1,7 @@
 // 服务匹配前缀
 const SERVER_PRE = {
   HYPERVISOR: '', // 系统
-  ASSETS: '/assets' // 资源
+  ASSETS: '' // 资源
 }
 
 // 接口请求路径
@@ -14,6 +14,7 @@ export const SERVER_URL = {
   DICTIONARY: SERVER_PRE.HYPERVISOR.concat('/dictionaries'), // 字典
 
   REGION: SERVER_PRE.HYPERVISOR.concat('/regions'), // 行政区划
+  FILE: SERVER_PRE.ASSETS.concat('/files'), // 文件
 
   ACCESS_LOG: SERVER_PRE.HYPERVISOR.concat('/access-logs'), // 访问日志
   AUDIT_LOG: SERVER_PRE.HYPERVISOR.concat('/audit-logs'), // 审计日志
@@ -24,5 +25,8 @@ export const SERVER_URL = {
   POST: SERVER_PRE.ASSETS.concat('/posts'), // 帖子
   CATEGORY: SERVER_PRE.ASSETS.concat('/categories'), // 类别
   STATISTICS: SERVER_PRE.ASSETS.concat('/statistics'), // 统计
-  COMMENT: SERVER_PRE.ASSETS.concat('/comments') // 评论
+  COMMENT: SERVER_PRE.ASSETS.concat('/comments'), // 评论
+
+  SIGNIN: SERVER_PRE.ASSETS.concat('/signin'), // 登录
+  SIGNOUT: SERVER_PRE.ASSETS.concat('/signout') // 退出
 }

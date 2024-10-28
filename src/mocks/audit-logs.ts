@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 import type { AuditLog } from 'src/models'
 
 const datas: AuditLog[] = [
@@ -7,12 +8,11 @@ const datas: AuditLog[] = [
     operator: 'admin',
     operation: 'Create',
     resource: 'User',
-    oldValue: null,
     newValue: '{"operator:"john", "role:"admin"}',
     ip: '192.168.0.1',
     location: 'New York',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 2,
@@ -23,8 +23,8 @@ const datas: AuditLog[] = [
     newValue: '{"email:"john@example.com"}',
     ip: '192.168.0.2',
     location: 'London',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 203,
+    operatedTime: new Date()
   },
   {
     id: 3,
@@ -32,47 +32,44 @@ const datas: AuditLog[] = [
     operation: 'Delete',
     resource: 'Post',
     oldValue: '{"post_id:123, "content:"Hello World"}',
-    newValue: null,
     ip: '192.168.0.3',
     location: 'San Francisco',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 401,
+    operatedTime: new Date()
   },
   {
     id: 4,
     operator: 'bob',
     operation: 'Upload',
     resource: 'File',
-    oldValue: null,
     newValue: '{"file_name:"report.pdf"}',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 0,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 200,
+    operatedTime: new Date()
   },
   {
     id: 5,
     operator: 'carol',
     operation: 'Login',
     resource: 'Session',
-    oldValue: null,
-    newValue: '{"status:"active"}',
+    newValue: '{"statusCode:"active"}',
     ip: '192.168.0.5',
     location: 'Paris',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 500,
+    operatedTime: new Date()
   },
   {
     id: 6,
     operator: 'dave',
     operation: 'Logout',
     resource: 'Session',
-    oldValue: '{"status:"active"}',
-    newValue: '{"status:"inactive"}',
+    oldValue: '{"statusCode:"active"}',
+    newValue: '{"statusCode:"inactive"}',
     ip: '192.168.0.6',
     location: 'Tokyo',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 400,
+    operatedTime: new Date()
   },
   {
     id: 7,
@@ -83,32 +80,30 @@ const datas: AuditLog[] = [
     newValue: '{"id:2, "password:"new"}',
     ip: '192.168.0.1',
     location: 'New York',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 204,
+    operatedTime: new Date()
   },
   {
     id: 8,
     operator: 'john',
     operation: 'View',
     resource: 'Report',
-    oldValue: null,
     newValue: '{"report_id:45}',
     ip: '192.168.0.2',
     location: 'London',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 404,
+    operatedTime: new Date()
   },
   {
     id: 9,
     operator: 'alice',
     operation: 'Download',
     resource: 'File',
-    oldValue: null,
     newValue: '{"file_id:789}',
     ip: '192.168.0.3',
     location: 'San Francisco',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 500,
+    operatedTime: new Date()
   },
   {
     id: 10,
@@ -119,8 +114,8 @@ const datas: AuditLog[] = [
     newValue: '{"theme:"dark"}',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 502,
+    operatedTime: new Date()
   },
   {
     id: 11,
@@ -131,13 +126,13 @@ const datas: AuditLog[] = [
     newValue: '{"theme:"dark"}',
     ip: '192.168.0.4',
     location: 'Berlin',
-    status: 1,
-    operatedTime: '2024-07-01T00:00:00'
+    statusCode: 415,
+    operatedTime: new Date()
   }
 ]
 
 export const auditLogsHandlers = [
-  http.get('/api/audit-logs/:id', ({ params }) => {
+  http.get(`/api${SERVER_URL.AUDIT_LOG}/:id`, ({ params }) => {
     const { id } = params
     if (id) {
       return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
@@ -145,20 +140,22 @@ export const auditLogsHandlers = [
       return HttpResponse.json(null)
     }
   }),
-  http.get('/api/audit-logs', ({ request }) => {
+  http.get(`/api${SERVER_URL.AUDIT_LOG}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
     // Construct a JSON response with the list of all Role
     // as the response body.
     const data = {
-      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
-      totalElements: datas.length
+      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      page: {
+        totalElements: datas.length
+      }
     }
 
     return HttpResponse.json(data)
   }),
-  http.delete('/api/audit-logs/:id', ({ params }) => {
+  http.delete(`/api${SERVER_URL.AUDIT_LOG}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

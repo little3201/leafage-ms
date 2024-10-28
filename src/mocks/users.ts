@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 import type { User } from 'src/models'
 
 const datas: User[] = []
@@ -7,6 +8,7 @@ for (let i = 0; i < 20; i++) {
   const data: User = {
     id: i,
     username: 'username' + i,
+    fullName: 'fullName_' + i,
     avatar: '/src/assets/images/avatar.jpg',
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
@@ -19,20 +21,33 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const usersHandlers = [
-  http.get('/api/users', ({ request }) => {
+  http.get(`/api${SERVER_URL.USER}/me`, () => {
+    return HttpResponse.json(datas[0])
+  }),
+  http.get(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    } else {
+      return HttpResponse.json(null)
+    }
+  }),
+  http.get(`/api${SERVER_URL.USER}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
     // Construct a JSON response with the list of all Dictionarys
     // as the response body.
     const data = {
-      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
-      totalElements: datas.length
+      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      page: {
+        totalElements: datas.length
+      }
     }
 
     return HttpResponse.json(data)
   }),
-  http.post('/api/users', async ({ request }) => {
+  http.post(`/api${SERVER_URL.USER}`, async ({ request }) => {
     // Read the intercepted request body as JSON.
     const newData = await request.json() as User
 
@@ -43,7 +58,7 @@ export const usersHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.delete('/api/users/:id', ({ params }) => {
+  http.delete(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

@@ -4,12 +4,11 @@ import { SERVER_URL } from 'src/api/paths'
 export const authenticationHandlers = [
   http.post(`/api${SERVER_URL.SIGNIN}`, async ({ request }) => {
     const info = await request.formData()
-
     const username = info.get('username')
     // Read the intercepted request body.
-    return HttpResponse.json({ user: { username, avatar: '/src/assets/images/avatar.jpg' }, access_token: 'sfa23asdfasdfasdf' }, {
+    return HttpResponse.json(null, {
       headers: {
-        'Set-Cookie': 'logged_in=yes'
+        'Set-Cookie': `username=${username}; Path=/;`
       }
     })
   }),

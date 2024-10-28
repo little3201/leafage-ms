@@ -7,13 +7,13 @@ import type { PrivilegeTreeNode } from 'src/models'
 export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
-    const userStore = useUserStore(store)
-    if (userStore.user?.username && Cookies.get('logged_in')) {
+    if (Cookies.get('username')) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
         // 获取权限，注册路由表
         if (!to.name || !router.hasRoute(to.name)) {
+          const userStore = useUserStore(store)
           const routes = generateRoutes(userStore.privileges as PrivilegeTreeNode[])
 
           // 动态添加可访问路由表

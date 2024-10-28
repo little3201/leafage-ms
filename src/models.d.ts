@@ -152,7 +152,7 @@ export interface SchedulerLog extends AudtiMetadata {
   status?: number
 }
 
-export interface File extends AudtiMetadata {
+export interface FileRecord extends AudtiMetadata {
   name: string
   type: string
   size: number

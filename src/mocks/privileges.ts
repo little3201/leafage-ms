@@ -352,9 +352,7 @@ const treeNodes: PrivilegeTreeNode[] = [
 ]
 
 export const privilegessHandlers = [
-  http.get(`/api${SERVER_URL.PRIVILEGE}/tree`, ({ params }) => {
-    const { username } = params
-    console.log(username)
+  http.get(`/api${SERVER_URL.PRIVILEGE}/tree`, () => {
     return HttpResponse.json(treeNodes)
   }),
   http.get(`/api${SERVER_URL.PRIVILEGE}/:id/subset`, ({ params }) => {

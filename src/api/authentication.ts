@@ -8,8 +8,7 @@ import { SERVER_URL } from 'src/api/paths'
  * @returns token
  */
 export const signin = (username: string, password: string) => {
-  return api.post(SERVER_URL.SIGNIN, {}, { auth: { username, password } })
-  // return api.post(SERVER_URL.SIGNIN, new URLSearchParams({ username, password }))
+  return api.post(SERVER_URL.SIGNIN, new URLSearchParams({ username, password }))
 }
 
 /**

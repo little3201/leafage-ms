@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/api/paths'
-import type { File } from 'src/models'
+import type { FileRecord } from 'src/models'
 
-const datas: File[] = [
+const datas: FileRecord[] = [
 ]
 
 for (let i = 1; i < 28; i++) {
-  const data: File = {
+  const data: FileRecord = {
     id: i,
     name: 'file_name_' + i,
     type: i % 3 > 0 ? 'File' : 'Media',

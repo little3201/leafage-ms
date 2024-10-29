@@ -36,6 +36,14 @@
           :label="$t('upload')" @click="uploadRow" />
       </template>
 
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th v-for="col in props.cols" :key="col.name" :props="props">
+            {{ $t(col.label) }}
+          </q-th>
+        </q-tr>
+      </template>
+
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn title="download" padding="xs" flat round color="primary" icon="sym_r_download"

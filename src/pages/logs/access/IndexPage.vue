@@ -36,11 +36,19 @@
           </q-th>
         </q-tr>
       </template>
-
-      <template v-slot:body-cell-status="props">
+      <template v-slot:body-cell-httpMethod="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
-          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          <q-badge :color="methods[props.row.httpMethod]" rounded class="q-mr-xs" />
+          {{ props.row.httpMethod }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-statusCode="props">
+        <q-td :props="props">
+          <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
+            text-color="white">{{ props.row.statusCode }}</q-chip>
+          <q-chip v-else-if="props.row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+            props.row.statusCode }}</q-chip>
+          <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -98,14 +106,22 @@ const columns: QTableProps['columns'] = [
   { name: 'httpMethod', label: 'httpMethod', align: 'left', field: 'httpMethod' },
   { name: 'params', label: 'params', align: 'left', field: 'params' },
   { name: 'body', label: 'body', align: 'left', field: 'body' },
-  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
+  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
   { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
   { name: 'responseTimes', label: 'responseTimes', align: 'center', field: 'responseTimes' },
   { name: 'responseMessage', label: 'responseMessage', align: 'center', field: 'responseMessage' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
+
+const methods: { [key: string]: string } = {
+  GET: 'positive',
+  POST: 'warning',
+  PUT: 'primary',
+  PATCH: 'primary',
+  DELETE: 'negative'
+}
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()

@@ -178,7 +178,7 @@ const subDatas: Privilege[] = [
     actions: ['add', 'edit', 'remove', 'import', 'export', 'config', 'preview'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_code_rounded',
+    icon: 'sym_r_code',
     description: 'this is description for this row'
   },
   {
@@ -190,7 +190,7 @@ const subDatas: Privilege[] = [
     actions: ['add', 'edit', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_terminal_rounded',
+    icon: 'sym_r_terminal',
     description: 'this is description for this row'
   }
 ]

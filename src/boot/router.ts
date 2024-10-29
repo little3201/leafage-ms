@@ -4,16 +4,21 @@ import { Cookies } from 'quasar'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
 
+// 生成路由
+const BlankLayout = () => import('src/layouts/BlankLayout.vue')
+
+const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
+
 export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
-    if (Cookies.get('username')) {
+    const userStore = useUserStore(store)
+    if (Cookies.get('username') && Object.keys(userStore.user || {}).length > 0) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
         // 获取权限，注册路由表
         if (!to.name || !router.hasRoute(to.name)) {
-          const userStore = useUserStore(store)
           const routes = generateRoutes(userStore.privileges as PrivilegeTreeNode[])
 
           // 动态添加可访问路由表
@@ -45,12 +50,6 @@ export default boot(({ router, store }) => {
   })
 })
 
-// 生成路由
-const MainLayout = () => import('src/layouts/MainLayout.vue')
-const BlankLayout = () => import('src/layouts/BlankLayout.vue')
-
-const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
-
 export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] => {
   const res: RouteRecordRaw[] = []
   for (const route of routes) {
@@ -68,7 +67,7 @@ export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] =>
         // 动态加载路由文件
         data.component = comModule
       } else if (component.includes('#')) {
-        data.component = component === '#' ? MainLayout : BlankLayout
+        data.component = BlankLayout
       }
     }
     // recursive child routes

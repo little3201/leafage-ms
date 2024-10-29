@@ -19,6 +19,7 @@ export default {
   lastModifiedDate: '更新时间',
   members: '成员',
   username: '账号',
+  fullName: '姓名',
   password: '密码',
   email: '邮箱',
   accountNonLocked: '锁状态',
@@ -52,7 +53,7 @@ export default {
   resource: '资源',
   oldValue: '旧值',
   newValue: '新值',
-  executedTime: '耗时',
+  executedTimes: '耗时',
   processing: '进行中',
   done: '完成',
   failure: '失败',
@@ -112,9 +113,6 @@ export default {
   lengthRange: '长度在 {min} 到 {max} 个字符',
   removeConfirm: '是否确定要删除这条数据？',
 
-  pageError: '未找到相关页面',
-  networkError: '网络错误',
-  noPermission: '无访问权限',
   goHome: '返回首页',
 
   welcome: '嗨！欢迎回来',

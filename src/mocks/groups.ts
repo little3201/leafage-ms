@@ -4,13 +4,20 @@ import type { Group, GroupMembers, TreeNode } from 'src/models'
 
 const datas: Group[] = []
 
-for (let i = 0; i < 20; i++) {
+for (let i = 1; i < 20; i++) {
   const data: Group = {
     id: i,
     name: 'group_' + i,
+    principal: i < 6 ? 'https://cdn.quasar.dev/img/avatar' + i + '.jpg' : '',
     enabled: i % 3 > 0,
+    description: 'This is row description about xxx',
     lastModifiedDate: new Date()
   }
+  const members = []
+  for (let j = 1; j < 7; j++) {
+    members.push('https://cdn.quasar.dev/img/avatar' + j + '.jpg')
+  }
+  data.members = members
   datas.push(data)
 }
 

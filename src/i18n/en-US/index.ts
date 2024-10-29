@@ -19,6 +19,7 @@ export default {
   lastModifiedDate: 'Last Modified Date',
   members: 'Members',
   username: 'Username',
+  fullName: 'Full Name',
   password: 'Password',
   email: 'Email',
   accountNonLocked: 'Locked',
@@ -52,7 +53,7 @@ export default {
   resource: 'Resource',
   oldValue: 'Old Value',
   newValue: 'New Value',
-  executedTime: 'Executed Time',
+  executedTimes: 'Executed Times',
   processing: 'Processing',
   done: 'Done',
   failure: 'Failure',
@@ -112,9 +113,6 @@ export default {
   lengthRange: 'The length must between {min} and {max}',
   removeConfirm: 'Are you sure to delete this?',
 
-  pageError: 'Not found the page',
-  networkError: 'Network Error',
-  noPermission: 'Permission Denied',
   goHome: 'Go Home',
 
   welcome: 'Hi! Welcome Back.',

@@ -19,6 +19,7 @@ export default {
   lastModifiedDate: '更新時間',
   members: '成員',
   username: '賬號',
+  fullName: '姓名',
   password: '密碼',
   email: '郵箱',
   accountNonLocked: '鎖狀態',
@@ -52,7 +53,7 @@ export default {
   resource: '資源',
   oldValue: '舊值',
   newValue: '新值',
-  executedTime: '耗時',
+  executedTimes: '耗時',
   processing: '執行中',
   done: '完成',
   failure: '失敗',
@@ -112,9 +113,6 @@ export default {
   lengthRange: '長度在 {min} 到 {max} 個字元',
   removeConfirm: '是否確定要刪除這條數據？',
 
-  pageError: '未找到相關頁面',
-  networkError: '網絡錯誤',
-  noPermission: '無訪問權限',
   goHome: '返回首頁',
 
   welcome: '嗨！歡迎回來',

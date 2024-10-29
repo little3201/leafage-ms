@@ -37,10 +37,18 @@
         </q-tr>
       </template>
 
-      <template v-slot:body-cell-status="props">
+      <template v-slot:body-cell-statusCode="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
-          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
+            text-color="white">{{ props.row.statusCode }}</q-chip>
+          <q-chip v-else-if="props.row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+            props.row.statusCode }}</q-chip>
+          <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-operatedTime="props">
+        <q-td :props="props">
+          {{ props.row.operatedTime ? date.formatDate(props.row.operatedTime, 'YYYY-MM-DD HH:mm') : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -58,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 import { retrieveOperationLogs, fetchOperationLog } from 'src/api/operation-logs'
 
 import type { OperationLog } from 'src/models'
@@ -92,15 +100,14 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'module', label: 'module', align: 'left', field: 'module' },
   { name: 'operation', label: 'operation', align: 'left', field: 'operation' },
-  { name: 'method', label: 'method', align: 'left', field: 'method' },
-  { name: 'params', label: 'params', align: 'center', field: 'params' },
-  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
+  { name: 'os', label: 'os', align: 'left', field: 'os' },
+  { name: 'browser', label: 'browser', align: 'left', field: 'browser' },
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
-  { name: 'status', label: 'status', align: 'center', field: 'status' },
+  { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
   { name: 'operatedTime', label: 'operatedTime', align: 'center', field: 'operatedTime' },
+  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 

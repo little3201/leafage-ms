@@ -12,7 +12,7 @@ for (let i = 1; i < 34; i++) {
     areaCode: Math.floor(Math.random() * 100),
     postalCode: Math.floor(Math.random() * 3000),
     enabled: i % 3 > 0,
-    description: 'This is region description about xxx'
+    description: 'This is row description about xxx'
   }
   for (let j = 1; j < i; j++) {
     const subData: Region = {

@@ -24,6 +24,8 @@ export interface User extends AudtiMetadata {
 export interface Group extends AudtiMetadata {
   name: string
   superiorId?: number
+  principal?: string
+  members?: string[]
   enabled: boolean
   description?: string
 }
@@ -36,7 +38,7 @@ export interface GroupMembers {
 
 export interface Role extends AudtiMetadata {
   name: string
-  privileges?: number
+  members?: string[]
   enabled?: boolean
   description?: string
 }
@@ -147,7 +149,7 @@ export interface AuditLog extends AudtiMetadata {
 export interface SchedulerLog extends AudtiMetadata {
   name: string
   startTime?: Date
-  executedTime?: number
+  executedTimes?: number
   nextExecuteTime?: Date
   status?: number
 }

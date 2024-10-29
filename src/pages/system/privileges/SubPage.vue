@@ -11,7 +11,7 @@
           <q-input v-model="form.name" label="Region name" lazy-rules
             :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-          <q-input v-model="form.description" label="Region deacription" type="textarea" />
+          <q-input v-model="form.description" label="Region description" type="textarea" />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -46,7 +46,7 @@
     <template v-slot:body="props">
       <q-tr :props="props">
         <q-td auto-width>
-          <q-btn title="expand" round flat dense @click="props.expand = !props.expand"
+          <q-btn v-if="props.row.count > 0" title="expand" round flat dense @click="props.expand = !props.expand"
             :icon="props.expand ? 'sym_r_keyboard_arrow_down' : 'sym_r_keyboard_arrow_right'" />
         </q-td>
         <q-td v-for="col in props.cols" :key="col.name">
@@ -54,11 +54,24 @@
             <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
               class="q-mt-none" />
           </div>
-          <div v-else-if="col.name === 'enabled'" class="text-center">
-            <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
-          </div>
           <div v-else-if="col.name === 'name'">
             <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
+          </div>
+          <div v-else-if="col.name === 'actions' && props.row.actions && props.row.actions.length > 0">
+            <q-chip v-for="(action, index) in visibleArray(props.row.actions, 3)" :key="index" :label="$t(action)"
+              :color="actions[action]" text-color="white" class="q-mr-sm" size="sm" />
+            <template v-if="props.row.actions.length > 3">
+              <q-chip color="primary" text-color="white" class="q-mr-sm" size="sm">
+                + {{ props.row.actions.length - 3 }}
+                <q-tooltip>
+                  <q-chip v-for="(action, index) in props.row.actions.slice(3)" :key="index" :label="$t(action)"
+                    :color="actions[action]" text-color="white" class="q-mr-sm" size="sm" />
+                </q-tooltip>
+              </q-chip>
+            </template>
+          </div>
+          <div v-else-if="col.name === 'enabled'" class="text-center">
+            <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
           </div>
           <span v-else>{{ col.value }}</span>
         </q-td>
@@ -77,7 +90,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar } from 'quasar'
 import { retrievePrivilegeSubset, fetchPrivilege } from 'src/api/privileges'
-
+import { visibleArray } from 'src/utils'
 import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
@@ -116,11 +129,31 @@ const pagination = ref({
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
   { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
-  { name: 'order', label: 'order', align: 'left', field: 'order' },
+  { name: 'actions', label: 'actions', align: 'left', field: 'actions' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
+
+const actions: { [key: string]: string } = {
+  add: 'primary',
+  edit: 'primary',
+  upload: 'primary',
+
+  import: 'warning',
+
+  remove: 'negative',
+  clear: 'negative',
+
+  export: 'secondary',
+  download: 'secondary',
+
+  relation: 'positive',
+  config: 'positive',
+
+  preview: 'info',
+  detail: 'info'
+}
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()

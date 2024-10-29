@@ -13,8 +13,8 @@ for (let i = 0; i < 20; i++) {
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,
-    accountExpiresAt: new Date(2024, 7, i),
-    credentialsExpiresAt: new Date(2024, i, 3),
+    accountExpiresAt: i > 3 ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28) : undefined,
+    credentialsExpiresAt: i > 3 ? new Date(new Date().getFullYear() + 1, 12, 30) : undefined,
     lastModifiedDate: new Date()
   }
   datas.push(data)

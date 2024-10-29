@@ -8,11 +8,15 @@ for (let i = 0; i < 20; i++) {
   const data: Role = {
     id: i,
     name: 'role_' + i,
-    privileges: 1,
     enabled: i % 3 > 0,
-    description: 'This is role description about xxx',
+    description: 'This is row description about xxx',
     lastModifiedDate: new Date()
   }
+  const members = []
+  for (let j = 1; j < 7; j++) {
+    members.push('https://cdn.quasar.dev/img/avatar' + j + '.jpg')
+  }
+  data.members = members
   datas.push(data)
 }
 

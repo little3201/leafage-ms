@@ -10,7 +10,7 @@
           <q-input v-model="form.name" label="Region name" lazy-rules
             :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-          <q-input v-model="form.description" label="Region deacription" type="textarea" />
+          <q-input v-model="form.description" label="Region description" type="textarea" />
         </q-card-section>
 
         <q-card-actions align="right">

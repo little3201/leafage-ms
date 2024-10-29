@@ -7,10 +7,10 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input v-model="form.name" label="Dictionary name" lazy-rules
-            :rules="[val => val && val.length > 0 || 'Please type something']" />
+          <q-input v-model="form.name" :label="$t('name')" lazy-rules
+            :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-          <q-input v-model="form.description" label="Dictionary deacription" type="textarea" />
+          <q-input v-model="form.description" :label="$t('description')" type="textarea" />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -86,7 +86,6 @@ const form = ref<Dictionary>({
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'order', label: 'order', align: 'left', field: 'order' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }

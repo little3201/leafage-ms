@@ -108,11 +108,14 @@ export default {
   generator: '代碼生成',
   deploy: '部署腳本',
 
-  inputText: '请输入',
-  searchText: '请选择',
+  inputText: '請輸入{field}',
+  selectText: '請選擇{field}',
   lengthRange: '長度在 {min} 到 {max} 個字元',
   removeConfirm: '是否確定要刪除這條數據？',
 
+  notFound: '資源未找到',
+  serverError: '伺服器錯誤',
+  error: '發生錯誤',
   goHome: '返回首頁',
 
   welcome: '嗨！歡迎回來',

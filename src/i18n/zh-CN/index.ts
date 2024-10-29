@@ -108,11 +108,14 @@ export default {
   generator: '代码生成',
   deploy: '部署脚本',
 
-  inputText: '請輸入',
-  searchText: '請選擇',
+  inputText: '请输入{field}',
+  selectText: '请选择{field}',
   lengthRange: '长度在 {min} 到 {max} 个字符',
   removeConfirm: '是否确定要删除这条数据？',
 
+  notFound: '资源未找到',
+  serverError: '服务器错误',
+  error: '发生错误',
   goHome: '返回首页',
 
   welcome: '嗨！欢迎回来',

@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form ref="formRef" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">{{ $t('dictionaries') }}</div>
           </q-card-section>
@@ -79,9 +79,7 @@ import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
-
 import SubPage from './SubPage.vue'
-
 import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
@@ -93,6 +91,7 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
+const formRef = ref()
 const form = ref<Dictionary>({
   name: '',
   description: ''
@@ -161,7 +160,9 @@ function onSubmit() {
   visible.value = false
 }
 
-function onReset() { }
+function onReset() {
+  formRef.value.resetFields()
+}
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val

@@ -2,7 +2,7 @@
   <q-page padding>
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset">
+        <q-form ref="formRef" @submit="onSubmit" @reset="onReset">
           <q-card-section>
             <div class="text-h6">{{ $t('users') }}</div>
           </q-card-section>
@@ -105,7 +105,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { QTableProps } from 'quasar'
+import type { QTableProps, QForm } from 'quasar'
 import { exportFile, useQuasar, date } from 'quasar'
 import { retrieveUsers, fetchUser } from 'src/api/users'
 import { calculate } from 'src/utils'
@@ -121,6 +121,7 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
+const formRef = ref<QForm>()
 const form = ref<User>({
   username: '',
   fullName: '',
@@ -220,8 +221,7 @@ async function onSubmit() {
 
 function onReset() {
   // Reset the form data
-  form.value.username = ''
-  form.value.email = ''
+  formRef.value?.resetValidation()
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

@@ -7,14 +7,17 @@ import { useLocaleStore } from 'stores/locale-store'
 
 const langList = import.meta.glob('../../node_modules/quasar/lang/(en-US|zh-CN|zh-TW).js')
 
+export const i18n = createI18n({
+  legacy: false,
+  locale: 'zh-CN',
+  fallbackLocale: 'zh-CN',
+  messages
+})
+
 export default boot(({ app, store }) => {
   const localeStore = useLocaleStore(store)
 
-  const i18n = createI18n({
-    legacy: false,
-    locale: localeStore.lang || 'zh-CN',
-    messages
-  })
+  i18n.global.locale.value = localeStore.lang || 'zh-CN'
 
   // config default language pack
   const langIso = localeStore.lang

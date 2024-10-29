@@ -58,7 +58,7 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_sticky_note"
+          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
             @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />

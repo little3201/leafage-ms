@@ -26,7 +26,6 @@ export const useUserStore = defineStore('user', {
     async login(username: string, password: string) {
       const res = await signin(username, password)
       if (res.status === 200) {
-        localStorage.setItem('access_token', res.data)
         const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
         // 执行结果处理
         this.$patch({

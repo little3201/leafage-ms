@@ -36,11 +36,24 @@
           </q-th>
         </q-tr>
       </template>
-
-      <template v-slot:body-cell-status="props">
+      <template v-slot:body-cell-httpMethod="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
-          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          <q-badge :color="methods[props.row.httpMethod]" rounded class="q-mr-xs" />
+          {{ props.row.httpMethod }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-statusCode="props">
+        <q-td :props="props">
+          <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
+            text-color="white">{{ props.row.statusCode }}</q-chip>
+          <q-chip v-else-if="props.row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+            props.row.statusCode }}</q-chip>
+          <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-responseTimes="props">
+        <q-td :props="props">
+          {{ props.row.responseTimes ? formatDuration(props.row.responseTimes) : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -60,7 +73,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
-
+import { formatDuration } from 'src/utils'
 import type { AccessLog } from 'src/models'
 
 const $q = useQuasar()
@@ -75,14 +88,10 @@ const loading = ref<boolean>(false)
 const row = ref<AccessLog>({
   id: undefined,
   operator: '',
-  api: '',
-  method: 'PST',
-  params: null,
+  url: '',
+  httpMethod: '',
   ip: '',
   location: '',
-  status: null,
-  responseTime: null,
-  responseCode: null,
   responseMessage: ''
 })
 
@@ -97,18 +106,26 @@ const pagination = ref({
 const selected = ref([])
 
 const columns: QTableProps['columns'] = [
-  { name: 'api', label: 'api', align: 'left', field: 'api' },
-  { name: 'method', label: 'method', align: 'left', field: 'method' },
+  { name: 'url', label: 'url', align: 'left', field: 'url' },
+  { name: 'httpMethod', label: 'httpMethod', align: 'left', field: 'httpMethod' },
   { name: 'params', label: 'params', align: 'left', field: 'params' },
-  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
+  { name: 'body', label: 'body', align: 'left', field: 'body' },
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
-  { name: 'status', label: 'status', align: 'center', field: 'status' },
-  { name: 'responseTime', label: 'responseTime', align: 'center', field: 'responseTime' },
-  { name: 'responseCode', label: 'responseCode', align: 'center', field: 'responseCode' },
+  { name: 'operator', label: 'operator', align: 'center', field: 'operator' },
+  { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
+  { name: 'responseTimes', label: 'responseTimes', align: 'center', field: 'responseTimes' },
   { name: 'responseMessage', label: 'responseMessage', align: 'center', field: 'responseMessage' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
+
+const methods: { [key: string]: string } = {
+  GET: 'positive',
+  POST: 'warning',
+  PUT: 'primary',
+  PATCH: 'primary',
+  DELETE: 'negative'
+}
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()
@@ -121,15 +138,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
 
-  retrieveAccessLogs(page, rowsPerPage).then(res => {
+  const params = { page, size: rowsPerPage, sortBy, descending }
+
+  retrieveAccessLogs({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

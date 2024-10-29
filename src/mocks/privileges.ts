@@ -1,38 +1,61 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 import type { Privilege, PrivilegeTreeNode } from 'src/models'
 
 const datas: Privilege[] = [
   {
     id: 1,
-    path: '/system',
+    path: 'system',
     component: '#',
     redirect: '/system/users',
     name: 'system',
-    order: 1,
-    enabled: true,
     icon: 'sym_r_settings',
+    count: 5,
+    enabled: true,
     description: 'this is description for this row'
   },
   {
     id: 7,
-    path: '/logs',
+    path: 'logs',
     component: '#',
     redirect: '/logs/operation',
     name: 'logs',
-    order: 2,
-    enabled: true,
     icon: 'sym_r_lab_profile',
+    count: 3,
+    enabled: true,
     description: 'this is description for this row'
   },
   {
     id: 12,
-    path: '/regions',
-    component: '#',
+    path: 'regions',
+    component: 'pages/regions/IndexPage',
     name: 'regions',
-    redirect: '/regions',
-    order: 3,
-    enabled: true,
     icon: 'sym_r_location_on',
+    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    count: 0,
+    enabled: true,
+    description: 'this is description for this row'
+  },
+  {
+    id: 14,
+    path: 'files',
+    component: 'pages/files/IndexPage',
+    name: 'files',
+    icon: 'sym_r_folder_open',
+    actions: ['upload', 'download', 'remove'],
+    count: 0,
+    enabled: true,
+    description: 'this is description for this row'
+  },
+  {
+    id: 16,
+    path: 'exploiter',
+    component: '#',
+    name: 'exploiter',
+    redirect: '/exploiter',
+    icon: 'sym_r_build',
+    count: 1,
+    enabled: true,
     description: 'this is description for this row'
   }
 ]
@@ -44,9 +67,10 @@ const subDatas: Privilege[] = [
     path: 'groups',
     component: 'pages/system/groups/IndexPage',
     name: 'groups',
-    order: 1,
+    actions: ['add', 'edit', 'remove', 'import', 'export', 'relation'],
+    count: 0,
     enabled: true,
-    icon: 'sym_r_group',
+    icon: 'sym_r_account_tree',
     description: 'this is description for this row'
   },
   {
@@ -55,7 +79,8 @@ const subDatas: Privilege[] = [
     path: 'users',
     component: 'pages/system/users/IndexPage',
     name: 'users',
-    order: 2,
+    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_person',
     description: 'this is description for this row'
@@ -66,7 +91,8 @@ const subDatas: Privilege[] = [
     path: 'privileges',
     component: 'pages/system/privileges/IndexPage',
     name: 'privileges',
-    order: 3,
+    actions: ['edit', 'import', 'export'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_admin_panel_settings',
     description: 'this is description for this row'
@@ -77,7 +103,8 @@ const subDatas: Privilege[] = [
     path: 'roles',
     component: 'pages/system/roles/IndexPage',
     name: 'roles',
-    order: 4,
+    actions: ['add', 'edit', 'remove', 'import', 'export', 'relation'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_shield_person',
     description: 'this is description for this row'
@@ -88,7 +115,8 @@ const subDatas: Privilege[] = [
     path: 'dictionaries',
     component: 'pages/system/dictionaries/IndexPage',
     name: 'dictionaries',
-    order: 5,
+    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_book_3',
     description: 'this is description for this row'
@@ -99,7 +127,8 @@ const subDatas: Privilege[] = [
     path: 'operation',
     component: 'pages/logs/operation/IndexPage',
     name: 'operationLog',
-    order: 1,
+    actions: ['clear', 'detail', 'export', 'remove'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_clinical_notes',
     description: 'this is description for this row'
@@ -110,7 +139,8 @@ const subDatas: Privilege[] = [
     path: 'access',
     component: 'pages/logs/access/IndexPage',
     name: 'accessLog',
-    order: 2,
+    actions: ['clear', 'detail', 'export', 'remove'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_sticky_note_2',
     description: 'this is description for this row'
@@ -121,7 +151,8 @@ const subDatas: Privilege[] = [
     path: 'audit',
     component: 'pages/logs/audit/IndexPage',
     name: 'auditLog',
-    order: 3,
+    actions: ['detail', 'export'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_note_alt',
     description: 'this is description for this row'
@@ -132,20 +163,34 @@ const subDatas: Privilege[] = [
     path: 'scheduler',
     component: 'pages/logs/scheduler/IndexPage',
     name: 'schedulerLog',
-    order: 4,
+    actions: ['clear', 'detail', 'export', 'remove'],
+    count: 0,
     enabled: true,
     icon: 'sym_r_event_note',
     description: 'this is description for this row'
   },
   {
-    id: 13,
-    superiorId: 12,
-    path: '',
-    component: 'pages/regions/IndexPage',
-    name: 'regions',
-    order: 1,
+    id: 17,
+    superiorId: 16,
+    path: 'generator',
+    name: 'generator',
+    component: 'pages/exploiter/generator/IndexPage',
+    actions: ['add', 'edit', 'remove', 'import', 'export', 'config', 'preview'],
+    count: 0,
     enabled: true,
-    icon: 'sym_r_location_on',
+    icon: 'sym_r_code',
+    description: 'this is description for this row'
+  },
+  {
+    id: 18,
+    superiorId: 16,
+    path: 'deploy',
+    name: 'deploy',
+    component: 'pages/exploiter/deploy/IndexPage',
+    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    count: 0,
+    enabled: true,
+    icon: 'sym_r_terminal',
     description: 'this is description for this row'
   }
 ]
@@ -153,118 +198,168 @@ const subDatas: Privilege[] = [
 const treeNodes: PrivilegeTreeNode[] = [
   {
     id: 1,
-    path: '/system',
-    component: '#',
-    redirect: '/system/users',
     name: 'system',
-    icon: 'sym_r_settings',
+    meta: {
+      path: 'system',
+      component: '#',
+      redirect: '/system/users',
+      icon: 'sym_r_settings'
+    },
     children: [
       {
         id: 2,
-        path: 'groups',
-        component: 'pages/system/groups/IndexPage',
         name: 'groups',
-        icon: 'sym_r_group'
+        meta: {
+          path: 'groups',
+          component: 'pages/system/groups/IndexPage',
+          icon: 'sym_r_account_tree'
+        }
       },
       {
         id: 3,
-        path: 'users',
-        component: 'pages/system/users/IndexPage',
         name: 'users',
-        icon: 'sym_r_person'
+        meta: {
+          path: 'users',
+          component: 'pages/system/users/IndexPage',
+          icon: 'sym_r_person'
+        }
       },
       {
         id: 4,
-        path: 'privileges',
-        component: 'pages/system/privileges/IndexPage',
-        name: 'privileges',
-        icon: 'sym_r_admin_panel_settings'
+        name: 'roles',
+        meta: {
+          path: 'roles',
+          component: 'pages/system/roles/IndexPage',
+          icon: 'sym_r_shield_person'
+        }
       },
       {
         id: 5,
-        path: 'roles',
-        component: 'pages/system/roles/IndexPage',
-        name: 'roles',
-        icon: 'sym_r_shield_person'
+        name: 'dictionaries',
+        meta: {
+          path: 'dictionaries',
+          component: 'pages/system/dictionaries/IndexPage',
+          icon: 'sym_r_book_3'
+        }
       },
       {
         id: 6,
-        path: 'dictionaries',
-        component: 'pages/system/dictionaries/IndexPage',
-        name: 'dictionaries',
-        icon: 'sym_r_book_3'
+        name: 'privileges',
+        meta: {
+          path: 'privileges',
+          component: 'pages/system/privileges/IndexPage',
+          icon: 'sym_r_admin_panel_settings'
+        }
       }
     ]
   },
   {
     id: 7,
-    path: '/logs',
-    component: '#',
-    redirect: '/logs/operation',
     name: 'logs',
-    icon: 'sym_r_lab_profile',
+    meta: {
+      path: 'logs',
+      component: '#',
+      redirect: '/logs/operation',
+      icon: 'sym_r_lab_profile'
+    },
     children: [
       {
         id: 8,
-        path: 'operation',
-        component: 'pages/logs/operation/IndexPage',
         name: 'operationLog',
-        icon: 'sym_r_clinical_notes'
+        meta: {
+          path: 'operation',
+          component: 'pages/logs/operation/IndexPage',
+          icon: 'sym_r_clinical_notes'
+        }
       },
       {
         id: 9,
-        path: 'access',
-        component: 'pages/logs/access/IndexPage',
         name: 'accessLog',
-        icon: 'sym_r_sticky_note_2'
+        meta: {
+          path: 'access',
+          component: 'pages/logs/access/IndexPage',
+          icon: 'sym_r_sticky_note_2'
+        }
       },
       {
         id: 10,
-        path: 'audit',
-        component: 'pages/logs/audit/IndexPage',
         name: 'auditLog',
-        icon: 'sym_r_note_alt'
+        meta: {
+          path: 'audit',
+          component: 'pages/logs/audit/IndexPage',
+          icon: 'sym_r_note_alt'
+        }
       },
       {
         id: 11,
-        path: 'scheduler',
-        component: 'pages/logs/scheduler/IndexPage',
         name: 'schedulerLog',
-        icon: 'sym_r_event_note'
+        meta: {
+          path: 'scheduler',
+          component: 'pages/logs/scheduler/IndexPage',
+          icon: 'sym_r_event_note'
+        }
       }
     ]
   },
   {
     id: 12,
-    path: '/regions',
-    component: '#',
     name: 'regions',
-    redirect: '/regions',
-    icon: 'sym_r_location_on',
+    meta: {
+      path: 'regions',
+      component: 'pages/regions/IndexPage',
+      icon: 'sym_r_location_on'
+    }
+  },
+  {
+    id: 14,
+    name: 'files',
+    meta: {
+      path: 'files',
+      component: 'pages/files/IndexPage',
+      icon: 'sym_r_folder_open'
+    }
+  },
+  {
+    id: 16,
+    name: 'exploiter',
+    meta: {
+      path: 'exploiter',
+      component: '#',
+      redirect: '/exploiter/generator',
+      icon: 'sym_r_build'
+    },
     children: [
       {
-        id: 13,
-        path: '',
-        component: 'pages/regions/IndexPage',
-        name: 'regions-index',
-        icon: 'sym_r_location_on',
-        hidden: true
+        id: 17,
+        name: 'generator',
+        meta: {
+          path: 'generator',
+          component: 'pages/exploiter/generator/IndexPage',
+          icon: 'sym_r_code'
+        }
+      },
+      {
+        id: 18,
+        name: 'deploy',
+        meta: {
+          path: 'deploy',
+          component: 'pages/exploiter/deploy/IndexPage',
+          icon: 'sym_r_terminal'
+        }
       }
     ]
   }
 ]
 
 export const privilegessHandlers = [
-  http.get('/api/privileges/:username/tree', ({ params }) => {
-    const { username } = params
-    console.log(username)
+  http.get(`/api${SERVER_URL.PRIVILEGE}/tree`, () => {
     return HttpResponse.json(treeNodes)
   }),
-  http.get('/api/privileges/:id/subset', ({ params }) => {
+  http.get(`/api${SERVER_URL.PRIVILEGE}/:id/subset`, ({ params }) => {
     const { id } = params
     return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(id)))
   }),
-  http.get('/api/privileges/:id', ({ params }) => {
+  http.get(`/api${SERVER_URL.PRIVILEGE}/:id`, ({ params }) => {
     const { id } = params
     if (id) {
       let res = datas.filter(item => item.id === Number(id))
@@ -275,20 +370,22 @@ export const privilegessHandlers = [
     }
     return HttpResponse.json(null)
   }),
-  http.get('/api/privileges', ({ request }) => {
+  http.get(`/api${SERVER_URL.PRIVILEGE}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
     // Construct a JSON response with the list of all Dictionarys
     // as the response body.
     const data = {
-      content: Array.from(datas.slice((Number(page) - 1) * Number(size), Number(page) * Number(size))),
-      totalElements: datas.length
+      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+      page: {
+        totalElements: datas.length
+      }
     }
 
     return HttpResponse.json(data)
   }),
-  http.post('/api/privileges', async ({ request }) => {
+  http.post(`/api${SERVER_URL.PRIVILEGE}`, async ({ request }) => {
     // Read the intercepted request body as JSON.
     const newData = await request.json() as Privilege
 
@@ -299,7 +396,7 @@ export const privilegessHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.delete('/api/privileges/:id', ({ params }) => {
+  http.delete(`/api${SERVER_URL.PRIVILEGE}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

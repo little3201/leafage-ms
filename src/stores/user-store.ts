@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { Cookies } from 'quasar'
-import { api } from 'boot/axios'
+import { signin, signout } from 'src/api/authentication'
+import { fetchMe } from 'src/api/users'
 import { retrievePrivilegeTree } from 'src/api/privileges'
-import type { Privilege } from 'src/models'
+import type { PrivilegeTreeNode } from 'src/models'
 
 interface User {
   username: string
@@ -12,26 +13,26 @@ interface User {
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: null as User | null,
-    access_token: null as string | null,
-    privileges: [] as Privilege[]
+    privileges: [] as PrivilegeTreeNode[]
   }),
   actions: {
     async logout() {
-      await api.post('/logout')
-      Cookies.remove('logged_in')
-      this.$reset()
+      const res = await signout()
+      if (res.status === 200) {
+        Cookies.remove('username')
+        this.$reset()
+      }
     },
     async login(username: string, password: string) {
-      const res = await api.post('/login', new URLSearchParams({ username, password }))
-      this.$patch({
-        user: res.data.user,
-        access_token: res.data.access_token
-      })
-      // privileges
-      const response = await retrievePrivilegeTree(username)
-      this.$patch({
-        privileges: response.data
-      })
+      const res = await signin(username, password)
+      if (res.status === 200) {
+        const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
+        // 执行结果处理
+        this.$patch({
+          user: userResp.data,
+          privileges: privilegesResp.data
+        })
+      }
     }
   },
   persist: true

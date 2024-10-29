@@ -110,7 +110,7 @@ module.exports = configure(function (ctx) {
       open: true, // opens browser window automatically
       proxy: {
         '^/api': {
-          target: 'http://127.0.0.1:8763',
+          target: 'http://192.168.0.111:8768',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }

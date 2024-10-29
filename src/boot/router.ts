@@ -4,11 +4,16 @@ import { Cookies } from 'quasar'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
 
+// 生成路由
+const BlankLayout = () => import('src/layouts/BlankLayout.vue')
+
+const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
+
 export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     const userStore = useUserStore(store)
-    if (userStore.user?.username && Cookies.get('logged_in')) {
+    if (Cookies.get('username') && Object.keys(userStore.user || {}).length > 0) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
@@ -18,7 +23,7 @@ export default boot(({ router, store }) => {
 
           // 动态添加可访问路由表
           routes.forEach((route) => {
-            router.addRoute(route as RouteRecordRaw)
+            router.addRoute('home', route as RouteRecordRaw)
           })
           // 捕获所有未匹配的路径，放在配置的末尾
           router.addRoute({
@@ -45,30 +50,24 @@ export default boot(({ router, store }) => {
   })
 })
 
-// 生成路由
-const MainLayout = () => import('src/layouts/MainLayout.vue')
-const BlankLayout = () => import('src/layouts/BlankLayout.vue')
-
-const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
-
 export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] => {
   const res: RouteRecordRaw[] = []
   for (const route of routes) {
     const data: RouteRecordRaw = {
-      path: route.path as string,
+      path: route.meta.path,
       name: route.name,
-      redirect: route.redirect,
+      redirect: route.meta.redirect,
       component: null,
       children: []
     }
-    if (route.component) {
-      const comModule = modules[`../${route.component}.vue`]
-      const component = route.component as string
+    if (route.meta.component) {
+      const comModule = modules[`../${route.meta.component}.vue`]
+      const component = route.meta.component as string
       if (comModule) {
         // 动态加载路由文件
         data.component = comModule
       } else if (component.includes('#')) {
-        data.component = component === '#' ? MainLayout : BlankLayout
+        data.component = BlankLayout
       }
     }
     // recursive child routes

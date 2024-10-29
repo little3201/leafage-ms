@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw'
+import { SERVER_URL } from 'src/api/paths'
 import type { Dictionary } from 'src/models'
 
 const datas: Dictionary[] = []
@@ -8,7 +9,6 @@ for (let i = 0; i < 20; i++) {
   const data: Dictionary = {
     id: i,
     name: 'dictionary_' + i,
-    order: i + 1,
     enabled: i % 3 > 0,
     description: 'This is dictionary description about xxx',
     lastModifiedDate: new Date()
@@ -17,7 +17,6 @@ for (let i = 0; i < 20; i++) {
     const subData: Dictionary = {
       id: j,
       name: 'dictionary_' + i + '_' + j,
-      order: j + 1,
       superiorId: i,
       enabled: j % 2 > 0,
       description: 'description',
@@ -29,11 +28,23 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const dictionariesHandlers = [
-  http.get('/api/dictionaries/:id/subset', ({ params }) => {
+  http.get(`/api${SERVER_URL.DICTIONARY}/:id`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      let array = datas.filter(item => item.id === Number(id))
+      if (array.length === 0) {
+        array = subDatas.filter(item => item.id === Number(id))
+      }
+      return HttpResponse.json(array[0])
+    } else {
+      return HttpResponse.json(null)
+    }
+  }),
+  http.get(`/api${SERVER_URL.DICTIONARY}/:id/subset`, ({ params }) => {
     const superiorId = params.id
     return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(superiorId)))
   }),
-  http.get('/api/dictionaries', ({ request }) => {
+  http.get(`/api${SERVER_URL.DICTIONARY}`, ({ request }) => {
     const url = new URL(request.url)
 
     const page = url.searchParams.get('page')
@@ -43,12 +54,14 @@ export const dictionariesHandlers = [
     // as the response body.
     const data = {
       content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
-      totalElements: datas.length
+      page: {
+        totalElements: datas.length
+      }
     }
 
     return HttpResponse.json(data)
   }),
-  http.post('/api/dictionaries', async ({ request }) => {
+  http.post(`/api${SERVER_URL.DICTIONARY}`, async ({ request }) => {
     // Read the intercepted request body as JSON.
     const newData = await request.json() as Dictionary
 
@@ -59,7 +72,7 @@ export const dictionariesHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.delete('/api/dictionaries/:id', ({ params }) => {
+  http.delete(`/api${SERVER_URL.DICTIONARY}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params

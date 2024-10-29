@@ -9,10 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Region name" lazy-rules
+            <q-input v-model="form.name" :label="$t('name')" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
 
-            <q-input v-model="form.description" label="Region deacription" type="textarea" />
+            <q-input v-model="form.description" :label="$t('description')" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -134,16 +134,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending }
 
-  retrieveRegions(page, rowsPerPage, { params }).then(res => {
+  retrieveRegions({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

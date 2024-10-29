@@ -9,10 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Role name" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.name" :label="$t('name')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-            <q-input v-model="form.description" label="Role deacription" type="textarea" />
+            <q-input v-model="form.description" :label="$t('description')" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -50,9 +50,23 @@
 
       <template v-slot:body-cell-members="props">
         <q-td :props="props">
-          <q-avatar v-for="n in 5" :key="n" size="32px" :style="{ left: `${n * -2}px`, border: '2px solid white' }">
-            <img :src="`https://cdn.quasar.dev/img/avatar${n + 1}.jpg`" />
-          </q-avatar>
+          <template v-if="props.row.members && props.row.members.length > 0">
+            <q-avatar v-for="(member, index) in visibleArray(props.row.members, 5)" :key="index" size="2em"
+              :style="{ left: `${index * -2}px`, border: '2px solid white' }">
+              <q-img :src="member" :alt="`avater${index}`" width="2em" height="2em" />
+            </q-avatar>
+            <template v-if="props.row.members.length > 5">
+              <q-chip color="primary" text-color="white" class="q-mr-xs" size="sm">
+                + {{ props.row.members.length - 5 }}
+                <q-tooltip>
+                  <q-avatar v-for="(member, index) in props.row.members.slice(5)" :key="index" size="2em"
+                    :style="{ left: `${index * -2}px`, border: '2px solid white' }">
+                    <q-img :src="member" :alt="`avater${index}`" width="2em" height="2em" />
+                  </q-avatar>
+                </q-tooltip>
+              </q-chip>
+            </template>
+          </template>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
@@ -61,11 +75,12 @@
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
-        <q-td :props="props">
+        <q-td :props="props"><q-btn title="relation" padding="xs" flat round color="positive" icon="sym_r_link"
+            @click="relationRow(props.row.id)" class="q-mt-none" />
           <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
-            class="q-mt-none" />
+            class="q-mt-none q-mx-sm" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
-            @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
+            @click="removeRow(props.row.id)" class="q-mt-none " />
         </q-td>
       </template>
     </q-table>
@@ -77,6 +92,7 @@ import { ref, onMounted } from 'vue'
 import { exportFile, useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveRoles, fetchRole } from 'src/api/roles'
+import { visibleArray } from 'src/utils'
 
 import type { Role } from 'src/models'
 
@@ -91,6 +107,7 @@ const loading = ref<boolean>(false)
 
 const form = ref<Role>({
   name: '',
+  enabled: true,
   description: ''
 })
 
@@ -125,16 +142,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending }
 
-  retrieveRoles(page, rowsPerPage, { params }).then(res => {
+  retrieveRoles({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -147,6 +164,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
 function addRow() {
   visible.value = true
+}
+
+function relationRow(id: number) {
+  console.log(id)
 }
 
 async function editRow(id: number) {

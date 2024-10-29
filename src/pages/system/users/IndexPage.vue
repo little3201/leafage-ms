@@ -8,11 +8,14 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.username" label="Your username" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.username" :label="$t('username')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-            <q-input v-model="form.email" label="Your email *" lazy-rules type="email"
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.fullName" :label="$t('fullName')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+
+            <q-input v-model="form.email" :label="$t('email')" lazy-rules type="email"
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -49,10 +52,15 @@
 
       <template v-slot:body-cell-username="props">
         <q-td :props="props">
-          <q-avatar size="md">
-            <q-img alt="avatar" :src="props.row.avatar" width="2em" height="2em" />
-          </q-avatar>
-          <span class="q-ml-sm">{{ props.row.username }}</span>
+          <div class="row items-center">
+            <q-avatar size="2rem">
+              <q-img alt="avatar" :src="props.row.avatar" width="2rem" height="2rem" />
+            </q-avatar>
+            <div class="column q-ml-sm">
+              <span class="text-subtitle">{{ props.row.fullName }}</span>
+              <span class="text-caption text-grey-7">{{ props.row.username }}</span>
+            </div>
+          </div>
         </q-td>
       </template>
       <template v-slot:body-cell-enabled="props">
@@ -62,14 +70,17 @@
       </template>
       <template v-slot:body-cell-accountExpiresAt="props">
         <q-td :props="props">
-          <q-badge :color="calculate(props.row.accountExpiresAt)" rounded class="q-mr-sm" />
-          {{ date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') }}
+          <q-badge v-if="props.row.accountExpiresAt" :color="calculate(props.row.accountExpiresAt)" rounded
+            class="q-mr-xs" />
+          {{ props.row.accountExpiresAt ? date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-credentialsExpiresAt="props">
         <q-td :props="props">
-          <q-badge :color="calculate(props.row.credentialsExpiresAt)" rounded class="q-mr-sm" />
-          {{ date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH: mm:ss') }}
+          <q-badge v-if="props.row.credentialsExpiresAt" :color="calculate(props.row.credentialsExpiresAt)" rounded
+            class="q-mr-xs" />
+          {{ props.row.credentialsExpiresAt ? date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') :
+            '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
@@ -97,6 +108,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar, date } from 'quasar'
 import { retrieveUsers, fetchUser } from 'src/api/users'
+import { calculate } from 'src/utils'
 
 import type { User } from 'src/models'
 
@@ -111,8 +123,8 @@ const loading = ref<boolean>(false)
 
 const form = ref<User>({
   username: '',
-  email: '',
-  description: ''
+  fullName: '',
+  email: ''
 })
 
 const pagination = ref({
@@ -147,16 +159,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending }
 
-  retrieveUsers(page, rowsPerPage, { params }).then(res => {
+  retrieveUsers({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -249,24 +261,6 @@ function exportTable() {
       color: 'negative',
       icon: 'warning'
     })
-  }
-}
-
-function calculate(target: string) {
-  const now = new Date()
-  const targetDate = new Date(target)
-  // 失效时间是否小于7天
-  const diff = date.getDateDiff(targetDate, now, 'days')
-  if (diff > 7) {
-    return 'positive'
-  } else {
-    // 是否失效
-    const diffSec = date.getDateDiff(targetDate, now, 'seconds')
-    if (diffSec > 0) {
-      return 'warning'
-    } else {
-      return 'negative'
-    }
   }
 }
 </script>

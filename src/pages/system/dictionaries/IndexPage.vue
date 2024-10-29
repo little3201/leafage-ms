@@ -9,10 +9,10 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" label="Dictionary name" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.name" :label="$t('name')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-            <q-input v-model="form.description" label="Dictionary deacription" type="textarea" />
+            <q-input v-model="form.description" :label="$t('description')" type="textarea" />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -95,7 +95,6 @@ const loading = ref(false)
 
 const form = ref<Dictionary>({
   name: '',
-  order: 1,
   description: ''
 })
 
@@ -109,7 +108,6 @@ const pagination = ref({
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'order', label: 'order', align: 'left', field: 'order' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
@@ -128,16 +126,16 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   const { page, rowsPerPage, sortBy, descending } = props.pagination
   const filter = props.filter
 
-  const params = { sortBy, descending, filter: filter || '' }
+  const params = { page, size: rowsPerPage, sortBy, descending }
 
-  retrieveDictionaries(page, rowsPerPage, params).then(res => {
+  retrieveDictionaries({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

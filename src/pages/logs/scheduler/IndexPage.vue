@@ -39,8 +39,23 @@
 
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
+          <q-chip v-if="props.row.status === 0" size="sm" color="primary" text-color="white">
+            {{ $t('processing') }}
+          </q-chip>
+          <q-chip v-else-if="props.row.status === 1" size="sm" color="positive" text-color="white">
+            {{ $t('done') }}
+          </q-chip>
           <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-executedTimes="props">
+        <q-td :props="props">
+          {{ props.row.executedTimes ? formatDuration(props.row.executedTimes) : '-' }}
+        </q-td>
+      </template>
+      <template v-slot:body-cell-nextExecuteTime="props">
+        <q-td :props="props">
+          {{ props.row.nextExecuteTime ? date.formatDate(props.row.nextExecuteTime, 'YYYY-MM-DD HH:mm') : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -58,9 +73,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 import { retrieveSchedulerLogs, fetchSchedulerLog } from 'src/api/scheduler-logs'
-
+import { formatDuration } from 'src/utils'
 import type { SchedulerLog } from 'src/models'
 
 const $q = useQuasar()
@@ -74,13 +89,7 @@ const loading = ref<boolean>(false)
 
 const row = ref<SchedulerLog>({
   id: undefined,
-  name: '',
-  method: '',
-  params: '',
-  cronExpression: '',
-  startTime: '',
-  endTime: '',
-  status: null
+  name: ''
 })
 
 const pagination = ref({
@@ -95,12 +104,10 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name' },
-  { name: 'method', label: 'method', align: 'left', field: 'method' },
-  { name: 'params', label: 'params', align: 'center', field: 'params' },
-  { name: 'cronExpression', label: 'cronExpression', align: 'center', field: 'cronExpression' },
-  { name: 'status', label: 'status', align: 'center', field: 'status' },
   { name: 'startTime', label: 'startTime', align: 'center', field: 'startTime' },
-  { name: 'endTime', label: 'endTime', align: 'center', field: 'endTime' },
+  { name: 'status', label: 'status', align: 'center', field: 'status' },
+  { name: 'executedTimes', label: 'executedTimes', align: 'center', field: 'executedTimes' },
+  { name: 'nextExecuteTime', label: 'nextExecuteTime', align: 'center', field: 'nextExecuteTime' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
@@ -115,15 +122,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
 
-  retrieveSchedulerLogs(page, rowsPerPage).then(res => {
+  const params = { page, size: rowsPerPage, sortBy, descending }
+
+  retrieveSchedulerLogs({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

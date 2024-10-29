@@ -37,10 +37,18 @@
         </q-tr>
       </template>
 
-      <template v-slot:body-cell-status="props">
+      <template v-slot:body-cell-statusCode="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status" size="sm" color="positive" text-color="white">{{ $t('success') }}</q-chip>
-          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
+            text-color="white">{{ props.row.statusCode }}</q-chip>
+          <q-chip v-else-if="props.row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+            props.row.statusCode }}</q-chip>
+          <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-operatedTime="props">
+        <q-td :props="props">
+          {{ props.row.operatedTime ? date.formatDate(props.row.operatedTime, 'YYYY-MM-DD HH:mm') : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -58,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { exportFile, useQuasar, date } from 'quasar'
 import { retrieveAuditLogs, fetchAuditLog } from 'src/api/audit-logs'
 
 import type { AuditLog } from 'src/models'
@@ -77,12 +85,8 @@ const row = ref<AuditLog>({
   operation: '',
   operator: '',
   resource: '',
-  oldValue: '',
-  newValue: null,
   ip: '',
-  location: '',
-  status: null,
-  operatedTime: null
+  location: ''
 })
 
 const pagination = ref({
@@ -102,7 +106,7 @@ const columns: QTableProps['columns'] = [
   { name: 'newValue', label: 'newValue', align: 'center', field: 'newValue' },
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
-  { name: 'status', label: 'status', align: 'center', field: 'status' },
+  { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
   { name: 'operatedTime', label: 'operatedTime', align: 'center', field: 'operatedTime' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
@@ -118,15 +122,18 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   loading.value = true
 
   const { page, rowsPerPage, sortBy, descending } = props.pagination
+  const filter = props.filter
 
-  retrieveAuditLogs(page, rowsPerPage).then(res => {
+  const params = { page, size: rowsPerPage, sortBy, descending }
+
+  retrieveAuditLogs({ ...params }, filter).then(res => {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.totalElements
+    pagination.value.rowsNumber = res.data.page.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

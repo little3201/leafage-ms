@@ -51,6 +51,11 @@
           <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
         </q-td>
       </template>
+      <template v-slot:body-cell-responseTimes="props">
+        <q-td :props="props">
+          {{ props.row.responseTimes ? formatDuration(props.row.responseTimes) : '-' }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_sticky_note"
@@ -68,7 +73,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
-
+import { formatDuration } from 'src/utils'
 import type { AccessLog } from 'src/models'
 
 const $q = useQuasar()
@@ -84,10 +89,9 @@ const row = ref<AccessLog>({
   id: undefined,
   operator: '',
   url: '',
-  httpMethod: 'PST',
+  httpMethod: '',
   ip: '',
   location: '',
-  responseTimes: 0,
   responseMessage: ''
 })
 

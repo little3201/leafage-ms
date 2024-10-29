@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import { useUserStore } from 'stores/user-store'
-import { Cookies } from 'quasar'
+// import { Cookies } from 'quasar'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
 
@@ -13,7 +13,7 @@ export default boot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     const userStore = useUserStore(store)
-    if (Cookies.get('username') && Object.keys(userStore.user || {}).length > 0) {
+    if (localStorage.getItem('access_token') && Object.keys(userStore.user || {}).length > 0) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {

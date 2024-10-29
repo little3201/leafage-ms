@@ -44,6 +44,11 @@
         </q-tr>
       </template>
 
+      <template v-slot:body-cell-size="props">
+        <q-td :props="props">
+          {{ formatFileSize(props.row.size) }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
           <q-btn title="download" padding="xs" flat round color="primary" icon="sym_r_download"
@@ -61,7 +66,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar } from 'quasar'
 import { retrieveFiles, fetchFile } from 'src/api/files'
-
+import { formatFileSize } from 'src/utils'
 import type { FileRecord } from 'src/models'
 
 const $q = useQuasar()

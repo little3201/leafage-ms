@@ -8,12 +8,12 @@ export function pathResolve(parentPath: string, path: string | undefined): strin
   return `${parentPath}${childPath}`.replace(/\/\//g, '/').trim()
 }
 
-export function isString(val: unknown): val is string {
-  return is(val, 'String')
-}
-
 export function is(val: unknown, type: string) {
   return toString.call(val) === `[object ${type}]`
+}
+
+export function isString(val: unknown): val is string {
+  return is(val, 'String')
 }
 
 export function calculate(target: string) {
@@ -50,6 +50,20 @@ export const formatDuration = (milliseconds: number) => {
   }
 
   return '0ms' // 处理0毫秒的情况
+}
+
+export const formatFileSize = (size: number) => {
+  if (isNaN(size) || size <= 0) return '-'
+
+  const units = ['B', 'KB', 'MB', 'GB', 'TB']
+  let index = 0
+
+  while (size >= 1024 && index < units.length - 1) {
+    size /= 1024
+    index++
+  }
+
+  return `${size.toFixed(2)}${units[index]}`
 }
 
 export function visibleArray(array: string[], count: number) {

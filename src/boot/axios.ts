@@ -10,6 +10,7 @@ export default boot(() => {
   // 请求拦截器
   api.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
+      config.headers.Authorization = 'Bearer ' + localStorage.getItem('access_token')
       // 创建 AbortController 实例
       const abortController = new AbortController()
       // 将 signal 添加到请求配置中

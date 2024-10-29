@@ -27,6 +27,6 @@ export const SERVER_URL = {
   STATISTICS: SERVER_PRE.ASSETS.concat('/statistics'), // 统计
   COMMENT: SERVER_PRE.ASSETS.concat('/comments'), // 评论
 
-  SIGNIN: SERVER_PRE.ASSETS.concat('/signin'), // 登录
+  SIGNIN: SERVER_PRE.ASSETS.concat('/token'), // 登录
   SIGNOUT: SERVER_PRE.ASSETS.concat('/signout') // 退出
 }

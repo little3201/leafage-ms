@@ -9,7 +9,7 @@ for (let i = 0; i < 20; i++) {
     id: i,
     username: 'username' + i,
     fullName: 'fullName_' + i,
-    avatar: '/src/assets/images/avatar.jpg',
+    avatar: '/images/avatar.jpg',
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,

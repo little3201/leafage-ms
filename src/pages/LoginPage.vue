@@ -3,7 +3,7 @@
     <q-header class="transparent text-black">
       <q-toolbar>
         <q-toolbar-title>
-          <q-img alt="logo" src="/vite.svg" width="3rem" height="3rem" />
+          <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
           <span class="q-ml-sm text-weight-medium">Project Management</span>
         </q-toolbar-title>
         <!-- language -->
@@ -47,7 +47,7 @@
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">
-                  <q-img alt="logo" src="/vite.svg" width="8em" height="8em" />
+                  <q-img alt="logo" src="/svgs/vite.svg" width="8em" height="8em" />
                 </div>
                 <div class="text-h6 text-center q-mb-xs">
                   {{ $t('signinTo') }}

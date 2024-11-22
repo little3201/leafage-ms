@@ -55,8 +55,8 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
-                class="q-mt-none" />
+              <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
+                @click="modifyRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
@@ -147,7 +147,7 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-async function editRow(id: number) {
+async function modifyRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

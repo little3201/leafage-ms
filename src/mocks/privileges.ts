@@ -31,7 +31,7 @@ const datas: Privilege[] = [
     component: 'pages/regions/IndexPage',
     name: 'regions',
     icon: 'sym_r_location_on',
-    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
     description: 'this is description for this row'
@@ -49,10 +49,10 @@ const datas: Privilege[] = [
   },
   {
     id: 16,
-    path: 'exploiter',
+    path: 'exploiters',
     component: '#',
-    name: 'exploiter',
-    redirect: '/exploiter',
+    name: 'exploiters',
+    redirect: '/exploiters/generators',
     icon: 'sym_r_build',
     count: 1,
     enabled: true,
@@ -67,7 +67,7 @@ const subDatas: Privilege[] = [
     path: 'groups',
     component: 'pages/system/groups/IndexPage',
     name: 'groups',
-    actions: ['add', 'edit', 'remove', 'import', 'export', 'relation'],
+    actions: ['create', 'modify', 'remove', 'import', 'export', 'relation'],
     count: 0,
     enabled: true,
     icon: 'sym_r_account_tree',
@@ -79,7 +79,7 @@ const subDatas: Privilege[] = [
     path: 'users',
     component: 'pages/system/users/IndexPage',
     name: 'users',
-    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
     icon: 'sym_r_person',
@@ -91,7 +91,7 @@ const subDatas: Privilege[] = [
     path: 'privileges',
     component: 'pages/system/privileges/IndexPage',
     name: 'privileges',
-    actions: ['edit', 'import', 'export'],
+    actions: ['modify', 'import', 'export'],
     count: 0,
     enabled: true,
     icon: 'sym_r_admin_panel_settings',
@@ -103,7 +103,7 @@ const subDatas: Privilege[] = [
     path: 'roles',
     component: 'pages/system/roles/IndexPage',
     name: 'roles',
-    actions: ['add', 'edit', 'remove', 'import', 'export', 'relation'],
+    actions: ['create', 'modify', 'remove', 'import', 'export', 'relation'],
     count: 0,
     enabled: true,
     icon: 'sym_r_shield_person',
@@ -115,7 +115,7 @@ const subDatas: Privilege[] = [
     path: 'dictionaries',
     component: 'pages/system/dictionaries/IndexPage',
     name: 'dictionaries',
-    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
     icon: 'sym_r_book_3',
@@ -172,10 +172,10 @@ const subDatas: Privilege[] = [
   {
     id: 17,
     superiorId: 16,
-    path: 'generator',
-    name: 'generator',
-    component: 'pages/exploiter/generator/IndexPage',
-    actions: ['add', 'edit', 'remove', 'import', 'export', 'config', 'preview'],
+    path: 'generators',
+    name: 'generators',
+    component: 'pages/exploiters/generators/IndexPage',
+    actions: ['create', 'modify', 'remove', 'import', 'export', 'config', 'preview'],
     count: 0,
     enabled: true,
     icon: 'sym_r_code',
@@ -184,13 +184,25 @@ const subDatas: Privilege[] = [
   {
     id: 18,
     superiorId: 16,
-    path: 'deploy',
-    name: 'deploy',
-    component: 'pages/exploiter/deploy/IndexPage',
-    actions: ['add', 'edit', 'remove', 'import', 'export'],
+    path: 'scripts',
+    name: 'scripts',
+    component: 'pages/exploiters/scripts/IndexPage',
+    actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
     icon: 'sym_r_terminal',
+    description: 'this is description for this row'
+  },
+  {
+    id: 19,
+    superiorId: 16,
+    path: 'templates',
+    name: 'templates',
+    component: 'pages/exploiters/templates/IndexPage',
+    actions: ['create', 'modify', 'remove', 'import', 'export'],
+    count: 0,
+    enabled: true,
+    icon: 'sym_r_code',
     description: 'this is description for this row'
   }
 ]
@@ -321,29 +333,38 @@ const treeNodes: PrivilegeTreeNode[] = [
   },
   {
     id: 16,
-    name: 'exploiter',
+    name: 'exploiters',
     meta: {
-      path: 'exploiter',
+      path: 'exploiters',
       component: '#',
-      redirect: '/exploiter/generator',
+      redirect: '/exploiter/generators',
       icon: 'sym_r_build'
     },
     children: [
       {
         id: 17,
-        name: 'generator',
+        name: 'generators',
         meta: {
-          path: 'generator',
-          component: 'pages/exploiter/generator/IndexPage',
+          path: 'generators',
+          component: 'pages/exploiters/generators/IndexPage',
           icon: 'sym_r_code'
         }
       },
       {
         id: 18,
-        name: 'deploy',
+        name: 'scripts',
         meta: {
-          path: 'deploy',
-          component: 'pages/exploiter/deploy/IndexPage',
+          path: 'scripts',
+          component: 'pages/exploiters/scripts/IndexPage',
+          icon: 'sym_r_terminal'
+        }
+      },
+      {
+        id: 17,
+        name: 'templates',
+        meta: {
+          path: 'templates',
+          component: 'pages/exploiters/templates/IndexPage',
           icon: 'sym_r_terminal'
         }
       }

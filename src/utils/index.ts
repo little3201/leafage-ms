@@ -66,6 +66,6 @@ export const formatFileSize = (size: number) => {
   return `${size.toFixed(2)}${units[index]}`
 }
 
-export function visibleArray(array: string[], count: number) {
+export function visibleArray<T extends string | number>(array: T[], count: number): T[] {
   return array.length > count ? array.slice(0, count) : array
 }

@@ -38,7 +38,7 @@
       </template>
       <template v-slot:body-cell-httpMethod="props">
         <q-td :props="props">
-          <q-badge :color="methods[props.row.httpMethod]" rounded class="q-mr-xs" />
+          <q-badge :color="httpMethods[props.row.httpMethod]" rounded class="q-mr-xs" />
           {{ props.row.httpMethod }}
         </q-td>
       </template>
@@ -74,6 +74,7 @@ import type { QTableProps } from 'quasar'
 import { exportFile, useQuasar } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
 import { formatDuration } from 'src/utils'
+import { httpMethods } from 'src/constants'
 import type { AccessLog } from 'src/models'
 
 const $q = useQuasar()
@@ -118,14 +119,6 @@ const columns: QTableProps['columns'] = [
   { name: 'responseMessage', label: 'responseMessage', align: 'center', field: 'responseMessage' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
-
-const methods: { [key: string]: string } = {
-  GET: 'positive',
-  POST: 'warning',
-  PUT: 'primary',
-  PATCH: 'primary',
-  DELETE: 'negative'
-}
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()

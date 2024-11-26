@@ -1,7 +1,8 @@
 // 服务匹配前缀
 const SERVER_PRE = {
   HYPERVISOR: '', // 系统
-  ASSETS: '' // 资源
+  ASSETS: '', // 资源
+  EXPLOITER: ''
 }
 
 // 接口请求路径
@@ -28,5 +29,39 @@ export const SERVER_URL = {
   COMMENT: SERVER_PRE.ASSETS.concat('/comments'), // 评论
 
   SIGNIN: SERVER_PRE.ASSETS.concat('/signin'), // 登录
-  SIGNOUT: SERVER_PRE.ASSETS.concat('/signout') // 退出
+  SIGNOUT: SERVER_PRE.ASSETS.concat('/signout'), // 退出
+
+  // exploiters
+  SCRIPT: SERVER_PRE.EXPLOITER.concat('/scripts'), // 脚本
+  SCHEMA: SERVER_PRE.EXPLOITER.concat('/schemas'), // 表配置
+  TEMPLATE: SERVER_PRE.EXPLOITER.concat('/templates'), // 模板
+  DB: SERVER_PRE.EXPLOITER.concat('/db') // 表
+}
+
+export const actions: { [key: string]: string } = {
+  create: 'primary',
+  modify: 'primary',
+  upload: 'primary',
+
+  import: 'warning',
+
+  remove: 'negative',
+  clear: 'negative',
+
+  export: 'secondary',
+  download: 'secondary',
+
+  relation: 'positive',
+  config: 'positive',
+
+  preview: 'info',
+  detail: 'info'
+}
+
+export const httpMethods: { [key: string]: string } = {
+  GET: 'positive',
+  POST: 'warning',
+  PUT: 'primary',
+  PATCH: 'primary',
+  DELETE: 'negative'
 }

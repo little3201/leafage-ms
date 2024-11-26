@@ -508,9 +508,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@quasar/app-vite@npm:^1.10.2":
-  version: 1.10.2
-  resolution: "@quasar/app-vite@npm:1.10.2"
+"@quasar/app-vite@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@quasar/app-vite@npm:1.11.0"
   dependencies:
     "@quasar/render-ssr-error": "npm:^1.0.3"
     "@quasar/vite-plugin": "npm:^1.7.0"
@@ -574,14 +574,14 @@ __metadata:
       optional: true
   bin:
     quasar: bin/quasar
-  checksum: 10c0/acbc31991a2f4c9f277921602f7f700017c9541ceef3ad36e5237a75c1d65a611098ed6ae480abb16ad946a0b440002bb6d88334e64fd67d1695cad66ba55616
+  checksum: 10c0/acb7aa9cd8cbd117dc861af89091259aa0aaf7bb1140051dc6760d3ae98f34a261b03972811b17d41c78e7b08b2170506de84b850631d4ce2924e7f7d13bef99
   languageName: node
   linkType: hard
 
-"@quasar/extras@npm:^1.16.11":
-  version: 1.16.12
-  resolution: "@quasar/extras@npm:1.16.12"
-  checksum: 10c0/663557f7e97ff52f7da66de147ec83e56667c8d7adf7dcf832fdff750f645dc26c591e45c6c35023e70ccd53a964d4e71c8009d2b9beb1b41576bfd49bd63529
+"@quasar/extras@npm:^1.16.13":
+  version: 1.16.13
+  resolution: "@quasar/extras@npm:1.16.13"
+  checksum: 10c0/6a43e0bb079e2609aba6faa30a313f9f1823ea58c8ce8bc5d0b1b9661398c0466b74f47a057760fab8d4c22973f910e73f5064f7dbd573ae97f926d33f325ff8
   languageName: node
   linkType: hard
 
@@ -3574,6 +3574,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^11.10.0":
+  version: 11.10.0
+  resolution: "highlight.js@npm:11.10.0"
+  checksum: 10c0/cd8bf7ef06cbd72ddb83580ecabe769f08f062be8bb82d2eb492d31c17f7480d1f8d14a66fc81deee0601645435f19f04c470510563f847242a41ccff0ab873e
+  languageName: node
+  linkType: hard
+
 "html-minifier-terser@npm:^7.2.0":
   version: 7.2.0
   resolution: "html-minifier-terser@npm:7.2.0"
@@ -4174,8 +4181,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "leafage-ms@workspace:."
   dependencies:
-    "@quasar/app-vite": "npm:^1.10.2"
-    "@quasar/extras": "npm:^1.16.11"
+    "@quasar/app-vite": "npm:^1.11.0"
+    "@quasar/extras": "npm:^1.16.13"
     "@typescript-eslint/eslint-plugin": "npm:^8.11.0"
     "@typescript-eslint/parser": "npm:^8.11.0"
     apexcharts: "npm:^3.54.1"
@@ -4187,12 +4194,13 @@ __metadata:
     eslint-plugin-n: "npm:^16.6.2"
     eslint-plugin-promise: "npm:^6.1.1"
     eslint-plugin-vue: "npm:^9.24.0"
+    highlight.js: "npm:^11.10.0"
     lottie-web: "npm:^5.12.2"
     msw: "npm:^2.3.5"
     pinia: "npm:^2.1.7"
     pinia-plugin-persistedstate: "npm:^3.2.1"
     postcss: "npm:^8.4.38"
-    quasar: "npm:^2.17.1"
+    quasar: "npm:^2.17.4"
     typescript: "npm:^5.4.4"
     vue: "npm:^3.5.12"
     vue-i18n: "npm:^10.0.4"
@@ -5131,10 +5139,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quasar@npm:^2.17.1":
-  version: 2.17.1
-  resolution: "quasar@npm:2.17.1"
-  checksum: 10c0/fa562d67dfda8ef30be1c4a7791b00565cd22ec4faa95088e73ad9601690e29ca604b68036ddedee56429b5696307cd88c8db91a70f116e6995fb17aa0345c9b
+"quasar@npm:^2.17.4":
+  version: 2.17.4
+  resolution: "quasar@npm:2.17.4"
+  checksum: 10c0/97970661c872e7e5adbed73e97b91c6762d37cc1a65ba66e075f4386c34dc19c3797126915cb014b67ae018c9ab9d93bff5ef464d7d7e3f8ee9ddd61a26a9fed
   languageName: node
   linkType: hard
 

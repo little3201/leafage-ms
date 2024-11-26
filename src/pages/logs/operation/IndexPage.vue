@@ -53,7 +53,7 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_sticky_note"
+          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
             @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar, date } from 'quasar'
+import { useQuasar, exportFile, date } from 'quasar'
 import { retrieveOperationLogs, fetchOperationLog } from 'src/api/operation-logs'
 
 import type { OperationLog } from 'src/models'

@@ -13,18 +13,19 @@
     "build": "quasar build"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.11",
+    "@quasar/extras": "^1.16.13",
     "apexcharts": "^3.54.1",
     "axios": "^1.7.3",
+    "highlight.js": "^11.10.0",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
-    "quasar": "^2.17.1",
+    "quasar": "^2.17.4",
     "vue": "^3.5.12",
     "vue-i18n": "^10.0.4",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.10.2",
+    "@quasar/app-vite": "^1.11.0",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
     "autoprefixer": "^10.4.19",

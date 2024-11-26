@@ -38,7 +38,7 @@
       </template>
       <template v-slot:body-cell-httpMethod="props">
         <q-td :props="props">
-          <q-badge :color="methods[props.row.httpMethod]" rounded class="q-mr-xs" />
+          <q-badge :color="httpMethods[props.row.httpMethod]" rounded class="q-mr-xs" />
           {{ props.row.httpMethod }}
         </q-td>
       </template>
@@ -58,7 +58,7 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_sticky_note"
+          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
             @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
@@ -71,9 +71,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
 import { formatDuration } from 'src/utils'
+import { httpMethods } from 'src/constants'
 import type { AccessLog } from 'src/models'
 
 const $q = useQuasar()
@@ -118,14 +119,6 @@ const columns: QTableProps['columns'] = [
   { name: 'responseMessage', label: 'responseMessage', align: 'center', field: 'responseMessage' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
-
-const methods: { [key: string]: string } = {
-  GET: 'positive',
-  POST: 'warning',
-  PUT: 'primary',
-  PATCH: 'primary',
-  DELETE: 'negative'
-}
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()

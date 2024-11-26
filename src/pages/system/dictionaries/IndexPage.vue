@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form ref="formRef" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">{{ $t('dictionaries') }}</div>
           </q-card-section>
@@ -55,8 +55,8 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
-                class="q-mt-none" />
+              <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
+                @click="saveRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
@@ -76,12 +76,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
-
 import SubPage from './SubPage.vue'
-
 import type { Dictionary } from 'src/models'
 
 const $q = useQuasar()
@@ -93,6 +91,7 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
+const formRef = ref()
 const form = ref<Dictionary>({
   name: '',
   description: ''
@@ -148,7 +147,7 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-async function editRow(id: number) {
+async function saveRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {
@@ -161,7 +160,9 @@ function onSubmit() {
   visible.value = false
 }
 
-function onReset() { }
+function onReset() {
+  formRef.value.resetFields()
+}
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val

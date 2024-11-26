@@ -33,8 +33,8 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('add')" @click="addRow" />
+        <q-btn title="create" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
+          :label="$t('create')" @click="saveRow()" />
         <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
@@ -56,8 +56,8 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit"
-                @click="editRow(props.row.id)" class="q-mt-none" />
+              <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
+                @click="saveRow(props.row.id)" class="q-mt-none" />
               <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
                 @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
             </div>
@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrieveRegions, fetchRegion } from 'src/api/regions'
 import SubPage from './SubPage.vue'
 
@@ -154,11 +154,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function addRow() {
-  visible.value = true
-}
-
-async function editRow(id: number) {
+async function saveRow(id?: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

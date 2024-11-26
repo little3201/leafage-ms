@@ -56,21 +56,21 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
-              <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(col.value)"
-                class="q-mt-none" />
+              <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
+                @click="saveRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'name'">
               <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
             </div>
             <div v-else-if="col.name === 'actions' && props.row.actions && props.row.actions.length > 0">
-              <q-chip v-for="(action, index) in visibleArray(props.row.actions, 3)" :key="index" :label="$t(action)"
-                :color="actions[action]" text-color="white" class="q-mr-sm" size="sm" />
+              <q-chip v-for="(item, index) in visibleArray(props.row.actions, 3)" :key="index"
+                :label="$t(item as string)" :color="actions[item]" text-color="white" class="q-mr-sm" size="sm" />
               <template v-if="props.row.actions.length > 3">
                 <q-chip color="primary" text-color="white" class="q-mr-sm" size="sm">
                   + {{ props.row.actions.length - 3 }}
                   <q-tooltip>
-                    <q-chip v-for="(action, index) in props.row.actions.slice(3)" :key="index" :label="$t(action)"
-                      :color="actions[action]" text-color="white" class="q-mr-sm" size="sm" />
+                    <q-chip v-for="(item, index) in props.row.actions.slice(3)" :key="index" :label="$t(item)"
+                      :color="actions[item]" text-color="white" class="q-mr-sm" size="sm" />
                   </q-tooltip>
                 </q-chip>
               </template>
@@ -94,10 +94,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrievePrivileges, fetchPrivilege } from 'src/api/privileges'
 import SubPage from './SubPage.vue'
 import { visibleArray } from 'src/utils'
+import { actions } from 'src/constants'
 import type { Privilege } from 'src/models'
 
 const $q = useQuasar()
@@ -137,26 +138,6 @@ const columns: QTableProps['columns'] = [
   { name: 'id', label: 'actions', field: 'id' }
 ]
 
-const actions: { [key: string]: string } = {
-  add: 'primary',
-  edit: 'primary',
-  upload: 'primary',
-
-  import: 'warning',
-
-  remove: 'negative',
-  clear: 'negative',
-
-  export: 'secondary',
-  download: 'secondary',
-
-  relation: 'positive',
-  config: 'positive',
-
-  preview: 'info',
-  detail: 'info'
-}
-
 onMounted(() => {
   tableRef.value.requestServerInteraction()
 })
@@ -194,7 +175,7 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-async function editRow(id: number) {
+async function saveRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

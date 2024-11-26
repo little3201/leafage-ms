@@ -2,7 +2,7 @@
   <q-page padding>
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset">
+        <q-form ref="formRef" @submit="onSubmit" @reset="onReset">
           <q-card-section>
             <div class="text-h6">{{ $t('users') }}</div>
           </q-card-section>
@@ -35,8 +35,8 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="add" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('add')" @click="addRow" />
+        <q-btn title="create" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
+          :label="$t('create')" @click="saveRow()" />
         <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
@@ -92,7 +92,7 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="edit" padding="xs" flat round color="primary" icon="sym_r_edit" @click="editRow(props.row.id)"
+          <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit" @click="saveRow(props.row.id)"
             class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
@@ -105,8 +105,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar, date } from 'quasar'
+import type { QTableProps, QForm } from 'quasar'
+import { useQuasar, exportFile, date } from 'quasar'
 import { retrieveUsers, fetchUser } from 'src/api/users'
 import { calculate } from 'src/utils'
 
@@ -121,6 +121,7 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
+const formRef = ref<QForm>()
 const form = ref<User>({
   username: '',
   fullName: '',
@@ -179,11 +180,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function addRow() {
-  visible.value = true
-}
-
-async function editRow(id: number) {
+async function saveRow(id?: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {
@@ -220,8 +217,7 @@ async function onSubmit() {
 
 function onReset() {
   // Reset the form data
-  form.value.username = ''
-  form.value.email = ''
+  formRef.value?.resetValidation()
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

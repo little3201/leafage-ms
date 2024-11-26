@@ -3,7 +3,7 @@
     <q-header>
       <q-toolbar>
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/vite.svg" width="2em" height="2em" />
+          <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
           <span>Project Management</span>
         </q-toolbar-title>
         <q-toolbar-title>

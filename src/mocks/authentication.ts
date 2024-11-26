@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { SERVER_URL } from 'src/api/paths'
+import { SERVER_URL } from 'src/constants'
 
 export const authenticationHandlers = [
   http.post(`/api${SERVER_URL.SIGNIN}`, async ({ request }) => {
@@ -8,7 +8,7 @@ export const authenticationHandlers = [
     // Read the intercepted request body.
     return HttpResponse.json(null, {
       headers: {
-        'Set-Cookie': `username=${username}; Path=/;`
+        'Set-Cookie': `logged_in=${username}; HttpOnly; Secure; SameSite=Lax; Max-Age=86400; Path=/;`
       }
     })
   }),

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { SERVER_URL } from 'src/api/paths'
+import { SERVER_URL } from 'src/constants'
 import type { Role, RolePrivileges, RoleMembers } from 'src/models'
 
 const datas: Role[] = []

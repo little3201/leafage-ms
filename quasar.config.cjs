@@ -74,7 +74,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? '/api'
-          : 'https://api.leafage.top/v1',
+          : '/api',
         TITLE: ''
       },
 

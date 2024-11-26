@@ -34,7 +34,7 @@
           </template>
         </q-input>
         <q-btn title="create" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('create')" @click="createRow" />
+          :label="$t('create')" @click="saveRow()" />
         <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
           @click="exportTable" />
       </template>
@@ -51,17 +51,17 @@
       <template v-slot:body-cell-members="props">
         <q-td :props="props">
           <template v-if="props.row.members && props.row.members.length > 0">
-            <q-avatar v-for="(member, index) in visibleArray(props.row.members, 5)" :key="index" size="2em"
+            <q-avatar v-for="(item, index) in visibleArray(props.row.members, 5)" :key="index" size="2em"
               :style="{ left: `${index * -2}px`, border: '2px solid white' }">
-              <q-img :src="member" :alt="`avater${index}`" width="2em" height="2em" />
+              <q-img :src="item as string" :alt="`avater${index}`" width="2em" height="2em" />
             </q-avatar>
             <template v-if="props.row.members.length > 5">
               <q-chip color="primary" text-color="white" class="q-mr-xs" size="sm">
                 + {{ props.row.members.length - 5 }}
                 <q-tooltip>
-                  <q-avatar v-for="(member, index) in props.row.members.slice(5)" :key="index" size="2em"
+                  <q-avatar v-for="(item, index) in props.row.members.slice(5)" :key="index" size="2em"
                     :style="{ left: `${index * -2}px`, border: '2px solid white' }">
-                    <q-img :src="member" :alt="`avater${index}`" width="2em" height="2em" />
+                    <q-img :src="item" :alt="`avater${index}`" width="2em" height="2em" />
                   </q-avatar>
                 </q-tooltip>
               </q-chip>
@@ -75,10 +75,11 @@
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
-        <q-td :props="props"><q-btn title="relation" padding="xs" flat round color="positive" icon="sym_r_link"
+        <q-td :props="props">
+          <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit" @click="saveRow(props.row.id)"
+            class="q-mt-none q-mx-sm" />
+          <q-btn title="relation" padding="xs" flat round color="positive" icon="sym_r_link"
             @click="relationRow(props.row.id)" class="q-mt-none" />
-          <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
-            @click="modifyRow(props.row.id)" class="q-mt-none q-mx-sm" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none " />
         </q-td>
@@ -89,7 +90,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveRoles, fetchRole } from 'src/api/roles'
 import { visibleArray } from 'src/utils'
@@ -162,15 +163,11 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   })
 }
 
-function createRow() {
-  visible.value = true
-}
-
 function relationRow(id: number) {
   console.log(id)
 }
 
-async function modifyRow(id: number) {
+async function saveRow(id?: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

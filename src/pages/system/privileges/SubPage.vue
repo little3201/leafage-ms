@@ -51,8 +51,8 @@
         </q-td>
         <q-td v-for="col in props.cols" :key="col.name">
           <div v-if="col.name === 'id'" class="text-right">
-            <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
-              @click="modifyRow(col.value)" class="q-mt-none" />
+            <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit" @click="saveRow(col.value)"
+              class="q-mt-none" />
           </div>
           <div v-else-if="col.name === 'name'">
             <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
@@ -160,7 +160,7 @@ async function onRequest() {
   }
 }
 
-function modifyRow(id: number) {
+function saveRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

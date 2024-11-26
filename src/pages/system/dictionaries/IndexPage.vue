@@ -56,7 +56,7 @@
           <q-td v-for="col in props.cols" :key="col.name">
             <div v-if="col.name === 'id'" class="text-right">
               <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit"
-                @click="modifyRow(col.value)" class="q-mt-none" />
+                @click="saveRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
               <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
 import SubPage from './SubPage.vue'
@@ -147,7 +147,7 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
-async function modifyRow(id: number) {
+async function saveRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

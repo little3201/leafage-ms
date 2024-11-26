@@ -28,7 +28,7 @@
       <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
         @click="onRequest" />
       <q-btn title="create" rounded color="primary" :disable="loading" icon="sym_r_add" :label="$t('create')"
-        @click="createRow" />
+        @click="saveRow()" />
     </template>
 
     <template v-slot:header="props">
@@ -46,7 +46,7 @@
     </template>
     <template v-slot:body-cell-id="props">
       <q-td :props="props">
-        <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit" @click="modifyRow(props.row.id)"
+        <q-btn title="modify" padding="xs" flat round color="primary" icon="sym_r_edit" @click="saveRow(props.row.id)"
           class="q-mt-none" />
         <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
           @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
@@ -114,11 +114,7 @@ async function onRequest() {
   }
 }
 
-function createRow() {
-  visible.value = true
-}
-
-async function modifyRow(id: number) {
+async function saveRow(id?: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {

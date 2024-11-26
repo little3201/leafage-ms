@@ -71,7 +71,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
 import { formatDuration } from 'src/utils'
 import { httpMethods } from 'src/constants'

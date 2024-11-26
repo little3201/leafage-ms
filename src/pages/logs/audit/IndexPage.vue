@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar, date } from 'quasar'
+import { useQuasar, exportFile, date } from 'quasar'
 import { retrieveAuditLogs, fetchAuditLog } from 'src/api/audit-logs'
 
 import type { AuditLog } from 'src/models'

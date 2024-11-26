@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { Cookies } from 'quasar'
 import { signin, signout } from 'src/api/authentication'
 import { fetchMe } from 'src/api/users'
 import { retrievePrivilegeTree } from 'src/api/privileges'
@@ -19,7 +18,6 @@ export const useUserStore = defineStore('user', {
     async logout() {
       const res = await signout()
       if (res.status === 200) {
-        Cookies.remove('username')
         this.$reset()
       }
     },

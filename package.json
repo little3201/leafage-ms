@@ -16,6 +16,7 @@
     "@quasar/extras": "^1.16.11",
     "apexcharts": "^3.54.1",
     "axios": "^1.7.3",
+    "highlight.js": "^11.10.0",
     "lottie-web": "^5.12.2",
     "pinia": "^2.1.7",
     "quasar": "^2.17.1",

@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { exportFile, useQuasar, date } from 'quasar'
+import { useQuasar, exportFile, date } from 'quasar'
 import { retrieveSchedulerLogs, fetchSchedulerLog } from 'src/api/scheduler-logs'
 import { formatDuration } from 'src/utils'
 import type { SchedulerLog } from 'src/models'

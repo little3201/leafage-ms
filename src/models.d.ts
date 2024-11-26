@@ -160,30 +160,47 @@ export interface FileRecord extends AudtiMetadata {
   size: number
 }
 
-export interface Table extends AudtiMetadata {
+export interface Schema extends AudtiMetadata {
   name: string
   comment: string
-  description: string
+  reference: string
+  domain: string
+  enabled?: boolean
+  templates: number[]
 }
 
-export interface Column extends AudtiMetadata {
+export interface Field extends AudtiMetadata {
   name: string
-  type: string
+  dataType: string
   length: number
+  fieldType: string
+  formType: string
+  tsType: string
   nullable: boolean
-  unique: boolean
+  queryable: boolean
+  editable: boolean
   comment: string
   description: string
 }
 
-export interface Code extends AudtiMetadata {
+export interface Template extends AudtiMetadata {
   name: string
+  suffix: string
   content: string
+  type?: number
+  version: string
+  enabled?: boolean
 }
 
 export interface Script extends AudtiMetadata {
   name: string
   icon: string
   version: string
+  content: string
   description: string
+}
+
+export interface TableInfo {
+  tableName: string
+  tableComment: string
 }

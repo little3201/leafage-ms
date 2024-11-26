@@ -22,7 +22,6 @@ export default boot(({ router }) => {
       config.signal = controller.signal
       abortControllerMap.set(uniqueKey, controller)
 
-      defaultRequestInterceptors(config)
       return config
     },
     (error: AxiosError) => {
@@ -39,33 +38,27 @@ export default boot(({ router }) => {
       return response
     },
     (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        router.replace('/login')
-      } else if (error.response?.status === 404) {
-        Notify.create({ type: 'negative', message: t('notFound') })
-      } else if (error.response?.status === 500) {
-        Notify.create({ type: 'negative', message: t('serverError') })
+      const status = error.response?.status
+      switch (status) {
+        case 401:
+          localStorage.removeItem('access_token')
+          router.replace('/login')
+          break
+        case 403:
+          Notify.create({ type: 'forbidden', message: t('error') })
+          break
+        case 404:
+          Notify.create({ type: 'negative', message: t('notFound') })
+          break
+        case 500:
+          Notify.create({ type: 'negative', message: t('serverError') })
+          break
+        default:
+          Notify.create({ type: 'negative', message: t('error') })
       }
-      Notify.create({ type: 'negative', message: t('error') })
       return Promise.reject(error)
     }
   )
 })
-
-const defaultRequestInterceptors = (config: InternalAxiosRequestConfig) => {
-  if (config.method === 'get' && config.params) {
-    let url = config.url as string
-    url += '?'
-    Object.keys(config.params).forEach((key) => {
-      if (config.params[key] !== undefined && config.params[key] !== null && config.params[key] !== '') {
-        url += `${key}=${encodeURIComponent(config.params[key])}&`
-      }
-    })
-    url = url.substring(0, url.length - 1)
-    config.params = {}
-    config.url = url
-  }
-  return config
-}
 
 export { api }

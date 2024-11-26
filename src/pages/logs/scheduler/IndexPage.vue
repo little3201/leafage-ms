@@ -24,8 +24,10 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
-          @click="exportTable" />
+        <q-btn title="refresh" round padding="xs" flat color="primary" class="q-ml-sm" :disable="loading"
+          icon="sym_r_refresh" @click="refresh" />
+        <q-btn title="clear" round padding="xs" flat color="negative" class="q-mx-sm" icon="sym_r_clear_all" />
+        <q-btn title="export" round padding="xs" flat color="primary" icon="sym_r_file_export" @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -39,13 +41,14 @@
 
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
-          <q-chip v-if="props.row.status === 0" size="sm" color="primary" text-color="white">
+          <q-chip v-if="props.row.status === 0" size="sm" icon="sym_r_progress_activity" color="primary"
+            text-color="white">
             {{ $t('processing') }}
           </q-chip>
-          <q-chip v-else-if="props.row.status === 1" size="sm" color="positive" text-color="white">
+          <q-chip v-else-if="props.row.status === 1" size="sm" icon="sym_r_check" color="positive" text-color="white">
             {{ $t('done') }}
           </q-chip>
-          <q-chip v-else size="sm" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          <q-chip v-else size="sm" icon="sym_r_error" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
         </q-td>
       </template>
       <template v-slot:body-cell-executedTimes="props">
@@ -142,6 +145,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   }).finally(() => {
     loading.value = false
   })
+}
+
+function refresh() {
+
 }
 
 function showRow(id: number) {

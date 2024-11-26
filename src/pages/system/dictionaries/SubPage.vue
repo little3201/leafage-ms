@@ -15,7 +15,7 @@
 
         <q-card-actions align="right">
           <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
-          <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
+          <q-btn title="submit" type="submit" flat :label="$t('submit')" color="primary" />
         </q-card-actions>
 
       </q-form>
@@ -25,10 +25,9 @@
   <q-table flat ref="subtableRef" :title="title" :rows="rows" :columns="columns" row-key="id" binary-state-sort
     @request="onRequest" hide-pagination hide-selected-banner class="full-width bg-transparent">
     <template v-slot:top-right>
-      <q-btn title="refresh" round flat color="primary" class="q-mx-md" :disable="loading" icon="sym_r_refresh"
-        @click="onRequest" />
-      <q-btn title="create" rounded color="primary" :disable="loading" icon="sym_r_add" :label="$t('create')"
-        @click="saveRow()" />
+      <q-btn title="refresh" round padding="xs" flat color="primary" class="q-mx-sm" :disable="loading"
+        icon="sym_r_refresh" @click="refresh" />
+      <q-btn title="create" round padding="xs" color="primary" :disable="loading" icon="sym_r_add" @click="saveRow()" />
     </template>
 
     <template v-slot:header="props">
@@ -112,6 +111,10 @@ async function onRequest() {
       loading.value = false
     })
   }
+}
+
+function refresh() {
+
 }
 
 async function saveRow(id?: number) {

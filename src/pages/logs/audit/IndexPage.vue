@@ -24,8 +24,9 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
-          @click="exportTable" />
+        <q-btn title="refresh" round padding="xs" flat color="primary" class="q-mx-sm" :disable="loading"
+          icon="sym_r_refresh" @click="refresh" />
+        <q-btn title="export" round padding="xs" flat color="primary" icon="sym_r_file_export" @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -142,6 +143,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   }).finally(() => {
     loading.value = false
   })
+}
+
+function refresh() {
+
 }
 
 function showRow(id: number) {

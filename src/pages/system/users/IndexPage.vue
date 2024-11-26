@@ -20,7 +20,7 @@
 
           <q-card-actions align="right">
             <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
-            <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
+            <q-btn title="submit" type="submit" flat :label="$t('submit')" color="primary" />
           </q-card-actions>
         </q-form>
       </q-card>
@@ -35,10 +35,13 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="create" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_add"
-          :label="$t('create')" @click="saveRow()" />
-        <q-btn title="export" rounded outline color="primary" icon="sym_r_file_save" :label="$t('export')"
-          @click="exportTable" />
+        <q-btn title="create" round padding="xs" color="primary" class="q-ml-sm" :disable="loading" icon="sym_r_add"
+          @click="saveRow()" />
+        <q-btn title="refresh" round padding="xs" flat color="primary" class="q-ml-sm" :disable="loading"
+          icon="sym_r_refresh" @click="refresh" />
+        <q-btn title="import" round padding="xs" flat color="primary" class="q-mx-sm" :disable="loading"
+          icon="sym_r_database_upload" @click="importRow" />
+        <q-btn title="export" round padding="xs" flat color="primary" icon="sym_r_file_export" @click="exportTable" />
       </template>
 
       <template v-slot:header="props">
@@ -115,6 +118,7 @@ import type { User } from 'src/models'
 const $q = useQuasar()
 
 const visible = ref<boolean>(false)
+const importVisible = ref<boolean>(false)
 
 const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
@@ -178,6 +182,14 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   }).finally(() => {
     loading.value = false
   })
+}
+
+function importRow() {
+  importVisible.value = true
+}
+
+function refresh() {
+
 }
 
 async function saveRow(id?: number) {

@@ -16,7 +16,7 @@
 
         <q-card-actions align="right">
           <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
-          <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
+          <q-btn title="submit" type="submit" flat :label="$t('submit')" color="primary" />
         </q-card-actions>
 
       </q-form>

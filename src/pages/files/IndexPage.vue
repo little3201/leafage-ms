@@ -16,7 +16,7 @@
 
           <q-card-actions align="right">
             <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
-            <q-btn title="submit" type="submit" :label="$t('submit')" color="primary" />
+            <q-btn title="submit" type="submit" flat :label="$t('submit')" color="primary" />
           </q-card-actions>
 
         </q-form>
@@ -32,8 +32,10 @@
             <q-icon name="sym_r_search" />
           </template>
         </q-input>
-        <q-btn title="upload" rounded color="primary" class="q-mx-md" :disable="loading" icon="sym_r_upload"
-          :label="$t('upload')" @click="uploadRow" />
+        <q-btn title="refresh" round padding="xs" flat color="primary" class="q-mx-sm" :disable="loading"
+          icon="sym_r_refresh" @click="refresh" />
+        <q-btn title="upload" round padding="xs" color="primary" :disable="loading" icon="sym_r_upload"
+          @click="uploadRow" />
       </template>
 
       <template v-slot:header="props">
@@ -136,6 +138,10 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
   }).finally(() => {
     loading.value = false
   })
+}
+
+function refresh() {
+
 }
 
 function uploadRow() {

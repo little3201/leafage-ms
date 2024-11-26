@@ -74,7 +74,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? '/api'
-          : '/api',
+          : 'https://101.42.255.156/api',
         TITLE: ''
       },
 

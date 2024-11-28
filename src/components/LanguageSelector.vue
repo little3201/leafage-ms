@@ -33,7 +33,7 @@ watch(lang, val => {
 
 const localeStore = useLocaleStore()
 
-function changeLocale(langIso: string = 'en-US') {
+function changeLocale(langIso: 'en-US' | 'zh-CN' | 'zh-TW' = 'en-US') {
   lang.value = langIso
   locale.value = langIso
   localeStore.changeLang(langIso)

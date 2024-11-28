@@ -6,7 +6,7 @@ export const localeOptions = [
   { value: 'en-US', label: 'English(US)' },
   { value: 'zh-CN', label: '中文（简体）' },
   { value: 'zh-TW', label: '中文（繁體）' }
-]
+] as const
 
 export const messages = {
   'en-US': enUS,

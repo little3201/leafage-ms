@@ -44,7 +44,15 @@
           path: '/'
         }" />
         <!-- privileges -->
-        <EssentialList :essentialLinks="essentialLinks" />
+        <template v-for="link in essentialLinks" :key="link.id">
+          <EssentialList v-if="link.children && link.children.length > 0" :essentialLink="link"
+            :parent-path="`/${link.meta.path}`" />
+          <EssentialLink v-else v-bind="{
+            name: link.name,
+            icon: link.meta.icon,
+            path: link.meta.path
+          }" />
+        </template>
       </q-list>
     </q-drawer>
 

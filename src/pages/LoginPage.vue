@@ -29,7 +29,7 @@
           <q-card-section horizontal class="full-height" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
-                <DotLottieVue style="height: 32em; width: 32em" autoplay loop src="/1707289607880.lottie" />
+                <div ref="lottieRef" style="height: 32em; width: 32em" />
                 <div class="column q-gutter-y-xs">
                   <span class="text-weight-bold text-h5" style="margin-top: -20px">
                     {{ $t('welcome') }}
@@ -84,9 +84,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
+import lottie from 'lottie-web'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'stores/user-store'
 
@@ -101,10 +101,15 @@ const userStore = useUserStore()
 const showPwd = ref<boolean>(true)
 const rememberMe = ref<boolean>(false)
 const loading = ref<boolean>(false)
+const lottieRef = ref<HTMLDivElement | null>(null)
 
 const form = ref({
   username: '',
   password: ''
+})
+
+onMounted(() => {
+  load()
 })
 
 function changeRememberMe(value: boolean) {
@@ -122,5 +127,17 @@ async function onSubmit() {
       // 在请求结束后执行
       loading.value = false
     })
+}
+
+function load() {
+  if (lottieRef.value) {
+    lottie.loadAnimation({
+      container: lottieRef.value,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/1707289607880.json'
+    })
+  }
 }
 </script>

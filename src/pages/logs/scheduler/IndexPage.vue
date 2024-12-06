@@ -91,7 +91,6 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const row = ref<SchedulerLog>({
-  id: undefined,
   name: ''
 })
 

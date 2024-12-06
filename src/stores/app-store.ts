@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import { Dark } from 'quasar'
 
 export const useAppStore = defineStore('app', {
@@ -14,6 +14,10 @@ export const useAppStore = defineStore('app', {
     setTitle(title: string) {
       this.title = title
     }
-  },
-  persist: true
+  }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useAppStore, import.meta.hot));
+}
+

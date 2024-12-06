@@ -8,7 +8,8 @@
             :parent-path="pathResolve(parentPath, link.meta.path)" />
 
           <!-- single item -->
-          <EssentialLink v-else v-bind="{ name: link.name, icon: link.meta.icon, path: link.meta.path, parentPath }" />
+          <EssentialLink v-else
+            v-bind="{ name: link.name, icon: link.meta.icon, path: link.meta.path, parentPath: parentPath || '' }" />
         </template>
       </q-card-section>
     </q-card>

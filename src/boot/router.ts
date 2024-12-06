@@ -1,4 +1,4 @@
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { useUserStore } from 'stores/user-store'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
@@ -8,7 +8,7 @@ const BlankLayout = () => import('src/layouts/BlankLayout.vue')
 
 const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 
-export default boot(({ router, store }) => {
+export default defineBoot(({ router, store }) => {
   router.beforeEach((to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     const userStore = useUserStore(store)
@@ -52,10 +52,10 @@ export default boot(({ router, store }) => {
 export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] => {
   const res: RouteRecordRaw[] = []
   for (const route of routes) {
-    const data: RouteRecordRaw = {
+    const item: RouteRecordRaw = {
       path: route.meta.path,
       name: route.name,
-      redirect: route.meta.redirect,
+      redirect: route.meta.redirect as string,
       component: null,
       children: []
     }
@@ -64,16 +64,16 @@ export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] =>
       const component = route.meta.component as string
       if (comModule) {
         // 动态加载路由文件
-        data.component = comModule
+        item.component = comModule
       } else if (component.includes('#')) {
-        data.component = BlankLayout
+        item.component = BlankLayout
       }
     }
     // recursive child routes
     if (route.children) {
-      data.children = generateRoutes(route.children)
+      item.children = generateRoutes(route.children)
     }
-    res.push(data)
+    res.push(item)
   }
   return res
 }

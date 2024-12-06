@@ -98,10 +98,9 @@ const $q = useQuasar()
 
 const props = withDefaults(defineProps<{
   title: string
-  superiorId?: number | undefined
+  superiorId?: number
 }>(), {
-  title: '',
-  superiorId: undefined
+  title: ''
 })
 
 const visible = ref<boolean>(false)
@@ -114,6 +113,7 @@ const loading = ref<boolean>(false)
 const form = ref<Privilege>({
   name: '',
   path: '',
+  superiorId: props.superiorId as number,
   component: '',
   icon: '',
   description: ''

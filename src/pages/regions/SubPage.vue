@@ -87,10 +87,9 @@ const $q = useQuasar()
 
 const props_ = withDefaults(defineProps<{
   title: string
-  superiorId?: number | undefined
+  superiorId?: number
 }>(), {
-  title: '',
-  superiorId: undefined
+  title: ''
 })
 
 const visible = ref<boolean>(false)
@@ -102,6 +101,7 @@ const loading = ref<boolean>(false)
 
 const form = ref<Region>({
   name: '',
+  superiorId: props_.superiorId as number,
   areaCode: 0,
   postalCode: 0,
   description: ''

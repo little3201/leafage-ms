@@ -83,7 +83,6 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const row = ref<OperationLog>({
-  id: undefined,
   operation: '',
   content: '',
   ip: '',

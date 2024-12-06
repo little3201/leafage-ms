@@ -1,14 +1,17 @@
-import { defineStore } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia'
 
 export const useLocaleStore = defineStore('locale', {
   state: () => ({
-    lang: 'en-US' as 'zh-CN' | 'en-US' | 'zh-TW'
+    lang: 'en-US'
   }),
   actions: {
-    changeLang(lang: 'zh-CN' | 'en-US' | 'zh-TW') {
+    changeLang(lang: string) {
       // 更新用户状态
       this.lang = lang
     }
-  },
-  persist: true
+  }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useLocaleStore, import.meta.hot));
+}

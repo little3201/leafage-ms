@@ -53,7 +53,6 @@ export default {
   status: 'Status',
   startTime: 'Started Time',
   nextExecuteTime: 'Next Execute Time',
-  operationTime: 'Operated Time',
   responseTimes: 'Response Times',
   statusCode: 'Response Code',
   responseMessage: 'Response Message',

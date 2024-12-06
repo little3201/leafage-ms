@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@lottiefiles/dotlottie-vue':
+        specifier: ^0.5.2
+        version: 0.5.2(vue@3.5.13(typescript@5.7.2))
       '@quasar/extras':
         specifier: ^1.16.15
         version: 1.16.15
@@ -20,9 +23,6 @@ importers:
       highlight.js:
         specifier: ^11.10.0
         version: 11.10.0
-      lottie-web:
-        specifier: ^5.12.2
-        version: 5.12.2
       pinia:
         specifier: ^2.3.0
         version: 2.3.0(typescript@5.7.2)(vue@3.5.13(typescript@5.7.2))
@@ -79,7 +79,7 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0(eslint@9.16.0)(optionator@0.9.4)(typescript@5.7.2)(vite@6.0.3(@types/node@20.17.9)(sass-embedded@1.82.0)(sass@1.82.0)(terser@5.37.0)(yaml@2.6.1))(vue-tsc@2.1.10(typescript@5.7.2))
       vue-tsc:
-        specifier: ^2.0.29
+        specifier: ^2.1.10
         version: 2.1.10(typescript@5.7.2)
 
 packages:
@@ -406,6 +406,14 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@lottiefiles/dotlottie-vue@0.5.2':
+    resolution: {integrity: sha512-2aIrIXmdMd3BZNfBGGXTgZHfK2QBCmTj0SWy0SfFbTCgZ5jIQ1oytNfXCCzpOGXoCKb+GrAW6qkuPNj1kSbxNA==}
+    peerDependencies:
+      vue: ^3.3.4
+
+  '@lottiefiles/dotlottie-web@0.38.1':
+    resolution: {integrity: sha512-k7l2nLxGvFCD4ckJFxYI7KSvLvT5HtvGkejk6VuGTuUfcQpS+e29fOF+oNRVW5Wjgdh/1QvyxLpqDg57CcJqgw==}
 
   '@mswjs/interceptors@0.37.3':
     resolution: {integrity: sha512-USvgCL/uOGFtVa6SVyRrC8kIAedzRohxIXN5LISlg5C5vLZCn7dgMFVSNhSF9cuBEFrm/O2spDWEZeMnw4ZXYg==}
@@ -1739,9 +1747,6 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
 
-  lottie-web@5.12.2:
-    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
-
   lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
 
@@ -3048,6 +3053,13 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@lottiefiles/dotlottie-vue@0.5.2(vue@3.5.13(typescript@5.7.2))':
+    dependencies:
+      '@lottiefiles/dotlottie-web': 0.38.1
+      vue: 3.5.13(typescript@5.7.2)
+
+  '@lottiefiles/dotlottie-web@0.38.1': {}
 
   '@mswjs/interceptors@0.37.3':
     dependencies:
@@ -4462,8 +4474,6 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
-
-  lottie-web@5.12.2: {}
 
   lower-case@2.0.2:
     dependencies:

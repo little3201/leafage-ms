@@ -29,7 +29,7 @@
           <q-card-section horizontal class="full-height" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
-                <div ref="lottieRef" style="height: 32em; width: 32em" />
+                <canvas ref="lottieRef" style="height: 32em; width: 32em" />
                 <div class="column q-gutter-y-xs">
                   <span class="text-weight-bold text-h5" style="margin-top: -20px">
                     {{ $t('welcome') }}
@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import lottie from 'lottie-web'
+import { DotLottie } from '@lottiefiles/dotlottie-web'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'stores/user-store'
 
@@ -101,7 +101,7 @@ const userStore = useUserStore()
 const showPwd = ref<boolean>(true)
 const rememberMe = ref<boolean>(false)
 const loading = ref<boolean>(false)
-const lottieRef = ref<HTMLDivElement | null>(null)
+const lottieRef = ref<HTMLCanvasElement | null>(null)
 
 const form = ref({
   username: '',
@@ -131,12 +131,11 @@ async function onSubmit() {
 
 function load() {
   if (lottieRef.value) {
-    lottie.loadAnimation({
-      container: lottieRef.value,
-      renderer: 'svg',
+    new DotLottie({
+      canvas: lottieRef.value,
       loop: true,
       autoplay: true,
-      path: '/1707289607880.json'
+      src: '/1707289607880.lottie'
     })
   }
 }

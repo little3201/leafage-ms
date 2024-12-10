@@ -135,7 +135,10 @@ function load() {
       canvas: lottieRef.value,
       loop: true,
       autoplay: true,
-      src: '/1707289607880.lottie'
+      src: '/1707289607880.lottie',
+      renderConfig: {
+        autoResize: true
+      }
     })
   }
 }

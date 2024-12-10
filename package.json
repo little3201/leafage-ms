@@ -10,7 +10,7 @@
     "lint": "eslint -c ./eslint.config.js './src*/**/*.{ts,js,cjs,mjs,vue}'",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
-    "build": "NODE_OPTIONS='--trace-uncaught' quasar build"
+    "build": "quasar build"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.15",

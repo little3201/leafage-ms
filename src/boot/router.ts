@@ -1,5 +1,7 @@
 import { defineBoot } from '#q-app/wrappers'
+import { Cookies } from 'quasar'
 import { useUserStore } from 'stores/user-store'
+import { retrievePrivilegeTree } from 'src/api/privileges'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
 
@@ -9,16 +11,29 @@ const BlankLayout = () => import('src/layouts/BlankLayout.vue')
 const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 
 export default defineBoot(({ router, store }) => {
-  router.beforeEach((to, from, next) => {
+  router.beforeEach(async (to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     const userStore = useUserStore(store)
-    if (Object.keys(userStore.user || {}).length > 0) {
+    const logged_user = Cookies.get('logged_user')
+    if (logged_user && userStore.username.length > 0) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
         // 获取权限，注册路由表
         if (!to.name || !router.hasRoute(to.name)) {
-          const routes = generateRoutes(userStore.privileges as PrivilegeTreeNode[])
+          let userPrivileges = userStore.privileges
+          if (userPrivileges.length === 0) {
+            try {
+              const res = await retrievePrivilegeTree()
+              userStore.$patch({ privileges: res.data })
+              userPrivileges = res.data
+            } catch (error) {
+              console.error('Failed to retrieve privileges:', error)
+              next({ path: '/login' })
+              return
+            }
+          }
+          const routes = generateRoutes(userPrivileges)
 
           // 动态添加可访问路由表
           routes.forEach((route) => {

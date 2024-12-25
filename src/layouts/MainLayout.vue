@@ -2,9 +2,9 @@
   <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? '' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
+        <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
-          <span>Project Management</span>
+          Project Management
         </q-toolbar-title>
         <q-toolbar-title>
           <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
@@ -17,9 +17,9 @@
 
         <div class="cursor-pointer">
           <q-avatar size="md">
-            <q-img alt="avatar" :src="userStore.user?.avatar" width="2rem" height="2rem" />
+            <q-img alt="avatar" src="/images/avatar.jpg" width="2rem" height="2rem" />
           </q-avatar>
-          <span class="q-ml-sm">{{ userStore.user?.username }}</span>
+          <span class="q-ml-sm">{{ userStore.username }}</span>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>

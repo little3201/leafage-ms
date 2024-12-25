@@ -4,11 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
+import { Cookies, useQuasar } from 'quasar'
 
 const $q = useQuasar()
+$q.dark.set(Cookies.get('theme') === 'dark')
 
 function handleChange(value: boolean) {
+  Cookies.set('theme', value ? 'dark' : 'light')
   $q.dark.set(value)
 }
 </script>

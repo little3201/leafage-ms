@@ -4,14 +4,10 @@ import { fetchMe } from 'src/api/users'
 import { retrievePrivilegeTree } from 'src/api/privileges'
 import type { PrivilegeTreeNode } from 'src/models'
 
-interface User {
-  username: string
-  avatar: string
-}
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    user: null as User | null,
+    username: '',
     privileges: [] as PrivilegeTreeNode[]
   }),
   actions: {
@@ -27,7 +23,7 @@ export const useUserStore = defineStore('user', {
         const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
         // 执行结果处理
         this.$patch({
-          user: userResp.data,
+          username: userResp.data.username,
           privileges: privilegesResp.data
         })
       }

@@ -4,15 +4,13 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onBeforeUnmount, onActivated } from 'vue'
-import { debounce } from 'quasar'
+import { Cookies, debounce } from 'quasar'
 import ApexCharts from 'apexcharts'
-import { useAppStore } from 'stores/app-store'
 import { isString } from 'src/utils'
 
-const appStore = useAppStore()
 
 const props = withDefaults(defineProps<{
-  options: ApexCharts.ApexOptions // 使用 ApexCharts 的配置类型
+  options: ApexCharts.ApexOptions
   width?: number | string
   height?: number | string
 }>(), {
@@ -20,12 +18,10 @@ const props = withDefaults(defineProps<{
   height: '400px'
 })
 
-const theme = computed(() => appStore.isDark ? 'dark' : 'light')
-
 const options = computed(() => {
   return Object.assign({}, props.options, {
     theme: {
-      mode: theme.value
+      mode: Cookies.get('theme')
     }
   })
 })

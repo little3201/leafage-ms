@@ -1,10 +1,10 @@
 <template>
-  <q-layout class="overflow-hidden" :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
-    <q-header class="transparent text-black">
+  <q-layout :class="['overflow-hidden', $q.dark.isActive ? '' : 'bg-light-blue-1']">
+    <q-header :class="['transparent', $q.dark.isActive ? '' : 'text-black']">
       <q-toolbar>
+        <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
         <q-toolbar-title>
-          <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
-          <span class="q-ml-sm text-weight-medium">Project Management</span>
+          Project Management
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />
@@ -26,7 +26,7 @@
 
         <q-card bordered class="column justify-center items-center shadow-12 overflow-hidden"
           style="width: 65vw;height: 70vh;border-radius: 20px;">
-          <q-card-section horizontal class="full-height" style="width: 50%;">
+          <q-card-section horizontal :class="['full-height', $q.screen.lt.md ? 'hidden' : '']" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
                 <canvas ref="lottieRef" style="height: 32em; width: 32em" />

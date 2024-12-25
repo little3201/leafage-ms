@@ -25,6 +25,7 @@ export default {
   accountExpiresAt: '賬號失效時間',
   credentialsExpiresAt: '密碼失效時間',
   principal: '負責人',
+  members: '成员',
   all: '全部',
   yourself: '僅自己',
   yourGroup: '所在分組',

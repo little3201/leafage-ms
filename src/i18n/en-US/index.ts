@@ -25,6 +25,7 @@ export default {
   accountExpiresAt: 'User Expires At',
   credentialsExpiresAt: 'Credentials Expires At',
   principal: 'Principal',
+  members: 'Members',
   all: 'All',
   yourself: 'Only Yourself',
   yourGroup: 'Your Group',

@@ -4,10 +4,12 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onBeforeUnmount, onActivated } from 'vue'
-import { Cookies, debounce } from 'quasar'
+import { useQuasar, debounce } from 'quasar'
 import ApexCharts from 'apexcharts'
 import { isString } from 'src/utils'
 
+
+const $q = useQuasar()
 
 const props = withDefaults(defineProps<{
   options: ApexCharts.ApexOptions
@@ -21,7 +23,7 @@ const props = withDefaults(defineProps<{
 const options = computed(() => {
   return Object.assign({}, props.options, {
     theme: {
-      mode: Cookies.get('theme')
+      mode: $q.dark.isActive ? 'dark' : 'light'
     }
   })
 })

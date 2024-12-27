@@ -1,6 +1,6 @@
 import { defineBoot } from '#q-app/wrappers'
-import { Cookies } from 'quasar'
 import { useUserStore } from 'stores/user-store'
+import { fetchMe } from 'src/api/users'
 import { retrievePrivilegeTree } from 'src/api/privileges'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
@@ -13,27 +13,34 @@ const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 export default defineBoot(({ router, store }) => {
   router.beforeEach(async (to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
-    const userStore = useUserStore(store)
-    const logged_user = Cookies.get('logged_user')
-    if (logged_user && userStore.username.length > 0) {
+    const access_token = localStorage.getItem('access_token')
+    if (access_token) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
+        const userStore = useUserStore(store)
+        let privileges = userStore.privileges
+        if (!privileges.length) {
+          try {
+            const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
+            privileges = privilegesResp.data
+            userStore.$patch({
+              username: userResp.data.username,
+              fullName: userResp.data.fullName,
+              email: userResp.data.email,
+              avatar: userResp.data.avatar,
+              privileges
+            })
+          } catch (error) {
+            console.error('Failed to retrieve privileges:', error)
+            next({ path: '/login' })
+            return
+          }
+        }
+
         // 获取权限，注册路由表
         if (!to.name || !router.hasRoute(to.name)) {
-          let userPrivileges = userStore.privileges
-          if (userPrivileges.length === 0) {
-            try {
-              const res = await retrievePrivilegeTree()
-              userStore.$patch({ privileges: res.data })
-              userPrivileges = res.data
-            } catch (error) {
-              console.error('Failed to retrieve privileges:', error)
-              next({ path: '/login' })
-              return
-            }
-          }
-          const routes = generateRoutes(userPrivileges)
+          const routes = generateRoutes(privileges)
 
           // 动态添加可访问路由表
           routes.forEach((route) => {

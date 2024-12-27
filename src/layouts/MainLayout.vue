@@ -17,7 +17,7 @@
 
         <div class="cursor-pointer">
           <q-avatar size="md">
-            <q-img alt="avatar" src="/images/avatar.jpg" width="2rem" height="2rem" />
+            <q-img alt="avatar" :src="userStore.avatar" width="2rem" height="2rem" />
           </q-avatar>
           <span class="q-ml-sm">{{ userStore.username }}</span>
           <q-menu>
@@ -44,7 +44,7 @@
           path: '/'
         }" />
         <!-- privileges -->
-        <template v-for="link in essentialLinks" :key="link.id">
+        <template v-for="link in userStore.privileges" :key="link.id">
           <EssentialList v-if="link.children && link.children.length > 0" :essentialLink="link"
             :parent-path="`/${link.meta.path}`" />
           <EssentialLink v-else v-bind="{
@@ -81,7 +81,6 @@ import EssentialList from 'components/EssentialList.vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
 
-import type { PrivilegeTreeNode } from 'src/models'
 
 const { replace } = useRouter()
 const $q = useQuasar()
@@ -89,8 +88,6 @@ const $q = useQuasar()
 const userStore = useUserStore()
 
 const leftDrawerOpen = ref<boolean>(false)
-
-const essentialLinks: PrivilegeTreeNode[] = userStore.privileges as PrivilegeTreeNode[]
 
 function onLogout() {
   userStore.logout().then(() => replace('/login'))

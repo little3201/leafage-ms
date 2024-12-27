@@ -39,9 +39,9 @@ watch(lang, async (val) => {
 })
 
 function changeLocale(langIso: string) {
-  locale.value = langIso
   lang.value = langIso
-  Cookies.set('lang', langIso)
+  locale.value = langIso
+  Cookies.set('lang', langIso, { secure: true, sameSite: 'Lax' })
   // set html lang
   const htmlElement = document.querySelector('html')
   if (htmlElement) {

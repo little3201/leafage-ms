@@ -10,7 +10,7 @@ const $q = useQuasar()
 $q.dark.set(Cookies.get('theme') === 'dark')
 
 function handleChange(value: boolean) {
-  Cookies.set('theme', value ? 'dark' : 'light')
+  Cookies.set('theme', value ? 'dark' : 'light', { secure: true, sameSite: 'Lax' })
   $q.dark.set(value)
 }
 </script>

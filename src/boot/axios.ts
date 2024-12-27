@@ -13,7 +13,7 @@ const abortControllerMap: Map<string, AbortController> = new Map()
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api: AxiosInstance = axios.create({ baseURL: process.env.API || '/api', timeout: 10000 })
+const api: AxiosInstance = axios.create({ baseURL: process.env.API || '/api', timeout: 10000, withCredentials: true })
 
 export default defineBoot(({ router }) => {
   // 请求拦截器

@@ -25,7 +25,7 @@
           style="height: 21em;  width: 21em; bottom: -16em; left: 14em; " />
 
         <q-card bordered class="column justify-center items-center shadow-12 overflow-hidden"
-          style="width: 65vw;height: 70vh;border-radius: 20px;">
+          style="height: 70vh; border-radius: 20px;" :style="{ width: $q.screen.lt.sm ? '100%' : '65vw' }">
           <q-card-section horizontal :class="['full-height', $q.screen.lt.md ? 'hidden' : '']" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
@@ -42,8 +42,8 @@
             </transition>
           </q-card-section>
           <q-separator vertical />
-          <q-card-section horizontal class="full-height no-border-radius" style="width: 50%;"
-            :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
+          <q-card-section horizontal class="full-height no-border-radius"
+            :style="{ width: $q.screen.lt.md ? '100%' : '50%' }" :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">

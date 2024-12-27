@@ -22,9 +22,10 @@ for (let i = 0; i < 20; i++) {
 
 export const usersHandlers = [
   http.get(`/api${SERVER_URL.USER}/me`, ({ cookies }) => {
-    if (!cookies.logged_user) {
-      return new HttpResponse(null, { status: 401 })
-    }
+    // if (!cookies.logged_user) {
+    //   return new HttpResponse(null, { status: 401 })
+    // }
+    console.log('cookies', cookies)
 
     return HttpResponse.json({
       username: 'username',

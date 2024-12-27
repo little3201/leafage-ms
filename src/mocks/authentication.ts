@@ -5,15 +5,15 @@ export const authenticationHandlers = [
   http.post(`/api${SERVER_URL.SIGNIN}`, async ({ request }) => {
     const info = await request.formData()
     const username = info.get('username')
-    // Read the intercepted request body.
-    return HttpResponse.json(null, {
+    // Setting the 'Set-Cookie' mocked response header.
+    return new HttpResponse('xxx', {
       headers: {
-        'Set-Cookie': `logged_in=${username}; HttpOnly; Secure; SameSite=Lax; Max-Age=86400; Path=/;`
+        'Set-Cookie': `logged_user=${username}; HttpOnly; Secure; SameSite=Lax; Expires=86400; Path=/;`
       }
     })
   }),
   http.post(`/api${SERVER_URL.SIGNOUT}`, ({ cookies }) => {
-    if (!cookies.username) {
+    if (!cookies.logged_user) {
       return new HttpResponse(null, { status: 401 })
     }
     return new HttpResponse()

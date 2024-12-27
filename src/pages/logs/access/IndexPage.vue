@@ -89,7 +89,6 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const row = ref<AccessLog>({
-  id: undefined,
   operator: '',
   url: '',
   httpMethod: '',

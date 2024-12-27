@@ -82,7 +82,6 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const row = ref<AuditLog>({
-  id: undefined,
   operation: '',
   operator: '',
   resource: '',

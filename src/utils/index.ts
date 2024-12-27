@@ -1,7 +1,7 @@
 import { date } from 'quasar'
 import type { Dictionary } from 'src/models'
 
-export function pathResolve(parentPath: string, path: string | undefined): string {
+export function pathResolve(parentPath: string | undefined, path: string | undefined): string {
   if (!path) {
     return ''
   }

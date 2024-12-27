@@ -1,16 +1,19 @@
 <template>
-  <template v-for="link in essentialLinks" :key="link.name">
-    <q-expansion-item v-if="Array.isArray(link.children)" :icon="link.meta.icon" :label="$t(link.name)">
-      <q-card>
-        <q-card-section>
+  <q-expansion-item :icon="essentialLink.meta.icon" :label="$t(essentialLink.name)">
+    <q-card>
+      <q-card-section>
+        <template v-for="link in essentialLink.children" :key="link.id">
           <!-- children -->
-          <EssentialList :essentialLinks="link.children" :parent-path="pathResolve(parentPath, link.meta.path)" />
-        </q-card-section>
-      </q-card>
-    </q-expansion-item>
-    <!-- single item -->
-    <EssentialLink v-else v-bind="{ name: link.name, icon: link.meta.icon, path: link.meta.path, parentPath }" />
-  </template>
+          <EssentialList v-if="link.children && link.children.length > 0" :essentialLink="link"
+            :parent-path="pathResolve(parentPath, link.meta.path)" />
+
+          <!-- single item -->
+          <EssentialLink v-else
+            v-bind="{ name: link.name, icon: link.meta.icon, path: link.meta.path, parentPath: parentPath || '' }" />
+        </template>
+      </q-card-section>
+    </q-card>
+  </q-expansion-item>
 </template>
 
 <script setup lang="ts">
@@ -19,7 +22,7 @@ import type { PrivilegeTreeNode } from 'src/models'
 import { pathResolve } from 'src/utils'
 
 withDefaults(defineProps<{
-  essentialLinks: PrivilegeTreeNode[]
+  essentialLink: PrivilegeTreeNode
   parentPath?: string
 }>(), {
   parentPath: ''

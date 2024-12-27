@@ -29,7 +29,7 @@ for (let i = 1; i < 28; i++) {
     dataType: 'varchar',
     length: 255,
     fieldType: 'String',
-    formType: 'ElInput',
+    formType: 'input',
     tsType: 'string',
     nullable: i % 3 > 0,
     queryable: i < 2,

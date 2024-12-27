@@ -13,16 +13,26 @@ for (let i = 0; i < 20; i++) {
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,
-    accountExpiresAt: i > 3 ? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28) : undefined,
-    credentialsExpiresAt: i > 3 ? new Date(new Date().getFullYear() + 1, 12, 30) : undefined,
+    accountExpiresAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28),
+    credentialsExpiresAt: new Date(new Date().getFullYear() + 1, 12, 30),
     lastModifiedDate: new Date()
   }
   datas.push(data)
 }
 
 export const usersHandlers = [
-  http.get(`/api${SERVER_URL.USER}/me`, () => {
-    return HttpResponse.json(datas[0])
+  http.get(`/api${SERVER_URL.USER}/me`, ({ cookies }) => {
+    // if (!cookies.logged_user) {
+    //   return new HttpResponse(null, { status: 401 })
+    // }
+    console.log('cookies', cookies)
+
+    return HttpResponse.json({
+      username: 'username',
+      fullName: 'fullName_',
+      avatar: '/images/avatar.jpg',
+      email: 'username' + '@test.com'
+    })
   }),
   http.get(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
     const { id } = params

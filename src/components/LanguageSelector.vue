@@ -2,7 +2,7 @@
   <q-btn title="translate" icon="sym_r_translate" round flat dense>
     <q-menu>
       <q-list dense separator>
-        <q-item clickable v-close-popup v-for="option in localeOptions" :key="option.value"
+        <q-item clickable v-close-popup v-for="option in langOptions" :key="option.value"
           :active="locale === option.value" @click="changeLocale(option.value)">
           <q-item-section>{{ option.label }}</q-item-section>
         </q-item>
@@ -14,29 +14,34 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useQuasar } from 'quasar'
-import { localeOptions } from 'src/i18n'
-import { useLocaleStore } from 'stores/locale-store'
-
-const { locale } = useI18n({ useScope: 'global' })
-
-const modules = import.meta.glob('../../node_modules/quasar/lang/(en-US|zh-CN|zh-TW).js')
+import { useQuasar, Cookies } from 'quasar'
+import languages from 'quasar/lang/index.json'
+import type { QuasarLanguage } from 'quasar'
 
 const $q = useQuasar()
+
+const { locale } = useI18n({ useScope: 'global' })
+locale.value = Cookies.get('lang') || $q.lang.isoName
+const modules = import.meta.glob('../../node_modules/quasar/lang/(en-US|zh-CN|zh-TW).js')
+
+
+const langOptions = languages.filter(lang => ['en-US', 'zh-CN', 'zh-TW'].includes(lang.isoName))
+  .map(lang => ({ label: lang.nativeName, value: lang.isoName }))
+
 const lang = ref($q.lang.isoName)
 
-watch(lang, val => {
-  modules[`../../node_modules/quasar/lang/${val}.js`]().then(lang => {
-    $q.lang.set(lang.default)
-  })
+watch(lang, async (val) => {
+  const loadLangModule = modules[`../../node_modules/quasar/lang/${val}.js`]
+  if (loadLangModule) {
+    const langModule = await loadLangModule()
+    $q.lang.set((langModule as { default: QuasarLanguage }).default)
+  }
 })
 
-const localeStore = useLocaleStore()
-
-function changeLocale(langIso: string = 'en-US') {
+function changeLocale(langIso: string) {
   lang.value = langIso
   locale.value = langIso
-  localeStore.changeLang(langIso)
+  Cookies.set('lang', langIso, { secure: true, sameSite: 'Lax' })
   // set html lang
   const htmlElement = document.querySelector('html')
   if (htmlElement) {

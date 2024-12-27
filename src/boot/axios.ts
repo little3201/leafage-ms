@@ -1,18 +1,21 @@
-import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import { defineBoot } from '#q-app/wrappers'
+import axios from 'axios'
+import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { Notify } from 'quasar'
-import { i18n } from 'boot/i18n'
+import { useI18n } from 'vue-i18n'
 
-const { t } = i18n.global
 
 const abortControllerMap: Map<string, AbortController> = new Map()
 
-const api: AxiosInstance = axios.create({
-  baseURL: process.env.API,
-  timeout: 10000
-})
+// Be careful when using SSR for cross-request state pollution
+// due to creating a Singleton instance here;
+// If any client changes this (global) instance, it might be a
+// good idea to move this instance creation inside of the
+// "export default () => {}" function below (which runs individually
+// for each client)
+const api: AxiosInstance = axios.create({ baseURL: process.env.API || '/api', timeout: 10000, withCredentials: true })
 
-export default boot(({ router }) => {
+export default defineBoot(({ router }) => {
   // 请求拦截器
   api.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
@@ -38,6 +41,7 @@ export default boot(({ router }) => {
       return response
     },
     (error: AxiosError) => {
+      const { t } = useI18n()
       const status = error.response?.status
       switch (status) {
         case 401:

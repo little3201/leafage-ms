@@ -1,5 +1,7 @@
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { useUserStore } from 'stores/user-store'
+import { fetchMe } from 'src/api/users'
+import { retrievePrivilegeTree } from 'src/api/privileges'
 import type { RouteRecordRaw } from 'vue-router'
 import type { PrivilegeTreeNode } from 'src/models'
 
@@ -8,17 +10,37 @@ const BlankLayout = () => import('src/layouts/BlankLayout.vue')
 
 const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 
-export default boot(({ router, store }) => {
-  router.beforeEach((to, from, next) => {
+export default defineBoot(({ router, store }) => {
+  router.beforeEach(async (to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
-    const userStore = useUserStore(store)
-    if (Object.keys(userStore.user || {}).length > 0) {
+    const access_token = localStorage.getItem('access_token')
+    if (access_token) {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
+        const userStore = useUserStore(store)
+        let privileges = userStore.privileges
+        if (!privileges.length) {
+          try {
+            const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
+            privileges = privilegesResp.data
+            userStore.$patch({
+              username: userResp.data.username,
+              fullName: userResp.data.fullName,
+              email: userResp.data.email,
+              avatar: userResp.data.avatar,
+              privileges
+            })
+          } catch (error) {
+            console.error('Failed to retrieve privileges:', error)
+            next({ path: '/login' })
+            return
+          }
+        }
+
         // 获取权限，注册路由表
         if (!to.name || !router.hasRoute(to.name)) {
-          const routes = generateRoutes(userStore.privileges as PrivilegeTreeNode[])
+          const routes = generateRoutes(privileges)
 
           // 动态添加可访问路由表
           routes.forEach((route) => {
@@ -52,10 +74,10 @@ export default boot(({ router, store }) => {
 export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] => {
   const res: RouteRecordRaw[] = []
   for (const route of routes) {
-    const data: RouteRecordRaw = {
+    const item: RouteRecordRaw = {
       path: route.meta.path,
       name: route.name,
-      redirect: route.meta.redirect,
+      redirect: route.meta.redirect as string,
       component: null,
       children: []
     }
@@ -64,16 +86,16 @@ export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] =>
       const component = route.meta.component as string
       if (comModule) {
         // 动态加载路由文件
-        data.component = comModule
+        item.component = comModule
       } else if (component.includes('#')) {
-        data.component = BlankLayout
+        item.component = BlankLayout
       }
     }
     // recursive child routes
     if (route.children) {
-      data.children = generateRoutes(route.children)
+      item.children = generateRoutes(route.children)
     }
-    res.push(data)
+    res.push(item)
   }
   return res
 }

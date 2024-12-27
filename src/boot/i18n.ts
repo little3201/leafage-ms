@@ -1,29 +1,21 @@
-import { Lang } from 'quasar'
-import { boot } from 'quasar/wrappers'
+import { defineBoot } from '#q-app/wrappers'
 import { createI18n } from 'vue-i18n'
-import { messages } from 'src/i18n'
+import { Cookies } from 'quasar';
+import messages from 'src/i18n'
 
-import { useLocaleStore } from 'stores/locale-store'
 
-const langList = import.meta.glob('../../node_modules/quasar/lang/(en-US|zh-CN|zh-TW).js')
+export type MessageLanguages = keyof typeof messages;
+// Type-define 'en-US' as the master schema for the resource
+export type MessageSchema = typeof messages['en-US'];
 
-export const i18n = createI18n({
-  legacy: false,
-  locale: 'zh-CN',
-  fallbackLocale: 'zh-CN',
-  messages
-})
 
-export default boot(({ app, store }) => {
-  const localeStore = useLocaleStore(store)
+export default defineBoot(({ app }) => {
 
-  i18n.global.locale.value = localeStore.lang || 'zh-CN'
-
-  // config default language pack
-  const langIso = localeStore.lang
-
-  langList[`../../node_modules/quasar/lang/${langIso}.js`]().then(lang => {
-    Lang.set(lang.default)
+  const i18n = createI18n<{ message: MessageSchema }, MessageLanguages>({
+    legacy: false,
+    locale: Cookies.get('lang') || 'en-US',
+    fallbackLocale: 'en-US',
+    messages
   })
 
   // Set i18n instance on app

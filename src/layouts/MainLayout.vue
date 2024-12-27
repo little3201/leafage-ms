@@ -2,9 +2,9 @@
   <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? '' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
+        <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
         <q-toolbar-title :shrink="true">
-          <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
-          <span>Project Management</span>
+          Project Management
         </q-toolbar-title>
         <q-toolbar-title>
           <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
@@ -17,9 +17,9 @@
 
         <div class="cursor-pointer">
           <q-avatar size="md">
-            <q-img alt="avatar" :src="userStore.user?.avatar" width="2rem" height="2rem" />
+            <q-img alt="avatar" :src="userStore.avatar" width="2rem" height="2rem" />
           </q-avatar>
-          <span class="q-ml-sm">{{ userStore.user?.username }}</span>
+          <span class="q-ml-sm">{{ userStore.username }}</span>
           <q-menu>
             <q-list dense separator>
               <q-item clickable v-close-popup>
@@ -44,7 +44,15 @@
           path: '/'
         }" />
         <!-- privileges -->
-        <EssentialList :essentialLinks="essentialLinks" />
+        <template v-for="link in userStore.privileges" :key="link.id">
+          <EssentialList v-if="link.children && link.children.length > 0" :essentialLink="link"
+            :parent-path="`/${link.meta.path}`" />
+          <EssentialLink v-else v-bind="{
+            name: link.name,
+            icon: link.meta.icon,
+            path: link.meta.path
+          }" />
+        </template>
       </q-list>
     </q-drawer>
 
@@ -73,7 +81,6 @@ import EssentialList from 'components/EssentialList.vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
 
-import type { PrivilegeTreeNode } from 'src/models'
 
 const { replace } = useRouter()
 const $q = useQuasar()
@@ -81,8 +88,6 @@ const $q = useQuasar()
 const userStore = useUserStore()
 
 const leftDrawerOpen = ref<boolean>(false)
-
-const essentialLinks: PrivilegeTreeNode[] = userStore.privileges as PrivilegeTreeNode[]
 
 function onLogout() {
   userStore.logout().then(() => replace('/login'))

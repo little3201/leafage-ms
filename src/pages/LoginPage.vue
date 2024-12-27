@@ -1,10 +1,10 @@
 <template>
-  <q-layout class="overflow-hidden" :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
-    <q-header class="transparent text-black">
+  <q-layout :class="['overflow-hidden', $q.dark.isActive ? '' : 'bg-light-blue-1']">
+    <q-header :class="['transparent', $q.dark.isActive ? '' : 'text-black']">
       <q-toolbar>
+        <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
         <q-toolbar-title>
-          <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
-          <span class="q-ml-sm text-weight-medium">Project Management</span>
+          Project Management
         </q-toolbar-title>
         <!-- language -->
         <LanguageSelector />
@@ -25,11 +25,11 @@
           style="height: 21em;  width: 21em; bottom: -16em; left: 14em; " />
 
         <q-card bordered class="column justify-center items-center shadow-12 overflow-hidden"
-          style="width: 65vw;height: 70vh;border-radius: 20px;">
-          <q-card-section horizontal class="full-height" style="width: 50%;">
+          style="height: 70vh; border-radius: 20px;" :style="{ width: $q.screen.lt.sm ? '100%' : '65vw' }">
+          <q-card-section horizontal :class="['full-height', $q.screen.lt.md ? 'hidden' : '']" style="width: 50%;">
             <transition appear enter-active-class="animated slideInLeft" leave-active-class="animated slideOutLeft">
               <div class="column inline justify-center items-center" style="margin-top: -60px">
-                <div ref="lottieRef" style="height: 32em; width: 32em" />
+                <canvas ref="lottieRef" style="height: 32em; width: 32em" />
                 <div class="column q-gutter-y-xs">
                   <span class="text-weight-bold text-h5" style="margin-top: -20px">
                     {{ $t('welcome') }}
@@ -42,8 +42,8 @@
             </transition>
           </q-card-section>
           <q-separator vertical />
-          <q-card-section horizontal class="full-height no-border-radius" style="width: 50%;"
-            :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
+          <q-card-section horizontal class="full-height no-border-radius"
+            :style="{ width: $q.screen.lt.md ? '100%' : '50%' }" :class="$q.dark.isActive ? '' : 'bg-light-blue-1'">
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">
@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import lottie from 'lottie-web'
+import { DotLottie } from '@lottiefiles/dotlottie-web'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'stores/user-store'
 
@@ -101,7 +101,7 @@ const userStore = useUserStore()
 const showPwd = ref<boolean>(true)
 const rememberMe = ref<boolean>(false)
 const loading = ref<boolean>(false)
-const lottieRef = ref<HTMLDivElement | null>(null)
+const lottieRef = ref<HTMLCanvasElement | null>(null)
 
 const form = ref({
   username: '',
@@ -109,7 +109,7 @@ const form = ref({
 })
 
 onMounted(() => {
-  show()
+  load()
 })
 
 function changeRememberMe(value: boolean) {
@@ -129,14 +129,16 @@ async function onSubmit() {
     })
 }
 
-function show() {
+function load() {
   if (lottieRef.value) {
-    lottie.loadAnimation({
-      container: lottieRef.value,
-      renderer: 'svg',
+    new DotLottie({
+      canvas: lottieRef.value,
       loop: true,
       autoplay: true,
-      path: '/bg.json'
+      src: '/1707289607880.lottie',
+      renderConfig: {
+        autoResize: true
+      }
     })
   }
 }

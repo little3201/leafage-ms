@@ -2,10 +2,7 @@
   <q-layout :class="['overflow-hidden', $q.dark.isActive ? '' : 'bg-light-blue-1']">
     <q-header :class="['transparent', $q.dark.isActive ? '' : 'text-black']">
       <q-toolbar>
-        <q-img alt="logo" src="/svgs/vite.svg" width="3rem" height="3rem" />
-        <q-toolbar-title>
-          Project Management
-        </q-toolbar-title>
+        <q-space />
         <!-- language -->
         <LanguageSelector />
         <!-- theme -->
@@ -47,7 +44,7 @@
             <transition appear enter-active-class="animated slideInRight" leave-active-class="animated slideOutRight">
               <div class="column justify-center items-center full-width">
                 <div class="text-center">
-                  <q-img alt="logo" src="/svgs/vite.svg" width="8em" height="8em" />
+                  <q-img alt="logo" src="/svgs/logo.svg" width="8em" height="8em" />
                 </div>
                 <div class="text-h6 text-center q-mb-xs">
                   {{ $t('signinTo') }}

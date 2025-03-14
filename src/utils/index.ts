@@ -1,6 +1,12 @@
 import { date } from 'quasar'
-import type { Dictionary } from 'src/models'
+import type { Dictionary } from 'src/types'
 
+/**
+ * Resolve a child path relative to a parent path
+ * @param {string} parentPath - The parent path
+ * @param {string} path - The child path
+ * @returns {string} - The resolved path
+ */
 export function pathResolve(parentPath: string | undefined, path: string | undefined): string {
   if (!path) {
     return ''
@@ -9,14 +15,30 @@ export function pathResolve(parentPath: string | undefined, path: string | undef
   return `${parentPath}${childPath}`.replace(/\/\//g, '/').trim()
 }
 
-export function is(val: unknown, type: string) {
+/**
+ * Check if a value matches a specific type
+ * @param {unknown} val - The value to check
+ * @param {string} type - The type to match
+ * @returns {boolean} - True if the value matches the type, otherwise false
+ */
+export function is(val: unknown, type: string): boolean {
   return toString.call(val) === `[object ${type}]`
 }
 
+/**
+ * Check if a value is a string
+ * @param {unknown} val - The value to check
+ * @returns {boolean} - True if the value is a string, otherwise false
+ */
 export function isString(val: unknown): val is string {
   return is(val, 'String')
 }
 
+/**
+ * Compare the target date with the current date and return a status
+ * @param {string} target - The target date
+ * @returns {string} - The status ('success', 'warning', 'danger')
+ */
 export function calculate(target: string) {
   const now = new Date()
   const targetDate = new Date(target)
@@ -35,6 +57,11 @@ export function calculate(target: string) {
   }
 }
 
+/**
+ * Format a duration given in milliseconds into a human-readable string
+ * @param {number} milliseconds - The duration in milliseconds
+ * @returns {string} - The formatted duration
+ */
 export const formatDuration = (milliseconds: number) => {
   const timeUnits = [
     { unit: 'h', factor: 3600000 }, // 1小时 = 3600000毫秒
@@ -53,6 +80,11 @@ export const formatDuration = (milliseconds: number) => {
   return '0ms' // 处理0毫秒的情况
 }
 
+/**
+ * Format a file size given in bytes into a human-readable string
+ * @param {number} size - The file size in bytes
+ * @returns {string} - The formatted file size
+ */
 export const formatFileSize = (size: number) => {
   if (isNaN(size) || size <= 0) return '-'
 
@@ -134,4 +166,42 @@ export function downloadFile(data: Blob, filename: string, mimeType?: string): v
 
   // 释放创建的 URL 对象
   window.URL.revokeObjectURL(url)
+}
+
+export function groupByType<T>(array: T[], typeOptions: Dictionary[], typeKey: keyof T): { [key: string]: T[] } {
+  return array.reduce((acc: { [key: string]: T[] }, curr: T) => {
+    const typeValue = curr[typeKey] as number; // 假设类型键的值是一个数字
+    const name = formatDictionary(typeValue, typeOptions);
+    if (!name) { return acc; }
+    if (!acc[name]) { acc[name] = []; }
+    acc[name].push(curr);
+    return acc;
+  }, {} as { [key: string]: T[] });
+}
+
+export function getRandomString(length: number): string {
+  const a = new Uint8Array(Math.ceil(length / 2));
+  crypto.getRandomValues(a);
+  const str = Array.from(a, (dec) => ('0' + dec.toString(16)).slice(-2)).join('');
+  return str.slice(0, length);
+}
+
+export function generateVerifier(prefix?: string): string {
+  let verifier = prefix || ''
+  if (verifier.length < 43) {
+    verifier = verifier + getRandomString(43 - verifier.length)
+  }
+  return encodeURIComponent(verifier).slice(0, 128)
+}
+
+export function computeChallenge(codeVerifier: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(codeVerifier);
+
+  return crypto.subtle.digest('SHA-256', data).then(digest => {
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+  });
 }

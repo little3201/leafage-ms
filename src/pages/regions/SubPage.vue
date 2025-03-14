@@ -22,7 +22,7 @@
     </q-card>
   </q-dialog>
 
-  <q-table flat ref="tableRef" :title="title" selection="multiple" v-model:selected="selected" :rows="rows"
+  <q-table flat ref="subtableRef" :title="title" selection="multiple" v-model:selected="selected" :rows="rows"
     :columns="columns" row-key="id" v-model:pagination="pagination" :loading="loading" :filter="filter"
     binary-state-sort @request="onRequest" class="full-width" table-class="bg-transparent">
     <template v-slot:top-right>
@@ -81,7 +81,7 @@ import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile } from 'quasar'
 import { retrieveRegions, fetchRegion } from 'src/api/regions'
 
-import type { Region } from 'src/models'
+import type { Region } from 'src/types'
 
 const $q = useQuasar()
 
@@ -94,7 +94,7 @@ const props_ = withDefaults(defineProps<{
 
 const visible = ref<boolean>(false)
 
-const tableRef = ref()
+const subtableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
@@ -127,7 +127,7 @@ const columns: QTableProps['columns'] = [
 ]
 
 onMounted(() => {
-  tableRef.value.requestServerInteraction()
+  subtableRef.value.requestServerInteraction()
 })
 
 /**
@@ -150,7 +150,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
       pagination.value.descending = descending
 
       rows.value = res.data.content
-      pagination.value.rowsNumber = res.data.page.totalElements
+      pagination.value.rowsNumber = res.data.totalElements
     }).catch(error => {
       $q.notify({
         message: error.message,
@@ -163,7 +163,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 }
 
 function refresh() {
-
+  subtableRef.value.requestServerInteraction()
 }
 
 async function saveRow(id?: number) {

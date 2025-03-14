@@ -54,14 +54,6 @@
         </q-tr>
       </template>
 
-      <template v-slot:body-cell-principal="props">
-        <q-td :props="props">
-          <q-avatar v-if="props.row.principal" size="2em" :style="{ border: '2px solid white' }">
-            <q-img :src="props.row.principal" alt="avater" width="2em" height="2em" />
-          </q-avatar>
-        </q-td>
-      </template>
-
       <template v-slot:body-cell-members="props">
         <q-td :props="props">
           <template v-if="props.row.members && props.row.members.length > 0">
@@ -109,7 +101,7 @@ import { useQuasar, exportFile } from 'quasar'
 import { retrieveGroups, fetchGroup } from 'src/api/groups'
 import { visibleArray } from 'src/utils'
 
-import type { Group } from 'src/models'
+import type { Group } from 'src/types'
 
 const $q = useQuasar()
 
@@ -138,7 +130,6 @@ const selected = ref([])
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'principal', label: 'principal', align: 'center', field: 'principal' },
   { name: 'members', label: 'members', align: 'center', field: 'members' },
   { name: 'enabled', label: 'enabled', align: 'center', field: 'enabled' },
   { name: 'description', label: 'description', field: 'description' },
@@ -167,7 +158,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -183,7 +174,7 @@ function importRow() {
 }
 
 function refresh() {
-
+  tableRef.value.requestServerInteraction()
 }
 
 function relationRow(id: number) {

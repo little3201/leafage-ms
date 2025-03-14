@@ -55,7 +55,7 @@
               class="q-mt-none" />
           </div>
           <div v-else-if="col.name === 'name'">
-            <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
+            <q-icon :name="`sym_r_${props.row.icon}`" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
           </div>
           <div v-else-if="col.name === 'actions' && props.row.actions && props.row.actions.length > 0">
             <q-chip v-for="(item, index) in visibleArray(props.row.actions, 3)" :key="index" :label="$t(item as string)"
@@ -92,7 +92,7 @@ import { useQuasar } from 'quasar'
 import { retrievePrivilegeSubset, fetchPrivilege } from 'src/api/privileges'
 import { visibleArray } from 'src/utils'
 import { actions } from 'src/constants'
-import type { Privilege } from 'src/models'
+import type { Privilege } from 'src/types'
 
 const $q = useQuasar()
 

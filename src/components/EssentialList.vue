@@ -1,5 +1,5 @@
 <template>
-  <q-expansion-item :icon="essentialLink.meta.icon" :label="$t(essentialLink.name)">
+  <q-expansion-item :icon="`sym_r_${essentialLink.meta.icon}`" :label="$t(essentialLink.name)">
     <q-card>
       <q-card-section>
         <template v-for="link in essentialLink.children" :key="link.id">
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import type { PrivilegeTreeNode } from 'src/models'
+import type { PrivilegeTreeNode } from 'src/types'
 import { pathResolve } from 'src/utils'
 
 withDefaults(defineProps<{

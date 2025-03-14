@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { Template } from 'src/models'
+import type { Template } from 'src/types'
 
 const datas: Template[] = [
   {

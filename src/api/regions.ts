@@ -1,6 +1,6 @@
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/constants'
-import type { Pagination, Region } from 'src/models'
+import type { Pagination, Region } from 'src/types'
 
 /**
  * Retrieve rows

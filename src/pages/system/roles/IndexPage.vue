@@ -98,7 +98,7 @@ import type { QTableProps } from 'quasar'
 import { retrieveRoles, fetchRole } from 'src/api/roles'
 import { visibleArray } from 'src/utils'
 
-import type { Role } from 'src/models'
+import type { Role } from 'src/types'
 
 const $q = useQuasar()
 
@@ -156,7 +156,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -172,7 +172,7 @@ function importRow() {
 }
 
 function refresh() {
-
+  tableRef.value.requestServerInteraction()
 }
 
 function relationRow(id: number) {

@@ -79,7 +79,7 @@ import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile, date } from 'quasar'
 import { retrieveSchedulerLogs, fetchSchedulerLog } from 'src/api/scheduler-logs'
 import { formatDuration } from 'src/utils'
-import type { SchedulerLog } from 'src/models'
+import type { SchedulerLog } from 'src/types'
 
 const $q = useQuasar()
 
@@ -135,7 +135,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -147,7 +147,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 }
 
 function refresh() {
-
+  tableRef.value.requestServerInteraction()
 }
 
 function showRow(id: number) {

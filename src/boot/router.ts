@@ -1,9 +1,11 @@
 import { defineBoot } from '#q-app/wrappers'
+import { Cookies } from 'quasar'
 import { useUserStore } from 'stores/user-store'
-import { fetchMe } from 'src/api/users'
 import { retrievePrivilegeTree } from 'src/api/privileges'
+import { signIn, getSub } from 'src/api/authentication'
+import { fetchMe } from 'src/api/users'
 import type { RouteRecordRaw } from 'vue-router'
-import type { PrivilegeTreeNode } from 'src/models'
+import type { PrivilegeTreeNode } from 'src/types'
 
 // 生成路由
 const BlankLayout = () => import('src/layouts/BlankLayout.vue')
@@ -13,59 +15,47 @@ const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 export default defineBoot(({ router, store }) => {
   router.beforeEach(async (to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
-    const access_token = localStorage.getItem('access_token')
-    if (access_token) {
-      if (to.path === '/login') {
-        next({ path: '/' })
-      } else {
-        const userStore = useUserStore(store)
-        let privileges = userStore.privileges
-        if (!privileges.length) {
-          try {
-            const [userResp, privilegesResp] = await Promise.all([fetchMe(), retrievePrivilegeTree()])
-            privileges = privilegesResp.data
-            userStore.$patch({
-              username: userResp.data.username,
-              fullName: userResp.data.fullName,
-              email: userResp.data.email,
-              avatar: userResp.data.avatar,
-              privileges
-            })
-          } catch (error) {
-            console.error('Failed to retrieve privileges:', error)
-            next({ path: '/login' })
-            return
-          }
+    if (to.path === '/callback') {
+      next()
+    } else {
+      const userStore = useUserStore(store)
+      if (userStore.accessToken) {
+        // load user info
+        if (!userStore.username) {
+          const [subRes, userRes] = await Promise.all([getSub(), fetchMe()])
+          userStore.$patch({
+            username: subRes.data.sub,
+            avatar: userRes.data.avatar
+          })
+
         }
-
-        // 获取权限，注册路由表
+        // load privileges
+        if (!userStore.privileges.length) {
+          const privilegesResp = await retrievePrivilegeTree();
+          const privileges = privilegesResp.data;
+          userStore.$patch({ privileges });
+        }
         if (!to.name || !router.hasRoute(to.name)) {
-          const routes = generateRoutes(privileges)
-
-          // 动态添加可访问路由表
+          const routes = generateRoutes(userStore.privileges)
           routes.forEach((route) => {
             router.addRoute('home', route as RouteRecordRaw)
           })
-          // 捕获所有未匹配的路径，放在配置的末尾
           router.addRoute({
             path: '/:cacheAll(.*)*',
             name: 'ErrorNotFound',
-            component: () => import('src/pages/ErrorNotFound.vue')
+            component: () => import('pages/ErrorNotFound.vue')
           })
-
           const redirectPath = from.query.redirect || to.path
           const redirect = decodeURIComponent(redirectPath as string)
           const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
+          Cookies.set('redirect', nextData.path)
           next(nextData)
         } else {
+          Cookies.set('redirect', decodeURIComponent(to.fullPath as string))
           next()
         }
-      }
-    } else {
-      if (to.path === '/login') {
-        next()
       } else {
-        next(`/login?redirect=${to.path}`)
+        await signIn()
       }
     }
   })

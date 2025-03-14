@@ -82,18 +82,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { DotLottie } from '@lottiefiles/dotlottie-web'
 import { useQuasar } from 'quasar'
-import { useUserStore } from 'stores/user-store'
 
 import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
 
-const { currentRoute, replace } = useRouter()
-const $q = useQuasar()
 
-const userStore = useUserStore()
+const $q = useQuasar()
 
 const showPwd = ref<boolean>(true)
 const rememberMe = ref<boolean>(false)
@@ -115,15 +111,7 @@ function changeRememberMe(value: boolean) {
 
 async function onSubmit() {
   loading.value = true
-  userStore.login(form.value.username, form.value.password)
-    .then(() => {
-      const redirectRoute = currentRoute.value.query.redirect as string
-      replace(redirectRoute || '/')
-    }).catch(error => $q.notify({ type: 'negative', message: error.message }))
-    .finally(() => {
-      // 在请求结束后执行
-      loading.value = false
-    })
+  // todo
 }
 
 function load() {

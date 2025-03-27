@@ -15,7 +15,6 @@ export const SERVER_URL = {
 
   // hypervisor
   USER: SERVER_PREFIX.HYPERVISOR.concat('/users'), // 用户
-  ROLE: SERVER_PREFIX.HYPERVISOR.concat('/roles'), // 角色
   PRIVILEGE: SERVER_PREFIX.HYPERVISOR.concat('/privileges'), // 权限
   GROUP: SERVER_PREFIX.HYPERVISOR.concat('/groups'), // 分组
   DICTIONARY: SERVER_PREFIX.HYPERVISOR.concat('/dictionaries'), // 字典

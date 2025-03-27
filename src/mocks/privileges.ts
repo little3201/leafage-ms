@@ -98,18 +98,6 @@ const subDatas: Privilege[] = [
     description: 'this is description for this row'
   },
   {
-    id: 5,
-    superiorId: 1,
-    path: 'roles',
-    component: 'pages/system/roles/IndexPage',
-    name: 'roles',
-    actions: ['create', 'modify', 'remove', 'import', 'export', 'relation'],
-    count: 0,
-    enabled: true,
-    icon: 'shield_person',
-    description: 'this is description for this row'
-  },
-  {
     id: 6,
     superiorId: 1,
     path: 'dictionaries',
@@ -238,29 +226,20 @@ const treeNodes: PrivilegeTreeNode[] = [
       },
       {
         id: 4,
-        name: 'roles',
-        meta: {
-          path: 'roles',
-          component: 'pages/system/roles/IndexPage',
-          icon: 'shield_person'
-        }
-      },
-      {
-        id: 5,
-        name: 'dictionaries',
-        meta: {
-          path: 'dictionaries',
-          component: 'pages/system/dictionaries/IndexPage',
-          icon: 'book_3'
-        }
-      },
-      {
-        id: 6,
         name: 'privileges',
         meta: {
           path: 'privileges',
           component: 'pages/system/privileges/IndexPage',
           icon: 'admin_panel_settings'
+        }
+      },
+      {
+        id: 6,
+        name: 'dictionaries',
+        meta: {
+          path: 'dictionaries',
+          component: 'pages/system/dictionaries/IndexPage',
+          icon: 'book_3'
         }
       }
     ]

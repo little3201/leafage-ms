@@ -1,6 +1,6 @@
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/constants'
-import type { Pagination, Group } from 'src/models'
+import type { Pagination, Group } from 'src/types'
 
 /**
  * Retrieve rows
@@ -72,4 +72,25 @@ export const enableGroup = (id: number) => {
  */
 export const removeGroup = (id: number) => {
   return api.delete(`${SERVER_URL.GROUP}/${id}`)
+}
+
+/**
+ * Relation privileges for a row
+ * @param id Row ID
+ * @param privilegeIds privilege ids
+ * @returns Related status
+ */
+export const relationGroupPrivileges = (id: number, privilegeIds: number[]) => {
+  return api.patch(`${SERVER_URL.GROUP}/${id}/privileges`, privilegeIds)
+}
+
+/**
+ * Remove privileges for a row
+ * @param id Row ID
+ * @param privilegeIds privilege ids
+ * @returns Deletion status
+ */
+export const removeGroupPrivileges = (id: number, privilegeIds: number[]) => {
+  const params = privilegeIds ? { privilegeIds: privilegeIds.join(',') } : {}
+  return api.delete(`${SERVER_URL.GROUP}/${id}/privileges`, { params })
 }

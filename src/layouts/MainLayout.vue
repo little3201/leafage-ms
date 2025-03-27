@@ -2,7 +2,7 @@
   <q-layout view="hHh LpR lff" :class="$q.dark.isActive ? '' : 'bg-grey-2'">
     <q-header>
       <q-toolbar>
-        <q-img alt="logo" src="/svgs/vite.svg" width="2em" height="2em" />
+        <q-img alt="logo" src="/svgs/logo.svg" width="2em" height="2em" />
         <q-toolbar-title :shrink="true">
           Project Management
         </q-toolbar-title>
@@ -16,8 +16,7 @@
         <ThemeToogle class="q-mx-sm" />
 
         <div class="cursor-pointer">
-          <q-avatar size="md">
-            <q-img alt="avatar" :src="userStore.avatar" width="2rem" height="2rem" />
+          <q-avatar size="md" color="green" icon="sym_r_person">
           </q-avatar>
           <span class="q-ml-sm">{{ userStore.username }}</span>
           <q-menu>
@@ -25,7 +24,7 @@
               <q-item clickable v-close-popup>
                 <q-item-section>{{ $t('profile') }}</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="onLogout">
+              <q-item clickable v-close-popup @click="signOut">
                 <q-item-section>{{ $t('signout') }}</q-item-section>
               </q-item>
             </q-list>
@@ -40,7 +39,7 @@
         <!-- home -->
         <EssentialLink v-bind="{
           name: 'home',
-          icon: 'sym_r_home',
+          icon: 'home',
           path: '/'
         }" />
         <!-- privileges -->
@@ -72,7 +71,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useUserStore } from 'stores/user-store'
 
@@ -80,17 +78,11 @@ import EssentialLink from 'components/EssentialLink.vue'
 import EssentialList from 'components/EssentialList.vue'
 import LanguageSelector from 'components/LanguageSelector.vue'
 import ThemeToogle from 'components/ThemeToogle.vue'
+import { signOut } from 'src/api/authentication'
 
 
-const { replace } = useRouter()
 const $q = useQuasar()
-
 const userStore = useUserStore()
 
 const leftDrawerOpen = ref<boolean>(false)
-
-function onLogout() {
-  userStore.logout().then(() => replace('/login'))
-    .catch(error => $q.notify({ type: 'negative', message: error.message }))
-}
 </script>

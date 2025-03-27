@@ -60,7 +60,7 @@ import { useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveDictionarySubset, fetchDictionary } from 'src/api/dictionaries'
 
-import type { Dictionary } from 'src/models'
+import type { Dictionary } from 'src/types'
 
 const $q = useQuasar()
 
@@ -114,7 +114,7 @@ async function onRequest() {
 }
 
 function refresh() {
-
+  subtableRef.value.requestServerInteraction()
 }
 
 async function saveRow(id?: number) {

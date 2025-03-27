@@ -77,7 +77,7 @@ import { useQuasar, exportFile } from 'quasar'
 import { retrieveAccessLogs, fetchAccessLog } from 'src/api/access-logs'
 import { formatDuration } from 'src/utils'
 import { httpMethods } from 'src/constants'
-import type { AccessLog } from 'src/models'
+import type { AccessLog } from 'src/types'
 
 const $q = useQuasar()
 
@@ -143,7 +143,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -155,7 +155,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 }
 
 function refresh() {
-
+  tableRef.value.requestServerInteraction()
 }
 
 function showRow(id: number) {

@@ -1,7 +1,7 @@
 <template>
   <q-item clickable v-ripple exact :to="pathResolve(parentPath, path)">
     <q-item-section v-if="icon" avatar>
-      <q-icon :name="icon" />
+      <q-icon :name="`sym_r_${icon}`" />
     </q-item-section>
     <q-item-section>
       <q-item-label>{{ $t(name) }}</q-item-label>

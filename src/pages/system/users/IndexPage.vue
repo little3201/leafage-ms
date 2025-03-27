@@ -60,7 +60,12 @@
               <q-img alt="avatar" :src="props.row.avatar" width="2rem" height="2rem" />
             </q-avatar>
             <div class="column q-ml-sm">
-              <span class="text-subtitle">{{ props.row.fullName }}</span>
+              <span v-if="locale === 'en-US' || props.row.middleName" class="text-subtitle">
+                {{ props.row.givenName }} {{ props.row.middleName }} {{ props.row.familyName }}
+              </span>
+              <span v-else class="text-subtitle">
+                {{ props.row.familyName }}{{ props.row.givenName }}
+              </span>
               <span class="text-caption text-grey-7">{{ props.row.username }}</span>
             </div>
           </div>
@@ -110,11 +115,14 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps, QForm } from 'quasar'
 import { useQuasar, exportFile, date } from 'quasar'
+import { useI18n } from 'vue-i18n'
 import { retrieveUsers, fetchUser } from 'src/api/users'
 import { calculate } from 'src/utils'
 
-import type { User } from 'src/models'
+import type { User } from 'src/types'
 
+
+const { locale } = useI18n()
 const $q = useQuasar()
 
 const visible = ref<boolean>(false)
@@ -173,7 +181,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,
@@ -189,7 +197,7 @@ function importRow() {
 }
 
 function refresh() {
-
+  tableRef.value.requestServerInteraction()
 }
 
 async function saveRow(id?: number) {

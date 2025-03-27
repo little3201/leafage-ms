@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { User } from 'src/models'
+import type { User } from 'src/types'
 
 const datas: User[] = []
 
@@ -21,12 +21,7 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const usersHandlers = [
-  http.get(`/api${SERVER_URL.USER}/me`, ({ cookies }) => {
-    // if (!cookies.logged_user) {
-    //   return new HttpResponse(null, { status: 401 })
-    // }
-    console.log('cookies', cookies)
-
+  http.get(`/api${SERVER_URL.USER}/me`, () => {
     return HttpResponse.json({
       username: 'username',
       fullName: 'fullName_',

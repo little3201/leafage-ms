@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { Group, GroupMembers, TreeNode } from 'src/models'
+import type { Group, GroupMembers, TreeNode } from 'src/types'
 
 const datas: Group[] = []
 

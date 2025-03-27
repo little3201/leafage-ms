@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "Vue.volar",
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "wayou.vscode-todo-highlight"

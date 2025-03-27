@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { OperationLog } from 'src/models'
+import type { OperationLog } from 'src/types'
 
 const datas: OperationLog[] = [
   {

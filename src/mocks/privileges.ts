@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { Privilege, PrivilegeTreeNode } from 'src/models'
+import type { Privilege, PrivilegeTreeNode } from 'src/types'
 
 const datas: Privilege[] = [
   {
@@ -9,7 +9,7 @@ const datas: Privilege[] = [
     component: '#',
     redirect: '/system/users',
     name: 'system',
-    icon: 'sym_r_settings',
+    icon: 'settings',
     count: 5,
     enabled: true,
     description: 'this is description for this row'
@@ -20,7 +20,7 @@ const datas: Privilege[] = [
     component: '#',
     redirect: '/logs/operation',
     name: 'logs',
-    icon: 'sym_r_lab_profile',
+    icon: 'lab_profile',
     count: 3,
     enabled: true,
     description: 'this is description for this row'
@@ -30,7 +30,7 @@ const datas: Privilege[] = [
     path: 'regions',
     component: 'pages/regions/IndexPage',
     name: 'regions',
-    icon: 'sym_r_location_on',
+    icon: 'location_on',
     actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
@@ -41,7 +41,7 @@ const datas: Privilege[] = [
     path: 'files',
     component: 'pages/files/IndexPage',
     name: 'files',
-    icon: 'sym_r_folder_open',
+    icon: 'folder_open',
     actions: ['upload', 'download', 'remove'],
     count: 0,
     enabled: true,
@@ -53,7 +53,7 @@ const datas: Privilege[] = [
     component: '#',
     name: 'exploiters',
     redirect: '/exploiters/generators',
-    icon: 'sym_r_build',
+    icon: 'build',
     count: 1,
     enabled: true,
     description: 'this is description for this row'
@@ -70,7 +70,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export', 'relation'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_account_tree',
+    icon: 'account_tree',
     description: 'this is description for this row'
   },
   {
@@ -82,7 +82,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_person',
+    icon: 'person',
     description: 'this is description for this row'
   },
   {
@@ -94,19 +94,7 @@ const subDatas: Privilege[] = [
     actions: ['modify', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_admin_panel_settings',
-    description: 'this is description for this row'
-  },
-  {
-    id: 5,
-    superiorId: 1,
-    path: 'roles',
-    component: 'pages/system/roles/IndexPage',
-    name: 'roles',
-    actions: ['create', 'modify', 'remove', 'import', 'export', 'relation'],
-    count: 0,
-    enabled: true,
-    icon: 'sym_r_shield_person',
+    icon: 'admin_panel_settings',
     description: 'this is description for this row'
   },
   {
@@ -118,7 +106,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_book_3',
+    icon: 'book_3',
     description: 'this is description for this row'
   },
   {
@@ -130,7 +118,7 @@ const subDatas: Privilege[] = [
     actions: ['clear', 'detail', 'export', 'remove'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_clinical_notes',
+    icon: 'clinical_notes',
     description: 'this is description for this row'
   },
   {
@@ -142,7 +130,7 @@ const subDatas: Privilege[] = [
     actions: ['clear', 'detail', 'export', 'remove'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_sticky_note_2',
+    icon: 'sticky_note_2',
     description: 'this is description for this row'
   },
   {
@@ -154,7 +142,7 @@ const subDatas: Privilege[] = [
     actions: ['detail', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_note_alt',
+    icon: 'note_alt',
     description: 'this is description for this row'
   },
   {
@@ -166,7 +154,7 @@ const subDatas: Privilege[] = [
     actions: ['clear', 'detail', 'export', 'remove'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_event_note',
+    icon: 'event_note',
     description: 'this is description for this row'
   },
   {
@@ -178,7 +166,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export', 'config', 'preview'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_code',
+    icon: 'code',
     description: 'this is description for this row'
   },
   {
@@ -190,7 +178,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_terminal',
+    icon: 'terminal',
     description: 'this is description for this row'
   },
   {
@@ -202,7 +190,7 @@ const subDatas: Privilege[] = [
     actions: ['create', 'modify', 'remove', 'import', 'export'],
     count: 0,
     enabled: true,
-    icon: 'sym_r_code',
+    icon: 'code',
     description: 'this is description for this row'
   }
 ]
@@ -215,7 +203,7 @@ const treeNodes: PrivilegeTreeNode[] = [
       path: 'system',
       component: '#',
       redirect: '/system/users',
-      icon: 'sym_r_settings'
+      icon: 'settings'
     },
     children: [
       {
@@ -224,7 +212,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'groups',
           component: 'pages/system/groups/IndexPage',
-          icon: 'sym_r_account_tree'
+          icon: 'account_tree'
         }
       },
       {
@@ -233,34 +221,25 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'users',
           component: 'pages/system/users/IndexPage',
-          icon: 'sym_r_person'
+          icon: 'person'
         }
       },
       {
         id: 4,
-        name: 'roles',
-        meta: {
-          path: 'roles',
-          component: 'pages/system/roles/IndexPage',
-          icon: 'sym_r_shield_person'
-        }
-      },
-      {
-        id: 5,
-        name: 'dictionaries',
-        meta: {
-          path: 'dictionaries',
-          component: 'pages/system/dictionaries/IndexPage',
-          icon: 'sym_r_book_3'
-        }
-      },
-      {
-        id: 6,
         name: 'privileges',
         meta: {
           path: 'privileges',
           component: 'pages/system/privileges/IndexPage',
-          icon: 'sym_r_admin_panel_settings'
+          icon: 'admin_panel_settings'
+        }
+      },
+      {
+        id: 6,
+        name: 'dictionaries',
+        meta: {
+          path: 'dictionaries',
+          component: 'pages/system/dictionaries/IndexPage',
+          icon: 'book_3'
         }
       }
     ]
@@ -272,7 +251,7 @@ const treeNodes: PrivilegeTreeNode[] = [
       path: 'logs',
       component: '#',
       redirect: '/logs/operation',
-      icon: 'sym_r_lab_profile'
+      icon: 'lab_profile'
     },
     children: [
       {
@@ -281,7 +260,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'operation',
           component: 'pages/logs/operation/IndexPage',
-          icon: 'sym_r_clinical_notes'
+          icon: 'clinical_notes'
         }
       },
       {
@@ -290,7 +269,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'access',
           component: 'pages/logs/access/IndexPage',
-          icon: 'sym_r_sticky_note_2'
+          icon: 'sticky_note_2'
         }
       },
       {
@@ -299,7 +278,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'audit',
           component: 'pages/logs/audit/IndexPage',
-          icon: 'sym_r_note_alt'
+          icon: 'note_alt'
         }
       },
       {
@@ -308,7 +287,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'scheduler',
           component: 'pages/logs/scheduler/IndexPage',
-          icon: 'sym_r_event_note'
+          icon: 'event_note'
         }
       }
     ]
@@ -319,7 +298,7 @@ const treeNodes: PrivilegeTreeNode[] = [
     meta: {
       path: 'regions',
       component: 'pages/regions/IndexPage',
-      icon: 'sym_r_location_on'
+      icon: 'location_on'
     }
   },
   {
@@ -328,7 +307,7 @@ const treeNodes: PrivilegeTreeNode[] = [
     meta: {
       path: 'files',
       component: 'pages/files/IndexPage',
-      icon: 'sym_r_folder_open'
+      icon: 'folder_open'
     }
   },
   {
@@ -338,7 +317,7 @@ const treeNodes: PrivilegeTreeNode[] = [
       path: 'exploiters',
       component: '#',
       redirect: '/exploiter/generators',
-      icon: 'sym_r_build'
+      icon: 'build'
     },
     children: [
       {
@@ -347,7 +326,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'generators',
           component: 'pages/exploiters/generators/IndexPage',
-          icon: 'sym_r_code'
+          icon: 'code'
         }
       },
       {
@@ -356,7 +335,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'scripts',
           component: 'pages/exploiters/scripts/IndexPage',
-          icon: 'sym_r_terminal'
+          icon: 'terminal'
         }
       },
       {
@@ -365,7 +344,7 @@ const treeNodes: PrivilegeTreeNode[] = [
         meta: {
           path: 'templates',
           component: 'pages/exploiters/templates/IndexPage',
-          icon: 'sym_r_terminal'
+          icon: 'terminal'
         }
       }
     ]
@@ -373,12 +352,7 @@ const treeNodes: PrivilegeTreeNode[] = [
 ]
 
 export const privilegessHandlers = [
-  http.get(`/api${SERVER_URL.PRIVILEGE}/tree`, ({ cookies }) => {
-    // if (!cookies.logged_user) {
-    //   return new HttpResponse(null, { status: 401 })
-    // }
-    console.log('cookies', cookies)
-
+  http.get(`/api${SERVER_URL.PRIVILEGE}/tree`, () => {
     return HttpResponse.json(treeNodes)
   }),
   http.get(`/api${SERVER_URL.PRIVILEGE}/:id/subset`, ({ params }) => {

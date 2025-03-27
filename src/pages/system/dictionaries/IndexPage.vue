@@ -81,7 +81,7 @@ import { useQuasar, exportFile } from 'quasar'
 import type { QTableProps } from 'quasar'
 import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
 import SubPage from './SubPage.vue'
-import type { Dictionary } from 'src/models'
+import type { Dictionary } from 'src/types'
 
 const $q = useQuasar()
 
@@ -136,7 +136,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

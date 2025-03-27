@@ -61,7 +61,7 @@
                 @click="saveRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'name'">
-              <q-icon :name="props.row.icon" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
+              <q-icon :name="`sym_r_${props.row.icon}`" size="sm" class="q-pr-sm" />{{ $t(col.value) }}
             </div>
             <div v-else-if="col.name === 'actions' && props.row.actions && props.row.actions.length > 0">
               <q-chip v-for="(item, index) in visibleArray(props.row.actions, 3)" :key="index"
@@ -100,7 +100,7 @@ import { retrievePrivileges, fetchPrivilege } from 'src/api/privileges'
 import SubPage from './SubPage.vue'
 import { visibleArray } from 'src/utils'
 import { actions } from 'src/constants'
-import type { Privilege } from 'src/models'
+import type { Privilege } from 'src/types'
 
 const $q = useQuasar()
 
@@ -162,7 +162,7 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
     pagination.value.descending = descending
 
     rows.value = res.data.content
-    pagination.value.rowsNumber = res.data.page.totalElements
+    pagination.value.rowsNumber = res.data.totalElements
   }).catch(error => {
     $q.notify({
       message: error.message,

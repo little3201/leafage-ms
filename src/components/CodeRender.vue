@@ -18,12 +18,10 @@ onUnmounted(() => { highlightResult.value = null })
 </script>
 
 <template>
-  <article>
-    <pre class="relative m-0">
-      <code class="hljs" v-html="highlightResult?.value"></code>
-      <small class="absolute top-2 right-0 px-2 text-white">
-        {{ highlightResult?.language }}
-      </small>
-    </pre>
-  </article>
+  <pre class="relative-position m-0">
+    <code class="hljs" v-html="highlightResult?.value"></code>
+    <small class="absolute absolute-top-right text-white q-pr-sm q-pt-sm">
+      {{ highlightResult?.language }}
+    </small>
+  </pre>
 </template>

@@ -1,8 +1,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-import { defineConfig } from '#q-app/wrappers';
-import { fileURLToPath } from 'node:url';
+import { defineConfig } from '#q-app/wrappers'
 
 export default defineConfig((ctx) => {
   return {
@@ -62,7 +61,8 @@ export default defineConfig((ctx) => {
       // analyze: true,
       env: {
         API: ctx.dev ? '/api' : 'https://101.42.255.156/api',
-        TITLE: ''
+        CLIENT_ID: 'pkce-client',
+        AUTHORITY_URL: 'http://127.0.0.1:8761'
       },
       // rawDefine: {},
       // ignorePublicFolder: true,
@@ -74,20 +74,6 @@ export default defineConfig((ctx) => {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        ['@intlify/unplugin-vue-i18n/vite', {
-          // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
-          // compositionOnly: false,
-
-          // if you want to use named tokens in your Vue I18n messages, such as 'Hello {name}',
-          // you need to set `runtimeOnly: false`
-          // runtimeOnly: false,
-
-          ssr: ctx.modeName === 'ssr',
-
-          // you need to set i18n resource including paths !
-          include: [fileURLToPath(new URL('./src/i18n', import.meta.url))]
-        }],
-
         ['vite-plugin-checker', {
           vueTsc: true,
           eslint: {
@@ -104,7 +90,7 @@ export default defineConfig((ctx) => {
       open: true, // opens browser window automatically
       proxy: {
         '^/api': {
-          target: 'http://192.168.0.111:8768',
+          target: 'http://127.0.0.1:8760',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }

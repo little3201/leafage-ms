@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 import { SERVER_URL } from 'src/constants'
-import type { AccessLog } from 'src/models'
+import type { AccessLog } from 'src/types'
 
 const datas: AccessLog[] = [
   {

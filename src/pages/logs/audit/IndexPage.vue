@@ -81,13 +81,15 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const row = ref<AuditLog>({
+const initialValues: AuditLog = {
+  id: undefined,
   operation: '',
   operator: '',
   resource: '',
   ip: '',
   location: ''
-})
+}
+const row = ref<AuditLog>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -134,11 +136,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })

@@ -5,7 +5,7 @@
       <q-card style="min-width: 25em">
         <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
-            <div class="text-h6">{{ $t('regions') }}</div>
+            <div class="text-h6">{{ $t('files') }}</div>
           </q-card-section>
 
           <q-card-section>
@@ -71,12 +71,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { useQuasar, date } from 'quasar'
+import { date } from 'quasar'
 import { retrieveFiles, fetchFile } from 'src/api/files'
 import { formatFileSize } from 'src/utils'
 import type { FileRecord } from 'src/types'
 
-const $q = useQuasar()
 
 const visible = ref<boolean>(false)
 
@@ -85,11 +84,13 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<FileRecord>({
+const initialValues: FileRecord = {
+  id: undefined,
   name: '',
   type: '',
   size: 0
-})
+}
+const form = ref<FileRecord>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -130,11 +131,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })

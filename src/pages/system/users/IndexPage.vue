@@ -11,7 +11,10 @@
             <q-input v-model="form.username" :label="$t('username')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-            <q-input v-model="form.fullName" :label="$t('fullName')" lazy-rules
+            <q-input v-model="form.familyName" :label="$t('familyName')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+
+            <q-input v-model="form.givenName" :label="$t('givenName')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
             <q-input v-model="form.email" :label="$t('email')" lazy-rules type="email"
@@ -134,11 +137,14 @@ const filter = ref('')
 const loading = ref<boolean>(false)
 
 const formRef = ref<QForm>()
-const form = ref<User>({
+const initialValues: User = {
+  id: undefined,
   username: '',
-  fullName: '',
+  givenName: '',
+  familyName: '',
   email: ''
-})
+}
+const form = ref<User>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -182,11 +188,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })
@@ -201,11 +202,12 @@ function refresh() {
 }
 
 async function saveRow(id?: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchUser(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function removeRow(id: number) {

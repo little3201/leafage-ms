@@ -77,11 +77,12 @@ const subtableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const loading = ref<boolean>(false)
 
-const form = ref<Dictionary>({
+const initialValues: Dictionary = {
+  id: undefined,
   name: '',
-  superiorId: props.superiorId as number,
-  description: ''
-})
+  enabled: true
+}
+const form = ref<Dictionary>({ ...initialValues })
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },

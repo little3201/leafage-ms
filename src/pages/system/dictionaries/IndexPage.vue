@@ -94,10 +94,12 @@ const filter = ref('')
 const loading = ref(false)
 
 const formRef = ref()
-const form = ref<Dictionary>({
+const initialValues: Dictionary = {
+  id: undefined,
   name: '',
-  description: ''
-})
+  enabled: true
+}
+const form = ref<Dictionary>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -137,11 +139,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => { loading.value = false })
 }
 

@@ -99,13 +99,14 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Region>({
+const initialValues: Region = {
+  id: undefined,
   name: '',
-  superiorId: props_.superiorId as number,
   areaCode: 0,
   postalCode: 0,
   description: ''
-})
+}
+const form = ref<Region>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',

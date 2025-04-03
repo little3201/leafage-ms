@@ -1,5 +1,5 @@
 interface AudtiMetadata {
-  id?: number
+  id: number | undefined
   lastModifiedDate?: Date
 }
 
@@ -12,8 +12,11 @@ export interface Pagination {
 
 export interface User extends AudtiMetadata {
   username: string
-  fullName: string
+  givenName: string
+  familyName: string
+  middleName?: string
   email: string
+  phoneNumber?: string
   avatar?: string
   accountNonLocked?: boolean
   accountExpiresAt?: Date
@@ -26,7 +29,7 @@ export interface Group extends AudtiMetadata {
   superiorId?: number
   principal?: string
   members?: string[]
-  enabled: boolean
+  enabled?: boolean
   description?: string
 }
 
@@ -53,6 +56,7 @@ export interface RolePrivileges {
   id: number
   roleId: number
   privilegeId: number
+  actions?: string[]
 }
 
 export interface Privilege extends AudtiMetadata {
@@ -108,7 +112,7 @@ export interface PrivilegeTreeNode extends TreeNode {
 export interface OperationLog extends AudtiMetadata {
   operation: string
   content: string
-  operator: string
+  operator?: string
   ip: string
   location: string
   referer?: string
@@ -118,13 +122,13 @@ export interface OperationLog extends AudtiMetadata {
   userAgent?: string
   browser?: string
   statusCode?: number
-  operatedTime?: Date
+  operatedTimes?: number
 }
 
 export interface AccessLog extends AudtiMetadata {
   url: string
   httpMethod: string
-  operator: string
+  operator?: string
   params?: string
   body?: string
   ip: string
@@ -143,7 +147,7 @@ export interface AuditLog extends AudtiMetadata {
   ip: string
   location: string
   statusCode?: number
-  operatedTime?: Date
+  operatedTimes?: number
 }
 
 export interface SchedulerLog extends AudtiMetadata {
@@ -194,6 +198,7 @@ export interface Template extends AudtiMetadata {
 
 export interface Script extends AudtiMetadata {
   name: string
+  type?: number
   icon: string
   version: string
   content: string

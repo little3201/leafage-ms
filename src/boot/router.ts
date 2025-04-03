@@ -48,12 +48,14 @@ export default defineBoot(({ router, store }) => {
           const redirectPath = from.query.redirect || to.path
           const redirect = decodeURIComponent(redirectPath as string)
           const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
-          Cookies.set('redirect', nextData.path)
+          Cookies.set('current_page', nextData.path)
           next(nextData)
         } else {
-          Cookies.set('redirect', decodeURIComponent(to.fullPath as string))
+          Cookies.set('current_page', decodeURIComponent(to.fullPath as string))
           next()
         }
+      } else if (to.fullPath === '/login') {
+        next()
       } else {
         await signIn()
       }

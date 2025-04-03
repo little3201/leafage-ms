@@ -61,8 +61,7 @@ export default defineConfig((ctx) => {
       // analyze: true,
       env: {
         API: ctx.dev ? '/api' : 'https://101.42.255.156/api',
-        CLIENT_ID: 'pkce-client',
-        AUTHORITY_URL: 'http://127.0.0.1:8761'
+        CLIENT_ID: 'pkce-client'
       },
       // rawDefine: {},
       // ignorePublicFolder: true,

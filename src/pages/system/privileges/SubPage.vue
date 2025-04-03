@@ -110,14 +110,16 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Privilege>({
+const initialValues: Privilege = {
+  id: undefined,
   name: '',
   path: '',
-  superiorId: props.superiorId as number,
   component: '',
   icon: '',
+  actions: [],
   description: ''
-})
+}
+const form = ref<Privilege>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',

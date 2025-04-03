@@ -97,6 +97,22 @@ export const groupsHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
+  http.get(`/api${SERVER_URL.GROUP}/:id/members`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json(members.filter(item => item.groupId === Number(id)))
+    } else {
+      return HttpResponse.json([])
+    }
+  }),
+  http.get(`/api${SERVER_URL.GROUP}/:id`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    } else {
+      return HttpResponse.json(null)
+    }
+  }),
   http.delete(`/api${SERVER_URL.GROUP}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.

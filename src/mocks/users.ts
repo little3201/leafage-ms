@@ -8,7 +8,8 @@ for (let i = 0; i < 20; i++) {
   const data: User = {
     id: i,
     username: 'username' + i,
-    fullName: 'fullName_' + i,
+    givenName: 'givenName_' + i,
+    familyName: 'family' + i,
     avatar: '/images/avatar.jpg',
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
@@ -21,10 +22,17 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const usersHandlers = [
+  http.get(`/api${SERVER_URL.USERINFO}`, () => {
+    return HttpResponse.json({
+      sub: 'username'
+    })
+  }),
   http.get(`/api${SERVER_URL.USER}/me`, () => {
     return HttpResponse.json({
       username: 'username',
-      fullName: 'fullName_',
+      givenName: '勒布朗',
+      familyName: '詹姆斯',
+      middleName: '雷蒙',
       avatar: '/images/avatar.jpg',
       email: 'username' + '@test.com'
     })

@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form ref="formRef" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
           <q-card-section>
             <div class="text-h6">{{ $t('groups') }}</div>
           </q-card-section>
@@ -113,10 +113,13 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Group>({
+const formRef = ref()
+const initialValues: Group = {
+  id: undefined,
   name: '',
   enabled: true
-})
+}
+const form = ref<Group>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -159,11 +162,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })
@@ -202,7 +200,9 @@ function onSubmit() {
   visible.value = false
 }
 
-function onReset() { }
+function onReset() {
+  formRef.value.resetFields()
+}
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val

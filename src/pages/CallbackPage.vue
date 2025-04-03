@@ -26,14 +26,13 @@ onMounted(() => {
     if (res) {
       // 回调成功，删除code_verifier
       localStorage.removeItem('code_verifier')
-      // 存储id_token
-      localStorage.setItem('id_token_hint', res.data.id_token)
       userStore.$patch({
-        accessToken: res.data.access_token
+        accessToken: res.data.access_token,
+        idToken: res.data.id_token
       })
       loading.value = false
       // 路由跳转
-      replace(Cookies.get('redirect') || '/')
+      replace(Cookies.get('current_page') || '/')
     }
   }).catch(() => {
     // 回调失败，登录

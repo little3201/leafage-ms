@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form ref="formRef" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit">
           <q-card-section>
             <div class="text-h6">{{ $t('groups') }}</div>
           </q-card-section>
@@ -77,7 +77,7 @@
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+          <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -91,6 +91,7 @@
         </q-td>
       </template>
     </q-table>
+
   </q-page>
 </template>
 
@@ -98,10 +99,10 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile } from 'quasar'
-import { retrieveGroups, fetchGroup } from 'src/api/groups'
+import { retrieveGroups, fetchGroup, createGroup, modifyGroup, removeGroup, enableGroup } from 'src/api/groups'
 import { visibleArray } from 'src/utils'
-
 import type { Group } from 'src/types'
+
 
 const $q = useQuasar()
 
@@ -113,7 +114,6 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const formRef = ref()
 const initialValues: Group = {
   id: undefined,
   name: '',
@@ -179,29 +179,34 @@ function relationRow(id: number) {
   console.log(id)
 }
 
+function enableRow(id: number) {
+  enableGroup(id)
+}
+
 async function saveRow(id?: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchGroup(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function removeRow(id: number) {
-  console.log('id: ', id)
   loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
+  // You can send a request to delete the group with the specified id
+  removeGroup(id).finally(() => { loading.value = false })
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyGroup(form.value.id, form.value)
+  } else {
+    createGroup(form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
-}
-
-function onReset() {
-  formRef.value.resetFields()
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

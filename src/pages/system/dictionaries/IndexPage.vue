@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form ref="formRef" @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit">
           <q-card-section>
             <div class="text-h6">{{ $t('dictionaries') }}</div>
           </q-card-section>
@@ -60,7 +60,7 @@
                 @click="saveRow(col.value)" class="q-mt-none" />
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
-              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+              <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
@@ -79,7 +79,7 @@
 import { ref, onMounted } from 'vue'
 import { useQuasar, exportFile } from 'quasar'
 import type { QTableProps } from 'quasar'
-import { retrieveDictionaries, fetchDictionary } from 'src/api/dictionaries'
+import { retrieveDictionaries, fetchDictionary, modifyDictionary, enableDictionary } from 'src/api/dictionaries'
 import SubPage from './SubPage.vue'
 import type { Dictionary } from 'src/types'
 
@@ -93,7 +93,6 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref(false)
 
-const formRef = ref()
 const initialValues: Dictionary = {
   id: undefined,
   name: '',
@@ -150,21 +149,26 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
+function enableRow(id: number) {
+  enableDictionary(id)
+}
+
 async function saveRow(id: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchDictionary(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyDictionary(form.value.id, form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
-}
-
-function onReset() {
-  formRef.value.resetFields()
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

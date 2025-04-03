@@ -2,7 +2,7 @@
 
   <q-dialog v-model="visible" persistent>
     <q-card style="min-width: 25em">
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="onSubmit">
         <q-card-section>
           <div class="text-h6">{{ $t('privileges') }}</div>
         </q-card-section>
@@ -23,15 +23,17 @@
     </q-card>
   </q-dialog>
 
-  <q-table flat ref="tableRef" :title="$t(title)" :rows="rows" :columns="columns" row-key="id"
-    v-model:pagination="pagination" :loading="loading" :filter="filter" binary-state-sort @request="onRequest"
-    class="full-width">
+  <q-table flat ref="subTableRef" :title="$t(title)" :rows="rows" :columns="columns" row-key="id" :loading="loading"
+    :filter="filter" binary-state-sort @request="onRequest" class="full-width">
     <template v-slot:top-right>
       <q-input dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
           <q-icon name="sym_r_search" />
         </template>
       </q-input>
+
+      <q-btn title="refresh" round padding="xs" flat color="primary" class="q-ml-sm" :disable="loading"
+        icon="sym_r_refresh" @click="refresh" />
     </template>
 
     <template v-slot:header="props">
@@ -71,7 +73,7 @@
             </template>
           </div>
           <div v-else-if="col.name === 'enabled'" class="text-center">
-            <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+            <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
           </div>
           <span v-else>{{ col.value }}</span>
         </q-td>
@@ -88,13 +90,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { useQuasar } from 'quasar'
-import { retrievePrivilegeSubset, fetchPrivilege } from 'src/api/privileges'
+import { retrievePrivilegeSubset, fetchPrivilege, modifyPrivilege, enablePrivilege } from 'src/api/privileges'
 import { visibleArray } from 'src/utils'
 import { actions } from 'src/constants'
 import type { Privilege } from 'src/types'
 
-const $q = useQuasar()
 
 const props = withDefaults(defineProps<{
   title: string
@@ -105,7 +105,7 @@ const props = withDefaults(defineProps<{
 
 const visible = ref<boolean>(false)
 
-const tableRef = ref()
+const subTableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
@@ -121,14 +121,6 @@ const initialValues: Privilege = {
 }
 const form = ref<Privilege>({ ...initialValues })
 
-const pagination = ref({
-  sortBy: 'id',
-  descending: true,
-  page: 1,
-  rowsPerPage: 7,
-  rowsNumber: 0
-})
-
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
   { name: 'path', label: 'path', align: 'left', field: 'path', sortable: true },
@@ -139,7 +131,7 @@ const columns: QTableProps['columns'] = [
 ]
 
 onMounted(() => {
-  tableRef.value.requestServerInteraction()
+  subTableRef.value.requestServerInteraction()
 })
 
 /**
@@ -151,29 +143,35 @@ async function onRequest() {
   if (props.superiorId) {
     retrievePrivilegeSubset(props.superiorId).then(res => {
       rows.value = res.data
-    }).catch(error => {
-      $q.notify({
-        message: error.message,
-        type: 'negative'
-      })
     }).finally(() => {
       loading.value = false
     })
   }
 }
 
-function saveRow(id: number) {
-  visible.value = true
+function refresh() {
+  subTableRef.value.requestServerInteraction()
+}
+
+async function enableRow(id: number) {
+  enablePrivilege(id)
+}
+
+async function saveRow(id: number) {
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchPrivilege(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyPrivilege(form.value.id, form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
 }
-
-function onReset() { }
 </script>

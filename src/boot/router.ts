@@ -12,7 +12,7 @@ const BlankLayout = () => import('src/layouts/BlankLayout.vue')
 
 const modules = import.meta.glob('../pages/**/*.{vue,tsx}')
 
-export default defineBoot(({ router, store }) => {
+export default defineBoot(async ({ router, store }) => {
   router.beforeEach(async (to, from, next) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     if (to.path === '/callback') {

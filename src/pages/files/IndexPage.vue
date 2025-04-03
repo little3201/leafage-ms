@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit">
           <q-card-section>
             <div class="text-h6">{{ $t('files') }}</div>
           </q-card-section>
@@ -12,6 +12,7 @@
             <q-input v-model="form.name" :label="$t('name')" lazy-rules
               :rules="[val => val && val.length > 0 || 'Please type something']" />
             <q-input v-model="form.type" :label="$t('type')" lazy-rules />
+            <q-uploader url="/upload" label="Upload files" />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -72,7 +73,7 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { date } from 'quasar'
-import { retrieveFiles, fetchFile } from 'src/api/files'
+import { retrieveFiles, uploadFile, downloadFile } from 'src/api/files'
 import { formatFileSize } from 'src/utils'
 import type { FileRecord } from 'src/types'
 
@@ -148,7 +149,7 @@ async function downloadRow(id: number) {
   visible.value = true
   // You can populate the form with existing user data based on the id
   if (id) {
-    fetchFile(id).then(res => { form.value = res.data })
+    downloadFile(id)
   }
 }
 
@@ -163,7 +164,7 @@ function removeRow(id: number) {
 function onSubmit() {
   // Close the dialog after submitting
   visible.value = false
+  uploadFile(form.value)
 }
 
-function onReset() { }
 </script>

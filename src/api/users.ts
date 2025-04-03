@@ -60,6 +60,15 @@ export const enableUser = (id: number) => {
 }
 
 /**
+ * Lock or Unlock an existing row
+ * @param id Row ID
+ * @returns Enable or Disable result
+ */
+export const lockUser = (id: number) => {
+  return api.patch(`${SERVER_URL.USER}/${id}`)
+}
+
+/**
  * Remove a row
  * @param id Row ID
  * @returns Deletion status

@@ -12,8 +12,8 @@ export default defineConfig((ctx) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-      'i18n',
       'axios',
+      'i18n',
       'msw-server',
       'router'
     ],

@@ -14,6 +14,15 @@ export const retrieveRegions = (pagination: Pagination, filters?: object) => {
 }
 
 /**
+ * Get row subset
+ * @param id Row ID
+ * @returns Subset data
+ */
+export const retrieveRegionSubset = (id: number) => {
+  return api.get(`${SERVER_URL.REGION}/${id}/subset`)
+}
+
+/**
  * Fetch a specific row
  * @param id Row ID
  * @returns Row data
@@ -39,6 +48,15 @@ export const createRegion = (row: Region) => {
  */
 export const modifyRegion = (id: number, row: Region) => {
   return api.put(`${SERVER_URL.REGION}/${id}`, row)
+}
+
+/**
+ * Enable or Disable an existing row
+ * @param id Row ID
+ * @returns Enable or Disable result
+ */
+export const enableRegion = (id: number) => {
+  return api.patch(`${SERVER_URL.REGION}/${id}`)
 }
 
 /**

@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="visible" persistent>
     <q-card style="min-width: 25em">
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="onSubmit">
         <q-card-section>
           <div class="text-h6">{{ $t('regions') }}</div>
         </q-card-section>
@@ -61,7 +61,7 @@
               @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
           </div>
           <div v-else-if="col.name === 'enabled'" class="text-center">
-            <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+            <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
           </div>
           <span v-else>{{ col.value }}</span>
         </q-td>
@@ -79,13 +79,13 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile } from 'quasar'
-import { retrieveRegions, fetchRegion } from 'src/api/regions'
-
+import { retrieveRegionSubset, fetchRegion, createRegion, modifyRegion, removeRegion, enableRegion } from 'src/api/regions'
 import type { Region } from 'src/types'
+
 
 const $q = useQuasar()
 
-const props_ = withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   title: string
   superiorId?: number
 }>(), {
@@ -134,29 +134,12 @@ onMounted(() => {
 /**
  * 查询列表
  */
-async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {
+async function onRequest() {
   loading.value = true
 
-  const { page, rowsPerPage, sortBy, descending } = props.pagination
-  const filter = props.filter
-
-  const params = { page, size: rowsPerPage, sortBy, descending, filter: filter || '' }
-
-  if (props_.superiorId) {
-    filter.superiorId = props_.superiorId
-    retrieveRegions({ ...params }, filter).then(res => {
-      pagination.value.page = page
-      pagination.value.rowsPerPage = rowsPerPage
-      pagination.value.sortBy = sortBy
-      pagination.value.descending = descending
-
-      rows.value = res.data.content
-      pagination.value.rowsNumber = res.data.totalElements
-    }).catch(error => {
-      $q.notify({
-        message: error.message,
-        type: 'negative'
-      })
+  if (props.superiorId) {
+    retrieveRegionSubset(props.superiorId).then(res => {
+      rows.value = res.data
     }).finally(() => {
       loading.value = false
     })
@@ -167,29 +150,34 @@ function refresh() {
   subtableRef.value.requestServerInteraction()
 }
 
+async function enableRow(id: number) {
+  enableRegion(id)
+}
+
 async function saveRow(id?: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchRegion(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function removeRow(id: number) {
-  console.log('id: ', id)
   loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
+  removeRegion(id).finally(() => { loading.value = false })
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyRegion(form.value.id, form.value)
+  } else {
+    createRegion(form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
 }
-
-function onReset() { }
-
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val
 

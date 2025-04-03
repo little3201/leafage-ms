@@ -42,6 +42,10 @@ export const regionsHandlers = [
       return HttpResponse.json(null)
     }
   }),
+  http.get(`/api${SERVER_URL.REGION}/:id/subset`, ({ params }) => {
+    const { id } = params
+    return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(id)))
+  }),
   http.get(`/api${SERVER_URL.REGION}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')

@@ -96,7 +96,7 @@
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-btn title="accountNonLocked" padding="xs" flat round :disable="!props.row.accountNonLocked && loading"
+          <q-btn title="accountNonLocked" padding="xs" flat round :disable="props.row.accountNonLocked || loading"
             :color="props.row.accountNonLocked ? 'positive' : 'warning'"
             :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'"
             @click="unlockRow(props.row.id)" />

@@ -87,7 +87,11 @@ export const usersHandlers = [
     // Read the intercepted request body as JSON.
     const { id } = params
 
-    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    const data = datas.filter(item => item.id === Number(id))[0] as User
+    if (data) {
+      data.accountNonLocked = true
+    }
+    return HttpResponse.json(data)
   }),
   http.delete(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
     // All request path params are provided in the "params"

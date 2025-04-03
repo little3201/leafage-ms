@@ -96,10 +96,10 @@
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-btn title="accountNonLocked" padding="xs" flat round :disable="loading"
+          <q-btn title="accountNonLocked" padding="xs" flat round :disable="!props.row.accountNonLocked && loading"
             :color="props.row.accountNonLocked ? 'positive' : 'warning'"
             :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'"
-            @click="lockRow(props.row.id)" />
+            @click="unlockRow(props.row.id)" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -120,7 +120,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps, QForm } from 'quasar'
 import { useQuasar, exportFile, date } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { retrieveUsers, fetchUser, createUser, modifyUser, removeUser, enableUser, lockUser } from 'src/api/users'
+import { retrieveUsers, fetchUser, createUser, modifyUser, removeUser, enableUser, unlockUser } from 'src/api/users'
 import { calculate } from 'src/utils'
 
 import type { User } from 'src/types'
@@ -205,8 +205,8 @@ async function enableRow(id: number) {
   enableUser(id)
 }
 
-async function lockRow(id: number) {
-  lockUser(id)
+async function unlockRow(id: number) {
+  unlockUser(id)
 }
 
 async function saveRow(id?: number) {

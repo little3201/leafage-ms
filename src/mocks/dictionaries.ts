@@ -72,6 +72,18 @@ export const dictionariesHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
+  http.put(`/api${SERVER_URL.DICTIONARY}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
+  http.patch(`/api${SERVER_URL.DICTIONARY}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
   http.delete(`/api${SERVER_URL.DICTIONARY}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.

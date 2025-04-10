@@ -5,7 +5,7 @@ import type { Dictionary } from 'src/types'
 const datas: Dictionary[] = []
 const subDatas: Dictionary[] = []
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 90; i++) {
   const data: Dictionary = {
     id: i,
     name: 'dictionary_' + i,

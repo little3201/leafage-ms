@@ -2,7 +2,7 @@
   <q-layout>
     <q-page-container class="h-screen">
       <q-page class="flex flex-center">
-        <q-circular-progress indeterminate rounded size="60px" />
+        <q-circular-progress indeterminate rounded size="xl" />
       </q-page>
     </q-page-container>
   </q-layout>

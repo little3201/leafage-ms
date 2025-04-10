@@ -14,8 +14,8 @@ export default defineConfig((ctx) => {
     boot: [
       'axios',
       'i18n',
-      'msw-server',
-      'router'
+      'router',
+      'msw-server'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

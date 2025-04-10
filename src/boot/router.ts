@@ -17,6 +17,8 @@ export default defineBoot(async ({ router, store }) => {
     // Now you need to add your authentication logic here, like calling an API endpoint
     if (to.path === '/callback') {
       next()
+    } else if (to.fullPath === '/login') {
+      next()
     } else {
       const userStore = useUserStore(store)
       if (userStore.accessToken) {
@@ -54,8 +56,6 @@ export default defineBoot(async ({ router, store }) => {
           Cookies.set('current_page', decodeURIComponent(to.fullPath as string))
           next()
         }
-      } else if (to.fullPath === '/login') {
-        next()
       } else {
         await signIn()
       }

@@ -24,6 +24,10 @@ export async function signIn() {
 
   api.get(SERVER_URL.AUTHORIZE, { params }).then(res => {
     window.location.replace(res.request.responseURL)
+  }).catch(error => {
+    if (error) {
+      window.location.replace('/login')
+    }
   })
 }
 

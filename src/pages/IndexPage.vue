@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-card>
+    <q-card flat>
       <q-card-section>
         <chart-view :options="lineOptionsData" />
       </q-card-section>

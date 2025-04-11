@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', {
     username: '',
     avatar: '',
     accessToken: '',
+    idToken: '',
     privileges: [] as PrivilegeTreeNode[]
   })
 })

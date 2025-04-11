@@ -75,6 +75,27 @@ export const removeGroup = (id: number) => {
 }
 
 /**
+ * Relation members for a row
+ * @param id Row ID
+ * @param usernames usernames
+ * @returns Related status
+ */
+export const relationGroupMembers = (id: number, usernames: string[]) => {
+  return api.patch(`${SERVER_URL.GROUP}/${id}/members`, usernames)
+}
+
+/**
+ * Remove members for a row
+ * @param id Row ID
+ * @param usernames usernames
+ * @returns Deletion status
+ */
+export const removeGroupMembers = (id: number, usernames: number[]) => {
+  const params = usernames ? { privilegeIds: usernames.join(',') } : {}
+  return api.delete(`${SERVER_URL.GROUP}/${id}/members`, { params })
+}
+
+/**
  * Relation privileges for a row
  * @param id Row ID
  * @param privilegeIds privilege ids

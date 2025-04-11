@@ -2,7 +2,7 @@
   <q-page padding>
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form ref="formRef" @submit="onSubmit" @reset="onReset">
+        <q-form @submit="onSubmit">
           <q-card-section>
             <div class="text-h6">{{ $t('users') }}</div>
           </q-card-section>
@@ -11,7 +11,10 @@
             <q-input v-model="form.username" :label="$t('username')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-            <q-input v-model="form.fullName" :label="$t('fullName')" lazy-rules
+            <q-input v-model="form.familyName" :label="$t('familyName')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+
+            <q-input v-model="form.givenName" :label="$t('givenName')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
             <q-input v-model="form.email" :label="$t('email')" lazy-rules type="email"
@@ -73,7 +76,7 @@
       </template>
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+          <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
         </q-td>
       </template>
       <template v-slot:body-cell-accountExpiresAt="props">
@@ -93,9 +96,10 @@
       </template>
       <template v-slot:body-cell-accountNonLocked="props">
         <q-td :props="props">
-          <q-btn title="accountNonLocked" padding="xs" flat round :disable="loading"
+          <q-btn title="accountNonLocked" padding="xs" flat round :disable="props.row.accountNonLocked || loading"
             :color="props.row.accountNonLocked ? 'positive' : 'warning'"
-            :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'" @click="lockRow(props.row)" />
+            :icon="props.row.accountNonLocked ? 'sym_r_lock_open_right' : 'sym_r_lock'"
+            @click="unlockRow(props.row.id)" />
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -116,7 +120,7 @@ import { ref, onMounted } from 'vue'
 import type { QTableProps, QForm } from 'quasar'
 import { useQuasar, exportFile, date } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { retrieveUsers, fetchUser } from 'src/api/users'
+import { retrieveUsers, fetchUser, createUser, modifyUser, removeUser, enableUser, unlockUser } from 'src/api/users'
 import { calculate } from 'src/utils'
 
 import type { User } from 'src/types'
@@ -133,12 +137,14 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const formRef = ref<QForm>()
-const form = ref<User>({
+const initialValues: User = {
+  id: undefined,
   username: '',
-  fullName: '',
+  givenName: '',
+  familyName: '',
   email: ''
-})
+}
+const form = ref<User>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -182,11 +188,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })
@@ -200,44 +201,38 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
+async function enableRow(id: number) {
+  enableUser(id)
+}
+
+async function unlockRow(id: number) {
+  unlockUser(id)
+}
+
 async function saveRow(id?: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchUser(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function removeRow(id: number) {
-  console.log('Removing user with ID:', id)
   loading.value = true
   // You can send a request to delete the user with the specified id
-  setTimeout(() => {
-    loading.value = false
-    // Refresh the table data after deleting the user
-    tableRef.value?.requestServerInteraction()
-  }, 500)
-}
-
-/**
- * 解锁/上锁
- * @param row 数据行
- */
-function lockRow(row: User) {
-  // You can populate the form with existing user data based on the id
-  if (row) {
-    row.accountNonLocked = !row.accountNonLocked
-  }
+  removeUser(id).finally(() => { loading.value = false })
 }
 
 async function onSubmit() {
+  if (form.value.id) {
+    modifyUser(form.value.id, form.value)
+  } else {
+    createUser(form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
-}
-
-function onReset() {
-  // Reset the form data
-  formRef.value?.resetValidation()
 }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {

@@ -13,7 +13,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 401,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 400,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 6,
@@ -73,7 +73,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 7,
@@ -85,7 +85,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 8,
@@ -97,7 +97,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 9,
@@ -109,7 +109,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 10,
@@ -121,7 +121,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   },
   {
     id: 11,
@@ -133,7 +133,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTime: new Date()
+    operatedTimes: 323
   }
 ]
 

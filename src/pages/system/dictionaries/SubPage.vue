@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="visible" persistent>
     <q-card style="min-width: 25em">
-      <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <q-form @submit="onSubmit">
         <q-card-section>
           <div class="text-h6">{{ $t('dictionaries') }}</div>
         </q-card-section>
@@ -40,7 +40,7 @@
 
     <template v-slot:body-cell-enabled="props">
       <q-td :props="props">
-        <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+        <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
       </q-td>
     </template>
     <template v-slot:body-cell-id="props">
@@ -56,13 +56,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useQuasar } from 'quasar'
 import type { QTableProps } from 'quasar'
-import { retrieveDictionarySubset, fetchDictionary } from 'src/api/dictionaries'
-
+import { retrieveDictionarySubset, fetchDictionary, createDictionary, modifyDictionary, enableDictionary, removeDictionary } from 'src/api/dictionaries'
 import type { Dictionary } from 'src/types'
 
-const $q = useQuasar()
 
 const props = withDefaults(defineProps<{
   title: string
@@ -77,11 +74,12 @@ const subtableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const loading = ref<boolean>(false)
 
-const form = ref<Dictionary>({
+const initialValues: Dictionary = {
+  id: undefined,
   name: '',
-  superiorId: props.superiorId as number,
-  description: ''
-})
+  enabled: true
+}
+const form = ref<Dictionary>({ ...initialValues })
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
@@ -102,11 +100,6 @@ async function onRequest() {
   if (props.superiorId) {
     retrieveDictionarySubset(props.superiorId).then(res => {
       rows.value = res.data
-    }).catch(error => {
-      $q.notify({
-        message: error.message,
-        type: 'negative'
-      })
     }).finally(() => {
       loading.value = false
     })
@@ -115,6 +108,10 @@ async function onRequest() {
 
 function refresh() {
   subtableRef.value.requestServerInteraction()
+}
+
+function enableRow(id: number) {
+  enableDictionary(id)
 }
 
 async function saveRow(id?: number) {
@@ -126,17 +123,18 @@ async function saveRow(id?: number) {
 }
 
 function removeRow(id: number) {
-  console.log('id: ', id)
   loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
+  removeDictionary(id).finally(() => { loading.value = false })
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyDictionary(form.value.id, form.value)
+  } else {
+    createDictionary(form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
 }
-
-function onReset() { }
 </script>

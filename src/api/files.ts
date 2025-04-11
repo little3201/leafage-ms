@@ -13,15 +13,6 @@ export const retrieveFiles = (pagination: Pagination, filters?: object) => {
 }
 
 /**
- * Fetch a specific row
- * @param id Row ID
- * @returns Row data
- */
-export const fetchFile = (id: number) => {
-  return api.get(`${SERVER_URL.FILE}/${id}`)
-}
-
-/**
  * Upload
  * @param row Row data
  * @returns Uploaded row

@@ -26,14 +26,16 @@ export default defineBoot(({ store }) => {
       const userStore = useUserStore(store)
       if (userStore.accessToken) {
         config.headers.Authorization = `Bearer ${userStore.accessToken}`
+      } else {
+        delete config.headers.Authorization
       }
+
       // 创建 AbortController 实例
       const controller = new AbortController()
-      const uniqueKey = `${config.method}:${config.url}`
+      const uniqueKey = generateUniqueKey(config)
       config.signal = controller.signal
       abortControllerMap.set(uniqueKey, controller)
 
-      removeEmptyParamsFromGetRequest(config)
       return config
     },
     (error: AxiosError) => {
@@ -45,7 +47,7 @@ export default defineBoot(({ store }) => {
   // 响应拦截器
   api.interceptors.response.use(
     (response: AxiosResponse) => {
-      const uniqueKey = `${response.config.method}:${response.config.url}`
+      const uniqueKey = generateUniqueKey(response.config)
       abortControllerMap.delete(uniqueKey)
       return response
     },
@@ -53,6 +55,7 @@ export default defineBoot(({ store }) => {
       const status = error.response?.status
       switch (status) {
         case 401:
+          cancelAllRequest()
           signIn()
           return
         case 403:
@@ -72,29 +75,18 @@ export default defineBoot(({ store }) => {
   )
 })
 
-/**
- * 拦截并处理axios的请求配置，以便在GET请求时移除空字符串、null和undefined的参数。
- * @param config - axios请求配置对象
- * @returns 修改后的axios请求配置对象
- */
-const removeEmptyParamsFromGetRequest = (config: InternalAxiosRequestConfig) => {
-  // 如果请求方法是 GET 且存在参数
-  if (config.method === 'get' && config.params) {
-    // 将参数对象转换为键值对数组，过滤掉值为 undefined, null 或 空字符串的参数
-    const params = Object.entries(config.params)
-      .filter((entry): entry is [string, string] => {
-        const value = entry[1]
-        return value !== undefined && value !== null && value !== ''
-      })
-      // 对剩余的参数进行编码并转换为查询字符串格式
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&') // 使用 & 符号连接各个参数
+// 构建 uniqueKey 的辅助函数
+function generateUniqueKey(config: InternalAxiosRequestConfig): string {
+  const { method, url, params } = config
+  const paramString = params ? JSON.stringify(params) : ''
+  return `${method}:${url}:${paramString}`
+}
 
-    // 将过滤后的查询字符串附加到 URL 上
-    config.url = `${config.url}?${params}`
-    config.params = {}
-  }
-  return config
+function cancelAllRequest() {
+  abortControllerMap.forEach(controller => {
+    controller.abort()
+  })
+  abortControllerMap.clear()
 }
 
 export { api }

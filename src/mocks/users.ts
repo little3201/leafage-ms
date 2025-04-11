@@ -8,7 +8,8 @@ for (let i = 0; i < 20; i++) {
   const data: User = {
     id: i,
     username: 'username' + i,
-    fullName: 'fullName_' + i,
+    givenName: 'givenName_' + i,
+    familyName: 'family' + i,
     avatar: '/images/avatar.jpg',
     email: 'username' + i + '@test.com',
     enabled: i % 2 > 0,
@@ -21,10 +22,17 @@ for (let i = 0; i < 20; i++) {
 }
 
 export const usersHandlers = [
+  http.get(`/api${SERVER_URL.USERINFO}`, () => {
+    return HttpResponse.json({
+      sub: 'username'
+    })
+  }),
   http.get(`/api${SERVER_URL.USER}/me`, () => {
     return HttpResponse.json({
       username: 'username',
-      fullName: 'fullName_',
+      givenName: '勒布朗',
+      familyName: '詹姆斯',
+      middleName: '雷蒙',
       avatar: '/images/avatar.jpg',
       email: 'username' + '@test.com'
     })
@@ -62,6 +70,28 @@ export const usersHandlers = [
     // Don't forget to declare a semantic "201 Created"
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
+  }),
+  http.put(`/api${SERVER_URL.USER}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
+  http.patch(`/api${SERVER_URL.USER}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
+  http.patch(`/api${SERVER_URL.USER}/:id/unlock`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    const data = datas.filter(item => item.id === Number(id))[0] as User
+    if (data) {
+      data.accountNonLocked = true
+    }
+    return HttpResponse.json(data)
   }),
   http.delete(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
     // All request path params are provided in the "params"

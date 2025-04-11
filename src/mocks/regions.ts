@@ -42,6 +42,10 @@ export const regionsHandlers = [
       return HttpResponse.json(null)
     }
   }),
+  http.get(`/api${SERVER_URL.REGION}/:id/subset`, ({ params }) => {
+    const { id } = params
+    return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(id)))
+  }),
   http.get(`/api${SERVER_URL.REGION}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
@@ -99,6 +103,18 @@ export const regionsHandlers = [
     // Don't forget to declare a semantic "201 Created"
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
+  }),
+  http.put(`/api${SERVER_URL.REGION}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
+  http.patch(`/api${SERVER_URL.REGION}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
   }),
   http.delete(`/api${SERVER_URL.REGION}/:id`, ({ params }) => {
     // All request path params are provided in the "params"

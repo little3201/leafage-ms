@@ -97,6 +97,45 @@ export const groupsHandlers = [
     // response and send back the newly created Dictionary!
     return HttpResponse.json(newData, { status: 201 })
   }),
+  http.get(`/api${SERVER_URL.GROUP}/:id/members`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json(members.filter(item => item.groupId === Number(id)))
+    } else {
+      return HttpResponse.json([])
+    }
+  }),
+  http.get(`/api${SERVER_URL.GROUP}/:id`, ({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    } else {
+      return HttpResponse.json(null)
+    }
+  }),
+  http.post(`/api${SERVER_URL.GROUP}`, async ({ request }) => {
+    // Read the intercepted request body as JSON.
+    const newData = await request.json() as Group
+
+    // Push the new Dictionary to the map of all Dictionarys.
+    datas.push(newData)
+
+    // Don't forget to declare a semantic "201 Created"
+    // response and send back the newly created Dictionary!
+    return HttpResponse.json(newData, { status: 201 })
+  }),
+  http.put(`/api${SERVER_URL.GROUP}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
+  http.patch(`/api${SERVER_URL.GROUP}/:id`, async ({ params }) => {
+    // Read the intercepted request body as JSON.
+    const { id } = params
+
+    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+  }),
   http.delete(`/api${SERVER_URL.GROUP}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.

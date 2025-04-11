@@ -65,3 +65,12 @@ export const modifyDictionary = (id: number, row: Dictionary) => {
 export const removeDictionary = (id: number) => {
   return api.delete(`${SERVER_URL.DICTIONARY}/${id}`)
 }
+
+/**
+ * Enable or Disable an existing row
+ * @param id Row ID
+ * @returns Enable or Disable result
+ */
+export const enableDictionary = (id: number) => {
+  return api.patch(`${SERVER_URL.DICTIONARY}/${id}`)
+}

@@ -12,10 +12,10 @@ export default defineConfig((ctx) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-      'i18n',
       'axios',
-      'msw-server',
-      'router'
+      'i18n',
+      'router',
+      'msw-server'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -61,8 +61,7 @@ export default defineConfig((ctx) => {
       // analyze: true,
       env: {
         API: ctx.dev ? '/api' : 'https://101.42.255.156/api',
-        CLIENT_ID: 'pkce-client',
-        AUTHORITY_URL: 'http://127.0.0.1:8761'
+        CLIENT_ID: 'pkce-client'
       },
       // rawDefine: {},
       // ignorePublicFolder: true,

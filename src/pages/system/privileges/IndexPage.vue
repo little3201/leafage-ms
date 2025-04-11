@@ -3,7 +3,7 @@
 
     <q-dialog v-model="visible" persistent>
       <q-card style="min-width: 25em">
-        <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+        <q-form @submit="onSubmit">
           <q-card-section>
             <div class="text-h6">{{ $t('privileges') }}</div>
           </q-card-section>
@@ -77,7 +77,7 @@
               </template>
             </div>
             <div v-else-if="col.name === 'enabled'" class="text-center">
-              <q-toggle v-model="props.row.enabled" size="sm" color="positive" />
+              <q-toggle v-model="props.row.enabled" @toogle="enableRow(props.row.id)" size="sm" color="positive" />
             </div>
             <span v-else>{{ col.value }}</span>
           </q-td>
@@ -96,7 +96,7 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile } from 'quasar'
-import { retrievePrivileges, fetchPrivilege } from 'src/api/privileges'
+import { retrievePrivileges, fetchPrivilege, modifyPrivilege, enablePrivilege } from 'src/api/privileges'
 import SubPage from './SubPage.vue'
 import { visibleArray } from 'src/utils'
 import { actions } from 'src/constants'
@@ -112,14 +112,16 @@ const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
 
-const form = ref<Privilege>({
+const initialValues: Privilege = {
+  id: undefined,
   name: '',
   path: '',
   component: '',
   icon: '',
   actions: [],
   description: ''
-})
+}
+const form = ref<Privilege>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -163,11 +165,6 @@ async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>
 
     rows.value = res.data.content
     pagination.value.rowsNumber = res.data.totalElements
-  }).catch(error => {
-    $q.notify({
-      message: error.message,
-      type: 'negative'
-    })
   }).finally(() => {
     loading.value = false
   })
@@ -181,20 +178,27 @@ function refresh() {
   tableRef.value.requestServerInteraction()
 }
 
+async function enableRow(id: number) {
+  enablePrivilege(id)
+}
+
 async function saveRow(id: number) {
-  visible.value = true
+  form.value = { ...initialValues }
   // You can populate the form with existing user data based on the id
   if (id) {
     fetchPrivilege(id).then(res => { form.value = res.data })
   }
+  visible.value = true
 }
 
 function onSubmit() {
+  if (form.value.id) {
+    modifyPrivilege(form.value.id, form.value)
+  }
+
   // Close the dialog after submitting
   visible.value = false
 }
-
-function onReset() { }
 
 function wrapCsvValue(val: string, formatFn?: (val: string, row?: string) => string, row?: string) {
   let formatted = formatFn !== void 0 ? formatFn(val, row) : val

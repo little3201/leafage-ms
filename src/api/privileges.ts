@@ -1,6 +1,6 @@
 import { api } from 'boot/axios'
 import { SERVER_URL } from 'src/constants'
-import type { Pagination } from 'src/types'
+import type { Pagination, Privilege } from 'src/types'
 
 /**
  * Retrieve rows
@@ -37,4 +37,23 @@ export const retrievePrivilegeTree = () => {
  */
 export const fetchPrivilege = (id: number) => {
   return api.get(`${SERVER_URL.PRIVILEGE}/${id}`)
+}
+
+/**
+ * Modify an existing row
+ * @param id Row ID
+ * @param data Updated row data
+ * @returns Modified row
+ */
+export const modifyPrivilege = (id: number, row: Privilege) => {
+  return api.put(`${SERVER_URL.PRIVILEGE}/${id}`, row)
+}
+
+/**
+ * Enable or Disable an existing row
+ * @param id Row ID
+ * @returns Enable or Disable result
+ */
+export const enablePrivilege = (id: number) => {
+  return api.patch(`${SERVER_URL.PRIVILEGE}/${id}`)
 }

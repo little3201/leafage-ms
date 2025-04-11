@@ -24,7 +24,7 @@
               <q-item clickable v-close-popup>
                 <q-item-section>{{ $t('profile') }}</q-item-section>
               </q-item>
-              <q-item clickable v-close-popup @click="signOut">
+              <q-item clickable v-close-popup @click="signOut(userStore.idToken)">
                 <q-item-section>{{ $t('signout') }}</q-item-section>
               </q-item>
             </q-list>

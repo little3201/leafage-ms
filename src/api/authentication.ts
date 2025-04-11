@@ -4,8 +4,6 @@ import { getRandomString, generateVerifier, computeChallenge } from 'src/utils'
 
 
 const client_id = process.env.CLIENT_ID
-const authorityUrl = process.env.AUTHORITY_URL
-
 
 export async function signIn() {
   const state = getRandomString(16)
@@ -15,16 +13,22 @@ export async function signIn() {
   const codeChallenge = await computeChallenge(codeVerifier)
 
   const params = new URLSearchParams({
-    response_type: 'code',
     client_id: `${client_id}`,
     redirect_uri: `${window.location.origin}/callback`,
-    scope: 'openid profile',
-    code_challenge: codeChallenge,
     state: state,
+    scope: 'openid profile',
+    response_type: 'code',
+    code_challenge: codeChallenge,
     code_challenge_method: 'S256'
   })
 
-  window.location.href = `${authorityUrl}/${SERVER_URL.AUTHORIZE}?${params}`
+  api.get(SERVER_URL.AUTHORIZE, { params }).then(res => {
+    window.location.replace(res.request.responseURL)
+  }).catch(error => {
+    if (error) {
+      window.location.replace('/login')
+    }
+  })
 }
 
 export function handleCallback() {
@@ -46,28 +50,29 @@ export function handleCallback() {
   }
 
   const params = new URLSearchParams({
-    grant_type: 'authorization_code',
     client_id: `${client_id}`,
-    code: code,
     redirect_uri: `${window.location.origin}/callback`,
+    state: state,
+    code: code,
     code_verifier: codeVerifier,
-    state: state
+    grant_type: 'authorization_code'
   })
   // Exchange authorization code for access token
-  return api.post(`${authorityUrl}/${SERVER_URL.TOKEN}`, params)
+  return api.post(SERVER_URL.TOKEN, params)
 }
 
 export function getSub() {
-  return api.get(`${authorityUrl}/${SERVER_URL.USERINFO}`)
+  return api.get(SERVER_URL.USERINFO)
 }
 
-export function signOut() {
-  const idTokenHint = localStorage.getItem('id_token_hint')
+export function signOut(idToken: string) {
   const params = new URLSearchParams({
-    id_token_hint: `${idTokenHint}`,
+    id_token_hint: idToken,
     client_id: `${client_id}`,
     post_logout_redirect_uri: `${window.location.origin}`
   })
 
-  window.location.href = `${authorityUrl}/${SERVER_URL.LOGOUT}?${params}`
+  api.post(SERVER_URL.LOGOUT, params).then(res => {
+    window.location.replace(res.request.responseURL)
+  })
 }

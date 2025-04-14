@@ -60,7 +60,7 @@ export default defineConfig((ctx) => {
       // publicPath: '/',
       // analyze: true,
       env: {
-        API: ctx.dev ? '/api' : 'https://101.42.255.156/api',
+        API: ctx.dev ? '/api' : '/api',
         CLIENT_ID: 'pkce-client'
       },
       // rawDefine: {},

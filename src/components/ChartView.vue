@@ -87,13 +87,11 @@ const handleContentResize = (e: TransitionEvent): void => {
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    initChart()
-  }, 0)
+  initChart()
 
   window.addEventListener('resize', resizeHandler)
 
-  contentEl.value = document.getElementsByClassName('el-layout-content')[0]
+  contentEl.value = document.getElementsByClassName('q-page-container')[0]
   if (contentEl.value) {
     (contentEl.value as Element).addEventListener('transitionend', handleContentResize as (event: Event) => void)
   }

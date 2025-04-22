@@ -1,24 +1,25 @@
 import { http, HttpResponse } from 'msw'
-import { SERVER_URL } from 'src/constants'
 import type { User } from 'src/types'
+import { SERVER_URL } from 'src/constants'
 
 const datas: User[] = []
 
-for (let i = 0; i < 20; i++) {
-  const data: User = {
+for (let i = 1; i < 28; i++) {
+  const row: User = {
     id: i,
     username: 'username' + i,
-    givenName: 'givenName_' + i,
-    familyName: 'family' + i,
+    givenName: '三' + i,
+    middleName: i % 3 > 0 ? '五' : '',
+    familyName: '张',
     avatar: '/images/avatar.jpg',
-    email: 'username' + i + '@test.com',
+    email: 'usexxx' + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,
     accountExpiresAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28),
     credentialsExpiresAt: new Date(new Date().getFullYear() + 1, 12, 30),
     lastModifiedDate: new Date()
   }
-  datas.push(data)
+  datas.push(row)
 }
 
 export const usersHandlers = [
@@ -29,12 +30,18 @@ export const usersHandlers = [
   }),
   http.get(`/api${SERVER_URL.USER}/me`, () => {
     return HttpResponse.json({
-      username: 'username',
+      id: 1,
+      enabled: true,
+      lastModifiedDate: null,
+      username: 'admin',
       givenName: '勒布朗',
       familyName: '詹姆斯',
       middleName: '雷蒙',
       avatar: '/images/avatar.jpg',
-      email: 'username' + '@test.com'
+      email: 'test@test.com',
+      accountExpiresAt: null,
+      accountNonLocked: true,
+      credentialsExpiresAt: null
     })
   }),
   http.get(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
@@ -42,14 +49,22 @@ export const usersHandlers = [
     if (id) {
       return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
     } else {
-      return HttpResponse.json(null)
+      return HttpResponse.json()
     }
+  }),
+  http.get(`/api${SERVER_URL.USER}/:id/exists`, ({ params }) => {
+    const { id, username } = params
+    let filtered = datas.filter(item => item.username === username)
+    if (id) {
+      filtered = datas.filter(item => item.username === username && item.id !== Number(id))
+    }
+    return HttpResponse.json(filtered.length > 0)
   }),
   http.get(`/api${SERVER_URL.USER}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
-    // Construct a JSON response with the list of all Dictionarys
+    // Construct a JSON response with the list of all Row
     // as the response body.
     const data = {
       content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
@@ -60,57 +75,89 @@ export const usersHandlers = [
 
     return HttpResponse.json(data)
   }),
+  http.post(`/api${SERVER_URL.USER}/import`, async ({ request }) => {
+    // Read the intercepted request body as JSON.
+    const data = await request.formData()
+    const file = data.get('file')
+    
+    if (!file) {
+      return new HttpResponse('Missing document', { status: 400 })
+    }
+  
+    if (!(file instanceof File)) {
+      return new HttpResponse('Uploaded document is not a File', {
+        status: 400,
+      })
+    }
+    return HttpResponse.json()
+  }),
   http.post(`/api${SERVER_URL.USER}`, async ({ request }) => {
     // Read the intercepted request body as JSON.
     const newData = await request.json() as User
 
-    // Push the new Dictionary to the map of all Dictionarys.
+    // Push the new Row to the map of all Row.
     datas.push(newData)
 
     // Don't forget to declare a semantic "201 Created"
-    // response and send back the newly created Dictionary!
+    // response and send back the newly created Row!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.put(`/api${SERVER_URL.USER}/:id`, async ({ params }) => {
-    // Read the intercepted request body as JSON.
+  http.put(`/api${SERVER_URL.USER}/:id`, async ({ params, request }) => {
     const { id } = params
-
-    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
-  }),
-  http.patch(`/api${SERVER_URL.USER}/:id`, async ({ params }) => {
     // Read the intercepted request body as JSON.
-    const { id } = params
+    const newData = await request.json() as User
 
-    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
-  }),
-  http.patch(`/api${SERVER_URL.USER}/:id/unlock`, async ({ params }) => {
-    // Read the intercepted request body as JSON.
-    const { id } = params
-
-    const data = datas.filter(item => item.id === Number(id))[0] as User
-    if (data) {
-      data.accountNonLocked = true
+    if (id && newData) {
+      // Don't forget to declare a semantic "201 Created"
+      // response and send back the newly created Row!
+      return HttpResponse.json({...newData, id: id}, { status: 202 })
+    } else {
+      return HttpResponse.error()
     }
-    return HttpResponse.json(data)
+  }),
+  http.patch(`/api${SERVER_URL.USER}/:id`, async({ params }) => {
+    const { id } = params
+    if (id) {
+      return HttpResponse.json()
+    } else {
+      return HttpResponse.error()
+    }
+  }),
+  http.patch(`/api${SERVER_URL.USER}/privileges/:privilegeId`, async({ params, request }) => {
+    const data = await request.json()
+    const { privilegeId } = params
+    if (privilegeId && data) {
+      return HttpResponse.json()
+    } else {
+      return HttpResponse.error()
+    }
+  }),
+  http.delete(`/api${SERVER_URL.USER}/:username/privileges/:privilegeId`, async({ params }) => {
+    const { username, privilegeId } = params
+    if (username && privilegeId) {
+      return HttpResponse.json()
+    } else {
+      return HttpResponse.error()
+    }
   }),
   http.delete(`/api${SERVER_URL.USER}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
     // argument of the response resolver.
     const { id } = params
 
-    // Let's attempt to grab the Dictionary by its ID.
+    // Let's attempt to grab the Row by its ID.
     const deletedData = datas.filter(item => item.id === Number(id))
 
     // Respond with a "404 Not Found" response if the given
-    // Dictionary ID does not exist.
+    // Row ID does not exist.
     if (!deletedData) {
       return new HttpResponse(null, { status: 404 })
     }
 
-    // Delete the Dictionary from the "allDictionarys" map.
+    // Delete the Row from the "allRow" map.
     datas.pop()
 
-    // Respond with a "200 OK" response and the deleted Dictionary.
+    // Respond with a "200 OK" response and the deleted Row.
     return HttpResponse.json(deletedData)
   })
 ]

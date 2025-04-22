@@ -135,6 +135,7 @@ export default {
   lengthRange: '長度在 {min} 到 {max} 個字元',
   removeConfirm: '是否確定要刪除這條數據？',
 
+  successful: '請求成功。',
   alreadyExists: '{field}已存在',
   forbidden: '您沒有訪問此資源的權限，請聯繫管理員。',
   notFound: '未找到您請求的資源。請檢查URL是否正確，或返回首頁。',
@@ -143,6 +144,12 @@ export default {
   goHome: '返回首頁',
   tooltipRule: '應用時，將按照規則（具體查看系統說明）進行替換',
   ruleTooltip: '若需在應用時按照規則進行替換，請以%s開始',
+
+  noDataSelected: '未選擇數據。',
+
+  drop2Here: '將檔案拖放到此處，或',
+  click2Upload: '點擊上傳',
+  fileSizeLimit: '檔大小小於 {size}。',
 
   welcome: '嗨！歡迎回來',
   subtitle: '請填寫您的帳號和密碼，讓我們繼續探索',

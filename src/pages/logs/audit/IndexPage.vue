@@ -4,7 +4,7 @@
     <q-dialog v-model="visible" persistent>
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ $t('accessLog') }}</div>
+          <div class="text-h6">{{ $t('auditLog') }}</div>
           <q-space />
           <q-btn icon="sym_r_close" flat round dense v-close-popup />
         </q-card-section>
@@ -38,6 +38,13 @@
         </q-tr>
       </template>
 
+      <template v-slot:body-cell-resource="props">
+        <q-td :props="props">
+          <q-btn :title="props.row.resource" flat rounded color="primary" @click="showRow(props.row.id)">
+            {{ props.row.resource }}
+          </q-btn>
+        </q-td>
+      </template>
       <template v-slot:body-cell-statusCode="props">
         <q-td :props="props">
           <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
@@ -54,8 +61,6 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
-            @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
@@ -109,7 +114,7 @@ const columns: QTableProps['columns'] = [
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
   { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
-  { name: 'operatedTime', label: 'operatedTime', align: 'center', field: 'operatedTime' },
+  { name: 'operatedTimes', label: 'operatedTimes', align: 'center', field: 'operatedTimes' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 

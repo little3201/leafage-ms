@@ -135,6 +135,7 @@ export default {
   lengthRange: '长度在 {min} 到 {max} 个字符',
   removeConfirm: '是否确定要删除这条数据？',
 
+  successful: '请求成功。',
   alreadyExists: '{field}已存在',
   forbidden: '您没有访问此资源的权限，请联系管理员。',
   notFound: '未找到您请求的资源。请检查URL是否正确，或返回首页。',
@@ -143,6 +144,12 @@ export default {
   goHome: '返回首页',
   tooltipRule: '应用时，将按照规则（具体查看系统说明）进行替换',
   ruleTooltip: '若需在应用时按照规则进行替换，请以%s开始',
+
+  noDataSelected: '未选择数据。',
+
+  drop2Here: '将文件拖放到此处，或',
+  click2Upload: '点击上传',
+  fileSizeLimit: '文件大小小于 {size}。',
 
   welcome: '嗨！欢迎回来',
   subtitle: '请填写您的账号和密码，让我们继续探索',

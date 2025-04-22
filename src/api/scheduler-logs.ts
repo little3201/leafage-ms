@@ -4,8 +4,7 @@ import type { Pagination } from 'src/types'
 
 /**
  * Retrieve rows
- * @param page Page number
- * @param size Items per page
+ * @param pagination Pagination and sort parameters
  * @param filters Optional filter or sort parameters
  * @returns Rows data
  */

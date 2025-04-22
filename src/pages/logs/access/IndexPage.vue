@@ -38,6 +38,14 @@
           </q-th>
         </q-tr>
       </template>
+
+      <template v-slot:body-cell-url="props">
+        <q-td :props="props">
+          <q-btn :title="props.row.url" flat rounded color="primary" @click="showRow(props.row.id)">
+            {{ props.row.url }}
+          </q-btn>
+        </q-td>
+      </template>
       <template v-slot:body-cell-httpMethod="props">
         <q-td :props="props">
           <q-badge :color="httpMethods[props.row.httpMethod]" rounded class="q-mr-xs" />
@@ -60,8 +68,6 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
-            @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>

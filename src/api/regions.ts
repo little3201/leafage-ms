@@ -4,8 +4,7 @@ import type { Pagination, Region } from 'src/types'
 
 /**
  * Retrieve rows
- * @param page Page number
- * @param size Items per page
+ * @param pagination Pagination and sort parameters
  * @param filters Optional filter or sort parameters
  * @returns Rows data
  */
@@ -32,6 +31,17 @@ export const fetchRegion = (id: number) => {
 }
 
 /**
+ * Check if a specific row exists by name
+ * @param superiorId Superior ID
+ * @param name Row name
+ * @param id Row ID
+ * @returns Row data
+ */
+export const checkRegionExists = (superiorId: number, name: string, id?: number) => {
+  return api.get(`${SERVER_URL.REGION}/${superiorId}/exists`, { params: { name, id } })
+}
+
+/**
  * Create a new row
  * @param row Row data
  * @returns Created row
@@ -43,7 +53,7 @@ export const createRegion = (row: Region) => {
 /**
  * Modify an existing row
  * @param id Row ID
- * @param data Updated row data
+ * @param row Updated row data
  * @returns Modified row
  */
 export const modifyRegion = (id: number, row: Region) => {
@@ -66,4 +76,15 @@ export const enableRegion = (id: number) => {
  */
 export const removeRegion = (id: number) => {
   return api.delete(`${SERVER_URL.REGION}/${id}`)
+}
+
+/**
+ * Import rows
+ * @param file file
+ * @returns
+ */
+export const importRegions = (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return api.post(`${SERVER_URL.REGION}/import`, formData)
 }

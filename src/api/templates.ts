@@ -69,11 +69,12 @@ export const removeTemplate = (id: number) => {
 }
 
 /**
- * Export rows
- * @param ids Rows ID
+ * Import rows
+ * @param file file
  * @returns
  */
-export const exprotTemplates = (ids?: number[]) => {
-  const params = ids ? { ids: ids.join(',') } : {}
-  return api.get(`${SERVER_URL.TEMPLATE}/export`, { params, responseType: 'blob' })
+export const importTemplates = (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return api.post(`${SERVER_URL.TEMPLATE}/import`, formData)
 }

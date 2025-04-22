@@ -6,6 +6,7 @@ import { i18n } from 'boot/i18n'
 import type { ComposerTranslation } from 'vue-i18n'
 import { useUserStore } from 'src/stores/user-store'
 import { signIn } from 'src/api/authentication'
+import { SERVER_URL } from 'src/constants'
 
 
 const { t } = i18n.global as { t: ComposerTranslation }
@@ -49,6 +50,11 @@ export default defineBoot(({ store }) => {
     (response: AxiosResponse) => {
       const uniqueKey = generateUniqueKey(response.config)
       abortControllerMap.delete(uniqueKey)
+
+      const { config, status } = response
+      if (status >= 200 && status < 300 && config.method !== 'get' && config.url !== SERVER_URL.TOKEN) {
+        Notify.create({ type: 'positive', message: t('successful') })
+      }
       return response
     },
     (error: AxiosError) => {

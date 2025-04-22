@@ -18,3 +18,14 @@ export const retrieveScripts = () => {
 export const fetchScript = (id: number) => {
   return api.get(`${SERVER_URL.SCRIPT}/${id}`)
 }
+
+/**
+ * Import rows
+ * @param file file
+ * @returns
+ */
+export const importScripts = (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return api.post(`${SERVER_URL.SCRIPT}/import`, formData)
+}

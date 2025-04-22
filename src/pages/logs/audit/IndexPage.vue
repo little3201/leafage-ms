@@ -4,13 +4,42 @@
     <q-dialog v-model="visible" persistent>
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ $t('accessLog') }}</div>
+          <div class="text-h6">{{ $t('auditLog') }}</div>
           <q-space />
           <q-btn icon="sym_r_close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
-          xxxxxx
+          <p><strong>{{ $t('resource') }}</strong>
+            {{ row.resource }}
+          </p>
+          <p><strong>{{ $t('operation') }}</strong>{{ row.operation }}</p>
+          <p><strong>{{ $t('ip') }}</strong>
+            {{ row.ip }}
+          </p>
+          <p><strong>{{ $t('location') }}</strong>
+            {{ row.location }}
+          </p>
+          <p><strong>{{ $t('oldValue') }}</strong>
+            {{ row.oldValue }}
+          </p>
+          <p><strong>{{ $t('newValue') }}</strong>
+            {{ row.newValue }}
+          </p>
+          <p><strong>{{ $t('operator') }}</strong>
+            {{ row.operator }}
+          </p>
+          <p>
+            <strong>{{ $t('statusCode') }}</strong>
+            <q-chip v-if="row.statusCode && row.statusCode >= 200 && row.statusCode < 300" size="sm" color="positive"
+              text-color="white">{{ row.statusCode }}</q-chip>
+            <q-chip v-else-if="row.statusCode && row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+              row.statusCode }}</q-chip>
+            <q-chip v-else size="sm" color="negative" text-color="white">{{ row.statusCode }}</q-chip>
+          </p>
+          <p><strong>{{ $t('operatedTimes') }}</strong>
+            {{ row.operatedTimes ? formatDuration(row.operatedTimes) : '' }}
+          </p>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -38,6 +67,13 @@
         </q-tr>
       </template>
 
+      <template v-slot:body-cell-resource="props">
+        <q-td :props="props">
+          <q-btn :title="props.row.resource" flat rounded no-caps color="primary" @click="showRow(props.row.id)">
+            {{ props.row.resource }}
+          </q-btn>
+        </q-td>
+      </template>
       <template v-slot:body-cell-statusCode="props">
         <q-td :props="props">
           <q-chip v-if="props.row.statusCode >= 200 && props.row.statusCode < 300" size="sm" color="positive"
@@ -47,15 +83,13 @@
           <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
         </q-td>
       </template>
-      <template v-slot:body-cell-operatedTime="props">
+      <template v-slot:body-cell-operatedTimes="props">
         <q-td :props="props">
-          {{ props.row.operatedTime ? date.formatDate(props.row.operatedTime, 'YYYY-MM-DD HH:mm') : '-' }}
+          {{ props.row.operatedTimes ? formatDuration(props.row.operatedTime) : '' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
-            @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
@@ -67,10 +101,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { useQuasar, exportFile, date } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrieveAuditLogs, fetchAuditLog } from 'src/api/audit-logs'
-
 import type { AuditLog } from 'src/types'
+import { formatDuration } from 'src/utils'
+
 
 const $q = useQuasar()
 
@@ -109,7 +144,7 @@ const columns: QTableProps['columns'] = [
   { name: 'ip', label: 'ip', align: 'center', field: 'ip' },
   { name: 'location', label: 'location', align: 'center', field: 'location' },
   { name: 'statusCode', label: 'statusCode', align: 'center', field: 'statusCode' },
-  { name: 'operatedTime', label: 'operatedTime', align: 'center', field: 'operatedTime' },
+  { name: 'operatedTimes', label: 'operatedTimes', align: 'center', field: 'operatedTimes' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
 

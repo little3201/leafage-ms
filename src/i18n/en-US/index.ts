@@ -135,6 +135,7 @@ export default {
   lengthRange: 'The length must between {min} and {max}',
   removeConfirm: 'Are you sure to delete this?',
 
+  successful: 'The request was successful.',
   alreadyExists: '{field} already exists',
   forbidden: 'You don\'t have permission to access this resource, please contact the administrator.',
   notFound: 'The resource not be found. Please check if the URL is correct or return to the homepage.',
@@ -143,6 +144,12 @@ export default {
   goHome: 'Go Home',
   tooltipRule: 'Applied according to the rules (see system guide for details)',
   ruleTooltip: 'To apply according to the rule, please start with %s',
+
+  noDataSelected: 'No data selected.',
+  
+  drop2Here: 'Drop file here or ',
+  click2Upload: 'click to upload',
+  fileSizeLimit: 'File with a size less than {size}.',
 
   welcome: 'Hi! Welcome Back.',
   subtitle: 'Please sign in to continue exploring.',

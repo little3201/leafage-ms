@@ -13,7 +13,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 401,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 400,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 6,
@@ -73,7 +73,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 7,
@@ -85,7 +85,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 8,
@@ -97,7 +97,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 9,
@@ -109,7 +109,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 10,
@@ -121,7 +121,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   },
   {
     id: 11,
@@ -133,7 +133,7 @@ const datas: OperationLog[] = [
     os: 'Windows 11',
     browser: 'Edge 129.0.2792.89',
     statusCode: 200,
-    operatedTimes: 323
+    operatedTimes: 12121
   }
 ]
 
@@ -143,14 +143,14 @@ export const operationLogsHandlers = [
     if (id) {
       return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
     } else {
-      return HttpResponse.json(null)
+      return HttpResponse.json()
     }
   }),
   http.get(`/api${SERVER_URL.OPERATION_LOG}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
-    // Construct a JSON response with the list of all Role
+    // Construct a JSON response with the list of all Row
     // as the response body.
     const data = {
       content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
@@ -166,19 +166,19 @@ export const operationLogsHandlers = [
     // argument of the response resolver.
     const { id } = params
 
-    // Let's attempt to grab the Role by its ID.
+    // Let's attempt to grab the Row by its ID.
     const deletedData = datas.filter(item => item.id === Number(id))
 
     // Respond with a "404 Not Found" response if the given
-    // Role ID does not exist.
+    // Row ID does not exist.
     if (!deletedData) {
       return new HttpResponse(null, { status: 404 })
     }
 
-    // Delete the Role from the "allRole" map.
+    // Delete the Row from the "allRow" map.
     datas.pop()
 
-    // Respond with a "200 OK" response and the deleted Role.
+    // Respond with a "200 OK" response and the deleted Row.
     return HttpResponse.json(deletedData)
   })
 ]

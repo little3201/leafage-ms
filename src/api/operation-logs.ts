@@ -5,7 +5,7 @@ import type { Pagination } from 'src/types'
 /**
  * Retrieve rows
  * @param pagination Pagination and sort parameters
- * @param filters Optional filter
+ * @param filters Optional filter or sort parameters
  * @returns Rows data
  */
 export const retrieveOperationLogs = (pagination: Pagination, filters?: object) => {

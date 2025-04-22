@@ -4,13 +4,32 @@
     <q-dialog v-model="visible" persistent>
       <q-card>
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ $t('accessLog') }}</div>
+          <div class="text-h6">{{ $t('schedulerLog') }}</div>
           <q-space />
           <q-btn icon="sym_r_close" flat round dense v-close-popup />
         </q-card-section>
 
         <q-card-section>
-          xxxxxx
+          <p><strong>{{ $t('name') }}</strong>{{ row.name }}</p>
+          <p><strong>{{ $t('startTime') }}</strong>
+            {{ row.startTime ? date.formatDate(row.startTime, 'YYYY-MM-DD HH:mm') : '-' }}
+          </p>
+          <p><strong>{{ $t('executedTimes') }}</strong>
+            {{ row.executedTimes ? formatDuration(row.executedTimes) : '-' }}
+          </p>
+          <p>
+            <strong>{{ $t('status') }}</strong>
+            <q-chip v-if="row.status === 0" size="sm" icon="sym_r_progress_activity" color="primary" text-color="white">
+              {{ $t('processing') }}
+            </q-chip>
+            <q-chip v-else-if="row.status === 1" size="sm" icon="sym_r_check" color="positive" text-color="white">
+              {{ $t('done') }}
+            </q-chip>
+            <q-chip v-else size="sm" icon="sym_r_error" color="negative" text-color="white">{{ $t('failure') }}</q-chip>
+          </p>
+          <p><strong>{{ $t('nextExecuteTime') }}</strong>
+            {{ row.nextExecuteTime ? date.formatDate(row.nextExecuteTime, 'YYYY-MM-DD HH:mm') : '-' }}
+          </p>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -39,6 +58,18 @@
         </q-tr>
       </template>
 
+      <template v-slot:body-cell-name="props">
+        <q-td :props="props">
+          <q-btn :title="props.row.name" flat rounded no-caps color="primary" @click="showRow(props.row.id)">
+            {{ props.row.name }}
+          </q-btn>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-startTime="props">
+        <q-td :props="props">
+          {{ props.row.startTime ? date.formatDate(props.row.startTime, 'YYYY-MM-DD HH:mm') : '-' }}
+        </q-td>
+      </template>
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
           <q-chip v-if="props.row.status === 0" size="sm" icon="sym_r_progress_activity" color="primary"
@@ -63,8 +94,6 @@
       </template>
       <template v-slot:body-cell-id="props">
         <q-td :props="props">
-          <q-btn title="detail" padding="xs" flat round color="primary" icon="sym_r_description"
-            @click="showRow(props.row.id)" class="q-mt-none" />
           <q-btn title="delete" padding="xs" flat round color="negative" icon="sym_r_delete"
             @click="removeRow(props.row.id)" class="q-mt-none q-ml-sm" />
         </q-td>
@@ -148,6 +177,7 @@ function refresh() {
 }
 
 function showRow(id: number) {
+  row.value = { ...initialValues }
   visible.value = true
   if (id) {
     fetchSchedulerLog(id).then(res => { row.value = res.data })

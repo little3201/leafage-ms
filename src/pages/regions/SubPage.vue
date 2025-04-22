@@ -8,9 +8,9 @@
 
         <q-card-section>
           <q-input v-model="form.name" label="Region name" lazy-rules
-            :rules="[val => val && val.length > 0 || 'Please type something']" />
+            :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
-          <q-input v-model="form.description" label="Region description" type="textarea" />
+          <q-input v-model="form.description" :label="$t('description')" type="textarea" />
         </q-card-section>
 
         <q-card-actions align="right">

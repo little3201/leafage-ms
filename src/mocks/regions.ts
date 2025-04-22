@@ -12,7 +12,7 @@ for (let i = 1; i < 34; i++) {
     areaCode: Math.floor(Math.random() * 100),
     postalCode: Math.floor(Math.random() * 3000),
     enabled: i % 3 > 0,
-    description: 'This is row description about xxx'
+    description: 'This is region description about xxx'
   }
   for (let j = 1; j < i; j++) {
     const subData: Region = {
@@ -39,82 +39,87 @@ export const regionsHandlers = [
       }
       return HttpResponse.json(res)
     } else {
-      return HttpResponse.json(null)
+      return HttpResponse.json()
     }
   }),
-  http.get(`/api${SERVER_URL.REGION}/:id/subset`, ({ params }) => {
-    const { id } = params
-    return HttpResponse.json(subDatas.filter(item => item.superiorId === Number(id)))
+  http.get(`/api${SERVER_URL.REGION}/:id/exists`, ({ params }) => {
+    const { id, name } = params
+    let filtered = datas.filter(item => item.name === name)
+    if (id) {
+      filtered = datas.filter(item => item.name === name && item.id !== Number(id))
+    }
+    return HttpResponse.json(filtered.length > 0)
   }),
   http.get(`/api${SERVER_URL.REGION}`, ({ request }) => {
     const url = new URL(request.url)
     const page = url.searchParams.get('page')
     const size = url.searchParams.get('size')
-
-    // sort and filter
-    const sortBy = url.searchParams.get('sortBy') as never
-    if (sortBy) {
-      datas.sort((a: Region, b: Region) => {
-        if (a[sortBy] > b[sortBy]) {
-          return 1
-        }
-        if (a[sortBy] < b[sortBy]) {
-          return -1
-        }
-        return 0
-      })
-    }
-
-    let data = {
-    }
-
-    const filter = url.searchParams.get('filter')
-    if (filter) {
-      const result = datas.filter(item => item.name.includes(filter))
-        .slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))
-      data = {
-        content: result,
-        page: {
-          totalElements: datas.length
-        }
-      }
-      return HttpResponse.json(data)
-    }
-    // Construct a JSON response with the list of all Dictionarys
+    // Construct a JSON response with the list of all Row
     // as the response body.
-    data = {
-      content: Array.from(datas.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
+    let filtered = []
+    const superiorId = url.searchParams.get('superiorId')
+    if (superiorId) {
+      filtered = subDatas.filter(item => item.superiorId === Number(superiorId))
+    } else {
+      filtered = datas
+    }
+    const data = {
+      content: Array.from(filtered.slice(Number(page) * Number(size), (Number(page) + 1) * Number(size))),
       page: {
-        page: {
-          totalElements: datas.length
-        }
+        totalElements: datas.length
       }
     }
 
     return HttpResponse.json(data)
   }),
+  http.post(`/api${SERVER_URL.REGION}/import`, async ({ request }) => {
+    // Read the intercepted request body as JSON.
+    const data = await request.formData()
+    const file = data.get('file')
+
+    if (!file) {
+      return new HttpResponse('Missing document', { status: 400 })
+    }
+
+    if (!(file instanceof File)) {
+      return new HttpResponse('Uploaded document is not a File', {
+        status: 400,
+      })
+    }
+    return HttpResponse.json()
+  }),
   http.post(`/api${SERVER_URL.REGION}`, async ({ request }) => {
     // Read the intercepted request body as JSON.
     const newData = await request.json() as Region
 
-    // Push the new Dictionary to the map of all Dictionarys.
+    // Push the new Row to the map of all Row.
     datas.push(newData)
 
     // Don't forget to declare a semantic "201 Created"
-    // response and send back the newly created Dictionary!
+    // response and send back the newly created Row!
     return HttpResponse.json(newData, { status: 201 })
   }),
-  http.put(`/api${SERVER_URL.REGION}/:id`, async ({ params }) => {
-    // Read the intercepted request body as JSON.
+  http.put(`/api${SERVER_URL.REGION}/:id`, async ({ params, request }) => {
     const { id } = params
+    // Read the intercepted request body as JSON.
+    const newData = await request.json() as Region
 
-    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    if (id && newData) {
+      // Don't forget to declare a semantic "201 Created"
+      // response and send back the newly created Row!
+      return HttpResponse.json({ ...newData, id: id }, { status: 202 })
+    } else {
+      return HttpResponse.error()
+    }
+
   }),
   http.patch(`/api${SERVER_URL.REGION}/:id`, async ({ params }) => {
-    // Read the intercepted request body as JSON.
     const { id } = params
-
-    return HttpResponse.json(datas.filter(item => item.id === Number(id))[0])
+    if (id) {
+      return HttpResponse.json()
+    } else {
+      return HttpResponse.error()
+    }
   }),
   http.delete(`/api${SERVER_URL.REGION}/:id`, ({ params }) => {
     // All request path params are provided in the "params"
@@ -125,15 +130,15 @@ export const regionsHandlers = [
     const deletedData = datas.filter(item => item.id === Number(id))
 
     // Respond with a "404 Not Found" response if the given
-    // Dictionary ID does not exist.
+    // Row ID does not exist.
     if (!deletedData) {
       return new HttpResponse(null, { status: 404 })
     }
 
-    // Delete the Dictionary from the "allDictionarys" map.
+    // Delete the Dictionary from the "allRow" map.
     datas.pop()
 
-    // Respond with a "200 OK" response and the deleted Dictionary.
+    // Respond with a "200 OK" response and the deleted Row.
     return HttpResponse.json(deletedData)
   })
 ]

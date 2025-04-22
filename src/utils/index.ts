@@ -16,25 +16,6 @@ export function pathResolve(parentPath: string | undefined, path: string | undef
 }
 
 /**
- * Check if a value matches a specific type
- * @param {unknown} val - The value to check
- * @param {string} type - The type to match
- * @returns {boolean} - True if the value matches the type, otherwise false
- */
-export function is(val: unknown, type: string): boolean {
-  return toString.call(val) === `[object ${type}]`
-}
-
-/**
- * Check if a value is a string
- * @param {unknown} val - The value to check
- * @returns {boolean} - True if the value is a string, otherwise false
- */
-export function isString(val: unknown): val is string {
-  return is(val, 'String')
-}
-
-/**
  * Compare the target date with the current date and return a status
  * @param {string} target - The target date
  * @returns {string} - The status ('success', 'warning', 'danger')

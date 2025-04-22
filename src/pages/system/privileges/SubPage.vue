@@ -8,11 +8,17 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input v-model="form.name" label="Region name" lazy-rules
-            :rules="[val => val && val.length > 0 || 'Please type something']" />
+            <q-input v-model="form.name" :label="$t('name')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+            <q-input v-model="form.path" :label="$t('path')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+            <q-input v-model="form.component" :label="$t('component')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+            <q-select v-model="form.redirect" :label="$t('redirect')" :options="subset" />
 
-          <q-input v-model="form.description" label="Region description" type="textarea" />
-        </q-card-section>
+            <q-input v-model="form.description" :label="$t('description')" type="textarea" />
+
+          </q-card-section>
 
         <q-card-actions align="right">
           <q-btn title="cancel" type="reset" unelevated :label="$t('cancel')" v-close-popup />
@@ -129,6 +135,8 @@ const columns: QTableProps['columns'] = [
   { name: 'description', label: 'description', align: 'left', field: 'description' },
   { name: 'id', label: 'actions', field: 'id' }
 ]
+
+const subset = ref<Array<Privilege>>()
 
 onMounted(() => {
   subTableRef.value.requestServerInteraction()

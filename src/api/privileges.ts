@@ -4,9 +4,8 @@ import type { Pagination, Privilege } from 'src/types'
 
 /**
  * Retrieve rows
- * @param page Page number
- * @param size Items per page
- * @param params Optional filter or sort parameters
+ * @param pagination Pagination and sort parameters
+ * @param filters Optional filter or sort parameters
  * @returns Rows data
  */
 export const retrievePrivileges = (pagination: Pagination, filters?: object) => {
@@ -42,7 +41,7 @@ export const fetchPrivilege = (id: number) => {
 /**
  * Modify an existing row
  * @param id Row ID
- * @param data Updated row data
+ * @param row Updated row data
  * @returns Modified row
  */
 export const modifyPrivilege = (id: number, row: Privilege) => {
@@ -56,4 +55,42 @@ export const modifyPrivilege = (id: number, row: Privilege) => {
  */
 export const enablePrivilege = (id: number) => {
   return api.patch(`${SERVER_URL.PRIVILEGE}/${id}`)
+}
+
+/**
+ * Retrieve roles for a specific row
+ * @param id Row ID
+ * @returns Role privileges
+ */
+export const retrievePrivilegeRoles = (id: number) => {
+  return api.get(`${SERVER_URL.PRIVILEGE}/${id}/roles`)
+}
+
+/**
+ * Retrieve groups for a specific row
+ * @param id Row ID
+ * @returns Group privileges
+ */
+export const retrievePrivilegeGroups = (id: number) => {
+  return api.get(`${SERVER_URL.PRIVILEGE}/${id}/groups`)
+}
+
+/**
+ * Retrieve users for a specific row
+ * @param id Row ID
+ * @returns User privileges
+ */
+export const retrievePrivilegeUsers = (id: number) => {
+  return api.get(`${SERVER_URL.PRIVILEGE}/${id}/users`)
+}
+
+/**
+ * Import rows
+ * @param file file
+ * @returns
+ */
+export const importPrivileges = (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return api.post(`${SERVER_URL.PRIVILEGE}/import`, formData)
 }

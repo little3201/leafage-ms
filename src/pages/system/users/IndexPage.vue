@@ -14,11 +14,37 @@
             <q-input v-model="form.familyName" :label="$t('familyName')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
+            <q-input v-model="form.middleName" :label="$t('middleName')" lazy-rules
+              :rules="[val => val && val.length > 0 || $t('inputText')]" />
+
             <q-input v-model="form.givenName" :label="$t('givenName')" lazy-rules
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
 
             <q-input v-model="form.email" :label="$t('email')" lazy-rules type="email"
               :rules="[val => val && val.length > 0 || $t('inputText')]" />
+
+            <q-input v-model="form.accountExpiresAt" :label="$t('accountExpiresAt')" mask="date" :rules="['date']">
+              <template v-slot:append>
+                <q-icon name="sym_r_event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="form.accountExpiresAt">
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+
+            <q-input v-model="form.credentialsExpiresAt" :label="$t('credentialsExpiresAt')" mask="date"
+              :rules="['date']">
+              <template v-slot:append>
+                <q-icon name="sym_r_event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="form.credentialsExpiresAt">
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
           </q-card-section>
 
           <q-card-actions align="right">
@@ -83,14 +109,14 @@
         <q-td :props="props">
           <q-badge v-if="props.row.accountExpiresAt" :color="calculate(props.row.accountExpiresAt)" rounded
             class="q-mr-xs" />
-          {{ props.row.accountExpiresAt ? date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm:ss') : '-' }}
+          {{ props.row.accountExpiresAt ? date.formatDate(props.row.accountExpiresAt, 'YYYY/MM/DD HH:mm') : '-' }}
         </q-td>
       </template>
       <template v-slot:body-cell-credentialsExpiresAt="props">
         <q-td :props="props">
           <q-badge v-if="props.row.credentialsExpiresAt" :color="calculate(props.row.credentialsExpiresAt)" rounded
             class="q-mr-xs" />
-          {{ props.row.credentialsExpiresAt ? date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm:ss') :
+          {{ props.row.credentialsExpiresAt ? date.formatDate(props.row.credentialsExpiresAt, 'YYYY/MM/DD HH:mm') :
             '-' }}
         </q-td>
       </template>

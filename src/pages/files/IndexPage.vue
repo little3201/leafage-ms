@@ -9,9 +9,6 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" :label="$t('name')" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
-            <q-input v-model="form.type" :label="$t('type')" lazy-rules />
             <q-uploader url="/upload" label="Upload files" />
           </q-card-section>
 
@@ -73,9 +70,8 @@
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
 import { date } from 'quasar'
-import { retrieveFiles, uploadFile, downloadFile } from 'src/api/files'
+import { retrieveFiles, downloadFile } from 'src/api/files'
 import { formatFileSize } from 'src/utils'
-import type { FileRecord } from 'src/types'
 
 
 const visible = ref<boolean>(false)
@@ -84,14 +80,6 @@ const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
-
-const initialValues: FileRecord = {
-  id: undefined,
-  name: '',
-  type: '',
-  size: 0
-}
-const form = ref<FileRecord>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',
@@ -103,7 +91,7 @@ const pagination = ref({
 
 const columns: QTableProps['columns'] = [
   { name: 'name', label: 'name', align: 'left', field: 'name', sortable: true },
-  { name: 'type', label: 'type', align: 'left', field: 'type', sortable: true },
+  { name: 'mimeType', label: 'type', align: 'left', field: 'mimeType', sortable: true },
   { name: 'size', label: 'size', align: 'left', field: 'size', sortable: true },
   { name: 'lastModifiedDate', label: 'lastModifiedDate', align: 'center', field: 'lastModifiedDate' },
   { name: 'id', label: 'actions', field: 'id' }
@@ -164,7 +152,6 @@ function removeRow(id: number) {
 function onSubmit() {
   // Close the dialog after submitting
   visible.value = false
-  uploadFile(form.value)
 }
 
 </script>

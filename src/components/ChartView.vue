@@ -4,9 +4,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onMounted, onBeforeUnmount, onActivated } from 'vue'
-import { useQuasar, debounce } from 'quasar'
+import { useQuasar, debounce, is } from 'quasar'
 import ApexCharts from 'apexcharts'
-import { isString } from 'src/utils'
 
 
 const $q = useQuasar()
@@ -35,8 +34,8 @@ let chartRef: ApexCharts | null = null
 const contentEl = ref<Element>()
 
 const styles = computed(() => {
-  const width = isString(props.width) ? props.width : `${props.width}px`
-  const height = isString(props.height) ? props.height : `${props.height}px`
+  const width = is.number(props.width) ? `${props.width}px` : props.width
+  const height = is.number(props.height) ? `${props.height}px` : props.height
 
   return {
     width,

@@ -74,7 +74,7 @@ export const generateRoutes = (routes: PrivilegeTreeNode[]): RouteRecordRaw[] =>
       children: []
     }
     if (route.meta.component) {
-      const comModule = modules[`../${route.meta.component}.vue`]
+      const comModule = modules[`../pages/${route.meta.component}/IndexPage.vue`]
       const component = route.meta.component as string
       if (comModule) {
         // 动态加载路由文件

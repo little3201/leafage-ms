@@ -19,9 +19,16 @@ export interface User extends AudtiMetadata {
   phoneNumber?: string
   avatar?: string
   accountNonLocked?: boolean
-  accountExpiresAt?: Date
-  credentialsExpiresAt?: Date
+  accountExpiresAt?: string
+  credentialsExpiresAt?: string
   enabled?: boolean
+}
+
+export interface UserPrivileges {
+  id: number
+  username: string
+  privilegeId: number
+  actions?: string[]
 }
 
 export interface Group extends AudtiMetadata {
@@ -37,6 +44,13 @@ export interface GroupMembers {
   id: number
   groupId: number
   username: string
+}
+
+export interface GroupPrivileges {
+  id: number
+  groupId: number
+  privilegeId: number
+  actions?: string[]
 }
 
 export interface Role extends AudtiMetadata {
@@ -156,11 +170,12 @@ export interface SchedulerLog extends AudtiMetadata {
   executedTimes?: number
   nextExecuteTime?: Date
   status?: number
+  record?: string 
 }
 
 export interface FileRecord extends AudtiMetadata {
   name: string
-  type: string
+  mimeType: string
   size: number
 }
 

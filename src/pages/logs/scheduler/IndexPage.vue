@@ -60,7 +60,7 @@
 
       <template v-slot:body-cell-name="props">
         <q-td :props="props">
-          <q-btn :title="props.row.name" flat rounded color="primary" @click="showRow(props.row.id)">
+          <q-btn :title="props.row.name" flat rounded no-caps color="primary" @click="showRow(props.row.id)">
             {{ props.row.name }}
           </q-btn>
         </q-td>

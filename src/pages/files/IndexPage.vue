@@ -9,9 +9,6 @@
           </q-card-section>
 
           <q-card-section>
-            <q-input v-model="form.name" :label="$t('name')" lazy-rules
-              :rules="[val => val && val.length > 0 || 'Please type something']" />
-            <q-input v-model="form.mimeType" :label="$t('type')" lazy-rules />
             <q-uploader url="/upload" label="Upload files" />
           </q-card-section>
 
@@ -75,7 +72,6 @@ import type { QTableProps } from 'quasar'
 import { date } from 'quasar'
 import { retrieveFiles, downloadFile } from 'src/api/files'
 import { formatFileSize } from 'src/utils'
-import type { FileRecord } from 'src/types'
 
 
 const visible = ref<boolean>(false)
@@ -84,14 +80,6 @@ const tableRef = ref()
 const rows = ref<QTableProps['rows']>([])
 const filter = ref('')
 const loading = ref<boolean>(false)
-
-const initialValues: FileRecord = {
-  id: undefined,
-  name: '',
-  mimeType: '',
-  size: 0
-}
-const form = ref<FileRecord>({ ...initialValues })
 
 const pagination = ref({
   sortBy: 'id',

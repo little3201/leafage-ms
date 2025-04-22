@@ -10,7 +10,39 @@
         </q-card-section>
 
         <q-card-section>
-          xxxxxx
+          <p><strong>{{ $t('url') }}</strong>
+            {{ row.url }}
+          </p>
+          <p><strong>{{ $t('httpMethod') }}</strong>{{ row.httpMethod }}</p>
+          <p><strong>{{ $t('ip') }}</strong>
+            {{ row.ip }}
+          </p>
+          <p><strong>{{ $t('location') }}</strong>
+            {{ row.location }}
+          </p>
+          <p><strong>{{ $t('params') }}</strong>
+            {{ row.params }}
+          </p>
+          <p v-if="row.body"><strong>{{ $t('body') }}</strong>
+            {{ row.body }}
+          </p>
+          <p><strong>{{ $t('operator') }}</strong>
+            {{ row.operator }}
+          </p>
+          <p>
+            <strong>{{ $t('statusCode') }}</strong>
+            <q-chip v-if="row.statusCode && row.statusCode >= 200 && row.statusCode < 300" size="sm" color="positive"
+              text-color="white">{{ row.statusCode }}</q-chip>
+            <q-chip v-else-if="row.statusCode && row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+              row.statusCode }}</q-chip>
+            <q-chip v-else size="sm" color="negative" text-color="white">{{ row.statusCode }}</q-chip>
+          </p>
+          <p><strong>{{ $t('responseTimes') }}</strong>
+            {{ row.responseTimes ? formatDuration(row.responseTimes) : '' }}
+          </p>
+          <p><strong>{{ $t('responseMessage') }}</strong>
+            {{ row.responseMessage }}
+          </p>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -41,7 +73,7 @@
 
       <template v-slot:body-cell-url="props">
         <q-td :props="props">
-          <q-btn :title="props.row.url" flat rounded color="primary" @click="showRow(props.row.id)">
+          <q-btn :title="props.row.url" flat rounded no-caps color="primary" @click="showRow(props.row.id)">
             {{ props.row.url }}
           </q-btn>
         </q-td>

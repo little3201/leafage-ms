@@ -10,7 +10,42 @@
         </q-card-section>
 
         <q-card-section>
-          xxxxxx
+          <p><strong>{{ $t('operation') }}</strong>{{ row.operation }}</p>
+          <p><strong>{{ $t('ip') }}</strong>
+            {{ row.ip }}
+          </p>
+          <p><strong>{{ $t('location') }}</strong>
+            {{ row.location }}
+          </p>
+          <p><strong>{{ $t('os') }}</strong>
+            {{ row.os }}
+          </p>
+          <p><strong>{{ $t('userAgent') }}</strong>
+            {{ row.userAgent }}
+          </p>
+          <p><strong>{{ $t('browser') }}</strong>
+            {{ row.browser }}
+          </p>
+          <p><strong>{{ $t('referer') }}</strong>
+            {{ row.referer }}
+          </p>
+          <p><strong>{{ $t('sessionId') }}</strong>
+            {{ row.sessionId }}
+          </p>
+          <p><strong>{{ $t('operator') }}</strong>
+            {{ row.operator }}
+          </p>
+          <p>
+            <strong>{{ $t('statusCode') }}</strong>
+            <q-chip v-if="row.statusCode && row.statusCode >= 200 && row.statusCode < 300" size="sm" color="positive"
+              text-color="white">{{ row.statusCode }}</q-chip>
+            <q-chip v-else-if="row.statusCode && row.statusCode >= 500" size="sm" color="warning" text-color="white">{{
+              row.statusCode }}</q-chip>
+            <q-chip v-else size="sm" color="negative" text-color="white">{{ row.statusCode }}</q-chip>
+          </p>
+          <p><strong>{{ $t('operatedTimes') }}</strong>
+            {{ row.operatedTimes ? formatDuration(row.operatedTimes) : '' }}
+          </p>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -41,7 +76,7 @@
 
       <template v-slot:body-cell-operation="props">
         <q-td :props="props">
-          <q-btn :title="props.row.operation" flat rounded color="primary" @click="showRow(props.row.id)">
+          <q-btn :title="props.row.operation" flat rounded no-caps color="primary" @click="showRow(props.row.id)">
             {{ props.row.operation }}
           </q-btn>
         </q-td>
@@ -55,9 +90,9 @@
           <q-chip v-else size="sm" color="negative" text-color="white">{{ props.row.statusCode }}</q-chip>
         </q-td>
       </template>
-      <template v-slot:body-cell-operatedTime="props">
+      <template v-slot:body-cell-operatedTimes="props">
         <q-td :props="props">
-          {{ props.row.operatedTime ? date.formatDate(props.row.operatedTime, 'YYYY-MM-DD HH:mm') : '-' }}
+          {{ props.row.operatedTimes ? formatDuration(props.row.operatedTimes) : '' }}
         </q-td>
       </template>
       <template v-slot:body-cell-id="props">
@@ -73,10 +108,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { QTableProps } from 'quasar'
-import { useQuasar, exportFile, date } from 'quasar'
+import { useQuasar, exportFile } from 'quasar'
 import { retrieveOperationLogs, fetchOperationLog } from 'src/api/operation-logs'
-
 import type { OperationLog } from 'src/types'
+import { formatDuration } from 'src/utils'
 
 const $q = useQuasar()
 

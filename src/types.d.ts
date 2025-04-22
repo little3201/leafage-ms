@@ -19,8 +19,8 @@ export interface User extends AudtiMetadata {
   phoneNumber?: string
   avatar?: string
   accountNonLocked?: boolean
-  accountExpiresAt?: Date
-  credentialsExpiresAt?: Date
+  accountExpiresAt?: string
+  credentialsExpiresAt?: string
   enabled?: boolean
 }
 

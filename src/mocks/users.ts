@@ -15,8 +15,8 @@ for (let i = 1; i < 28; i++) {
     email: 'usexxx' + '@test.com',
     enabled: i % 2 > 0,
     accountNonLocked: i % 3 > 0,
-    accountExpiresAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28),
-    credentialsExpiresAt: new Date(new Date().getFullYear() + 1, 12, 30),
+    accountExpiresAt: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 28).toISOString(),
+    credentialsExpiresAt: new Date(new Date().getFullYear() + 1, 12, 30).toISOString(),
     lastModifiedDate: new Date()
   }
   datas.push(row)

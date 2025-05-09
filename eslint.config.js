@@ -8,7 +8,7 @@ export default tseslint.config(
   { ignores: ['dist'] },
   {
     extends: [
-      js.configs.recommended, 
+      js.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.strictTypeChecked
     ],
@@ -27,6 +27,10 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+
+      quotes: ['warn', 'single', { avoidEscape: true }],
+      // allow debugger during development only
+      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
     },
   },
 )

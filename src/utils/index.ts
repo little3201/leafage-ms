@@ -151,13 +151,13 @@ export function downloadFile(data: Blob, filename: string, mimeType?: string): v
 
 export function groupByType<T>(array: T[], typeOptions: Dictionary[], typeKey: keyof T): { [key: string]: T[] } {
   return array.reduce((acc: { [key: string]: T[] }, curr: T) => {
-    const typeValue = curr[typeKey] as number; // 假设类型键的值是一个数字
-    const name = formatDictionary(typeValue, typeOptions);
-    if (!name) { return acc; }
-    if (!acc[name]) { acc[name] = []; }
-    acc[name].push(curr);
-    return acc;
-  }, {} as { [key: string]: T[] });
+    const typeValue = curr[typeKey] as number // 假设类型键的值是一个数字
+    const name = formatDictionary(typeValue, typeOptions)
+    if (!name) { return acc }
+    if (!acc[name]) { acc[name] = [] }
+    acc[name].push(curr)
+    return acc
+  }, {} as { [key: string]: T[] })
 }
 
 export function getRandomString(length: number): string {

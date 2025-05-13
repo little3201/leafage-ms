@@ -10,21 +10,31 @@
           <q-btn title="drawer" type="button" dense flat round icon="sym_r_menu"
             @click="leftDrawerOpen = !leftDrawerOpen" class="cursor-pointer" />
         </q-toolbar-title>
-        <!-- language -->
-        <LanguageSelector />
-        <!-- theme -->
-        <ThemeToogle class="q-mx-sm" />
-
+        <div class="q-mx-md">
+          <!-- theme -->
+          <ThemeToogle />
+          <!-- language -->
+          <LanguageSelector class="q-mx-sm" />
+          <!-- faq -->
+          <q-btn flat round dense title="faq" icon="sym_r_help" to="/faq" />
+        </div>
         <div class="cursor-pointer">
-          <q-avatar size="md" color="green" icon="sym_r_person">
+          <q-avatar size="md">
+            <img :src="userStore.avatar" alt="avatar" />
           </q-avatar>
           <span class="q-ml-sm">{{ userStore.username }}</span>
           <q-menu>
-            <q-list dense separator>
-              <q-item clickable v-close-popup>
+            <q-list separator>
+              <q-item to="/profile">
+                <q-item-section avatar>
+                  <q-icon name="sym_r_manage_accounts" />
+                </q-item-section>
                 <q-item-section>{{ $t('profile') }}</q-item-section>
               </q-item>
               <q-item clickable v-close-popup @click="signOut(userStore.idToken)">
+                <q-item-section avatar>
+                  <q-icon name="sym_r_logout" />
+                </q-item-section>
                 <q-item-section>{{ $t('signout') }}</q-item-section>
               </q-item>
             </q-list>

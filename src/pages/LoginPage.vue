@@ -3,10 +3,10 @@
     <q-header :class="['transparent', $q.dark.isActive ? '' : 'text-black']">
       <q-toolbar>
         <q-space />
+        <!-- theme -->
+        <ThemeToogle class="q-mx-sm" />
         <!-- language -->
         <LanguageSelector />
-        <!-- theme -->
-        <ThemeToogle />
       </q-toolbar>
     </q-header>
     <q-page-container>

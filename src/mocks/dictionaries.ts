@@ -34,7 +34,7 @@ const datas: Dictionary[] = [
     name: '操作按钮',
     id: 42,
     enabled: true
-  }
+  },
 ]
 
 const subDatas: Dictionary[] = [
@@ -192,6 +192,22 @@ const subDatas: Dictionary[] = [
     superiorId: 42,
     description: '授权',
     id: 56,
+    enabled: true,
+    lastModifiedDate: new Date()
+  },
+  {
+    name: 'DB',
+    superiorId: 68,
+    description: '数据库',
+    id: 57,
+    enabled: true,
+    lastModifiedDate: new Date()
+  },
+  {
+    name: 'middleware',
+    superiorId: 68,
+    description: '中间件',
+    id: 58,
     enabled: true,
     lastModifiedDate: new Date()
   },

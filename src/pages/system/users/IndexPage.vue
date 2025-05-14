@@ -143,7 +143,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { QTableProps, QForm } from 'quasar'
+import type { QTableProps } from 'quasar'
 import { useQuasar, exportFile, date } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { retrieveUsers, fetchUser, createUser, modifyUser, removeUser, enableUser, unlockUser } from 'src/api/users'
@@ -193,9 +193,7 @@ const columns: QTableProps['columns'] = [
 ]
 
 onMounted(() => {
-  if (tableRef.value) {
-    tableRef.value.requestServerInteraction()
-  }
+  tableRef.value.requestServerInteraction()
 })
 
 async function onRequest(props: Parameters<NonNullable<QTableProps['onRequest']>>[0]) {

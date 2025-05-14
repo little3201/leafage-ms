@@ -48,6 +48,7 @@
           </q-card-section>
         </q-card>
       </div>
+
       <div class="col">
         <q-card flat>
           <q-card-section>

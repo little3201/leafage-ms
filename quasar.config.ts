@@ -61,7 +61,7 @@ export default defineConfig((ctx) => {
       // analyze: true,
       env: {
         API: ctx.dev ? '/api' : '/api',
-        CLIENT_ID: 'pkce-client'
+        CLIENT_ID: 'pkce-client-quasar'
       },
       // rawDefine: {},
       // ignorePublicFolder: true,

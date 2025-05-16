@@ -13,5 +13,8 @@
     "typescriptreact"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "eslint.format.enable": true
+  "eslint.format.enable": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

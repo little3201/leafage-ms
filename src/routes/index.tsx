@@ -1,5 +1,6 @@
 import { createBrowserRouter, redirect } from "react-router"
 import App from "../App"
+import Home from '../pages/Home'
 import Login from "../pages/Login"
 
 // 示例 action（登录）
@@ -15,7 +16,7 @@ const loginAction = async ({ request }: { request: Request }) => {
   });
 
   if (res.ok) {
-    return redirect("/dashboard");
+    return redirect("/");
   } else {
     throw new Response("Login failed", { status: 401 });
   }
@@ -24,13 +25,17 @@ const loginAction = async ({ request }: { request: Request }) => {
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    Component: App,
     children: [
       {
         index: true,
-        element: <Login />,
-        action: loginAction,
+        Component: Home
       }
     ]
+  },
+  {
+    path: "/",
+    element: <Login />,
+    action: loginAction,
   }
 ])

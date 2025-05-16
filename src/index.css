@@ -1,23 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, components, utilities;
 
 @import 'primereact/resources/themes/tailwind-light/theme.css';
 
-:root {
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+html body {
+  margin: 0;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+:root {
+  position: relative;
+  height: 100%;
 }
